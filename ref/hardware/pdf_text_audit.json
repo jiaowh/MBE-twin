@@ -1,0 +1,71 @@
+{
+  "verified_date": "2026-09-14",
+  "method": "pypdf page enumeration and targeted H07 text checks; no plot digitization",
+  "files": [
+    {
+      "path": "ref/hardware/H01_RIBER_MBE49_legacy_brochure.pdf",
+      "pages": 2,
+      "sha256": "afdc385d39bff00f3133807b014b3eb53929088a937bdd86cc0eebb3cd78e160",
+      "parsed": true
+    },
+    {
+      "path": "ref/hardware/H03_RIBER_Ga_ABI.pdf",
+      "pages": 4,
+      "sha256": "97b6dfe131f42fb2afb0c25f2bfa1c9a1d8763d524fa1dc97c956748a3112eff",
+      "parsed": true
+    },
+    {
+      "path": "ref/hardware/H05_Eberl_substrate_manipulator_SH.pdf",
+      "pages": 2,
+      "sha256": "71545f78988fad02326d9e5ca060d99134da6799521968e1a0a7f5d6332b8df8",
+      "parsed": true
+    },
+    {
+      "path": "ref/hardware/H06_kSA_BandiT_GaN.pdf",
+      "pages": 7,
+      "sha256": "8709eb560571ee773a03ec45b30ff449745b4fea0c625632ffbafe1fe05434b0",
+      "parsed": true
+    },
+    {
+      "path": "ref/hardware/H07_Leybold_MAG_integra.pdf",
+      "pages": 64,
+      "sha256": "aa902f5b7448a21dfc25b470b729452dee855f6fd8408cade6fa82051107865d",
+      "parsed": true,
+      "cover_revision_found": true,
+      "checked_pages": {
+        "1": {
+          "text_characters": 246,
+          "has_2100": false,
+          "has_figure_6": false
+        },
+        "18": {
+          "text_characters": 1434,
+          "has_2100": true,
+          "has_figure_6": false
+        },
+        "19": {
+          "text_characters": 1192,
+          "has_2100": false,
+          "has_figure_6": false
+        },
+        "23": {
+          "text_characters": 165,
+          "has_2100": false,
+          "has_figure_6": false
+        }
+      }
+    },
+    {
+      "path": "ref/hardware/H08_Edwards_CryoTorr_catalogue.pdf",
+      "pages": 4,
+      "sha256": "5bda0727633dc20e2b296c6dad25cfbbfe92e138f44de279de882bdbe2681ded",
+      "parsed": true
+    },
+    {
+      "path": "ref/hardware/H12_Leybold_UHV_pumps.pdf",
+      "pages": 24,
+      "sha256": "6772143ab433cda44ddd584f0d35355f1907a4933c22cd4b09ed608678e6ceea",
+      "parsed": true
+    }
+  ]
+}

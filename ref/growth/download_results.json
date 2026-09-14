@@ -1,0 +1,50 @@
+﻿[
+    {
+        "id":  "G01",
+        "status":  "downloaded",
+        "file":  "G01_Adelmann_2003_Ga_adsorption.pdf",
+        "bytes":  312879,
+        "sha256":  "FB3F004C1E9A6DE05240394AC2CBAC771D32B31D756582B947AE1134907A3041"
+    },
+    {
+        "id":  "G04",
+        "status":  "downloaded",
+        "file":  "G04_Osaka_2007_atomic_N.pdf",
+        "bytes":  74636,
+        "sha256":  "20A13B650178D78021D71811DA7F4A9E60D11E96994AAD2AC143303D9F585A5A"
+    },
+    {
+        "id":  "G07",
+        "status":  "downloaded",
+        "file":  "G07_Kremer_2005_GaN_heat_capacity.pdf",
+        "bytes":  390293,
+        "sha256":  "D2F15966552AFE70837AA1FEC4C2021C76A70F3BCD653CBE55957837E69A1F25"
+    },
+    {
+        "id":  "G08",
+        "status":  "downloaded",
+        "file":  "G08_Xu_2019_AlN_thermal_conductivity.pdf",
+        "bytes":  2877784,
+        "sha256":  "1B61108D14777D43501F12B62C6772D8ACDAFD425EF8F45B55010F8A63ED9BC8"
+    },
+    {
+        "id":  "G09",
+        "status":  "downloaded",
+        "file":  "G09_Dagli_2020_nitride_thermal_conductivity.pdf",
+        "bytes":  4707556,
+        "sha256":  "3F4806A7E735EEE715CA582F19445D11248125E8F0196B7F280DEF04E23A0EFE"
+    },
+    {
+        "id":  "G11",
+        "status":  "downloaded",
+        "file":  "G11_Lee_2020_AlN_growth_diagram.pdf",
+        "bytes":  2069085,
+        "sha256":  "511CEA55A37738DBE309BB33DFD26205E05A2DAC93A06ADF32CB7E48DCA45F76"
+    },
+    {
+        "id":  "G12",
+        "status":  "failed",
+        "file":  "G12_Blanchard_2018_regrowth_contaminants.pdf",
+        "error":  "The remote server returned an error: (403) Forbidden."
+    }
+]

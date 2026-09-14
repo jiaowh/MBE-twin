@@ -1,0 +1,253 @@
+﻿[
+    {
+        "id":  "M01",
+        "title":  "GeForce RTX 50 Series Laptop GPUs: specifications",
+        "publisher":  "NVIDIA",
+        "url":  "https://www.nvidia.com/en-us/geforce/laptops/50-series/",
+        "version_or_date":  "Live vendor page, snapshot 2026-09-11",
+        "accessed":  "2026-09-11",
+        "local_path":  "ref/methods/M01_nvidia_rtx50_laptop_specs.html",
+        "locators":  [
+                         "Specs table: GeForce RTX 5050 Laptop GPU column"
+                     ],
+        "supported_claims":  [
+                                 "RTX 5050 Laptop is listed with 2560 CUDA cores, 8 GB GDDR7 and 384 GB/s memory bandwidth."
+                             ],
+        "limits":  [
+                       "GPU specifications do not establish laptop CPU, RAM, sustained thermal performance, solver support or simulation runtime. Not desktop RTX 5050 specifications."
+                   ],
+        "sha256":  "589a24c29b0d4c575df9c7fc3d2a65b5025428bc548471c90f3c31beb9957587",
+        "bytes":  667848,
+        "archive_status":  "downloaded",
+        "archive_format":  "HTML source snapshot; external image and script assets not bundled",
+        "verified":  "2026-09-13"
+    },
+    {
+        "id":  "M02",
+        "title":  "Gmsh Reference Manual",
+        "publisher":  "Gmsh project",
+        "url":  "https://gmsh.info/doc/texinfo/gmsh.pdf",
+        "version_or_date":  "Rolling stable manual; archive before selecting a pinned runtime",
+        "accessed":  "2026-09-11",
+        "local_path":  "ref/methods/M02_gmsh_reference.pdf",
+        "locators":  [
+                         "Section 1.2 Mesh module",
+                         "Section 1.2.3 Elementary entities vs physical groups",
+                         "Tutorial t1; x1 Geometry and mesh data"
+                     ],
+        "supported_claims":  [
+                                 "Physical groups associate boundary/volume entities with solver-relevant identities; default export can omit elements outside physical groups."
+                             ],
+        "limits":  [
+                       "Meshing capability does not verify geometry, stable identities after CAD edits, solver-import compatibility or physical convergence."
+                   ],
+        "sha256":  "207da03a454b08ea2a3fd5e9a4b9746ab80af6ec0b834e69e597e0ddf0cfadf2",
+        "bytes":  4137760,
+        "archive_status":  "downloaded",
+        "archive_format":  "PDF; original downloaded bytes",
+        "verified":  "2026-09-13"
+    },
+    {
+        "id":  "M03",
+        "title":  "Elmer Models Manual",
+        "publisher":  "CSC - IT Center for Science",
+        "url":  "https://www.nic.funet.fi/index/elmer/doc/ElmerModelsManual.pdf",
+        "version_or_date":  "Rolling documentation snapshot; retrieved file 364 PDF pages",
+        "accessed":  "2026-09-11",
+        "local_path":  "ref/methods/M03_elmer_models_manual.pdf",
+        "locators":  [
+                         "Chapter 1 Heat Equation; section 1.2.5 Boundary Conditions",
+                         "Printed pages 14-16: view-factor shadowing, geometry updates, Gebhart and radiosity settings"
+                     ],
+        "supported_claims":  [
+                                 "Elmer documents thermal radiation, Gebhart and radiosity approaches, ray-based shadowing controls and optional caching/update thresholds."
+                             ],
+        "limits":  [
+                       "Settings that drop factors, freeze geometry or emissivities are numerical approximations requiring convergence checks. The documented spectral model is not evidence that arbitrary wafer optical transmission is handled."
+                   ],
+        "sha256":  "49f646da3c0a58cb760586eb9ce1279b91e3f5fcbc20857a2e707175439d8105",
+        "bytes":  1889020,
+        "archive_status":  "downloaded",
+        "archive_format":  "PDF; original downloaded bytes",
+        "verified":  "2026-09-13"
+    },
+    {
+        "id":  "M04",
+        "title":  "Molflow 2.6 algorithm",
+        "authors":  [
+                        "Marton Ady"
+                    ],
+        "publisher":  "CERN",
+        "url":  "https://molflow.docs.cern.ch/guide/molflow/general/attachments/molflow_algorithm.pdf",
+        "version_or_date":  "2016-03-03; extract from author\u0027s PhD thesis",
+        "accessed":  "2026-09-11",
+        "local_path":  "ref/methods/M04_molflow_algorithm.pdf",
+        "locators":  [
+                         "Section 1 Introduction, printed p2",
+                         "Sections 2 Steady-state simulation and 4 evaluation/textures"
+                     ],
+        "supported_claims":  [
+                                 "Test-particle Monte Carlo omits intermolecular collisions, tracks facet hits and scales test-particle tallies to physical quantities; independent histories permit parallel sampling."
+                             ],
+        "limits":  [
+                       "Algorithm reference is historical, not a release-specific guarantee. A Molflow-reported wall-flight mean path is not the gas-gas collision mean free path. Beam angular/energy normalization and current automation must be demonstrated."
+                   ],
+        "sha256":  "2ecfdd86bbfdc0c92d08dcf97a69a57f2598cc07feab73d636bda49fb568067c",
+        "bytes":  10036049,
+        "archive_status":  "downloaded",
+        "archive_format":  "PDF; original downloaded bytes",
+        "verified":  "2026-09-13"
+    },
+    {
+        "id":  "M05",
+        "title":  "SPARTA manual: Accelerating SPARTA performance",
+        "publisher":  "SPARTA project",
+        "url":  "https://sparta.github.io/doc/Section_accelerate.html",
+        "version_or_date":  "Live documentation snapshot",
+        "accessed":  "2026-09-11",
+        "local_path":  "ref/methods/M05_sparta_acceleration.html",
+        "locators":  [
+                         "Sections 5.1 Measuring performance, 5.2 Packages with optimized styles, 5.3 KOKKOS package"
+                     ],
+        "supported_claims":  [
+                                 "Kokkos provides acceleration for supported styles on CPUs/GPUs; speedup depends on problem and commands; roundoff, precision and random-number differences can affect results."
+                             ],
+        "limits":  [
+                       "An RTX GPU alone is not a performance guarantee. Benchmark the pinned build, active physics styles and statistics."
+                   ],
+        "sha256":  "6e855b824c08dbbc1fe6ffa5b9b2cf889433f827710e3c160dbaf944d7ceedda",
+        "bytes":  35528,
+        "archive_status":  "downloaded",
+        "archive_format":  "HTML source snapshot; external image and script assets not bundled",
+        "verified":  "2026-09-13"
+    },
+    {
+        "id":  "M06",
+        "title":  "COMSOL 6.4: The Molecular Flow Module Physics Interface Guide",
+        "publisher":  "COMSOL",
+        "url":  "https://doc.comsol.com/6.4/doc/com.comsol.help.molec/molec_introduction.2.03.html",
+        "version_or_date":  "6.4",
+        "accessed":  "2026-09-11",
+        "local_path":  "ref/methods/M06_comsol_molecular_interfaces.html",
+        "locators":  [
+                         "Rarefied Flow: free molecular and transitional interface discussion"
+                     ],
+        "supported_claims":  [
+                                 "The free molecular interface targets Kn \u003e 10 and uses angular coefficients; re-emission directions independent of incidence are an assumed boundary condition. Transitional flow is more computationally demanding."
+                             ],
+        "limits":  [
+                       "A regime label is not a quantitative bound on neglected collisions or directional deposition error. Directional/specular beam cases require capability demonstrations."
+                   ],
+        "sha256":  "dc7f3dfbb8a53c980d138bd7b332568b438ea5fc5017f1578e0031b612a2b1de",
+        "bytes":  21236,
+        "archive_status":  "downloaded",
+        "archive_format":  "HTML source snapshot; external image and script assets not bundled",
+        "verified":  "2026-09-13"
+    },
+    {
+        "id":  "M07",
+        "title":  "The Plasma Module User\u0027s Guide",
+        "publisher":  "COMSOL",
+        "url":  "https://doc.comsol.com/6.4/doc/com.comsol.help.plasma/PlasmaModuleUsersGuide.pdf",
+        "version_or_date":  "6.4",
+        "accessed":  "2026-09-11",
+        "local_path":  "ref/methods/M07_comsol_plasma_6_4_manual.pdf",
+        "locators":  [
+                         "Printed p194 (PDF page 194): Inductively Coupled Plasma interface and AC/DC requirement for 3D",
+                         "Printed p223: Validity of Fluid Models (CCP discussion)",
+                         "Printed pp231-234: Theory for Inductively Coupled Plasmas"
+                     ],
+        "supported_claims":  [
+                                 "The ICP interface treats induction in the frequency domain and couples plasma variables. The interface-specific section states 3D ICP requires AC/DC Module; microwave plasma uses RF Module. The manual discusses fluid-model validity limits."
+                             ],
+        "limits":  [
+                       "Do not apply the CCP rough pressure threshold directly to the actual MBE ICP source. Determine charged-particle nonlocality, chemistry and source dimensions. Licensing should be checked for chosen dimensions/features."
+                   ],
+        "sha256":  "78287b71eb6bb4819997fd02109f763eae6391d7ba9ca71881861a0d4f446802",
+        "bytes":  3944845,
+        "archive_status":  "downloaded",
+        "archive_format":  "PDF; original downloaded bytes",
+        "verified":  "2026-09-13"
+    },
+    {
+        "id":  "M08",
+        "title":  "Reduced-Basis Approximations and A Posteriori Error Bounds for Nonaffine and Nonlinear Partial Differential Equations: Application to Inverse Analysis",
+        "authors":  [
+                        "Nguyen Ngoc Cuong"
+                    ],
+        "publisher":  "Singapore-MIT Alliance",
+        "url":  "https://www.mit.edu/~cuongng/publication/pub31/pub31.pdf",
+        "version_or_date":  "PhD thesis, June 2005 (PDF title page; landing page lists September)",
+        "accessed":  "2026-09-11",
+        "local_path":  "ref/methods/M08_nguyen_reduced_basis_thesis.pdf",
+        "locators":  [
+                         "Sections 3.2.4 Offline-Online Computational Procedure and 3.3 A Posteriori Error Estimation",
+                         "Sections 3.5.3-3.5.4 and 10.2 future directions/limitations"
+                     ],
+        "supported_claims":  [
+                                 "Reduced-basis evaluation separates offline construction and online prediction, with residual/stability-based error bounds in specified problem classes."
+                             ],
+        "limits":  [
+                       "Rigorous bounds require their assumptions; nonlinear/nonaffine generalizations can include non-rigorous components. Bounds relative to discretized equations do not validate physical model form."
+                   ],
+        "sha256":  "09197b72bc6e3674094fcea0fa5edd4317ceb2a9025ce461873cb1e734b5dac8",
+        "bytes":  7573241,
+        "archive_status":  "downloaded",
+        "archive_format":  "PDF; original downloaded bytes",
+        "verified":  "2026-09-13"
+    },
+    {
+        "id":  "M09",
+        "title":  "Examining Spatial (Grid) Convergence",
+        "authors":  [
+                        "John W. Slater (responsible NASA curator)"
+                    ],
+        "publisher":  "NASA Glenn / NPARC Alliance",
+        "url":  "https://www.grc.nasa.gov/www/wind/valid/tutorial/spatconv.html",
+        "version_or_date":  "Page last updated 2021-02-10",
+        "accessed":  "2026-09-11",
+        "local_path":  "ref/methods/M09_nasa_grid_convergence.html",
+        "locators":  [
+                         "Asymptotic Range of Convergence",
+                         "Richardson Extrapolation",
+                         "Grid Convergence Index (GCI)"
+                     ],
+        "supported_claims":  [
+                                 "A three-grid study supports observed-order and asymptotic-range checks; grid-convergence uncertainty is distinct from physical accuracy."
+                             ],
+        "limits":  [
+                       "CFD tutorial methodology must be adapted to FEM, particle statistics, coupled solvers and nonsmooth observables. A tiny two-grid change is insufficient evidence of convergence."
+                   ],
+        "sha256":  "bd279deb8664487d47500c03b06997ee9f5c052ab8a8ea19ea41e639386bd1f0",
+        "bytes":  29126,
+        "archive_status":  "downloaded",
+        "archive_format":  "HTML source snapshot; external image and script assets not bundled",
+        "verified":  "2026-09-13"
+    },
+    {
+        "id":  "M10",
+        "title":  "SPARTA Features",
+        "publisher":  "SPARTA project",
+        "url":  "https://sparta.github.io/features.html",
+        "version_or_date":  "Live documentation snapshot",
+        "accessed":  "2026-09-11",
+        "local_path":  "ref/methods/M10_sparta_features.html",
+        "locators":  [
+                         "Models",
+                         "Gas-phase collisions and chemistry",
+                         "Surface collisions and chemistry",
+                         "Output"
+                     ],
+        "supported_claims":  [
+                                 "SPARTA supports low-density-gas DSMC, local grids, VSS/VHS/HS collision models, surface interactions, restart files and an ambipolar plasma approximation."
+                             ],
+        "limits":  [
+                       "A listed ambipolar approximation is not a self-consistent RF ICP or general sheath model. Ga/N/Al collision and reaction parameters still need evidence."
+                   ],
+        "sha256":  "017d36981a90cca10e2e3aa8ee9224d6067f6d7ac36c9c844b113b62647f8061",
+        "bytes":  6158,
+        "archive_status":  "downloaded",
+        "archive_format":  "HTML source snapshot; external image and script assets not bundled",
+        "verified":  "2026-09-13"
+    }
+]

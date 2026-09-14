@@ -1,0 +1,18 @@
+﻿[
+    {
+        "id":  "G10",
+        "url":  "https://djena.engineering.cornell.edu/papers-new/2022/zhang2022molecular.pdf",
+        "status":  "downloaded",
+        "file":  "G10_Zhang_2022_Npolar_AlN_cleaning.pdf",
+        "bytes":  5851440,
+        "sha256":  "2FE510ACE71D87DAE9F54D6D7A4D04FFC7179DCCB333C9A5E1A2600EFFAD540D"
+    },
+    {
+        "id":  "G12",
+        "url":  "https://mdpi-res.com/d_attachment/crystals/crystals-08-00178/article_deploy/crystals-08-00178.pdf",
+        "status":  "downloaded",
+        "file":  "G12_Blanchard_2018_regrowth_contaminants.pdf",
+        "bytes":  1350414,
+        "sha256":  "BCCCB87396F3D33ED24857C3654854B563BD5451ACD6738123419C728F8D48A3"
+    }
+]

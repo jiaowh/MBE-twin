@@ -1,0 +1,69 @@
+{
+  "verified_date": "2026-09-13",
+  "method": "pypdf parse, page enumeration, SHA256, first-page title inspection",
+  "files": [
+    {
+      "file": "ref/growth/G01_Adelmann_2003_Ga_adsorption.pdf",
+      "bytes": 312879,
+      "sha256": "fb3f004c1e9a6de05240394ac2cbac771d32b31d756582b947ae1134907a3041",
+      "pages": 9,
+      "first_page_excerpt": "Gallium adsorption on 0001 GaN surfaces\nChristoph Adelmann,* Julien Brault, Guido Mula, † and Bruno Daudin\nCEA/CNRS Research Group ‘‘Nanophysique et Semiconducteurs,’’ De´partement de Recherche Fondamentale sur la Matie`re Condense´e,\nSPMM, CEA/Grenoble, 17 Rue des Martyrs, 38054 Grenoble Cedex 9, France\nLiverios Lymperakis and Jo¨rg Neugebauer\nFritz-Haber-Institut der Max-Planck-Gesellschaft, Faradayweg 4-6, D-14195 Berlin, Germany\n~Received 8 November 2002; published 28 April 2003 !\nWe study"
+    },
+    {
+      "file": "ref/growth/G02_Fernandez_Garrido_2008_GaN_decomposition.pdf",
+      "bytes": 522059,
+      "sha256": "f6ee96cc0775b07bb4e38cc2a9d89ca6fd9807527b16dfba23c5a4fe1a43876d",
+      "pages": 6,
+      "first_page_excerpt": "In situ GaN decomposition analysis by quadrupole mass spectrometry\nand reﬂection high-energy electron diffraction\nS. Fernández-Garrido, 1,a/H20850G. Koblmüller, 2 E. Calleja, 1 and J. S. Speck 2\n1ISOM and Dpt. de Ingeniería Electrónica, ETSI Telecomunicación, Universidad Politécnica de Madrid,\n28040 Madrid, Spain\n2Materials Department, University of California, Santa Barbara, California 93106-5050, USA\n/H20849Received 8 April 2008; accepted 13 June 2008; published online 14 August 2008 /H20850\nT"
+    },
+    {
+      "file": "ref/growth/G04_Osaka_2007_atomic_N.pdf",
+      "bytes": 74636,
+      "sha256": "20a13b650178d78021d71811da7f4a9e60d11e96994aad2ac143303d9f585a5a",
+      "pages": 3,
+      "first_page_excerpt": "Role of atomic nitrogen during GaN growth by plasma-assisted molecular\nbeam epitaxy revealed by appearance mass spectrometry\nJ. Osaka a/H20850\nDepartment of Electrical Engineering and Computer Science, Nagoya University, Furo-cho, Chikusa-ku,\nNagoya 464-8603, Japan\nM. Senthil Kumar, b/H20850H. T oyoda, T . Ishijima, and H. Sugai\nDepartment of Electrical Engineering, Nagoya University Furo-cho, Chikusa-ku, Nagoya 464-8603, Japan\nT . Mizutani\nDepartment of Quantum Engineering, Nagoya University, F"
+    },
+    {
+      "file": "ref/growth/G07_Kremer_2005_GaN_heat_capacity.pdf",
+      "bytes": 390293,
+      "sha256": "d2f15966552afe70837aa1fec4c2021c76a70f3bcd653cbe55957837e69a1f25",
+      "pages": 17,
+      "first_page_excerpt": "arXiv:cond-mat/0503522v1  [cond-mat.mtrl-sci]  21 Mar 2005\nHeat capacity of α-GaN: Isotope Eﬀects\nR. K. Kremer, ∗ M. Cardona, and E. Schmitt\nMax-Planck-Institut f¨ ur Festk¨ orperforschung,\nHeisenbergstr. 1, D-70569 Stuttgart, Germany\nJ. Blumm\nNETZSCH-Ger¨ atebau GmbH, D-95100 Selb, Germany\nS. K. Estreicher and M. Sanati\nPhysics Department, Texas Tech University, Lubbock, TX 794 09-1051, USA\nM. Bockowski, I. Grzegory, T. Suski\nInstitute of High Pressure Physics, Polish Academy of Scien ces,\nul S"
+    },
+    {
+      "file": "ref/growth/G08_Xu_2019_AlN_thermal_conductivity.pdf",
+      "bytes": 2877784,
+      "sha256": "1b61108d14777d43501f12b62c6772d8acdafd425ef8f45b55010f8a63ed9bc8",
+      "pages": 23,
+      "first_page_excerpt": "1  Thermal conductivity of crystalline AlN and the influence of atomic-scale defects  Runjie (Lily) Xu1, Miguel Muñoz Rojo1,2, S. M. Islam3, Aditya Sood1,4,5, Bozo Vareskic6, Ankita Katre7,8, Natalio Mingo7, Kenneth E. Goodson4,9, Huili (Grace) Xing3,10, Debdeep Jena3,10 and Eric Pop1,9,*  1Electrical Engineering, Stanford University, Stanford, CA 94305, U.S.A. 2Thermal and Fluid Engineering, University of Twente, Enschede, 7500 AE, Netherlands 3Electrical & Computer Engineering, Cornell Univers"
+    },
+    {
+      "file": "ref/growth/G09_Dagli_2020_nitride_thermal_conductivity.pdf",
+      "bytes": 4707556,
+      "sha256": "3f4806a7e735eee715ca582f19445d11248125e8f0196b7f280def04e23a0efe",
+      "pages": 16,
+      "first_page_excerpt": "a) Electronic mail: kioup@umich.edu  \nThermal conductivity of AlN, GaN, and AlxGa1-xN alloys as a function of composition, temperature, crystallographic direction, and isotope disorder from first principles  Sahil Dagli, Kelsey A. Mengle, and Emmanouil Kioupakis a  \nDepartment of Materials Science and Engineering, University of Michigan, Ann Arbor, Michigan 48109, USA  Ultra-wide-band-gap group-III nitrides are of interest for applications in deep-ultraviolet optoelectronics and power electronic"
+    },
+    {
+      "file": "ref/growth/G10_Zhang_2022_Npolar_AlN_cleaning.pdf",
+      "bytes": 5851440,
+      "sha256": "2fe510ace71d87dae9f54d6d7a4d04ffc7179dccb333c9a5e1a2600effad540d",
+      "pages": 16,
+      "first_page_excerpt": "Zhang et al., Sci. Adv. 8, eabo6408 (2022)     9 September 2022\nSCIENCE ADVANCES |  RESEARCH ARTICLE\n1 of 7\nMATERIALS SCIENCE\nMolecular beam homoepitaxy of N-polar AlN: Enabling \nrole of aluminum-assisted surface cleaning\nZexuan Zhang1*, Yusuke Hayashi2, Tetsuya Tohei2, Akira Sakai2, Vladimir Protasenko1, \nJashan Singhal1, Hideto Miyake3,4, Huili Grace Xing1,5,6, Debdeep Jena1,5,6, YongJin Cho1*\nN-polar aluminum nitride (AlN) is an important building block for next-generation high-power radio fr"
+    },
+    {
+      "file": "ref/growth/G11_Lee_2020_AlN_growth_diagram.pdf",
+      "bytes": 2069085,
+      "sha256": "511cea55a37738dbe309bb33dfd26205e05a2dac93a06adf32cb7e48dca45f76",
+      "pages": 5,
+      "first_page_excerpt": "Surface control and MBE growth diagram for\nhomoepitaxy on single-crystal AlN substrates\nCite as: Appl. Phys. Lett. 116, 262102 (2020); doi: 10.1063/5.0010813\nSubmitted: 15 April 2020 . Accepted: 17 June 2020 .\nPublished Online: 30 June 2020\nKevin Lee,1,a)\n YongJin Cho,1\n Leo J. Schowalter,2\n Masato Toita,2\n Huili Grace Xing,1,3,4\nand Debdeep Jena1,3,4\nAFFILIATIONS\n1School of Electrical and Computer Engineering, Cornell University, Ithaca, New York 14853, USA\n2Advanced Devices Technology Center, "
+    },
+    {
+      "file": "ref/growth/G12_Blanchard_2018_regrowth_contaminants.pdf",
+      "bytes": 1350414,
+      "sha256": "bcccb87396f3d33ed24857c3654854b563bd5451acd6738123419c728f8d48a3",
+      "pages": 7,
+      "first_page_excerpt": "crystals\nArticle\nCharacterization of Sub-Monolayer Contaminants at\nthe Regrowth Interface in GaN Nanowires Grown by\nSelective-Area Molecular Beam Epitaxy\nPaul Blanchard *, Matthew Brubaker, Todd Harvey, Alexana Roshko, Norman Sanford,\nJoel Weber and Kris A. Bertness ID\nNational Institute of Standards and Technology (NIST), Boulder, CO 80305, USA;\nmatthew.brubaker@nist.gov (M.B.); todd.harvey@nist.gov (T.H.); alexana.roshko@nist.gov (A.R.);\nnorman.sanford@nist.gov (N.S.); joel.weber@nist.gov (J.W"
+    }
+  ]
+}

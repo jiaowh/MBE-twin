@@ -1,0 +1,31 @@
+{
+  "schema_version": "planning-0.1",
+  "revision_date": "2026-09-13",
+  "status": "requirements_intake_not_simulation_configuration",
+  "proposal": {"path": "MBE_Phase1_Proposal_v1.2.pptx", "sha256": "DD5D2F7B7698E693FD7654FDCB4F4934FC4D0BF270176D3E84F50E6837FDB94B", "slides": [8, 11, 19]},
+  "materials_initial": ["GaN", "AlN"],
+  "wafer": {
+    "diameter_m": null,
+    "diameter_candidates_m": [0.2, 0.2032],
+    "candidate_status": "interpretations_of_8_inch_not_measured_dimensions",
+    "thickness_m": null,
+    "substrate": null,
+    "template_stack": null,
+    "orientation": null,
+    "polarity": null,
+    "backside": null,
+    "incoming_bow_m": null,
+    "uncertainty": null
+  },
+  "geometry": {"cad_path": null, "cad_sha256": null, "coordinate_frame": null, "source_poses": null, "holder_contacts": null, "chamber_volume_m3": null},
+  "heater": {"material_proposal": "SiC", "rating_proposal_C": 1200, "rating_object": null, "zone_count": null, "zone_geometry": null, "power_limits_W": null, "sensors": null},
+  "sources": {"positions_proposal": 10, "occupancy_proposal": {"Ga": 3, "Al": 3, "Si": 1, "Mg": 1, "spare": 2}, "selected_models": null, "crucible_geometry": null, "flux_calibrations": null},
+  "nitrogen": {"frequency_proposal_Hz": 13560000, "power_proposal_W": 600, "power_definition": null, "source_model": null, "flow_range_sccm": null, "flow_standard_K": null, "flow_standard_Pa": null, "species_output": null, "ion_measurement": null},
+  "vacuum": {"turbo_nominal_min_proposal_m3_s": 2.0, "base_pressure_target_proposal_Pa": 1e-9, "target_is_measurement": false, "selected_pumps": null, "effective_speed_by_species": null, "gas_loads": null, "gauge_calibrations": null},
+  "diagnostics": {"rheed_energy_proposal_eV": 30000, "band_edge_model": null, "bfm_model": null, "rga_model": null, "timestamp_contract": null},
+  "laptop": {"gpu_family_assumption": "RTX 5050 Laptop", "actual_gpu": null, "cpu": null, "ram_GB": null, "vram_GB": null, "power_limit_W": null, "benchmark_status": "not_run"},
+  "parameters_required_fields": ["value", "unit", "provenance_type", "source_id", "source_locator", "uncertainty", "validity_conditions", "revision"],
+  "calibration_dataset_ids": [],
+  "validation_dataset_ids": [],
+  "validation_status": "not_implemented_not_validated"
+}

@@ -1,0 +1,9 @@
+[
+  {"id":"G01","url":"https://pure.mpg.de/rest/items/item_740208/component/file_2052820/content","file":"G01_Adelmann_2003_Ga_adsorption.pdf"},
+  {"id":"G04","url":"https://nagoya.repo.nii.ac.jp/record/7101/files/AppPhysLett_90-172114.pdf","file":"G04_Osaka_2007_atomic_N.pdf"},
+  {"id":"G07","url":"https://arxiv.org/pdf/cond-mat/0503522","file":"G07_Kremer_2005_GaN_heat_capacity.pdf"},
+  {"id":"G08","url":"https://arxiv.org/pdf/1904.00345","file":"G08_Xu_2019_AlN_thermal_conductivity.pdf"},
+  {"id":"G09","url":"https://arxiv.org/pdf/1910.05440","file":"G09_Dagli_2020_nitride_thermal_conductivity.pdf"},
+  {"id":"G11","url":"https://djena.engineering.cornell.edu/papers-new/2020/lee2020surface.pdf","file":"G11_Lee_2020_AlN_growth_diagram.pdf"},
+  {"id":"G12","url":"https://www.mdpi.com/2073-4352/8/4/178/pdf","file":"G12_Blanchard_2018_regrowth_contaminants.pdf"}
+]

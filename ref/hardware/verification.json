@@ -1,0 +1,155 @@
+﻿{
+    "audited_on":  "2026-09-13",
+    "successful_pdf_count":  7,
+    "successful_html_count":  3,
+    "failed_source_ids":  [
+                              "H02",
+                              "H04",
+                              "H10",
+                              "H11"
+                          ],
+    "artifact_errors":  0,
+    "download_script_parse_errors":  0,
+    "rows":  [
+                 {
+                     "id":  "H01",
+                     "path":  "ref/hardware/H01_RIBER_MBE49_product.html",
+                     "status":  "downloaded",
+                     "exists":  true,
+                     "sha256_matches":  true,
+                     "bytes_matches":  true,
+                     "pdf_signature":  false,
+                     "kind":  "html"
+                 },
+                 {
+                     "id":  "H01",
+                     "path":  "ref/hardware/H01_RIBER_MBE49_legacy_brochure.pdf",
+                     "status":  "downloaded",
+                     "exists":  true,
+                     "sha256_matches":  true,
+                     "bytes_matches":  true,
+                     "pdf_signature":  true,
+                     "kind":  "pdf"
+                 },
+                 {
+                     "id":  "H02",
+                     "path":  "ref/hardware/H02_download_response.html",
+                     "status":  "download_failed",
+                     "exists":  true,
+                     "sha256_matches":  true,
+                     "bytes_matches":  true,
+                     "pdf_signature":  false,
+                     "kind":  "failed_response_html"
+                 },
+                 {
+                     "id":  "H03",
+                     "path":  "ref/hardware/H03_RIBER_Ga_ABI.pdf",
+                     "status":  "downloaded",
+                     "exists":  true,
+                     "sha256_matches":  true,
+                     "bytes_matches":  true,
+                     "pdf_signature":  true,
+                     "kind":  "pdf"
+                 },
+                 {
+                     "id":  "H03",
+                     "path":  "ref/hardware/H03_RIBER_Ga_ABI_product.html",
+                     "status":  "downloaded",
+                     "exists":  true,
+                     "sha256_matches":  true,
+                     "bytes_matches":  true,
+                     "pdf_signature":  false,
+                     "kind":  "html"
+                 },
+                 {
+                     "id":  "H04",
+                     "path":  null,
+                     "status":  "download_failed",
+                     "exists":  false,
+                     "sha256_matches":  true,
+                     "bytes_matches":  true,
+                     "pdf_signature":  false,
+                     "kind":  "pdf"
+                 },
+                 {
+                     "id":  "H05",
+                     "path":  "ref/hardware/H05_Eberl_substrate_manipulator_SH.pdf",
+                     "status":  "downloaded",
+                     "exists":  true,
+                     "sha256_matches":  true,
+                     "bytes_matches":  true,
+                     "pdf_signature":  true,
+                     "kind":  "pdf"
+                 },
+                 {
+                     "id":  "H06",
+                     "path":  "ref/hardware/H06_kSA_BandiT_GaN.pdf",
+                     "status":  "downloaded",
+                     "exists":  true,
+                     "sha256_matches":  true,
+                     "bytes_matches":  true,
+                     "pdf_signature":  true,
+                     "kind":  "pdf"
+                 },
+                 {
+                     "id":  "H07",
+                     "path":  "ref/hardware/H07_Leybold_MAG_integra.pdf",
+                     "status":  "downloaded",
+                     "exists":  true,
+                     "sha256_matches":  true,
+                     "bytes_matches":  true,
+                     "pdf_signature":  true,
+                     "kind":  "pdf"
+                 },
+                 {
+                     "id":  "H08",
+                     "path":  "ref/hardware/H08_Edwards_CryoTorr_catalogue.pdf",
+                     "status":  "downloaded",
+                     "exists":  true,
+                     "sha256_matches":  true,
+                     "bytes_matches":  true,
+                     "pdf_signature":  true,
+                     "kind":  "pdf"
+                 },
+                 {
+                     "id":  "H09",
+                     "path":  "ref/hardware/H09_STAIB_RHEED30.html",
+                     "status":  "downloaded",
+                     "exists":  true,
+                     "sha256_matches":  true,
+                     "bytes_matches":  true,
+                     "pdf_signature":  false,
+                     "kind":  "html"
+                 },
+                 {
+                     "id":  "H10",
+                     "path":  "ref/hardware/H10_download_response.html",
+                     "status":  "download_failed",
+                     "exists":  true,
+                     "sha256_matches":  true,
+                     "bytes_matches":  true,
+                     "pdf_signature":  false,
+                     "kind":  "failed_response_html"
+                 },
+                 {
+                     "id":  "H11",
+                     "path":  "ref/hardware/H11_download_response.html",
+                     "status":  "download_failed",
+                     "exists":  true,
+                     "sha256_matches":  true,
+                     "bytes_matches":  true,
+                     "pdf_signature":  false,
+                     "kind":  "failed_response_html"
+                 },
+                 {
+                     "id":  "H12",
+                     "path":  "ref/hardware/H12_Leybold_UHV_pumps.pdf",
+                     "status":  "downloaded",
+                     "exists":  true,
+                     "sha256_matches":  true,
+                     "bytes_matches":  true,
+                     "pdf_signature":  true,
+                     "kind":  "pdf"
+                 }
+             ]
+}

@@ -1,0 +1,360 @@
+{
+  "checked_date": "2026-09-14",
+  "source_count": 34,
+  "usable_pdf_count": 21,
+  "usable_html_count": 8,
+  "artifacts": [
+    {
+      "id": "G01",
+      "path": "ref/growth/G01_Adelmann_2003_Ga_adsorption.pdf",
+      "bytes": 312879,
+      "sha256": "fb3f004c1e9a6de05240394ac2cbac771d32b31d756582b947ae1134907a3041",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 9,
+      "first_page_text_characters": 5488,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "G02",
+      "path": "ref/growth/G02_Fernandez_Garrido_2008_GaN_decomposition.pdf",
+      "bytes": 522059,
+      "sha256": "f6ee96cc0775b07bb4e38cc2a9d89ca6fd9807527b16dfba23c5a4fe1a43876d",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 6,
+      "first_page_text_characters": 5719,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "G04",
+      "path": "ref/growth/G04_Osaka_2007_atomic_N.pdf",
+      "bytes": 74636,
+      "sha256": "20a13b650178d78021d71811da7f4a9e60d11e96994aad2ac143303d9f585a5a",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 3,
+      "first_page_text_characters": 5251,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "G07",
+      "path": "ref/growth/G07_Kremer_2005_GaN_heat_capacity.pdf",
+      "bytes": 390293,
+      "sha256": "d2f15966552afe70837aa1fec4c2021c76a70f3bcd653cbe55957837e69a1f25",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 17,
+      "first_page_text_characters": 692,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "G08",
+      "path": "ref/growth/G08_Xu_2019_AlN_thermal_conductivity.pdf",
+      "bytes": 2877784,
+      "sha256": "1b61108d14777d43501f12b62c6772d8acdafd425ef8f45b55010f8a63ed9bc8",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 23,
+      "first_page_text_characters": 2168,
+      "parser_warning_count": 20,
+      "parser_warning_examples": [
+        "Ignoring wrong pointing object 8 0 (offset 0)",
+        "Ignoring wrong pointing object 10 0 (offset 0)",
+        "Ignoring wrong pointing object 12 0 (offset 0)"
+      ]
+    },
+    {
+      "id": "G09",
+      "path": "ref/growth/G09_Dagli_2020_nitride_thermal_conductivity.pdf",
+      "bytes": 4707556,
+      "sha256": "3f4806a7e735eee715ca582f19445d11248125e8f0196b7f280def04e23a0efe",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 16,
+      "first_page_text_characters": 1861,
+      "parser_warning_count": 617,
+      "parser_warning_examples": [
+        "Ignoring wrong pointing object 17 0 (offset 0)",
+        "Ignoring wrong pointing object 19 0 (offset 0)",
+        "Ignoring wrong pointing object 21 0 (offset 0)"
+      ]
+    },
+    {
+      "id": "G10",
+      "path": "ref/growth/G10_Zhang_2022_Npolar_AlN_cleaning.pdf",
+      "bytes": 5851440,
+      "sha256": "2fe510ace71d87dae9f54d6d7a4d04ffc7179dccb333c9a5e1a2600effad540d",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 16,
+      "first_page_text_characters": 6600,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "G11",
+      "path": "ref/growth/G11_Lee_2020_AlN_growth_diagram.pdf",
+      "bytes": 2069085,
+      "sha256": "511cea55a37738dbe309bb33dfd26205e05a2dac93a06adf32cb7e48dca45f76",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 5,
+      "first_page_text_characters": 4628,
+      "parser_warning_count": 1,
+      "parser_warning_examples": [
+        "Ignoring wrong pointing object 150 0 (offset 0)"
+      ]
+    },
+    {
+      "id": "G12",
+      "path": "ref/growth/G12_Blanchard_2018_regrowth_contaminants.pdf",
+      "bytes": 1350414,
+      "sha256": "bcccb87396f3d33ed24857c3654854b563bd5451acd6738123419c728f8d48a3",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 7,
+      "first_page_text_characters": 3236,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "H01",
+      "path": "ref/hardware/H01_RIBER_MBE49_product.html",
+      "bytes": 84977,
+      "sha256": "f95962d7d3556ff6629dfc591415fef4a00287882bfe70188c0b0bddb4427a23",
+      "source_status": "downloaded",
+      "usable_source": true
+    },
+    {
+      "id": "H01",
+      "path": "ref/hardware/H01_RIBER_MBE49_legacy_brochure.pdf",
+      "bytes": 2030543,
+      "sha256": "afdc385d39bff00f3133807b014b3eb53929088a937bdd86cc0eebb3cd78e160",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 2,
+      "first_page_text_characters": 3026,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "H02",
+      "path": "ref/hardware/H02_download_response.html",
+      "bytes": 198,
+      "sha256": "d1b7e9829adbd05f1f101f07915e02e58c2d81ea5c6ddec58650df596c4a5b14",
+      "source_status": "download_failed",
+      "usable_source": false
+    },
+    {
+      "id": "H03",
+      "path": "ref/hardware/H03_RIBER_Ga_ABI.pdf",
+      "bytes": 501028,
+      "sha256": "97b6dfe131f42fb2afb0c25f2bfa1c9a1d8763d524fa1dc97c956748a3112eff",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 4,
+      "first_page_text_characters": 1791,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "H03",
+      "path": "ref/hardware/H03_RIBER_Ga_ABI_product.html",
+      "bytes": 98699,
+      "sha256": "f1272bdf8875efd4e0526a830ea04e3d657c7f6f3cc6471d0d9c7ce9d5522417",
+      "source_status": "downloaded",
+      "usable_source": true
+    },
+    {
+      "id": "H05",
+      "path": "ref/hardware/H05_Eberl_substrate_manipulator_SH.pdf",
+      "bytes": 1306149,
+      "sha256": "71545f78988fad02326d9e5ca060d99134da6799521968e1a0a7f5d6332b8df8",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 2,
+      "first_page_text_characters": 2005,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "H06",
+      "path": "ref/hardware/H06_kSA_BandiT_GaN.pdf",
+      "bytes": 1619744,
+      "sha256": "8709eb560571ee773a03ec45b30ff449745b4fea0c625632ffbafe1fe05434b0",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 7,
+      "first_page_text_characters": 3161,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "H07",
+      "path": "ref/hardware/H07_Leybold_MAG_integra.pdf",
+      "bytes": 3346108,
+      "sha256": "aa902f5b7448a21dfc25b470b729452dee855f6fd8408cade6fa82051107865d",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 64,
+      "first_page_text_characters": 246,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "H08",
+      "path": "ref/hardware/H08_Edwards_CryoTorr_catalogue.pdf",
+      "bytes": 2421407,
+      "sha256": "5bda0727633dc20e2b296c6dad25cfbbfe92e138f44de279de882bdbe2681ded",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 4,
+      "first_page_text_characters": 38,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "H09",
+      "path": "ref/hardware/H09_STAIB_RHEED30.html",
+      "bytes": 96308,
+      "sha256": "d66daa4b21661661752eb4cacb0a11ff7567150bffb1ecf983611d120528e0f3",
+      "source_status": "downloaded",
+      "usable_source": true
+    },
+    {
+      "id": "H10",
+      "path": "ref/hardware/H10_download_response.html",
+      "bytes": 222,
+      "sha256": "b22c824c6ca2e5c85730a2cc32c1a7829aac293e20a011248b9e6bd8ad94b821",
+      "source_status": "download_failed",
+      "usable_source": false
+    },
+    {
+      "id": "H11",
+      "path": "ref/hardware/H11_download_response.html",
+      "bytes": 410,
+      "sha256": "8e063f7e0c8edb632cf662df4a32bbd5724f983d86489863fd15515a6f3d76f6",
+      "source_status": "download_failed",
+      "usable_source": false
+    },
+    {
+      "id": "H12",
+      "path": "ref/hardware/H12_Leybold_UHV_pumps.pdf",
+      "bytes": 4168240,
+      "sha256": "6772143ab433cda44ddd584f0d35355f1907a4933c22cd4b09ed608678e6ceea",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 24,
+      "first_page_text_characters": 284,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "M01",
+      "path": "ref/methods/M01_nvidia_rtx50_laptop_specs.html",
+      "bytes": 667848,
+      "sha256": "589a24c29b0d4c575df9c7fc3d2a65b5025428bc548471c90f3c31beb9957587",
+      "source_status": "downloaded",
+      "usable_source": true
+    },
+    {
+      "id": "M02",
+      "path": "ref/methods/M02_gmsh_reference.pdf",
+      "bytes": 4137760,
+      "sha256": "207da03a454b08ea2a3fd5e9a4b9746ab80af6ec0b834e69e597e0ddf0cfadf2",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 458,
+      "first_page_text_characters": 4,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "M03",
+      "path": "ref/methods/M03_elmer_models_manual.pdf",
+      "bytes": 1889020,
+      "sha256": "49f646da3c0a58cb760586eb9ce1279b91e3f5fcbc20857a2e707175439d8105",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 364,
+      "first_page_text_characters": 146,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "M04",
+      "path": "ref/methods/M04_molflow_algorithm.pdf",
+      "bytes": 10036049,
+      "sha256": "2ecfdd86bbfdc0c92d08dcf97a69a57f2598cc07feab73d636bda49fb568067c",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 31,
+      "first_page_text_characters": 3193,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "M05",
+      "path": "ref/methods/M05_sparta_acceleration.html",
+      "bytes": 35528,
+      "sha256": "6e855b824c08dbbc1fe6ffa5b9b2cf889433f827710e3c160dbaf944d7ceedda",
+      "source_status": "downloaded",
+      "usable_source": true
+    },
+    {
+      "id": "M06",
+      "path": "ref/methods/M06_comsol_molecular_interfaces.html",
+      "bytes": 21236,
+      "sha256": "dc7f3dfbb8a53c980d138bd7b332568b438ea5fc5017f1578e0031b612a2b1de",
+      "source_status": "downloaded",
+      "usable_source": true
+    },
+    {
+      "id": "M07",
+      "path": "ref/methods/M07_comsol_plasma_6_4_manual.pdf",
+      "bytes": 3944845,
+      "sha256": "78287b71eb6bb4819997fd02109f763eae6391d7ba9ca71881861a0d4f446802",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 472,
+      "first_page_text_characters": 27,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "M08",
+      "path": "ref/methods/M08_nguyen_reduced_basis_thesis.pdf",
+      "bytes": 7573241,
+      "sha256": "09197b72bc6e3674094fcea0fa5edd4317ceb2a9025ce461873cb1e734b5dac8",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 303,
+      "first_page_text_characters": 1435,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "M09",
+      "path": "ref/methods/M09_nasa_grid_convergence.html",
+      "bytes": 29126,
+      "sha256": "bd279deb8664487d47500c03b06997ee9f5c052ab8a8ea19ea41e639386bd1f0",
+      "source_status": "downloaded",
+      "usable_source": true
+    },
+    {
+      "id": "M10",
+      "path": "ref/methods/M10_sparta_features.html",
+      "bytes": 6158,
+      "sha256": "017d36981a90cca10e2e3aa8ee9224d6067f6d7ac36c9c844b113b62647f8061",
+      "source_status": "downloaded",
+      "usable_source": true
+    }
+  ],
+  "issues": [],
+  "physics_validation": "not_performed"
+}

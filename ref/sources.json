@@ -1,0 +1,1359 @@
+{
+  "schema_version": 1,
+  "compiled_date": "2026-09-14",
+  "sources": [
+    {
+      "id": "G01",
+      "title": "Gallium adsorption on (0001) GaN surfaces",
+      "authors": [
+        "Christoph Adelmann",
+        "Julien Brault",
+        "Guido Mula",
+        "Bruno Daudin",
+        "Liverios Lymperakis",
+        "Jörg Neugebauer"
+      ],
+      "year": 2003,
+      "publication": "Physical Review B 67, 165419",
+      "doi": "10.1103/PhysRevB.67.165419",
+      "url": "https://doi.org/10.1103/PhysRevB.67.165419",
+      "download_url": "https://pure.mpg.de/rest/items/item_740208/component/file_2052820/content",
+      "alternate_url": "https://arxiv.org/abs/cond-mat/0304157",
+      "accessed_date": "2026-09-11",
+      "source_locator": "Experimental procedure; Figs. 1-5; Table I. Saved published PDF has 9 pages; arXiv preprint has different pagination.",
+      "supports": "Separate Ga adlayer inventory and droplet regime; calibrated adsorption/desorption transients; Ga flux calibration by N-rich growth RHEED oscillations with stated sticking assumption.",
+      "does_not_support": "Direct conversion of arbitrary RHEED intensity to thickness or coverage; universal Arrhenius prefactors; transferring Ga-polar kinetics to other orientations.",
+      "evidence_type": "experiment_and_atomistic_model",
+      "status": "pdf_downloaded",
+      "local_path": "ref/growth/G01_Adelmann_2003_Ga_adsorption.pdf",
+      "sha256": "fb3f004c1e9a6de05240394ac2cbac771d32b31d756582b947ae1134907a3041",
+      "bytes": 312879,
+      "collection": "growth",
+      "detail_manifest": "ref/growth/sources.json",
+      "indexed_artifacts": [
+        {
+          "path": "ref/growth/G01_Adelmann_2003_Ga_adsorption.pdf",
+          "status": "downloaded",
+          "sha256": "fb3f004c1e9a6de05240394ac2cbac771d32b31d756582b947ae1134907a3041",
+          "bytes": 312879
+        }
+      ]
+    },
+    {
+      "id": "G02",
+      "title": "In situ GaN decomposition analysis by quadrupole mass spectrometry and reflection high-energy electron diffraction",
+      "authors": [
+        "S. Fernández-Garrido",
+        "G. Koblmüller",
+        "E. Calleja",
+        "J. S. Speck"
+      ],
+      "year": 2008,
+      "publication": "Journal of Applied Physics 104, 033541",
+      "doi": "10.1063/1.2968442",
+      "url": "https://doi.org/10.1063/1.2968442",
+      "download_url": "https://oa.upm.es/2586/1/INVE_MEM_2008_57018.pdf",
+      "metadata_url": "https://oa.upm.es/2586/",
+      "accessed_date": "2026-09-11",
+      "metadata_rechecked_date": "2026-09-13",
+      "source_locator": "Saved PDF pp. 2-5: Figs. 1-6, Eq. (3), and Conclusions.",
+      "supports": "Vacuum decomposition measurement by two diagnostics; effective loss depends on active-N excess; N-rich recapture suppresses loss while slightly Ga-rich loss resembles vacuum loss.",
+      "does_not_support": "Zero loss whenever nitrogen is on; one decomposition parameterization for all surfaces, coverages, or materials; treating the reported 3.1 eV apparent barrier as a complete rate law.",
+      "evidence_type": "experiment",
+      "status": "pdf_downloaded",
+      "local_path": "ref/growth/G02_Fernandez_Garrido_2008_GaN_decomposition.pdf",
+      "sha256": "f6ee96cc0775b07bb4e38cc2a9d89ca6fd9807527b16dfba23c5a4fe1a43876d",
+      "bytes": 522059,
+      "collection": "growth",
+      "detail_manifest": "ref/growth/sources.json",
+      "indexed_artifacts": [
+        {
+          "path": "ref/growth/G02_Fernandez_Garrido_2008_GaN_decomposition.pdf",
+          "status": "downloaded",
+          "sha256": "f6ee96cc0775b07bb4e38cc2a9d89ca6fd9807527b16dfba23c5a4fe1a43876d",
+          "bytes": 522059
+        }
+      ]
+    },
+    {
+      "id": "G03",
+      "title": "Growth diagram and morphologies of AlN thin films grown by molecular beam epitaxy",
+      "authors": [
+        "G. Koblmüller",
+        "R. Averbeck",
+        "L. Geelhaar",
+        "H. Riechert",
+        "W. Hösler",
+        "P. Pongratz"
+      ],
+      "year": 2003,
+      "publication": "Journal of Applied Physics 93, 9591-9596",
+      "doi": "10.1063/1.1575929",
+      "url": "https://doi.org/10.1063/1.1575929",
+      "accessed_date": "2026-09-11",
+      "source_locator": "Bibliographic lead corroborated by G11 reference 33 and later author publications; original full text not acquired.",
+      "supports": "Identifies the foundational AlN heteroepitaxy growth-diagram study to acquire.",
+      "does_not_support": "No numerical parameters or independently reviewed original-paper physics are extracted from this URL-only entry.",
+      "evidence_type": "bibliographic_lead_to_primary_paper",
+      "status": "not_downloaded",
+      "unavailable_reason": "Publisher page retrieval failed; no verified open original PDF acquired in this pass. Follow-up metadata download was interrupted by approval-service usage limit.",
+      "local_path": null,
+      "collection": "growth",
+      "detail_manifest": "ref/growth/sources.json",
+      "indexed_artifacts": []
+    },
+    {
+      "id": "G04",
+      "title": "Role of atomic nitrogen during GaN growth by plasma-assisted molecular beam epitaxy revealed by appearance mass spectrometry",
+      "authors": [
+        "J. Osaka",
+        "M. Senthil Kumar",
+        "H. Toyoda",
+        "T. Ishijima",
+        "H. Sugai",
+        "T. Mizutani"
+      ],
+      "year": 2007,
+      "publication": "Applied Physics Letters 90, 172114",
+      "doi": "10.1063/1.2734390",
+      "url": "https://doi.org/10.1063/1.2734390",
+      "download_url": "https://nagoya.repo.nii.ac.jp/record/7101/files/AppPhysLett_90-172114.pdf",
+      "accessed_date": "2026-09-11",
+      "source_locator": "Saved PDF pp. 1-3, experimental source/aperture setup and Figs. 2-4.",
+      "supports": "Appearance mass spectrometry and growth calibration distinguish supplied atomic N from incorporated N; measures power/flow dependence for an identified source.",
+      "does_not_support": "Assuming all RF sources have the same active-species fractions, unit sticking, universal power-to-flux map, or zero ions.",
+      "evidence_type": "experiment",
+      "status": "pdf_downloaded",
+      "local_path": "ref/growth/G04_Osaka_2007_atomic_N.pdf",
+      "sha256": "20a13b650178d78021d71811da7f4a9e60d11e96994aad2ac143303d9f585a5a",
+      "bytes": 74636,
+      "collection": "growth",
+      "detail_manifest": "ref/growth/sources.json",
+      "indexed_artifacts": [
+        {
+          "path": "ref/growth/G04_Osaka_2007_atomic_N.pdf",
+          "status": "downloaded",
+          "sha256": "20a13b650178d78021d71811da7f4a9e60d11e96994aad2ac143303d9f585a5a",
+          "bytes": 74636
+        }
+      ]
+    },
+    {
+      "id": "G05",
+      "title": "Plasma-assisted Molecular Beam Epitaxy of N-polar InAlN-barrier High-electron-mobility Transistors",
+      "authors": [
+        "Matthew T. Hardy",
+        "David F. Storm",
+        "D. Scott Katzer",
+        "Brian P. Downey",
+        "Neeraj Nepal",
+        "David J. Meyer"
+      ],
+      "year": 2016,
+      "publication": "Journal of Visualized Experiments 117, 54775",
+      "doi": "10.3791/54775",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5226270/",
+      "publisher_url": "https://www.jove.com/v/54775/plasma-assisted-molecular-beam-epitaxy-n-polar-inaln-barrier-high",
+      "metadata_url": "https://pubmed.ncbi.nlm.nih.gov/27911417/",
+      "accessed_date": "2026-09-11",
+      "source_locator": "Protocol: Effusion Cell Ramp and Flux Calibration; nitrogen-source setup; Ga deposition/desorption; rotation-triggered RHEED acquisition.",
+      "supports": "Concrete calibration workflow and repeat BFM readings; explicit source-specific active-N flux; shutter and surface-inventory transients.",
+      "does_not_support": "Extending project material scope to InAlN; transferring N-polar device recipe or instrument setpoints to proposed Ga/Al-polar equipment.",
+      "evidence_type": "experimental_protocol",
+      "status": "primary_text_reviewed_url_only",
+      "unavailable_reason": "Relevant primary web text reviewed; no PDF saved. Direct PMC requests intermittently presented a challenge; open-access locator retrieval was interrupted by approval-service usage limit.",
+      "local_path": null,
+      "collection": "growth",
+      "detail_manifest": "ref/growth/sources.json",
+      "indexed_artifacts": []
+    },
+    {
+      "id": "G06",
+      "title": "Plasma assisted molecular beam epitaxy of GaN with growth rates >2.6 µm/h",
+      "authors": [
+        "Brian M. McSkimming",
+        "F. Wu",
+        "Thomas Huault",
+        "Catherine Chaix",
+        "James S. Speck"
+      ],
+      "year": 2014,
+      "publication": "Journal of Crystal Growth 386, 168-174",
+      "doi": "10.1016/j.jcrysgro.2013.10.013",
+      "url": "https://www.sciencedirect.com/science/article/pii/S0022024813006751",
+      "metadata_url": "https://labs.materials.ucsb.edu/speck/james/publications/2026",
+      "accessed_date": "2026-09-11",
+      "source_locator": "Publisher abstract and accessible sections Growth rate and Plasma source improvements; author-group bibliography. URL ending /2026 is an item identifier, not publication year.",
+      "supports": "Source geometry and aperture modifications change achievable rate; a measured RF-power/flow matrix is needed; accessible growth-rate discussion includes non-monotonic flow response.",
+      "does_not_support": "A 600 W source universally reaches a particular rate, or increasing flow always raises active-N delivery; base UHV guarantees no hydrogen incorporation.",
+      "evidence_type": "experiment",
+      "status": "primary_text_reviewed_url_only",
+      "unavailable_reason": "Publisher sections reviewed; no verified open original PDF acquired. Do not treat abstract/HTML as digitized figure data.",
+      "local_path": null,
+      "collection": "growth",
+      "detail_manifest": "ref/growth/sources.json",
+      "indexed_artifacts": []
+    },
+    {
+      "id": "G07",
+      "title": "Heat capacity of alpha-GaN: Isotope effects",
+      "authors": [
+        "R. K. Kremer",
+        "M. Cardona",
+        "E. Schmitt",
+        "J. Blumm",
+        "S. K. Estreicher",
+        "M. Sanati",
+        "M. Bockowski",
+        "I. Grzegory",
+        "T. Suski",
+        "A. Jezowski"
+      ],
+      "year": 2005,
+      "publication": "Physical Review B 72, 075209; saved arXiv preprint cond-mat/0503522v1",
+      "doi": "10.1103/PhysRevB.72.075209",
+      "url": "https://arxiv.org/abs/cond-mat/0503522",
+      "download_url": "https://arxiv.org/pdf/cond-mat/0503522",
+      "accessed_date": "2026-09-11",
+      "source_locator": "Experimental method; Sec. IV; Figs. 4-5. Saved preprint has 17 pages.",
+      "supports": "Single-crystal wurtzite GaN heat-capacity measurements over 20-1400 K; distinguishes measured Cp from computed Cv and isotope effects.",
+      "does_not_support": "AlN, Si, SiC, sapphire, carrier or heater properties; unlimited extrapolation beyond the measured temperature interval.",
+      "evidence_type": "experiment_and_first_principles",
+      "status": "pdf_downloaded",
+      "local_path": "ref/growth/G07_Kremer_2005_GaN_heat_capacity.pdf",
+      "sha256": "d2f15966552afe70837aa1fec4c2021c76a70f3bcd653cbe55957837e69a1f25",
+      "bytes": 390293,
+      "collection": "growth",
+      "detail_manifest": "ref/growth/sources.json",
+      "indexed_artifacts": [
+        {
+          "path": "ref/growth/G07_Kremer_2005_GaN_heat_capacity.pdf",
+          "status": "downloaded",
+          "sha256": "d2f15966552afe70837aa1fec4c2021c76a70f3bcd653cbe55957837e69a1f25",
+          "bytes": 390293
+        }
+      ]
+    },
+    {
+      "id": "G08",
+      "title": "Thermal conductivity of crystalline AlN and the influence of atomic-scale defects",
+      "authors": [
+        "Runjie Lily Xu",
+        "Miguel Muñoz Rojo",
+        "S. M. Islam",
+        "Aditya Sood",
+        "Bozo Vareskic",
+        "Ankita Katre",
+        "Natalio Mingo",
+        "Kenneth E. Goodson",
+        "Huili Grace Xing",
+        "Debdeep Jena",
+        "Eric Pop"
+      ],
+      "year": 2019,
+      "publication": "Journal of Applied Physics 126, 185105; saved arXiv version includes supplement",
+      "doi": "10.1063/1.5097172",
+      "url": "https://arxiv.org/abs/1904.00345",
+      "download_url": "https://arxiv.org/pdf/1904.00345",
+      "accessed_date": "2026-09-11",
+      "source_locator": "Sec. II experimental method; Fig. 4(a) measured conductivity at 100-400 K; Figs. 4(b), 5 and supplement distinguish modeled boundary/defect effects.",
+      "supports": "AlN material quality and thickness affect conductivity; measured uncertainty and independent room-temperature TDTR check; bulk/film distinction.",
+      "does_not_support": "Using room-temperature bulk conductivity for a thin defective growing film at 1000-1473 K; all plotted model curves are measured data.",
+      "evidence_type": "experiment_and_thermal_transport_model",
+      "status": "pdf_downloaded",
+      "local_path": "ref/growth/G08_Xu_2019_AlN_thermal_conductivity.pdf",
+      "sha256": "1b61108d14777d43501f12b62c6772d8acdafd425ef8f45b55010f8a63ed9bc8",
+      "bytes": 2877784,
+      "collection": "growth",
+      "detail_manifest": "ref/growth/sources.json",
+      "indexed_artifacts": [
+        {
+          "path": "ref/growth/G08_Xu_2019_AlN_thermal_conductivity.pdf",
+          "status": "downloaded",
+          "sha256": "1b61108d14777d43501f12b62c6772d8acdafd425ef8f45b55010f8a63ed9bc8",
+          "bytes": 2877784
+        }
+      ]
+    },
+    {
+      "id": "G09",
+      "title": "Thermal conductivity of AlN, GaN, and AlxGa1-xN alloys as a function of composition, temperature, crystallographic direction, and isotope disorder from first principles",
+      "authors": [
+        "Sahil Dagli",
+        "Kelsey A. Mengle",
+        "Emmanouil Kioupakis"
+      ],
+      "year": 2019,
+      "publication": "arXiv:1910.05440v1; preprint, journal publication not established in this audit",
+      "doi": "10.48550/arXiv.1910.05440",
+      "url": "https://arxiv.org/abs/1910.05440",
+      "download_url": "https://arxiv.org/pdf/1910.05440",
+      "accessed_date": "2026-09-11",
+      "metadata_rechecked_date": "2026-09-13",
+      "source_locator": "Figs. 1-3, Tables I-III and analytical model; calculation range 100-1000 K; saved PDF has 16 pages.",
+      "supports": "A/c anisotropy, temperature and isotope/composition dependence from first principles; candidate property prior and cross-check.",
+      "does_not_support": "Measured chamber properties, measured film conductivity, or validated continuation to 1473 K; peer-reviewed status is not established.",
+      "evidence_type": "first_principles_preprint",
+      "status": "pdf_downloaded",
+      "local_path": "ref/growth/G09_Dagli_2020_nitride_thermal_conductivity.pdf",
+      "filename_note": "The acquisition filename contains 2020; bibliographic year is 2019. Filename retained to preserve the existing download log.",
+      "sha256": "3f4806a7e735eee715ca582f19445d11248125e8f0196b7f280def04e23a0efe",
+      "bytes": 4707556,
+      "collection": "growth",
+      "detail_manifest": "ref/growth/sources.json",
+      "indexed_artifacts": [
+        {
+          "path": "ref/growth/G09_Dagli_2020_nitride_thermal_conductivity.pdf",
+          "status": "downloaded",
+          "sha256": "3f4806a7e735eee715ca582f19445d11248125e8f0196b7f280def04e23a0efe",
+          "bytes": 4707556
+        }
+      ]
+    },
+    {
+      "id": "G10",
+      "title": "Molecular beam homoepitaxy of N-polar AlN: Enabling role of aluminum-assisted surface cleaning",
+      "authors": [
+        "Zexuan Zhang",
+        "Yusuke Hayashi",
+        "Tetsuya Tohei",
+        "Akira Sakai",
+        "Vladimir Protasenko",
+        "Jashan Singhal",
+        "Hideto Miyake",
+        "Huili Grace Xing",
+        "Debdeep Jena",
+        "YongJin Cho"
+      ],
+      "year": 2022,
+      "publication": "Science Advances 8, eabo6408",
+      "doi": "10.1126/sciadv.abo6408",
+      "url": "https://doi.org/10.1126/sciadv.abo6408",
+      "download_url": "https://djena.engineering.cornell.edu/papers-new/2022/zhang2022molecular.pdf",
+      "alternate_url": "https://arxiv.org/abs/2204.08604",
+      "accessed_date": "2026-09-11",
+      "source_locator": "Results and Methods: comparison of samples with/without Al-assisted cleaning; structural/polarity characterization. Saved 16-page file contains article plus appended material.",
+      "supports": "Initial oxide/surface preparation can change regrown polarity and interface structure; clean versus unclean paired specimens are a useful experimental design.",
+      "does_not_support": "Assigning polarity solely from the intended recipe; transferring N-polar substrate kinetics to Al-polar or patterned GaN without evidence.",
+      "evidence_type": "experiment",
+      "status": "pdf_downloaded",
+      "local_path": "ref/growth/G10_Zhang_2022_Npolar_AlN_cleaning.pdf",
+      "sha256": "2fe510ace71d87dae9f54d6d7a4d04ffc7179dccb333c9a5e1a2600effad540d",
+      "bytes": 5851440,
+      "collection": "growth",
+      "detail_manifest": "ref/growth/sources.json",
+      "indexed_artifacts": [
+        {
+          "path": "ref/growth/G10_Zhang_2022_Npolar_AlN_cleaning.pdf",
+          "status": "downloaded",
+          "sha256": "2fe510ace71d87dae9f54d6d7a4d04ffc7179dccb333c9a5e1a2600effad540d",
+          "bytes": 5851440
+        }
+      ]
+    },
+    {
+      "id": "G11",
+      "title": "Surface control and MBE growth diagram for homoepitaxy on single-crystal AlN substrates",
+      "authors": [
+        "Kevin Lee",
+        "YongJin Cho",
+        "Leo J. Schowalter",
+        "Masato Toita",
+        "Huili Grace Xing",
+        "Debdeep Jena"
+      ],
+      "year": 2020,
+      "publication": "Applied Physics Letters 116, 262102",
+      "doi": "10.1063/5.0010813",
+      "url": "https://doi.org/10.1063/5.0010813",
+      "download_url": "https://djena.engineering.cornell.edu/papers-new/2020/lee2020surface.pdf",
+      "accessed_date": "2026-09-11",
+      "source_locator": "Saved pp. 2-4; Figs. 2-3 (cleaning/desorption and Al-polar growth diagram); Fig. 5 (SIMS bulk/interface distinction); data availability statement.",
+      "supports": "AlN-specific adlayer/droplet growth regimes; reported thermocouple versus true surface-temperature distinction; interface contamination can persist despite low bulk impurity concentrations.",
+      "does_not_support": "A universal 700 C AlN process; numerical thermocouple settings transferred between machines; low bulk SIMS signal proving a contamination-free nucleation interface.",
+      "evidence_type": "experiment",
+      "status": "pdf_downloaded",
+      "local_path": "ref/growth/G11_Lee_2020_AlN_growth_diagram.pdf",
+      "sha256": "511cea55a37738dbe309bb33dfd26205e05a2dac93a06adf32cb7e48dca45f76",
+      "bytes": 2069085,
+      "collection": "growth",
+      "detail_manifest": "ref/growth/sources.json",
+      "indexed_artifacts": [
+        {
+          "path": "ref/growth/G11_Lee_2020_AlN_growth_diagram.pdf",
+          "status": "downloaded",
+          "sha256": "511cea55a37738dbe309bb33dfd26205e05a2dac93a06adf32cb7e48dca45f76",
+          "bytes": 2069085
+        }
+      ]
+    },
+    {
+      "id": "G12",
+      "title": "Characterization of Sub-Monolayer Contaminants at the Regrowth Interface in GaN Nanowires Grown by Selective-Area Molecular Beam Epitaxy",
+      "authors": [
+        "Paul Blanchard",
+        "Matthew Brubaker",
+        "Todd Harvey",
+        "Alexana Roshko",
+        "Norman Sanford",
+        "Joel Weber",
+        "Kris A. Bertness"
+      ],
+      "year": 2018,
+      "publication": "Crystals 8(4), 178",
+      "doi": "10.3390/cryst8040178",
+      "url": "https://www.mdpi.com/2073-4352/8/4/178",
+      "download_url": "https://mdpi-res.com/d_attachment/crystals/crystals-08-00178/article_deploy/crystals-08-00178.pdf",
+      "metadata_url": "https://www.nist.gov/publications/characterization-sub-monolayer-contaminants-regrowth-interface-gan-nanowires-grown",
+      "accessed_date": "2026-09-11",
+      "source_locator": "Table 1 and Fig. 1 on p. 3; APT ambiguities/discussion on pp. 4-6; Conclusions.",
+      "supports": "Observed correlation between Al/O interface contamination and inversion domains in selective-area GaN nanowires; comparison of preparation histories; analytical limitations.",
+      "does_not_support": "Universal causal coefficients for planar device leakage or Si contamination; exact O coverage from ambiguous APT mass assignments; a 2024 publication date.",
+      "evidence_type": "experiment",
+      "status": "pdf_downloaded",
+      "local_path": "ref/growth/G12_Blanchard_2018_regrowth_contaminants.pdf",
+      "date_note": "Published in 2018; PMC manuscript became available in 2025. Neither archival date establishes a new publication year.",
+      "sha256": "bcccb87396f3d33ed24857c3654854b563bd5451acd6738123419c728f8d48a3",
+      "bytes": 1350414,
+      "collection": "growth",
+      "detail_manifest": "ref/growth/sources.json",
+      "indexed_artifacts": [
+        {
+          "path": "ref/growth/G12_Blanchard_2018_regrowth_contaminants.pdf",
+          "status": "downloaded",
+          "sha256": "bcccb87396f3d33ed24857c3654854b563bd5451acd6738123419c728f8d48a3",
+          "bytes": 1350414
+        }
+      ]
+    },
+    {
+      "id": "H01",
+      "title": "MBE 49 production system",
+      "vendor": "RIBER",
+      "version": "Web page undated; linked legacy brochure undated",
+      "url": "https://www.riber.com/product/mbe-49/",
+      "locator": "Presentation; linked brochure pp.1-2 (legacy specification)",
+      "claims": [
+        "Current series includes 200 mm capacity and a nitride reactor variant.",
+        "Legacy brochure provides layout/source inventory examples but is not the current 200 mm specification."
+      ],
+      "limits": [
+        "No actual proposed-chamber CAD or a 200 mm GaN uniformity guarantee.",
+        "Legacy GaAs/GaAlAs uniformity cannot validate GaN/AlN."
+      ],
+      "artifacts": [
+        {
+          "url": "https://www.riber.com/product/mbe-49/",
+          "path": "ref/hardware/H01_RIBER_MBE49_product.html",
+          "kind": "html",
+          "status": "downloaded",
+          "content_type": "text/html; charset=UTF-8",
+          "sha256": "f95962d7d3556ff6629dfc591415fef4a00287882bfe70188c0b0bddb4427a23",
+          "bytes": 84977
+        },
+        {
+          "url": "https://www.riber.com/wp-content/uploads/2021/02/RIBER_MBE49.pdf",
+          "path": "ref/hardware/H01_RIBER_MBE49_legacy_brochure.pdf",
+          "kind": "pdf",
+          "status": "downloaded",
+          "content_type": "application/pdf",
+          "sha256": "afdc385d39bff00f3133807b014b3eb53929088a937bdd86cc0eebb3cd78e160",
+          "bytes": 2030543
+        }
+      ],
+      "verified_on": "2026-09-11",
+      "evidence_class": "primary_manufacturer_comparator",
+      "status": "downloaded",
+      "local_audited_on": "2026-09-13",
+      "collection": "hardware",
+      "detail_manifest": "ref/hardware/sources.json",
+      "indexed_artifacts": [
+        {
+          "url": "https://www.riber.com/product/mbe-49/",
+          "path": "ref/hardware/H01_RIBER_MBE49_product.html",
+          "kind": "html",
+          "status": "downloaded",
+          "content_type": "text/html; charset=UTF-8",
+          "sha256": "f95962d7d3556ff6629dfc591415fef4a00287882bfe70188c0b0bddb4427a23",
+          "bytes": 84977
+        },
+        {
+          "url": "https://www.riber.com/wp-content/uploads/2021/02/RIBER_MBE49.pdf",
+          "path": "ref/hardware/H01_RIBER_MBE49_legacy_brochure.pdf",
+          "kind": "pdf",
+          "status": "downloaded",
+          "content_type": "application/pdf",
+          "sha256": "afdc385d39bff00f3133807b014b3eb53929088a937bdd86cc0eebb3cd78e160",
+          "bytes": 2030543
+        }
+      ]
+    },
+    {
+      "id": "H02",
+      "title": "RF-6.02 Plasma Source",
+      "vendor": "SVT Associates",
+      "version": "Undated, catalog folio 29",
+      "url": "https://www.svta.com/uploads/documents/RF_6.0.pdf",
+      "locator": "PDF p.1, Specifications and relative flux distribution",
+      "claims": [
+        "200–2000 W, 0.1–10 sccm; 6 in CF; 89 mm source; typical 10.5 in throw; 0.5 GPM cooling.",
+        "Manufacturer advertises coverage up to 8 in, custom aperture and charge suppression."
+      ],
+      "limits": [
+        "Does not establish output or uniformity at 600 W.",
+        "No species-resolved absolute flux/energy distribution or measured zero-ion bound.",
+        "RF frequency is not specified in this sheet."
+      ],
+      "artifacts": [
+        {
+          "url": "https://www.svta.com/uploads/documents/RF_6.0.pdf",
+          "path": "ref/hardware/H02_download_response.html",
+          "kind": "failed_response_html",
+          "status": "download_failed",
+          "expected_path": "ref/hardware/H02_SVTA_RF_6.02.pdf",
+          "expected_kind": "pdf",
+          "error": "Received HTML challenge/redirect, not the requested source. Public source content was inspected with web tool; full local source unavailable.",
+          "sha256": "d1b7e9829adbd05f1f101f07915e02e58c2d81ea5c6ddec58650df596c4a5b14",
+          "bytes": 198
+        }
+      ],
+      "verified_on": "2026-09-11",
+      "evidence_class": "primary_manufacturer_comparator",
+      "status": "partial_or_unavailable",
+      "local_audited_on": "2026-09-13",
+      "collection": "hardware",
+      "detail_manifest": "ref/hardware/sources.json",
+      "indexed_artifacts": [
+        {
+          "url": "https://www.svta.com/uploads/documents/RF_6.0.pdf",
+          "path": "ref/hardware/H02_download_response.html",
+          "kind": "failed_response_html",
+          "status": "download_failed",
+          "expected_path": "ref/hardware/H02_SVTA_RF_6.02.pdf",
+          "expected_kind": "pdf",
+          "error": "Received HTML challenge/redirect, not the requested source. Public source content was inspected with web tool; full local source unavailable.",
+          "sha256": "d1b7e9829adbd05f1f101f07915e02e58c2d81ea5c6ddec58650df596c4a5b14",
+          "bytes": 198
+        }
+      ]
+    },
+    {
+      "id": "H03",
+      "title": "Heated insert cell for Ga & In — ABI",
+      "vendor": "RIBER",
+      "version": "Undated",
+      "url": "https://www.riber.com/product/heated-insert-cell-for-ga-in-abi/",
+      "locator": "Product Technical information; PDF product introduction and specifications",
+      "claims": [
+        "Independent insert/crucible temperature control and PBN crucibles.",
+        "ABI 85 example lists Ga 1 µm/h at 1000°C insert/950°C crucible, 230 W insert/140 W crucible."
+      ],
+      "limits": [
+        "Growth-rate label is vendor/configuration dependent; no universal GaN flux calibration.",
+        "Fill geometry and two thermal zones must be preserved or calibrated."
+      ],
+      "artifacts": [
+        {
+          "url": "https://www.riber.com/wp-content/uploads/2020/11/RIBER_Heated-insert-cell-for-Ga-In_ABI.pdf",
+          "path": "ref/hardware/H03_RIBER_Ga_ABI.pdf",
+          "kind": "pdf",
+          "status": "downloaded",
+          "content_type": "application/pdf",
+          "sha256": "97b6dfe131f42fb2afb0c25f2bfa1c9a1d8763d524fa1dc97c956748a3112eff",
+          "bytes": 501028
+        },
+        {
+          "url": "https://www.riber.com/product/heated-insert-cell-for-ga-in-abi/",
+          "path": "ref/hardware/H03_RIBER_Ga_ABI_product.html",
+          "kind": "html",
+          "status": "downloaded",
+          "content_type": "text/html; charset=UTF-8",
+          "sha256": "f1272bdf8875efd4e0526a830ea04e3d657c7f6f3cc6471d0d9c7ce9d5522417",
+          "bytes": 98699
+        }
+      ],
+      "verified_on": "2026-09-11",
+      "evidence_class": "primary_manufacturer_comparator",
+      "status": "downloaded",
+      "local_audited_on": "2026-09-13",
+      "collection": "hardware",
+      "detail_manifest": "ref/hardware/sources.json",
+      "indexed_artifacts": [
+        {
+          "url": "https://www.riber.com/wp-content/uploads/2020/11/RIBER_Heated-insert-cell-for-Ga-In_ABI.pdf",
+          "path": "ref/hardware/H03_RIBER_Ga_ABI.pdf",
+          "kind": "pdf",
+          "status": "downloaded",
+          "content_type": "application/pdf",
+          "sha256": "97b6dfe131f42fb2afb0c25f2bfa1c9a1d8763d524fa1dc97c956748a3112eff",
+          "bytes": 501028
+        },
+        {
+          "url": "https://www.riber.com/product/heated-insert-cell-for-ga-in-abi/",
+          "path": "ref/hardware/H03_RIBER_Ga_ABI_product.html",
+          "kind": "html",
+          "status": "downloaded",
+          "content_type": "text/html; charset=UTF-8",
+          "sha256": "f1272bdf8875efd4e0526a830ea04e3d657c7f6f3cc6471d0d9c7ce9d5522417",
+          "bytes": 98699
+        }
+      ]
+    },
+    {
+      "id": "H04",
+      "title": "Aluminum source ABN BF CL & CN",
+      "vendor": "RIBER",
+      "version": "Undated; hosted by RIBER China",
+      "url": "https://www.riber.cn/wp-content/uploads/2023/05/RIBER_Aluminum-source-ABN-BF-CL-CN.pdf",
+      "locator": "Product introduction, Cold Neck technology",
+      "claims": [
+        "Cold-lip/neck thermal design addresses Al creep and overflow.",
+        "Cold-neck configuration is recommended by vendor for ammonia or high-rate plasma nitrogen environments."
+      ],
+      "limits": [
+        "Claims are comparator-specific; no actual Al cell model, aperture, fill or calibration supplied.",
+        "Do not reuse Ga hot-lip thermal model for Al."
+      ],
+      "artifacts": [
+        {
+          "url": "https://www.riber.cn/wp-content/uploads/2023/05/RIBER_Aluminum-source-ABN-BF-CL-CN.pdf",
+          "path": null,
+          "kind": "pdf",
+          "status": "download_failed",
+          "error": "The operation has timed out.",
+          "expected_path": "ref/hardware/H04_RIBER_Al_cold_lip_neck.pdf"
+        }
+      ],
+      "verified_on": "2026-09-11",
+      "evidence_class": "primary_manufacturer_comparator",
+      "status": "partial_or_unavailable",
+      "local_audited_on": "2026-09-13",
+      "collection": "hardware",
+      "detail_manifest": "ref/hardware/sources.json",
+      "indexed_artifacts": [
+        {
+          "url": "https://www.riber.cn/wp-content/uploads/2023/05/RIBER_Aluminum-source-ABN-BF-CL-CN.pdf",
+          "path": null,
+          "kind": "pdf",
+          "status": "download_failed",
+          "error": "The operation has timed out.",
+          "expected_path": "ref/hardware/H04_RIBER_Al_cold_lip_neck.pdf"
+        }
+      ]
+    },
+    {
+      "id": "H05",
+      "title": "Substrate manipulators / deposition stages SH",
+      "vendor": "Dr. Eberl MBE-Komponenten",
+      "version": "Undated",
+      "url": "https://www.mbe-komponenten.de/pdf/data-sheet-sh.pdf",
+      "locator": "PDF p.1 headline/rotation; p.2 Technical Data",
+      "claims": [
+        "Family offers W/Ta/graphite/SiC heating, substrates up to 8 in, typical rotation 10–30 rpm.",
+        "Headline maximum wafer temperature 1200°C; technical table states standard configuration 1000°C and higher on request."
+      ],
+      "limits": [
+        "Not evidence that one 8 in SiC multi-zone unit attains 1200°C in active nitrogen.",
+        "No zone count, power map or thermal contact data."
+      ],
+      "artifacts": [
+        {
+          "url": "https://www.mbe-komponenten.de/pdf/data-sheet-sh.pdf",
+          "path": "ref/hardware/H05_Eberl_substrate_manipulator_SH.pdf",
+          "kind": "pdf",
+          "status": "downloaded",
+          "content_type": "application/pdf",
+          "sha256": "71545f78988fad02326d9e5ca060d99134da6799521968e1a0a7f5d6332b8df8",
+          "bytes": 1306149
+        }
+      ],
+      "verified_on": "2026-09-11",
+      "evidence_class": "primary_manufacturer_comparator",
+      "status": "downloaded",
+      "local_audited_on": "2026-09-13",
+      "collection": "hardware",
+      "detail_manifest": "ref/hardware/sources.json",
+      "indexed_artifacts": [
+        {
+          "url": "https://www.mbe-komponenten.de/pdf/data-sheet-sh.pdf",
+          "path": "ref/hardware/H05_Eberl_substrate_manipulator_SH.pdf",
+          "kind": "pdf",
+          "status": "downloaded",
+          "content_type": "application/pdf",
+          "sha256": "71545f78988fad02326d9e5ca060d99134da6799521968e1a0a7f5d6332b8df8",
+          "bytes": 1306149
+        }
+      ]
+    },
+    {
+      "id": "H06",
+      "title": "kSA GaN BandiT Temperature Monitor application note",
+      "vendor": "k-Space Associates",
+      "version": "Application note, undated; website labels version 1.0",
+      "url": "https://www.k-space.com/wp-content/uploads/kSA_BandiT_for_GaN-1.pdf",
+      "locator": "PDF pp.1-2 calibration/geometry; pp.5-7 MBE results",
+      "claims": [
+        "GaN film on sapphire and SiC temperature demonstrated using material-specific band-edge calibration.",
+        "MBE example uses Veeco GEN200; external broadband light and optical port geometry are described."
+      ],
+      "limits": [
+        "GaN demonstration does not validate bare AlN/sapphire sensing or every film thickness/doping.",
+        "Band-edge sensor requires an observation model and calibration, not ideal true temperature plus arbitrary noise."
+      ],
+      "artifacts": [
+        {
+          "url": "https://www.k-space.com/wp-content/uploads/kSA_BandiT_for_GaN-1.pdf",
+          "path": "ref/hardware/H06_kSA_BandiT_GaN.pdf",
+          "kind": "pdf",
+          "status": "downloaded",
+          "content_type": "application/pdf",
+          "sha256": "8709eb560571ee773a03ec45b30ff449745b4fea0c625632ffbafe1fe05434b0",
+          "bytes": 1619744
+        }
+      ],
+      "verified_on": "2026-09-11",
+      "evidence_class": "primary_manufacturer_comparator",
+      "status": "downloaded",
+      "local_audited_on": "2026-09-13",
+      "collection": "hardware",
+      "detail_manifest": "ref/hardware/sources.json",
+      "indexed_artifacts": [
+        {
+          "url": "https://www.k-space.com/wp-content/uploads/kSA_BandiT_for_GaN-1.pdf",
+          "path": "ref/hardware/H06_kSA_BandiT_GaN.pdf",
+          "kind": "pdf",
+          "status": "downloaded",
+          "content_type": "application/pdf",
+          "sha256": "8709eb560571ee773a03ec45b30ff449745b4fea0c625632ffbafe1fe05434b0",
+          "bytes": 1619744
+        }
+      ]
+    },
+    {
+      "id": "H07",
+      "title": "MAG integra operating instructions",
+      "vendor": "Leybold",
+      "version": "Operating instructions 300324726_002_C4; confirmed from local PDF cover",
+      "url": "https://fr.shop.leybold.com/medias/300324726-002-Instructions.pdf?attachment=true&context=bWFzdGVyfHJvb3R8MzM0NjEwOHxhcHBsaWNhdGlvbi9wZGZ8YUdZM0wyZzVZUzg0TnpBMk1UWXdNRFk1T0RNNU9DOHpNREF6TWpRM01qWmZNREF5WDBsdWMzUnlkV04wYVc5dWN5NXdaR1l8MTNiNDk2ZjE1NzkxMzczMjRkMzZiMDMwYjcwZjg0MmM1NTkzMWIwNmY1OTY2YmY3NjY2MDc3Nzk2Y2FlZWY2Yw",
+      "locator": "Table 2 Technical data, p.18; operating-condition footnotes p.19; Figure 6 MAG W2200 pumping curves, p.23 (PDF and printed numbering coincide)",
+      "claims": [
+        "Magnetically supported turbopump; species-dependent speed and throughput curves.",
+        "Table 2 gives W2200 iP(L) speed 2100 L/s N2, 1900 L/s Ar, 2050 L/s He and 1750 L/s H2; N2 continuous throughput 17 mbar L/s, subject to p.19 cooling and backing-pump conditions."
+      ],
+      "limits": [
+        "Nameplate speed is not chamber effective pumping speed; CF/ISO configuration and conductance matter.",
+        "Does not establish chamber base pressure."
+      ],
+      "artifacts": [
+        {
+          "url": "https://fr.shop.leybold.com/medias/300324726-002-Instructions.pdf?attachment=true&context=bWFzdGVyfHJvb3R8MzM0NjEwOHxhcHBsaWNhdGlvbi9wZGZ8YUdZM0wyZzVZUzg0TnpBMk1UWXdNRFk1T0RNNU9DOHpNREF6TWpRM01qWmZNREF5WDBsdWMzUnlkV04wYVc5dWN5NXdaR1l8MTNiNDk2ZjE1NzkxMzczMjRkMzZiMDMwYjcwZjg0MmM1NTkzMWIwNmY1OTY2YmY3NjY2MDc3Nzk2Y2FlZWY2Yw",
+          "path": "ref/hardware/H07_Leybold_MAG_integra.pdf",
+          "kind": "pdf",
+          "status": "downloaded",
+          "content_type": "application/pdf",
+          "sha256": "aa902f5b7448a21dfc25b470b729452dee855f6fd8408cade6fa82051107865d",
+          "bytes": 3346108
+        }
+      ],
+      "verified_on": "2026-09-11",
+      "evidence_class": "primary_manufacturer_comparator",
+      "status": "downloaded",
+      "local_audited_on": "2026-09-13",
+      "verification_limit": "Local cover, technical table, footnotes and figure caption extracted with pypdf on 2026-09-13; pump curves not digitized or visually audited.",
+      "collection": "hardware",
+      "detail_manifest": "ref/hardware/sources.json",
+      "indexed_artifacts": [
+        {
+          "url": "https://fr.shop.leybold.com/medias/300324726-002-Instructions.pdf?attachment=true&context=bWFzdGVyfHJvb3R8MzM0NjEwOHxhcHBsaWNhdGlvbi9wZGZ8YUdZM0wyZzVZUzg0TnpBMk1UWXdNRFk1T0RNNU9DOHpNREF6TWpRM01qWmZNREF5WDBsdWMzUnlkV04wYVc5dWN5NXdaR1l8MTNiNDk2ZjE1NzkxMzczMjRkMzZiMDMwYjcwZjg0MmM1NTkzMWIwNmY1OTY2YmY3NjY2MDc3Nzk2Y2FlZWY2Yw",
+          "path": "ref/hardware/H07_Leybold_MAG_integra.pdf",
+          "kind": "pdf",
+          "status": "downloaded",
+          "content_type": "application/pdf",
+          "sha256": "aa902f5b7448a21dfc25b470b729452dee855f6fd8408cade6fa82051107865d",
+          "bytes": 3346108
+        }
+      ]
+    },
+    {
+      "id": "H08",
+      "title": "CTI-Cryogenics Cryo-Torr Cryopumps line catalogue",
+      "vendor": "Edwards",
+      "version": "Copyright Edwards Limited 2021",
+      "url": "https://www.edwardsvacuum.com/content/dam/brands/edwards-vacuum/edwards-website-assets/our-markets/chamber-solutions/cti-datasheets/Edwards%20CTI-Cryogenics%20Cryo-Torr%20Cryopumps%20Line%20Catalogue.pdf",
+      "locator": "Specification table (PDF p.3)",
+      "claims": [
+        "Cryo-Torr 8 comparator: 4000 L/s water, 1500 L/s air, 2500 L/s hydrogen, 1200 L/s argon.",
+        "Finite capacities and cooldown times accompany speed ratings."
+      ],
+      "limits": [
+        "Air must not be silently relabeled pure N2.",
+        "Cryopump is not the same as an LN2 chamber shroud; capacity/regeneration and hot-source radiation load are required."
+      ],
+      "artifacts": [
+        {
+          "url": "https://www.edwardsvacuum.com/content/dam/brands/edwards-vacuum/edwards-website-assets/our-markets/chamber-solutions/cti-datasheets/Edwards%20CTI-Cryogenics%20Cryo-Torr%20Cryopumps%20Line%20Catalogue.pdf",
+          "path": "ref/hardware/H08_Edwards_CryoTorr_catalogue.pdf",
+          "kind": "pdf",
+          "status": "downloaded",
+          "content_type": "application/pdf",
+          "sha256": "5bda0727633dc20e2b296c6dad25cfbbfe92e138f44de279de882bdbe2681ded",
+          "bytes": 2421407
+        }
+      ],
+      "verified_on": "2026-09-11",
+      "evidence_class": "primary_manufacturer_comparator",
+      "status": "downloaded",
+      "local_audited_on": "2026-09-13",
+      "collection": "hardware",
+      "detail_manifest": "ref/hardware/sources.json",
+      "indexed_artifacts": [
+        {
+          "url": "https://www.edwardsvacuum.com/content/dam/brands/edwards-vacuum/edwards-website-assets/our-markets/chamber-solutions/cti-datasheets/Edwards%20CTI-Cryogenics%20Cryo-Torr%20Cryopumps%20Line%20Catalogue.pdf",
+          "path": "ref/hardware/H08_Edwards_CryoTorr_catalogue.pdf",
+          "kind": "pdf",
+          "status": "downloaded",
+          "content_type": "application/pdf",
+          "sha256": "5bda0727633dc20e2b296c6dad25cfbbfe92e138f44de279de882bdbe2681ded",
+          "bytes": 2421407
+        }
+      ]
+    },
+    {
+      "id": "H09",
+      "title": "RHEED-30 electron source",
+      "vendor": "STAIB Instruments",
+      "version": "Web page undated (site metadata 2017)",
+      "url": "https://staibinstruments.com/rheed-30/",
+      "locator": "Key features; Characteristics; differential pumping",
+      "claims": [
+        "500 eV–30 keV, up to 100 µA; 50 µm minimum spot only at low current, 150 mm working distance and maximum energy.",
+        "Differential pumping is offered above 1e-5 mbar."
+      ],
+      "limits": [
+        "Vendor explicitly says not all specifications are simultaneous.",
+        "Geometry, gun protection/pumping and beam footprint remain required; no predictive diffraction solver provided."
+      ],
+      "artifacts": [
+        {
+          "url": "https://staibinstruments.com/rheed-30/",
+          "path": "ref/hardware/H09_STAIB_RHEED30.html",
+          "kind": "html",
+          "status": "downloaded",
+          "content_type": "text/html; charset=UTF-8",
+          "sha256": "d66daa4b21661661752eb4cacb0a11ff7567150bffb1ecf983611d120528e0f3",
+          "bytes": 96308
+        }
+      ],
+      "verified_on": "2026-09-11",
+      "evidence_class": "primary_manufacturer_comparator",
+      "status": "downloaded",
+      "local_audited_on": "2026-09-13",
+      "collection": "hardware",
+      "detail_manifest": "ref/hardware/sources.json",
+      "indexed_artifacts": [
+        {
+          "url": "https://staibinstruments.com/rheed-30/",
+          "path": "ref/hardware/H09_STAIB_RHEED30.html",
+          "kind": "html",
+          "status": "downloaded",
+          "content_type": "text/html; charset=UTF-8",
+          "sha256": "d66daa4b21661661752eb4cacb0a11ff7567150bffb1ecf983611d120528e0f3",
+          "bytes": 96308
+        }
+      ]
+    },
+    {
+      "id": "H10",
+      "title": "Beam Flux Monitor",
+      "vendor": "SVT Associates",
+      "version": "Undated",
+      "url": "https://svta.com/components/real-time-monitoring/beam-flux-monitor/",
+      "locator": "Description and Specifications",
+      "claims": [
+        "Movable Bayard-Alpert monitor measures BEP near substrate; range 3e-11–7.5e-4 Torr.",
+        "Bakeout 250°C; 2.75/4.5 in CF; travel at least 4 in."
+      ],
+      "limits": [
+        "BEP is instrument/gas dependent and needs conversion/calibration to absolute arriving flux.",
+        "Proposed 1e-11 mbar base is below this monitor's stated lower range."
+      ],
+      "artifacts": [
+        {
+          "url": "https://svta.com/components/real-time-monitoring/beam-flux-monitor/",
+          "path": "ref/hardware/H10_download_response.html",
+          "kind": "failed_response_html",
+          "status": "download_failed",
+          "content_type": "text/html",
+          "expected_path": "ref/hardware/H10_SVTA_BFM.html",
+          "expected_kind": "html",
+          "error": "Received HTML challenge/redirect, not the requested source. Public source content was inspected with web tool; full local source unavailable.",
+          "sha256": "b22c824c6ca2e5c85730a2cc32c1a7829aac293e20a011248b9e6bd8ad94b821",
+          "bytes": 222
+        }
+      ],
+      "verified_on": "2026-09-11",
+      "evidence_class": "primary_manufacturer_comparator",
+      "status": "partial_or_unavailable",
+      "local_audited_on": "2026-09-13",
+      "collection": "hardware",
+      "detail_manifest": "ref/hardware/sources.json",
+      "indexed_artifacts": [
+        {
+          "url": "https://svta.com/components/real-time-monitoring/beam-flux-monitor/",
+          "path": "ref/hardware/H10_download_response.html",
+          "kind": "failed_response_html",
+          "status": "download_failed",
+          "content_type": "text/html",
+          "expected_path": "ref/hardware/H10_SVTA_BFM.html",
+          "expected_kind": "html",
+          "error": "Received HTML challenge/redirect, not the requested source. Public source content was inspected with web tool; full local source unavailable.",
+          "sha256": "b22c824c6ca2e5c85730a2cc32c1a7829aac293e20a011248b9e6bd8ad94b821",
+          "bytes": 222
+        }
+      ]
+    },
+    {
+      "id": "H11",
+      "title": "Transpector MPH Operating Manual",
+      "vendor": "INFICON",
+      "version": "PN 074-555-P1C; ©2016",
+      "url": "https://www.inficon.com/media/4281/download/074-555-P1C-Transpector-MPH-Operating-Manual.pdf?inline=true&language=en&v=1",
+      "locator": "Section 1.7 specifications; Chapter 4 Applications Guide, printed pp.4-9 to 4-13 (PDF pp.74-78)",
+      "claims": [
+        "Quadrupole RGA interpretation requires fragmentation, ionization, transmission, detector gain and calibration.",
+        "Manual provides vacuum requirements, interfaces and installation constraints."
+      ],
+      "limits": [
+        "RGA mass peaks are not a direct species partial-pressure truth vector; overlapping fragments require calibrated inference.",
+        "Current instrument firmware and chosen detector must be versioned."
+      ],
+      "artifacts": [
+        {
+          "url": "https://www.inficon.com/media/4281/download/074-555-P1C-Transpector-MPH-Operating-Manual.pdf?inline=true&language=en&v=1",
+          "path": "ref/hardware/H11_download_response.html",
+          "kind": "failed_response_html",
+          "status": "download_failed",
+          "expected_path": "ref/hardware/H11_INFICON_Transpector_MPH_manual.pdf",
+          "expected_kind": "pdf",
+          "error": "Received HTML challenge/redirect, not the requested source. Public source content was inspected with web tool; full local source unavailable.",
+          "sha256": "8e063f7e0c8edb632cf662df4a32bbd5724f983d86489863fd15515a6f3d76f6",
+          "bytes": 410
+        }
+      ],
+      "verified_on": "2026-09-11",
+      "evidence_class": "primary_manufacturer_comparator",
+      "status": "partial_or_unavailable",
+      "local_audited_on": "2026-09-13",
+      "collection": "hardware",
+      "detail_manifest": "ref/hardware/sources.json",
+      "indexed_artifacts": [
+        {
+          "url": "https://www.inficon.com/media/4281/download/074-555-P1C-Transpector-MPH-Operating-Manual.pdf?inline=true&language=en&v=1",
+          "path": "ref/hardware/H11_download_response.html",
+          "kind": "failed_response_html",
+          "status": "download_failed",
+          "expected_path": "ref/hardware/H11_INFICON_Transpector_MPH_manual.pdf",
+          "expected_kind": "pdf",
+          "error": "Received HTML challenge/redirect, not the requested source. Public source content was inspected with web tool; full local source unavailable.",
+          "sha256": "8e063f7e0c8edb632cf662df4a32bbd5724f983d86489863fd15515a6f3d76f6",
+          "bytes": 410
+        }
+      ]
+    },
+    {
+      "id": "H12",
+      "title": "UHV Pumps — full line catalogue",
+      "vendor": "Leybold / Gamma Vacuum",
+      "version": "Edition 2022",
+      "url": "https://www.leybold.com/content/dam/brands/leybold/downloads/catalogue-chapters-pdf/110_EN_UHV%20Pumps.pdf",
+      "locator": "Ion pump performance/selection tables; printed pp.16-17 TSP",
+      "claims": [
+        "Ion/TSP configurations have species-dependent pumping behavior.",
+        "TSP captures reactive gases through renewed getter deposition and is paired with ion pumping."
+      ],
+      "limits": [
+        "Selected model, screen geometry, Ti inventory, flashing history and operating pressure envelope are needed.",
+        "Catalog ultimate pressure is not an assembled chamber base-pressure guarantee."
+      ],
+      "artifacts": [
+        {
+          "url": "https://www.leybold.com/content/dam/brands/leybold/downloads/catalogue-chapters-pdf/110_EN_UHV%20Pumps.pdf",
+          "path": "ref/hardware/H12_Leybold_UHV_pumps.pdf",
+          "kind": "pdf",
+          "status": "downloaded",
+          "content_type": "application/pdf",
+          "sha256": "6772143ab433cda44ddd584f0d35355f1907a4933c22cd4b09ed608678e6ceea",
+          "bytes": 4168240
+        }
+      ],
+      "verified_on": "2026-09-11",
+      "evidence_class": "primary_manufacturer_comparator",
+      "status": "downloaded",
+      "local_audited_on": "2026-09-13",
+      "collection": "hardware",
+      "detail_manifest": "ref/hardware/sources.json",
+      "indexed_artifacts": [
+        {
+          "url": "https://www.leybold.com/content/dam/brands/leybold/downloads/catalogue-chapters-pdf/110_EN_UHV%20Pumps.pdf",
+          "path": "ref/hardware/H12_Leybold_UHV_pumps.pdf",
+          "kind": "pdf",
+          "status": "downloaded",
+          "content_type": "application/pdf",
+          "sha256": "6772143ab433cda44ddd584f0d35355f1907a4933c22cd4b09ed608678e6ceea",
+          "bytes": 4168240
+        }
+      ]
+    },
+    {
+      "id": "M01",
+      "title": "GeForce RTX 50 Series Laptop GPUs: specifications",
+      "publisher": "NVIDIA",
+      "url": "https://www.nvidia.com/en-us/geforce/laptops/50-series/",
+      "version_or_date": "Live vendor page, snapshot 2026-09-11",
+      "accessed": "2026-09-11",
+      "local_path": "ref/methods/M01_nvidia_rtx50_laptop_specs.html",
+      "locators": [
+        "Specs table: GeForce RTX 5050 Laptop GPU column"
+      ],
+      "supported_claims": [
+        "RTX 5050 Laptop is listed with 2560 CUDA cores, 8 GB GDDR7 and 384 GB/s memory bandwidth."
+      ],
+      "limits": [
+        "GPU specifications do not establish laptop CPU, RAM, sustained thermal performance, solver support or simulation runtime. Not desktop RTX 5050 specifications."
+      ],
+      "sha256": "589a24c29b0d4c575df9c7fc3d2a65b5025428bc548471c90f3c31beb9957587",
+      "bytes": 667848,
+      "archive_status": "downloaded",
+      "archive_format": "HTML source snapshot; external image and script assets not bundled",
+      "verified": "2026-09-13",
+      "collection": "methods",
+      "detail_manifest": "ref/methods/sources.json",
+      "indexed_artifacts": [
+        {
+          "path": "ref/methods/M01_nvidia_rtx50_laptop_specs.html",
+          "status": "downloaded",
+          "sha256": "589a24c29b0d4c575df9c7fc3d2a65b5025428bc548471c90f3c31beb9957587",
+          "bytes": 667848
+        }
+      ]
+    },
+    {
+      "id": "M02",
+      "title": "Gmsh Reference Manual",
+      "publisher": "Gmsh project",
+      "url": "https://gmsh.info/doc/texinfo/gmsh.pdf",
+      "version_or_date": "Rolling stable manual; archive before selecting a pinned runtime",
+      "accessed": "2026-09-11",
+      "local_path": "ref/methods/M02_gmsh_reference.pdf",
+      "locators": [
+        "Section 1.2 Mesh module",
+        "Section 1.2.3 Elementary entities vs physical groups",
+        "Tutorial t1; x1 Geometry and mesh data"
+      ],
+      "supported_claims": [
+        "Physical groups associate boundary/volume entities with solver-relevant identities; default export can omit elements outside physical groups."
+      ],
+      "limits": [
+        "Meshing capability does not verify geometry, stable identities after CAD edits, solver-import compatibility or physical convergence."
+      ],
+      "sha256": "207da03a454b08ea2a3fd5e9a4b9746ab80af6ec0b834e69e597e0ddf0cfadf2",
+      "bytes": 4137760,
+      "archive_status": "downloaded",
+      "archive_format": "PDF; original downloaded bytes",
+      "verified": "2026-09-13",
+      "collection": "methods",
+      "detail_manifest": "ref/methods/sources.json",
+      "indexed_artifacts": [
+        {
+          "path": "ref/methods/M02_gmsh_reference.pdf",
+          "status": "downloaded",
+          "sha256": "207da03a454b08ea2a3fd5e9a4b9746ab80af6ec0b834e69e597e0ddf0cfadf2",
+          "bytes": 4137760
+        }
+      ]
+    },
+    {
+      "id": "M03",
+      "title": "Elmer Models Manual",
+      "publisher": "CSC - IT Center for Science",
+      "url": "https://www.nic.funet.fi/index/elmer/doc/ElmerModelsManual.pdf",
+      "version_or_date": "Rolling documentation snapshot; retrieved file 364 PDF pages",
+      "accessed": "2026-09-11",
+      "local_path": "ref/methods/M03_elmer_models_manual.pdf",
+      "locators": [
+        "Chapter 1 Heat Equation; section 1.2.5 Boundary Conditions",
+        "Printed pages 14-16: view-factor shadowing, geometry updates, Gebhart and radiosity settings"
+      ],
+      "supported_claims": [
+        "Elmer documents thermal radiation, Gebhart and radiosity approaches, ray-based shadowing controls and optional caching/update thresholds."
+      ],
+      "limits": [
+        "Settings that drop factors, freeze geometry or emissivities are numerical approximations requiring convergence checks. The documented spectral model is not evidence that arbitrary wafer optical transmission is handled."
+      ],
+      "sha256": "49f646da3c0a58cb760586eb9ce1279b91e3f5fcbc20857a2e707175439d8105",
+      "bytes": 1889020,
+      "archive_status": "downloaded",
+      "archive_format": "PDF; original downloaded bytes",
+      "verified": "2026-09-13",
+      "collection": "methods",
+      "detail_manifest": "ref/methods/sources.json",
+      "indexed_artifacts": [
+        {
+          "path": "ref/methods/M03_elmer_models_manual.pdf",
+          "status": "downloaded",
+          "sha256": "49f646da3c0a58cb760586eb9ce1279b91e3f5fcbc20857a2e707175439d8105",
+          "bytes": 1889020
+        }
+      ]
+    },
+    {
+      "id": "M04",
+      "title": "Molflow 2.6 algorithm",
+      "authors": [
+        "Marton Ady"
+      ],
+      "publisher": "CERN",
+      "url": "https://molflow.docs.cern.ch/guide/molflow/general/attachments/molflow_algorithm.pdf",
+      "version_or_date": "2016-03-03; extract from author's PhD thesis",
+      "accessed": "2026-09-11",
+      "local_path": "ref/methods/M04_molflow_algorithm.pdf",
+      "locators": [
+        "Section 1 Introduction, printed p2",
+        "Sections 2 Steady-state simulation and 4 evaluation/textures"
+      ],
+      "supported_claims": [
+        "Test-particle Monte Carlo omits intermolecular collisions, tracks facet hits and scales test-particle tallies to physical quantities; independent histories permit parallel sampling."
+      ],
+      "limits": [
+        "Algorithm reference is historical, not a release-specific guarantee. A Molflow-reported wall-flight mean path is not the gas-gas collision mean free path. Beam angular/energy normalization and current automation must be demonstrated."
+      ],
+      "sha256": "2ecfdd86bbfdc0c92d08dcf97a69a57f2598cc07feab73d636bda49fb568067c",
+      "bytes": 10036049,
+      "archive_status": "downloaded",
+      "archive_format": "PDF; original downloaded bytes",
+      "verified": "2026-09-13",
+      "collection": "methods",
+      "detail_manifest": "ref/methods/sources.json",
+      "indexed_artifacts": [
+        {
+          "path": "ref/methods/M04_molflow_algorithm.pdf",
+          "status": "downloaded",
+          "sha256": "2ecfdd86bbfdc0c92d08dcf97a69a57f2598cc07feab73d636bda49fb568067c",
+          "bytes": 10036049
+        }
+      ]
+    },
+    {
+      "id": "M05",
+      "title": "SPARTA manual: Accelerating SPARTA performance",
+      "publisher": "SPARTA project",
+      "url": "https://sparta.github.io/doc/Section_accelerate.html",
+      "version_or_date": "Live documentation snapshot",
+      "accessed": "2026-09-11",
+      "local_path": "ref/methods/M05_sparta_acceleration.html",
+      "locators": [
+        "Sections 5.1 Measuring performance, 5.2 Packages with optimized styles, 5.3 KOKKOS package"
+      ],
+      "supported_claims": [
+        "Kokkos provides acceleration for supported styles on CPUs/GPUs; speedup depends on problem and commands; roundoff, precision and random-number differences can affect results."
+      ],
+      "limits": [
+        "An RTX GPU alone is not a performance guarantee. Benchmark the pinned build, active physics styles and statistics."
+      ],
+      "sha256": "6e855b824c08dbbc1fe6ffa5b9b2cf889433f827710e3c160dbaf944d7ceedda",
+      "bytes": 35528,
+      "archive_status": "downloaded",
+      "archive_format": "HTML source snapshot; external image and script assets not bundled",
+      "verified": "2026-09-13",
+      "collection": "methods",
+      "detail_manifest": "ref/methods/sources.json",
+      "indexed_artifacts": [
+        {
+          "path": "ref/methods/M05_sparta_acceleration.html",
+          "status": "downloaded",
+          "sha256": "6e855b824c08dbbc1fe6ffa5b9b2cf889433f827710e3c160dbaf944d7ceedda",
+          "bytes": 35528
+        }
+      ]
+    },
+    {
+      "id": "M06",
+      "title": "COMSOL 6.4: The Molecular Flow Module Physics Interface Guide",
+      "publisher": "COMSOL",
+      "url": "https://doc.comsol.com/6.4/doc/com.comsol.help.molec/molec_introduction.2.03.html",
+      "version_or_date": "6.4",
+      "accessed": "2026-09-11",
+      "local_path": "ref/methods/M06_comsol_molecular_interfaces.html",
+      "locators": [
+        "Rarefied Flow: free molecular and transitional interface discussion"
+      ],
+      "supported_claims": [
+        "The free molecular interface targets Kn > 10 and uses angular coefficients; re-emission directions independent of incidence are an assumed boundary condition. Transitional flow is more computationally demanding."
+      ],
+      "limits": [
+        "A regime label is not a quantitative bound on neglected collisions or directional deposition error. Directional/specular beam cases require capability demonstrations."
+      ],
+      "sha256": "dc7f3dfbb8a53c980d138bd7b332568b438ea5fc5017f1578e0031b612a2b1de",
+      "bytes": 21236,
+      "archive_status": "downloaded",
+      "archive_format": "HTML source snapshot; external image and script assets not bundled",
+      "verified": "2026-09-13",
+      "collection": "methods",
+      "detail_manifest": "ref/methods/sources.json",
+      "indexed_artifacts": [
+        {
+          "path": "ref/methods/M06_comsol_molecular_interfaces.html",
+          "status": "downloaded",
+          "sha256": "dc7f3dfbb8a53c980d138bd7b332568b438ea5fc5017f1578e0031b612a2b1de",
+          "bytes": 21236
+        }
+      ]
+    },
+    {
+      "id": "M07",
+      "title": "The Plasma Module User's Guide",
+      "publisher": "COMSOL",
+      "url": "https://doc.comsol.com/6.4/doc/com.comsol.help.plasma/PlasmaModuleUsersGuide.pdf",
+      "version_or_date": "6.4",
+      "accessed": "2026-09-11",
+      "local_path": "ref/methods/M07_comsol_plasma_6_4_manual.pdf",
+      "locators": [
+        "Printed p194 (PDF page 194): Inductively Coupled Plasma interface and AC/DC requirement for 3D",
+        "Printed p223: Validity of Fluid Models (CCP discussion)",
+        "Printed pp231-234: Theory for Inductively Coupled Plasmas"
+      ],
+      "supported_claims": [
+        "The ICP interface treats induction in the frequency domain and couples plasma variables. The interface-specific section states 3D ICP requires AC/DC Module; microwave plasma uses RF Module. The manual discusses fluid-model validity limits."
+      ],
+      "limits": [
+        "Do not apply the CCP rough pressure threshold directly to the actual MBE ICP source. Determine charged-particle nonlocality, chemistry and source dimensions. Licensing should be checked for chosen dimensions/features."
+      ],
+      "sha256": "78287b71eb6bb4819997fd02109f763eae6391d7ba9ca71881861a0d4f446802",
+      "bytes": 3944845,
+      "archive_status": "downloaded",
+      "archive_format": "PDF; original downloaded bytes",
+      "verified": "2026-09-13",
+      "collection": "methods",
+      "detail_manifest": "ref/methods/sources.json",
+      "indexed_artifacts": [
+        {
+          "path": "ref/methods/M07_comsol_plasma_6_4_manual.pdf",
+          "status": "downloaded",
+          "sha256": "78287b71eb6bb4819997fd02109f763eae6391d7ba9ca71881861a0d4f446802",
+          "bytes": 3944845
+        }
+      ]
+    },
+    {
+      "id": "M08",
+      "title": "Reduced-Basis Approximations and A Posteriori Error Bounds for Nonaffine and Nonlinear Partial Differential Equations: Application to Inverse Analysis",
+      "authors": [
+        "Nguyen Ngoc Cuong"
+      ],
+      "publisher": "Singapore-MIT Alliance",
+      "url": "https://www.mit.edu/~cuongng/publication/pub31/pub31.pdf",
+      "version_or_date": "PhD thesis, June 2005 (PDF title page; landing page lists September)",
+      "accessed": "2026-09-11",
+      "local_path": "ref/methods/M08_nguyen_reduced_basis_thesis.pdf",
+      "locators": [
+        "Sections 3.2.4 Offline-Online Computational Procedure and 3.3 A Posteriori Error Estimation",
+        "Sections 3.5.3-3.5.4 and 10.2 future directions/limitations"
+      ],
+      "supported_claims": [
+        "Reduced-basis evaluation separates offline construction and online prediction, with residual/stability-based error bounds in specified problem classes."
+      ],
+      "limits": [
+        "Rigorous bounds require their assumptions; nonlinear/nonaffine generalizations can include non-rigorous components. Bounds relative to discretized equations do not validate physical model form."
+      ],
+      "sha256": "09197b72bc6e3674094fcea0fa5edd4317ceb2a9025ce461873cb1e734b5dac8",
+      "bytes": 7573241,
+      "archive_status": "downloaded",
+      "archive_format": "PDF; original downloaded bytes",
+      "verified": "2026-09-13",
+      "collection": "methods",
+      "detail_manifest": "ref/methods/sources.json",
+      "indexed_artifacts": [
+        {
+          "path": "ref/methods/M08_nguyen_reduced_basis_thesis.pdf",
+          "status": "downloaded",
+          "sha256": "09197b72bc6e3674094fcea0fa5edd4317ceb2a9025ce461873cb1e734b5dac8",
+          "bytes": 7573241
+        }
+      ]
+    },
+    {
+      "id": "M09",
+      "title": "Examining Spatial (Grid) Convergence",
+      "authors": [
+        "John W. Slater (responsible NASA curator)"
+      ],
+      "publisher": "NASA Glenn / NPARC Alliance",
+      "url": "https://www.grc.nasa.gov/www/wind/valid/tutorial/spatconv.html",
+      "version_or_date": "Page last updated 2021-02-10",
+      "accessed": "2026-09-11",
+      "local_path": "ref/methods/M09_nasa_grid_convergence.html",
+      "locators": [
+        "Asymptotic Range of Convergence",
+        "Richardson Extrapolation",
+        "Grid Convergence Index (GCI)"
+      ],
+      "supported_claims": [
+        "A three-grid study supports observed-order and asymptotic-range checks; grid-convergence uncertainty is distinct from physical accuracy."
+      ],
+      "limits": [
+        "CFD tutorial methodology must be adapted to FEM, particle statistics, coupled solvers and nonsmooth observables. A tiny two-grid change is insufficient evidence of convergence."
+      ],
+      "sha256": "bd279deb8664487d47500c03b06997ee9f5c052ab8a8ea19ea41e639386bd1f0",
+      "bytes": 29126,
+      "archive_status": "downloaded",
+      "archive_format": "HTML source snapshot; external image and script assets not bundled",
+      "verified": "2026-09-13",
+      "collection": "methods",
+      "detail_manifest": "ref/methods/sources.json",
+      "indexed_artifacts": [
+        {
+          "path": "ref/methods/M09_nasa_grid_convergence.html",
+          "status": "downloaded",
+          "sha256": "bd279deb8664487d47500c03b06997ee9f5c052ab8a8ea19ea41e639386bd1f0",
+          "bytes": 29126
+        }
+      ]
+    },
+    {
+      "id": "M10",
+      "title": "SPARTA Features",
+      "publisher": "SPARTA project",
+      "url": "https://sparta.github.io/features.html",
+      "version_or_date": "Live documentation snapshot",
+      "accessed": "2026-09-11",
+      "local_path": "ref/methods/M10_sparta_features.html",
+      "locators": [
+        "Models",
+        "Gas-phase collisions and chemistry",
+        "Surface collisions and chemistry",
+        "Output"
+      ],
+      "supported_claims": [
+        "SPARTA supports low-density-gas DSMC, local grids, VSS/VHS/HS collision models, surface interactions, restart files and an ambipolar plasma approximation."
+      ],
+      "limits": [
+        "A listed ambipolar approximation is not a self-consistent RF ICP or general sheath model. Ga/N/Al collision and reaction parameters still need evidence."
+      ],
+      "sha256": "017d36981a90cca10e2e3aa8ee9224d6067f6d7ac36c9c844b113b62647f8061",
+      "bytes": 6158,
+      "archive_status": "downloaded",
+      "archive_format": "HTML source snapshot; external image and script assets not bundled",
+      "verified": "2026-09-13",
+      "collection": "methods",
+      "detail_manifest": "ref/methods/sources.json",
+      "indexed_artifacts": [
+        {
+          "path": "ref/methods/M10_sparta_features.html",
+          "status": "downloaded",
+          "sha256": "017d36981a90cca10e2e3aa8ee9224d6067f6d7ac36c9c844b113b62647f8061",
+          "bytes": 6158
+        }
+      ]
+    }
+  ]
+}
