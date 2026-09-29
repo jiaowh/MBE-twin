@@ -5,7 +5,7 @@ This repository holds the engineering plan, the source library and the first sim
 | Area | Status (2026-09-29) |
 |---|---|
 | Direct beam and free-molecular crucible emission | Implemented; verified against closed-form and deterministic references; reproduces R07's measured fill-level profiles (Bi) |
-| Collisional crucible (SPARTA DSMC) | One fitted parameter (Bi hard-sphere diameter, 6.0-10.8 A) matches R07's profile shapes at 0.35-11 A/s to within the current statistical noise (about 0.02-0.04 RMS; free-molecular 0.04-0.20); absolute centre rates 7-15 % low; high-statistics repeat running |
+| Collisional crucible (SPARTA DSMC) | One fitted parameter (Bi hard-sphere diameter, 8.0-10.3 A) reproduces R07's profile shapes at 0.35-11 A/s to 0.004-0.023 RMS, noise-corrected, with seed, timestep and cell checks (free-molecular: 0.04-0.20); absolute centre rates 7-15 % low (systematic, unexplained) |
 | Production Ga transport (200 mm, level melt) | Sensitivity study: collisional (DSMC) range/mean at 46 deg grows from 2.2-2.3 % (40 mm recess) to 7.9-11.3 % (120 mm) over an unsourced Ga diameter bracket; numerical uncertainty about 0.2-0.4 points; not a thickness prediction |
 | Heater and wafer thermal (Elmer) | Conduction (V02) and diffuse-gray radiation (V03) verified; R03 heater reproduction not started |
 | Nitrogen, vacuum, growth chemistry | Planned ([nitrogen boundary](ref/notes/NITROGEN_BOUNDARY.md)); not implemented |
