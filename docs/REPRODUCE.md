@@ -7,7 +7,10 @@ Every result quoted in [REFERENCE_CHAMBER.md](../ref/notes/REFERENCE_CHAMBER.md)
 - Python 3.11+ with numpy; tests also need pytest and scipy; the R07 digitizer needs PyMuPDF.
 - Elmer 26.1 (see README) with `ELMER_HOME` set; SPARTA commit `e071055` built with `make serial` in WSL at `~/sparta/src/spa_serial`.
 - Run everything from the repository root with `PYTHONPATH=src` (PowerShell: `$env:PYTHONPATH = "src"`).
-- Python sources are kept with LF line endings on every checkout (`.gitattributes`), so the recorded source hashes match a fresh clone.
+- Python sources are kept with LF line endings on every checkout (`.gitattributes`), and since 2026-09-30 source hashes are taken after normalizing CRLF to LF. Earlier manifests hashed raw bytes at the end of post-processing. Checked against the commits (2026-09-30):
+  - `uq_batch` records match commit `cef2a3b` directly.
+  - `ga_batch` records match `cef2a3b`, except two cases. `scripts/sparta_ga.py` and `src/mbe_twin/vapour.py` were CRLF on disk, so their hashes match `cef2a3b` only after converting to CRLF. `src/mbe_twin/sparta.py` matches `0c2ea63`, the version present when post-processing ended. The runs' input files were written by the `cef2a3b` version, which printed surface points to 10 instead of 17 significant digits; the difference is below 1e-10 relative.
+  - Since 2026-09-30, `config.json` also records `source_sha256_at_start`, the hashes of the code that wrote the inputs.
 
 ## Verification
 

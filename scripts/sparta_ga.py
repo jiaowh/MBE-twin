@@ -37,7 +37,7 @@ import numpy as np
 
 from mbe_twin.beam import Wafer, crucible_source_on_cone, level_melt_normal, rotation_averaged_flux
 from mbe_twin.crucible import Crucible, simulate
-from mbe_twin.manifest import build_manifest, write_manifest
+from mbe_twin.manifest import build_manifest, source_sha256, write_manifest
 from mbe_twin.sparta import (batch_means, expected_dump_steps, load_run_config, log_stats,
                              prepare_run_dir, read_dumps, run_case, sparta_commit)
 from mbe_twin.sparta_source import SourceRun, crucible_surface, wafer_profile
@@ -211,6 +211,8 @@ def main():
         run = build_run(cfg)
         cfg["derived"] = run.config()
         cfg["sparta_commit"] = sparta_commit()
+        # the code that writes the inputs; the manifest hashes the post-processing code
+        cfg["source_sha256_at_start"] = source_sha256(SOURCES)
         d = "fm" if cfg["diameter_m"] is None else f"d{cfg['diameter_m'] * 1e10:.2f}"
         work = Path(args.out or ROOT / "results/sparta_ga" /
                     f"fill{1e3 * args.fill:.0f}_{d}_{args.rate:g}umh_{args.mode}")

@@ -32,7 +32,7 @@ from pathlib import Path
 import numpy as np
 
 from mbe_twin.crucible import Crucible, next_event_flux, simulate
-from mbe_twin.manifest import build_manifest, write_manifest
+from mbe_twin.manifest import build_manifest, source_sha256, write_manifest
 from mbe_twin.sparta import (batch_means, crucible_surface, expected_dump_steps,
                              load_run_config, log_stats, prepare_run_dir, propagate_slab,
                              read_dumps, run_case, sparta_commit, write_surf)
@@ -256,6 +256,8 @@ def main():
         suffix = "".join("_" + s.replace("=", "") for s in args.set)
         work = Path(args.out or ROOT / "results/sparta_r07" / f"{args.benchmark}{suffix}")
         cfg["sparta_commit"] = sparta_commit()
+        # the code that writes the inputs; the manifest hashes the post-processing code
+        cfg["source_sha256_at_start"] = source_sha256(SOURCES)
         prepare_run_dir(work, cfg)  # refuses a non-empty directory
         write_inputs(work, cfg)
         run_case(work)

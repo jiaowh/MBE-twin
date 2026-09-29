@@ -46,13 +46,16 @@ def source_sha256(paths, root=None):
     """SHA-256 of each source file, keyed by its path relative to the repository root.
 
     Recorded in manifests because a "-dirty" commit alone does not identify the code that ran.
+    Line endings are normalized to LF before hashing, so the hash does not depend on how git
+    checked the file out (Windows checkouts may use CRLF). Manifests written before
+    2026-09-30 hashed raw bytes (see docs/REPRODUCE.md).
     """
     root = Path(root) if root else Path(__file__).resolve().parents[2]
     out = {}
     for p in paths:
         p = Path(p).resolve()
         key = p.relative_to(root).as_posix() if p.is_relative_to(root) else str(p)
-        out[key] = hashlib.sha256(p.read_bytes()).hexdigest()
+        out[key] = hashlib.sha256(p.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
     return out
 
 
