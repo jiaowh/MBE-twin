@@ -1,0 +1,40 @@
+{
+  "source": "R03: Y. Wu et al., Int. J. Mech. Sci. 305 (2025) 110810, doi:10.1016/j.ijmecsci.2025.110810 (ref/reference/R03_Wu_2025_dual_zone_MBE_heater.pdf)",
+  "recorded": "2026-09-30",
+  "machine": "4 x 6-inch MBE heater (CETC 48): dual-zone pyrolytic-graphite heating plate, Mo/Ta reflecting and insulating plates, Mo platen and backing ring, GaAs substrates",
+  "measurement": {
+    "method": "Canon EOS 6D Mark II through a bottom viewport, 660 nm narrow-band filter plus ND16, 14-bit RAW grey levels mapped to temperature with a FLUKE Endurance pyrometer at the substrate centre; stated error +/-2 K (Sec. 3.5)",
+    "profiles": "lines drawn manually across one substrate (Fig. B5); x axis 0-0.15 m spans one 6-inch substrate, which sits off the heater axis on the 4 x 6-inch platen"
+  },
+  "radial_temperature_difference_K": {
+    "provenance": "values printed in the panels of Fig. 14 (exact as printed)",
+    "target_K": [863, 923, 983, 1043, 1103, 1163],
+    "test": [2.4, 2.8, 3.1, 3.7, 5.5, 6.0],
+    "simulation_R03": [2.5, 3.0, 3.3, 4.1, 6.2, 6.6]
+  },
+  "surface_temperature_difference_983K": {
+    "provenance": "Sec. 3.5 text",
+    "test": 5.3,
+    "simulation_R03": 3.3
+  },
+  "profile_shape_note": "At 863-983 K the measured radial profiles are M-shaped with maxima near 0.02 m and 0.11 m; R03's simulated profiles peak near 0.00 m and 0.13 m and drop steeply at the edge. The shapes are not reproduced by R03's own model, so profile shape is a weak target; the radial temperature differences are the usable quantity. Fig. 15 surface values and Fig. 16 maps are not digitized.",
+  "materials_table_C1": {
+    "heating_plate_PG": {"density": 1950, "emissivity": 0.83, "k_cp_sigma": "temperature-dependent, Fig. 2"},
+    "PBN_board": {"density": 1850, "k": 58, "cp": 710, "emissivity": 0.88},
+    "platen_backing_ring_Mo_rough": {"density": 10200, "k": 138, "cp": 250, "emissivity": 0.45},
+    "insulating_plate_Mo_polished": {"density": 10200, "k": 138, "cp": 250, "emissivity": 0.2},
+    "reflecting_plate_Ta_polished": {"density": 16650, "k": 57, "cp": 140, "emissivity": 0.1},
+    "hull_upper_cover_Ta_rough": {"density": 16650, "k": 57, "cp": 140, "emissivity": 0.5},
+    "substrate_GaAs": {"density": 5500, "k": 46, "cp": 330, "emissivity": 0.8},
+    "units": "kg/m^3, W/m/K, J/kg/K"
+  },
+  "final_design_table_C2_and_text_mm": {
+    "heating_plate_width_d": 9, "heating_plate_spacing_l": 2, "heating_plate_thickness_w": 2,
+    "insulating_plates_N1": 3, "insulating_spacing_h1": 5,
+    "reflecting_plates_N2": 2, "reflecting_spacing_h2": 1,
+    "under_reflecting_plate_width_L": 20,
+    "inner_zone_width_LA": 174, "outer_zone_width_LB": 20,
+    "heating_spacing_H": 15
+  },
+  "interpretation_not_stated": "LA + LB = 194 mm is read as the heater's radial extent (inner zone to 174 mm radius, outer ring 174-194 mm), consistent with a 4 x 6-inch platen; the heater meander path, platen and hull dimensions, and zone powers are not given."
+}
