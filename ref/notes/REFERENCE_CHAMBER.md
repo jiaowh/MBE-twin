@@ -109,27 +109,41 @@ The sub-percent optimum of the first study belongs to a fill that cannot exist a
   - Particles are sampled in a slab above the orifice and propagated ballistically to the 115 mm plane.
   - The grid has two levels: fine cells in and just above the bore, 3x coarser elsewhere.
 - **Verification.** With collisions off, SPARTA reproduces `crucible.py` in absolute flux to 1-2 % per bin across 0-48 mm (two seeds, 0.7-1.5 M samples). The slab-to-plane propagation is unbiased against an exact point-source solution (tests/test_sparta.py).
-- **Numerical convergence at 3.5 A/s, d = 8 A.**
-  - Sampling height: moving the slab from 3 D to 4.5 D shifts the bias by +0.015; beyond 4.5 D (6 D, 8 D) it scatters by +/-0.01 without trend. Production runs sample at 5-5.5 D.
-  - Particle count: 5x more particles changes the profile RMS by less than 0.01.
-- **Calibration** of d on R07 Fig. 4 at 3.5 A/s: d = 5.68 A (the Knudsen-statement value) gives RMS 0.04-0.06, 7 A gives 0.023, 8 A gives 0.009-0.015 (bias within +/-0.01), 11 A gives 0.040 (bias +0.028). 9 A gives 0.029 (bias +0.024). The bias crosses zero near 8 A (-0.019 at 7 A, about 0 at 8 A, +0.024 at 9 A), so the adopted value is d = 8 +/- 0.5 A.
-- **Held-out predictions** (d = 8 A, not refitted):
+- **Numerical uncertainty** (revised 2026-09-30 after review; `cases/sparta_r07/uq_batch.json`, summaries in `data/runs/sparta_r07/uq_batch/`, table by `scripts/summarize_uq.py`). The first-pass calibration and held-out figures are withdrawn (see below).
+  - Earlier check, kept: moving the sampling slab from 3 D to 4.5 D shifts the bias by +0.015, and beyond 4.5 D it scatters without trend. Runs sample at 5-5.5 D.
+  - With 2e5 particles and 16000 sampling steps, the per-bin statistical error of the normalized profile is about 0.02 (batch means over 8 time blocks). That is as large as the model-data misfit. The profile RMS is inflated by this noise (RMS^2 is about misfit^2 + noise^2), and three seeds at 3.5 A/s gave RMS 0.016, 0.018 and 0.037. Seeds, halved timestep and finer cells (11 A/s: 0.6 to 0.45 mm) all change the RMS by no more than this noise.
+  - The first-pass headline figures (3.5 A/s RMS 0.009-0.015; 0.35 A/s 0.018 with 5e5 particles; 11 A/s 0.014) are single draws at this noise level. They do not establish agreement better than about 0.02-0.03, and the earlier statement that particle count "changes the RMS by less than 0.01" was not resolved either.
+  - Diameter: the bias of the 3.5 A/s profile against R07 is -0.007, -0.016, -0.009, -0.002 and +0.013 at d = 7, 7.5, 8, 8.5 and 9 A. A linear fit gives zero bias at 8.4 A. Allowing |bias| up to the combined tolerance of digitization (0.009), statistics (0.017) and seed/timestep differences (0.019) gives **d = 6.0-10.8 A**. This is a sensitivity interval, not a confidence interval. It replaces "8 +/- 0.5 A", which had no stated construction. d = 8 A stays the working value.
+  - Centre rates (not fitted) are low in every run: 0.35 A/s by 7-9 %, 3.5 A/s by 13-15 %, 11 A/s by 6-9 %. Seed-to-seed spread is 1-2 %, and timestep and cell effects are 1-3 %, so the deficit is systematic. Possible causes (R07's partly interpolated pressures, Bi2 in the vapour, the evaporation coefficient) are not quantified. The model's absolute rate is therefore uncertain by about 15 %.
+  - A high-statistics repeat (5x particles, 3x sampling; `uq2_batch.json`, now the default benchmark settings) is running to resolve the profile misfit and narrow d.
+- **What the R07 comparison supports.** Across the tested Bi rate series (0.35-11 A/s, one crucible, L/D = 4), the profile shape agrees with R07 to within the current noise, about 0.02-0.04 RMS. The free-molecular model is off by 0.04, 0.14 and 0.20 at the same rates. It does not establish absolute flux better than about 15 %, transfer to Ga, or transfer to other fills and tilts.
+- **Limits.** One material (Bi), one crucible (L/D = 4), and profiles only to 45 mm. d is an effective hard-sphere parameter for Bi vapour, not a molecular property, and does not transfer to Ga or Al.
 
-| R07 case | SPARTA profile RMS (bias) | Free-molecular RMS | Centre rate: SPARTA / free-molecular / R07 (A/s) |
-|---|---|---|---|
-| 0.35 A/s, 573 C | 0.018 (+0.002) | 0.042 | 0.31 / 0.34 / 0.35 |
-| 3.5 A/s (calibration) | 0.009-0.015 | 0.136 | 2.95 / 4.25 / 3.5 |
-| 11 A/s, 723 C, 1 mm cells (lambda_sat = 1.2 cells; under-resolved) | 0.033 (-0.029) | 0.201 | 10.4 / 15.7 / 11.0 |
-| 11 A/s, 0.6 mm cells (lambda_sat = 2.0 cells, 4.0 M samples) | 0.014 (-0.011) | 0.201 | 10.2 / 15.7 / 11.0 |
+**Ga source on the 200 mm wafer, DSMC** (`src/mbe_twin/sparta_source.py`, `scripts/sparta_ga.py`, `cases/sparta_ga/ga_batch.json`, summaries in `data/runs/sparta_ga/ga_batch/`, 2026-09-30).
 
-- With one fitted parameter, the collisional model reproduces both held-out profiles to RMS 0.014-0.018, 2-3x the digitization error. That cuts the free-molecular error 2x at 0.35 A/s and 14x at 11 A/s. Cell size matters at high rate: the 11 A/s error drops from 0.033 to 0.014 when the fine cells shrink from 1.2 to 2.0 cells per saturation mean free path. Keep fine cells at or below lambda_sat / 2. It also predicts the absolute centre rates within 5-15 % without any flux fitting, where the free-molecular model overstates 11 A/s by 43 %. The rates run 5-15 % low, which is within the uncertainty of R07's (partly interpolated) pressures and the neglected Bi2, but this is not shown.
-- **Limits.** One material (Bi), one crucible (L/D = 4), and profiles only to 45 mm. d is an effective hard-sphere parameter for Bi vapour, not a molecular property, and does not transfer to Ga or Al. Applying the method to Ga needs a Ga collision diameter; none is sourced yet, so a Ga production run must bracket d, as the Knudsen estimate did.
+- **Set-up.** R14's 71.5 mm cylindrical bore at 46 deg and 350 mm, aimed at the wafer centre, with a level (horizontal) melt at admissible fills of 40, 70 and 120 mm recess. Ga saturation pressure is from Alcock (R15). In "hold" mode, the melt temperature is set per fill so the free-molecular model delivers the wafer-centre Ga flux for 1 um/h GaN at Ga/N = 1: 953.6, 957.0 and 962.1 C (p = 0.20-0.24 Pa). The Ga diameter is bracketed at 2.5, 5.68 and 8 A (lambda_sat/D = 4.2-0.35). Cells are D/16 (<= lambda_sat / 2), with 6e5 particles and 24000 sampling steps. Particles are sampled at 3.0-3.5 D, since the nearest wafer edge is 3.9 D away, and carried ballistically to the rotating wafer. Metric: range/mean of an even-polynomial fit over the whole 200 mm wafer, with batch-means errors.
+- **Verification.** Collisionless SPARTA reproduces `crucible.py` on the wafer: range/mean 2.37 / 6.24 / 11.83 % vs 2.42 / 6.12 / 11.56 %, within 1-2 standard errors, and centre flux 0.994-0.998 of the target.
+
+| Fill (recess) | crucible.py (FM) | d = 2.5 A | d = 5.68 A | d = 8 A |
+|---|---|---|---|---|
+| 40 mm | 2.42 % | 2.31 +/- 0.08 % | 2.23 +/- 0.13 % | 2.30 +/- 0.13 % |
+| 70 mm | 6.12 % | 5.81 +/- 0.15 % | 5.54 +/- 0.21 % | 5.25 +/- 0.20 % |
+| 120 mm | 11.56 % | 11.26 +/- 0.21 % | 9.18 +/- 0.26 % | 7.92 +/- 0.20 % |
+
+- **Collisions reduce the fill-level sensitivity in this geometry.** Near-full charges are unaffected, but at 120 mm recess range/mean drops from 11.6 % to 7.9-9.2 % for d = 5.7-8 A. Over the admissible fills, the collisional non-uniformity at a fixed 46 deg port still grows 3.5-5x (2.2-2.3 % to 7.9-11.3 %, depending on d). The unsourced Ga diameter is now the largest uncertainty at deep fills (7.9 to 11.3 %).
+- **Numerics at the most collisional state (120 mm, d = 8 A):** a second seed gives 8.13 +/- 0.24 % (base 7.92 +/- 0.20). Cells refined from D/16 to D/24 give 8.36 +/- 0.19 %, a +0.4 point shift (about 1.6 sigma), so discretization error there is about 0.4 points. First-half and second-half estimates agree within about 0.3 points in most runs (0.6 at 70 mm, d = 8 A). A sampling-slab check (2.5-3.0 D) is being rerun after a meshing failure.
+- **Delivered rate.** Holding the free-molecular temperature schedule, DSMC delivers 0.96-1.07 of the target centre flux, depending on d and fill. Collisions can raise the centre flux of a near-full charge by up to 7 % (d = 8 A, 40 mm). At fixed temperature (953.6 C, set for the 40 mm fill), the centre flux falls to 0.95 at 70 mm and 0.82 at 120 mm (d = 5.68 A). Holding the rate needs +8.5 K over this fill range. At fixed temperature the lower pressure makes the 120 mm profile less flattened (9.83 % vs 9.18 %).
+- **Rate dependence.** At 0.5 um/h (929 C), the 120 mm fill gives 10.85 % vs 9.18 % at 1 um/h (d = 5.68 A). The non-uniformity therefore depends on the growth rate as well as the fill.
+- **What this supports.** A representative-chamber sensitivity study with a verified collisional model, stated numerical uncertainty (about 0.2-0.4 points) and a bracketed physical unknown (d). It is not a thickness prediction. In Ga-rich PAMBE, thickness follows the active-N map ([nitrogen boundary](NITROGEN_BOUNDARY.md)); the Ga map sets the Ga/N-ratio margin across the wafer.
 
 ## Next actions
 
-1. Done 2026-09-29: full texts of R03, R07 and R14; crucible emission model with deterministic verification; R14 and R07 comparisons; level (gravity) melt; Elmer 26.1 installed and verified (V02 slab benchmark exact to machine precision).
-2. Done 2026-09-29: R07 Fig. 7 digitized and compared (above); centre-rate decay supports an orifice-origin beam at high rate; shape transfer limited by the shared-axis assumption.
-3. Done 2026-09-29: in-crucible Knudsen number for Ga and Al (above): production Ga cells are collisional. SPARTA DSMC crucible model built, verified against `crucible.py`, calibrated on R07 3.5 A/s and validated on 0.35 and 11 A/s (above). Next in this line: the 200 mm fill-level and angle study for Ga at GaN production rates with SPARTA, bracketing the unsourced Ga collision diameter; then a level (tilted) melt in SPARTA.
-4. R03 thermal reproduction in Elmer: digitize Figs. 14-16 (the authors will not be contacted) and state geometric assumptions for the missing heater meander, platen and hull dimensions. Expect weak discrimination (+/-2 K measurement vs +/-3 K spread).
-5. Still wanted: full texts of R04 and R05, and the RIBER MBE 49 technical PDF.
-6. Then run the 200 mm design studies (zone count, sensor observability, source throw and aperture layout) on the representative chamber.
+Revised 2026-09-30 after the Stage A review (the review's recommended sequence).
+
+1. Done: run isolation and recorded configurations; named R07 benchmarks; versioned summaries; manifests with source hashes (docs/REPRODUCE.md).
+2. In progress: numerical uncertainty of the R07 benchmarks. First pass done (above); high-statistics repeat running.
+3. Done: level-melt SPARTA geometry and transport to the inclined, rotating wafer (`sparta_source.py`), verified collisionless against `crucible.py`.
+4. Done (first pass): Ga study over admissible fills, the diameter bracket, hold and fixed temperature, and two rates (above). Next: best port angle per fill with collisions; a Ga diameter from a sourced estimate if one can be found; combination with the nitrogen map into a Ga/N ratio range.
+5. Thermal: diffuse-gray radiation verified in Elmer (V03). R03 is a 4x6-inch platen, so its reproduction needs digitized Figs. 14-16 and geometry ranges (heater meander, platen, hull) run as sensitivity cases, not a recovered heater. Next in this line.
+6. Nitrogen: boundary and measurement access planned ([nitrogen boundary](NITROGEN_BOUNDARY.md)); aperture-plate sensitivity done (hole aspect dominates). Next: Knudsen check for the plate holes.
+7. Still wanted: full texts of R04 and R05, the RIBER MBE 49 technical PDF, and a representative aperture-plate drawing.
