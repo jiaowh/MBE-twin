@@ -108,7 +108,9 @@ def write_surf(mesh, path, scale=1.0, comment="crucible"):
     """Write a SPARTA 3d surface file (1-based ids; one type per triangle)."""
     lines = [f"# {comment}", "", f"{len(mesh.points)} points", f"{len(mesh.triangles)} triangles",
              "", "Points", ""]
-    lines += [f"{i + 1} {x * scale:.10g} {y * scale:.10g} {z * scale:.10g}"
+    # Full precision: box-face points must match create_box exactly (10 digits could round
+    # a point just outside the box).
+    lines += [f"{i + 1} {x * scale:.17g} {y * scale:.17g} {z * scale:.17g}"
               for i, (x, y, z) in enumerate(mesh.points)]
     lines += ["", "Triangles", ""]
     lines += [f"{i + 1} {t} {a + 1} {b + 1} {c + 1}"
