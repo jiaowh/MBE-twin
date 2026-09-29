@@ -145,5 +145,5 @@ Revised 2026-09-30 after the Stage A review (the review's recommended sequence).
 3. Done: level-melt SPARTA geometry and transport to the inclined, rotating wafer (`sparta_source.py`), verified collisionless against `crucible.py`.
 4. Done (first pass): Ga study over admissible fills, the diameter bracket, hold and fixed temperature, and two rates (above). Next: best port angle per fill with collisions; a Ga diameter from a sourced estimate if one can be found; combination with the nitrogen map into a Ga/N ratio range.
 5. Thermal: diffuse-gray radiation verified in Elmer (V03). R03 is a 4x6-inch platen, so its reproduction needs digitized Figs. 14-16 and geometry ranges (heater meander, platen, hull) run as sensitivity cases, not a recovered heater. Next in this line.
-6. Nitrogen: boundary and measurement access planned ([nitrogen boundary](NITROGEN_BOUNDARY.md)); aperture-plate sensitivity done (hole aspect dominates). Next: Knudsen check for the plate holes.
+6. Nitrogen: boundary and measurement access planned ([nitrogen boundary](NITROGEN_BOUNDARY.md)); aperture-plate sensitivity done (hole aspect dominates); hole Knudsen number 0.2-250 depending on open area, so the plate drawing decides between the free-molecular model and DSMC.
 7. Still wanted: full texts of R04 and R05, the RIBER MBE 49 technical PDF, and a representative aperture-plate drawing.

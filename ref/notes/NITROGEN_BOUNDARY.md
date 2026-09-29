@@ -50,7 +50,14 @@ Ranges span plate radius and output profile.
 
 - **The hole aspect ratio dominates.** Plate radius and the output profile across the plate move range/mean by 0-2 points for thin and moderate holes and up to 9 points for the most beamed case; L/r moves it by tens of points. The hole diameter and plate thickness are therefore the most important nitrogen inputs to obtain (P0 request: aperture-plate drawing).
 - A free-molecular plate of beaming holes (L/r >= 2) aimed at the wafer centre cannot give a uniform 200 mm N map at these throws. Real large-area plates presumably rely on hole angles, hole-density patterns or off-centre aim, none of which is public. The model can represent tilted holes and density patterns once a drawing exists.
-- **Caveat: the holes may not be free-molecular.** RF sources run with a discharge pressure far above chamber pressure, so the gas in the holes can be transitional or viscous, which changes the angular distribution (as collisions did for the Ga cells). The Knudsen check in step 4 must come before these numbers are used for design.
+- **Caveat: the holes may not be free-molecular.** RF sources run with a discharge pressure far above chamber pressure, so the gas in the holes can be transitional or viscous, which changes the angular distribution (as collisions did for the Ga cells).
+
+**Hole Knudsen number** (`scripts/nitrogen_knudsen.py`, 2026-09-30). The pressure behind the plate follows from flow over plate conductance, p = Q / C, so it is estimated rather than assumed. Brackets: 0.5-3 sccm, 50-500 holes, hole radius 0.1-0.3 mm, L/r 2-5, gas at 300-600 K, and the N2 diameter 3.7 A x/÷ 1.3 (a textbook value, not sourced here).
+
+- The implied source pressure is 0.1-140 Pa.
+- Plates with many holes (500), or holes of 0.3 mm radius at low flow, give Kn = lambda / (2r) of 3-250. That is free-molecular, and the aperture model above is self-consistent.
+- Few small holes (50 x 0.1 mm) at 3 sccm give Kn 0.2-1.4. That is transitional, and the free-molecular hole beaming above would then be wrong in the same way the free-molecular Ga cell was.
+- Which regime applies depends on the plate's total open area, so the aperture drawing decides it. For a transitional plate, the DSMC route used for the Ga cells (SPARTA, one hole or a hole cluster) is available.
 
 ## Next steps
 
