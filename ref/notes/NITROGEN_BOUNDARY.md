@@ -59,6 +59,19 @@ Ranges span plate radius and output profile.
 - Few small holes (50 x 0.1 mm) at 3 sccm give Kn 0.2-1.4. That is transitional, and the free-molecular hole beaming above would then be wrong in the same way the free-molecular Ga cell was.
 - Which regime applies depends on the plate's total open area, so the aperture drawing decides it. For a transitional plate, the DSMC route used for the Ga cells (SPARTA, one hole or a hole cluster) is available.
 
+## Ga/N ratio across the wafer (first combination, 2026-09-30)
+
+`scripts/ga_n_ratio.py` divides the smoothed Ga DSMC profiles (46 deg, 350 mm, level melt; [representative chamber](REFERENCE_CHAMBER.md)) by two representative N maps (plate at 40 deg, 350 mm). Both are rotation-averaged. Spread of the local Ga/N ratio, as range/mean over 200 mm:
+
+| Ga fill (d range) | Ga alone | / thin-plate N (N edge/centre 0.96) | / beaming-hole N, L/r 2 (edge/centre 0.82) |
+|---|---|---|---|
+| 40 mm | 2.2-2.4 % | 1.4-1.5 % | 16.7-16.8 % |
+| 70 mm | 5.3-6.2 % | 1.7-2.5 % | 12.8-13.8 % |
+| 120 mm | 7.9-11.8 % | 4.2-8.1 % | 7.3-11.1 % |
+
+- Ga uniformity alone is the wrong criterion. With a thin plate, the edge-low Ga and N maps partly cancel, so the ratio is more uniform than Ga alone at every fill. With beaming holes, the ratio is most non-uniform for a fresh charge and improves as the melt recedes, the opposite of the Ga-alone trend.
+- The Ga/N margin a layout must hold is therefore set jointly by the Ga fill range and the N plate. The N plate is the less constrained of the two (hole geometry unknown; regime depends on open area). The nitrogen boundary is now the limiting input for the source-layout decision, as the review anticipated.
+
 ## Next steps
 
 1. Done: aperture-plate source.
