@@ -21,7 +21,7 @@ No named person is assigned without team confirmation. A public component brochu
 
 ## Initial experimental campaigns
 
-The counts below are planning minima for feasibility, not a statistically justified final sample size. Pilot variance and parameter identifiability determine the eventual design. Reserve validation runs before fitting, and split by complete physical run/wafer rather than pixels or adjacent time samples.
+These campaigns define the required coverage, not a separate test programme. Obtain them first from logged FAT, SAT and commissioning tests, as mapped in [the Phase-1 plan, section 6.1](../PHASE1_CHAMBER_PLAN.md#61-commissioning-as-the-primary-calibration-source). Request dedicated twin runs only for gaps that remain once that coverage is compared with this table. Those runs compete for the proposal's limited commissioning wafers, substrates and tool time. The counts below are planning minima for feasibility, not a statistically justified final sample size. Pilot variance and parameter identifiability determine the eventual design. Reserve validation runs before fitting, and split by complete physical run/wafer rather than pixels or adjacent time samples.
 
 | Campaign | Initial design | Independent check and failure interpretation |
 |---|---|---|

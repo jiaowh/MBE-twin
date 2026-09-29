@@ -1,0 +1,348 @@
+{
+  "schema_version": 1,
+  "collection": "reference",
+  "compiled_date": "2026-09-29",
+  "scope": "Public sources for a representative 200 mm plasma-assisted GaN chamber and for published simulation-versus-measurement test cases per subsystem. The proposed machine does not exist yet and no partner machine data is accessible. These sources define a representative envelope and validation cases; they do not describe or validate the proposed chamber.",
+  "review_levels": {
+    "full_text_reviewed": "Local copy read for the stated claims.",
+    "online_page_reviewed": "Publisher, vendor or press page read online; no local archive.",
+    "abstract_or_index_only": "Only the abstract, index entry or search snippet was read (publisher blocked automated full-text access). Numbers must be checked against the full text before use."
+  },
+  "sources": [
+    {
+      "id": "R01",
+      "title": "RIBER MBE 49 GaN: plasma-assisted GaN production system for 200 mm GaN-on-Si",
+      "vendor": "RIBER",
+      "year": 2023,
+      "url": "https://www.semiconductor-today.com/news_items/2023/oct/riber-171023.shtml",
+      "related_urls": [
+        "https://www.riber.com/product/mbe-49/",
+        "https://www.semiconductor-today.com/news_items/2024/oct/riber-211024.shtml",
+        "https://compoundsemiconductor.net/article/111492/First_200_Mm_AlN-on-Si_Template_Using_Ammonia-based_MBE"
+      ],
+      "accessed": "2026-09-28",
+      "review_level": "online_page_reviewed",
+      "supports": "Closest commercial match to the proposal: 200 mm GaN-on-Si by RF plasma MBE, with the RF source optimized jointly with CRHEA for growth rate and uniformity. The MBE 49 family covers 200 mm, 150 mm, 4x4-inch and 5x3-inch configurations.",
+      "does_not_support": "No public geometry, uniformity numbers or run data. CRHEA's reported 200 mm MBE 49 AlN-on-Si templates used ammonia MBE, not plasma, and do not transfer to the plasma process.",
+      "follow_up": "The RIBER product page links a 1.93 MB technical PDF that has not been retrieved.",
+      "status": "url_only"
+    },
+    {
+      "id": "R02",
+      "title": "MBE Nitride Components & Systems brochure (GEN20, GEN200, UNI-Bulb RF nitrogen source, SUMO cells, valved Mg source)",
+      "vendor": "Veeco",
+      "year": 2006,
+      "url": "https://www.semiconductor-today.com/images/adverts/veeco_brochure_nitrides.pdf",
+      "related_urls": [
+        "https://www.veeco.com/products/gen200-mbe-system/"
+      ],
+      "accessed": "2026-09-28",
+      "review_level": "full_text_reviewed",
+      "supports": "GEN200 accommodates a single 8-inch wafer (or four 4-inch) and was offered for RF-nitrogen or ammonia nitride MBE. Dual-filament substrate heater to 1200 C (thermocouple). UNI-Bulb endplate is designed per system model and growth condition, so aperture-plate geometry sets the delivered distribution.",
+      "does_not_support": "No dimensions, source angles, throw distances or uniformity data. 2006 marketing content; current product configuration may differ.",
+      "artifacts": [
+        {
+          "url": "https://www.semiconductor-today.com/images/adverts/veeco_brochure_nitrides.pdf",
+          "path": "ref/reference/R02_Veeco_nitride_MBE_brochure_2006.pdf",
+          "kind": "pdf",
+          "status": "downloaded",
+          "sha256": "4d1f3bd0d047d73f20dd4f6f3fcbacd76a9c51d94ebfb9933b10e7c7cb9052d6",
+          "bytes": 366996
+        }
+      ],
+      "status": "downloaded"
+    },
+    {
+      "id": "R03",
+      "title": "Simulation and experiment of a dual-temperature zone MBE heater",
+      "authors": [
+        "Yongshuan Wu",
+        "Wenli Lv",
+        "Fengwu Chen",
+        "Changping Chen",
+        "Xin Gong",
+        "Junhui Li"
+      ],
+      "year": 2025,
+      "publication": "International Journal of Mechanical Sciences 305, 110810",
+      "url": "https://www.sciencedirect.com/science/article/abs/pii/S0020740325008926",
+      "related_urls": [
+        "https://ui.adsabs.harvard.edu/abs/2025IJMS..30510810W/abstract"
+      ],
+      "accessed": "2026-09-29",
+      "review_level": "full_text_reviewed",
+      "supports": "4x6-inch platen MBE heater: pyrolytic-graphite Joule plate (emissivity 0.83), PBN board (0.88), Mo platen/backing ring (rough 0.45), polished Mo insulating plates (0.2), polished Ta reflectors (0.1), rough Ta hull (0.5), GaAs substrate (0.8). COMSOL 6.1 electric currents + solid heat transfer + surface-to-surface radiation (hemicube), ~355k elements, steady state, no rotation. Optimised dual zone: inner width LA = 174 mm, outer LB = 20 mm, under-reflector width L = 20 mm, heater-substrate gap H = 15 mm, plate thickness 2 mm. Measurement: Canon 6D through bottom viewport, 660 nm band filter + ND16, 14-bit RAW grey levels calibrated to a Fluke Endurance pyrometer at the substrate centre; stated error +/-2 K. Radial profiles at 863, 923, 983, 1043, 1103 and 1163 K. At 983 K: M-shaped radial profile, radial difference 3.1 K measured vs 3.3 K simulated (max pointwise deviation 0.89 K); surface difference 5.3 K measured vs 3.3 K simulated.",
+      "does_not_support": "A reproducible geometry: heater meander layout, platen/wafer-pocket layout, hull and cold-trap dimensions and contact conductances are not tabulated. Headline '0.2 % relative error' is relative to absolute temperature; relative to the measured surface temperature spread the model under-predicts by about 40 % (3.3 vs 5.3 K). Measurement uncertainty (+/-2 K) is comparable to the +/-3 K non-uniformity, limiting discrimination between models. GaAs substrate, not GaN-on-Si; 983 K target, below GaN growth temperatures. Data available only as figures; the user decided (2026-09-29) not to contact the authors, so Figs. 14-16 must be digitized.",
+      "use": "Thermal validation case with limited discriminating power; design analogue for a narrow outer zone (LB = 20 mm) and reflector stack; material-emissivity priors; camera thermometry method for the sensor decision. Reproduction requires stated geometric assumptions.",
+      "status": "downloaded",
+      "affiliations": "Central South University; The 48th Research Institute of China Electronics Technology Group Corporation (CETC 48), Changsha",
+      "doi": "10.1016/j.ijmecsci.2025.110810",
+      "source_locator": "Sec. 2.1-2.5 model; Sec. 3.5 (p.11) experiment; Figs. 14-16 measured vs simulated radial/surface profiles; Tables C1 (materials, emissivities) and C2 (dimensions); Eqs. D8-D9",
+      "artifacts": [
+        {
+          "url": "https://www.sciencedirect.com/science/article/abs/pii/S0020740325008926",
+          "path": "ref/reference/R03_Wu_2025_dual_zone_MBE_heater.pdf",
+          "kind": "pdf",
+          "status": "downloaded",
+          "sha256": "185d1c31b2d72770460a7de58a816967b7098d123b9d449f2e730caaaf193266",
+          "bytes": 15100689,
+          "provided_by": "user, 2026-09-29"
+        }
+      ]
+    },
+    {
+      "id": "R04",
+      "title": "Design and optimization of a multi-temperature zone heater for enhanced substrate temperature uniformity in large-sized molecular beam epitaxy systems",
+      "year": 2025,
+      "publication": "Applied Thermal Engineering",
+      "url": "https://www.sciencedirect.com/science/article/abs/pii/S1359431125014565",
+      "accessed": "2026-09-28",
+      "review_level": "abstract_or_index_only",
+      "supports": "Simulation plus experiment for a multi-zone heater with reflective and insulating plates in a large multi-substrate MBE system. Reported: three zones reduce substrate temperature difference from 67.3 K to 9.9 K (87.36% uniform area); 3.05 K at 923 K; two reflective plates cut power 31.88% and shell temperature 53.56%. Uniformity scales with heating-plate flattening ratio and inversely with spacing.",
+      "does_not_support": "Authors, substrate size and measurement method unverified. Multi-substrate platen geometry differs from a single 200 mm wafer.",
+      "use": "Zone-count and reflector design-study comparison for WP3.",
+      "status": "url_only"
+    },
+    {
+      "id": "R05",
+      "title": "Design elements affecting wafer temperature uniformity in multi-wafer production MBE systems",
+      "authors": [
+        "Rogers",
+        "et al."
+      ],
+      "year": 2009,
+      "publication": "Journal of Crystal Growth 311",
+      "url": "https://www.sciencedirect.com/science/article/abs/pii/S0022024808009913",
+      "accessed": "2026-09-28",
+      "review_level": "abstract_or_index_only",
+      "supports": "Experimental study in a 7x6-inch production MBE system: backing-ring width must compensate conduction into the wafer perimeter from the hotter platen; platen spacing and low reflectivity avoid reflected-power hot spots.",
+      "does_not_support": "III-V production context; quantitative results unverified.",
+      "use": "Edge/contact boundary-condition check for the holder model.",
+      "status": "url_only"
+    },
+    {
+      "id": "R06",
+      "title": "Thermal imaging of wafer temperature in MBE using a digital camera",
+      "authors": [
+        "A.W. Jackson",
+        "A.C. Gossard"
+      ],
+      "year": 2007,
+      "publication": "Journal of Crystal Growth",
+      "url": "https://www.sciencedirect.com/science/article/abs/pii/S0022024806015727",
+      "accessed": "2026-09-28",
+      "review_level": "abstract_or_index_only",
+      "date_note": "Index shows online availability 2006-12-23; issue year not verified.",
+      "supports": "In-situ wafer temperature imaging with a modified silicon-sensor DSLR (infrared filter removed).",
+      "does_not_support": "Calibration range and accuracy for GaN/Si at growth temperature unverified.",
+      "use": "Candidate low-cost full-wafer temperature observation for the design-freeze sensor decision.",
+      "status": "url_only"
+    },
+    {
+      "id": "R07",
+      "title": "A detailed study of the molecular beam flux distribution of MBE effusion sources",
+      "year": 1991,
+      "publication": "Vacuum 42(18), 1209-1212",
+      "url": "https://www.sciencedirect.com/science/article/abs/pii/0042207X91901323",
+      "accessed": "2026-09-29",
+      "review_level": "full_text_reviewed",
+      "supports": "Bismuth from graphite crucibles, cylindrical and conical (taper 2.6 deg), aperture D = 16.5 mm; quartz-microbalance scan across +/-48 mm in a plane normal to the crucible axis at R = 115 mm (one case 265 mm). Measured: filling level L/D (Fig. 3), source temperature / rate (Figs. 2, 4), 60 deg inclination at 0.07 and 26.5 A/s (Fig. 5), cylindrical vs conical at L/D = 2 (Fig. 6), 115 vs 265 mm at L/D = 2, 593 C, centre rates 10.0 and 1.9 A/s (Fig. 7). Findings: central ~30 mm plateau independent of L/D, strong fill-level effect outside it; higher rate flattens the profile; inclination effect small up to 60 deg; 1/R^2 holds; intermolecular collisions in the crucible matter above ~0.2 A/s (Knudsen number lambda/D < 12), so collisionless crucible models fail at practical rates. Transfer method to a rotating substrate with a virtual point source at the taper apex; example for VG V80H geometry q = 160 mm, h = 302 mm, 24 deg (Fig. 9).",
+      "does_not_support": "Tabulated data (figures only; scanned PDF, digitization needed). Bismuth, not Ga or Al. Absolute fluxes only for Fig. 7 centre rates.",
+      "use": "Source-transport validation: collisionless crucible model against the 0.07 A/s profile; geometric transfer (fit at 115 mm, predict 265 mm); rate dependence as a model-form limit for collisionless kernels; Fig. 9 as a code-to-code check of rotation averaging.",
+      "status": "downloaded",
+      "authors": [
+        "W. Gericke",
+        "M. Hoericke",
+        "J. von Kalben"
+      ],
+      "affiliations": "Zentralinstitut fuer Elektronenphysik, Berlin",
+      "source_locator": "Sec. 2 setup and Fig. 1; Figs. 2-7 measured normalized profiles; Fig. 8-9 and equations p.1212 rotating-substrate transfer; Sec. 4",
+      "artifacts": [
+        {
+          "url": "https://www.sciencedirect.com/science/article/abs/pii/0042207X91901323",
+          "path": "ref/reference/R07_Gericke_1991_effusion_flux_distribution.pdf",
+          "kind": "pdf",
+          "status": "downloaded",
+          "sha256": "b30e3e82da05e2c07811cc574bdbd0a0fb55d4638f631c8df789cbaed586b82c",
+          "bytes": 433487,
+          "provided_by": "user, 2026-09-29"
+        }
+      ],
+      "digitized_data": "data/benchmarks/r07_gericke1991.json (Figs. 3, 4, 5, 7; scripts/digitize_r07.py)",
+      "comparison": "scripts/compare_r07.py; see ref/notes/REFERENCE_CHAMBER.md"
+    },
+    {
+      "id": "R08",
+      "title": "Molecular beam epitaxy beam flux modeling",
+      "year": 1985,
+      "publication": "Journal of Vacuum Science & Technology B 3(2), 531",
+      "url": "https://pubs.aip.org/avs/jvb/article-pdf/3/2/531/12021852/531_1_online.pdf",
+      "accessed": "2026-09-28",
+      "review_level": "abstract_or_index_only",
+      "supports": "Early beam-flux modeling reference for effusion sources.",
+      "does_not_support": "Content and any measured comparison unverified; publisher returned 403.",
+      "use": "Analytical/semi-analytical comparison for the direct-beam flux kernel.",
+      "status": "url_only"
+    },
+    {
+      "id": "R09",
+      "title": "Monte Carlo calculations of the beam flux distribution from molecular-beam epitaxy sources",
+      "year": "unverified",
+      "url": "https://www.researchgate.net/publication/222096092_Monte_Carlo_calculations_of_the_beam_flux_distribution_from_molecular-beam_epitaxy_sources",
+      "accessed": "2026-09-28",
+      "review_level": "abstract_or_index_only",
+      "supports": "Monte Carlo angular flux distributions from effusion crucibles, a cross-check for Molflow crucible emission.",
+      "does_not_support": "Authors, year and journal unverified.",
+      "status": "url_only"
+    },
+    {
+      "id": "R10",
+      "title": "High active nitrogen flux growth of GaN by plasma assisted molecular beam epitaxy",
+      "year": 2015,
+      "publication": "Journal of Vacuum Science & Technology A 33(5), 05E128",
+      "url": "https://pubs.aip.org/avs/jva/article-abstract/33/5/05E128/245187/High-active-nitrogen-flux-growth-of-GaN-by-plasma",
+      "related_urls": [
+        "https://www.osti.gov/biblio/22479653-high-active-nitrogen-flux-growth-gan-plasma-assisted-molecular-beam-epitaxy"
+      ],
+      "accessed": "2026-09-28",
+      "review_level": "abstract_or_index_only",
+      "supports": "Modified RIBER RF nitrogen source with active-N flux over 30 times typical PAMBE; GaN grown at 5-25 sccm and 200-600 W forward power, up to about 7.6 um/h.",
+      "does_not_support": "Spatial distribution over 200 mm; authors unverified.",
+      "use": "Bounds for total active-N versus power/flow in the proposal's 600 W range.",
+      "status": "url_only"
+    },
+    {
+      "id": "R11",
+      "title": "Development and diagnostic study of the RF nitrogen atom source",
+      "authors": [
+        "Mengting Li",
+        "Xin Xu",
+        "Wubin Wu",
+        "Shixiang Peng",
+        "et al."
+      ],
+      "year": 2024,
+      "publication": "Vacuum",
+      "url": "https://www.sciencedirect.com/science/article/abs/pii/S0042207X24008662",
+      "accessed": "2026-09-28",
+      "review_level": "abstract_or_index_only",
+      "supports": "13.56 MHz, 0-500 W source with 1 mm PBN discharge chamber; OES diagnostics and an RF nitrogen global model linking N-atom density to power, pressure and chamber size. Reported 18% dissociation and 5e12 cm^-3 N atoms at 400 W and 2.1e-3 Pa; N atom density 25 times the ion density.",
+      "does_not_support": "Wafer-plane flux map or growth calibration.",
+      "use": "Global-model form for total active-N versus power and pressure.",
+      "status": "url_only"
+    },
+    {
+      "id": "R12",
+      "title": "Active nitrogen flux measurement during GaN growth based on the transmitted signal detected with a pyrometer",
+      "authors": [
+        "Matteo Canciani",
+        "Stefano Vichi",
+        "Oksana Koplak",
+        "Sergio Bietti",
+        "Stefano Sanguinetti"
+      ],
+      "year": 2024,
+      "publication": "arXiv:2412.15710",
+      "url": "https://arxiv.org/abs/2412.15710",
+      "accessed": "2026-09-28",
+      "review_level": "full_text_reviewed",
+      "supports": "Operational active-N flux measurement from pyrometer signal changes in two-step Ga-rich/N-controlled growth, versus N2 flow and RF power (source tunable 0-600 W; example 300 W, 3 sccm). University of Milan-Bicocca.",
+      "does_not_support": "Spatial distribution; a specific commercial source model; peer-reviewed status not checked.",
+      "use": "Method for defining active-N operationally during commissioning.",
+      "artifacts": [
+        {
+          "url": "https://arxiv.org/pdf/2412.15710",
+          "path": "ref/reference/R12_Canciani_2024_active_N_pyrometer.pdf",
+          "kind": "pdf",
+          "status": "downloaded",
+          "sha256": "3e88f8107bb0c5cccb63e20c28e4425d1824be799467d10a42382ef5ab0ce3e2",
+          "bytes": 1465673
+        }
+      ],
+      "status": "downloaded"
+    },
+    {
+      "id": "R13",
+      "title": "System and method for increasing III-nitride semiconductor growth rate and reducing damaging ion flux (US 10,526,723)",
+      "year": "unverified",
+      "url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/10526723",
+      "accessed": "2026-09-28",
+      "review_level": "abstract_or_index_only",
+      "supports": "Example of a public patent describing III-nitride plasma source design; patents are the main public source of source and aperture geometry.",
+      "does_not_support": "Measured wafer-plane distributions; assignee and claims unreviewed.",
+      "use": "Geometry lead for the aperture-plate transport model.",
+      "status": "url_only"
+    },
+    {
+      "id": "R14",
+      "title": "Simulation of the uniformity influence of effusion cell structure and layout in molecular beam epitaxy",
+      "title_original": "束源炉结构及布局对分子束外延薄膜材料均匀性影响的仿真",
+      "authors": [
+        "Xiantong Tao",
+        "Yingrui Duan",
+        "Zhuangzhuang Li",
+        "Liyuan Song",
+        "Chunzhang Yang",
+        "Jin Yang",
+        "Yanhui Li",
+        "Jincheng Kong",
+        "Jun Zhao",
+        "Rongbin Ji",
+        "Shanli Wang"
+      ],
+      "affiliations": "Kunming Institute of Physics",
+      "year": 2025,
+      "publication": "Chinese Journal of Vacuum Science and Technology 45(6), 461-468",
+      "doi": "10.13922/j.cnki.cjvst.202502013",
+      "url": "https://doi.org/10.13922/j.cnki.cjvst.202502013",
+      "accessed": "2026-09-29",
+      "review_level": "full_text_reviewed",
+      "status": "downloaded",
+      "source_locator": "Table 1; Fig. 7 crucible geometry; Figs. 8-10 base case; Fig. 11 angle scan; Figs. 12-13 distance scan; Fig. 14 crucible shapes; Fig. 16 fill level; Sec. 4",
+      "supports": "COMSOL free-molecular-flow simulation of an 8-inch vertical MBE layout (HgCdTe context, CdTe source), diffuse crucible walls, rotating substrate. Cylindrical crucible bore 71.5 mm, depth 174 mm (170 mm in Fig. 7), fill depth 140 mm, axis aimed at wafer centre; angle phi measured from the wafer normal (phi = 0 symmetric, Fig. 5). Base 35 deg / 350 mm: centre-peaked rotated profile about 2.66 to 2.41 (x1e15) centre to edge, stated non-uniformity 8.2 %. Angle scan: best at 46 deg. Distance scan at 46 deg: range below 1.4 % beyond 300 mm. Shapes at 40 deg / 350 mm: cylindrical 4.36 %, conical 1.4 %, constricted-neck 2.35 %. Flux falls about linearly with source consumption (slope about -2/3 at centre). Also lists 8-inch-class tools: RIBER MBE8000 (4x8-inch), Veeco GEN2000 (7x6-inch), CETC 48 (4x6-inch).",
+      "does_not_support": "Measurement: simulation only, so agreement is code-to-code corroboration, not validation. Non-uniformity metric is not defined and does not reproduce exactly from Fig. 10; depth 174 vs 170 mm inconsistency; distance used in the angle scan not stated explicitly (Table 1 gives 350 mm). CdTe, not Ga/Al.",
+      "use": "Code-to-code comparison for the crucible emission model on an 8-inch geometry: optimum angle near 46 deg, base-case centre-to-edge ratio about 0.90, crucible-shape ranking.",
+      "artifacts": [
+        {
+          "url": "https://doi.org/10.13922/j.cnki.cjvst.202502013",
+          "path": "ref/reference/R14_Tao_2025_effusion_cell_layout_8inch.pdf",
+          "kind": "pdf",
+          "status": "downloaded",
+          "sha256": "aa96097e5e9c4872474c262dd4cf0cb87ea9bc2dc29c9da4faf791424dce3c81",
+          "bytes": 1976304,
+          "provided_by": "user, 2026-09-29"
+        }
+      ]
+    },
+    {
+      "id": "R15",
+      "title": "Vapour pressure equations for the metallic elements: 298-2500 K (CRC Handbook reprint, 'Vapor pressure of the metallic elements')",
+      "year": 1984,
+      "publication": "Canadian Metallurgical Quarterly 23(3), 309-313; table reprinted in CRC Handbook of Chemistry and Physics (C. B. Alcock, 2000)",
+      "url": "https://www.tandfonline.com/doi/abs/10.1179/cmq.1984.23.3.309",
+      "accessed": "2026-09-29",
+      "review_level": "full_text_reviewed",
+      "supports": "log10(p/atm) = A + B/T + C log10 T + D/T^3 for 65 metallic elements, 1e-10 to 1e2 Pa, accuracy +/-5 % or better. Liquid Ga: A 6.754, B -13984, C -0.3413, m.p.-1600 K. Liquid Al: A 5.911, B -16211, m.p.-1800 K. log10(p/Pa) = 5.006 + A + ...",
+      "does_not_support": "Bi, As, Sb (not in the table). Evaporation coefficients or collision cross-sections.",
+      "use": "Saturated vapour pressure of Ga and Al melts (src/mbe_twin/vapour.py) for the in-crucible Knudsen-number estimate (scripts/crucible_knudsen.py).",
+      "status": "downloaded",
+      "authors": [
+        "C. B. Alcock",
+        "V. P. Itkin",
+        "M. K. Horrigan"
+      ],
+      "source_locator": "CRC table, rows 'Ga liq' and 'Al liq' (p. 1)",
+      "artifacts": [
+        {
+          "url": "https://physics.nyu.edu/kentlab/How_to/ChemicalInfo/VaporPressure/VaporPressureElements",
+          "path": "ref/reference/R15_Alcock_1984_vapour_pressure_CRC.pdf",
+          "kind": "pdf",
+          "status": "downloaded",
+          "sha256": "20e3838423214d3f07c9d301f85fe1713991c848f70770b41bdeb9357c0e3416",
+          "bytes": 8600,
+          "provided_by": "fetched by Claude, 2026-09-29"
+        }
+      ]
+    }
+  ]
+}
