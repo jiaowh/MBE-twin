@@ -33,9 +33,28 @@ Listed in order of how directly each one constrains the boundary. Plan the ports
 
 Request in the P0 data list: aperture-plate drawing and hole map, source mounting angle and throw, OES viewport, and whether the manipulator carries a BFM.
 
+## First sensitivity result (2026-09-29)
+
+`src/mbe_twin/aperture.py` implements the plate. Each hole is a short tube sharing one random walk, weighted by a radial output profile. Tests check it against a single `CrucibleSource` (exact) and against a Lambertian disk for dense thin holes (0.2 %). `scripts/nitrogen_plate.py` scans hole aspect L/r (0, 2, 5), plate radius (10, 20 mm), output profile (uniform, centre- or edge-peaked by 50 %), throw (267, 350 mm) and port angle (0-50 deg), with the plate aimed at the wafer centre. Range/mean on the rotating 200 mm wafer:
+
+| Throw | L/r | 0 deg | 20 deg | 40 deg | 50 deg |
+|---|---|---|---|---|---|
+| 350 mm | 0 | 15.6-15.7 % | 12.4-12.5 % | 3.7 % | 1.8-1.9 % |
+| 350 mm | 2 | 33.8-35.4 % | 30.3-31.9 % | 20.3-21.8 % | 13.8-15.1 % |
+| 350 mm | 5 | 67.3-72.6 % | 62.7-67.8 % | 49.6-54.2 % | 40.7-45.1 % |
+| 267 mm | 0 | 26.0-26.3 % | 21.2-21.4 % | 7.4-7.5 % | 2.0 % |
+| 267 mm | 2 | 50.9-53.6 % | 45.7-48.2 % | 30.6-32.8 % | 20.0-22.0 % |
+| 267 mm | 5 | 98.1-106.8 % | 91.6-100.0 % | 72.6-80.3 % | 59.0-65.8 % |
+
+Ranges span plate radius and output profile.
+
+- **The hole aspect ratio dominates.** Plate radius and the output profile across the plate move range/mean by 0-2 points for thin and moderate holes and up to 9 points for the most beamed case; L/r moves it by tens of points. The hole diameter and plate thickness are therefore the most important nitrogen inputs to obtain (P0 request: aperture-plate drawing).
+- A free-molecular plate of beaming holes (L/r >= 2) aimed at the wafer centre cannot give a uniform 200 mm N map at these throws. Real large-area plates presumably rely on hole angles, hole-density patterns or off-centre aim, none of which is public. The model can represent tilted holes and density patterns once a drawing exists.
+- **Caveat: the holes may not be free-molecular.** RF sources run with a discharge pressure far above chamber pressure, so the gas in the holes can be transitional or viscous, which changes the angular distribution (as collisions did for the Ga cells). The Knudsen check in step 4 must come before these numbers are used for design.
+
 ## Next steps
 
-1. Implement an aperture-plate source (hole pattern of short-tube emitters) using the existing beam code; verify against a single-tube `crucible.py` result and a flat-disk limit.
-2. Sensitivity study of the wafer N map over hole-pattern radius, plate profile (flat versus centre-peaked output), throw and angle, labelled `representative_chamber`.
+1. Done: aperture-plate source.
+2. Done (first pass): sensitivity study above. Add tilted holes and hole-density patterns when a representative drawing is found.
 3. Combine with the Ga DSMC results: Ga/N ratio range across 200 mm for candidate layouts over the admissible fill range.
 4. Knudsen check for the plate holes and the plume at typical flows (1-3 sccm).

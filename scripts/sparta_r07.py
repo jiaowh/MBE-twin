@@ -57,22 +57,25 @@ DEFAULTS = {
     "diameter_m": 8.0e-10,  # calibrated on 3.5 A/s (ref/notes/REFERENCE_CHAMBER.md)
     "cell_m": 1.0e-3,       # fine cell in and near the bore; keep <= lambda_sat / 2
     "coarse": 3,            # coarse cell = coarse * cell elsewhere (1: uniform grid)
-    "particles": 2.0e5,     # target simulated particles in the bore at saturation density
+    "particles": 1.0e6,     # target simulated particles in the bore at saturation density
     "dt_factor": 0.3,       # timestep = dt_factor * cell / mean speed
     "steps_eq": 8000,
-    "steps_sample": 16000,
+    "steps_sample": 48000,
     "dump_every": 20,
     "slab_D": [5.0, 5.5],   # sampling slab above the orifice, in units of D (>= 4.5 D)
     "seed": 12345,
 }
 # Configurations behind the results in REFERENCE_CHAMBER.md. The 11 A/s case needs finer
 # cells (lambda_sat = 1.2 mm) and, with them, more particles and a longer equilibration.
+# Statistics: with 2e5 particles and 16000 sampling steps the per-bin profile error is about
+# 0.02, as large as the model-data misfit (uq_batch, 2026-09-29); these settings bring it
+# to about 0.005.
 BENCHMARKS = {
     "r07_fm": {"case": "fm"},
     "r07_0.35": {"case": "0.35"},
     "r07_3.5": {"case": "3.5"},
-    "r07_11": {"case": "11", "cell_m": 0.6e-3, "particles": 6.0e5, "steps_eq": 14000,
-               "steps_sample": 24000},
+    "r07_11": {"case": "11", "cell_m": 0.6e-3, "particles": 1.2e6, "steps_eq": 14000,
+               "steps_sample": 72000},
 }
 SOURCES = [Path(__file__), ROOT / "src/mbe_twin/sparta.py", ROOT / "src/mbe_twin/crucible.py"]
 
