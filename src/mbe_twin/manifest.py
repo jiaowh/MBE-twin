@@ -42,9 +42,27 @@ def _git_commit(root):
     return out.stdout.strip() + ("-dirty" if dirty.stdout.strip() else "")
 
 
+def source_sha256(paths, root=None):
+    """SHA-256 of each source file, keyed by its path relative to the repository root.
+
+    Recorded in manifests because a "-dirty" commit alone does not identify the code that ran.
+    """
+    root = Path(root) if root else Path(__file__).resolve().parents[2]
+    out = {}
+    for p in paths:
+        p = Path(p).resolve()
+        key = p.relative_to(root).as_posix() if p.is_relative_to(root) else str(p)
+        out[key] = hashlib.sha256(p.read_bytes()).hexdigest()
+    return out
+
+
 def build_manifest(run_id, *, label, inputs, outputs, validation_status="not_validated",
-                   warnings=(), disabled_physics=()):
-    """Assemble a run manifest. `label` and `validation_status` are restricted vocabularies."""
+                   warnings=(), disabled_physics=(), sources=(), solver=None):
+    """Assemble a run manifest. `label` and `validation_status` are restricted vocabularies.
+
+    `sources` lists code files whose hashes are recorded; `solver` describes an external
+    solver build (name, version or commit).
+    """
     if label not in LABELS:
         raise ValueError(f"label must be one of {LABELS}")
     if validation_status not in VALIDATION_STATUSES:
@@ -61,6 +79,8 @@ def build_manifest(run_id, *, label, inputs, outputs, validation_status="not_val
         "python": platform.python_version(),
         "numpy": np.__version__,
         "platform": platform.platform(),
+        "source_sha256": source_sha256(sources, root),
+        "solver": solver,
         "inputs_sha256": canonical_hash(inputs),
         "inputs": inputs,
         "outputs": outputs,

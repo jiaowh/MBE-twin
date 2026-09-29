@@ -1,6 +1,17 @@
 # GaN/AlN MBE digital twin
 
-This repository currently contains a reviewed engineering plan and a source library for a laptop-runnable MBE chamber twin. Simulation implementation and experimental validation are the next stages.
+This repository holds the engineering plan, the source library and the first simulation code (Stage A) for a laptop-runnable MBE chamber twin. The proposed machine is not built; the code runs on a representative 200 mm chamber and is checked subsystem by subsystem against published cases. No result here is a validated prediction for the proposed machine.
+
+| Area | Status (2026-09-29) |
+|---|---|
+| Direct beam and free-molecular crucible emission | Implemented; verified against closed-form and deterministic references; reproduces R07's measured fill-level profiles (Bi) |
+| Collisional crucible (SPARTA DSMC) | One fitted parameter (Bi hard-sphere diameter) reproduces R07's held-out profile shapes at 0.35 and 11 A/s; absolute rates 7-16 % low; numerical uncertainty study in progress |
+| Production Ga transport (200 mm, level melt) | Exploratory: free-molecular sensitivity study done; DSMC study over an unsourced Ga collision-diameter bracket in progress |
+| Heater and wafer thermal (Elmer) | Conduction (V02) and diffuse-gray radiation (V03) verified; R03 heater reproduction not started |
+| Nitrogen, vacuum, growth chemistry | Planned ([nitrogen boundary](ref/notes/NITROGEN_BOUNDARY.md)); not implemented |
+| Integrated chamber twin | Not implemented |
+
+How to reproduce each result: [docs/REPRODUCE.md](docs/REPRODUCE.md).
 
 Start with [PHASE1_CHAMBER_PLAN.md](PHASE1_CHAMBER_PLAN.md): scope, accuracy requirements, justified accelerations, laptop performance gates, tool choices and implementation order.
 
@@ -17,7 +28,7 @@ Commercial solver access is optional. For Stage A, the published test cases R03,
 
 ## Code (Stage A, started 2026-09-28)
 
-`src/mbe_twin` holds the first implementation slice: SI unit conversions, a direct-beam flux model (finite effusion apertures, cos^n emission, shutter shadowing, wafer rotation and dose), a free-molecular crucible emission model (`crucible.py`, verified against Clausing transmission), area-weighted uniformity metrics and a run manifest. `vapour.py` holds sourced Ga/Al vapour-pressure equations (Alcock 1984), and `scripts/crucible_knudsen.py` estimates the in-crucible collision regime at production rates against R07's criterion. `sparta.py` and `scripts/sparta_r07.py` run a collisional (DSMC) crucible model with SPARTA inside WSL, calibrated and validated on R07's rate series. `scripts/compare_r14.py` runs the code-to-code comparison with the 8-inch layout study R14. `scripts/digitize_r07.py` and `scripts/compare_r07.py` digitize R07's measured profiles and compare them with the crucible model. It needs Python 3.11+ with numpy; the tests also need pytest and scipy, and the digitizer needs PyMuPDF.
+`src/mbe_twin` holds the first implementation slice: SI unit conversions, a direct-beam flux model (finite effusion apertures, cos^n emission, shutter shadowing, wafer rotation and dose), a free-molecular crucible emission model (`crucible.py`, verified against Clausing transmission), area-weighted uniformity metrics and a run manifest. `vapour.py` holds sourced Ga/Al vapour-pressure equations (Alcock 1984), and `scripts/crucible_knudsen.py` estimates the in-crucible collision regime at production rates against R07's criterion. `sparta.py` and `scripts/sparta_r07.py` run a collisional (DSMC) crucible model with SPARTA inside WSL, calibrated on R07's 3.5 A/s profile and tested on its 0.35 and 11 A/s profiles; `sparta_source.py` and `scripts/sparta_ga.py` extend it to a level melt in a tilted crucible and transport onto the rotating 200 mm wafer. `scripts/fill_level_fm.py` is the free-molecular fill-level sensitivity study. `radiation.py` holds the coaxial-disk radiation reference for the Elmer V03 benchmark. `scripts/compare_r14.py` runs the code-to-code comparison with the 8-inch layout study R14. `scripts/digitize_r07.py` and `scripts/compare_r07.py` digitize R07's measured profiles and compare them with the crucible model. It needs Python 3.11+ with numpy; the tests also need pytest and scipy, and the digitizer needs PyMuPDF.
 
 Elmer FEM is an external solver, pinned to the rel26.1 Windows build (`ElmerFEM-gui-nompi-Windows-AMD64-rel26.1.zip`; banner "Version 9.0, compiled 2026-01-20"). Set `ELMER_HOME` to the unpacked folder that contains `bin/`. `src/mbe_twin/elmer.py` runs cases, and `cases/verification/elmer_v02_slab` is its conduction benchmark; the Elmer test is skipped when Elmer is absent.
 

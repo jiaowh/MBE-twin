@@ -9,8 +9,9 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from mbe_twin.sparta import (LIP, MELT, WALL, crucible_surface, edge_use, propagate_slab,
-                             sparta_available, write_surf)
+from mbe_twin.sparta import (LIP, MELT, WALL, batch_means, crucible_surface, edge_use,
+                             expected_dump_steps, load_run_config, log_stats, prepare_run_dir,
+                             propagate_slab, read_dumps, sparta_available, write_surf)
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -98,11 +99,54 @@ def test_collisionless_sparta_matches_free_molecular_model(tmp_path):
     # Long runs agree with crucible.py to 1-2 % in absolute flux; this is a coarse check of
     # the whole pipeline: flux integrated inside 20 mm within 5 %.
     out = tmp_path / "fm"
-    subprocess.run([sys.executable, str(ROOT / "scripts/sparta_r07.py"), "fm", "--steps-eq", "4000",
-                    "--steps-sample", "6000", "--particles", "1e5", "--out", str(out)],
+    subprocess.run([sys.executable, str(ROOT / "scripts/sparta_r07.py"), "r07_fm",
+                    "--set", "steps_eq=4000", "--set", "steps_sample=6000", "--set", "particles=1e5",
+                    "--set", "slab_D=[1.5, 2.0]", "--out", str(out)],
                    check=True, capture_output=True, env={**os.environ, "PYTHONPATH": str(ROOT / "src")})
-    m = json.loads((out / "manifest.json").read_text())["outputs"]
+    m = json.loads((out / "summary.json").read_text())["outputs"]
     area = np.diff(np.linspace(0.0, 48.0, 25) ** 2)
     inner = np.array(m["x_mm"]) <= 20.0
     s, f = np.array(m["sparta_flux"]), np.array(m["free_molecular_flux"])
     assert np.sum((s * area)[inner]) / np.sum((f * area)[inner]) == pytest.approx(1.0, abs=0.05)
+
+
+def _write_dump(path, step, rows):
+    lines = ["ITEM: TIMESTEP", str(step), "ITEM: NUMBER OF ATOMS", str(len(rows)),
+             "ITEM: BOX BOUNDS oo oo oo", "-1 1", "-1 1", "-1 1", "ITEM: ATOMS id x y z vx vy vz"]
+    lines += [" ".join(map(str, r)) for r in rows]
+    path.write_text(chr(10).join(lines) + chr(10))
+
+
+def test_run_dir_must_be_fresh_and_config_round_trips(tmp_path):
+    cfg = {"case": "3.5", "slab_m": [0.08, 0.09]}
+    work = prepare_run_dir(tmp_path / "run", cfg)
+    assert load_run_config(work) == cfg
+    with pytest.raises(FileExistsError):
+        prepare_run_dir(work, cfg)  # holds config.json now
+    with pytest.raises(FileNotFoundError):
+        load_run_config(tmp_path)
+
+
+def test_read_dumps_rejects_stale_or_missing_snapshots(tmp_path):
+    steps = expected_dump_steps(100, 40, 20)
+    assert steps == [100, 120, 140]
+    for i, step in enumerate(steps):
+        _write_dump(tmp_path / f"dump.slab.{step}", step, [(1, 0, 0, 0.1 * i, 0, 0, 1.0)] * (i + 1))
+    pos, vel, snap = read_dumps(tmp_path, steps)
+    assert len(pos) == 6 and list(snap) == [0, 1, 1, 2, 2, 2]
+    _write_dump(tmp_path / "dump.slab.160", 160, [(1, 0, 0, 0, 0, 0, 1.0)])  # left from a longer run
+    with pytest.raises(ValueError, match="unexpected"):
+        read_dumps(tmp_path, steps)
+    with pytest.raises(ValueError, match="missing"):
+        read_dumps(tmp_path, expected_dump_steps(100, 80, 20)[:-1] + [200])
+    with pytest.raises(ValueError):
+        expected_dump_steps(100, 50, 20)
+
+
+def test_batch_means_and_log_stats():
+    mean, se = batch_means([[1.0, 2.0], [3.0, 2.0]])
+    assert np.allclose(mean, [2.0, 2.0]) and np.allclose(se, [1.0, 0.0])
+    log = chr(10).join(["junk", "Step CPU Np ", " 0 0 0 ", " 1000 1.5 42 ", "Loop time of 2",
+                     "Step CPU Np", " 1000 0 42", ""])
+    rows = log_stats(log)
+    assert [r["Step"] for r in rows] == [0, 1000, 1000] and rows[1]["Np"] == 42

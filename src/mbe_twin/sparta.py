@@ -18,6 +18,7 @@ with flux-weighted normal velocities (checked in fix_emit_surf.cpp), i.e. a cosi
 evaporating melt at saturation density n.
 """
 
+import json
 import shutil
 import subprocess
 from dataclasses import dataclass
@@ -148,6 +149,112 @@ def sparta_available():
     r = subprocess.run(["wsl.exe", "-e", "bash", "-lc", f"test -x {SPARTA_WSL_EXE}"],
                        capture_output=True, timeout=120)
     return r.returncode == 0
+
+
+def sparta_commit():
+    """Commit of the WSL SPARTA checkout that `SPARTA_WSL_EXE` was built from, or None."""
+    try:
+        r = subprocess.run(["wsl.exe", "-e", "bash", "-lc", "git -C ~/sparta rev-parse HEAD"],
+                           capture_output=True, timeout=120)
+    except (OSError, subprocess.SubprocessError):
+        return None
+    if r.returncode != 0:
+        return None
+    return r.stdout.decode().strip() or None
+
+
+CONFIG_FILE = "config.json"
+
+
+def prepare_run_dir(work_dir, config):
+    """Create a fresh run directory and record the complete run configuration in it.
+
+    Refuses a directory that already holds files, so that snapshots from an earlier run can
+    never be mixed into a new one. The configuration is written before SPARTA starts, and
+    post-processing reads it back (`load_run_config`) instead of trusting command-line flags.
+    """
+    work = Path(work_dir)
+    if work.exists() and any(work.iterdir()):
+        raise FileExistsError(f"run directory {work} is not empty; choose a new --out")
+    work.mkdir(parents=True, exist_ok=True)
+    (work / CONFIG_FILE).write_text(json.dumps(config, indent=2, sort_keys=True) + "\n",
+                                    encoding="utf-8")
+    return work
+
+
+def load_run_config(work_dir):
+    path = Path(work_dir) / CONFIG_FILE
+    if not path.exists():
+        raise FileNotFoundError(f"{path} missing: the run predates recorded configurations "
+                                "and cannot be post-processed reproducibly")
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def expected_dump_steps(steps_eq, steps_sample, dump_every):
+    """Timesteps at which the sampling run writes `dump.slab.*` (both ends included)."""
+    if steps_eq % dump_every or steps_sample % dump_every:
+        raise ValueError("equilibration and sampling steps must be multiples of dump_every")
+    return list(range(steps_eq, steps_eq + steps_sample + 1, dump_every))
+
+
+def read_dumps(work_dir, expected_steps, prefix="dump.slab."):
+    """Particle snapshots of one run, checked against the expected set of timesteps.
+
+    Returns positions (N, 3), velocities (N, 3) and the snapshot index (N,) of each sample.
+    Raises if any expected snapshot is missing or any unexpected one is present.
+    """
+    work = Path(work_dir)
+    files = {int(f.name[len(prefix):]): f for f in work.glob(prefix + "*")}
+    expected = list(expected_steps)
+    missing = sorted(set(expected) - set(files))
+    extra = sorted(set(files) - set(expected))
+    if missing or extra:
+        raise ValueError(f"dump files do not match the run configuration: missing {missing[:5]}"
+                         f"{'...' if len(missing) > 5 else ''}, unexpected {extra[:5]}"
+                         f"{'...' if len(extra) > 5 else ''}")
+    pos, vel, snap = [], [], []
+    for i, step in enumerate(expected):
+        text = files[step].read_text().splitlines()
+        if int(text[text.index("ITEM: TIMESTEP") + 1]) != step:
+            raise ValueError(f"{files[step].name}: timestep does not match its file name")
+        start = next(j for j, line in enumerate(text) if line.startswith("ITEM: ATOMS")) + 1
+        if start < len(text):
+            a = np.loadtxt(text[start:], ndmin=2)
+            pos.append(a[:, 1:4])
+            vel.append(a[:, 4:7])
+            snap.append(np.full(len(a), i))
+    return np.concatenate(pos), np.concatenate(vel), np.concatenate(snap)
+
+
+def batch_means(block_values):
+    """Mean and standard error from (n_blocks, ...) block estimates (batch-means method).
+
+    Valid when blocks are long compared with the correlation time of the sampled quantity;
+    check by comparing the standard error for different block counts.
+    """
+    v = np.asarray(block_values, float)
+    n = len(v)
+    if n < 2:
+        raise ValueError("need at least two blocks")
+    return v.mean(axis=0), v.std(axis=0, ddof=1) / np.sqrt(n)
+
+
+def log_stats(log_text):
+    """Rows of SPARTA's thermo output as dicts of floats, for every `run` in the log."""
+    rows, header = [], None
+    for line in log_text.splitlines():
+        parts = line.split()
+        if parts and parts[0] == "Step":
+            header = parts
+            continue
+        if header and len(parts) == len(header):
+            try:
+                rows.append(dict(zip(header, map(float, parts))))
+            except ValueError:
+                header = None
+        elif header:
+            header = None
+    return rows
 
 
 def run_case(work_dir, script="in.case", log="log.sparta", timeout=36000):

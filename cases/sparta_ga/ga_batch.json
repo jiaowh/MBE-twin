@@ -1,0 +1,24 @@
+{
+  "description": "Ga source on the 200 mm representative chamber (71.5 mm bore, 350 mm, 46 deg, level melt): collisionless checks, collision-diameter bracket over admissible fills at GaN 1 um/h (temperature held by a free-molecular mass balance), fixed-temperature and 0.5 um/h variants, and slab, seed and cell checks at the most collisional state. Longest jobs first.",
+  "script": "scripts/sparta_ga.py",
+  "jobs": [
+    {"name": "fill120_d8_cells24", "args": ["--fill", "0.12", "--diameter", "8e-10", "--set", "cells_per_bore=24", "--set", "particles=1.2e6", "--set", "steps_eq=12000", "--set", "steps_sample=36000"]},
+    {"name": "fill120_d8", "args": ["--fill", "0.12", "--diameter", "8e-10"]},
+    {"name": "fill120_d8_seed2", "args": ["--fill", "0.12", "--diameter", "8e-10", "--set", "seed=2"]},
+    {"name": "fill120_d8_slab25", "args": ["--fill", "0.12", "--diameter", "8e-10", "--set", "slab_D=[2.5, 3.0]"]},
+    {"name": "fill070_d8", "args": ["--fill", "0.07", "--diameter", "8e-10"]},
+    {"name": "fill040_d8", "args": ["--fill", "0.04", "--diameter", "8e-10"]},
+    {"name": "fill120_d5.68", "args": ["--fill", "0.12", "--diameter", "5.68e-10"]},
+    {"name": "fill070_d5.68", "args": ["--fill", "0.07", "--diameter", "5.68e-10"]},
+    {"name": "fill040_d5.68", "args": ["--fill", "0.04", "--diameter", "5.68e-10"]},
+    {"name": "fill120_d2.5", "args": ["--fill", "0.12", "--diameter", "2.5e-10"]},
+    {"name": "fill070_d2.5", "args": ["--fill", "0.07", "--diameter", "2.5e-10"]},
+    {"name": "fill040_d2.5", "args": ["--fill", "0.04", "--diameter", "2.5e-10"]},
+    {"name": "fill120_d5.68_fixedT", "args": ["--fill", "0.12", "--diameter", "5.68e-10", "--mode", "fixed"]},
+    {"name": "fill070_d5.68_fixedT", "args": ["--fill", "0.07", "--diameter", "5.68e-10", "--mode", "fixed"]},
+    {"name": "fill120_d5.68_0.5umh", "args": ["--fill", "0.12", "--diameter", "5.68e-10", "--rate", "0.5"]},
+    {"name": "fill120_fm", "args": ["--fill", "0.12", "--diameter", "none"]},
+    {"name": "fill070_fm", "args": ["--fill", "0.07", "--diameter", "none"]},
+    {"name": "fill040_fm", "args": ["--fill", "0.04", "--diameter", "none"]}
+  ]
+}
