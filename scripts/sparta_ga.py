@@ -24,7 +24,7 @@ slab 3.0-3.5 D above the orifice (the nearest wafer edge is 3.9 D away along the
 collisions beyond 3.5 D are neglected (R07 benchmark: moving the slab from 3 D to 4.5 D
 changed the profile by about 0.015). Uncertainty: batch means over time blocks.
 
-Usage: python scripts/sparta_ga.py --fill 0.07 --diameter 5.68e-10 [--rate 1.0] [--mode hold]
+Usage: python scripts/sparta_ga.py --fill 0.07 --diameter 5.68e-10 [--rate 1.0] [--mode hold] [--angle 46]
                                    [--out DIR] [--record NAME] [--set key=value ...]
        python scripts/sparta_ga.py --reuse DIR [--record NAME]
 """
@@ -49,7 +49,7 @@ ROOT = Path(__file__).resolve().parents[1]
 RECORD_DIR = ROOT / "data/runs/sparta_ga"
 BORE_RADIUS = 0.03575
 THROW = 0.350
-POLAR_DEG = 46.0
+POLAR_DEG = 46.0  # port angle from the wafer normal; set per run from config["polar_deg"] in main()
 WAFER_RADIUS = 0.100
 REFERENCE_FILL = 0.040
 GA_MASS = atomic_mass_kg("Ga")
@@ -185,20 +185,24 @@ def main():
     ap.add_argument("--diameter", default=None, help="hard-sphere diameter (m) or 'none'")
     ap.add_argument("--rate", type=float, default=1.0, help="target GaN growth rate (um/h)")
     ap.add_argument("--mode", choices=("hold", "fixed"), default="hold")
+    ap.add_argument("--angle", type=float, default=46.0, help="port angle from the wafer normal (deg)")
     ap.add_argument("--set", action="append", default=[], metavar="KEY=VALUE")
     ap.add_argument("--out", default=None)
     ap.add_argument("--reuse", default=None, metavar="DIR")
     ap.add_argument("--blocks", type=int, default=8)
     ap.add_argument("--record", default=None, metavar="NAME")
     args = ap.parse_args()
+    global POLAR_DEG
 
     if args.reuse:
         work = Path(args.reuse)
         cfg = load_run_config(work)
+        POLAR_DEG = cfg.get("polar_deg", 46.0)  # runs before 2026-09-30 were all at 46 deg
     else:
         if args.fill is None or args.diameter is None:
             ap.error("give --fill and --diameter (or --reuse DIR)")
-        cfg = {"fill_m": args.fill, "rate_um_h": args.rate, "mode": args.mode,
+        POLAR_DEG = args.angle
+        cfg = {"fill_m": args.fill, "rate_um_h": args.rate, "mode": args.mode, "polar_deg": args.angle,
                "diameter_m": None if args.diameter == "none" else float(args.diameter), **NUMERICS}
         for item in args.set:
             key, _, value = item.partition("=")
@@ -215,7 +219,8 @@ def main():
         cfg["source_sha256_at_start"] = source_sha256(SOURCES)
         d = "fm" if cfg["diameter_m"] is None else f"d{cfg['diameter_m'] * 1e10:.2f}"
         work = Path(args.out or ROOT / "results/sparta_ga" /
-                    f"fill{1e3 * args.fill:.0f}_{d}_{args.rate:g}umh_{args.mode}")
+                    f"fill{1e3 * args.fill:.0f}_{d}_{args.rate:g}umh_{args.mode}"
+                    + ("" if args.angle == 46.0 else f"_{args.angle:g}deg"))
         prepare_run_dir(work, cfg)
         run.write_inputs(work)
         run_case(work)

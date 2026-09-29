@@ -1,0 +1,8 @@
+{
+  "description": "Extends the high-statistics diameter scan at 3.5 A/s (uq2_batch: 7, 8, 9 A) to close the admissible interval: bias is not linear in d over 7-9 A, so 8.5, 10 and 11 A are added at the default benchmark settings. Run each job directly with --out results/uq2_batch/NAME --record uq2_batch/NAME so that summarize_uq.py sees one scan (the batch runner would file them under uq2_dscan).",
+  "jobs": [
+    {"name": "3.5_d8.5", "args": ["r07_3.5", "--set", "diameter_m=8.5e-10"]},
+    {"name": "3.5_d10.0", "args": ["r07_3.5", "--set", "diameter_m=10.0e-10"]},
+    {"name": "3.5_d11.0", "args": ["r07_3.5", "--set", "diameter_m=11.0e-10"]}
+  ]
+}
