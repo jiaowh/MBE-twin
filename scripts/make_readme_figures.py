@@ -187,8 +187,15 @@ def ga_angle():
         ax.errorbar(angs, vals, yerr=errs, fmt="o-", c=col, capsize=3, label=f"{f} mm, with collisions")
         ax.plot(angs, fms, ":", c=col, lw=1)
     ax.plot([], [], "k:", lw=1, label="dotted: no collisions")
-    ax.axhspan(0, 1.5, color=GREY, alpha=0.12)
-    ax.text(62.3, 0.4, "values below ~1.5 %\nnot yet converged", fontsize=8, color=GREY, ha="right")
+    for f, a, dx in [(70, 54, 0.35), (120, 58, 0.35)]:  # spread of the one-setting checks
+        checks = sorted((RUNS / "sparta_ga/ga_checks").glob(f"fill{f:03d}_d8_{a}deg_*.json"))
+        vals = [load(p.relative_to(RUNS))["metrics_dsmc"]["range_over_mean_pct"] for p in checks]
+        vals.append(load(f"sparta_ga/ga_angle/fill{f:03d}_d8_{a}deg.json")["metrics_dsmc"]
+                    ["range_over_mean_pct"])
+        ax.plot([a + dx] * 2, [min(vals), max(vals)], c=GREY, lw=4, alpha=0.7, solid_capstyle="butt")
+    ax.plot([], [], c=GREY, lw=4, alpha=0.7, label="spread of repeat checks")
+    ax.axhspan(0, 2.0, color=GREY, alpha=0.12)
+    ax.text(62.3, 0.4, "values below ~2 %\nnot yet converged", fontsize=8, color=GREY, ha="right")
     ax.set_xlabel("port angle from the wafer axis (degrees)")
     ax.set_ylabel("unevenness, range/mean (%)")
     ax.set_title("The best port angle depends on how full the cup is (atom size 8 Å)", fontsize=10)

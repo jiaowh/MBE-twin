@@ -171,10 +171,21 @@ Range/mean at 46 deg, 1 um/h (free-molecular temperature schedule):
 
   The bootstrap scatter is 0.16-0.49 points.
   - Collisions move the 120 mm optimum from 62 deg or beyond (free-molecular) to about 58 deg. At 70 mm the optimum stays near 54 deg.
-  - **Minima are about 1 % and not converged.** Numerical checks at two optima (d = 8 A, `cases/sparta_ga/ga_checks.json`, one setting changed per check):
-    - 70 mm / 54 deg: base 0.69, second seed 0.87, half timestep 1.35, finer cells 0.86 %.
-    - 120 mm / 58 deg: base 0.92, second seed 1.47 %.
-    The half-timestep shift (0.66 points) exceeds either run's scatter. That is not conclusive evidence of timestep bias, but it rules out claiming convergence. The remaining checks (doubled particles; timestep and cells at 120 mm) were interrupted by session restarts and are rerunning. Report the optima as "about 1 %, uncertainty unresolved"; sub-percent values are not established.
+  - **Minima are about 1 % (70 mm) and about 1.5-2 % (120 mm), not converged.** Numerical checks at two optima (d = 8 A, `cases/sparta_ga/ga_checks.json`, one setting changed per check; +/- is the bootstrap scatter; all 8 checks completed 2026-09-30):
+
+    | Check | 70 mm / 54 deg | 120 mm / 58 deg |
+    |---|---|---|
+    | Base | 0.69 +/- 0.26 | 0.92 +/- 0.28 |
+    | Second seed | 0.87 +/- 0.30 | 1.47 +/- 0.40 |
+    | Half timestep | 1.35 +/- 0.31 | 1.83 +/- 0.38 |
+    | Cells D/24 | 0.86 +/- 0.23 | 1.29 +/- 0.39 |
+    | 2x particles | 1.04 +/- 0.18 | 1.93 +/- 0.32 |
+
+    - At 70 mm the checks span 0.69-1.35 %. Only the half-timestep value lies clearly above the base.
+    - At 120 mm every check exceeds the base, and the half-timestep and 2x-particle values do so by about 1 point (about 2.3 sigma each). The base looks like a low draw, or both settings are under-resolved; one-setting checks cannot distinguish these.
+    - Report the optima as about 1 % (70 mm) and about 1.5-2 % (120 mm). Sub-percent values are not established.
+    - Neither check moves the optimum angle. That would need a finer angle scan at converged settings.
+    - Delivered/target centre flux in these runs: 1.08-1.09 at 70 mm / 54 deg and 1.00-1.03 at 120 mm / 58 deg (free-molecular schedule).
   - **A fixed port cannot follow the optimum.** A fresh 40 mm fill spills above 48.2 deg, while the depleted charge prefers 54-58 deg.
 - **Delivered flux.** Under the free-molecular temperature schedule, DSMC delivers 0.96-1.09 of the target centre flux, depending on d, fill and angle. Every comparison above is therefore at approximately, not exactly, constant flux. The temperature rise needed to hold the rate is known only for the free-molecular schedule: 953.6 to 962.1 C from 40 to 120 mm at 46 deg, and up to 979.5 C at 62 deg. A DSMC-held version is running: `sparta_ga.py --mode dsmc-hold` corrects the temperature from a previous run's delivered flux, and `scripts/ga_flux_hold.py` repeats the correction until delivered/target is within +/-1.5 %. Only states meeting that tolerance will be called flux-held.
 - **What this supports.** A representative-chamber sensitivity study with a verified collisional model, a validated uniformity estimator with stated scatter, recorded one-state numerical sensitivities, and a bracketed physical unknown (d). It is not a thickness prediction. In Ga-rich PAMBE, thickness follows the active-N map ([nitrogen boundary](NITROGEN_BOUNDARY.md)); the Ga map sets the Ga/N-ratio margin across the wafer.
@@ -186,7 +197,7 @@ Revised 2026-09-30 after the third review round. Order of work: recover the inco
 1. Done: run isolation and recorded configurations; named R07 benchmarks; frozen batch files; versioned summaries; manifests with source hashes ([REPRODUCE](../../docs/REPRODUCE.md)).
 2. Done: numerical uncertainty of the R07 benchmarks (seeds, timestep, cells, time blocks, high-statistics repeat); d = 8.0-10.3 A, an effective-parameter sensitivity interval. The 7-15 % absolute-rate deficit remains open.
 3. Done: level-melt SPARTA geometry and transport to the inclined, rotating wafer, verified collisionless against `crucible.py`; uniformity estimator validated against dense references and applied to all Ga records.
-4. In progress: numerical checks at the angle optima (4 of 8 complete; the rest were interrupted by session restarts and are rerunning through the memory-guarded batch runner).
+4. Done: numerical checks at the angle optima (8 of 8; see "Minima" above). Optima are about 1 % (70 mm) and about 1.5-2 % (120 mm), not converged. A converged optimum would need a combined finer-timestep, more-particle run, which is deferred because each takes about 2 h on the laptop.
 5. Queued: DSMC-held delivered flux (`ga_dsmchold.json`, then `ga_flux_hold.py` iterating to +/-1.5 %) for the 46 deg fill series and the angle optima. Afterwards, restate the temperature rise needed to hold the rate and the angle comparison at held flux.
 6. Then: a representative aperture-plate geometry (R13 patent Figs. 7-8 are the current lead; see [validation reference search](VALIDATION_REFERENCE_SEARCH_2026-09-30.md)), and a defensible Ga collision cross-section. None was found; the bracket stays explicitly unsourced until a justified gas-phase potential is available.
 7. Later: crucible-shape study to reduce fill drift (after 4-6).

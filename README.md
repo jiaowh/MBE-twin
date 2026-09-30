@@ -91,15 +91,15 @@ With the beam model tested, we apply it to a gallium cell in the representative 
 
 **The biggest unknown: the gallium atom's size.** No published source gives the collision size of a gallium atom, so we try a range (2.5, 5.68 and 8 Å). It hardly matters for a fresh charge. For a nearly empty cup, bigger atoms mean more collisions, which widen the spray again. There the answer ranges from about 8 % to 10 %.
 
-**Choosing the port angle.** Tilting the cell more steeply compensates for the narrowing spray. The best angle depends on the fill: about 48° for a fresh 40 mm charge, about 54° at 70 mm and about 58° at 120 mm. At its best angle each fill reaches roughly 1 %.
+**Choosing the port angle.** Tilting the cell more steeply compensates for the narrowing spray. The best angle depends on the fill: about 48° for a fresh 40 mm charge, about 54° at 70 mm and about 58° at 120 mm. At its best angle each fill reaches roughly 1–2 %.
 
 ![Range/mean against port angle for three fill levels, with the spill limit for a fresh charge above 48.2°](docs/figures/ga_angle.png)
 
-*Solid lines: collision model (atom size 8 Å) with statistical error. Dotted: no collisions. Red shading: angles where a fresh charge would spill. Grey band: values that finer simulation settings still move by up to about 0.7 points.*
+*Solid lines: collision model (atom size 8 Å) with statistical error. Dotted: no collisions. Red shading: angles where a fresh charge would spill. Grey bars at 54° and 58°: the spread of repeat runs with finer settings. Grey band: values not yet pinned down by those repeats.*
 
 What the angle study means:
 - **No fixed angle is best for a whole campaign.** A fresh charge would spill beyond 48.2°, while an emptying cup prefers 54–58°. Choosing a port angle is a real design trade-off.
-- **"About 1 %" is as precise as the optimum gets for now.** Repeating the best cases with finer time steps, finer grids and different random seeds moves the result between about 0.7 and 1.5 %. More of those checks are running.
+- **The best values are only known roughly.** We repeated the two best cases with a different random seed, a halved time step, a finer grid and twice the simulated atoms. The results moved between 0.7 and 1.4 % at 70 mm, and between 0.9 and 1.9 % at 120 mm. So the best achievable is about 1 % for a half-empty cup and about 1.5–2 % for a nearly empty one. Pinning it down further would need much longer runs.
 
 **Keeping the growth rate constant.** As the cup empties, less vapour escapes, so the oven must run hotter to keep the growth rate. The no-collision model puts the increase at about 8.5 °C between 40 and 120 mm. With collisions, the rate actually delivered at those temperatures is 4 % below to 9 % above the target. So the twin now adjusts the temperature from the collision simulation itself, repeating until the delivered rate is within ±1.5 % of the target. Those runs are in progress.
 
@@ -132,14 +132,14 @@ The first published heater experiment we examined (R03) turned out to be a weak 
 | Part | Status |
 |---|---|
 | Gallium beam model | Tested against a real experiment (shape within 1–2 %); absolute rate 7–15 % low, cause unknown |
-| Gallium on the 200 mm wafer | Fill and port-angle study done; final numerical checks and constant-growth-rate runs in progress |
+| Gallium on the 200 mm wafer | Fill and port-angle study done, including numerical checks at the best angles; constant-growth-rate runs next |
 | Nitrogen source | Hole-plate model built; needs a representative plate drawing |
 | Wafer heater | Solver passes exact tests; needs a better published experiment, then the 200 mm model |
 | Surface growth chemistry | Not started |
 | The real machine | Needs its drawings and first measurements, which will turn the representative twin into its own twin |
 
 **Next.**
-1. Finish the gallium checks and the constant-growth-rate runs.
+1. Run the constant-growth-rate cases.
 2. Find a representative nitrogen plate design and a sourced gallium atom size.
 3. Design a crucible shape that keeps the spray steadier as it empties.
 4. Find a stronger heater experiment.
