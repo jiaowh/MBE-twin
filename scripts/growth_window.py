@@ -17,7 +17,8 @@ local ratio spread max(g/n)/min(g/n) must fit inside 1 + F_crit/J_N for a window
 Thickness range/mean is reported at the window centre. Temperatures follow the sources' own
 substrate-temperature scales (growth.py); all outputs are representative_chamber.
 
-Usage: python scripts/growth_window.py [--out results/growth_window]
+Usage: python scripts/growth_window.py [--aim ...] [--held] [--out results/growth_window]
+--held replaces the Ga maps by the centre-flux-held runs where they exist.
 """
 
 import argparse
@@ -42,6 +43,11 @@ GA_CASES = {
     "120 mm, 46 deg": "ga_batch/fill120_d8.json", "40 mm, 48 deg": "ga_angle/fill040_d8_48deg.json",
     "70 mm, 54 deg": "ga_angle/fill070_d8_54deg.json", "120 mm, 58 deg": "ga_angle/fill120_d8_58deg.json",
 }
+HELD = {  # centre-flux-held states (data/runs/sparta_ga/ga_dsmchold, latest correction)
+    "40 mm, 46 deg": "fill040_d8_dsmchold", "70 mm, 46 deg": "fill070_d8_dsmchold",
+    "120 mm, 46 deg": "fill120_d8_dsmchold", "40 mm, 48 deg": "fill040_d8_48deg_dsmchold",
+    "70 mm, 54 deg": "fill070_d8_54deg_dsmchold", "120 mm, 58 deg": "fill120_d8_58deg_dsmchold",
+}
 J_N0 = 1000.0 / 60.0  # nm/min for 1 um/h
 T0_C = (700.0, 740.0, 780.0)
 DT_K = (-10.0, -5.0, 0.0, 5.0, 10.0)
@@ -54,6 +60,13 @@ def ga_profile(record):
                                    np.asarray(o["dsmc_flux_stderr"]))
     f = profile_fit.evaluate(coef, RHO, WAFER_RADIUS)
     return f / f[0]
+
+
+def latest_held(name):
+    """Record path of the latest completed correction of a held state, or None."""
+    runs = [f"ga_dsmchold/{name}.json"] + [f"ga_dsmchold/{name}_it{k}.json" for k in range(2, 10)]
+    done = [r for r in runs if (RECORDS / r).exists()]
+    return done[-1] if done else None
 
 
 def n_profiles(paths):
@@ -100,9 +113,19 @@ def main():
     ap.add_argument("--out", default="results/growth_window")
     ap.add_argument("--aim", nargs="+", default=[str(AIM)],
                     help="nitrogen_aim_study manifests; per L/r the lowest range/mean is used")
+    ap.add_argument("--held", action="store_true",
+                    help="use the centre-flux-held Ga records (latest correction) where available")
     args = ap.parse_args()
+    cases = dict(GA_CASES)
+    if args.held:
+        for k, name in HELD.items():
+            rec = latest_held(name)
+            if rec:
+                cases[k] = rec
+            else:
+                print(f"note: no held record for {k}; using {cases[k]}")
     params = load_parameters()
-    ga = {k: ga_profile(v) for k, v in GA_CASES.items()}
+    ga = {k: ga_profile(v) for k, v in cases.items()}
     nm = n_profiles(args.aim)
     rows = []
     for (gk, g), (nk, n), t0, dt, sc in itertools.product(ga.items(), nm.items(), T0_C, DT_K,
@@ -131,7 +154,7 @@ def main():
 
     manifest = build_manifest(
         "growth_window", label="representative_chamber", validation_status="not_validated",
-        inputs={"ga_records": GA_CASES, "n_source": args.aim, "J_N0_nm_min": J_N0,
+        inputs={"ga_records": cases, "n_source": args.aim, "J_N0_nm_min": J_N0,
                 "T0_C": T0_C, "dT_edge_K": DT_K},
         outputs={"rows": rows, "rho_m": RHO},
         sources=[Path(__file__), ROOT / "src/mbe_twin/growth.py", ROOT / "data/parameters/gan_growth.json",
