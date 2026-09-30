@@ -9,9 +9,12 @@ skipped. A directory without it (a failed or interrupted run) is reported as inc
 left untouched, unless --retry-incomplete is given, which moves it aside to
 <name>.failed-<timestamp> and reruns the job. The batch exits with status 1 if any job failed or
 is incomplete, so unattended runs cannot look successful.
-Serial SPARTA uses one core per job; the laptop's WSL has four.
+Serial SPARTA uses one core per job; the laptop's WSL has four. Memory guard: a job starts only
+when at least --min-free-gb of physical memory is available (checked every 30 s). Together with
+streamed post-processing this keeps overnight batches from exhausting the 15 GB laptop, which
+happened on 2026-09-30 when four post-processing jobs each loaded ~55 million samples.
 
-Usage: python scripts/sparta_batch.py cases/sparta_r07/uq_batch.json [--workers 4]
+Usage: python scripts/sparta_batch.py cases/sparta_r07/uq_batch.json [--workers 3] [--min-free-gb 3]
                                       [--retry-incomplete]
 """
 
@@ -20,6 +23,7 @@ import json
 import os
 import subprocess
 import sys
+import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -27,7 +31,41 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def run(job, batch, log_dir, script, retry_incomplete=False, results=ROOT / "results"):
+def available_gb():
+    """Available physical memory in GB (Windows API, or /proc/meminfo elsewhere)."""
+    if os.name == "nt":
+        import ctypes
+
+        class MemoryStatus(ctypes.Structure):
+            _fields_ = [("dwLength", ctypes.c_ulong), ("dwMemoryLoad", ctypes.c_ulong),
+                        ("ullTotalPhys", ctypes.c_ulonglong), ("ullAvailPhys", ctypes.c_ulonglong),
+                        ("ullTotalPageFile", ctypes.c_ulonglong), ("ullAvailPageFile", ctypes.c_ulonglong),
+                        ("ullTotalVirtual", ctypes.c_ulonglong), ("ullAvailVirtual", ctypes.c_ulonglong),
+                        ("ullAvailExtendedVirtual", ctypes.c_ulonglong)]
+
+        m = MemoryStatus()
+        m.dwLength = ctypes.sizeof(MemoryStatus)
+        ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(m))
+        return m.ullAvailPhys / 2 ** 30
+    for line in Path("/proc/meminfo").read_text().splitlines():
+        if line.startswith("MemAvailable:"):
+            return int(line.split()[1]) / 2 ** 20
+    return float("inf")
+
+
+_START_LOCK = threading.Lock()
+
+
+def wait_for_memory(min_free_gb, name):
+    with _START_LOCK:  # one job starts at a time, so each sees the memory left by the others
+        while available_gb() < min_free_gb:
+            print(f"{time.strftime('%H:%M:%S')} {name}: waiting, {available_gb():.1f} GB free "
+                  f"< {min_free_gb} GB", flush=True)
+            time.sleep(30)
+        time.sleep(5)
+
+
+def run(job, batch, log_dir, script, retry_incomplete=False, results=ROOT / "results", min_free_gb=0.0):
     out = Path(results) / batch / job["name"]
     if (out / "summary.json").exists():
         return job["name"], "skipped (complete)", 0.0
@@ -35,6 +73,7 @@ def run(job, batch, log_dir, script, retry_incomplete=False, results=ROOT / "res
         if not retry_incomplete:
             return job["name"], "INCOMPLETE (no summary.json; rerun with --retry-incomplete)", 0.0
         out.rename(out.with_name(f"{out.name}.failed-{time.strftime('%Y%m%d-%H%M%S')}"))
+    wait_for_memory(min_free_gb, job["name"])
     cmd = [sys.executable, str(ROOT / script), *job["args"], "--out", str(out),
            "--record", f"{batch}/{job['name']}"]
     t0 = time.time()
@@ -47,7 +86,9 @@ def run(job, batch, log_dir, script, retry_incomplete=False, results=ROOT / "res
 def main():
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("jobs")
-    ap.add_argument("--workers", type=int, default=4)
+    ap.add_argument("--workers", type=int, default=3)
+    ap.add_argument("--min-free-gb", type=float, default=3.0,
+                    help="start a job only when this much physical memory is available")
     ap.add_argument("--results", default=str(ROOT / "results"), help="parent of the batch's run directories")
     ap.add_argument("--retry-incomplete", action="store_true",
                     help="move incomplete run directories aside and rerun those jobs")
@@ -60,7 +101,7 @@ def main():
     bad = []
     with ThreadPoolExecutor(args.workers) as pool:
         for name, status, secs in pool.map(lambda j: run(j, batch, log_dir, script, args.retry_incomplete,
-                                                             args.results),
+                                                             args.results, args.min_free_gb),
                                            spec["jobs"]):
             print(f"{time.strftime('%H:%M:%S')} {name}: {status} ({secs / 60:.1f} min)", flush=True)
             if not (status == "ok" or status.startswith("skipped")):

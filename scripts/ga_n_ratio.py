@@ -4,7 +4,7 @@ In Ga-rich growth the local growth rate follows active N, and Ga must exceed N e
 without reaching the droplet threshold (ref/notes/NITROGEN_BOUNDARY.md). The quantity that
 matters for the Ga source is therefore the spread of the local Ga/N ratio, not the Ga range
 alone. This script combines:
-- Ga: the smooth (even-polynomial) DSMC profiles recorded by scripts/sparta_ga.py
+- Ga: the fitted DSMC profiles recorded by scripts/sparta_ga.py (annulus fit, order 4)
   (data/runs/sparta_ga/ga_batch), 46 deg / 350 mm, level melt, three fills and the diameter
   bracket;
 - N: representative aperture-plate maps (scripts/nitrogen_plate.py model) at 40 deg and
@@ -21,6 +21,7 @@ from pathlib import Path
 
 import numpy as np
 
+from mbe_twin import profile_fit
 from mbe_twin.aperture import aperture_plate_sources, hex_holes
 from mbe_twin.beam import Wafer, rotation_averaged_flux
 from mbe_twin.crucible import Crucible, simulate
@@ -33,9 +34,7 @@ RHO = np.linspace(0.0, R, 41)
 
 def ga_profile(name):
     m = json.loads((RUNS / f"{name}.json").read_text(encoding="utf-8"))["outputs"]["metrics_dsmc"]
-    a, b, c = m["fit"]
-    x = (RHO / R) ** 2
-    f = a + b * x + c * x * x
+    f = profile_fit.evaluate(m["fit"], RHO, R)  # annulus-fit polynomial in (r/R)^2 (sparta_ga.py)
     return f / f[0]
 
 

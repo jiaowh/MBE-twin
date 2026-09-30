@@ -38,8 +38,8 @@ import numpy as np
 from mbe_twin.beam import Wafer, crucible_source_on_cone, level_melt_normal, rotation_averaged_flux
 from mbe_twin.crucible import Crucible, simulate
 from mbe_twin.manifest import build_manifest, source_sha256, write_manifest
-from mbe_twin.sparta import (batch_means, expected_dump_steps, load_run_config, log_stats,
-                             prepare_run_dir, read_dumps, run_case, sparta_commit)
+from mbe_twin.sparta import (accumulate_snapshots, batch_means, expected_dump_steps, load_run_config,
+                             log_stats, prepare_run_dir, run_case, sparta_commit)
 from mbe_twin import profile_fit
 from mbe_twin.sparta_source import SourceRun, crucible_surface, wafer_profile
 from mbe_twin.sparta import MELT
@@ -191,16 +191,12 @@ def fm_reference(cfg, run):
 def postprocess(work, cfg, n_blocks):
     run = build_run(cfg)
     steps = expected_dump_steps(run.steps_eq, run.steps_sample, run.dump_every)
-    pos, vel, snap = read_dumps(work, steps)
     wafer, src = placement()
-
-    def flux_of(mask, n):
-        return wafer_profile(pos[mask], vel[mask], run.slab, src, wafer, EDGES)[0] * run.fnum / n
-
-    n_snap = len(steps)
-    flux = flux_of(np.ones(len(pos), bool), n_snap)
-    bounds = np.linspace(0, n_snap, n_blocks + 1).astype(int)
-    blocks = [flux_of((snap >= a) & (snap < b), b - a) for a, b in zip(bounds[:-1], bounds[1:])]
+    # Stream the snapshots (memory of one snapshot); each sample is fnum real atoms.
+    acc = accumulate_snapshots(work, steps, lambda p, v: wafer_profile(p, v, run.slab, src, wafer, EDGES)[0],
+                               n_blocks)
+    flux = acc["total"] / acc["n_total"] * run.fnum
+    blocks = [acc["blocks"][b] / acc["n_blocks"][b] * run.fnum for b in range(n_blocks)]
     _, flux_se = batch_means(blocks)
     metrics = smooth_metrics(flux, flux_se)
     metrics["order_sensitivity"] = {f"order{k}": smooth_metrics(flux, flux_se, k)["range_over_mean_pct"]
@@ -209,9 +205,8 @@ def postprocess(work, cfg, n_blocks):
     block_m = [smooth_metrics(b, flux_se * np.sqrt(n_blocks)) for b in blocks]
     unc = {k: float(batch_means([m[k] for m in block_m])[1]) for k in ("range_over_mean_pct", "std_pct", "mean")}
     unc["bootstrap"] = estimator_spread(flux, flux_se)
-    half = n_snap // 2
-    halves = [smooth_metrics(flux_of(snap < half, half), flux_se * np.sqrt(2)),
-              smooth_metrics(flux_of(snap >= half, n_snap - half), flux_se * np.sqrt(2))]
+    halves = [smooth_metrics(acc["halves"][h] / acc["n_halves"][h] * run.fnum, flux_se * np.sqrt(2))
+              for h in (0, 1)]
     stats = log_stats((work / "log.sparta").read_text(encoding="utf-8", errors="replace"))
     npart = np.array([r["Np"] for r in stats if r["Step"] >= run.steps_eq])
     return run, flux, flux_se, metrics, unc, halves, npart

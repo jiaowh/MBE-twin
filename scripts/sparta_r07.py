@@ -33,9 +33,8 @@ import numpy as np
 
 from mbe_twin.crucible import Crucible, next_event_flux, simulate
 from mbe_twin.manifest import build_manifest, source_sha256, write_manifest
-from mbe_twin.sparta import (batch_means, crucible_surface, expected_dump_steps,
-                             load_run_config, log_stats, prepare_run_dir, propagate_slab,
-                             read_dumps, run_case, sparta_commit, write_surf)
+from mbe_twin.sparta import (accumulate_snapshots, batch_means, crucible_surface, expected_dump_steps,
+                             load_run_config, log_stats, prepare_run_dir, propagate_slab, run_case, sparta_commit, write_surf)
 from mbe_twin.units import K_B, N_A
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -186,16 +185,13 @@ def profile_metrics(flux, ref):
 
 def postprocess(work, cfg, n_blocks):
     steps = expected_dump_steps(cfg["steps_eq"], cfg["steps_sample"], cfg["dump_every"])
-    pos, vel, snap = read_dumps(work, steps)
     n_snap = len(steps)
     slab = tuple(cfg["slab_m"])
     edges = X_EDGES_MM / 1000
-
-    def flux_of(mask, n):
-        # Snapshot weights v_z / thickness are rates (1/s); each sample is fnum real atoms.
-        return propagate_slab(pos[mask], vel[mask], slab, PLANE, edges)[0] * cfg["fnum"] / n
-
-    flux = flux_of(np.ones(len(pos), bool), n_snap)
+    # Stream the snapshots (memory of one snapshot). Snapshot weights v_z / thickness are
+    # rates (1/s); each sample is fnum real atoms.
+    acc = accumulate_snapshots(work, steps, lambda p, v: propagate_slab(p, v, slab, PLANE, edges)[0], n_blocks)
+    flux = acc["total"] / n_snap * cfg["fnum"]
     curve = CASES[cfg["case"]][3]
     ref = None
     if curve:
@@ -205,25 +201,19 @@ def postprocess(work, cfg, n_blocks):
     whole = profile_metrics(flux, ref)
 
     # Batch means over contiguous time blocks (the boundary snapshot goes to the last block).
-    bounds = np.linspace(0, n_snap, n_blocks + 1).astype(int)
-    blocks = []
-    for a, b in zip(bounds[:-1], bounds[1:]):
-        m = (snap >= a) & (snap < b)
-        blocks.append(profile_metrics(flux_of(m, b - a), ref))
+    blocks = [profile_metrics(acc["blocks"][b] / acc["n_blocks"][b] * cfg["fnum"], ref) for b in range(n_blocks)]
     unc = {}
     for key in ("rate", "rms", "bias"):
         if key in blocks[0]:
             mean, se = batch_means([bl[key] for bl in blocks])
             unc[key] = {"block_mean": float(mean), "stderr": float(se)}
     prof_se = batch_means([bl["profile"] for bl in blocks])[1]
-    half = n_snap // 2
-    first = profile_metrics(flux_of(snap < half, half), ref)
-    second = profile_metrics(flux_of(snap >= half, n_snap - half), ref)
+    first, second = (profile_metrics(acc["halves"][h] / acc["n_halves"][h] * cfg["fnum"], ref) for h in (0, 1))
     stats = log_stats((work / "log.sparta").read_text(encoding="utf-8", errors="replace"))
     sample = [r for r in stats if r["Step"] >= cfg["steps_eq"]]
     npart = np.array([r["Np"] for r in sample])
     return flux, ref, whole, {
-        "n_blocks": n_blocks, "snapshots": n_snap, "samples": int(len(pos)),
+        "n_blocks": n_blocks, "snapshots": n_snap, "samples": int(acc["samples"]),
         "block": unc, "profile_stderr": prof_se,
         "halves": {"rate": [first["rate"], second["rate"]],
                    "profile_max_abs_diff": float(np.max(np.abs(first["profile"] - second["profile"])[KEEP])),

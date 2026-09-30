@@ -199,11 +199,13 @@ def expected_dump_steps(steps_eq, steps_sample, dump_every):
     return list(range(steps_eq, steps_eq + steps_sample + 1, dump_every))
 
 
-def read_dumps(work_dir, expected_steps, prefix="dump.slab."):
-    """Particle snapshots of one run, checked against the expected set of timesteps.
+def iter_dumps(work_dir, expected_steps, prefix="dump.slab."):
+    """Yield (snapshot index, positions (n, 3), velocities (n, 3)) one snapshot at a time,
+    after checking the dump files against the expected set of timesteps.
 
-    Returns positions (N, 3), velocities (N, 3) and the snapshot index (N,) of each sample.
-    Raises if any expected snapshot is missing or any unexpected one is present.
+    Streaming keeps memory proportional to one snapshot: long runs hold tens of millions of
+    samples (about 55 million for a 40 mm Ga fill), and loading them together exhausted the
+    laptop's memory (2026-09-30).
     """
     work = Path(work_dir)
     files = {int(f.name[len(prefix):]): f for f in work.glob(prefix + "*")}
@@ -214,18 +216,52 @@ def read_dumps(work_dir, expected_steps, prefix="dump.slab."):
         raise ValueError(f"dump files do not match the run configuration: missing {missing[:5]}"
                          f"{'...' if len(missing) > 5 else ''}, unexpected {extra[:5]}"
                          f"{'...' if len(extra) > 5 else ''}")
-    pos, vel, snap = [], [], []
     for i, step in enumerate(expected):
         text = files[step].read_text().splitlines()
         if int(text[text.index("ITEM: TIMESTEP") + 1]) != step:
             raise ValueError(f"{files[step].name}: timestep does not match its file name")
         start = next(j for j, line in enumerate(text) if line.startswith("ITEM: ATOMS")) + 1
-        if start < len(text):
-            a = np.loadtxt(text[start:], ndmin=2)
-            pos.append(a[:, 1:4])
-            vel.append(a[:, 4:7])
-            snap.append(np.full(len(a), i))
+        a = np.loadtxt(text[start:], ndmin=2) if start < len(text) else np.empty((0, 7))
+        yield i, a[:, 1:4], a[:, 4:7]
+
+
+def read_dumps(work_dir, expected_steps, prefix="dump.slab."):
+    """All snapshots at once: positions (N, 3), velocities (N, 3), snapshot index (N,).
+    For small runs and tests only; use `accumulate_snapshots` for production runs."""
+    pos, vel, snap = [], [], []
+    for i, p, v in iter_dumps(work_dir, expected_steps, prefix):
+        if len(p):
+            pos.append(p)
+            vel.append(v)
+            snap.append(np.full(len(p), i))
     return np.concatenate(pos), np.concatenate(vel), np.concatenate(snap)
+
+
+def accumulate_snapshots(work_dir, expected_steps, fn, n_blocks):
+    """Stream the snapshots and sum fn(positions, velocities) (a fixed-shape array) over
+    contiguous time blocks and over the two halves of the sampling run.
+
+    Returns sums and snapshot counts for the whole run, each block and each half; the
+    per-snapshot mean of a group is its sum divided by its count. Block boundaries match
+    np.linspace(0, n_snapshots, n_blocks + 1).astype(int).
+    """
+    steps = list(expected_steps)
+    n_snap = len(steps)
+    bounds = np.linspace(0, n_snap, n_blocks + 1).astype(int)
+    half = n_snap // 2
+    blocks = halves = None
+    n_samples = 0
+    for i, p, v in iter_dumps(work_dir, steps):
+        y = np.asarray(fn(p, v), float)
+        if blocks is None:
+            blocks = np.zeros((n_blocks,) + y.shape)
+            halves = np.zeros((2,) + y.shape)
+        blocks[np.searchsorted(bounds, i, side="right") - 1] += y
+        halves[0 if i < half else 1] += y
+        n_samples += len(p)
+    return {"total": blocks.sum(axis=0), "n_total": n_snap, "blocks": blocks,
+            "n_blocks": np.diff(bounds), "halves": halves, "n_halves": np.array([half, n_snap - half]),
+            "samples": n_samples}
 
 
 def batch_means(block_values):

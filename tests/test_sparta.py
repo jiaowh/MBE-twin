@@ -150,3 +150,25 @@ def test_batch_means_and_log_stats():
                      "Step CPU Np", " 1000 0 42", ""])
     rows = log_stats(log)
     assert [r["Step"] for r in rows] == [0, 1000, 1000] and rows[1]["Np"] == 42
+
+
+def test_streamed_accumulation_matches_loading_everything(tmp_path):
+    from mbe_twin.sparta import accumulate_snapshots
+
+    rng = np.random.default_rng(1)
+    steps = expected_dump_steps(100, 200, 20)  # 11 snapshots
+    for step in steps:
+        n = int(rng.integers(0, 6))
+        _write_dump(tmp_path / f"dump.slab.{step}", step,
+                    [(k, *rng.normal(size=3), *rng.normal(size=3)) for k in range(n)])
+    fn = lambda p, v: np.array([len(p), p[:, 0].sum() if len(p) else 0.0])
+    acc = accumulate_snapshots(tmp_path, steps, fn, n_blocks=4)
+    pos, vel, snap = read_dumps(tmp_path, steps)
+    bounds = np.linspace(0, len(steps), 5).astype(int)
+    for b, (a, c) in enumerate(zip(bounds[:-1], bounds[1:])):
+        m = (snap >= a) & (snap < c)
+        assert acc["blocks"][b] == pytest.approx([m.sum(), pos[m, 0].sum()])
+        assert acc["n_blocks"][b] == c - a
+    half = len(steps) // 2
+    assert acc["halves"][1] == pytest.approx([(snap >= half).sum(), pos[snap >= half, 0].sum()])
+    assert acc["total"] == pytest.approx([len(pos), pos[:, 0].sum()]) and acc["samples"] == len(pos)

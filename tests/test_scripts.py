@@ -65,7 +65,7 @@ def _batch(tmp_path, jobs, *extra):
     spec = tmp_path / "b.json"
     spec.write_text(json.dumps({"script": str(tmp_path / "fake.py"), "jobs": jobs}))
     return subprocess.run([sys.executable, str(ROOT / "scripts/sparta_batch.py"), str(spec),
-                           "--results", str(tmp_path / "res"), "--workers", "2", *extra],
+                           "--results", str(tmp_path / "res"), "--workers", "2", "--min-free-gb", "0", *extra],
                           capture_output=True, text=True)
 
 
