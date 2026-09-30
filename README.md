@@ -79,7 +79,7 @@ flowchart LR
 What this test settles and what it leaves open:
 - **One tuned number.** Collisions depend on how "big" an atom is in a collision. For bismuth the test pins that size to 8–10 Å.
 - **Open puzzle.** The model's absolute deposition rate is 7–15 % lower than measured in every case. This is not simulation noise. The spray *shape*, which is what uniformity depends on, is reproduced.
-- **A likely explanation.** Bismuth vapour is not all single atoms. Published data put about 30 % of it as paired atoms (Bi₂). A pair carries two atoms, so at the same vapour pressure more bismuth arrives, about 12–13 % more. That is the size of the gap. It is not yet built into the model: the pressures the 1991 paper states are themselves 1.4–1.7 times the handbook values, so the check needs care.
+- **A likely explanation.** Bismuth vapour is not all single atoms. Published data put about 30 % of it as paired atoms (Bi₂). A pair carries two atoms, so at the same vapour pressure more bismuth arrives, about 12–13 % more. That is the size of the gap. The pressures the 1991 paper states are themselves 1.4–1.7 times the handbook values, so the check needs care. Paired atoms have now been added to the collision model, and the test is running. At the fastest evaporation speed the gap closes (the model now reads 5 % high instead of 7 % low), with the spray shape still matching.
 
 ## 4. Gallium on the 200 mm wafer
 
@@ -93,7 +93,7 @@ With the beam model tested, we apply it to a gallium cell in the representative 
 
 **The biggest unknown: the gallium atom's size.** No published source gives the collision size of a gallium atom, so we try a range (2.5, 5.68 and 8 Å). It hardly matters for a fresh charge. For a nearly empty cup, bigger atoms mean more collisions, which widen the spray again. There the answer ranges from about 8 % to 10 %.
 
-A new estimate narrows that range from physics rather than guesswork. Atoms attract each other at a distance with a strength that has been calculated for every element. Scaling from noble gases, whose collision sizes are well measured, gives about 4 Å for gallium if that attraction were all there is. The same method says bismuth should be about 4 Å, but the 1991 experiment needs 8–10 Å. Metal atoms bond as well as attract, which makes them "look" bigger. Carrying bismuth's extra factor over to gallium gives at most about 9.6 Å. The next runs will use 4, 6 and 9.6 Å. Gallium vapour, unlike bismuth, is almost entirely single atoms (paired atoms under 0.1 %, checked against a 1998 measurement), so the model's single-atom picture holds.
+A new estimate narrows that range from physics rather than guesswork. Atoms attract each other at a distance with a strength that has been calculated for every element. Scaling from noble gases, whose collision sizes are well measured, gives about 4 Å for gallium if that attraction were all there is. The same method says bismuth should be about 4 Å, but the 1991 experiment needs 8–10 Å. Metal atoms bond as well as attract, which makes them "look" bigger. Carrying bismuth's extra factor over to gallium gives about 9.6 Å. These are reasoned estimates, not measured limits: 4, 6 and 9.6 Å are plausible values to try, and 2.5 Å is not ruled out. Part of bismuth's extra size may come from its paired atoms, which the running test will show, so the gallium runs will be redone only after that. Gallium vapour, unlike bismuth, is almost entirely single atoms (paired atoms under 0.1 %, checked against a 1998 measurement), so the model's single-atom picture holds.
 
 **Choosing the port angle.** Tilting the cell more steeply compensates for the narrowing spray. The best angle depends on the fill: about 48° for a fresh 40 mm charge, about 54° at 70 mm and about 58° at 120 mm. At its best angle each fill reaches roughly 1–2 %.
 
@@ -117,9 +117,9 @@ In the usual gallium-rich recipe, a thin excess film of gallium sits on the surf
 
 **The nitrogen source.** The plasma source releases its gas through a plate with many small holes. Our model of that plate shows:
 - **Hole shape sets the spread.** How the nitrogen spreads over the wafer depends mostly on the holes' shape (how deep compared with how wide). The plate's overall size barely matters.
-- **Real plates look much less even than the gallium beam.** Two published plates give real hole counts and sizes (about 700 to 4000 holes, 0.2–0.34 mm wide), but not the plate thickness, so we tried 0.5–2 mm. At normal gas flows the gas in the holes is thin enough for the model to apply. Straight holes that are several times longer than they are wide send the nitrogen out in a narrow jet. Aimed at the wafer centre from 350 mm, the model then gives nitrogen maps with range/mean of 20 % to over 100 %, against 1–10 % for gallium. - **Aiming off-centre evens it out, at a price.** If the source is pointed not at the wafer centre but near its edge, the spinning wafer sweeps the narrow jet over a ring. In the model this brings every published plate below 1 % range/mean. The catch is that the narrower the jet, the more precisely the source must point. For the deepest holes, a pointing error of 1.6° (10 mm at the wafer) can cost up to 10 points; for a thin plate it hardly matters. A thin plate or shallow holes are the safer choice, and the source mounting needs a way to measure and adjust its aim.
+- **Real plates look much less even than the gallium beam.** Two published plates give real hole counts and sizes (about 700 to 4000 holes, 0.2–0.34 mm wide), but not the plate thickness, so we tried 0.5–2 mm. At normal gas flows the gas in the holes is thin enough for the model to apply. Straight holes that are several times longer than they are wide send the nitrogen out in a narrow jet. Aimed at the wafer centre from 350 mm, the model then gives nitrogen maps with range/mean of 20 % to over 100 %, against 1–10 % for gallium.
+- **Aiming off-centre evens it out, at a price.** If the source is pointed not at the wafer centre but near its edge, the spinning wafer sweeps the narrow jet over a ring. In the model this brings every published plate to about 1 % range/mean or below, even if the plate emits unevenly across its face. The catch is that the narrower the jet, the more precisely the source must point. For the deepest holes, a pointing error of 1.6° (10 mm at the wafer) can cost up to 10 points; for a thin plate it hardly matters. A thin plate or shallow holes are the safer choice, and the source mounting needs a way to measure and adjust its aim.
 - **Still the least certain input.** None of this is tested against a measured nitrogen map, and the real plate's thickness, hole pattern and hole angles are unknown. A thickness map grown with nitrogen as the limiting supply on the real machine will be the direct test.
-- **The ratio can go either way.** Combining gallium and nitrogen maps can make the ratio across the wafer more even than the gallium alone, or less even, depending on the plate. A drawing of a real (or representative) plate is needed before settling where the gallium cell goes.
 
 ## 6. How the layer grows
 
@@ -157,7 +157,7 @@ At 740 °C, every 1 °C of temperature spread adds roughly 0.1–0.16 % to the t
 - **Statistical error bars.** Collision simulations are statistical, like an opinion poll, so every result carries an error estimate from splitting the run into independent pieces. Important cases are rerun with another random seed, smaller time steps and finer grids.
 - **A checked unevenness formula.** Turning a noisy simulated spray into one range/mean number needs a smoothing formula. Ours was tested against exact answers: it is off by at most 0.2 points, and its random scatter is 0.3–0.5 points.
 - **Every result can be rerun.** Each run gets its own folder and records its full settings before it starts. Saved results carry a fingerprint of the exact code that produced them, and batch files spell out every setting.
-- **Automatic tests.** About 130 automatic tests check the code; all pass. Every number is traced to a published source, and unknown or unexplained results are labelled rather than hidden.
+- **Automatic tests.** About 150 automatic tests check the code; all pass. Every number is traced to a published source, and unknown or unexplained results are labelled rather than hidden.
 - **The laptop stays safe.** Simulation output is read one snapshot at a time. A new job starts only when enough memory is free, both in Windows and in the Linux environment where the collision simulator runs. When the laptop is shared with other work, jobs also wait for a free processor core, and an overnight queue stops starting new jobs at a set hour.
 
 ## 9. Where things stand
@@ -166,7 +166,7 @@ At 740 °C, every 1 °C of temperature spread adds roughly 0.1–0.16 % to the t
 |---|---|
 | Gallium beam model | Tested against a real experiment (shape within 1–2 %); absolute rate 7–15 % low, likely paired bismuth atoms (test running) |
 | Gallium on the 200 mm wafer | Fill and port-angle study done, including numerical checks at the best angles; constant-gallium-supply runs running |
-| Nitrogen source | Two published plates modelled: a narrow jet unless aimed off-centre, then below 1 % but sensitive to pointing; plate thickness and pattern unknown |
+| Nitrogen source | Two published plates modelled: a narrow jet unless aimed off-centre, then about 1 % or below but sensitive to pointing; plate thickness and pattern unknown |
 | Wafer heater | First 200 mm model: zone count, edge support and control precision compared; not yet checked against any measured heater |
 | Surface growth chemistry | First model from published constants: growth window and thickness from the gallium, nitrogen and temperature maps; not yet tested against a wafer |
 | The real machine | Needs its drawings and first measurements, which will turn the representative twin into its own twin |
@@ -197,6 +197,7 @@ Tilting a hot oven of liquid gallium has real engineering risks (sealing, spitti
 | DSMC | Direct Simulation Monte Carlo: simulates a gas by following many sample atoms and letting them collide at random with the right probabilities |
 | Effusion cell | The oven that evaporates the metal |
 | Free-molecular | Gas so thin that atoms never collide with each other, only with walls |
+| Growth window | The range of gallium-to-nitrogen supply in which the layer grows smoothly: below it growth is rough, above it gallium droplets form |
 | Gallium-rich growth | A recipe with slightly more gallium than nitrogen, so thickness follows the nitrogen supply |
 | MBE | Molecular beam epitaxy: growing crystals from beams of atoms in vacuum |
 | Range/mean | (thickest − thinnest) ÷ average: our measure of unevenness |
