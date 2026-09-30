@@ -7,7 +7,7 @@ name = "mbe-twin"
 version = "0.1.0"
 description = "GaN/AlN MBE growth-chamber twin: representative-chamber stage"
 requires-python = ">=3.11"
-dependencies = ["numpy>=1.26"]
+dependencies = ["numpy>=2.0"]  # np.trapezoid
 
 [project.optional-dependencies]
 test = ["pytest>=8", "scipy>=1.11"]

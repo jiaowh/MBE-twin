@@ -40,10 +40,11 @@ from mbe_twin.crucible import Crucible, simulate
 from mbe_twin.manifest import build_manifest, source_sha256, write_manifest
 from mbe_twin.sparta import (batch_means, expected_dump_steps, load_run_config, log_stats,
                              prepare_run_dir, read_dumps, run_case, sparta_commit)
+from mbe_twin import profile_fit
 from mbe_twin.sparta_source import SourceRun, crucible_surface, wafer_profile
 from mbe_twin.sparta import MELT
 from mbe_twin.units import kelvin_to_celsius
-from mbe_twin.vapour import atomic_mass_kg, evaporation_flux, vapour_pressure
+from mbe_twin.vapour import atomic_mass_kg, evaporation_flux, temperature_for_pressure, vapour_pressure
 
 ROOT = Path(__file__).resolve().parents[1]
 RECORD_DIR = ROOT / "data/runs/sparta_ga"
@@ -59,7 +60,7 @@ UM_PER_H = 1e-6 / 3600.0
 EDGES = np.linspace(0.0, WAFER_RADIUS, 21)
 MID = 0.5 * (EDGES[1:] + EDGES[:-1])
 AREA = np.pi * np.diff(EDGES ** 2)
-SOURCES = [Path(__file__), ROOT / "src/mbe_twin/sparta_source.py", ROOT / "src/mbe_twin/sparta.py",
+SOURCES = [Path(__file__), ROOT / "src/mbe_twin/profile_fit.py", ROOT / "src/mbe_twin/sparta_source.py", ROOT / "src/mbe_twin/sparta.py",
            ROOT / "src/mbe_twin/crucible.py", ROOT / "src/mbe_twin/beam.py", ROOT / "src/mbe_twin/vapour.py"]
 # Particles and sampling length set for about 0.3 % standard error on range/mean (a 2e5 /
 # 16000-step trial gave several tenths of a percent on single bins at the wafer).
@@ -108,6 +109,32 @@ def hold_temperature(fill, rate_um_h, events):
     return 0.5 * (lo + hi)
 
 
+def default_run_name(cfg):
+    """Run-directory name from the physical settings, e.g. fill120_d8.00_1umh_hold_58deg."""
+    d = "fm" if cfg["diameter_m"] is None else f"d{cfg['diameter_m'] * 1e10:.2f}"
+    angle = cfg.get("polar_deg", 46.0)
+    return (f"fill{1e3 * cfg['fill_m']:.0f}_{d}_{cfg['rate_um_h']:g}umh_{cfg['mode']}"
+            + ("" if angle == 46.0 else f"_{angle:g}deg"))
+
+
+def corrected_temperature(prev_dir, cfg):
+    """Melt temperature for dsmc-hold: scale the previous run's saturation pressure by
+    target / delivered DSMC centre flux (delivered flux is close to proportional to pressure
+    over a few percent), then invert the vapour-pressure curve."""
+    prev = json.loads((prev_dir / "summary.json").read_text(encoding="utf-8"))["outputs"]
+    pc = prev["config"]
+    for key in ("fill_m", "diameter_m", "rate_um_h"):
+        if pc[key] != cfg[key]:
+            raise SystemExit(f"--correct-from run differs in {key}: {pc[key]} vs {cfg[key]}")
+    if pc.get("polar_deg", 46.0) != cfg["polar_deg"]:
+        raise SystemExit("--correct-from run differs in port angle")
+    ratio = prev["centre_flux_over_target"]["dsmc"]
+    p_new = float(vapour_pressure("Ga", pc["T_K"])) / ratio
+    return {"T_K": temperature_for_pressure("Ga", p_new),
+            "T_basis": {"method": "DSMC-corrected", "corrected_from": prev_dir.name,
+                        "previous_T_K": pc["T_K"], "previous_delivered_over_target": ratio}}
+
+
 def build_run(cfg):
     c = crucible_for(cfg["fill_m"])
     d = cfg["diameter_m"]
@@ -121,37 +148,44 @@ def build_run(cfg):
                      half_angle_deg=25.0)
 
 
-def smooth_metrics(profile, stderr=None):
-    """Range/mean and std (%) of an even-polynomial fit a + b r^2 + c r^4 to a binned profile.
+# Uniformity estimator (review 2026-09-30): a polynomial of ORDER in (r/R)^2 whose annulus
+# averages match the DSMC bins (mbe_twin.profile_fit). Against dense free-molecular reference
+# profiles with the runs' own noise (scripts/check_uniformity_estimator.py), order 4 is biased by
+# at most 0.2 points and scatters by 0.3-0.5 points. The former point-quartic fit overstated a
+# 10.3 % case by 1.1 points.
+ORDER = 4
+N_BOOTSTRAP = 400
 
-    Max-minus-min of noisy bins is biased upward; the fit gives a noise-robust estimate.
-    """
-    x = (MID / WAFER_RADIUS) ** 2
-    A = np.stack([np.ones_like(x), x, x * x], 1)
-    w = np.ones_like(x) if stderr is None else 1.0 / np.maximum(stderr, 1e-12 * np.abs(profile).max())
-    coef = np.linalg.lstsq(A * w[:, None], profile * w, rcond=None)[0]
-    r = np.linspace(0.0, WAFER_RADIUS, 401)
-    f = coef[0] + coef[1] * (r / WAFER_RADIUS) ** 2 + coef[2] * (r / WAFER_RADIUS) ** 4
-    ring = np.pi * np.diff(np.concatenate(([0.0], 0.5 * (r[1:] + r[:-1]), [WAFER_RADIUS])) ** 2)
-    mean = np.sum(ring * f) / ring.sum()
-    std = np.sqrt(np.sum(ring * (f - mean) ** 2) / ring.sum())
-    return {"range_over_mean_pct": 100 * (f.max() - f.min()) / mean, "std_pct": 100 * std / mean,
-            "centre_to_edge": f[-1] / f[0], "mean": mean, "fit": coef.tolist()}
+
+def smooth_metrics(bins, stderr=None, order=ORDER):
+    return profile_fit.fitted_uniformity(bins, EDGES, WAFER_RADIUS, order, stderr)
+
+
+def estimator_spread(bins, stderr, rng_seed=0):
+    """Parametric bootstrap: refit with bins perturbed by their standard errors; returns the
+    standard deviation of range/mean and std (%) over the refits."""
+    rng = np.random.default_rng(rng_seed)
+    vals = np.array([[m["range_over_mean_pct"], m["std_pct"]] for m in
+                     (smooth_metrics(bins + stderr * rng.standard_normal(len(bins)), stderr)
+                      for _ in range(N_BOOTSTRAP))])
+    return {"range_over_mean_pct": float(vals[:, 0].std()), "std_pct": float(vals[:, 1].std())}
 
 
 def fm_reference(cfg, run):
-    """crucible.py prediction on the same wafer, absolute (atoms m^-2 s^-1)."""
-    ev = fm_events(cfg["fill_m"], 150_000, seed=21)
+    """crucible.py prediction on the same wafer, absolute (atoms m^-2 s^-1): annulus bins for
+    comparison with DSMC, and a dense point profile whose uniformity needs no fit."""
+    ev = fm_events(cfg["fill_m"], 400_000, seed=21)
     wafer, _ = placement()
     src = crucible_source_on_cone("Ga", wafer, ev, throw=THROW, polar_angle=np.radians(POLAR_DEG),
                                   azimuth=0.0,
                                   emission_rate=melt_area(run.crucible) * evaporation_flux(run.pressure_pa, run.temperature_k, GA_MASS))
-    r = np.linspace(0.0, WAFER_RADIUS, 201)
-    f = rotation_averaged_flux([src], wafer, r, n_angles=72)
+    r = np.linspace(0.0, WAFER_RADIUS, 401)
+    f = rotation_averaged_flux([src], wafer, r, n_angles=360)
     rm = 0.5 * (r[1:] + r[:-1])
     fm = 0.5 * (f[1:] + f[:-1])
-    return np.array([np.sum((fm * rm)[(rm >= a) & (rm < b)]) / np.sum(rm[(rm >= a) & (rm < b)])
-                     for a, b in zip(EDGES[:-1], EDGES[1:])]), ev.transmission
+    bins = np.array([np.sum((fm * rm)[(rm >= a) & (rm < b)]) / np.sum(rm[(rm >= a) & (rm < b)])
+                     for a, b in zip(EDGES[:-1], EDGES[1:])])
+    return bins, profile_fit.uniformity(f, r, WAFER_RADIUS), ev.transmission
 
 
 def postprocess(work, cfg, n_blocks):
@@ -169,8 +203,12 @@ def postprocess(work, cfg, n_blocks):
     blocks = [flux_of((snap >= a) & (snap < b), b - a) for a, b in zip(bounds[:-1], bounds[1:])]
     _, flux_se = batch_means(blocks)
     metrics = smooth_metrics(flux, flux_se)
+    metrics["order_sensitivity"] = {f"order{k}": smooth_metrics(flux, flux_se, k)["range_over_mean_pct"]
+                                    for k in (3, 5)}
+    metrics["binned_range_over_mean_pct"] = profile_fit.binned_uniformity(flux, EDGES)
     block_m = [smooth_metrics(b, flux_se * np.sqrt(n_blocks)) for b in blocks]
     unc = {k: float(batch_means([m[k] for m in block_m])[1]) for k in ("range_over_mean_pct", "std_pct", "mean")}
+    unc["bootstrap"] = estimator_spread(flux, flux_se)
     half = n_snap // 2
     halves = [smooth_metrics(flux_of(snap < half, half), flux_se * np.sqrt(2)),
               smooth_metrics(flux_of(snap >= half, n_snap - half), flux_se * np.sqrt(2))]
@@ -184,7 +222,11 @@ def main():
     ap.add_argument("--fill", type=float, help="melt recess on the axis (m)")
     ap.add_argument("--diameter", default=None, help="hard-sphere diameter (m) or 'none'")
     ap.add_argument("--rate", type=float, default=1.0, help="target GaN growth rate (um/h)")
-    ap.add_argument("--mode", choices=("hold", "fixed"), default="hold")
+    ap.add_argument("--mode", choices=("hold", "fixed", "dsmc-hold"), default="hold",
+                    help="hold: T from the free-molecular mass balance; fixed: T of the reference fill; "
+                         "dsmc-hold: T corrected from --correct-from's delivered DSMC flux")
+    ap.add_argument("--correct-from", default=None, metavar="DIR",
+                    help="dsmc-hold: completed run of the same fill, angle, diameter and rate")
     ap.add_argument("--angle", type=float, default=46.0, help="port angle from the wafer normal (deg)")
     ap.add_argument("--set", action="append", default=[], metavar="KEY=VALUE")
     ap.add_argument("--out", default=None)
@@ -209,25 +251,25 @@ def main():
             if key not in NUMERICS:
                 ap.error(f"--set: unknown key {key!r}")
             cfg[key] = json.loads(value) if key == "slab_D" else type(NUMERICS[key])(float(value))
-        ref_fill = cfg["fill_m"] if args.mode == "hold" else REFERENCE_FILL
-        cfg["T_K"] = hold_temperature(ref_fill, args.rate, fm_events(ref_fill))
-        cfg["T_reference_fill_m"] = ref_fill
+        if args.mode == "dsmc-hold":
+            cfg.update(corrected_temperature(Path(args.correct_from or ap.error("dsmc-hold needs --correct-from")), cfg))
+        else:
+            ref_fill = cfg["fill_m"] if args.mode == "hold" else REFERENCE_FILL
+            cfg["T_K"] = hold_temperature(ref_fill, args.rate, fm_events(ref_fill))
+            cfg["T_reference_fill_m"] = ref_fill
+            cfg["T_basis"] = "free-molecular mass balance" + ("" if args.mode == "hold" else " at the reference fill")
         run = build_run(cfg)
         cfg["derived"] = run.config()
         cfg["sparta_commit"] = sparta_commit()
         # the code that writes the inputs; the manifest hashes the post-processing code
         cfg["source_sha256_at_start"] = source_sha256(SOURCES)
-        d = "fm" if cfg["diameter_m"] is None else f"d{cfg['diameter_m'] * 1e10:.2f}"
-        work = Path(args.out or ROOT / "results/sparta_ga" /
-                    f"fill{1e3 * args.fill:.0f}_{d}_{args.rate:g}umh_{args.mode}"
-                    + ("" if args.angle == 46.0 else f"_{args.angle:g}deg"))
+        work = Path(args.out) if args.out else ROOT / "results/sparta_ga" / default_run_name(cfg)
         prepare_run_dir(work, cfg)
         run.write_inputs(work)
         run_case(work)
 
     run, flux, flux_se, m, unc, halves, npart = postprocess(work, cfg, args.blocks)
-    fm, transmission_fm = fm_reference(cfg, run)
-    m_fm = smooth_metrics(fm)
+    fm, m_fm, transmission_fm = fm_reference(cfg, run)
     target = cfg["rate_um_h"] * UM_PER_H * N_GA_GAN
     centre = float(np.sum((flux * AREA)[:2]) / AREA[:2].sum())  # inside 10 mm
     centre_fm = float(np.sum((fm * AREA)[:2]) / AREA[:2].sum())
@@ -235,8 +277,10 @@ def main():
           f"lambda_sat/D = {run.lambda_sat / run.bore:.3g}, cell {1e3 * run.cell_m:.2f} mm")
     print(f"  centre Ga flux / target ({cfg['rate_um_h']:g} um/h GaN): DSMC {centre / target:.3f}, "
           f"free-molecular {centre_fm / target:.3f}")
-    print(f"  200 mm range/mean: DSMC {m['range_over_mean_pct']:.2f} +/- {unc['range_over_mean_pct']:.2f} %, "
-          f"free-molecular {m_fm['range_over_mean_pct']:.2f} %; std {m['std_pct']:.2f} vs {m_fm['std_pct']:.2f} %")
+    print(f"  200 mm range/mean: DSMC {m['range_over_mean_pct']:.2f} +/- {unc['bootstrap']['range_over_mean_pct']:.2f} % "
+          f"(orders 3/5: {m['order_sensitivity']['order3']:.2f}/{m['order_sensitivity']['order5']:.2f}, "
+          f"bins {m['binned_range_over_mean_pct']:.2f}), free-molecular (dense) {m_fm['range_over_mean_pct']:.2f} %; "
+          f"std {m['std_pct']:.2f} vs {m_fm['std_pct']:.2f} %")
     print(f"  centre-to-edge: DSMC {m['centre_to_edge']:.4f}, free-molecular {m_fm['centre_to_edge']:.4f}")
     print(f"  steady state: halves range/mean {halves[0]['range_over_mean_pct']:.2f} / "
           f"{halves[1]['range_over_mean_pct']:.2f} %; Np range {100 * np.ptp(npart) / npart.mean():.2f} %")
@@ -258,7 +302,8 @@ def main():
         inputs=cfg, outputs=summary, sources=SOURCES,
         solver={"name": "SPARTA", "build": "serial (WSL)", "commit": cfg.get("sparta_commit")},
         warnings=["Ga collision diameter not sourced: bracketed 2.5-8 A",
-                  "Melt temperature set by a free-molecular mass balance (hold mode)",
+                  "Melt temperature: see config T_basis (free-molecular mass balance, or corrected "
+                  "from a previous DSMC run's delivered flux)",
                   "Collisions beyond the sampling slab (3.5 D) neglected",
                   "Representative geometry (R14 bore, 350 mm, 46 deg), not the proposed machine"],
         disabled_physics=["Ga2 and other dimers", "wall sticking/condensation (hot lip assumed)",

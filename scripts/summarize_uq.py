@@ -57,7 +57,7 @@ def main():
           f"{'vs R07':>7s}  halves(rate)      Np range")
     for k, r in rows.items():
         print(f"{k:14s} {r.get('rms', np.nan):7.4f} {r.get('noise', np.nan):6.4f} {r.get('rms_corr', np.nan):6.4f} "
-              f"{r.get("bias", np.nan):+8.4f} {r.get("bias_se", np.nan):6.4f} {r['rate']:9.4g} "
+              f"{r.get('bias', np.nan):+8.4f} {r.get('bias_se', np.nan):6.4f} {r['rate']:9.4g} "
               f"{r['rate_se']:6.2g} {r['rate_err_pct']:+6.1f}%  "
               f"{r['halves_rate'][0]:.4g}/{r['halves_rate'][1]:.4g}  {100 * r['np_rel_range']:.2f}%")
 
