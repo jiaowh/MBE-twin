@@ -9,8 +9,9 @@ skipped. A directory without it (a failed or interrupted run) is reported as inc
 left untouched, unless --retry-incomplete is given, which moves it aside to
 <name>.failed-<timestamp> and reruns the job. The batch exits with status 1 if any job failed or
 is incomplete, so unattended runs cannot look successful.
-Serial SPARTA uses one core per job; the laptop's WSL has four. Memory guard: a job starts only
-when at least --min-free-gb of physical memory is available (checked every 30 s). Together with
+Serial SPARTA uses one core per job; the laptop's WSL has four. Memory guard (best effort): jobs are admitted one at a time, only
+when at least --min-free-gb of physical memory is available, and the next job waits until the
+previous one has run --settle seconds so its start-up allocation shows in the free memory. Together with
 streamed post-processing this keeps overnight batches from exhausting the 15 GB laptop, which
 happened on 2026-09-30 when four post-processing jobs each loaded ~55 million samples.
 
@@ -56,16 +57,30 @@ def available_gb():
 _START_LOCK = threading.Lock()
 
 
-def wait_for_memory(min_free_gb, name):
-    with _START_LOCK:  # one job starts at a time, so each sees the memory left by the others
+def launch_admitted(cmd, log, name, min_free_gb, settle_s):
+    """Start one job under admission control and return its Popen.
+
+    The lock is held while memory is checked, the job is launched and it runs for settle_s
+    seconds, so the next job is admitted only after this one's start-up allocation (SPARTA
+    creates its particles in the first tens of seconds) is visible in the free-memory figure.
+    Best effort: a job's memory can still grow later, so the per-job footprint must stay small
+    (post-processing streams snapshots) and the threshold leaves headroom.
+    """
+    with _START_LOCK:
         while available_gb() < min_free_gb:
             print(f"{time.strftime('%H:%M:%S')} {name}: waiting, {available_gb():.1f} GB free "
                   f"< {min_free_gb} GB", flush=True)
             time.sleep(30)
-        time.sleep(5)
+        proc = subprocess.Popen(cmd, stdout=log, stderr=subprocess.STDOUT,
+                                env={**os.environ, "PYTHONPATH": str(ROOT / "src")})
+        deadline = time.time() + settle_s
+        while time.time() < deadline and proc.poll() is None:
+            time.sleep(1)
+        return proc
 
 
-def run(job, batch, log_dir, script, retry_incomplete=False, results=ROOT / "results", min_free_gb=0.0):
+def run(job, batch, log_dir, script, retry_incomplete=False, results=ROOT / "results", min_free_gb=0.0,
+        settle_s=0.0):
     out = Path(results) / batch / job["name"]
     if (out / "summary.json").exists():
         return job["name"], "skipped (complete)", 0.0
@@ -73,14 +88,12 @@ def run(job, batch, log_dir, script, retry_incomplete=False, results=ROOT / "res
         if not retry_incomplete:
             return job["name"], "INCOMPLETE (no summary.json; rerun with --retry-incomplete)", 0.0
         out.rename(out.with_name(f"{out.name}.failed-{time.strftime('%Y%m%d-%H%M%S')}"))
-    wait_for_memory(min_free_gb, job["name"])
     cmd = [sys.executable, str(ROOT / script), *job["args"], "--out", str(out),
            "--record", f"{batch}/{job['name']}"]
     t0 = time.time()
     with open(log_dir / f"{job['name']}.log", "w", encoding="utf-8") as log:
-        r = subprocess.run(cmd, stdout=log, stderr=subprocess.STDOUT,
-                           env={**os.environ, "PYTHONPATH": str(ROOT / "src")})
-    return job["name"], "ok" if r.returncode == 0 else f"FAILED ({r.returncode})", time.time() - t0
+        rc = launch_admitted(cmd, log, job["name"], min_free_gb, settle_s).wait()
+    return job["name"], "ok" if rc == 0 else f"FAILED ({rc})", time.time() - t0
 
 
 def main():
@@ -89,6 +102,8 @@ def main():
     ap.add_argument("--workers", type=int, default=3)
     ap.add_argument("--min-free-gb", type=float, default=3.0,
                     help="start a job only when this much physical memory is available")
+    ap.add_argument("--settle", type=float, default=90.0,
+                    help="seconds a newly started job runs before the next one may be admitted")
     ap.add_argument("--results", default=str(ROOT / "results"), help="parent of the batch's run directories")
     ap.add_argument("--retry-incomplete", action="store_true",
                     help="move incomplete run directories aside and rerun those jobs")
@@ -101,7 +116,7 @@ def main():
     bad = []
     with ThreadPoolExecutor(args.workers) as pool:
         for name, status, secs in pool.map(lambda j: run(j, batch, log_dir, script, args.retry_incomplete,
-                                                             args.results, args.min_free_gb),
+                                                             args.results, args.min_free_gb, args.settle),
                                            spec["jobs"]):
             print(f"{time.strftime('%H:%M:%S')} {name}: {status} ({secs / 60:.1f} min)", flush=True)
             if not (status == "ok" or status.startswith("skipped")):

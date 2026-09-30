@@ -1,8 +1,10 @@
 # Machine data, calibration and acceptance plan
 
-Revision 2026-09-13. These are planned acquisitions and protocols; no machine measurements or successful validation runs are supplied in this repository.
+Revision 2026-09-30: adds the wafer-uniformity improvement outcome protocol to the 2026-09-13 data plan. These are planned acquisitions and protocols; no proposed-machine measurements or successful proposed-machine validation runs are supplied in this repository.
 
 ## Intake and provenance
+
+The ultimate project goal is reduced wafer nonuniformity. This plan therefore covers both prediction validation and a separate demonstration that twin-guided changes improve measured wafer outcomes. Thickness uniformity is the first outcome; material-property claims require their own metrics and independent measurements.
 
 Start with [machine_requirements.json](../data/intake/machine_requirements.json). Each input needs units, coordinate frame or reference state, revision, source location, applicable conditions and uncertainty. Classify it as proposal target, measured, literature, digitized, fitted, prior, synthetic or derived. Record correlations and calibration history. Keep raw measurements immutable and store transformations separately.
 
@@ -60,7 +62,21 @@ Also report maximum local error, bias, center/edge values and time-dependent fea
 
 Predeclare tolerances, dataset IDs, uncertainty handling, fitting bounds, exclusions and pass/fail logic before opening held-out results. Account for spatial/time correlation. Prediction intervals must have useful width as well as coverage; very wide intervals cannot turn an inaccurate model into an accepted one. Use the initial goals in [the Phase-1 plan](../PHASE1_CHAMBER_PLAN.md) only until measurement capability and process sensitivity establish final ones.
 
+## Demonstrating wafer-uniformity improvement
+
+Follow [Phase-1 section 1.1](../PHASE1_CHAMBER_PLAN.md#11-project-success-and-design-decisions). A model that predicts a nonuniform wafer correctly passes a different test from a twin-guided change that makes the wafer more uniform.
+
+1. Before selecting a candidate, declare the baseline geometry/recipe, material and stack, usable wafer mask, edge exclusion, map resolution, target mean thickness or growth rate, campaign fill range and quality constraints. Record baseline wafer IDs and repeatability. Until the machine exists, use an explicitly representative baseline and retain predicted-only status.
+2. Predeclare thickness half-range/mean (%) as the initial primary outcome, area-weighted standard deviation (%) as a companion, the required improvement, uncertainty method and acceptable changes in mean thickness/rate and material quality. Store unresolved numerical targets as pending, not as achieved values. Add material-property metrics only with qualified metrology and model scope.
+3. Lock the model and candidate prediction before independent outcome runs. Compare baseline and candidate on the same metrology and spatial support, with repeats and an order or pairing that accounts for source depletion, drift and maintenance. Choose replication from observed variance; pixels are not independent wafers.
+4. Report baseline and candidate maps, means and nonuniformity metrics. For metric U, define improvement as U_baseline - U_candidate in percentage points (positive means better). Quantify measurement, run-to-run and predicted-change uncertainty; report both predicted and measured changes, including disagreements.
+5. Claim demonstrated improvement only when the measured reduction meets the predeclared criterion, is resolved against uncertainty and respects the agreed process constraints over the tested operating range. Otherwise report the result as inconclusive or unsuccessful and identify the limiting evidence. Agreement with a literature benchmark or a smoother Ga map alone cannot pass this gate.
+
+Archive an outcome record containing baseline/candidate configuration and recipe IDs, model version, prediction timestamp, independent wafer IDs, metric definitions, masks, constraints, uncertainty, measured change and decision. Keep these outcome records distinct from calibration and prediction-validation records. This protocol adds a project outcome gate, not a claim that such measurements already exist.
+
 ## Numerical and laptop verification
+
+The following verification gates support reliable decisions; they do not demonstrate an improvement on a physical wafer.
 
 Execute the V01–V15 verification cases in [the master plan](../mbe_twin.md) as applicable. Refine mesh, timestep, angle, Monte Carlo sample count and coupling tolerance separately, then test the combined workflow. Compare local fields and conserved totals. Record stochastic uncertainty and independent-seed checks.
 

@@ -1,5 +1,7 @@
 # Reference library
 
+New search, 2026-09-30: [references for predictive validation](notes/VALIDATION_REFERENCE_SEARCH_2026-09-30.md), including sources R16-R20, access limits and follow-ups. These are reference acquisitions, not completed validation cases.
+
 Compiled 2026-09-13. This is an acquired evidence collection for the GaN/AlN chamber plan. Literature and comparator specifications do not validate this custom chamber.
 
 Read the annotated reviews: [growth/materials](notes/GROWTH_EVIDENCE.md), [hardware](notes/HARDWARE_EVIDENCE.md), and [solver/fidelity](notes/SOLVER_AND_FIDELITY.md) and [representative chamber](notes/REFERENCE_CHAMBER.md). The [combined manifest](sources.json) preserves the detailed source records; [integrity report](integrity_report.json) records file checks. Original-source copyright and license terms remain applicable.
@@ -65,6 +67,11 @@ Details: [methods/sources.json](methods/sources.json).
 
 | ID | Source | Local copy or access status |
 |---|---|---|
+| R16 | [Growth-induced temperature changes during transition metal nitride epitaxy on transparent SiC substrates](https://doi.org/10.1116/6.0000063) (2020) | [PDF](reference/R16_Katzer_2019_NAMBE_abstract.pdf) |
+| R17 | [Optical in-situ temperature management for high-quality ZnO molecular beam epitaxy](https://doi.org/10.1016/j.jcrysgro.2020.126009) (2021) | URL only / local source unavailable; see detailed manifest |
+| R18 | [Characterisation of an RF atomic nitrogen plasma source](https://doi.org/10.1016/S0022-0248(98)01361-X) (1999) | URL only / local source unavailable; see detailed manifest |
+| R19 | [Active nitrogen species dependence on radiofrequency plasma source operating parameters and their role in GaN growth](https://doi.org/10.1016/j.jcrysgro.2005.01.013) (2005) | URL only / local source unavailable; see detailed manifest |
+| R20 | [In situ investigation of growth modes during plasma-assisted molecular beam epitaxy of (0001)GaN](https://doi.org/10.1063/1.2789691) (2007) | [PDF](reference/R20_Koblmuller_2007_GaN_growth_modes.pdf) |
 | R01 | [RIBER MBE 49 GaN: plasma-assisted GaN production system for 200 mm GaN-on-Si](https://www.semiconductor-today.com/news_items/2023/oct/riber-171023.shtml) (2023) | URL only / local source unavailable; see detailed manifest |
 | R02 | [MBE Nitride Components & Systems brochure (GEN20, GEN200, UNI-Bulb RF nitrogen source, SUMO cells, valved Mg source)](https://www.semiconductor-today.com/images/adverts/veeco_brochure_nitrides.pdf) (2006) | [PDF](reference/R02_Veeco_nitride_MBE_brochure_2006.pdf) |
 | R03 | [Simulation and experiment of a dual-temperature zone MBE heater](https://www.sciencedirect.com/science/article/abs/pii/S0020740325008926) (2025) | [PDF](reference/R03_Wu_2025_dual_zone_MBE_heater.pdf) |
@@ -77,7 +84,7 @@ Details: [methods/sources.json](methods/sources.json).
 | R10 | [High active nitrogen flux growth of GaN by plasma assisted molecular beam epitaxy](https://pubs.aip.org/avs/jva/article-abstract/33/5/05E128/245187/High-active-nitrogen-flux-growth-of-GaN-by-plasma) (2015) | URL only / local source unavailable; see detailed manifest |
 | R11 | [Development and diagnostic study of the RF nitrogen atom source](https://www.sciencedirect.com/science/article/abs/pii/S0042207X24008662) (2024) | URL only / local source unavailable; see detailed manifest |
 | R12 | [Active nitrogen flux measurement during GaN growth based on the transmitted signal detected with a pyrometer](https://arxiv.org/abs/2412.15710) (2024) | [PDF](reference/R12_Canciani_2024_active_N_pyrometer.pdf) |
-| R13 | [System and method for increasing III-nitride semiconductor growth rate and reducing damaging ion flux (US 10,526,723)](https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/10526723) (unverified) | URL only / local source unavailable; see detailed manifest |
+| R13 | [System and method for increasing III-nitride semiconductor growth rate and reducing damaging ion flux (US 10,526,723)](https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/10526723) (2020) | [PDF](reference/R13_US10526723_plasma_aperture.pdf) |
 | R14 | [Simulation of the uniformity influence of effusion cell structure and layout in molecular beam epitaxy](https://doi.org/10.13922/j.cnki.cjvst.202502013) (2025) | [PDF](reference/R14_Tao_2025_effusion_cell_layout_8inch.pdf) |
 | R15 | [Vapour pressure equations for the metallic elements: 298-2500 K (CRC Handbook reprint, 'Vapor pressure of the metallic elements')](https://www.tandfonline.com/doi/abs/10.1179/cmq.1984.23.3.309) (1984) | [PDF](reference/R15_Alcock_1984_vapour_pressure_CRC.pdf) |
 

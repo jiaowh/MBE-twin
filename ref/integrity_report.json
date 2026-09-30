@@ -1,7 +1,7 @@
 {
   "checked_date": "2026-09-30",
-  "source_count": 49,
-  "usable_pdf_count": 27,
+  "source_count": 54,
+  "usable_pdf_count": 30,
   "usable_html_count": 8,
   "artifacts": [
     {
@@ -355,6 +355,30 @@
       "usable_source": true
     },
     {
+      "id": "R16",
+      "path": "ref/reference/R16_Katzer_2019_NAMBE_abstract.pdf",
+      "bytes": 184406,
+      "sha256": "e64673d6838c1b782bec934a6a7dcbded7ed503b1cfa8806828658717bad2ef4",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 2,
+      "first_page_text_characters": 3146,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "R20",
+      "path": "ref/reference/R20_Koblmuller_2007_GaN_growth_modes.pdf",
+      "bytes": 912484,
+      "sha256": "4a576e9f782faa9ed5d56eddf5d2738b1c9fbfb95b8052d4dceecc579b4b186c",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 19,
+      "first_page_text_characters": 1214,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
       "id": "R02",
       "path": "ref/reference/R02_Veeco_nitride_MBE_brochure_2006.pdf",
       "bytes": 366996,
@@ -405,6 +429,18 @@
         "Ignoring wrong pointing object 8 0 (offset 0)",
         "Ignoring wrong pointing object 10 0 (offset 0)"
       ]
+    },
+    {
+      "id": "R13",
+      "path": "ref/reference/R13_US10526723_plasma_aperture.pdf",
+      "bytes": 1849433,
+      "sha256": "afcff0007ed551c45342faffb217f852f63ef610572d06919aedf429c1b58916",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 18,
+      "first_page_text_characters": 2540,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
     },
     {
       "id": "R14",

@@ -65,7 +65,7 @@ def _batch(tmp_path, jobs, *extra):
     spec = tmp_path / "b.json"
     spec.write_text(json.dumps({"script": str(tmp_path / "fake.py"), "jobs": jobs}))
     return subprocess.run([sys.executable, str(ROOT / "scripts/sparta_batch.py"), str(spec),
-                           "--results", str(tmp_path / "res"), "--workers", "2", "--min-free-gb", "0", *extra],
+                           "--results", str(tmp_path / "res"), "--workers", "2", "--min-free-gb", "0", "--settle", "0", *extra],
                           capture_output=True, text=True)
 
 
@@ -80,3 +80,26 @@ def test_batch_reports_failures_and_incomplete_runs(tmp_path):
     r = _batch(tmp_path, [{"name": "good", "args": ["ok"]}, {"name": "bad", "args": ["ok"]}], "--retry-incomplete")
     assert r.returncode == 0 and "bad: ok" in r.stdout
     assert list((tmp_path / "res" / "b").glob("bad.failed-*"))
+
+
+def test_batch_admission_waits_for_settle(tmp_path):
+    import json
+    import subprocess
+
+    job = """
+import sys, time
+from pathlib import Path
+args = sys.argv[1:]
+out = Path(args[args.index("--out") + 1]); out.mkdir(parents=True, exist_ok=True)
+(out / "start").write_text(repr(time.time())); time.sleep(3); (out / "summary.json").write_text("{}")
+"""
+    (tmp_path / "slow.py").write_text(job)
+    spec = tmp_path / "b.json"
+    spec.write_text(json.dumps({"script": str(tmp_path / "slow.py"),
+                                "jobs": [{"name": "a", "args": []}, {"name": "b", "args": []}]}))
+    r = subprocess.run([sys.executable, str(ROOT / "scripts/sparta_batch.py"), str(spec), "--results",
+                        str(tmp_path / "res"), "--workers", "2", "--min-free-gb", "0", "--settle", "2"],
+                       capture_output=True, text=True)
+    assert r.returncode == 0
+    starts = sorted(float((tmp_path / "res" / "b" / n / "start").read_text()) for n in ("a", "b"))
+    assert starts[1] - starts[0] >= 1.9  # second job admitted only after the first settled

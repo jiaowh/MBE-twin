@@ -4,13 +4,15 @@ Technical overview of the repository: status by subsystem, documents, code, exte
 
 The proposed machine is not built. The code runs on a representative 200 mm chamber and is checked subsystem by subsystem against published cases. No result here is a validated prediction for the proposed machine.
 
+The project goal is to reduce wafer nonuniformity, first in grown-layer thickness and subsequently in separately validated material properties. Predictive accuracy, reproducibility and laptop execution enable that outcome. Prioritize development by which uncertainty or design decision it resolves for wafer improvement; source, thermal and nitrogen maps are intermediate evidence, not a substitute for measured growth outcomes. Use the [governing outcome contract](../PHASE1_CHAMBER_PLAN.md#11-project-success-and-design-decisions) and [baseline-to-candidate measurement protocol](DATA_AND_VALIDATION_PLAN.md#demonstrating-wafer-uniformity-improvement).
+
 ## Status
 
 | Area | Status (2026-09-30) |
 |---|---|
 | Direct beam and free-molecular crucible emission | Implemented; verified against closed-form and deterministic references; reproduces R07's measured fill-level profiles (Bi) |
 | Collisional crucible (SPARTA DSMC) | One fitted parameter (Bi hard-sphere diameter, effective-parameter sensitivity interval 8.0-10.3 A) reproduces R07's profile shapes at 0.35-11 A/s to 0.004-0.023 RMS, noise-corrected, with seed, timestep and cell checks (free-molecular: 0.04-0.20). Absolute centre rates are 7-15 % low (systematic, unexplained) |
-| Production Ga transport (200 mm, level melt) | Sensitivity study. At 46 deg, collisional range/mean (annulus-fit estimator, checked against dense references) is about 2 % at 40 mm recess, 5.0-5.4 % at 70 mm and 7.7-9.9 % at 120 mm, against 10.3 % free-molecular. Estimator scatter is 0.2-0.6 points. Angle optima are about 1 % or less, not resolved further. Numerical checks at the optima and runs at DSMC-held delivered flux are in progress. Not a thickness prediction |
+| Production Ga transport (200 mm, level melt) | Sensitivity study. At 46 deg, collisional range/mean (annulus-fit estimator, checked against dense references) is about 2 % at 40 mm recess, 5.0-5.4 % at 70 mm and 7.7-9.9 % at 120 mm, against 10.3 % free-molecular. Estimator scatter is 0.2-0.6 points. Angle optima are about 1 % and not converged (one-setting checks move them by up to 0.66 points). The temperature schedule is free-molecular, so delivered flux is 0.96-1.09 of target; DSMC-held runs, iterated to +/-1.5 %, are queued. Not a thickness prediction |
 | Heater and wafer thermal (Elmer) | Conduction (V02) and diffuse-gray radiation (V03) verified; R03 data recorded, reproduction deferred (weak discrimination) |
 | Nitrogen | Boundary and measurement access planned; aperture-plate sensitivity and hole Knudsen estimate done ([nitrogen boundary](../ref/notes/NITROGEN_BOUNDARY.md)) |
 | Vacuum, growth chemistry | Planned; not implemented |

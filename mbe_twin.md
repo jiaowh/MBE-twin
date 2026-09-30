@@ -1,10 +1,13 @@
 # MBE digital twin: accuracy-first architecture and validation plan
 
-Date: 2026-09-13 (revised from the September 8 draft)  
+Date: 2026-09-30 (goal alignment update to the September 13 architecture)
+
 Status: technical architecture for this GaN/AlN project. Stage A subsystem code exists (see the [developer guide](docs/DEVELOPER.md)); no integrated or experimentally validated chamber solver is established here.  
 The current work order, laptop requirements and acceptance proposals are in [PHASE1_CHAMBER_PLAN.md](PHASE1_CHAMBER_PLAN.md). That plan governs initial scope where this broader architecture describes later capabilities. The original draft is preserved in [ref/archive](ref/archive/mbe_twin_2026-09-08_original.md). All proposed implementation paths are relative to this repository.
 
 ## 1. Decision and intended outcome
+
+The project's ultimate outcome is a measurable reduction in nonuniformity across the 200 mm wafer. Initially assess grown-layer thickness; material-property uniformity requires separately qualified observables. The model explains how temperature, species delivery and surface growth create spatial variation, and supports changes to geometry and operation that reduce it. The governing outcome contract is [Phase-1 section 1.1](PHASE1_CHAMBER_PLAN.md#11-project-success-and-design-decisions).
 
 Build a machine-specific, three-dimensional, coupled chamber-and-growth model using specialist scientific solvers. Prioritize predictive accuracy, identifiable parameters, reproducibility and uncertainty over real-time speed. Use an open-source baseline so commercial licenses are optional. Use independently verified reduced models as limiting-case references where useful; no pre-existing simulator is required.
 
@@ -12,7 +15,7 @@ The initial candidate stack is FreeCAD for geometry, Gmsh for meshing, Elmer FEM
 
 Omniverse is optional: use it for a spatial application, equipment animation and presentation of computed fields if those deliverables justify the integration. It does not replace the physical solvers. COMSOL is an optional commercial alternative for parts of the coupled physics workflow, not a requirement for accuracy.
 
-The desired outcome is a model that predicts specified observables for a specified reactor and operating envelope, with documented uncertainty and independent experimental evidence. A detailed CAD scene, a converged numerical solution and a successful fit are each useful, but none alone establishes predictive validity.
+The enabling technical outcome is a model that predicts specified observables for a specified reactor and operating envelope, with documented uncertainty and independent experimental evidence. A detailed CAD scene, a converged numerical solution and a successful fit are each useful, but none alone establishes predictive validity. Even a validated model must support a measured baseline-to-candidate reduction in wafer nonuniformity before that project outcome is claimed.
 
 ### 1.1 Meaning of “as physically accurate as possible”
 
@@ -583,6 +586,8 @@ Do not use individual pixels from the same wafer as if they were independent val
 Acquire calibration data early; validation is not a final documentation-only work package. If data are unavailable, advance numerical verification and uncertainty studies while retaining `not_experimentally_validated` status.
 
 ### 14.5 Metrics and acceptance protocol
+
+Track model accuracy and wafer improvement separately. For the latter, compare baseline and candidate thickness half-range/mean and area-weighted standard deviation on the same usable wafer area, with agreed mean thickness/rate and quality constraints. Report the change in percentage points and its uncertainty across independent wafer runs. Numerical targets and material-property metrics are set before outcome testing; see [the improvement protocol](docs/DATA_AND_VALIDATION_PLAN.md#demonstrating-wafer-uniformity-improvement). Subsystem flux or temperature uniformity is intermediate evidence until its connection to growth is established.
 
 For area samples with weights `w_i`, use:
 
