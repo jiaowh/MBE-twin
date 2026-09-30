@@ -258,6 +258,7 @@ Wafer temperature range (K) at the optimum, 740 C mean. In brackets: the worst r
   - The wafer's own emissivity uncertainty (0.7 +/- 10 %, R28) alone moves the open-loop mean by 17-19 K. So power control or heater thermocouples cannot set the wafer temperature to better than about 20 K; the wafer must be measured.
   - One sensor corrects the mean but not the shape. At least one sensor per zone brings the range close to the best a 3-zone heater can do on the perturbed holder (heater_zones re-optimized: 20.5-23 K for the worst cases).
   - A 1 K bias on the outermost sensor changes the range by under 1 K.
+  - Supporting evidence (R16 supplement, read 2026-10-01): with the heater thermocouple held fixed, the substrate temperature fell from 784 to 665 C when the shutter opened, then rose to 880 C as a 9 nm metal film grew. That is a 3-inch transparent SiC substrate with metal films, an extreme case, and not a radial benchmark. It shows qualitatively that optical changes during growth move the wafer temperature far beyond what heater control sees. The pyrometer and band-edge readings still differed by 34 C at the end.
   - Sensors are ideal point readings; spot size, emissivity drift of a growing GaN-on-Si stack and viewport access are not modelled.
 - **Thickness effect** (growth model, [growth note](GROWTH_EVIDENCE.md)): about 0.03 / 0.11-0.16 / 0.45-0.64 % thickness range/mean per K of wafer range at 700 / 740 / 780 C. For example, 6 K at 740 C is about 1 %, and 17 K is about 2-3 %.
 - **Limits.**
@@ -288,7 +289,7 @@ Next:
 12. Beam transport: add background-gas attenuation exp(-s/lambda) to the direct-beam kernel (after the flux-hold batch, which imports beam.py), and re-evaluate the Ga angle optima and the N aim at the expected growth pressure. Requires the effective N2 pumping speed.
 13. Growth: independent validation data. R20's growth map is conditional on one N flux and one shared template, so it cannot serve as independent wafer validation. Commissioning N-limited and Ga-limited thickness maps are the real test.
 14. Later: crucible shapes (R24 reservoir; R25 is a line-of-sight model with walls hidden from the substrate, so a code-to-code check must reproduce that assumption) and the adjustable-source study below.
-15. Still wanted: full text of R04, the RIBER MBE 49 technical PDF, and a representative aperture-plate drawing. R03 reconstruction stays deferred (weak discrimination); R16 may inform transient validation.
+15. Still wanted: full text of R04, the RIBER MBE 49 technical PDF, and a representative aperture-plate drawing. R03 reconstruction stays deferred (weak discrimination). R16 (supplement read) is qualitative support for wafer-temperature sensing, not a transient benchmark; the 2020 journal article would be needed for one.
 
 ### Exploratory (non-essential)
 

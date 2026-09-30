@@ -86,7 +86,7 @@ These make commissioning tests (FAT/SAT) serve as calibration ([Phase-1 plan, se
 - **N-limited (Ga-rich) thickness maps** of calibration wafers at two or more growth temperatures and N source settings, with the N source aim recorded. This is the only direct test of the N map, which the studies above identify as the most uncertain and most consequential input.
 - **Ga-limited (N-rich) thickness maps** at two or more fill levels over a campaign. They measure the Ga map and its drift.
 - **Growth-time chamber pressure and effective N2 pumping speed**, and beam-flux calibrations with the plasma gas flowing as well as off (background scattering changes the delivered flux by 10-20 %).
-- **Wafer temperature at more than one radius** (multi-spot pyrometry or an instrumented wafer), logged with per-zone heater power.
+- **Wafer temperature at more than one radius, measured during growth** (R16 shows substrate temperature moving by more than 100 K at a fixed heater thermocouple as a film grows; an extreme case, but the mechanism applies to any change of the wafer's optics) (multi-spot pyrometry or an instrumented wafer), logged with per-zone heater power.
 - **N source alignment** with a mechanical reference that allows the aim to be measured and adjusted, and the plate drawing (thickness, pattern, tilt) from the vendor.
 - **Droplet onset and N-rich boundary** (RHEED/QMS) at the operating temperatures, on the machine's own temperature scale.
 
