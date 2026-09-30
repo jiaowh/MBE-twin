@@ -32,11 +32,13 @@ The batch runner treats a job as complete only when its directory holds `summary
 | R07 first uncertainty pass (2e5 particles, 16000 sampling steps; noise ~0.02 per bin) | `python scripts/sparta_batch.py cases/sparta_r07/uq_batch.json` | `data/runs/sparta_r07/uq_batch/` (`3.5_cell07` failed and has no record) |
 | R07 high-statistics benchmarks: seeds, timestep, cells, diameter 7 / 8 / 9 A | `python scripts/sparta_batch.py cases/sparta_r07/uq2_batch.json` | `data/runs/sparta_r07/uq2_batch/` |
 | R07 diameter scan extension (8.5 / 10 / 11 A) | for each job in `cases/sparta_r07/uq2_dscan.json`: `python scripts/sparta_r07.py <args> --out results/uq2_batch/<name> --record uq2_batch/<name>` | `data/runs/sparta_r07/uq2_batch/3.5_d*.json` |
+| Nitrogen: published plates (R13, R30), hole Knudsen number, geometry, free-molecular wafer maps (about 1 h) | `python scripts/nitrogen_plate_scenarios.py` | `results/nitrogen_plate_scenarios/manifest.json` |
+| R07 with Bi + Bi2 vapour (Kubaschewski fractions, x = 0.5 check, d scan at 3.5 A/s) | `python scripts/sparta_batch.py cases/sparta_r07/r07_bi2.json` | `data/runs/sparta_r07/r07_bi2/` |
 | R07 tables, noise-corrected RMS, diameter interval | `python scripts/summarize_uq.py --dir data/runs/sparta_r07/uq2_batch` | (printed) |
 | Ga on 200 mm at 46 deg: fills, diameter bracket, fixed T, 0.5 um/h, seed / cell / slab checks | `python scripts/sparta_batch.py cases/sparta_ga/ga_batch.json` | `data/runs/sparta_ga/ga_batch/` |
 | Ga port angle per fill | `python scripts/sparta_batch.py cases/sparta_ga/ga_angle.json` | `data/runs/sparta_ga/ga_angle/` |
 | Ga numerical checks at angle optima (one setting changed per check) | `python scripts/sparta_batch.py cases/sparta_ga/ga_checks.json` | `data/runs/sparta_ga/ga_checks/` |
-| Ga at DSMC-held delivered flux | `python scripts/sparta_batch.py cases/sparta_ga/ga_dsmchold.json` (after `ga_batch` and `ga_angle`) | `data/runs/sparta_ga/ga_dsmchold/` |
+| Ga at held centre Ga flux (first correction and iterations to +/-1.5 %; exit 1 unless every state is held) | `python scripts/ga_flux_hold.py --iterate` (after `ga_batch` and `ga_angle`; runs `ga_dsmchold.json`, then generated `cases/sparta_ga/iterations/ga_dsmchold.json`) | `data/runs/sparta_ga/ga_dsmchold/` |
 | Any single run by name | `python scripts/sparta_r07.py r07_11 --out results/my_run`; `python scripts/sparta_ga.py --fill 0.12 --diameter 8e-10 --angle 58` | (add `--record NAME`) |
 
 **Post-processing only.** `python scripts/sparta_ga.py --reuse results/<batch>/<name> --record <batch>/<name>` recomputes a Ga summary from the stored dumps and `config.json`. On 2026-09-30 all Ga records were regenerated this way with the revised uniformity estimator (next section). The dumps and inputs were not rerun.

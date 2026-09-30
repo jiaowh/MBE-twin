@@ -77,7 +77,8 @@ flowchart LR
 
 What this test settles and what it leaves open:
 - **One tuned number.** Collisions depend on how "big" an atom is in a collision. For bismuth the test pins that size to 8–10 Å.
-- **Open puzzle.** The model's absolute deposition rate is 7–15 % lower than measured in every case. This is not simulation noise, and its cause is still unknown. The spray *shape*, which is what uniformity depends on, is reproduced.
+- **Open puzzle.** The model's absolute deposition rate is 7–15 % lower than measured in every case. This is not simulation noise. The spray *shape*, which is what uniformity depends on, is reproduced.
+- **A likely explanation.** Bismuth vapour is not all single atoms. Published data put about 30 % of it as paired atoms (Bi₂). A pair carries two atoms, so at the same vapour pressure more bismuth arrives, about 12–13 % more. That is the size of the gap. It is not yet built into the model: the pressures the 1991 paper states are themselves 1.4–1.7 times the handbook values, so the check needs care.
 
 ## 4. Gallium on the 200 mm wafer
 
@@ -91,6 +92,8 @@ With the beam model tested, we apply it to a gallium cell in the representative 
 
 **The biggest unknown: the gallium atom's size.** No published source gives the collision size of a gallium atom, so we try a range (2.5, 5.68 and 8 Å). It hardly matters for a fresh charge. For a nearly empty cup, bigger atoms mean more collisions, which widen the spray again. There the answer ranges from about 8 % to 10 %.
 
+A new estimate narrows that range from physics rather than guesswork. Atoms attract each other at a distance with a strength that has been calculated for every element. Scaling from noble gases, whose collision sizes are well measured, gives about 4 Å for gallium if that attraction were all there is. The same method says bismuth should be about 4 Å, but the 1991 experiment needs 8–10 Å. Metal atoms bond as well as attract, which makes them "look" bigger. Carrying bismuth's extra factor over to gallium gives at most about 9.6 Å. The next runs will use 4, 6 and 9.6 Å. Gallium vapour, unlike bismuth, is almost entirely single atoms (paired atoms under 0.1 %, checked against a 1998 measurement), so the model's single-atom picture holds.
+
 **Choosing the port angle.** Tilting the cell more steeply compensates for the narrowing spray. The best angle depends on the fill: about 48° for a fresh 40 mm charge, about 54° at 70 mm and about 58° at 120 mm. At its best angle each fill reaches roughly 1–2 %.
 
 ![Range/mean against port angle for three fill levels, with the spill limit for a fresh charge above 48.2°](docs/figures/ga_angle.png)
@@ -101,7 +104,9 @@ What the angle study means:
 - **No fixed angle is best for a whole campaign.** A fresh charge would spill beyond 48.2°, while an emptying cup prefers 54–58°. Choosing a port angle is a real design trade-off.
 - **The best values are only known roughly.** We repeated the two best cases with a different random seed, a halved time step, a finer grid and twice the simulated atoms. The results moved between 0.7 and 1.4 % at 70 mm, and between 0.9 and 1.9 % at 120 mm. So the best achievable is about 1 % for a half-empty cup and about 1.5–2 % for a nearly empty one. Pinning it down further would need much longer runs.
 
-**Keeping the growth rate constant.** As the cup empties, less vapour escapes, so the oven must run hotter to keep the growth rate. The no-collision model puts the increase at about 8.5 °C between 40 and 120 mm. With collisions, the rate actually delivered at those temperatures is 4 % below to 9 % above the target. So the twin now adjusts the temperature from the collision simulation itself, repeating until the delivered rate is within ±1.5 % of the target. Those runs are in progress.
+**Keeping the gallium supply constant.** As the cup empties, less vapour escapes, so the oven must run hotter to keep the same gallium supply. The no-collision model puts the increase at about 8.5 °C between 40 and 120 mm. With collisions, the supply actually delivered at those temperatures is 4 % below to 9 % above the target. So the twin now adjusts the temperature from the collision simulation itself, repeating until the supply at the wafer centre is within ±1.5 % of the target. These runs started on the night of 30 September.
+
+What is held constant is the gallium arriving at the centre of the wafer, not the growth rate. The growth rate also depends on the nitrogen supply and on how much gallium actually sticks, which the twin does not model yet. The runs also record the average gallium supply over the whole wafer, since the edge receives less than the centre.
 
 **What these results are, and are not.** They compare design options on a representative chamber, with a known uncertainty and one clearly bracketed unknown (the atom size). They are not a thickness prediction for a specific machine. In the usual gallium-rich GaN recipe, thickness follows the nitrogen supply (next section).
 
@@ -111,6 +116,7 @@ In the usual gallium-rich recipe, a thin excess film of gallium sits on the surf
 
 **The nitrogen source.** The plasma source releases its gas through a plate with many small holes. Our model of that plate shows:
 - **Hole shape sets the spread.** How the nitrogen spreads over the wafer depends mostly on the holes' shape (how deep compared with how wide). The plate's overall size barely matters.
+- **Real plates look much less even than the gallium beam.** Two published plates give real hole counts and sizes (about 700 to 4000 holes, 0.2–0.34 mm wide), but not the plate thickness, so we tried 0.5–2 mm. At normal gas flows the gas in the holes is thin enough for the model to apply. Straight holes that are several times longer than they are wide send the nitrogen out in a narrow jet. Aimed at the wafer centre from 350 mm, the model then gives nitrogen maps with range/mean of 20 % to over 100 %, against 1–10 % for gallium. Real machines evidently do better, so something in the real source or layout (aiming off-centre, angled holes, a longer distance, what happens on the hole walls) must even it out. Finding out which is now the most important open question for where the sources go. A thickness map grown with nitrogen as the limiting supply on the real machine will be the direct test.
 - **The ratio can go either way.** Combining gallium and nitrogen maps can make the ratio across the wafer more even than the gallium alone, or less even, depending on the plate. A drawing of a real (or representative) plate is needed before settling where the gallium cell goes.
 
 ## 6. Wafer temperature
@@ -124,25 +130,28 @@ The first published heater experiment we examined (R03) turned out to be a weak 
 - **Statistical error bars.** Collision simulations are statistical, like an opinion poll, so every result carries an error estimate from splitting the run into independent pieces. Important cases are rerun with another random seed, smaller time steps and finer grids.
 - **A checked unevenness formula.** Turning a noisy simulated spray into one range/mean number needs a smoothing formula. Ours was tested against exact answers: it is off by at most 0.2 points, and its random scatter is 0.3–0.5 points.
 - **Every result can be rerun.** Each run gets its own folder and records its full settings before it starts. Saved results carry a fingerprint of the exact code that produced them, and batch files spell out every setting.
-- **Automatic tests.** About 120 automatic tests check the code; all pass. Every number is traced to a published source, and unknown or unexplained results are labelled rather than hidden.
-- **The laptop stays safe.** Simulation output is read one snapshot at a time. At most 3 jobs run at once, and a new job starts only when at least 3 GB of memory is free.
+- **Automatic tests.** About 130 automatic tests check the code; all pass. Every number is traced to a published source, and unknown or unexplained results are labelled rather than hidden.
+- **The laptop stays safe.** Simulation output is read one snapshot at a time. A new job starts only when enough memory is free, both in Windows and in the Linux environment where the collision simulator runs. When the laptop is shared with other work, jobs also wait for a free processor core, and an overnight queue stops starting new jobs at a set hour.
 
 ## 8. Where things stand
 
 | Part | Status |
 |---|---|
-| Gallium beam model | Tested against a real experiment (shape within 1–2 %); absolute rate 7–15 % low, cause unknown |
-| Gallium on the 200 mm wafer | Fill and port-angle study done, including numerical checks at the best angles; constant-growth-rate runs next |
-| Nitrogen source | Hole-plate model built; needs a representative plate drawing |
+| Gallium beam model | Tested against a real experiment (shape within 1–2 %); absolute rate 7–15 % low, likely paired bismuth atoms (test running) |
+| Gallium on the 200 mm wafer | Fill and port-angle study done, including numerical checks at the best angles; constant-gallium-supply runs running |
+| Nitrogen source | Hole-plate model run for two published plates: far less even than gallium unless the layout compensates; plate thickness and pattern unknown |
 | Wafer heater | Solver passes exact tests; needs a better published experiment, then the 200 mm model |
 | Surface growth chemistry | Not started |
 | The real machine | Needs its drawings and first measurements, which will turn the representative twin into its own twin |
 
 **Next.**
-1. Run the constant-growth-rate cases.
-2. Find a representative nitrogen plate design and a sourced gallium atom size.
-3. Design a crucible shape that keeps the spray steadier as it empties.
-4. Find a stronger heater experiment.
+1. Finish the constant-gallium-supply runs and the test of whether paired bismuth atoms close the 1991 rate gap (both running).
+2. Decide, from that test, whether to rerun the gallium study with atom sizes of 4, 6 and 9.6 Å. These are plausible values spanning a range argued from other atoms, not proven limits.
+3. Extend the nitrogen plate model so it can take the two real hole sizes now found (0.2 and 0.34 mm) and a range of plate thicknesses, and check whether the gas in the holes is thin enough for the model's assumptions.
+4. Design a crucible shape that keeps the spray steadier as it empties. Two patented production designs are now on file: a cup with a narrow inner opening, whose output does not depend on the fill, and a Riber-type cell reported to give 0.4 % over 190 mm.
+5. Find a stronger heater experiment. Emissivity data for the silicon wafer and the boron-nitride parts are now on file. A production-heater study (R05) measured what spoils wafer temperature (ring overlap, a shiny platen, a too-small heater gap), which the heater model must be able to show, but it lacks the dimensions needed to recreate it exactly.
+
+The sources and calculations from the latest search are in the [physics-data note](ref/notes/PHYSICS_DATA_SEARCH_2026-09-30.md).
 
 **Side idea (optional, not on the main path).** Could an adjustable gallium oven keep the layer even as the cup empties? The best angle steepens from about 48° to 58° as the cup empties, and a full cup only spills at steep angles, so "start shallow, tilt steeper later" never spills. When the laptop is free, we'll compare three ways to do it:
 - an oven that can tilt at its mounting;

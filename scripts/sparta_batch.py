@@ -15,8 +15,17 @@ previous one has run --settle seconds so its start-up allocation shows in the fr
 streamed post-processing this keeps overnight batches from exhausting the 15 GB laptop, which
 happened on 2026-09-30 when four post-processing jobs each loaded ~55 million samples.
 
+WSL is shared with other projects (2026-09-30: another project's jobs run in the same 8 GB,
+4-core VM). SPARTA runs inside WSL, and a WSL out-of-memory kill takes the largest process,
+which may belong to someone else. --min-free-wsl-gb therefore also requires MemAvailable inside
+WSL, and --max-wsl-load admits a job only while the WSL 1-minute load average is below the
+given value (so a job takes a free core instead of slowing other work). Both are checked with
+the same admission lock; if WSL cannot be queried the job waits. --no-start-after
+YYYY-MM-DDTHH:MM stops admitting jobs at that local time (for a machine that must be free by a
+given hour); jobs not started are reported and make the batch exit 1.
+
 Usage: python scripts/sparta_batch.py cases/sparta_r07/uq_batch.json [--workers 3] [--min-free-gb 3]
-                                      [--retry-incomplete]
+                                      [--min-free-wsl-gb 2.5] [--max-wsl-load 3.2] [--retry-incomplete]
 """
 
 import argparse
@@ -54,10 +63,49 @@ def available_gb():
     return float("inf")
 
 
+def wsl_state():
+    """(MemAvailable GB, 1-minute load average) inside WSL, or None if WSL cannot be queried."""
+    try:
+        r = subprocess.run(["wsl.exe", "-e", "cat", "/proc/meminfo", "/proc/loadavg"],
+                           capture_output=True, text=True, timeout=60)
+    except (OSError, subprocess.TimeoutExpired):
+        return None
+    mem = load = None
+    for line in r.stdout.splitlines():
+        parts = line.split()
+        if parts and parts[0] == "MemAvailable:":
+            mem = int(parts[1]) / 2 ** 20
+        elif len(parts) >= 5 and "/" in parts[3]:
+            load = float(parts[0])
+    return None if r.returncode != 0 or mem is None or load is None else (mem, load)
+
+
+def admission_blocker(min_free_gb, min_free_wsl_gb=0.0, max_wsl_load=None):
+    """Reason a job may not start now, or None."""
+    free = available_gb()
+    if free < min_free_gb:
+        return f"{free:.1f} GB free < {min_free_gb} GB"
+    if min_free_wsl_gb > 0 or max_wsl_load is not None:
+        st = wsl_state()
+        if st is None:
+            return "WSL state unavailable"
+        mem, load = st
+        if mem < min_free_wsl_gb:
+            return f"WSL {mem:.1f} GB available < {min_free_wsl_gb} GB"
+        if max_wsl_load is not None and load >= max_wsl_load:
+            return f"WSL load {load:.2f} >= {max_wsl_load}"
+    return None
+
+
 _START_LOCK = threading.Lock()
 
 
-def launch_admitted(cmd, log, name, min_free_gb, settle_s):
+class DeadlinePassed(Exception):
+    pass
+
+
+def launch_admitted(cmd, log, name, min_free_gb, settle_s, min_free_wsl_gb=0.0, max_wsl_load=None,
+                    deadline_ts=None):
     """Start one job under admission control and return its Popen.
 
     The lock is held while memory is checked, the job is launched and it runs for settle_s
@@ -67,9 +115,16 @@ def launch_admitted(cmd, log, name, min_free_gb, settle_s):
     (post-processing streams snapshots) and the threshold leaves headroom.
     """
     with _START_LOCK:
-        while available_gb() < min_free_gb:
-            print(f"{time.strftime('%H:%M:%S')} {name}: waiting, {available_gb():.1f} GB free "
-                  f"< {min_free_gb} GB", flush=True)
+        last = None
+        while True:
+            if deadline_ts is not None and time.time() > deadline_ts:
+                raise DeadlinePassed
+            why = admission_blocker(min_free_gb, min_free_wsl_gb, max_wsl_load)
+            if why is None:
+                break
+            if why != last:  # log changes only, not every poll
+                print(f"{time.strftime('%H:%M:%S')} {name}: waiting, {why}", flush=True)
+                last = why
             time.sleep(30)
         proc = subprocess.Popen(cmd, stdout=log, stderr=subprocess.STDOUT,
                                 env={**os.environ, "PYTHONPATH": str(ROOT / "src")})
@@ -80,7 +135,7 @@ def launch_admitted(cmd, log, name, min_free_gb, settle_s):
 
 
 def run(job, batch, log_dir, script, retry_incomplete=False, results=ROOT / "results", min_free_gb=0.0,
-        settle_s=0.0):
+        settle_s=0.0, min_free_wsl_gb=0.0, max_wsl_load=None, deadline_ts=None):
     out = Path(results) / batch / job["name"]
     if (out / "summary.json").exists():
         return job["name"], "skipped (complete)", 0.0
@@ -91,8 +146,15 @@ def run(job, batch, log_dir, script, retry_incomplete=False, results=ROOT / "res
     cmd = [sys.executable, str(ROOT / script), *job["args"], "--out", str(out),
            "--record", f"{batch}/{job['name']}"]
     t0 = time.time()
+    if deadline_ts is not None and time.time() > deadline_ts:
+        return job["name"], "NOT STARTED (--no-start-after passed)", 0.0
     with open(log_dir / f"{job['name']}.log", "w", encoding="utf-8") as log:
-        rc = launch_admitted(cmd, log, job["name"], min_free_gb, settle_s).wait()
+        try:
+            proc = launch_admitted(cmd, log, job["name"], min_free_gb, settle_s, min_free_wsl_gb, max_wsl_load,
+                                   deadline_ts)
+        except DeadlinePassed:
+            return job["name"], "NOT STARTED (--no-start-after passed)", 0.0
+        rc = proc.wait()
     return job["name"], "ok" if rc == 0 else f"FAILED ({rc})", time.time() - t0
 
 
@@ -102,6 +164,12 @@ def main():
     ap.add_argument("--workers", type=int, default=3)
     ap.add_argument("--min-free-gb", type=float, default=3.0,
                     help="start a job only when this much physical memory is available")
+    ap.add_argument("--min-free-wsl-gb", type=float, default=0.0,
+                    help="also require this much MemAvailable inside WSL (0: no check)")
+    ap.add_argument("--max-wsl-load", type=float, default=None,
+                    help="start a job only while the WSL 1-minute load average is below this")
+    ap.add_argument("--no-start-after", default=None, metavar="YYYY-MM-DDTHH:MM",
+                    help="admit no job after this local time")
     ap.add_argument("--settle", type=float, default=90.0,
                     help="seconds a newly started job runs before the next one may be admitted")
     ap.add_argument("--results", default=str(ROOT / "results"), help="parent of the batch's run directories")
@@ -109,6 +177,8 @@ def main():
                     help="move incomplete run directories aside and rerun those jobs")
     args = ap.parse_args()
     spec = json.loads(Path(args.jobs).read_text(encoding="utf-8"))
+    deadline_ts = (time.mktime(time.strptime(args.no_start_after, "%Y-%m-%dT%H:%M"))
+                   if args.no_start_after else None)
     batch = Path(args.jobs).stem
     script = spec.get("script", "scripts/sparta_r07.py")
     log_dir = Path(args.results) / batch / "_logs"
@@ -116,7 +186,8 @@ def main():
     bad = []
     with ThreadPoolExecutor(args.workers) as pool:
         for name, status, secs in pool.map(lambda j: run(j, batch, log_dir, script, args.retry_incomplete,
-                                                             args.results, args.min_free_gb, args.settle),
+                                                             args.results, args.min_free_gb, args.settle,
+                                                             args.min_free_wsl_gb, args.max_wsl_load, deadline_ts),
                                            spec["jobs"]):
             print(f"{time.strftime('%H:%M:%S')} {name}: {status} ({secs / 60:.1f} min)", flush=True)
             if not (status == "ok" or status.startswith("skipped")):

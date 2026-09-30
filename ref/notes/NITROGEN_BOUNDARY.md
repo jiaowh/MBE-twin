@@ -76,9 +76,41 @@ Each Ga value carries the estimator's scatter of about 0.2-0.6 points ([represen
 - Ga uniformity alone is the wrong criterion. With a thin plate, the edge-low Ga and N maps partly cancel. At 70 and 120 mm the ratio is clearly more uniform than Ga alone; at 40 mm the two are about the same. With beaming holes, the ratio is most non-uniform for a fresh charge and improves as the melt recedes, the opposite of the Ga-alone trend.
 - The Ga/N margin a layout must hold is therefore set jointly by the Ga fill range and the N plate. The N plate is the less constrained of the two (hole geometry unknown; regime depends on open area). The nitrogen boundary is now the limiting input for the source-layout decision, as the review anticipated.
 
+## Published plates: flow regime and geometry (2026-09-30)
+
+`scripts/nitrogen_plate_scenarios.py` (record `results/nitrogen_plate_scenarios/manifest.json`) takes the published hole sets and brackets what is not published. The plates are R13's original 712 and modified 4000 holes of 0.2032 mm, and R30's UNI-Bulb plate of about 2000 x 0.343 mm ([physics-data note](PHYSICS_DATA_SEARCH_2026-09-30.md), section 4). The brackets are thickness 0.5 / 1 / 2 mm, active radius 12.5 / 20 mm, 0.5 / 3 / 10 sccm N2, and 300 / 600 K gas. The first sensitivity study above stopped at L/r = 5; these plates give L/r = 2.9-19.7.
+
+- **Flow regime** (hole Kn = lambda / 2r, with p behind the plate from the free-molecular conductance; range over the N2-diameter bracket):
+
+  | Plate | 0.5 sccm | 3 sccm | 10 sccm |
+  |---|---|---|---|
+  | R13 original (712 x 0.203 mm) | 6-74 | 1.1-12 | 0.3-3.7 |
+  | R13 modified (4000 x 0.203 mm) | 36-415 | 6-69 | 1.8-21 |
+  | R30 (2000 x 0.343 mm) | 46-483 | 7.7-80 | 2.3-24 |
+
+  - For the many-hole plates at the usual 0.5-3 sccm, Kn is mostly above 10, so the free-molecular hole model is roughly self-consistent (the 2 mm / 300 K / large-diameter corner reaches 6-8).
+  - At 10 sccm, or with the 712-hole plate at 3 sccm and above, the holes are transitional. Free-molecular beaming is not reliable there; a hole-scale DSMC would be needed. This matches R13's stated reason for the 4000-hole redesign: lower pressure behind the plate at high flow.
+- **Geometry.** On a hexagonal pattern, all six plate and radius combinations leave webs of 0.17-1.2 mm (open area 1.8-38 %), so none is excluded as impossible to machine. The hole pattern and active radius remain unknown.
+- **Wafer maps** (free-molecular, valid where Kn is at least about 10). Range/mean over 200 mm at 350 mm throw, with the plate aimed at the wafer centre, uniform hole output and straight holes. The map depends on L/r and the plate extent, not on hole count or size. Ranges cover the active radii of 12.5 and 20 mm.
+
+  | L/r (plate, thickness) | 0 deg | 30 deg | 50 deg |
+  |---|---|---|---|
+  | 2.9 (R30, 0.5 mm) | 43-45 % | 34-36 % | 21-22 % |
+  | 4.9 (R13, 0.5 mm) | 67-70 % | 56-60 % | 40-43 % |
+  | 5.8 (R30, 1 mm) | 79-83 % | 68-72 % | 50-53 % |
+  | 9.8 (R13, 1 mm) | 129-139 % | 115-124 % | 91-99 % |
+  | 11.7 (R30, 2 mm) | 142-154 % | 127-138 % | 101-112 % |
+  | 19.7 (R13, 2 mm) | 218-251 % | 198-228 % | 163-190 % |
+
+  - Hole sampling is converged: halving the hole pitch (61 to about 220 sampled holes) changes the deepest case by at most 0.25 points.
+  - Every published hole set gives an N map far less uniform than the Ga map (1-10 %). Even the shallowest case (R30 in 0.5 mm, L/r 2.9) is 21-45 %. A thin cosine plate (L/r 0) is 16 % at 0 deg (first study).
+  - Taken literally, this says a straight-hole plate aimed at the wafer centre from 350 mm cannot give a uniform N-limited thickness on 200 mm. Either production sources differ from this picture, or the layout compensates. Candidates, none yet modelled: aiming the plate off-centre (`aim_offset` exists in `aperture.py`), tilted or diverging holes, larger throw, hole-wall recombination and collisions reshaping the beam, and the source's real active radius.
+  - This is the largest open question for the source layout. It raises the priority of the N map over any further Ga refinement. It also raises the value of a measured N-limited thickness map at commissioning, which is the only direct test.
+- **Not addressed:** the total active-N output (R10-R12, R18, commissioning), hole-wall recombination (grows with L/r) and the ion fraction. Hole counts alone do not supply the spatial pattern or the output.
+
 ## Next steps
 
 1. Done: aperture-plate source.
 2. Done (first pass): sensitivity study above. Add tilted holes and hole-density patterns when a representative drawing is found.
 3. Combine with the Ga DSMC results: Ga/N ratio range across 200 mm for candidate layouts over the admissible fill range.
-4. Knudsen check for the plate holes and the plume at typical flows (1-3 sccm).
+4. Done (2026-09-30): Knudsen check for the published plates (above). Still open: plume collisions just outside the plate at 10 sccm, and a hole-scale DSMC for the transitional cases if they matter for the chosen operating range.

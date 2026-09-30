@@ -8,11 +8,14 @@ fills 40-120 mm are studied. Wafer: 200 mm, uniform rotation.
 State: Ga at its saturation pressure (Alcock 1984, R15) at the melt temperature T, emitted
 from the melt by Hertz-Knudsen (evaporation coefficient 1). Two ways of setting T:
 - "hold": T chosen per fill so that the free-molecular model gives the wafer-centre Ga flux
-  of the target GaN growth rate (flux ratio Ga/N = 1). This mimics an operator raising the
+  of the target GaN growth rate (flux ratio Ga/N = 1). The target is a Ga arrival flux, not
+  a growth rate; runs record centre and wafer-mean delivered/target. This mimics an operator raising the
   cell temperature as the charge is consumed; the DSMC centre flux then shows how far
   collisions move the delivered rate from that estimate.
 - "fixed": T held at the value for a reference fill (40 mm), so the rate drops as the melt
   recedes.
+- "dsmc-hold": T corrected from a previous run's delivered DSMC centre flux, iterated by
+  scripts/ga_flux_hold.py ("centre-flux hold").
 Collisions: hard-sphere Ga with diameter d. No Ga collision diameter is sourced, so d is
 bracketed: 2.5 A (sigma/5 of R07's Knudsen statement, a deliberately small atom), 5.68 A
 (R07's Knudsen statement for Bi) and 8 A (the value calibrated on R07's Bi rate series,
@@ -268,10 +271,14 @@ def main():
     target = cfg["rate_um_h"] * UM_PER_H * N_GA_GAN
     centre = float(np.sum((flux * AREA)[:2]) / AREA[:2].sum())  # inside 10 mm
     centre_fm = float(np.sum((fm * AREA)[:2]) / AREA[:2].sum())
+    # wafer-average arrival (area-weighted bins, no fit); the hold targets the centre only
+    wafer_mean = float(np.sum(flux * AREA) / AREA.sum())
+    wafer_mean_fm = float(np.sum(fm * AREA) / AREA.sum())
     print(f"{work.name}: T = {kelvin_to_celsius(run.temperature_k):.1f} C, p = {run.pressure_pa:.3g} Pa, "
           f"lambda_sat/D = {run.lambda_sat / run.bore:.3g}, cell {1e3 * run.cell_m:.2f} mm")
-    print(f"  centre Ga flux / target ({cfg['rate_um_h']:g} um/h GaN): DSMC {centre / target:.3f}, "
-          f"free-molecular {centre_fm / target:.3f}")
+    print(f"  centre Ga flux / target ({cfg['rate_um_h']:g} um/h GaN at Ga/N = 1): DSMC {centre / target:.3f}, "
+          f"free-molecular {centre_fm / target:.3f}; wafer mean: DSMC {wafer_mean / target:.3f}, "
+          f"free-molecular {wafer_mean_fm / target:.3f}")
     print(f"  200 mm range/mean: DSMC {m['range_over_mean_pct']:.2f} +/- {unc['bootstrap']['range_over_mean_pct']:.2f} % "
           f"(orders 3/5: {m['order_sensitivity']['order3']:.2f}/{m['order_sensitivity']['order5']:.2f}, "
           f"bins {m['binned_range_over_mean_pct']:.2f}), free-molecular (dense) {m_fm['range_over_mean_pct']:.2f} %; "
@@ -286,7 +293,11 @@ def main():
     summary = {
         "config": cfg, "r_mm": 1e3 * MID, "dsmc_flux": flux, "dsmc_flux_stderr": flux_se,
         "free_molecular_flux": fm, "target_centre_flux": target,
+        "flux_basis": ("target = Ga arrival flux equal to the Ga content of the target GaN rate at Ga/N = 1; "
+                       "the hold modes match it at the wafer centre (r < 10 mm). A Ga flux, not a growth "
+                       "rate: thickness needs the N supply and incorporation/desorption."),
         "centre_flux_over_target": {"dsmc": centre / target, "free_molecular": centre_fm / target},
+        "wafer_mean_flux_over_target": {"dsmc": wafer_mean / target, "free_molecular": wafer_mean_fm / target},
         "metrics_dsmc": m, "metrics_dsmc_stderr": unc, "metrics_free_molecular": m_fm,
         "transmission_free_molecular": transmission_fm,
         "steady_state": {"halves_range_over_mean_pct": [h["range_over_mean_pct"] for h in halves],
@@ -296,7 +307,8 @@ def main():
         f"sparta_ga_{work.name}", label="representative_chamber", validation_status="not_validated",
         inputs=cfg, outputs=summary, sources=SOURCES,
         solver={"name": "SPARTA", "build": "serial (WSL)", "commit": cfg.get("sparta_commit")},
-        warnings=["Ga collision diameter not sourced: bracketed 2.5-8 A",
+        warnings=["Ga collision diameter not sourced: the run value is a scenario, not a bound "
+                  "(ref/notes/PHYSICS_DATA_SEARCH_2026-09-30.md section 2)",
                   "Melt temperature: see config T_basis (free-molecular mass balance, or corrected "
                   "from a previous DSMC run's delivered flux)",
                   "Collisions beyond the sampling slab (3.5 D) neglected",

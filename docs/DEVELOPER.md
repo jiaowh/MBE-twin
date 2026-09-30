@@ -51,12 +51,14 @@ Python 3.11+ with numpy 2.0+; the tests also need pytest and scipy, and the digi
 - `sparta.py` and `scripts/sparta_r07.py`: SPARTA (DSMC) crucible runs, calibrated on R07's 3.5 A/s profile and tested on its 0.35 and 11 A/s profiles.
 - `sparta_source.py` and `scripts/sparta_ga.py`: a level melt in a tilted crucible and transport onto the rotating 200 mm wafer.
 - `profile_fit.py`: the annulus-fit uniformity estimator, checked by `scripts/check_uniformity_estimator.py`.
-- `scripts/sparta_batch.py`: runs frozen job files from `cases/`. It has a memory guard and reports failed or incomplete jobs.
+- `scripts/sparta_batch.py`: runs frozen job files from `cases/`. It has a memory guard and reports failed or incomplete jobs. Admission control: `--min-free-gb` (Windows), `--min-free-wsl-gb` and `--max-wsl-load` (WSL is shared with other projects; a WSL out-of-memory kill takes the largest process, which may not be ours) and `--no-start-after`. Overnight queues on the shared laptop use `--workers 1`.
+- `scripts/ga_flux_hold.py`: centre-flux hold of the Ga source (first correction plus iterations); exit status 0 only if every state is within tolerance.
+- `scripts/sparta_r07.py --set x_dimer=X`: R07 with a Bi + Bi2 vapour; x_dimer = 0 writes exactly the monatomic input.
 
 **Nitrogen, radiation and studies**
 - `aperture.py`: the nitrogen aperture-plate source.
 - `radiation.py`: the coaxial-disk radiation reference for the Elmer V03 benchmark.
-- Study scripts: `scripts/crucible_knudsen.py`, `fill_level_fm.py`, `nitrogen_plate.py`, `nitrogen_knudsen.py`, `ga_n_ratio.py`, `compare_r14.py`.
+- Study scripts: `scripts/crucible_knudsen.py`, `fill_level_fm.py`, `nitrogen_plate.py`, `nitrogen_knudsen.py`, `ga_n_ratio.py`, `compare_r14.py`, `vapour_species.py` (Bi2 fraction, dispersion-scaled diameters, Ga2; see `ref/notes/PHYSICS_DATA_SEARCH_2026-09-30.md`).
 - `scripts/digitize_r07.py` and `compare_r07.py`: digitize R07's measured profiles and compare them with the crucible model.
 
 ## External solvers
