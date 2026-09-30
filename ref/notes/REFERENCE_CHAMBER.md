@@ -249,26 +249,35 @@ Wafer temperature range (K) at the optimum, 740 C mean. In brackets: the worst r
 
 ## Next actions
 
-Revised 2026-09-30 (night) after the third review round and its audit. Prediction accuracy stays the first outcome; wafer-uniformity improvement follows once the relevant predictions are qualified. Order: fix completion reporting and the flux/growth distinction (done), resolve the R07 pressure and species interpretation, finish a bounded centre-flux-hold comparison, then move the main effort to nitrogen and thermal prediction accuracy and a first growth model. Further angle refinement, crucible shapes and adjustable sources wait.
+Revised 2026-10-01 (overnight). Prediction accuracy stays the first outcome; wafer-uniformity improvement follows once the relevant predictions are qualified. The provisional design guidance and its open gates are in [docs/SOURCE_DESIGN_PROVISIONAL.md](../../docs/SOURCE_DESIGN_PROVISIONAL.md).
 
-1. Done: run isolation and recorded configurations; named R07 benchmarks; frozen batch files; versioned summaries; manifests with source hashes ([REPRODUCE](../../docs/REPRODUCE.md)).
-2. Done: numerical uncertainty of the R07 benchmarks (seeds, timestep, cells, time blocks, high-statistics repeat); d = 8.0-10.3 A, an effective-parameter sensitivity interval. The 7-15 % absolute-rate deficit remains open; Bi2 in the vapour is the lead ([physics-data note](PHYSICS_DATA_SEARCH_2026-09-30.md), section 1), and two-species R07 runs (`cases/sparta_r07/r07_bi2.json`) started on 2026-09-30. The pressure-basis question moves d by at most 3-7 % (same note).
-3. Done: level-melt SPARTA geometry and transport to the inclined, rotating wafer, verified collisionless against `crucible.py`; uniformity estimator validated against dense references and applied to all Ga records.
-4. Done: numerical checks at the angle optima (8 of 8; see "Minima" above). Optima are about 1 % (70 mm) and about 1.5-2 % (120 mm), not converged. A converged optimum would need a combined finer-timestep, more-particle run, which is deferred because each takes about 2 h on the laptop.
-5. Running since 2026-09-30 22:03 (after the R07 two-species batch): centre-flux hold (`ga_dsmchold.json`, then `ga_flux_hold.py --iterate` to +/-1.5 %; exit status fails on any missing or unconverged state) for the 46 deg fill series and the angle optima at d = 5.68 and 8 A. Afterwards, restate the temperature rise needed to hold the centre Ga flux and the angle comparison at held centre flux, with wafer-mean flux alongside.
-6. Then: a representative aperture-plate geometry (R13 patent Figs. 7-8 are the current lead; see [validation reference search](VALIDATION_REFERENCE_SEARCH_2026-09-30.md)), and a defensible Ga collision cross-section. None was found. The dispersion argument gives an exploratory scenario range of about 4-9.6 A, not a bound ([physics-data note](PHYSICS_DATA_SEARCH_2026-09-30.md), section 2); whether new Ga batches use 4 / 6 / 9.6 A waits for the two-species R07 result. The nitrogen plate model needs hole diameter, thickness and count scenarios (R13: 712/4000 x 0.203 mm; R30: about 2000 x 0.343 mm) and a flow-regime check before those plates can be run.
-7. Later: crucible-shape study to reduce fill drift (after 4-6).
-8. Thermal: a reduced axisymmetric heater-ledge-wafer model and zone study exist (section above, 2026-10-01). Next: a platen and side-shield variant, and a check of R05's heater-gap mechanism. Diffuse-gray radiation verified in Elmer (V03). R03 data recorded in `data/benchmarks/r03_wu2025.json`: radial temperature differences from the Fig. 14 panel labels (test 2.4-6.0 K over 863-1163 K; R03 simulation 2.5-6.6 K), materials, emissivities and final dimensions. Each profile runs across one off-axis 6-inch GaAs substrate on a 4x6-inch platen, so a reproduction is 3-D. R03's own model misplaces the profile maxima, and the measured differences (2-6 K) are close to its +/-2 K error. A full R03 reconstruction stays deferred. R05 has been screened (full text): not reconstructible, but its measured mechanisms (backing-ring overlap, platen reflectivity, heater gap, zone ratio) are qualitative checks the 200 mm heater model must show. R16 can inform transient validation but does not establish radial accuracy.
-9. Nitrogen: boundary and measurement access planned ([nitrogen boundary](NITROGEN_BOUNDARY.md)); aperture-plate sensitivity done (hole aspect dominates); hole Knudsen number 0.2-250 depending on open area, so the plate drawing decides between the free-molecular model and DSMC.
-10. Still wanted: full text of R04 (R05 obtained 2026-09-30), the RIBER MBE 49 technical PDF, and a representative aperture-plate drawing.
+Done:
+1. Run isolation, recorded configurations, frozen batch files, versioned summaries and manifests with source hashes ([REPRODUCE](../../docs/REPRODUCE.md)).
+2. R07 numerical uncertainty; monatomic d = 8.0-10.3 A. Two-species (Bi + Bi2) runs (`cases/sparta_r07/r07_bi2.json`, 2026-10-01): at the Kubaschewski fraction the zero-bias diameter moves to 8.0 A (6.6-9.4 A). The 11 A/s centre rate goes from -7 % to +5 %; the 3.5 A/s rate improves by 7-9 points but stays 3-9 % low. The x = 0.5 and 0.35 A/s runs finish the batch ([physics-data note](PHYSICS_DATA_SEARCH_2026-09-30.md), section 1).
+3. Level-melt SPARTA geometry, uniformity estimator, and numerical checks at the angle optima (about 1 % at 70 mm and 1.5-2 % at 120 mm, not converged).
+4. Completion reporting and the flux/growth distinction (review 3).
+5. Nitrogen: published plates (R13, R30) with flow-regime check, aim-offset / port-angle optima, pointing tolerance and output-profile robustness ([nitrogen boundary](NITROGEN_BOUNDARY.md)).
+6. First GaN growth model and growth window ([growth note](GROWTH_EVIDENCE.md)).
+7. Axisymmetric 200 mm heater model, zone study and sensor study (section above).
+
+Running:
+8. Centre-flux hold (`ga_dsmchold.json`, then `ga_flux_hold.py --iterate` to +/-1.5 %) for the 46 deg fill series and the angle optima at d = 5.68 and 8 A. Afterwards, restate the temperature rise needed to hold the centre Ga flux and the angle comparison at held flux, and rerun the growth window with the held Ga maps.
+
+Next:
+9. Decide the Ga scenario set from the two-species R07 result. Transferring the reduced Bi enhancement (7.9-8.0 A over a 4.2-4.4 A dispersion value) to Ga gives about 6-9 A. The 8 A working value stays inside that range; 9.6 A looks generous. Scenarios, not bounds.
+10. Nitrogen: check that a steep (60-65 deg), off-centre N port clears the Ga cell and shutters; obtain plate thickness, pattern and hole tilt; a hole-scale DSMC only if the chosen flow range is transitional (above about 3 sccm, or few holes).
+11. Heater: a platen and side-shield variant; check R05's heater-gap mechanism (reflected power through a transparent wafer) against a Si wafer; spectral emissivity of the GaN-on-Si stack.
+12. Growth: independent validation data. R20's growth map is conditional on one N flux and one shared template, so it cannot serve as independent wafer validation. Commissioning N-limited and Ga-limited thickness maps are the real test.
+13. Later: crucible shapes (R24 reservoir; R25 is a line-of-sight model with walls hidden from the substrate, so a code-to-code check must reproduce that assumption) and the adjustable-source study below.
+14. Still wanted: full text of R04, the RIBER MBE 49 technical PDF, and a representative aperture-plate drawing. R03 reconstruction stays deferred (weak discrimination); R16 may inform transient validation.
 
 ### Exploratory (non-essential)
 
-Not on the critical path. Run only when the laptop is otherwise idle, and after items 4-5.
+Not on the critical path. Run only when the laptop is otherwise idle, and after items 8-9.
 
 - **Adjustable Ga source over a campaign** (added 2026-09-30). The collisional optimum port angle moves from about 48 deg (40 mm recess) to about 54 deg (70 mm) and 58 deg (120 mm). The spill limit only constrains the full cup, so a source that steepens as the charge depletes never violates it. The angle study above relocates the cell on the 350 mm sphere, always aimed at the wafer centre. A realistic mechanism (a bellows/gimbal pivot at the port flange) mainly shifts the aim point and changes the polar angle little, so that study does not describe it. Compare over a 40 -> 120 mm campaign, against the fixed 46 deg port:
   - (a) a cell pivoting about its flange by +/-5-10 deg, with the aim point allowed to move;
   - (b) two Ga cells at different angles with a fill-dependent flux split (no moving parts);
-  - (c) a fixed port with a shaped crucible (overlaps item 7).
+  - (c) a fixed port with a shaped crucible (overlaps item 13).
 
   Method: free-molecular screening with `crucible.py` first; DSMC (d bracket) only for the promising cases. Engineering caveats to record with any result: vacuum-compatible tilt with heater, thermocouple and shroud feedthroughs; shutter alignment; Ga creep or spitting at the lip when a hot cell is tilted (adjust between runs, not during growth); flux recalibration after each move. No production system re-aiming cells for uniformity is known to us; multiple same-species cells and large-volume depletion-tolerant crucibles are the usual industrial answers.
