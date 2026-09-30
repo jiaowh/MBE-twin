@@ -1356,6 +1356,472 @@
       ]
     },
     {
+      "id": "R21",
+      "title": "Handbook on Lead-bismuth Eutectic Alloy and Lead Properties, Materials Compatibility, Thermal-hydraulics and Technologies, 2015 edition (section 2.8, saturation vapour pressure)",
+      "authors": "OECD Nuclear Energy Agency (section after V. Sobolev 2011)",
+      "year": 2015,
+      "publication": "NEA No. 7268, OECD Publishing, Paris",
+      "url": "https://www.oecd-nea.org/jcms/pl_14972/handbook-on-lead-bismuth-eutectic-alloy-and-lead-properties-materials-compatibility-thermal-hydraulics-and-technologies-2015-edition",
+      "accessed": "2026-09-30",
+      "review_level": "full_text_reviewed",
+      "source_locator": "Section 2.8.2, Table 2.8.2 and Eq. (2.17), printed pp. 50-54 (excerpt PDF pp. 5-10)",
+      "supports": "Liquid Bi saturation pressure from five compilations, which scatter by up to about 40 % (Eq. 2.17: p = 2.67e10 exp(-22858/T) Pa). Kubaschewski (1979, after Brackett 1957) separate correlations: log10(p_Bi/Pa) = 2.1249 - 10400/T - 1.26 log10 T + 12.35; log10(p_Bi2/Pa) = 2.1249 - 10730/T - 3.2 log10 T + 18.1. These give a Bi2 mole fraction of 0.29-0.34 at 773-996 K.",
+      "does_not_support": "Measurement uncertainty of the Bi/Bi2 split (the table lists 'unknown purity' and no accuracy). Ga or Al data. Collision cross-sections.",
+      "use": "Quantifies Bi2 in R07's bismuth vapour, one candidate cause of the 7-15 % R07 centre-rate deficit, and the spread of the Bi vapour-pressure data behind R07's stated pressures.",
+      "status": "downloaded",
+      "follow_up": "See ref/notes/PHYSICS_DATA_SEARCH_2026-09-30.md for the calculations and how each source is used.",
+      "artifacts": [
+        {
+          "path": "ref/reference/R21_NEA_2015_LBE_handbook_s2.8_vapour_pressure.pdf",
+          "url": "https://www.oecd-nea.org/upload/docs/application/pdf/2024-01/7268-lead-bismuth-2015.pdf",
+          "status": "downloaded",
+          "sha256": "17fbaf74483849b2d463d8328af5b927fc7ddc6193bf5c2c25c9342cc5eb72af",
+          "bytes": 1178285,
+          "pages": 12,
+          "provided_by": "fetched by Claude, 2026-09-30",
+          "note": "Excerpt: PDF pages 1-4 (title, copyright) and 51-58 (section 2.8) of the full 950-page handbook (30249295 bytes, SHA-256 e4b02a77eff41762bfb6f1a22db4e38b77046c5da0adc445ff75280803d450e1). Refetch the full file from the URL."
+        }
+      ],
+      "collection": "reference",
+      "detail_manifest": "ref/reference/sources.json",
+      "indexed_artifacts": [
+        {
+          "path": "ref/reference/R21_NEA_2015_LBE_handbook_s2.8_vapour_pressure.pdf",
+          "url": "https://www.oecd-nea.org/upload/docs/application/pdf/2024-01/7268-lead-bismuth-2015.pdf",
+          "status": "downloaded",
+          "sha256": "17fbaf74483849b2d463d8328af5b927fc7ddc6193bf5c2c25c9342cc5eb72af",
+          "bytes": 1178285,
+          "pages": 12,
+          "provided_by": "fetched by Claude, 2026-09-30",
+          "note": "Excerpt: PDF pages 1-4 (title, copyright) and 51-58 (section 2.8) of the full 950-page handbook (30249295 bytes, SHA-256 e4b02a77eff41762bfb6f1a22db4e38b77046c5da0adc445ff75280803d450e1). Refetch the full file from the URL."
+        }
+      ]
+    },
+    {
+      "id": "R22",
+      "title": "C6 coefficients and dipole polarizabilities for all atoms and many ions in rows 1-6 of the periodic table",
+      "authors": "T. Gould, T. Bucko",
+      "year": 2016,
+      "publication": "Journal of Chemical Theory and Computation 12 (2016)",
+      "doi": "10.1021/acs.jctc.6b00361",
+      "url": "https://doi.org/10.1021/acs.jctc.6b00361",
+      "related_urls": [
+        "https://arxiv.org/abs/1604.02751"
+      ],
+      "accessed": "2026-09-30",
+      "review_level": "full_text_reviewed",
+      "source_locator": "Table 2 (arXiv v2 p. 15), 'benchmark' data set, atomic units",
+      "supports": "Static polarizability and same-species C6 (a.u.): Ne 6.91, Ar 67.4, Kr 136, Xe 302, Ga 52.1/456, Al 57.5/520, In 62.1/643, Bi 43.2/513. The authors report C6 agreement within about 20 % between kernels where reference polarizabilities are missing.",
+      "does_not_support": "The short-range (bonding or repulsive) Ga-Ga interaction, a transport cross-section, or a DSMC diameter by itself. The DOI is from the publisher index entry; the local copy is the arXiv version.",
+      "use": "Dispersion scaling of the hard-sphere diameter from noble gases to Ga, Al and Bi, which gives a physically argued lower end for the unsourced Ga diameter bracket.",
+      "status": "downloaded",
+      "follow_up": "See ref/notes/PHYSICS_DATA_SEARCH_2026-09-30.md for the calculations and how each source is used.",
+      "artifacts": [
+        {
+          "path": "ref/reference/R22_Gould_Bucko_2016_C6_polarizabilities.pdf",
+          "url": "https://arxiv.org/pdf/1604.02751",
+          "status": "downloaded",
+          "sha256": "01afbfde6e0d506382c23ba2d8b1e0d353e62c5bcad25048ca654bd939dd86c3",
+          "bytes": 462534,
+          "pages": 28,
+          "provided_by": "fetched by Claude, 2026-09-30",
+          "note": "arXiv v2 author version"
+        }
+      ],
+      "collection": "reference",
+      "detail_manifest": "ref/reference/sources.json",
+      "indexed_artifacts": [
+        {
+          "path": "ref/reference/R22_Gould_Bucko_2016_C6_polarizabilities.pdf",
+          "url": "https://arxiv.org/pdf/1604.02751",
+          "status": "downloaded",
+          "sha256": "01afbfde6e0d506382c23ba2d8b1e0d353e62c5bcad25048ca654bd939dd86c3",
+          "bytes": 462534,
+          "pages": 28,
+          "provided_by": "fetched by Claude, 2026-09-30",
+          "note": "arXiv v2 author version"
+        }
+      ]
+    },
+    {
+      "id": "R23",
+      "title": "Dissociation energies of the Ga2, In2, and GaIn molecules",
+      "authors": "G. Balducci, G. Gigli, G. Meloni",
+      "year": 1998,
+      "publication": "Journal of Chemical Physics 109(11), 4384-4388",
+      "url": "https://pubs.aip.org/aip/jcp/article-abstract/109/11/4384/1018967/Dissociation-energies-of-the-Ga2-In2-and-GaIn",
+      "related_urls": [
+        "https://repository.usfca.edu/cgi/viewcontent.cgi?article=1024&context=chem_fac"
+      ],
+      "accessed": "2026-09-30",
+      "review_level": "full_text_reviewed",
+      "source_locator": "Table I (ion currents), Sec. III.C.1 (Ga2 constants), Table II",
+      "supports": "Knudsen-cell mass spectrometry over Ga-In alloys at 1446-1642 K: D0(Ga2) = 110.8 +/- 4.9 kJ/mol (second law 110.4 +/- 9.6, third law 111.2 +/- 1.8), agreeing with Shim et al. 1991 (110.3 +/- 7.0). Thermal functions from Re = 0.272 nm, omega_e = 180 cm-1 with low-lying states. Table I lists Ga+ and Ga2+ ion currents with instrument constants and ion factors, so equilibrium constants can be recomputed.",
+      "does_not_support": "Ga2 transport or collision properties. The sensitivity constants agree only within 20 % between calibration methods.",
+      "use": "Ga2 fraction in the Ga cell: the measured equilibria give an effective electronic factor 6.4-19 (median 7.8) over the rigid-rotor model, hence x(Ga2) = 3e-5 to 8e-4 at 1245 K and 1-10 Pa. Ga is effectively monatomic.",
+      "status": "downloaded",
+      "follow_up": "See ref/notes/PHYSICS_DATA_SEARCH_2026-09-30.md for the calculations and how each source is used.",
+      "artifacts": [
+        {
+          "path": "ref/reference/R23_Balducci_1998_Ga2_In2_GaIn_dissociation.pdf",
+          "url": "https://repository.usfca.edu/cgi/viewcontent.cgi?article=1024&context=chem_fac",
+          "status": "downloaded",
+          "sha256": "6a8984d85586b6ced994faeab30299a6c6969bae824be28f9cc3c72f1b650f9c",
+          "bytes": 138083,
+          "pages": 7,
+          "provided_by": "saved by the user from a browser, 2026-09-30"
+        }
+      ],
+      "collection": "reference",
+      "detail_manifest": "ref/reference/sources.json",
+      "indexed_artifacts": [
+        {
+          "path": "ref/reference/R23_Balducci_1998_Ga2_In2_GaIn_dissociation.pdf",
+          "url": "https://repository.usfca.edu/cgi/viewcontent.cgi?article=1024&context=chem_fac",
+          "status": "downloaded",
+          "sha256": "6a8984d85586b6ced994faeab30299a6c6969bae824be28f9cc3c72f1b650f9c",
+          "bytes": 138083,
+          "pages": 7,
+          "provided_by": "saved by the user from a browser, 2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "R24",
+      "title": "Unibody crucible and effusion source employing such a crucible (US 5,827,371; parent US 5,820,681)",
+      "authors": "P. E. Colombo, R. F. Donadio (Chorus Corporation; current assignee Veeco)",
+      "year": 1998,
+      "publication": "US Patents 5,827,371 and 5,820,681",
+      "url": "https://patents.google.com/patent/US5827371A/en",
+      "related_urls": [
+        "https://patents.google.com/patent/US5820681A/en"
+      ],
+      "accessed": "2026-09-30",
+      "review_level": "full_text_reviewed",
+      "source_locator": "Detailed description, crucible 40 and crucible 90 dimensions",
+      "supports": "Dimensioned SUMO-type crucible: overall 13.4 cm; cylindrical reservoir 3.5 cm diameter x 7.3 cm; inner orifice 1.5 cm; re-entrant (negative draft) wall about 45 deg; exit cone 5.8 cm long at about 9 deg to a 3.8 cm outer orifice; PBN wall 0.08 cm. Larger crucible 90: 20.5 cm long, 7.3 cm base, 2.2 cm inner orifice, 30/15 deg. Claims a constant melt area seen through the orifice, hence little depletion effect.",
+      "does_not_support": "Any measured or computed flux or uniformity numbers, source-to-substrate geometry, or tilt/spill limits.",
+      "use": "Candidate geometry for the crucible-shape study (next action 3) and the 'better-shaped cup' option: an orifice-limited reservoir whose emitting area does not change as the charge is used.",
+      "status": "downloaded",
+      "follow_up": "See ref/notes/PHYSICS_DATA_SEARCH_2026-09-30.md for the calculations and how each source is used.",
+      "artifacts": [
+        {
+          "path": "ref/reference/R24_US5827371_unibody_crucible.pdf",
+          "url": "https://patentimages.storage.googleapis.com/de/b1/91/746c8d7652f0ae/US5827371.pdf",
+          "status": "downloaded",
+          "sha256": "b45e4eea13ccb66df094b0259b07d9e5d9c1b87de6c27c5e08d8f8d30bea4d09",
+          "bytes": 1482882,
+          "pages": 16,
+          "provided_by": "fetched by Claude, 2026-09-30"
+        },
+        {
+          "path": "ref/reference/R24_US5820681_unibody_crucible.pdf",
+          "url": "https://patentimages.storage.googleapis.com/11/0a/e6/970c7aa2e0bab5/US5820681.pdf",
+          "status": "downloaded",
+          "sha256": "bd5eed38826f7bc13afb6377a6dfd4e8767c3fbc35deb2705b3aa2a4eb3d550f",
+          "bytes": 1023029,
+          "pages": 11,
+          "provided_by": "fetched by Claude, 2026-09-30"
+        }
+      ],
+      "collection": "reference",
+      "detail_manifest": "ref/reference/sources.json",
+      "indexed_artifacts": [
+        {
+          "path": "ref/reference/R24_US5827371_unibody_crucible.pdf",
+          "url": "https://patentimages.storage.googleapis.com/de/b1/91/746c8d7652f0ae/US5827371.pdf",
+          "status": "downloaded",
+          "sha256": "b45e4eea13ccb66df094b0259b07d9e5d9c1b87de6c27c5e08d8f8d30bea4d09",
+          "bytes": 1482882,
+          "pages": 16,
+          "provided_by": "fetched by Claude, 2026-09-30"
+        },
+        {
+          "path": "ref/reference/R24_US5820681_unibody_crucible.pdf",
+          "url": "https://patentimages.storage.googleapis.com/11/0a/e6/970c7aa2e0bab5/US5820681.pdf",
+          "status": "downloaded",
+          "sha256": "bd5eed38826f7bc13afb6377a6dfd4e8767c3fbc35deb2705b3aa2a4eb3d550f",
+          "bytes": 1023029,
+          "pages": 11,
+          "provided_by": "fetched by Claude, 2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "R25",
+      "title": "Effusion cell and method of use in molecular beam epitaxy (US 6,053,981)",
+      "authors": "A. K. Salokatve, D. C. Poole (Coherent Inc. / VG Systems; current assignee Riber)",
+      "year": 2000,
+      "publication": "US Patent 6,053,981, filed 1998-09-15",
+      "url": "https://patents.google.com/patent/US6053981A/en",
+      "accessed": "2026-09-30",
+      "review_level": "full_text_reviewed",
+      "source_locator": "Description of Figs. 5-7",
+      "supports": "Computed (not measured) case: frustro-conical 170 cc crucible, wall taper about 14 deg, cell axis at about 36 deg, 410 mm along the centreline, elliptical aperture 25.5 x 20.3 mm. About 0.4 % thickness variation over a 190 mm rotating substrate at 130 cc; centre growth rate varies about 0.05 % as the fill drops from 170 to 70 cc at constant melt temperature. The circular-orifice comparison is about 10x worse over a 95 mm radius.",
+      "does_not_support": "Measured data, the calculation method, or complete crucible drawings (some dimensions only in figures). Not a validation case.",
+      "use": "Code-to-code comparison for the free-molecular crucible model on a production-style geometry close to the 200 mm case, and precedent for an apertured crucible that holds uniformity through depletion.",
+      "status": "downloaded",
+      "follow_up": "See ref/notes/PHYSICS_DATA_SEARCH_2026-09-30.md for the calculations and how each source is used.",
+      "artifacts": [
+        {
+          "path": "ref/reference/R25_US6053981_effusion_cell_VG.pdf",
+          "url": "https://patents.google.com/patent/US6053981A/en",
+          "status": "downloaded",
+          "sha256": "cbf6475045d1c5d2ef7a21401a0446a2627ec61a226c2a763584948bb7e4d7c9",
+          "bytes": 1144827,
+          "pages": 16,
+          "provided_by": "fetched by Claude, 2026-09-30",
+          "note": "PDF resolved from the Google Patents page"
+        }
+      ],
+      "collection": "reference",
+      "detail_manifest": "ref/reference/sources.json",
+      "indexed_artifacts": [
+        {
+          "path": "ref/reference/R25_US6053981_effusion_cell_VG.pdf",
+          "url": "https://patents.google.com/patent/US6053981A/en",
+          "status": "downloaded",
+          "sha256": "cbf6475045d1c5d2ef7a21401a0446a2627ec61a226c2a763584948bb7e4d7c9",
+          "bytes": 1144827,
+          "pages": 16,
+          "provided_by": "fetched by Claude, 2026-09-30",
+          "note": "PDF resolved from the Google Patents page"
+        }
+      ]
+    },
+    {
+      "id": "R26",
+      "title": "Control of ion content and nitrogen species using a mixed chemistry plasma for GaN grown at extremely high growth rates >9 um/h by plasma-assisted molecular beam epitaxy",
+      "authors": "B. P. Gunning, E. A. Clinton, J. J. Merola, W. A. Doolittle, R. C. Bresnahan",
+      "year": 2015,
+      "publication": "Journal of Applied Physics 118, 155302",
+      "url": "https://pubs.aip.org/aip/jap/article-abstract/118/15/155302/140376",
+      "related_urls": [
+        "https://www.osti.gov/pages/biblio/1420510"
+      ],
+      "accessed": "2026-09-30",
+      "review_level": "full_text_reviewed",
+      "source_locator": "Sec. II (system and aperture), Sec. III, Fig. 2",
+      "supports": "The original UNI-Bulb aperture was replaced by a custom plate of 5.6x higher conductance (hole count and size not stated); three cryopumps kept the chamber below 1e-4 Torr at over 30 sccm. 8.4 um/h with 34 sccm N2 at 500 W; 9.8 um/h with 20 sccm N2 + 7.7 sccm Ar at 600 W, thickness standard deviation 2 % over a 2-inch wafer (4 um film). Notes Ga spitting at very high flux.",
+      "does_not_support": "Plate hole count, diameter, thickness or pattern. (The earlier '2000 holes, #80 drill' attribution came from a search excerpt and belongs to R30.) A 200 mm map.",
+      "use": "The 5.6x conductance factor matches R13 (712 to 4000 holes, same group), suggesting R13 describes this plate; R30's statement that its 2000 x 0.343 mm plate has about half this conductance does not fit that reading (see note).",
+      "status": "downloaded",
+      "follow_up": "See ref/notes/PHYSICS_DATA_SEARCH_2026-09-30.md for the calculations and how each source is used.",
+      "artifacts": [
+        {
+          "path": "ref/reference/R26_Gunning_2015_high_rate_PAMBE.pdf",
+          "url": "https://doi.org/10.1063/1.4933278",
+          "status": "downloaded",
+          "sha256": "4934646cfba7a04c4736bc278f7a721aa6ee0565fb24b4f872c5963392c242d1",
+          "bytes": 981838,
+          "pages": 9,
+          "provided_by": "saved by the user from a browser, 2026-09-30"
+        }
+      ],
+      "doi": "10.1063/1.4933278",
+      "collection": "reference",
+      "detail_manifest": "ref/reference/sources.json",
+      "indexed_artifacts": [
+        {
+          "path": "ref/reference/R26_Gunning_2015_high_rate_PAMBE.pdf",
+          "url": "https://doi.org/10.1063/1.4933278",
+          "status": "downloaded",
+          "sha256": "4934646cfba7a04c4736bc278f7a721aa6ee0565fb24b4f872c5963392c242d1",
+          "bytes": 981838,
+          "pages": 9,
+          "provided_by": "saved by the user from a browser, 2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "R27",
+      "title": "Mid-infrared optical properties of pyrolytic boron nitride in the 390-1050 C temperature range using spectral emissivity measurements",
+      "authors": "I. Gonzalez de Arrieta, T. Echaniz, R. Fuente, L. del Campo, D. De Sousa Meneses, G. A. Lopez, M. J. Tello",
+      "year": 2017,
+      "publication": "Journal of Quantitative Spectroscopy and Radiative Transfer 194",
+      "url": "https://ui.adsabs.harvard.edu/abs/2017JQSRT.194....1G/abstract",
+      "related_urls": [
+        "https://arxiv.org/abs/2401.13109"
+      ],
+      "accessed": "2026-09-30",
+      "review_level": "full_text_reviewed",
+      "source_locator": "Author version (arXiv 2401.13109), 6 pages",
+      "supports": "Normal spectral emissivity of pBN, 4-16 um, 390-1050 C, with a temperature-dependent dielectric model; no systematic difference between bulk sample types.",
+      "does_not_support": "Total hemispherical emissivity (the band misses the short-wavelength part of the Planck spectrum at 1000 C), or thin coatings.",
+      "use": "Radiative property of PBN crucibles and heater parts for the Elmer heater and cell models, after extension below 4 um.",
+      "status": "downloaded",
+      "follow_up": "See ref/notes/PHYSICS_DATA_SEARCH_2026-09-30.md for the calculations and how each source is used.",
+      "artifacts": [
+        {
+          "path": "ref/reference/R27_Gonzalez_de_Arrieta_2017_PBN_emissivity.pdf",
+          "url": "https://arxiv.org/pdf/2401.13109",
+          "status": "downloaded",
+          "sha256": "d162c8350c4214d8b3822f464d42334ae5cc2498669667fa7784ef56edf03dc3",
+          "bytes": 510959,
+          "pages": 6,
+          "provided_by": "fetched by Claude, 2026-09-30"
+        }
+      ],
+      "collection": "reference",
+      "detail_manifest": "ref/reference/sources.json",
+      "indexed_artifacts": [
+        {
+          "path": "ref/reference/R27_Gonzalez_de_Arrieta_2017_PBN_emissivity.pdf",
+          "url": "https://arxiv.org/pdf/2401.13109",
+          "status": "downloaded",
+          "sha256": "d162c8350c4214d8b3822f464d42334ae5cc2498669667fa7784ef56edf03dc3",
+          "bytes": 510959,
+          "pages": 6,
+          "provided_by": "fetched by Claude, 2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "R28",
+      "title": "Emissivity of silicon at elevated temperatures",
+      "authors": "P. J. Timans",
+      "year": 1993,
+      "publication": "Journal of Applied Physics 74(10), 6353",
+      "url": "https://pubs.aip.org/aip/jap/article/74/10/6353/177953/Emissivity-of-silicon-at-elevated-temperatures",
+      "accessed": "2026-09-30",
+      "review_level": "full_text_reviewed",
+      "source_locator": "Abstract, Sec. IV, Conclusions",
+      "supports": "Total hemispherical emissivity from e-beam power balance: a 390 um lightly doped Si specimen rises from 0.12 at 280 C to a limiting value of about 0.7 at 650 C; heavily doped Si stays about 0.7 from 200 to 800 C. Uncertainty about 10 %. Spectral absorption 1.1-1.6 um, 330-800 C.",
+      "does_not_support": "GaN-on-Si stacks, rough or coated backsides, or 725 um wafers directly (thicker wafers reach the limit at lower temperature).",
+      "use": "Wafer emissivity for the 200 mm Si(111) heater model; at GaN growth temperatures the Si substrate is near the high-temperature limit.",
+      "status": "downloaded",
+      "follow_up": "See ref/notes/PHYSICS_DATA_SEARCH_2026-09-30.md for the calculations and how each source is used.",
+      "artifacts": [
+        {
+          "path": "ref/reference/R28_Timans_1993_Si_emissivity.pdf",
+          "url": "https://doi.org/10.1063/1.355159",
+          "status": "downloaded",
+          "sha256": "fbaaeda702c7bb0e9570486920ee61649a5dcef54464ac347691e033214527ba",
+          "bytes": 1921137,
+          "pages": 13,
+          "provided_by": "saved by the user from a browser, 2026-09-30"
+        }
+      ],
+      "doi": "10.1063/1.355159",
+      "collection": "reference",
+      "detail_manifest": "ref/reference/sources.json",
+      "indexed_artifacts": [
+        {
+          "path": "ref/reference/R28_Timans_1993_Si_emissivity.pdf",
+          "url": "https://doi.org/10.1063/1.355159",
+          "status": "downloaded",
+          "sha256": "fbaaeda702c7bb0e9570486920ee61649a5dcef54464ac347691e033214527ba",
+          "bytes": 1921137,
+          "pages": 13,
+          "provided_by": "saved by the user from a browser, 2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "R29",
+      "title": "NIST Chemistry WebBook, SRD 69: thermophysical properties of fluid systems (Ne, Ar, Kr, Xe viscosity)",
+      "authors": "E. W. Lemmon, I. H. Bell, M. L. Huber, M. O. McLinden (NIST)",
+      "year": 2026,
+      "publication": "NIST Standard Reference Database 69",
+      "url": "https://webbook.nist.gov/chemistry/fluid/",
+      "accessed": "2026-09-30",
+      "review_level": "online_page_reviewed",
+      "source_locator": "Isobaric tables at 0.001 MPa, 273.15 K",
+      "supports": "Dilute-gas viscosity at 273.15 K: Ne 29.900, Ar 20.998, Kr 23.373, Xe 21.075 uPa s.",
+      "does_not_support": "Metal vapours.",
+      "use": "Hard-sphere diameters of the noble gases (Ne 2.58, Ar 3.64, Kr 4.16, Xe 4.90 A), the anchors that test the C6 scaling used for Ga (R22).",
+      "status": "url_only",
+      "follow_up": "See ref/notes/PHYSICS_DATA_SEARCH_2026-09-30.md for the calculations and how each source is used.",
+      "artifacts": [],
+      "collection": "reference",
+      "detail_manifest": "ref/reference/sources.json",
+      "indexed_artifacts": []
+    },
+    {
+      "id": "R30",
+      "title": "Observation and mitigation of RF-plasma-induced damage to III-nitrides grown by molecular beam epitaxy",
+      "authors": "E. A. Clinton, E. Vadiee, M. B. Tellekamp, W. A. Doolittle",
+      "year": 2019,
+      "publication": "Journal of Applied Physics 126, 015705",
+      "doi": "10.1063/1.5097557",
+      "url": "https://pubs.aip.org/aip/jap/article/126/1/015705/155766/Observation-and-mitigation-of-RF-plasma-induced",
+      "related_urls": [
+        "https://www.osti.gov/pages/biblio/1545263"
+      ],
+      "accessed": "2026-09-30",
+      "review_level": "full_text_reviewed",
+      "source_locator": "Accepted manuscript (OSTI), experimental section",
+      "supports": "Veeco UNI-Bulb RF source with an aperture plate of about 2000 holes drilled with a #80 bit (0.0135 in = 0.343 mm), stated to be roughly half the total conductance of the plate used for 9.8 um/h (R26). N2 2.5-12.5 sccm, 350-550 W. The aperture conductance sets bulb pressure, plasma mode and ion acceleration.",
+      "does_not_support": "Plate thickness or hole pattern; wafer-plane N distribution.",
+      "use": "Second concrete hole count and diameter for the N plate model, alongside R13 (0.203 mm).",
+      "status": "downloaded",
+      "follow_up": "See ref/notes/PHYSICS_DATA_SEARCH_2026-09-30.md for the calculations and how each source is used.",
+      "artifacts": [
+        {
+          "path": "ref/reference/R30_Clinton_2019_RF_plasma_damage.pdf",
+          "url": "https://www.osti.gov/pages/servlets/purl/1545263",
+          "status": "downloaded",
+          "sha256": "6ef953a6dad15b9b864e302ca2218f6daaa200d263c61643ba4499060e422959",
+          "bytes": 2688586,
+          "pages": 46,
+          "provided_by": "saved by the user from a browser, 2026-09-30"
+        }
+      ],
+      "collection": "reference",
+      "detail_manifest": "ref/reference/sources.json",
+      "indexed_artifacts": [
+        {
+          "path": "ref/reference/R30_Clinton_2019_RF_plasma_damage.pdf",
+          "url": "https://www.osti.gov/pages/servlets/purl/1545263",
+          "status": "downloaded",
+          "sha256": "6ef953a6dad15b9b864e302ca2218f6daaa200d263c61643ba4499060e422959",
+          "bytes": 2688586,
+          "pages": 46,
+          "provided_by": "saved by the user from a browser, 2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "R31",
+      "title": "Emissivity measurements and modeling of silicon-related materials: an overview",
+      "authors": "N. M. Ravindra, B. Sopori, O. H. Gokce, S. X. Cheng, A. Shenoy, L. Jin, S. Abedrabbo, W. Chen, Y. Zhang",
+      "year": 2001,
+      "publication": "International Journal of Thermophysics 22(5), 1593-1611",
+      "url": "https://web.njit.edu/~sirenko/PapersNJIT/Ravi_IJTh_2001.pdf",
+      "accessed": "2026-09-30",
+      "review_level": "full_text_reviewed",
+      "source_locator": "Full text, 19 pages",
+      "supports": "Spectral emissometer measurements (1-20 um) of reflectance, transmittance and emittance versus temperature for Si and Si-related structures, compared with Multi-Rad simulations; corrections to Sato's 1967 Si data.",
+      "does_not_support": "GaN-on-Si stacks; a total emissivity for the project's wafers without further integration.",
+      "use": "Spectral Si emissivity for building a total emissivity of the 200 mm Si(111) wafer, cross-checking R28.",
+      "status": "downloaded",
+      "follow_up": "See ref/notes/PHYSICS_DATA_SEARCH_2026-09-30.md for the calculations and how each source is used.",
+      "artifacts": [
+        {
+          "path": "ref/reference/R31_Ravindra_2001_Si_emissivity_overview.pdf",
+          "url": "https://web.njit.edu/~sirenko/PapersNJIT/Ravi_IJTh_2001.pdf",
+          "status": "downloaded",
+          "sha256": "659f8c5f47564fc4b97896c6917af3bec4640d2aa382f43893cff42c094f7685",
+          "bytes": 670394,
+          "pages": 19,
+          "provided_by": "saved by the user from a browser, 2026-09-30"
+        }
+      ],
+      "collection": "reference",
+      "detail_manifest": "ref/reference/sources.json",
+      "indexed_artifacts": [
+        {
+          "path": "ref/reference/R31_Ravindra_2001_Si_emissivity_overview.pdf",
+          "url": "https://web.njit.edu/~sirenko/PapersNJIT/Ravi_IJTh_2001.pdf",
+          "status": "downloaded",
+          "sha256": "659f8c5f47564fc4b97896c6917af3bec4640d2aa382f43893cff42c094f7685",
+          "bytes": 670394,
+          "pages": 19,
+          "provided_by": "saved by the user from a browser, 2026-09-30"
+        }
+      ]
+    },
+    {
       "id": "R16",
       "title": "Growth-induced temperature changes during transition metal nitride epitaxy on transparent SiC substrates",
       "authors": "D. S. Katzer et al.",
@@ -1635,22 +2101,43 @@
     {
       "id": "R05",
       "title": "Design elements affecting wafer temperature uniformity in multi-wafer production MBE systems",
-      "authors": [
-        "Rogers",
-        "et al."
-      ],
+      "authors": "T. J. Rogers, W. A. Shelton, C. Conroy",
       "year": 2009,
-      "publication": "Journal of Crystal Growth 311",
+      "publication": "Journal of Crystal Growth 311, 1676-1679",
       "url": "https://www.sciencedirect.com/science/article/abs/pii/S0022024808009913",
-      "accessed": "2026-09-28",
-      "review_level": "abstract_or_index_only",
-      "supports": "Experimental study in a 7x6-inch production MBE system: backing-ring width must compensate conduction into the wafer perimeter from the hotter platen; platen spacing and low reflectivity avoid reflected-power hot spots.",
-      "does_not_support": "III-V production context; quantitative results unverified.",
-      "use": "Edge/contact boundary-condition check for the holder model.",
-      "status": "url_only",
+      "accessed": "2026-09-30",
+      "review_level": "full_text_reviewed",
+      "supports": "BandiT band-edge temperature maps of 6-inch GaAs wafers on a 7x6-inch Veeco Gen 2000 platen. Measured effects: outer-zone power ratio 8 % to 4.3 % cut the standard deviation from 2.79 to 2.06 C; the backing-ring ID should be 1-2 mm smaller than the ledge ID (144 mm ledge: 142-143 mm ring optimal); the centre-wafer valley from reflected heater power was over 20 C on a clean Mo platen, under 11 C after GaAs coating of its underside, 6.5 C on a well-used platen, and under 2 C after the heater-to-platen gap grew by about 0.75 in. Mo platen 4 mm thick; ledge width sets the ramp lag (up to 70 C).",
+      "does_not_support": "A reconstructible model: heater geometry, absolute spacings, emissivities and measurement uncertainty are not given. GaAs wafers are semi-transparent to the heater, unlike hot Si.",
+      "use": "Qualitative checks the 200 mm heater model must reproduce: ring overlap versus ledge conduction, platen reflectivity and heater spacing, zone power ratio. Not a quantitative benchmark.",
+      "status": "downloaded",
+      "doi": "10.1016/j.jcrysgro.2008.09.204",
+      "source_locator": "Full text, 4 pages, Figs. 1-5",
+      "follow_up": "See ref/notes/PHYSICS_DATA_SEARCH_2026-09-30.md for the calculations and how each source is used.",
+      "artifacts": [
+        {
+          "path": "ref/reference/R05_Rogers_2009_wafer_temperature_uniformity.pdf",
+          "url": "https://doi.org/10.1016/j.jcrysgro.2008.09.204",
+          "status": "downloaded",
+          "sha256": "846596316fd127349dff9a7e0ccc10f5b41b9c2f9ecd437e9ce9dff42b6bfe3f",
+          "bytes": 420225,
+          "pages": 4,
+          "provided_by": "saved by the user from a browser, 2026-09-30"
+        }
+      ],
       "collection": "reference",
       "detail_manifest": "ref/reference/sources.json",
-      "indexed_artifacts": []
+      "indexed_artifacts": [
+        {
+          "path": "ref/reference/R05_Rogers_2009_wafer_temperature_uniformity.pdf",
+          "url": "https://doi.org/10.1016/j.jcrysgro.2008.09.204",
+          "status": "downloaded",
+          "sha256": "846596316fd127349dff9a7e0ccc10f5b41b9c2f9ecd437e9ce9dff42b6bfe3f",
+          "bytes": 420225,
+          "pages": 4,
+          "provided_by": "saved by the user from a browser, 2026-09-30"
+        }
+      ]
     },
     {
       "id": "R06",
