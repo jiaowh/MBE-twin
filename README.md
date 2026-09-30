@@ -157,6 +157,7 @@ The first published heater experiment we examined (R03) turned out to be a weak 
 - **One heating zone is far from enough.** The wafer edge runs about 90 °C colder than the centre. Two zones bring this to about 35 °C and three to about 17 °C.
 - **How the heat is spread matters more than the number of zones.** A heater whose heating density varies smoothly with radius gets to about 2–10 °C.
 - **The wafer's edge support matters as much as the heater.** How far the wafer overlaps its holder, and how well they touch, changes the result several-fold.
+- **A plate that spreads the heat does not help.** Putting a heat-spreading plate between heater and wafer made the wafer less even in the model, because the wafer edge needs extra heat to make up for what it loses, and the plate smooths that away.
 - **Control precision matters.** A 5 % error in one zone's power adds 6–10 °C. So either the zone powers must be held very precisely, or the wafer temperature must be measured at more than one radius.
 - **The wafer has to be measured.** The silicon wafer's own heat emission is only known to ±10 %, and that alone shifts an unmeasured wafer by about 18 °C. In the model, one temperature sensor fixes the average but not the centre-to-edge shape; one sensor per heater zone gets close to the best shape the zones allow.
 
@@ -186,7 +187,7 @@ At 740 °C, every 1 °C of temperature spread adds roughly 0.1–0.16 % to the t
 2. Optionally add a gallium run at 4 Å, the smallest plausible atom size, to complete the range.
 3. Check that a steep, off-centre nitrogen port fits next to the gallium cell and shutters, and find what the real plates look like (thickness, hole pattern, hole angles).
 4. Design a crucible shape that keeps the spray steadier as it empties. Two patented production designs are now on file: a cup with a narrow inner opening, whose output does not depend on the fill, and a Riber-type cell reported to give 0.4 % over 190 mm.
-5. Add a platen and heat shields to the heater model, and find a stronger heater experiment. Emissivity data for the silicon wafer and the boron-nitride parts are now on file. A production-heater study (R05) measured what spoils wafer temperature (ring overlap, a shiny platen, a too-small heater gap), which the heater model must be able to show, but it lacks the dimensions needed to recreate it exactly.
+5. Try a larger heat-spreading plate and heat shields in the heater model, and find a stronger heater experiment. Emissivity data for the silicon wafer and the boron-nitride parts are now on file. A production-heater study (R05) measured what spoils wafer temperature (ring overlap, a shiny platen, a too-small heater gap), which the heater model must be able to show, but it lacks the dimensions needed to recreate it exactly.
 
 The sources and calculations from the latest search are in the [physics-data note](ref/notes/PHYSICS_DATA_SEARCH_2026-09-30.md).
 

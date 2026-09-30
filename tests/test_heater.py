@@ -40,3 +40,14 @@ def test_more_power_to_the_edge_zone_raises_the_wafer_edge():
     a = m.solve(heater_power=[1500.0, 1000.0])
     b = m.solve(heater_power=[1500.0, 1500.0])
     assert b["t_wafer"][-1] - a["t_wafer"][-1] > b["t_wafer"][0] - a["t_wafer"][0] > 0.0
+
+
+def test_platen_energy_balance_and_smoothing():
+    g = HeaterGeometry(zone_edges=(0.0, 0.08, 0.115), platen=True, **COARSE)
+    m = HeaterModel(g, HeaterProperties())
+    r = m.solve(heater_power=[1500.0, 1200.0])
+    assert abs(r["energy_residual"]) < 1e-6 * r["zone_power"].sum()
+    rt = m.solve(heater_temperature=[1300.0, 1350.0])
+    assert abs(rt["energy_residual"]) < 1e-6 * rt["zone_power"].sum()
+    # the platen sits between heater and wafer in temperature
+    assert r["t_heater"].min() > r["t_platen"].min() > r["t_wafer"].min()

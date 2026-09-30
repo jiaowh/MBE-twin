@@ -15,7 +15,9 @@ Parameters no repository source fixes are varied one at a time around a base cas
   gap 5 / 10 / 20 mm; heater emissivity 0.7 / 0.85 / 0.95; ledge emissivity 0.15 (clean Mo-like)
   / 0.3 / 0.6 (coated); wafer-ledge conductance 50 / 200 / 1000 W m^-2 K^-1; ledge inner radius
   95 / 97 / 99 mm (wafer overlap 5 / 3 / 1 mm); Si conductivity 20 / 30 / 40 W m^-1 K^-1; rim
-  surroundings 300 K (open) / 700 K (shielded); heater radius 115 / 130 mm (overhang).
+  surroundings 300 K (open) / 700 K (shielded); heater radius 115 / 130 mm (overhang); a platen
+  (diffuser plate: emissivity 0.9, 3 mm, 5 mm above the heater, 10 mm below the wafer) with
+  conductivity 30 / 100 / 150 W m^-1 K^-1 (SiC-like; not sourced).
 Also reported: the wafer range after a +/-5 % error in one zone's power (robustness), and
 R05's qualitative mechanisms (zone ratio, heater gap, ledge reflectivity, overlap) as checks.
 
@@ -54,6 +56,9 @@ VARIATIONS = [
     ("k_Si 20", {}, {"k_wafer": 20.0}), ("k_Si 40", {}, {"k_wafer": 40.0}),
     ("rim 700 K (shielded)", {}, {"t_rim": 700.0}),
     ("heater radius 130 mm", {"heater_radius": 0.130}, {}),
+    ("platen k 100 (SiC-like)", {"platen": True}, {}),
+    ("platen k 30", {"platen": True}, {"k_platen": 30.0}),
+    ("platen k 150", {"platen": True}, {"k_platen": 150.0}),
 ]
 
 

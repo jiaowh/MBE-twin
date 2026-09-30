@@ -218,6 +218,7 @@ Wafer temperature range (K) at the optimum, 740 C mean. In brackets: the worst r
 | k_Si 20 / 40 W/mK | 97 / 79 | 46 / 29 | 23 / 13 | 15 / 8.2 | 9.0 / 4.8 |
 | Heater radius 130 mm | 66 | 22 | 10 | 3.9 | 3.5 |
 | Ledge emissivity 0.15 / 0.6 | 78 / 101 | 35 / 37 | 18 / 15 | 11 / 10 | 7.5 / 5.4 |
+| Platen (emissivity 0.9, 3 mm, k 30 / 100 / 150 W/mK) | 120 / 101 / 93 | 42 / 40 / 40 | 23 / 30 / 32 | 22 / 28 / 31 | 20 / 27 / 30 |
 
 - **Zones help, but the radial power-density design helps more.** Uniform-density zones leave steps in the wafer profile. Going from 3 zones to a designed profile (12-zone proxy) roughly halves the range.
 - **The wafer edge support is as important as the heater.**
@@ -226,6 +227,7 @@ Wafer temperature range (K) at the optimum, 740 C mean. In brackets: the worst r
 - **A smaller gap and an overhanging heater help** in this model.
   - R05 instead found that a larger heater gap improved uniformity. Its mechanism was heater power reflected by a shiny platen through semi-transparent GaAs, and the model has neither a platen nor a transparent wafer.
   - This is an unresolved qualitative disagreement. The 200 mm holder design (platen or no platen) decides which mechanism applies.
+- **A platen (diffuser plate) makes the best achievable range worse in this model.** With a platen of the heater's radius, 5 mm above the heater and 10 mm below the wafer, the 3-zone optimum rises from 17 to 23-32 K and the designed-density optimum from 6 to 20-30 K; a more conductive platen is worse. The platen spreads heat sideways and removes the edge boost the wafer needs against its edge losses. It does make zone-power errors matter less in relative terms (a 5 % error adds 2-5 K instead of 6-10 K). A platen larger than the heater, or one with an edge ring, is not modelled.
 - **Control precision matters.** A 5 % error in one zone's power adds 6-10 K to the range at every zone count. Holding a few-kelvin range needs zone powers held to about 1-2 %, or feedback from wafer temperature at more than one radius. This bears directly on the design-freeze sensor decision.
 - **Sensors** (`scripts/heater_sensors.py`, record `results/heater_sensors/manifest.json`).
   - Set-up: a 3-zone heater optimized for the nominal holder, then run on 12 perturbed holders (contact, overlap, Si conductivity, ledge and wafer emissivity, gap). A controller holds the chosen wafer-temperature readings at their nominal values. Worst case over the perturbations:
@@ -266,7 +268,7 @@ Running:
 Next:
 9. Decided (2026-10-01): with Bi2 represented, the Bi enhancement over its dispersion value is 1.5-1.9x, so the Ga scenario range is about 6-8 A (widest 6-9 A). The existing 5.68 and 8 A Ga runs bracket it; no rerun. Optional: a 4 A run for the dispersion-only floor. Scenarios, not bounds.
 10. Nitrogen: check that a steep (60-65 deg), off-centre N port clears the Ga cell and shutters; obtain plate thickness, pattern and hole tilt; a hole-scale DSMC only if the chosen flow range is transitional (above about 3 sccm, or few holes).
-11. Heater: a platen and side-shield variant; check R05's heater-gap mechanism (reflected power through a transparent wafer) against a Si wafer; spectral emissivity of the GaN-on-Si stack.
+11. Heater: a larger-than-heater platen or edge-ring variant (the same-size platen, 2026-10-01, is worse); a side-shield variant; check R05's heater-gap mechanism (reflected power through a transparent wafer) against a Si wafer; spectral emissivity of the GaN-on-Si stack.
 12. Growth: independent validation data. R20's growth map is conditional on one N flux and one shared template, so it cannot serve as independent wafer validation. Commissioning N-limited and Ga-limited thickness maps are the real test.
 13. Later: crucible shapes (R24 reservoir; R25 is a line-of-sight model with walls hidden from the substrate, so a code-to-code check must reproduce that assumption) and the adjustable-source study below.
 14. Still wanted: full text of R04, the RIBER MBE 49 technical PDF, and a representative aperture-plate drawing. R03 reconstruction stays deferred (weak discrimination); R16 may inform transient validation.
