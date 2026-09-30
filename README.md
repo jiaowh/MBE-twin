@@ -109,6 +109,8 @@ What the angle study means:
 
 What is held constant is the gallium arriving at the centre of the wafer, not the growth rate. The growth rate also depends on the nitrogen supply and on how much gallium actually sticks, which the twin does not model yet. The runs also record the average gallium supply over the whole wafer, since the edge receives less than the centre.
 
+**A newly spotted effect: the chamber is not empty during growth.** The nitrogen source lets gas into the chamber, and a rough estimate shows that at typical growth pressures 10–20 % of the gallium beam hits a gas molecule on its way to the wafer. That shifts the unevenness by up to about 1 point and moves the best port angle. The beam models do not include it yet; it needs the real machine's pumping speed.
+
 **What these results are, and are not.** They compare design options on a representative chamber, with a known uncertainty and one clearly bracketed unknown (the atom size). They are not a thickness prediction for a specific machine. In the usual gallium-rich GaN recipe, thickness follows the nitrogen supply (next section).
 
 ## 5. Nitrogen
@@ -185,9 +187,10 @@ At 740 °C, every 1 °C of temperature spread adds roughly 0.1–0.16 % to the t
 **Next.**
 1. Finish the constant-gallium-supply runs (running) and redraw the growth window with them.
 2. Optionally add a gallium run at 4 Å, the smallest plausible atom size, to complete the range.
-3. Check that a steep, off-centre nitrogen port fits next to the gallium cell and shutters, and find what the real plates look like (thickness, hole pattern, hole angles).
-4. Design a crucible shape that keeps the spray steadier as it empties. Two patented production designs are now on file: a cup with a narrow inner opening, whose output does not depend on the fill, and a Riber-type cell reported to give 0.4 % over 190 mm.
-5. Try a larger heat-spreading plate and heat shields in the heater model, and find a stronger heater experiment. Emissivity data for the silicon wafer and the boron-nitride parts are now on file. A production-heater study (R05) measured what spoils wafer temperature (ring overlap, a shiny platen, a too-small heater gap), which the heater model must be able to show, but it lacks the dimensions needed to recreate it exactly.
+3. Add the background-gas effect to the beam models, and re-check the best port angles and nitrogen aim at a realistic growth pressure.
+4. Check that a steep, off-centre nitrogen port fits next to the gallium cell and shutters, and find what the real plates look like (thickness, hole pattern, hole angles).
+5. Design a crucible shape that keeps the spray steadier as it empties. Two patented production designs are now on file: a cup with a narrow inner opening, whose output does not depend on the fill, and a Riber-type cell reported to give 0.4 % over 190 mm.
+6. Try a larger heat-spreading plate and heat shields in the heater model, and find a stronger heater experiment. Emissivity data for the silicon wafer and the boron-nitride parts are now on file. A production-heater study (R05) measured what spoils wafer temperature (ring overlap, a shiny platen, a too-small heater gap), which the heater model must be able to show, but it lacks the dimensions needed to recreate it exactly.
 
 The sources and calculations from the latest search are in the [physics-data note](ref/notes/PHYSICS_DATA_SEARCH_2026-09-30.md).
 
