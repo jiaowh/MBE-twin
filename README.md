@@ -119,6 +119,11 @@ In the usual gallium-rich recipe, a thin excess film of gallium sits on the surf
 - **Hole shape sets the spread.** How the nitrogen spreads over the wafer depends mostly on the holes' shape (how deep compared with how wide). The plate's overall size barely matters.
 - **Real plates look much less even than the gallium beam.** Two published plates give real hole counts and sizes (about 700 to 4000 holes, 0.2–0.34 mm wide), but not the plate thickness, so we tried 0.5–2 mm. At normal gas flows the gas in the holes is thin enough for the model to apply. Straight holes that are several times longer than they are wide send the nitrogen out in a narrow jet. Aimed at the wafer centre from 350 mm, the model then gives nitrogen maps with range/mean of 20 % to over 100 %, against 1–10 % for gallium.
 - **Aiming off-centre evens it out, at a price.** If the source is pointed not at the wafer centre but near its edge, the spinning wafer sweeps the narrow jet over a ring. In the model this brings every published plate to about 1 % range/mean or below, even if the plate emits unevenly across its face. The catch is that the narrower the jet, the more precisely the source must point. For the deepest holes, a pointing error of 1.6° (10 mm at the wafer) can cost up to 10 points; for a thin plate it hardly matters. A thin plate or shallow holes are the safer choice, and the source mounting needs a way to measure and adjust its aim.
+
+![Nitrogen unevenness against where the source is aimed, for a thin plate and three hole depths: very uneven when aimed at the wafer centre, a narrow best region near the wafer edge](docs/figures/n_aim.png)
+
+*Model results for four plates. The points are 15 mm apart, so the best spots lie between them; finer steps reach about 1 % or below for every plate. The deeper the holes, the narrower the dip, and the more precisely the source has to point.*
+
 - **Still the least certain input.** None of this is tested against a measured nitrogen map, and the real plate's thickness, hole pattern and hole angles are unknown. A thickness map grown with nitrogen as the limiting supply on the real machine will be the direct test.
 
 ## 6. How the layer grows

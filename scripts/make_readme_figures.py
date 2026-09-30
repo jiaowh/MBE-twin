@@ -245,9 +245,45 @@ def growth_window():
     plt.close(fig)
 
 
+def n_aim():
+    """Nitrogen map uniformity against aim offset, from data/runs/studies/nitrogen_aim_study*.json."""
+    first = load("studies/nitrogen_aim_study.json")["rows"]
+    ext = {r["L_over_r"]: r for r in load("studies/nitrogen_aim_study_ext.json")["rows"]}
+    fig, ax = plt.subplots(figsize=(7.5, 4.2))
+    names = {0.0: "thin plate", 2.92: "holes 3x deeper than wide", 5.83: "6x", 11.66: "12x"}
+    for r, col, mk in zip(first, [GREY, BLUE, ORANGE, GREEN], ["s", "o", "^", "D"]):
+        a = r["L_over_r"]
+        k45 = r["angles_deg"].index(45.0)
+        v45 = [row[k45] for row in r["range_over_mean_pct"]]
+        ax.plot(r["offsets_mm"], v45, ls=":", c=col, marker=mk, ms=4, lw=1.5)
+        if a in ext:
+            e = ext[a]
+            k65 = e["angles_deg"].index(65.0)
+            ax.plot(e["offsets_mm"], [row[k65] for row in e["range_over_mean_pct"]], ls="-", c=col, marker=mk,
+                    ms=4, lw=2, label=names[a])
+        else:
+            ax.plot([], [], ls=":", c=col, marker=mk, label=names[a])
+    ax.plot([], [], "k:", lw=1.5, label="dotted: port at 45°")
+    ax.plot([], [], "k-", lw=2, label="solid: port at 65°")
+    ax.axvline(0, c=GREY, lw=0.8)
+    ax.text(2, 150, "aimed at\nwafer centre", fontsize=8, color="black")
+    ax.axvspan(100, 150, color=GREY, alpha=0.1)
+    ax.text(125, 0.13, "aim point beyond\nthe wafer edge", fontsize=8, ha="center")
+    ax.set_yscale("log")
+    ax.set_ylim(0.1, 300)
+    ax.set_yticks([0.1, 0.3, 1, 3, 10, 30, 100, 300])
+    ax.set_yticklabels(["0.1", "0.3", "1", "3", "10", "30", "100", "300"])
+    ax.set_xlabel("aim point, mm from the wafer centre towards the source")
+    ax.set_ylabel("nitrogen unevenness, range/mean (%)")
+    ax.set_title("Aiming the nitrogen source off-centre evens out its jet (model, straight holes)", fontsize=10)
+    ax.legend(frameon=False, fontsize=8, loc="lower left", ncol=2)
+    fig.savefig(OUT / "n_aim.png")
+    plt.close(fig)
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
-    for f in (chamber, level_melt, r07, ga_fill, ga_angle, growth_window):
+    for f in (chamber, level_melt, r07, ga_fill, ga_angle, growth_window, n_aim):
         f()
         print("wrote", f.__name__)
 
