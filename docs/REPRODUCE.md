@@ -36,6 +36,7 @@ The batch runner treats a job as complete only when its directory holds `summary
 | Nitrogen: aim offset and port angle per hole aspect (default grid, then extended grid) | `python scripts/nitrogen_aim_study.py`; `python scripts/nitrogen_aim_study.py --aspects 2.92 5.83 11.66 --offsets 60 75 90 105 120 135 150 --angles 40 45 50 55 60 65 --out results/nitrogen_aim_study_ext` | `results/nitrogen_aim_study*/manifest.json` |
 | Ga-rich growth window and thickness uniformity from Ga, N and temperature maps | `python scripts/growth_window.py --aim results/nitrogen_aim_study/manifest.json results/nitrogen_aim_study_ext/manifest.json` | `results/growth_window/manifest.json` |
 | Heater zones: wafer temperature range at 740 C by zone count and bracketed holder parameters | `python scripts/heater_zones.py` | `results/heater_zones/manifest.json` |
+| Wafer temperature sensor count and placement for 3-zone control | `python scripts/heater_sensors.py` | `results/heater_sensors/manifest.json` |
 | R07 Bi + Bi2 against monatomic runs; diameter scans | `python scripts/summarize_bi2.py` | (printed) |
 | R07 with Bi + Bi2 vapour (Kubaschewski fractions, x = 0.5 check, d scan at 3.5 A/s) | `python scripts/sparta_batch.py cases/sparta_r07/r07_bi2.json` | `data/runs/sparta_r07/r07_bi2/` |
 | R07 tables, noise-corrected RMS, diameter interval | `python scripts/summarize_uq.py --dir data/runs/sparta_r07/uq2_batch` | (printed) |

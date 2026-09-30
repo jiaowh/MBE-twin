@@ -148,6 +148,7 @@ The first published heater experiment we examined (R03) turned out to be a weak 
 - **How the heat is spread matters more than the number of zones.** A heater whose heating density varies smoothly with radius gets to about 2–10 °C.
 - **The wafer's edge support matters as much as the heater.** How far the wafer overlaps its holder, and how well they touch, changes the result several-fold.
 - **Control precision matters.** A 5 % error in one zone's power adds 6–10 °C. So either the zone powers must be held very precisely, or the wafer temperature must be measured at more than one radius.
+- **The wafer has to be measured.** The silicon wafer's own heat emission is only known to ±10 %, and that alone shifts an unmeasured wafer by about 18 °C. In the model, one temperature sensor fixes the average but not the centre-to-edge shape; one sensor per heater zone gets close to the best shape the zones allow.
 
 At 740 °C, every 1 °C of temperature spread adds roughly 0.1–0.16 % to the thickness spread (section 6). So these numbers feed directly into the heater and sensor choices for the real machine.
 

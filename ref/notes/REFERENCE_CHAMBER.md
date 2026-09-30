@@ -227,6 +227,20 @@ Wafer temperature range (K) at the optimum, 740 C mean. In brackets: the worst r
   - R05 instead found that a larger heater gap improved uniformity. Its mechanism was heater power reflected by a shiny platen through semi-transparent GaAs, and the model has neither a platen nor a transparent wafer.
   - This is an unresolved qualitative disagreement. The 200 mm holder design (platen or no platen) decides which mechanism applies.
 - **Control precision matters.** A 5 % error in one zone's power adds 6-10 K to the range at every zone count. Holding a few-kelvin range needs zone powers held to about 1-2 %, or feedback from wafer temperature at more than one radius. This bears directly on the design-freeze sensor decision.
+- **Sensors** (`scripts/heater_sensors.py`, record `results/heater_sensors/manifest.json`).
+  - Set-up: a 3-zone heater optimized for the nominal holder, then run on 12 perturbed holders (contact, overlap, Si conductivity, ledge and wafer emissivity, gap). A controller holds the chosen wafer-temperature readings at their nominal values. Worst case over the perturbations:
+
+    | Sensing | Worst wafer range | Worst mean offset from 740 C |
+    |---|---|---|
+    | None (zone powers held) | 37 K | 19 K |
+    | 1 sensor (centre or 60 mm), zones scaled together | 37 K | 5-9 K |
+    | 3 sensors, one per zone (0/70/97 or 30/77/90 mm) | 25-26 K | 1.8-2.0 K |
+    | 5 sensors (0/40/70/90/98 mm) | 23.5 K | 0.4 K |
+
+  - The wafer's own emissivity uncertainty (0.7 +/- 10 %, R28) alone moves the open-loop mean by 17-19 K. So power control or heater thermocouples cannot set the wafer temperature to better than about 20 K; the wafer must be measured.
+  - One sensor corrects the mean but not the shape. At least one sensor per zone brings the range close to the best a 3-zone heater can do on the perturbed holder (heater_zones re-optimized: 20.5-23 K for the worst cases).
+  - A 1 K bias on the outermost sensor changes the range by under 1 K.
+  - Sensors are ideal point readings; spot size, emissivity drift of a growing GaN-on-Si stack and viewport access are not modelled.
 - **Thickness effect** (growth model, [growth note](GROWTH_EVIDENCE.md)): about 0.03 / 0.11-0.16 / 0.45-0.64 % thickness range/mean per K of wafer range at 700 / 740 / 780 C. For example, 6 K at 740 C is about 1 %, and 17 K is about 2-3 %.
 - **Limits.**
   - Representative dimensions; heater emissivity, ledge properties, contact and Si conductivity are bracketed, not sourced.
