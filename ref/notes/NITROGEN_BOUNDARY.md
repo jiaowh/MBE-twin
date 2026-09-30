@@ -63,6 +63,8 @@ Ranges span plate radius and output profile.
 
 ## Ga/N ratio across the wafer (recomputed 2026-09-30 with the corrected estimator)
 
+*Superseded for design use (2026-10-01) by the growth window in the [growth note](GROWTH_EVIDENCE.md), which uses the aim-optimized N maps and turns the ratio spread into a regime window and a thickness map. Kept as the record of the centre-aimed case.*
+
 `scripts/ga_n_ratio.py` divides the fitted Ga DSMC profiles (46 deg, 350 mm, level melt; [representative chamber](REFERENCE_CHAMBER.md)) by two representative N maps (plate at 40 deg, 350 mm). Both are rotation-averaged. The Ga profiles now come from the annulus-fit estimator (order 4). The first version of this table used the earlier point-quartic fit, which overstated deep-fill Ga non-uniformity by up to about 1 point; that version is superseded. Spread of the local Ga/N ratio, as range/mean over 200 mm, across the Ga diameter bracket (2.5-8 A) and the collisionless case:
 
 | Ga fill | Ga alone | / thin-plate N (N edge/centre 0.96) | / beaming-hole N, L/r 2 (edge/centre 0.82) |
@@ -119,8 +121,11 @@ Each Ga value carries the estimator's scatter of about 0.2-0.6 points ([represen
 | 5.8 (1 mm) | 33 % (65 deg) | 0.9 % | +105 mm, 65 deg | 4.4 % |
 | 11.7 (2 mm) | 75 % (65 deg) | 0.9 % | +100 mm, 65 deg | 10.4 % |
 
-- **Yes, in the model.** Aiming the plate near the wafer edge brings every published hole set below 1 % range/mean. The optimum is a valley in (aim, angle): for L/r 2.9, 45 deg at +105 mm also gives 1.0 %.
+- **Yes, in the model.** Aiming the plate near the wafer edge brings every published hole set to about 1 % range/mean or below. Monte Carlo scatter at these optima is about 0.3-0.5 points (20 000 hole events): a second event sample gave 0.25 / 0.63 / 0.41 / 1.39 % for L/r 0 / 2.9 / 5.8 / 11.7 (`scripts/nitrogen_aim_robustness.py`). The optimum is a valley in (aim, angle): for L/r 2.9, 45 deg at +105 mm also gives 1.0 %.
 - **The price is pointing tolerance.** Deeper holes give a narrower beam, and the map becomes very sensitive to the aim point. At 350 mm, 10 mm at the wafer is about 1.6 deg of pointing. For L/r 11.7 that costs up to 10 points, for L/r 5.8 up to 4, for L/r 2.9 up to 2. Source alignment (and its drift with bake-out and plate replacement) then becomes a design and commissioning requirement.
+- **Output profile and plate size** (`results/nitrogen_aim_robustness/manifest.json`, same event sample for all variants).
+  - Centre- or edge-peaked output (+/-50 % across the plate) moves the optima by at most 0.25 points (L/r 5.8) and 0.25 points (L/r 11.7).
+  - A 12.5 mm active radius instead of 20 mm changes L/r 0-5.8 by at most 0.1 points. For L/r 11.7 it goes from 1.4 to 2.4 %, and re-aiming alone (5 mm steps) does not recover it.
 - **Longer throw does not help at the same aim.** At 450 mm with the 350 mm optimum aim, range/mean rises to 2.3-14 % for the beaming plates; the aim has to be re-optimized.
 - **Limits.** Free-molecular (valid for the many-hole plates at 0.5-3 sccm), 19 sampled holes (pitch R/2; the scenario study shows sampling converged), a 15 mm grid refined in 5 mm steps, and a single uniform-output plate. Steep 60-65 deg N ports must also clear the Ga cell and shutter geometry, which is not checked. Real plates may have tilted holes or radial output profiles.
 
