@@ -72,8 +72,8 @@ Each subsystem has a baseline and a candidate option, and all combinations are e
 ## 3. Open gates
 
 1. **Centre-flux hold (running).** The Ga comparisons are at approximately, not exactly, constant centre flux; runs holding it to +/-1.5 % finish on 2026-10-01.
-2. **Bi2 and the R07 rate (running).** The first result (11 A/s) closes the 7-8 % rate deficit (now +4.5 %) with an unchanged profile fit. The d scan at 3.5 A/s will show whether the fitted collision size moves, which bounds the Ga collision-size scenarios.
-3. **Ga collision size.** Unsourced; 4-9.6 A is an argued scenario range, not a bound. It matters mainly for a depleted charge.
+2. **Bi2 and the R07 rate (done).** With the compiled dimer fractions the R07 rates are -6.5 to +4.7 % (monatomic: -7 to -15 %), and the fitted Bi collision size moves from 9.1 to 8.0 A. The Ga scenario range becomes about 6-8 A, bracketed by the existing runs.
+3. **Ga collision size.** Unsourced; about 6-8 A (widest 6-9 A) is an argued scenario range after the Bi2 result, not a bound. It matters mainly for a depleted charge.
 4. **N plate.** Thickness, pattern, hole tilt, active radius and output profile unknown; transitional hole flow above about 3 sccm or with few holes is not modelled; total active-N output is not modelled.
 5. **Temperature scale and droplet onset.** The literature disagrees by up to a factor 3-4 at 700 C; each lab's temperature scale differs.
 6. **Heater.** No reconstructible published heater benchmark. The reduced axisymmetric model (2026-10-01) has no platen, shields or semi-transparent optics, and it disagrees qualitatively with R05 on the effect of the heater gap. R05's mechanism, reflected power through GaAs, is not in the model.

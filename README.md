@@ -77,9 +77,9 @@ flowchart LR
 *Deposit across a flat plate in front of the cell, relative to the centre. Black: measurement. Blue: collision model with its statistical error. Orange: no-collision model.*
 
 What this test settles and what it leaves open:
-- **One tuned number.** Collisions depend on how "big" an atom is in a collision. For bismuth the test pins that size to 8–10 Å.
-- **Open puzzle.** The model's absolute deposition rate is 7–15 % lower than measured in every case. This is not simulation noise. The spray *shape*, which is what uniformity depends on, is reproduced.
-- **A likely explanation.** Bismuth vapour is not all single atoms. Published data put about 30 % of it as paired atoms (Bi₂). A pair carries two atoms, so at the same vapour pressure more bismuth arrives, about 12–13 % more. That is the size of the gap. The pressures the 1991 paper states are themselves 1.4–1.7 times the handbook values, so the check needs care. Paired atoms have now been added to the collision model, and the test is running. At the fastest evaporation speed the gap closes (the model now reads 5 % high instead of 7 % low), with the spray shape still matching.
+- **One tuned number.** Collisions depend on how "big" an atom is in a collision. For bismuth the test pins that size to about 7–9 Å once paired atoms are included (8–10 Å without them).
+- **A puzzle, now mostly solved.** With single atoms only, the model's absolute deposition rate was 7–15 % lower than measured in every case. This was not simulation noise. The spray *shape*, which is what uniformity depends on, was reproduced either way.
+- **A likely explanation.** Bismuth vapour is not all single atoms. Published data put about 30 % of it as paired atoms (Bi₂). A pair carries two atoms, so at the same vapour pressure more bismuth arrives, about 12–13 % more. That is the size of the gap. The pressures the 1991 paper states are themselves 1.4–1.7 times the handbook values, so the check needs care. Paired atoms have now been added to the collision model. With the published share of pairs, the gap closes: the model reads between 6.5 % low and 5 % high at the three speeds, instead of 7–15 % low, and the spray shapes still match. The fitted atom size moves from about 9 Å to about 8 Å. How many atoms are paired and how big an atom is trade off against each other, and the 1991 data cannot separate the two.
 
 ## 4. Gallium on the 200 mm wafer
 
@@ -93,7 +93,7 @@ With the beam model tested, we apply it to a gallium cell in the representative 
 
 **The biggest unknown: the gallium atom's size.** No published source gives the collision size of a gallium atom, so we try a range (2.5, 5.68 and 8 Å). It hardly matters for a fresh charge. For a nearly empty cup, bigger atoms mean more collisions, which widen the spray again. There the answer ranges from about 8 % to 10 %.
 
-A new estimate narrows that range from physics rather than guesswork. Atoms attract each other at a distance with a strength that has been calculated for every element. Scaling from noble gases, whose collision sizes are well measured, gives about 4 Å for gallium if that attraction were all there is. The same method says bismuth should be about 4 Å, but the 1991 experiment needs 8–10 Å. Metal atoms bond as well as attract, which makes them "look" bigger. Carrying bismuth's extra factor over to gallium gives about 9.6 Å. These are reasoned estimates, not measured limits: 4, 6 and 9.6 Å are plausible values to try, and 2.5 Å is not ruled out. Part of bismuth's extra size may come from its paired atoms, which the running test will show, so the gallium runs will be redone only after that. Gallium vapour, unlike bismuth, is almost entirely single atoms (paired atoms under 0.1 %, checked against a 1998 measurement), so the model's single-atom picture holds.
+A new estimate narrows that range from physics rather than guesswork. Atoms attract each other at a distance with a strength that has been calculated for every element. Scaling from noble gases, whose collision sizes are well measured, gives about 4 Å for gallium if that attraction were all there is. The same method says bismuth should be about 4 Å, but the 1991 experiment needs 8–10 Å. Metal atoms bond as well as attract, which makes them "look" bigger. Carrying bismuth's extra factor over to gallium gives about 9.6 Å. These are reasoned estimates, not measured limits: 4, 6 and 9.6 Å are plausible values to try, and 2.5 Å is not ruled out. The paired-atom test showed that part of bismuth's extra size came from its pairs. With that removed, the same reasoning gives about 6–8 Å for gallium, which the existing runs at 5.68 and 8 Å already cover, so they do not need to be redone. Gallium vapour, unlike bismuth, is almost entirely single atoms (paired atoms under 0.1 %, checked against a 1998 measurement), so the model's single-atom picture holds.
 
 **Choosing the port angle.** Tilting the cell more steeply compensates for the narrowing spray. The best angle depends on the fill: about 48° for a fresh 40 mm charge, about 54° at 70 mm and about 58° at 120 mm. At its best angle each fill reaches roughly 1–2 %.
 
@@ -174,7 +174,7 @@ At 740 °C, every 1 °C of temperature spread adds roughly 0.1–0.16 % to the t
 
 | Part | Status |
 |---|---|
-| Gallium beam model | Tested against a real experiment (shape within 1–2 %); absolute rate 7–15 % low, likely paired bismuth atoms (test running) |
+| Gallium beam model | Tested against a real experiment: shape within 1–2 %; with paired bismuth atoms included, rate within −6.5 to +5 % |
 | Gallium on the 200 mm wafer | Fill and port-angle study done, including numerical checks at the best angles; constant-gallium-supply runs running |
 | Nitrogen source | Two published plates modelled: a narrow jet unless aimed off-centre, then about 1 % or below but sensitive to pointing; plate thickness and pattern unknown |
 | Wafer heater | First 200 mm model: zone count, edge support and control precision compared; not yet checked against any measured heater |
@@ -182,8 +182,8 @@ At 740 °C, every 1 °C of temperature spread adds roughly 0.1–0.16 % to the t
 | The real machine | Needs its drawings and first measurements, which will turn the representative twin into its own twin |
 
 **Next.**
-1. Finish the constant-gallium-supply runs and the test of whether paired bismuth atoms close the 1991 rate gap (both running).
-2. Decide, from that test, whether to rerun the gallium study with atom sizes of 4, 6 and 9.6 Å. These are plausible values spanning a range argued from other atoms, not proven limits.
+1. Finish the constant-gallium-supply runs (running) and redraw the growth window with them.
+2. Optionally add a gallium run at 4 Å, the smallest plausible atom size, to complete the range.
 3. Check that a steep, off-centre nitrogen port fits next to the gallium cell and shutters, and find what the real plates look like (thickness, hole pattern, hole angles).
 4. Design a crucible shape that keeps the spray steadier as it empties. Two patented production designs are now on file: a cup with a narrow inner opening, whose output does not depend on the fill, and a Riber-type cell reported to give 0.4 % over 190 mm.
 5. Add a platen and heat shields to the heater model, and find a stronger heater experiment. Emissivity data for the silicon wafer and the boron-nitride parts are now on file. A production-heater study (R05) measured what spoils wafer temperature (ring overlap, a shiny platen, a too-small heater gap), which the heater model must be able to show, but it lacks the dimensions needed to recreate it exactly.

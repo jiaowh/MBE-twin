@@ -6,7 +6,7 @@ This search followed the morning's [validation-reference search](VALIDATION_REFE
 
 | Question | Finding | Status |
 |---|---|---|
-| R07 centre rates 7-15 % low | Bi vapour is 29-34 % Bi2 (Kubaschewski). At R07's stated pressures that raises the arriving atom flux 12-13 %, enough to close the deficit. | Strong lead; two-species R07 runs in progress (section 1) |
+| R07 centre rates 7-15 % low | Bi vapour is 29-34 % Bi2 (Kubaschewski). At R07's stated pressures that raises the arriving atom flux 12-13 %, enough to close the deficit. | Confirmed in DSMC (2026-10-01): rates -6.5 to +4.7 % at d = 8 A; zero-bias d moves to 8.0 A (section 1) |
 | Ga collision diameter | Dispersion scaling, tested on Ne-Xe to within 5 %, gives 3.9-4.1 A for Ga at 1245 K. The R07-fitted Bi value is 1.8-2.4x its own dispersion value. The same ratio gives 7.5-9.6 A for Ga. | Argued scenario range (4-9.6 A), not a bound; see section 2 |
 | Is Ga vapour monatomic? | Ga2 is 3e-5 to 8e-4 mole fraction at cell conditions, anchored on R23's measured equilibria. | Yes; model assumption justified |
 | Nitrogen plate | Second concrete plate: Veeco UNI-Bulb, about 2000 holes of 0.343 mm (R30, not R26 as first recorded). Thickness is still unknown, and the R13/R26/R30 conductance statements do not reconcile. | Gap narrowed, not closed |
@@ -36,7 +36,28 @@ Caveats before this goes into the model:
 - *What this does to the fitted diameter.* The collisional change of the profile shape depends on the Knudsen number, lambda/D proportional to 1/(n d^2). The deposit measures how much vapour actually leaves, so the density that matters is the one reproducing the measured rate, whatever the tables say. A model rate low by delta means the model density is low by about delta, which the fit compensates with d larger by sqrt(1 + delta). For the 7-15 % deficit, the monatomic fit overstates d by 3-7 % (9.1 A -> about 8.5-8.8 A for the bias zero crossing), inside the 8.0-10.3 A sensitivity interval. The interval is therefore robust to the pressure basis at that level. It is not robust to the vapour composition, which the two-species run tests.
 - *What does not transfer to Ga.* The fitted d absorbs Bi2, R07's density basis and any lip effects. It stays an effective Bi parameter.
 
-Running (queued 2026-09-30 22:03, `cases/sparta_r07/r07_bi2.json`, `scripts/sparta_r07.py --set x_dimer=...`): two-species Bi + Bi2 R07 runs at R07's stated total pressures, with Kubaschewski fractions (0.324 / 0.300 / 0.286), a d scan 7-10 A at 3.5 A/s, x = 0.5 at 3.5 A/s (d = 8, 9 A), 0.35 A/s at d = 8, 9 A and 11 A/s at d = 8 A (0.5 mm cells, because Bi2 shortens the mean free path to about 0.87x). Assumptions: Bi2 diameter 2^(1/3) d, 2 rotational degrees of freedom with relaxation number 5, no vibration. Expected, if the dimer hypothesis holds: centre rates within a few percent of R07, profile RMS no worse than monatomic, and the bias zero crossing moving to smaller d.
+**Two-species R07 runs** (2026-10-01; `cases/sparta_r07/r07_bi2.json`, records `data/runs/sparta_r07/r07_bi2/`, table by `scripts/summarize_bi2.py`).
+- *Set-up.* R07's stated total pressures, with the Kubaschewski dimer fractions (0.324 / 0.300 / 0.286). Assumptions: Bi2 diameter 2^(1/3) d, 2 rotational degrees of freedom with relaxation number 5, no vibration. Numerics as the high-statistics monatomic benchmarks, except 0.5 mm cells at 11 A/s.
+- *Results.* Rate error is the centre rate against R07; RMS is noise-corrected. Monatomic values at the same d are in brackets.
+
+| Case | d | Rate error | Profile RMS | Bias | Atoms arriving as Bi2 |
+|---|---|---|---|---|---|
+| 0.35 A/s, x 0.324 | 8 A | +3.0 % (-8.2 %) | 0.020 (0.023) | -0.017 (-0.018) | 41 % |
+| 0.35 A/s, x 0.324 | 9 A | +0.5 % | 0.012 | -0.007 | 40 % |
+| 3.5 A/s, x 0.300 | 7 / 8 / 9 / 10 A | -3.4 / -6.5 / -9.4 / -10.5 % (-10.7 / -15.3 / -16.6 / -19.0 %) | 0.013 / 0.012 / 0.024 / 0.031 | -0.010 / +0.000 / +0.011 / +0.014 | 39-41 % |
+| 3.5 A/s, x 0.5 | 8 / 9 A | -2.0 / -3.5 % | 0.015 / 0.025 | +0.006 / +0.011 | 61 % |
+| 11 A/s, x 0.286 | 8 A | +4.7 % (-6.8 %) | 0.004 (0.015) | -0.004 (-0.015) | 42 % |
+
+- *The dimer hypothesis holds.* With the compiled dimer fractions and d = 8 A, the centre rates at the three R07 rates are -6.5 to +4.7 %, against -7 to -15 % for the monatomic model. The profile fits are as good or better, except where d is too large for the mixture (9-10 A at 3.5 A/s). The rate deficit was therefore mainly missing Bi2, not a numerical or geometric error.
+- *What moves.*
+  - At x = 0.30 the zero-bias diameter at 3.5 A/s moves from 9.1 A to 8.0 A. Its sensitivity interval moves from 8.0-10.2 A to 6.6-9.4 A (same tolerance construction as the monatomic interval).
+  - At x = 0.5 the bias is positive at 8 and 9 A, so the zero crossing is below 8 A (about 6.5 A by extrapolation from two points), and the 3.5 A/s rate error falls to -2 %.
+  - The dimer fraction and the Bi collision size trade off; R07's data cannot separate them.
+- *Still open.*
+  - At 3.5 A/s the rate stays 3-9 % low at x = 0.30. A larger dimer share or a small error in R07's interpolated 666 C pressure (1.05 Pa) could account for it.
+  - At 0.35 A/s the profile residual, model slightly narrower than R07, persists with or without dimers. It is therefore not a collision effect.
+  - The Bi2 diameter, rotational relaxation and missing vibration are assumptions that also enter the trade-off.
+- *Consequence for Ga.* The Bi effective diameter, once Bi2 is represented, is about 6.5-8 A (6.6-9.4 A interval). That is 1.5-1.9x its dispersion value (4.2-4.4 A), down from 1.8-2.4x. Transferred to Ga (dispersion value 3.9-4.1 A), the scenario range becomes about 6-8 A (widest 6-9 A). The existing Ga runs at 5.68 and 8 A bracket it well; 2.5 A is now clearly a low outlier, and 9.6 A is generous. No Ga rerun is needed for the scenario set. A 4 A run (the dispersion-only floor) would complete the low side if a bound is wanted.
 
 ## 2. Ga collision diameter
 
@@ -101,8 +122,8 @@ The NEA handbook is 950 pages (30 MB). Only its title pages and section 2.8 are 
 
 ## Recommended actions, in order
 
-1. Run a two-species Bi + Bi2 R07 case in SPARTA to test whether the rate deficit closes and where d moves (running since 2026-09-30).
-2. Then decide whether the Ga scenario set 4 / 6 / 9.6 A replaces 2.5 / 5.68 / 8 A for new Ga batches (review 3: scenarios, not bounds; no automatic rerun).
+1. Done (2026-10-01): two-species Bi + Bi2 R07 runs; the rate deficit closes to -6.5 to +4.7 % and d moves to about 8 A (section 1).
+2. Decided: the Ga scenario range is about 6-8 A (widest 6-9 A); the existing 5.68 and 8 A runs bracket it, so no rerun. Optional: a 4 A run for the dispersion-only floor.
 3. Bracket the N plate thickness with the R13 and R30 hole sizes.
 4. Reproduce R25's computed case with the free-molecular crucible model, then study an R24-type reservoir in the 200 mm geometry, respecting the spill limit.
 5. Build total emissivities for PBN (R27, extended) and Si (R28, R31) for the heater model. Design the 200 mm heater model so it can show R05's mechanisms: backing-ring overlap, platen reflectivity, heater gap and zone ratio.
