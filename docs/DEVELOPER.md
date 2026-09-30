@@ -53,6 +53,8 @@ Python 3.11+ with numpy 2.0+; the tests also need pytest and scipy, and the digi
 - `profile_fit.py`: the annulus-fit uniformity estimator, checked by `scripts/check_uniformity_estimator.py`.
 - `scripts/sparta_batch.py`: runs frozen job files from `cases/`. It has a memory guard and reports failed or incomplete jobs. Admission control: `--min-free-gb` (Windows), `--min-free-wsl-gb` and `--max-wsl-load` (WSL is shared with other projects; a WSL out-of-memory kill takes the largest process, which may not be ours) and `--no-start-after`. Overnight queues on the shared laptop use `--workers 1`.
 - `scripts/ga_flux_hold.py`: centre-flux hold of the Ga source (first correction plus iterations); exit status 0 only if every state is within tolerance.
+- `src/mbe_twin/growth.py`: steady-state GaN growth regime (N-rich / Ga adlayer / droplets), net growth with G02 decomposition, closed Ga balance; parameters with sources in `data/parameters/gan_growth.json`. `scripts/growth_window.py` applies it on the wafer.
+- `scripts/nitrogen_plate_scenarios.py`, `scripts/nitrogen_aim_study.py`: published N plates (flow regime, maps) and the aim-offset / port-angle scan.
 - `scripts/sparta_r07.py --set x_dimer=X`: R07 with a Bi + Bi2 vapour; x_dimer = 0 writes exactly the monatomic input.
 
 **Nitrogen, radiation and studies**

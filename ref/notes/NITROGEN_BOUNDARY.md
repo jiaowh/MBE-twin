@@ -108,6 +108,22 @@ Each Ga value carries the estimator's scatter of about 0.2-0.6 points ([represen
   - This is the largest open question for the source layout. It raises the priority of the N map over any further Ga refinement. It also raises the value of a measured N-limited thickness map at commissioning, which is the only direct test.
 - **Not addressed:** the total active-N output (R10-R12, R18, commissioning), hole-wall recombination (grows with L/r) and the ion fraction. Hole counts alone do not supply the spatial pattern or the output.
 
+## Can the layout even out a beaming plate? (2026-10-01)
+
+`scripts/nitrogen_aim_study.py` (records `results/nitrogen_aim_study/` and `results/nitrogen_aim_study_ext/`). Free-molecular straight holes, a 20 mm active radius, 350 mm throw and uniform hole output. The aim point is moved along the source's azimuth (positive towards the source side) and the port angle is varied. A narrow beam aimed off-centre on a rotating wafer spreads over an annulus. The first grid (offsets -80 to 80 mm, 0-45 deg) put the beaming plates' optima on its edge, so it was extended (offsets 60-150 mm, 40-65 deg).
+
+| L/r (R30 hole in) | Aimed at centre, same angle | Best found | Where | Worst within +/-10 mm of that aim |
+|---|---|---|---|---|
+| 0 (thin plate) | 1.0 % (45 deg) | 0.3 % | +55 mm, 45 deg | 0.4 % |
+| 2.9 (0.5 mm plate) | 9 % (65 deg) | 0.3 % | +75 mm, 65 deg | 2.1 % |
+| 5.8 (1 mm) | 33 % (65 deg) | 0.9 % | +105 mm, 65 deg | 4.4 % |
+| 11.7 (2 mm) | 75 % (65 deg) | 0.9 % | +100 mm, 65 deg | 10.4 % |
+
+- **Yes, in the model.** Aiming the plate near the wafer edge brings every published hole set below 1 % range/mean. The optimum is a valley in (aim, angle): for L/r 2.9, 45 deg at +105 mm also gives 1.0 %.
+- **The price is pointing tolerance.** Deeper holes give a narrower beam, and the map becomes very sensitive to the aim point. At 350 mm, 10 mm at the wafer is about 1.6 deg of pointing. For L/r 11.7 that costs up to 10 points, for L/r 5.8 up to 4, for L/r 2.9 up to 2. Source alignment (and its drift with bake-out and plate replacement) then becomes a design and commissioning requirement.
+- **Longer throw does not help at the same aim.** At 450 mm with the 350 mm optimum aim, range/mean rises to 2.3-14 % for the beaming plates; the aim has to be re-optimized.
+- **Limits.** Free-molecular (valid for the many-hole plates at 0.5-3 sccm), 19 sampled holes (pitch R/2; the scenario study shows sampling converged), a 15 mm grid refined in 5 mm steps, and a single uniform-output plate. Steep 60-65 deg N ports must also clear the Ga cell and shutter geometry, which is not checked. Real plates may have tilted holes or radial output profiles.
+
 ## Next steps
 
 1. Done: aperture-plate source.

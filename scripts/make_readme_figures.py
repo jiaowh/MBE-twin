@@ -1,7 +1,8 @@
 """Draw the README figures (docs/figures/*.png) from the recorded run summaries.
 
 Schematics (chamber, level melt) are illustrations, not to scale. Data figures read only
-data/runs/ records, so they change only when those records change.
+data/runs/ records and, for the growth window, the sourced constants in data/parameters/, so
+they change only when those records change.
 
 Usage: python scripts/make_readme_figures.py
 """
@@ -206,9 +207,47 @@ def ga_angle():
     plt.close(fig)
 
 
+def growth_window():
+    """Growth window and temperature sensitivity from the sourced kinetics (data/parameters)."""
+    import sys
+    sys.path.insert(0, str(ROOT / "src"))
+    from mbe_twin.growth import load_parameters
+    p = load_parameters()
+    j_n = 1000.0 / 60.0  # 1 um/h
+    t_c = np.linspace(680.0, 800.0, 121)
+    t_k = t_c + 273.15
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 3.8))
+    ax1.axhspan(0.5, 1.0, color=GREY, alpha=0.15)
+    ax1.text(682, 0.8, "too little gallium: rough growth", fontsize=8, color="black")
+    labels = {"G01_adsorption": "droplets start (G01)", "Heying_growth": "droplets start (Heying)",
+              "Ref14_growth": "droplets start (Ref. 14)"}
+    for (sc, lab), col, ls in zip(labels.items(), [BLUE, ORANGE, GREEN], ["-", "--", "-."]):
+        upper = 1.0 + p.critical_excess(sc, t_k) / j_n
+        ax1.plot(t_c, upper, c=col, ls=ls, lw=2, label=lab)
+    ax1.set_yscale("log")
+    ax1.set_ylim(0.5, 20)
+    ax1.set_yticks([0.5, 1, 2, 5, 10, 20])
+    ax1.set_yticklabels(["0.5", "1", "2", "5", "10", "20"])
+    ax1.text(745, 1.25, "usable window:\nsmooth growth", fontsize=8)
+    ax1.set_xlabel("growth temperature (°C, as measured in the source labs)")
+    ax1.set_ylabel("gallium-to-nitrogen supply ratio")
+    ax1.set_title("The usable window widens with temperature", fontsize=10)
+    ax1.legend(frameon=False, fontsize=8, loc="upper left", title="above a line: gallium droplets",
+               title_fontsize=8, alignment="left")
+    d = p.decomposition
+    change = 100 * (d(t_k + 10.0) - d(t_k)) / (j_n - d(t_k))
+    ax2.plot(t_c, change, c=RED, lw=2)
+    ax2.set_xlabel("growth temperature (°C, as measured in the source labs)")
+    ax2.set_ylabel("thickness change, % of the layer")
+    ax2.set_title("Effect of a 10 °C hotter wafer edge on thickness", fontsize=10)
+    ax2.set_ylim(0, None)
+    fig.savefig(OUT / "growth_window.png")
+    plt.close(fig)
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
-    for f in (chamber, level_melt, r07, ga_fill, ga_angle):
+    for f in (chamber, level_melt, r07, ga_fill, ga_angle, growth_window):
         f()
         print("wrote", f.__name__)
 
