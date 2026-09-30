@@ -32,7 +32,7 @@ def as_list(obj):
 def collect():
     records = []
     growth_checks = {x["file"]: x for x in read_json(ROOT / "ref/growth/file_verification.json")["files"]}
-    for group in ("growth", "hardware", "methods"):
+    for group in ("growth", "hardware", "methods", "reference"):
         manifest = f"ref/{group}/sources.json"
         for original in as_list(read_json(ROOT / manifest)):
             s = dict(original)
@@ -131,9 +131,9 @@ def audit(records):
 
 def make_index(records):
     lines = ["# Reference library", "", "Compiled 2026-09-13. This is an acquired evidence collection for the GaN/AlN chamber plan. Literature and comparator specifications do not validate this custom chamber.", "",
-             "Read the annotated reviews: [growth/materials](notes/GROWTH_EVIDENCE.md), [hardware](notes/HARDWARE_EVIDENCE.md), and [solver/fidelity](notes/SOLVER_AND_FIDELITY.md). The [combined manifest](sources.json) preserves the detailed source records; [integrity report](integrity_report.json) records file checks. Original-source copyright and license terms remain applicable.", "",
+             "Read the annotated reviews: [growth/materials](notes/GROWTH_EVIDENCE.md), [hardware](notes/HARDWARE_EVIDENCE.md), and [solver/fidelity](notes/SOLVER_AND_FIDELITY.md) and [representative chamber](notes/REFERENCE_CHAMBER.md). The [combined manifest](sources.json) preserves the detailed source records; [integrity report](integrity_report.json) records file checks. Original-source copyright and license terms remain applicable.", "",
              "The [proposal text](proposal/SLIDE_TEXT.md) comes from all 19 supplied slides. [Archived plans](archive/) preserve the pre-review drafts. These are project inputs, separate from externally acquired evidence.", ""]
-    for group, label in (("growth", "Papers and material properties"), ("hardware", "Chamber and component specifications"), ("methods", "Solvers and numerical methods")):
+    for group, label in (("growth", "Papers and material properties"), ("hardware", "Chamber and component specifications"), ("methods", "Solvers and numerical methods"), ("reference", "Representative chamber and published test cases")):
         lines += [f"## {label}", "", "| ID | Source | Local copy or access status |", "|---|---|---|"]
         for s in records:
             if s["collection"] != group:
@@ -148,7 +148,7 @@ def make_index(records):
             local = ", ".join(links) if links else "URL only / local source unavailable; see detailed manifest"
             lines.append(f"| {s['id']} | [{title}]({s['url']}) ({stamp}) | {local} |")
         lines += ["", f"Details: [{group}/sources.json]({group}/sources.json).", ""]
-    lines += ["## Remaining evidence gaps", "", "G03 is a bibliographic lead without reviewed original full text. G05/G06 have reviewed online content but no local paper. H02/H04/H10/H11 have incomplete local source access. HTML challenge responses are retained only as failed-download diagnostics and excluded from usable-source counts. Consult source-level status before extracting data.", "",
+    lines += ["## Remaining evidence gaps", "", "G03 is a bibliographic lead without reviewed original full text. G05/G06 have reviewed online content but no local paper. H02/H04/H10/H11 have incomplete local source access. Most R-series records were reviewed from abstracts or index entries only; check their numbers against full texts before use. HTML challenge responses are retained only as failed-download diagnostics and excluded from usable-source counts. Consult source-level status before extracting data.", "",
               "The library includes no actual machine CAD or calibration dataset. Obtain wafer/template specifications, optical/contact properties, source output maps, selected pump/diagnostic data and independent GaN/AlN wafers through the [data plan](../docs/DATA_AND_VALIDATION_PLAN.md). No digitized dataset or fitted parameter has been fabricated from these papers.", "",
               "Rerun `python scripts/audit_references.py` from the repository with pypdf installed to check the collection. This checks file integrity and document structure, not physical correctness, browser availability of every external URL, or simulation accuracy.", ""]
     (ROOT / "ref/README.md").write_text("\n".join(lines), encoding="utf-8")

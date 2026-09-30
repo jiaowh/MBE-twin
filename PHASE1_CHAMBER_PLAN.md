@@ -1,6 +1,6 @@
 # GaN/AlN MBE chamber twin: Phase-1 implementation plan
 
-Revision: 2026-09-14, including the subsequently supplied legacy-code review. Status: reviewed design and evidence intake. No simulator has been implemented or experimentally validated in this repository.
+Revision: 2026-09-28, adding the representative-chamber stage and commissioning-based calibration; previous revision 2026-09-14. Status: reviewed design and evidence intake; Stage A implementation started 2026-09-28 (beam, crucible, DSMC source and Elmer verification cases; see the status table in the [developer guide](docs/DEVELOPER.md)). Nothing in this repository is experimentally validated for the proposed machine; subsystem models are checked only against published cases on other machines.
 
 This revision governs the initial implementation and replaces the [archived September 7 plan](ref/archive/PHASE1_CHAMBER_PLAN_2026-09-07_original.md). Use [mbe_twin.md](mbe_twin.md) for detailed physics, [the review](docs/PLAN_REVIEW.md) for proposal corrections, [the data plan](docs/DATA_AND_VALIDATION_PLAN.md) for measurement requirements, and [ref](ref/README.md) for retrieved evidence.
 
@@ -16,9 +16,11 @@ The present delivery is a plan and reference library. It does not establish a fu
 
 Use the supplied [proposal](MBE_Phase1_Proposal_v1.2.pptx), particularly slides 8, 11 and 19, as requirements evidence. Vendor specifications are comparators until actual components are selected.
 
+The proposed machine is not yet built, and no partner machine's drawings or run data are accessible. Work therefore starts on a **representative 200 mm plasma-GaN chamber** with the envelope of the RIBER MBE 49 GaN and Veeco GEN200. Its subsystem models are checked against published simulation-versus-measurement cases ([representative chamber](ref/notes/REFERENCE_CHAMBER.md)). Representative results support design comparisons for the proposed tool before design freeze; they do not validate it. The table below remains the target that commissioning data will replace.
+
 | Item | Proposal requirement | Implementation treatment |
 |---|---|---|
-| Wafer | 8-inch growth, future larger platens | Resolve 200 mm versus exact 203.2 mm. Substrate/template, thickness, polarity and backside are mandatory inputs. |
+| Wafer | 8-inch growth, future larger platens | Decided 2026-09-28: 200 mm GaN-on-Si(111). Template stack, thickness, polarity and backside remain mandatory inputs. |
 | Heater | Solid SiC, 1200 °C, multi-zone control | Confirm rating location and atmosphere. Model electrical power, zone coupling, holder contacts, radiation and sensing. Zone count and geometry remain unknown. |
 | Source bank | Ten positions: 3 Ga, 3 Al, Si, Mg and spares | Named poses and shutters. First material models use Ga and Al; retain installed dopant-cell geometry/thermal effects even when doping is deferred. |
 | Nitrogen | RF 600 W, 13.56 MHz | Measured or explicitly uncertain species-output boundary initially. Active-N flux, distribution and ion content require evidence. |
@@ -27,7 +29,7 @@ Use the supplied [proposal](MBE_Phase1_Proposal_v1.2.pptx), particularly slides 
 | Instruments | 30 keV RHEED, band-edge thermometer, BFM, RGA | Exact models, paths, calibration and timestamps. Quantitative RHEED images require a separately validated diffraction model. |
 | Controls | Open software, interlocks/logging | Offline actuator/controller simulation and replay. Physical equipment protection remains with machine controls. |
 
-Initial geometric scope is the growth chamber and its wafer, holder, sources, shutters, heater, shrouds, pumps and diagnostic interfaces. Incoming-wafer and vacuum boundaries represent anneal/handling modules. This is a proposed staging choice, not a previously confirmed user exclusion. The hardware proposal still includes an anneal module.
+Initial geometric scope is the growth chamber and its wafer, holder, sources, shutters, heater, shrouds, pumps and diagnostic interfaces. Incoming-wafer and vacuum boundaries represent anneal/handling modules. The user excluded the transfer and anneal modules from the twin on 2026-09-07; the hardware proposal still includes an anneal module.
 
 GaN and AlN require separate kinetics/material cards; support sequential binary layers first. AlGaN alloys, Si/Mg incorporation and activation, InGaN MQWs, patterned-feature growth, defect evolution and device predictions follow separate gates. Include thin-film optical, thermal-interface and stress effects where sensitivity warrants them. An InGaN model requires an identified In source, which the proposal inventory does not establish.
 
@@ -53,7 +55,7 @@ Temperature accuracy must be tightened where growth kinetics demand it. A correc
 
 ## 4. Laptop architecture and justified tradeoffs
 
-Interpret “5050 laptop” provisionally as an RTX 5050 Laptop GPU. The official family specification is sourced in [methods evidence](ref/notes/SOLVER_AND_FIDELITY.md). Actual CPU, RAM, GPU power limit and cooling remain unconfirmed. Initial FEM and molecular-flow work may be CPU/RAM limited; GPU memory is not host memory.
+Confirmed 2026-09-28 on the development laptop: NVIDIA RTX 5050 Laptop GPU with 8 GB VRAM, AMD Ryzen 7 260 (8 cores, 16 threads), 15.3 GB RAM, Windows 11. For now this laptop is the only compute, including reference runs; more hardware is expected later. Size the first thermal and transport models to it. RAM, not the GPU, is the binding limit for FEM radiation and molecular-flow work; GPU memory is not host memory. The official GPU family specification is sourced in [methods evidence](ref/notes/SOLVER_AND_FIDELITY.md).
 
 Two execution modes share physics, parameters and output contracts:
 
@@ -90,11 +92,13 @@ Most urgent access: drawings, selected part numbers, thermal/source measurements
 
 ## 6. Work packages and release gates
 
+This is the project's single roadmap. Implementation is by the user and Claude; Stage A (section 7) must finish before the hardware design freeze. [mbe_twin.md](mbe_twin.md) supplies physics and verification detail for these packages but defines no separate stages.
+
 Each package produces reproducible inputs, outputs and an evidence report. Numerical verification may pass while experimental validation remains pending; these statuses must be distinct.
 
 | WP | Deliverables | Dependencies | Exit gate |
 |---|---|---|---|
-| 0: Requirements/data | Wafer/stack decision, machine ledger, tolerances, source register, data split, laptop inventory | This review | Critical unknowns labeled; common coordinates and first benchmark defined |
+| 0: Requirements/data | Wafer/stack decision, machine ledger, tolerances, source register, data split, laptop inventory; representative-chamber envelope with design-variable ranges; full texts of the published test cases | This review | Critical unknowns labeled; common coordinates and first benchmark defined; each first-slice subsystem has a named published test case or a recorded gap |
 | 1: Solver pilots | Conduction/radiation, finite-source, conductance and unit cases; pinned environment; timing/RAM | WP0 benchmark | Analytical/independent checks and numerical budgets pass; automation demonstrated |
 | 2: Geometry/properties | CAD, contacts, source/shutter poses, property functions/uncertainties, simplification record | WP0, overlaps WP1 | Dimensional evidence, geometry checks and omitted-feature sensitivity |
 | 3: Thermal/sensing | Power-driven zones, holder/wafer/shrouds, transients, optical observation, significant bow feedback | WP1–2 | Balance/convergence and held-out power/ramp/rotation evidence; unobserved-state uncertainty |
@@ -102,23 +106,45 @@ Each package produces reproducible inputs, outputs and an evidence report. Numer
 | 5: Binary surface growth | Separate GaN/AlN and polarity cards, adlayers, incorporation/desorption, signed interruptions, layer ledger | WP3–4 | Conservation/limit checks and independent thickness/regime evidence for both materials |
 | 6: Coupled laptop release | SI/time/field contracts, recipes, actuator/controller models, restart, exports, both modes | WP3–5 | Coupling and combined reduction error pass; complete laptop benchmark and held-out predictions |
 | 7: Connected shadow | Read-only telemetry/replay, residuals, quality flags and drift/version handling | WP6 | Clock/units/missing-data tests; equivalent offline replay; no machine command authority |
-| 8: Extended physics | Selected alloys/doping, patterned features, detailed plasma, defects or electrical behavior | Relevant base outputs | Separate scope, datasets, performance and quantity-specific validation |
+| 8: Extended physics | Selected alloys/doping, patterned features, resolved plasma source, film-stress history with full mechanical feedback, defects or electrical behavior; optional operator view (e.g. Omniverse) consuming the same outputs | Relevant base outputs | Separate scope, datasets, performance and quantity-specific validation; a display adds no substitute physics |
 
-WP3 and WP4 can proceed in parallel. Data acquisition starts in WP0. Detailed plasma work can proceed independently if evidence makes it necessary. Validation is continuous; do not estimate this research by code line counts or conversation sessions.
+WP3 and WP4 can proceed in parallel. Data acquisition starts in WP0. Measured-boundary nitrogen work (WP4) can begin early; resolved plasma modeling (WP8) proceeds independently if evidence makes it necessary. WP8 alloy/doping/pattern work is not a prerequisite for the thermal/flux twin, but it is required before claiming validated doping or regrowth predictions. WP7 must not turn an unvalidated offline model into an apparently authoritative live display. Validation is continuous; do not estimate this research by code line counts or conversation sessions.
 
-Align with the hardware programme: before design freeze, specify CAD interfaces and sensor access; during FAT, capture pump-down, power/temperature and source behavior; during SAT, repeat calibrations in the installed configuration; before process acceptance, reserve whole runs for blind predictions. The proposal's month-18/month-22 milestones do not establish twin validation dates.
+### 6.1 Commissioning as the primary calibration source
+
+The machine does not yet exist, and the budget holds few spare wafers or tool days. Calibration data should therefore come mainly from tests the hardware programme already runs (proposal slide 12), instrumented and logged so they also serve the twin. Dedicated twin runs fill only gaps that this mapping leaves.
+
+| Hardware stage | Tests the programme already runs | Twin dataset it yields, if logged | Required action |
+|---|---|---|---|
+| Design freeze (M0–M6) | Design review, long-lead orders | None; this is the last cheap point to make later tests useful | Specify per-zone heater V/I logging, temperature access at more than one radius (viewports/multi-spot thermometry), BFM wafer-plane positions, raw-data/clock logging and whether a thermocouple/instrumented test wafer can be mounted |
+| FAT in Jiangsu (M6–M12) | Leak check, bake-out, pump-down, heater and cell bench tests | Vacuum: pump-down, bake and gas-on/off traces at several N2 flows, gauge/RGA response. Thermal: heater power steps and zone combinations. Sources: cell degas and BEP versus cell temperature | Log to the run/data contract; tag as factory configuration |
+| SAT and commissioning at MRDI (M12–M18) | Reinstallation, UHV integration, interlocks, first plasma, first GaN epitaxy | Repeat of a FAT subset in the installed configuration (transfer/drift check); plasma power/flow response; growth-rate calibrations in metal-limited (absolute metal flux) and N-limited (operational active-N) regimes; thickness maps of calibration wafers | Declare holdouts before fitting; record reassembly changes to contacts and alignments |
+| Process development (M18–M24) | Regrowth, epitaxy and MQW runs, characterization | Whole-wafer thickness and structure maps from recipes the twin did not see | Predict before the run where possible; these are the validation cases |
+
+FAT data comes from a factory configuration; reassembly can change contacts, alignment and facility boundaries. Use it for calibration, and use SAT repeats to test transfer rather than assuming it. Commissioning recipes are chosen for the machine, not for identifiability. Before fitting, compare the resulting coverage with the campaigns in [DATA_AND_VALIDATION_PLAN.md](docs/DATA_AND_VALIDATION_PLAN.md) and request dedicated runs only for identified gaps. The proposal's month-18/month-22 milestones do not establish twin validation dates.
 
 ## 7. First implementation slice
 
-Use one dimensioned wafer/holder/heater arrangement, one Ga source and a characterized nitrogen boundary. Build a GaN test layer, then repeat the workflow with AlN-specific data and a separate Al cell. Provisional geometry may exercise software but stays labeled synthetic.
+The slice runs in two stages with the same code and output contracts.
 
-Deliver executable unit/physics benchmarks; a thermal and absolute flux map on the same registered wafer; integrated thickness and conserved inventories through a shutter event; a sensor-space measurement comparison or explicit data gap; a laptop report and reference-versus-accelerated difference map; and a run bundle containing input/source/geometry hashes, versions, settings, seeds, warnings and outputs.
+**Stage A: representative chamber (now, before design freeze).**
+1. Reproduce the published dual-zone heater case (R03) in the thermal model, within that study's measurement uncertainty.
+2. Reproduce the published effusion-source thickness distributions (R07) with the direct-beam kernel and Molflow crucible emission.
+3. Build the representative 200 mm chamber with one Ga source, one heater/holder/wafer stack (GaN-on-Si(111) unless decided otherwise), and a nitrogen boundary. The nitrogen boundary combines an aperture-plate transport model with a total active-N range bounded by R10–R12.
+4. Grow a GaN test layer in the N-limited and metal-limited regimes.
+5. Run the design studies that must finish before freeze: heater zone count and geometry, temperature-sensor count and placement (observability), and source throw, aim and aperture layout for 200 mm uniformity. Report each as a comparison between options with its sensitivity, not as an absolute prediction for the proposed machine.
+
+All Stage A outputs carry the `representative_chamber` label. The published-case reproductions are the only validation claims made in this stage. See [REFERENCE_CHAMBER.md](ref/notes/REFERENCE_CHAMBER.md).
+
+**Stage B: proposed machine (from design freeze onward).** Replace representative geometry with the frozen drawings, and calibrate with commissioning data (section 6.1). Then repeat the GaN workflow and extend it with AlN-specific data and a separate Al cell. Provisional geometry may exercise software but stays labeled synthetic.
+
+Across both stages, deliver executable unit/physics benchmarks; a thermal and absolute flux map on the same registered wafer; integrated thickness and conserved inventories through a shutter event; a sensor-space measurement comparison or explicit data gap; a laptop report and reference-versus-accelerated difference map; and a run bundle containing input/source/geometry hashes, versions, settings, seeds, warnings and outputs.
 
 Scaling to every source or adding an elaborate rendered chamber follows basic conservation, units and reference checks.
 
 ## 8. Data and outstanding decisions
 
-Use [DATA_AND_VALIDATION_PLAN.md](docs/DATA_AND_VALIDATION_PLAN.md) and [machine_requirements.json](data/intake/machine_requirements.json). The largest gaps are wafer/stack, heater/sensors, source geometry/output, effective pumping, optical/thermal properties and independent growth maps.
+Use [DATA_AND_VALIDATION_PLAN.md](docs/DATA_AND_VALIDATION_PLAN.md) and [machine_requirements.json](data/intake/machine_requirements.json). The largest gaps are wafer/stack, heater/sensors, source geometry/output, effective pumping, optical/thermal properties and independent growth maps. For Stage A, the gaps are full texts of the published test cases and any public wafer-plane nitrogen distribution at 200 mm, for which none was found.
 
 For each parameter record value, unit, provenance, source/locator, uncertainty, validity conditions and revision. Missing values stay null. Do not create apparently verified geometry, sticking probabilities or barriers from generic examples.
 

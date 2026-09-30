@@ -27,7 +27,7 @@ The corpus contains seven genuine PDF files and three genuine product-page HTML 
 
 ## Corrections and numerical inconsistencies
 
-1. **Resolve 200 mm versus exact 8 inches.** An exact 8-inch wafer is 203.2 mm in diameter, radius 101.6 mm. A 200 mm wafer has radius 100 mm. Substituting the former changes area by 3.2256%. Preserve the proposal's wording but add an explicit nominal diameter in millimetres before geometry, heater sizing, total flux and map masks are fixed. A platen handling limit of 12 inches does not specify the wafer or heater diameter.
+1. **Resolve 200 mm versus exact 8 inches.** Resolved 2026-09-28: the twin uses 200 mm GaN-on-Si(111). An exact 8-inch wafer is 203.2 mm in diameter, radius 101.6 mm. A 200 mm wafer has radius 100 mm. Substituting the former changes area by 3.2256%. Preserve the proposal's wording but add an explicit nominal diameter in millimetres before geometry, heater sizing, total flux and map masks are fixed. A platen handling limit of 12 inches does not specify the wafer or heater diameter.
 
 2. **Do not interpret 600 W as a growth-rate or uniformity specification.** H02 lists 200–2000 W, 0.1–10 sccm, a typical 10.5-inch throw and coverage up to 8 inches, without a 600 W species-resolved output map. The frequency and power limit in the proposal remain targets. Required characterization must separate forward/reflected/absorbed power, flow, aperture, source pressure, active-neutral output and residual ion output. “Ion-free” needs a quantitative measurement limit at the wafer.
 

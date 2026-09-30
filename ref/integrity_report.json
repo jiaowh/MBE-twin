@@ -1,7 +1,7 @@
 {
-  "checked_date": "2026-09-14",
-  "source_count": 34,
-  "usable_pdf_count": 21,
+  "checked_date": "2026-09-30",
+  "source_count": 49,
+  "usable_pdf_count": 27,
   "usable_html_count": 8,
   "artifacts": [
     {
@@ -12,7 +12,7 @@
       "source_status": "downloaded",
       "usable_source": true,
       "pdf_pages": 9,
-      "first_page_text_characters": 5488,
+      "first_page_text_characters": 5490,
       "parser_warning_count": 0,
       "parser_warning_examples": []
     },
@@ -24,7 +24,7 @@
       "source_status": "downloaded",
       "usable_source": true,
       "pdf_pages": 6,
-      "first_page_text_characters": 5719,
+      "first_page_text_characters": 5720,
       "parser_warning_count": 0,
       "parser_warning_examples": []
     },
@@ -48,7 +48,7 @@
       "source_status": "downloaded",
       "usable_source": true,
       "pdf_pages": 17,
-      "first_page_text_characters": 692,
+      "first_page_text_characters": 693,
       "parser_warning_count": 0,
       "parser_warning_examples": []
     },
@@ -92,7 +92,7 @@
       "source_status": "downloaded",
       "usable_source": true,
       "pdf_pages": 16,
-      "first_page_text_characters": 6600,
+      "first_page_text_characters": 6598,
       "parser_warning_count": 0,
       "parser_warning_examples": []
     },
@@ -138,7 +138,7 @@
       "source_status": "downloaded",
       "usable_source": true,
       "pdf_pages": 2,
-      "first_page_text_characters": 3026,
+      "first_page_text_characters": 3023,
       "parser_warning_count": 0,
       "parser_warning_examples": []
     },
@@ -353,6 +353,82 @@
       "sha256": "017d36981a90cca10e2e3aa8ee9224d6067f6d7ac36c9c844b113b62647f8061",
       "source_status": "downloaded",
       "usable_source": true
+    },
+    {
+      "id": "R02",
+      "path": "ref/reference/R02_Veeco_nitride_MBE_brochure_2006.pdf",
+      "bytes": 366996,
+      "sha256": "4d1f3bd0d047d73f20dd4f6f3fcbacd76a9c51d94ebfb9933b10e7c7cb9052d6",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 4,
+      "first_page_text_characters": 67,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "R03",
+      "path": "ref/reference/R03_Wu_2025_dual_zone_MBE_heater.pdf",
+      "bytes": 15100689,
+      "sha256": "185d1c31b2d72770460a7de58a816967b7098d123b9d449f2e730caaaf193266",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 21,
+      "first_page_text_characters": 5320,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "R07",
+      "path": "ref/reference/R07_Gericke_1991_effusion_flux_distribution.pdf",
+      "bytes": 433487,
+      "sha256": "b30e3e82da05e2c07811cc574bdbd0a0fb55d4638f631c8df789cbaed586b82c",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 4,
+      "first_page_text_characters": 5349,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "R12",
+      "path": "ref/reference/R12_Canciani_2024_active_N_pyrometer.pdf",
+      "bytes": 1465673,
+      "sha256": "3e88f8107bb0c5cccb63e20c28e4425d1824be799467d10a42382ef5ab0ce3e2",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 6,
+      "first_page_text_characters": 908,
+      "parser_warning_count": 18,
+      "parser_warning_examples": [
+        "Ignoring wrong pointing object 6 0 (offset 0)",
+        "Ignoring wrong pointing object 8 0 (offset 0)",
+        "Ignoring wrong pointing object 10 0 (offset 0)"
+      ]
+    },
+    {
+      "id": "R14",
+      "path": "ref/reference/R14_Tao_2025_effusion_cell_layout_8inch.pdf",
+      "bytes": 1976304,
+      "sha256": "aa96097e5e9c4872474c262dd4cf0cb87ea9bc2dc29c9da4faf791424dce3c81",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 8,
+      "first_page_text_characters": 2651,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "R15",
+      "path": "ref/reference/R15_Alcock_1984_vapour_pressure_CRC.pdf",
+      "bytes": 8600,
+      "sha256": "20e3838423214d3f07c9d301f85fe1713991c848f70770b41bdeb9357c0e3416",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 3,
+      "first_page_text_characters": 2049,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
     }
   ],
   "issues": [],

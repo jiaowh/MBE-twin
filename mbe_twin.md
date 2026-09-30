@@ -1,7 +1,7 @@
 # MBE digital twin: accuracy-first architecture and validation plan
 
 Date: 2026-09-13 (revised from the September 8 draft)  
-Status: technical architecture for this GaN/AlN project. No implemented or experimentally validated chamber solver is established here.  
+Status: technical architecture for this GaN/AlN project. Stage A subsystem code exists (see the [developer guide](docs/DEVELOPER.md)); no integrated or experimentally validated chamber solver is established here.  
 The current work order, laptop requirements and acceptance proposals are in [PHASE1_CHAMBER_PLAN.md](PHASE1_CHAMBER_PLAN.md). That plan governs initial scope where this broader architecture describes later capabilities. The original draft is preserved in [ref/archive](ref/archive/mbe_twin_2026-09-08_original.md). All proposed implementation paths are relative to this repository.
 
 ## 1. Decision and intended outcome
@@ -41,7 +41,7 @@ These are project working definitions. Two-way control is not a prerequisite for
 
 Include the growth chamber, wafer and holder, substrate heater, source assemblies and shutters, plasma-source interface, chamber walls, shields, cooling/shrouds, pumping interfaces, diagnostic sightlines and growth-recipe execution. Include in-chamber preparation and interruptions where their physics is modeled.
 
-The proposed first geometric domain excludes the transfer hub, load-lock, transfer robot, external anneal module, etch/PVD modules and upstream cleaning equipment. Their effects enter as initial wafer condition, surface contamination, template properties and boundary conditions. This is a staging recommendation, not a prior user exclusion. First release materials are binary GaN and AlN; patterned regrowth, alloys, doping and device behavior are later independently validated extensions.
+The proposed first geometric domain excludes the transfer hub, load-lock, transfer robot, external anneal module, etch/PVD modules and upstream cleaning equipment. Their effects enter as initial wafer condition, surface contamination, template properties and boundary conditions. The user excluded the transfer and anneal modules on 2026-09-07. First release materials are binary GaN and AlN; patterned regrowth, alloys, doping and device behavior are later independently validated extensions.
 
 ### 2.2 Provisional hardware ledger
 
@@ -606,40 +606,23 @@ Maintain parameter distributions, correlations and a model-discrepancy term wher
 
 Select new measurements to resolve identifiable combinations: for example, additional spatial/temporal thermal observations can be more useful than many repeated center readings. A center sensor plus a model may estimate edge temperature, but that estimate carries model uncertainty.
 
-## 15. Implementation roadmap with evidence gates
+## 15. Implementation roadmap
 
-The following stages define the implementation roadmap for this project. They are not estimated in lines of code or guaranteed session counts. Detailed plasma and surface modeling may be research projects; schedule them after scoping and capability demonstrations.
+The single roadmap is the work-package table in [PHASE1_CHAMBER_PLAN.md, section 6](PHASE1_CHAMBER_PLAN.md#6-work-packages-and-release-gates). The first implementation slice is in its section 7, and the use of commissioning data is in section 6.1. This document supplies the physics, verification cases (section 14.2) and acceptance protocol those packages use.
 
-| Stage | Deliverables | Exit gate |
-|---|---|---|
-| P0: Requirements and evidence intake | Machine ledger, quantities/tolerances, source inventory, data-access list, uncertainty register | Unknowns labeled; first thermal/flux case specified; required geometry source identified |
-| P1: Solver demonstrations | Minimal Elmer, Molflow, Gmsh and ParaView cases; pinned environment | Relevant V01–V08 benchmarks pass; formats, units and automation demonstrated |
-| P2: Actual chamber geometry | Versioned assembly, tags, simplifications and mesh scripts | Geometry review and sensitivity of omitted features documented |
-| P3: Thermal reference | Multi-zone power-driven heating, holder/shroud boundaries and sensor operator | Numerical budgets pass; held-out thermal validation or explicit data limitation |
-| P4: Source/vacuum reference | Per-source flux maps, shutter/rotation behavior and effective pumping | Particle/conductance tests and held-out source/vacuum validation |
-| P5: Coupled binary growth | Shared time/field contracts, separate GaN/AlN growth states, thickness maps and restart | Coupling balance/convergence and held-out validation for both materials |
-| P6: Mechanics and feedback | Film stress history, bow, geometry feedback | Analytical limits plus held-out mechanical observations |
-| P7: Plasma maturity | Measured output map initially; resolved source when justified | Independent species-output evidence; envelope documented |
-| P8: Alloys, dopants and patterned features | Audited reaction/feature models, separate electrical claims | Quantity-specific validation; unsupported outputs remain labeled exploratory |
-| P9: Connected shadow | Read-only ingestion, replay, residuals and drift monitoring | Clock/data-quality tests and agreement with released offline cases |
-| P10: Optional application | Omniverse interface or other operator view | Same model outputs, explicit units/provenance and no hidden substitute physics |
+The P0–P10 stages of earlier revisions are retired. For traceability:
 
-P3 and P4 can be developed independently after geometry intake; P5 depends on both. P7 measured-boundary work can begin early. P8 is not a prerequisite for a thermal/flux twin but is required before claiming validated doping/regrowth predictions. P9 must not turn an unvalidated offline model into an apparently authoritative live display.
-
-### 15.1 First implementation slice
-
-Choose one actual wafer/holder/heater configuration and one source. Build a power-driven thermal case and a finite-source transport case with the same physical coordinate system. Deposit a binary test layer using explicit local temperature/flux inputs and compare with a measured map if available.
-
-Required artifacts:
-
-1. Geometry/material/input manifest with unresolved fields visible.
-2. Analytical benchmark reports and mesh/sample convergence results.
-3. Wafer temperature and absolute arrival-flux maps.
-4. A time-integrated thickness map with a particle/material ledger.
-5. Comparison to independent measurements or an explicit statement that measurements are missing.
-6. Reproduction instructions and a machine-readable run manifest.
-
-Do not begin with the full ten-source, plasma, kMC, defect and Omniverse integration at once. The first slice establishes that geometry, solvers, units and validation work together while preserving the final accuracy objective.
+| Former stage | Work package |
+|---|---|
+| P0 requirements and evidence intake | WP0 |
+| P1 solver demonstrations | WP1 |
+| P2 actual chamber geometry | WP2 |
+| P3 thermal reference | WP3 |
+| P4 source/vacuum reference; P7 measured plasma output | WP4 |
+| P5 coupled binary growth | WP5 (surface growth) and WP6 (coupled release) |
+| P6 mechanics and feedback | WP3 for significant thermal bow feedback; WP8 for film-stress history and full mechanical feedback |
+| P7 resolved plasma source; P8 alloys, dopants and patterned features; P10 optional application | WP8 |
+| P9 connected shadow | WP7 |
 
 ## 16. Risks and decision triggers
 
@@ -661,7 +644,7 @@ Do not begin with the full ten-source, plasma, kMC, defect and Omniverse integra
 
 ### 17.1 Review scope
 
-This standalone plan specifies architecture, physical assumptions and future evidence requirements. It does not certify an existing implementation or import review results from another repository. Solver recommendations remain conditional on P1 demonstrations and version-specific documentation checks.
+This standalone plan specifies architecture, physical assumptions and future evidence requirements. It does not certify an existing implementation or import review results from another repository. Solver recommendations remain conditional on WP1 demonstrations and version-specific documentation checks.
 
 ### 17.2 Reproducible document checks
 

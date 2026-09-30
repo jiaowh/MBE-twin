@@ -2,7 +2,7 @@
 
 Compiled 2026-09-13. This is an acquired evidence collection for the GaN/AlN chamber plan. Literature and comparator specifications do not validate this custom chamber.
 
-Read the annotated reviews: [growth/materials](notes/GROWTH_EVIDENCE.md), [hardware](notes/HARDWARE_EVIDENCE.md), and [solver/fidelity](notes/SOLVER_AND_FIDELITY.md). The [combined manifest](sources.json) preserves the detailed source records; [integrity report](integrity_report.json) records file checks. Original-source copyright and license terms remain applicable.
+Read the annotated reviews: [growth/materials](notes/GROWTH_EVIDENCE.md), [hardware](notes/HARDWARE_EVIDENCE.md), and [solver/fidelity](notes/SOLVER_AND_FIDELITY.md) and [representative chamber](notes/REFERENCE_CHAMBER.md). The [combined manifest](sources.json) preserves the detailed source records; [integrity report](integrity_report.json) records file checks. Original-source copyright and license terms remain applicable.
 
 The [proposal text](proposal/SLIDE_TEXT.md) comes from all 19 supplied slides. [Archived plans](archive/) preserve the pre-review drafts. These are project inputs, separate from externally acquired evidence.
 
@@ -61,9 +61,31 @@ Details: [hardware/sources.json](hardware/sources.json).
 
 Details: [methods/sources.json](methods/sources.json).
 
+## Representative chamber and published test cases
+
+| ID | Source | Local copy or access status |
+|---|---|---|
+| R01 | [RIBER MBE 49 GaN: plasma-assisted GaN production system for 200 mm GaN-on-Si](https://www.semiconductor-today.com/news_items/2023/oct/riber-171023.shtml) (2023) | URL only / local source unavailable; see detailed manifest |
+| R02 | [MBE Nitride Components & Systems brochure (GEN20, GEN200, UNI-Bulb RF nitrogen source, SUMO cells, valved Mg source)](https://www.semiconductor-today.com/images/adverts/veeco_brochure_nitrides.pdf) (2006) | [PDF](reference/R02_Veeco_nitride_MBE_brochure_2006.pdf) |
+| R03 | [Simulation and experiment of a dual-temperature zone MBE heater](https://www.sciencedirect.com/science/article/abs/pii/S0020740325008926) (2025) | [PDF](reference/R03_Wu_2025_dual_zone_MBE_heater.pdf) |
+| R04 | [Design and optimization of a multi-temperature zone heater for enhanced substrate temperature uniformity in large-sized molecular beam epitaxy systems](https://www.sciencedirect.com/science/article/abs/pii/S1359431125014565) (2025) | URL only / local source unavailable; see detailed manifest |
+| R05 | [Design elements affecting wafer temperature uniformity in multi-wafer production MBE systems](https://www.sciencedirect.com/science/article/abs/pii/S0022024808009913) (2009) | URL only / local source unavailable; see detailed manifest |
+| R06 | [Thermal imaging of wafer temperature in MBE using a digital camera](https://www.sciencedirect.com/science/article/abs/pii/S0022024806015727) (2007) | URL only / local source unavailable; see detailed manifest |
+| R07 | [A detailed study of the molecular beam flux distribution of MBE effusion sources](https://www.sciencedirect.com/science/article/abs/pii/0042207X91901323) (1991) | [PDF](reference/R07_Gericke_1991_effusion_flux_distribution.pdf) |
+| R08 | [Molecular beam epitaxy beam flux modeling](https://pubs.aip.org/avs/jvb/article-pdf/3/2/531/12021852/531_1_online.pdf) (1985) | URL only / local source unavailable; see detailed manifest |
+| R09 | [Monte Carlo calculations of the beam flux distribution from molecular-beam epitaxy sources](https://www.researchgate.net/publication/222096092_Monte_Carlo_calculations_of_the_beam_flux_distribution_from_molecular-beam_epitaxy_sources) (unverified) | URL only / local source unavailable; see detailed manifest |
+| R10 | [High active nitrogen flux growth of GaN by plasma assisted molecular beam epitaxy](https://pubs.aip.org/avs/jva/article-abstract/33/5/05E128/245187/High-active-nitrogen-flux-growth-of-GaN-by-plasma) (2015) | URL only / local source unavailable; see detailed manifest |
+| R11 | [Development and diagnostic study of the RF nitrogen atom source](https://www.sciencedirect.com/science/article/abs/pii/S0042207X24008662) (2024) | URL only / local source unavailable; see detailed manifest |
+| R12 | [Active nitrogen flux measurement during GaN growth based on the transmitted signal detected with a pyrometer](https://arxiv.org/abs/2412.15710) (2024) | [PDF](reference/R12_Canciani_2024_active_N_pyrometer.pdf) |
+| R13 | [System and method for increasing III-nitride semiconductor growth rate and reducing damaging ion flux (US 10,526,723)](https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/10526723) (unverified) | URL only / local source unavailable; see detailed manifest |
+| R14 | [Simulation of the uniformity influence of effusion cell structure and layout in molecular beam epitaxy](https://doi.org/10.13922/j.cnki.cjvst.202502013) (2025) | [PDF](reference/R14_Tao_2025_effusion_cell_layout_8inch.pdf) |
+| R15 | [Vapour pressure equations for the metallic elements: 298-2500 K (CRC Handbook reprint, 'Vapor pressure of the metallic elements')](https://www.tandfonline.com/doi/abs/10.1179/cmq.1984.23.3.309) (1984) | [PDF](reference/R15_Alcock_1984_vapour_pressure_CRC.pdf) |
+
+Details: [reference/sources.json](reference/sources.json).
+
 ## Remaining evidence gaps
 
-G03 is a bibliographic lead without reviewed original full text. G05/G06 have reviewed online content but no local paper. H02/H04/H10/H11 have incomplete local source access. HTML challenge responses are retained only as failed-download diagnostics and excluded from usable-source counts. Consult source-level status before extracting data.
+G03 is a bibliographic lead without reviewed original full text. G05/G06 have reviewed online content but no local paper. H02/H04/H10/H11 have incomplete local source access. Most R-series records were reviewed from abstracts or index entries only; check their numbers against full texts before use. HTML challenge responses are retained only as failed-download diagnostics and excluded from usable-source counts. Consult source-level status before extracting data.
 
 The library includes no actual machine CAD or calibration dataset. Obtain wafer/template specifications, optical/contact properties, source output maps, selected pump/diagnostic data and independent GaN/AlN wafers through the [data plan](../docs/DATA_AND_VALIDATION_PLAN.md). No digitized dataset or fitted parameter has been fabricated from these papers.
 

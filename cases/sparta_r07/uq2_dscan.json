@@ -1,0 +1,84 @@
+{
+  "description": "Extends the high-statistics diameter scan at 3.5 A/s (uq2_batch: 7, 8, 9 A) to close the admissible interval: bias is not linear in d over 7-9 A, so 8.5, 10 and 11 A are added at the default benchmark settings. Run each job directly with --out results/uq2_batch/NAME --record uq2_batch/NAME so that summarize_uq.py sees one scan (the batch runner would file them under uq2_dscan).",
+  "jobs": [
+    {
+      "name": "3.5_d8.5",
+      "args": [
+        "r07_3.5",
+        "--set",
+        "diameter_m=8.5e-10",
+        "--set",
+        "cell_m=0.001",
+        "--set",
+        "coarse=3",
+        "--set",
+        "particles=1000000.0",
+        "--set",
+        "dt_factor=0.3",
+        "--set",
+        "steps_eq=8000",
+        "--set",
+        "steps_sample=48000",
+        "--set",
+        "dump_every=20",
+        "--set",
+        "slab_D=[5.0,5.5]",
+        "--set",
+        "seed=12345"
+      ]
+    },
+    {
+      "name": "3.5_d10.0",
+      "args": [
+        "r07_3.5",
+        "--set",
+        "diameter_m=1e-09",
+        "--set",
+        "cell_m=0.001",
+        "--set",
+        "coarse=3",
+        "--set",
+        "particles=1000000.0",
+        "--set",
+        "dt_factor=0.3",
+        "--set",
+        "steps_eq=8000",
+        "--set",
+        "steps_sample=48000",
+        "--set",
+        "dump_every=20",
+        "--set",
+        "slab_D=[5.0,5.5]",
+        "--set",
+        "seed=12345"
+      ]
+    },
+    {
+      "name": "3.5_d11.0",
+      "args": [
+        "r07_3.5",
+        "--set",
+        "diameter_m=1.1e-09",
+        "--set",
+        "cell_m=0.001",
+        "--set",
+        "coarse=3",
+        "--set",
+        "particles=1000000.0",
+        "--set",
+        "dt_factor=0.3",
+        "--set",
+        "steps_eq=8000",
+        "--set",
+        "steps_sample=48000",
+        "--set",
+        "dump_every=20",
+        "--set",
+        "slab_D=[5.0,5.5]",
+        "--set",
+        "seed=12345"
+      ]
+    }
+  ],
+  "frozen": "Every job lists all numerical settings explicitly (from its archived record, 2026-09-30), so changing the script defaults cannot change what this file reproduces."
+}
