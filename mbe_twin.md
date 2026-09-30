@@ -1,7 +1,7 @@
 # MBE digital twin: accuracy-first architecture and validation plan
 
 Date: 2026-09-13 (revised from the September 8 draft)  
-Status: technical architecture for this GaN/AlN project. Stage A subsystem code exists (see [README.md](README.md)); no integrated or experimentally validated chamber solver is established here.  
+Status: technical architecture for this GaN/AlN project. Stage A subsystem code exists (see the [developer guide](docs/DEVELOPER.md)); no integrated or experimentally validated chamber solver is established here.  
 The current work order, laptop requirements and acceptance proposals are in [PHASE1_CHAMBER_PLAN.md](PHASE1_CHAMBER_PLAN.md). That plan governs initial scope where this broader architecture describes later capabilities. The original draft is preserved in [ref/archive](ref/archive/mbe_twin_2026-09-08_original.md). All proposed implementation paths are relative to this repository.
 
 ## 1. Decision and intended outcome

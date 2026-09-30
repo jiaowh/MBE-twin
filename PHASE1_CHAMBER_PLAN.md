@@ -1,6 +1,6 @@
 # GaN/AlN MBE chamber twin: Phase-1 implementation plan
 
-Revision: 2026-09-28, adding the representative-chamber stage and commissioning-based calibration; previous revision 2026-09-14. Status: reviewed design and evidence intake; Stage A implementation started 2026-09-28 (beam, crucible, DSMC source and Elmer verification cases; see the status table in [README.md](README.md)). Nothing in this repository is experimentally validated for the proposed machine; subsystem models are checked only against published cases on other machines.
+Revision: 2026-09-28, adding the representative-chamber stage and commissioning-based calibration; previous revision 2026-09-14. Status: reviewed design and evidence intake; Stage A implementation started 2026-09-28 (beam, crucible, DSMC source and Elmer verification cases; see the status table in the [developer guide](docs/DEVELOPER.md)). Nothing in this repository is experimentally validated for the proposed machine; subsystem models are checked only against published cases on other machines.
 
 This revision governs the initial implementation and replaces the [archived September 7 plan](ref/archive/PHASE1_CHAMBER_PLAN_2026-09-07_original.md). Use [mbe_twin.md](mbe_twin.md) for detailed physics, [the review](docs/PLAN_REVIEW.md) for proposal corrections, [the data plan](docs/DATA_AND_VALIDATION_PLAN.md) for measurement requirements, and [ref](ref/README.md) for retrieved evidence.
 

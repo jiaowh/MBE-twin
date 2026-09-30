@@ -1,6 +1,6 @@
 # Reproducing Stage A results
 
-This guide lists the command behind each result quoted in [REFERENCE_CHAMBER.md](../ref/notes/REFERENCE_CHAMBER.md), [NITROGEN_BOUNDARY.md](../ref/notes/NITROGEN_BOUNDARY.md) and the README status table. A result that is not listed here is not yet reproducible from this repository, and should not be quoted as if it were.
+This guide lists the command behind each result quoted in [REFERENCE_CHAMBER.md](../ref/notes/REFERENCE_CHAMBER.md), [NITROGEN_BOUNDARY.md](../ref/notes/NITROGEN_BOUNDARY.md) and the status table of the [developer guide](DEVELOPER.md). A result that is not listed here is not yet reproducible from this repository, and should not be quoted as if it were.
 
 Bulky solver output (SPARTA particle dumps, Elmer meshes) goes to `results/`, which git ignores. Compact summaries behind the quoted DSMC numbers are versioned under `data/runs/`. Each summary holds:
 - the complete run configuration and the profiles with their uncertainties;
