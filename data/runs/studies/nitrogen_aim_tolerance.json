@@ -1,0 +1,200 @@
+{
+  "schema_version": "0.1",
+  "run_id": "nitrogen_aim_tolerance",
+  "created_utc": "2026-09-30T18:34:53+00:00",
+  "label": "representative_chamber",
+  "validation_status": "not_validated",
+  "package_version": "0.1.0",
+  "git_commit": "7d231cb839d4f1d65d21e0793ac65a9ea416c348-dirty",
+  "python": "3.12.10",
+  "numpy": "2.5.1",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "source_sha256": {
+    "scripts/nitrogen_aim_tolerance.py": "6fcaebf74b40a775ece04943aa9a4c03f661211c9b1421e2d494d217063336f8",
+    "scripts/nitrogen_aim_study.py": "16c682df1ad2ea8ed8c5738db358fa3a360dd79ad689eeb1e316ce4f38b31cad"
+  },
+  "solver": null,
+  "inputs_sha256": "7f1498744bd1f25639dde104c307efef70e5c7f8526c64fdf0a6ed1ebad3b287",
+  "inputs": {
+    "tolerances_mm": [
+      5,
+      10
+    ],
+    "scans": [
+      "results\\nitrogen_aim_fine_11.66\\manifest.json",
+      "results\\nitrogen_aim_fine_2.92\\manifest.json",
+      "results\\nitrogen_aim_fine_5.83\\manifest.json"
+    ]
+  },
+  "outputs": {
+    "rows": [
+      {
+        "L_over_r": 11.66,
+        "angle_deg": 55.0,
+        "nominal": {
+          "offset_mm": 90.0,
+          "pct": 5.810429733965665
+        },
+        "robust_5mm": {
+          "offset_mm": 90.0,
+          "worst_pct": 8.89346192103184,
+          "nominal_pct_there": 5.810429733965665
+        },
+        "robust_10mm": {
+          "offset_mm": 90.0,
+          "worst_pct": 12.255941403438914,
+          "nominal_pct_there": 5.810429733965665
+        }
+      },
+      {
+        "L_over_r": 11.66,
+        "angle_deg": 60.0,
+        "nominal": {
+          "offset_mm": 95.0,
+          "pct": 3.4856798480029068
+        },
+        "robust_5mm": {
+          "offset_mm": 95.0,
+          "worst_pct": 6.9582488235727835,
+          "nominal_pct_there": 3.4856798480029068
+        },
+        "robust_10mm": {
+          "offset_mm": 95.0,
+          "worst_pct": 10.624095586593496,
+          "nominal_pct_there": 3.4856798480029068
+        }
+      },
+      {
+        "L_over_r": 11.66,
+        "angle_deg": 65.0,
+        "nominal": {
+          "offset_mm": 100.0,
+          "pct": 1.937811135466412
+        },
+        "robust_5mm": {
+          "offset_mm": 105.0,
+          "worst_pct": 6.7044819556702695,
+          "nominal_pct_there": 2.7835858867893397
+        },
+        "robust_10mm": {
+          "offset_mm": 105.0,
+          "worst_pct": 10.455565592102376,
+          "nominal_pct_there": 2.7835858867893397
+        }
+      },
+      {
+        "L_over_r": 2.92,
+        "angle_deg": 55.0,
+        "nominal": {
+          "offset_mm": 90.0,
+          "pct": 0.8423421962402253
+        },
+        "robust_5mm": {
+          "offset_mm": 90.0,
+          "worst_pct": 1.5445199540212313,
+          "nominal_pct_there": 0.8423421962402253
+        },
+        "robust_10mm": {
+          "offset_mm": 90.0,
+          "worst_pct": 2.3577130950618623,
+          "nominal_pct_there": 0.8423421962402253
+        }
+      },
+      {
+        "L_over_r": 2.92,
+        "angle_deg": 60.0,
+        "nominal": {
+          "offset_mm": 85.0,
+          "pct": 0.792620490901404
+        },
+        "robust_5mm": {
+          "offset_mm": 85.0,
+          "worst_pct": 1.5581739238541834,
+          "nominal_pct_there": 0.792620490901404
+        },
+        "robust_10mm": {
+          "offset_mm": 85.0,
+          "worst_pct": 2.5016894081927568,
+          "nominal_pct_there": 0.792620490901404
+        }
+      },
+      {
+        "L_over_r": 2.92,
+        "angle_deg": 65.0,
+        "nominal": {
+          "offset_mm": 75.0,
+          "pct": 0.2991486276992721
+        },
+        "robust_5mm": {
+          "offset_mm": 75.0,
+          "worst_pct": 1.1958991549978317,
+          "nominal_pct_there": 0.2991486276992721
+        },
+        "robust_10mm": {
+          "offset_mm": 75.0,
+          "worst_pct": 2.1118359041242982,
+          "nominal_pct_there": 0.2991486276992721
+        }
+      },
+      {
+        "L_over_r": 5.83,
+        "angle_deg": 55.0,
+        "nominal": {
+          "offset_mm": 100.0,
+          "pct": 1.7987703152632122
+        },
+        "robust_5mm": {
+          "offset_mm": 100.0,
+          "worst_pct": 3.5106738019560826,
+          "nominal_pct_there": 1.7987703152632122
+        },
+        "robust_10mm": {
+          "offset_mm": 100.0,
+          "worst_pct": 5.7134183246605055,
+          "nominal_pct_there": 1.7987703152632122
+        }
+      },
+      {
+        "L_over_r": 5.83,
+        "angle_deg": 60.0,
+        "nominal": {
+          "offset_mm": 100.0,
+          "pct": 1.5488073272073837
+        },
+        "robust_5mm": {
+          "offset_mm": 105.0,
+          "worst_pct": 3.4968149390312306,
+          "nominal_pct_there": 1.7469129989199141
+        },
+        "robust_10mm": {
+          "offset_mm": 105.0,
+          "worst_pct": 5.66867418605106,
+          "nominal_pct_there": 1.7469129989199141
+        }
+      },
+      {
+        "L_over_r": 5.83,
+        "angle_deg": 65.0,
+        "nominal": {
+          "offset_mm": 110.0,
+          "pct": 0.8354876204097307
+        },
+        "robust_5mm": {
+          "offset_mm": 110.0,
+          "worst_pct": 2.6459606793048236,
+          "nominal_pct_there": 0.8354876204097307
+        },
+        "robust_10mm": {
+          "offset_mm": 110.0,
+          "worst_pct": 4.435942771551409,
+          "nominal_pct_there": 0.8354876204097307
+        }
+      }
+    ]
+  },
+  "disabled_physics": [],
+  "warnings": [
+    "Radial pointing error only (along the source azimuth); lateral error is second order under rotation",
+    "Free-molecular straight holes; Monte Carlo scatter 0.3-0.5 points on the absolute level"
+  ]
+}

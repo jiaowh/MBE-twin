@@ -126,6 +126,18 @@ Each Ga value carries the estimator's scatter of about 0.2-0.6 points ([represen
 - **Output profile and plate size** (`results/nitrogen_aim_robustness/manifest.json`, same event sample for all variants).
   - Centre- or edge-peaked output (+/-50 % across the plate) moves the optima by at most 0.16 points (L/r 5.8) and 0.24 points (L/r 11.7), and not at all for L/r 0-2.9.
   - A 12.5 mm active radius instead of 20 mm changes L/r 0-5.8 by at most 0.1 points. For L/r 11.7 it goes from 1.4 to 2.4 %, and re-aiming alone (5 mm steps) does not recover it.
+- **Pointing-tolerant aim** (`scripts/nitrogen_aim_tolerance.py` on 5 mm scans at 55 / 60 / 65 deg; records `data/runs/studies/nitrogen_aim_fine_*.json` and `nitrogen_aim_tolerance.json`). Worst range/mean within a radial pointing error, at the aim that minimizes it:
+
+  | Plate | +/-5 mm (+/-0.8 deg) | +/-10 mm (+/-1.6 deg) |
+  |---|---|---|
+  | Thin plate (L/r 0) | about 0.4 % | about 0.4 % |
+  | L/r 2.9 | 1.2-1.6 % | 2.1-2.5 % |
+  | L/r 5.8 | 2.7-3.5 % | 4.4-5.7 % |
+  | L/r 11.7 | 6.7-8.9 % | 10.5-12.3 % |
+
+  - The robust aim coincides with the nominal optimum (the valleys are symmetric), so the pointing tolerance, not the choice of aim, sets the floor. The angle (55-65 deg) matters less than the plate.
+  - With a realistic mounting tolerance, only a thin plate or shallow holes (L/r up to about 3) keep the N map near 1-1.5 %. Deep holes cost 3-9 points at +/-0.8 deg.
+  - Deep holes also carry more Monte Carlo scatter: this scan's nominal optimum for L/r 11.7 is 1.9 % against 0.9 % in the extended scan.
 - **Longer throw does not help at the same aim.** At 450 mm with the 350 mm optimum aim, range/mean rises to 2.3-14 % for the beaming plates; the aim has to be re-optimized.
 - **Limits.** Free-molecular (valid for the many-hole plates at 0.5-3 sccm), 19 sampled holes (pitch R/2; the scenario study shows sampling converged), a 15 mm grid refined in 5 mm steps, and a single uniform-output plate. Steep 60-65 deg N ports must also clear the Ga cell and shutter geometry, which is not checked. Real plates may have tilted holes or radial output profiles.
 
