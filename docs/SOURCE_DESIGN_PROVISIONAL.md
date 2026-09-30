@@ -47,6 +47,28 @@ Reading the table:
 
 The growth temperature of the proposed machine, on its own calibrated scale, is therefore the first thing that decides which subsystem the design effort should go to.
 
+## 2b. Predicted baseline and candidate maps
+
+`scripts/wafer_outcome.py` (record `results/wafer_outcome/manifest.json`) chains the models: Ga DSMC record, N plate map, optimized heater temperature map, then the growth model at the middle of the Ga-rich window. It reports the protocol's primary metric, thickness half-range/mean, with area-weighted std in brackets.
+
+Each subsystem has a baseline and a candidate option, and all combinations are evaluated so that no improvement is credited to the wrong change:
+- Ga: 46 deg port with a depleted 120 mm charge, or the 58 deg optimum.
+- N: plate aimed at the wafer centre at 45 deg, or at its aim optimum.
+- Heater: 3 uniform zones on a 3 mm overlap, or a designed power density on a 1 mm overlap.
+
+| Plate, growth temperature | All baseline | N aim only | Heater only | All candidate |
+|---|---|---|---|---|
+| L/r 5.8 (R30-type holes, 1 mm plate), 700 C | 27.5 % (15.2), Ga window empty | 0.62 % (0.35) | 27.8 %, window empty | 0.48 % (0.30) |
+| L/r 5.8, 740 C | 27.4 % (15.7) | 1.51 % (0.86) | 28.7 % (15.8) | 0.57 % (0.36) |
+| Thin plate, 700 C | 0.51 % (0.36) | 0.35 % (0.20) | 0.49 % (0.31) | 0.14 % (0.08) |
+| Thin plate, 740 C | 1.36 % (0.85) | 1.23 % (0.81) | 0.46 % (0.29) | 0.23 % (0.12) |
+
+- **For a beaming plate, the N aim is the decisive change**; nothing else matters until it is fixed. With the centre-aimed beaming plate at 700 C, no Ga/N setting keeps the whole wafer in the Ga-rich window.
+- **For a thin plate the baseline is already good.** The heater is the main lever at 740 C, and the N aim at 700 C.
+- **The Ga port option never changes the thickness.** It widens the Ga-rich window, for example from 0.18 to 0.22 in centre Ga/N at 700 C with the thin plate.
+- **Nonuniformities interact.** With the centre-aimed beaming plate, a flatter heater made thickness worse (27.4 to 28.7 %): the colder edge had been partly offsetting the centre-peaked N map. A layout must be judged on the combined map, and relying on such cancellation is fragile.
+- **Not included:** N pointing errors and heater parameter perturbations. Their separate effects are in section 2, and both enlarge the candidate numbers. These are predicted differences on a representative chamber, and the improvement protocol requires measured wafers.
+
 ## 3. Open gates
 
 1. **Centre-flux hold (running).** The Ga comparisons are at approximately, not exactly, constant centre flux; runs holding it to +/-1.5 % finish on 2026-10-01.
