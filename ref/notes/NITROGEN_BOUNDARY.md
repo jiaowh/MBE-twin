@@ -4,6 +4,8 @@ Started 2026-09-29 in response to the Stage A review (recommendation 6). Plasma 
 
 ## Why it limits the source-layout decision now
 
+The governing objective is a measured reduction in wafer nonuniformity, as defined in [the Phase-1 outcome contract](../../PHASE1_CHAMBER_PLAN.md#11-project-success-and-design-decisions). This nitrogen work supports that objective by connecting source-layout choices to the active-N map and growth regime. A better Ga/N margin is intermediate evidence; thickness improvement must be predicted with the relevant growth physics and checked on independent wafers.
+
 Plasma-assisted GaN is normally grown slightly Ga-rich, in the intermediate regime. Local growth rate is then set by the arriving active-N flux, and excess Ga forms a surface bilayer or droplets. Consequences:
 
 - **Thickness uniformity follows the active-N map, not the Ga map.** Ga delivery only has to keep every point of the wafer inside the Ga-rich window: above N-stoichiometry and below the droplet threshold at the growth temperature.
@@ -59,17 +61,19 @@ Ranges span plate radius and output profile.
 - Few small holes (50 x 0.1 mm) at 3 sccm give Kn 0.2-1.4. That is transitional, and the free-molecular hole beaming above would then be wrong in the same way the free-molecular Ga cell was.
 - Which regime applies depends on the plate's total open area, so the aperture drawing decides it. For a transitional plate, the DSMC route used for the Ga cells (SPARTA, one hole or a hole cluster) is available.
 
-## Ga/N ratio across the wafer (first combination, 2026-09-30)
+## Ga/N ratio across the wafer (recomputed 2026-09-30 with the corrected estimator)
 
-`scripts/ga_n_ratio.py` divides the smoothed Ga DSMC profiles (46 deg, 350 mm, level melt; [representative chamber](REFERENCE_CHAMBER.md)) by two representative N maps (plate at 40 deg, 350 mm). Both are rotation-averaged. Spread of the local Ga/N ratio, as range/mean over 200 mm:
+`scripts/ga_n_ratio.py` divides the fitted Ga DSMC profiles (46 deg, 350 mm, level melt; [representative chamber](REFERENCE_CHAMBER.md)) by two representative N maps (plate at 40 deg, 350 mm). Both are rotation-averaged. The Ga profiles now come from the annulus-fit estimator (order 4). The first version of this table used the earlier point-quartic fit, which overstated deep-fill Ga non-uniformity by up to about 1 point; that version is superseded. Spread of the local Ga/N ratio, as range/mean over 200 mm, across the Ga diameter bracket (2.5-8 A) and the collisionless case:
 
-| Ga fill (d range) | Ga alone | / thin-plate N (N edge/centre 0.96) | / beaming-hole N, L/r 2 (edge/centre 0.82) |
+| Ga fill | Ga alone | / thin-plate N (N edge/centre 0.96) | / beaming-hole N, L/r 2 (edge/centre 0.82) |
 |---|---|---|---|
-| 40 mm | 2.2-2.4 % | 1.4-1.5 % | 16.7-16.8 % |
-| 70 mm | 5.3-6.2 % | 1.7-2.5 % | 12.8-13.8 % |
-| 120 mm | 7.9-11.8 % | 4.2-8.1 % | 7.3-11.1 % |
+| 40 mm | 2.0-2.4 % | 1.8-2.2 % | 17.0-17.5 % |
+| 70 mm | 5.0-6.0 % | 1.7-2.6 % | 13.1-14.1 % |
+| 120 mm | 7.7-10.3 % | 4.4-6.9 % | 9.0-11.6 % |
 
-- Ga uniformity alone is the wrong criterion. With a thin plate, the edge-low Ga and N maps partly cancel, so the ratio is more uniform than Ga alone at every fill. With beaming holes, the ratio is most non-uniform for a fresh charge and improves as the melt recedes, the opposite of the Ga-alone trend.
+Each Ga value carries the estimator's scatter of about 0.2-0.6 points ([representative chamber](REFERENCE_CHAMBER.md)), which propagates into the ratios.
+
+- Ga uniformity alone is the wrong criterion. With a thin plate, the edge-low Ga and N maps partly cancel. At 70 and 120 mm the ratio is clearly more uniform than Ga alone; at 40 mm the two are about the same. With beaming holes, the ratio is most non-uniform for a fresh charge and improves as the melt recedes, the opposite of the Ga-alone trend.
 - The Ga/N margin a layout must hold is therefore set jointly by the Ga fill range and the N plate. The N plate is the less constrained of the two (hole geometry unknown; regime depends on open area). The nitrogen boundary is now the limiting input for the source-layout decision, as the review anticipated.
 
 ## Next steps

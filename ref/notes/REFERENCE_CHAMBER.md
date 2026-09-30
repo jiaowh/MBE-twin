@@ -4,6 +4,8 @@ Compiled 2026-09-28. The proposed 8-inch machine is not built, and no partner ma
 
 ## What this can and cannot claim
 
+The project goal is to reduce wafer nonuniformity, initially measured through grown-layer thickness. These studies support that goal by identifying promising changes and the uncertainties that prevent a reliable choice. Temperature, metal flux and Ga/N uniformity are intermediate metrics; a representative design comparison is not a demonstrated improvement on a physical wafer. Use the [project outcome contract](../../PHASE1_CHAMBER_PLAN.md#11-project-success-and-design-decisions) when ranking candidates and planning commissioning comparisons.
+
 A representative-chamber result can support design comparisons for the proposed tool: how many heater zones to use, where to put temperature sensors, and what source throw and aperture layout to choose. A subsystem model that reproduces its published case within that case's measurement uncertainty is *validated for that case*. None of this validates the proposed machine. Absolute predictions for it wait for its own drawings and commissioning data ([Phase-1 plan, section 6.1](../../PHASE1_CHAMBER_PLAN.md#61-commissioning-as-the-primary-calibration-source)). Label every output from this stage `representative_chamber`. The wafer is 200 mm GaN-on-Si(111) (user decision 2026-09-28).
 
 ## Envelope
@@ -129,42 +131,65 @@ The sub-percent optimum of the first study belongs to a fill that cannot exist a
 - **What the R07 comparison supports.** Across the tested Bi rate series (0.35-11 A/s, one crucible, L/D = 4), the collisional model reproduces the profile shape to 0.004-0.023 RMS (noise-corrected). The free-molecular model is off by 0.04-0.20 at the same rates. That is 2-20x better, and within about 2x the digitization error except at 0.35 A/s. The comparison does not establish absolute flux better than about 15 %, transfer to Ga, or transfer to other fills and tilts.
 - **Limits.** One material (Bi), one crucible (L/D = 4), and profiles only to 45 mm. d is an effective hard-sphere parameter for Bi vapour, not a molecular property, and does not transfer to Ga or Al.
 
-**Ga source on the 200 mm wafer, DSMC** (`src/mbe_twin/sparta_source.py`, `scripts/sparta_ga.py`, `cases/sparta_ga/ga_batch.json`, summaries in `data/runs/sparta_ga/ga_batch/`, 2026-09-30).
+**Ga source on the 200 mm wafer, DSMC** (`src/mbe_twin/sparta_source.py`, `scripts/sparta_ga.py`, job files in `cases/sparta_ga/`, summaries in `data/runs/sparta_ga/`; revised 2026-09-30 after the second review. All values are recomputed with the corrected estimator; the earlier tables, including 11.56 % free-molecular at 120 mm, a 0.23 % angle minimum, "0.2-0.4 point" uncertainty and "holding the rate needs +8.5 K", are withdrawn.)
 
-- **Set-up.** R14's 71.5 mm cylindrical bore at 46 deg and 350 mm, aimed at the wafer centre, with a level (horizontal) melt at admissible fills of 40, 70 and 120 mm recess. Ga saturation pressure is from Alcock (R15). In "hold" mode, the melt temperature is set per fill so the free-molecular model delivers the wafer-centre Ga flux for 1 um/h GaN at Ga/N = 1: 953.6, 957.0 and 962.1 C (p = 0.20-0.24 Pa). The Ga diameter is bracketed at 2.5, 5.68 and 8 A (lambda_sat/D = 4.2-0.35). Cells are D/16 (<= lambda_sat / 2), with 6e5 particles and 24000 sampling steps. Particles are sampled at 3.0-3.5 D, since the nearest wafer edge is 3.9 D away, and carried ballistically to the rotating wafer. Metric: range/mean of an even-polynomial fit over the whole 200 mm wafer, with batch-means errors.
-- **Verification.** Collisionless SPARTA reproduces `crucible.py` on the wafer: range/mean 2.37 / 6.24 / 11.83 % vs 2.42 / 6.12 / 11.56 %, within 1-2 standard errors, and centre flux 0.994-0.998 of the target.
+- **Set-up.**
+  - Geometry: R14's 71.5 mm cylindrical bore at 350 mm, aimed at the wafer centre, with a level (horizontal) melt at admissible fills of 40, 70 and 120 mm recess.
+  - Pressure: Ga saturation pressure from Alcock (R15).
+  - Temperature: in "hold" mode, set per fill and angle by the **free-molecular** mass balance for the wafer-centre flux of 1 um/h GaN at Ga/N = 1. This is a schedule, not a delivered-flux control (see "Delivered flux").
+  - Collisions: Ga diameter bracketed at 2.5, 5.68 and 8 A (unsourced; a literature search on 2026-09-30 found no verified neutral Ga-Ga transport cross-section).
+  - Numerics: cells D/16, 6e5 particles, 24000 sampling steps. Particles are sampled at 3.0-3.5 D and carried ballistically to the rotating wafer.
+- **Uniformity estimator.** Range/mean over the whole 200 mm wafer comes from a polynomial of order 4 in (r/R)^2 whose annulus averages match the 20 DSMC bins (`src/mbe_twin/profile_fit.py`). `scripts/check_uniformity_estimator.py` checks it against dense free-molecular reference profiles, using the noise recorded in the runs.
+  - With that noise, the estimator's bias is at most 0.2 points and its scatter 0.28-0.52 points.
+  - The former point-quartic fit overstated the 120 mm / 46 deg case by 1.1 points; raw bins understate it.
+  - Each DSMC value below carries a parametric-bootstrap scatter (+/-). The spread across fit orders 3 and 5 is recorded per run.
+- **Verification.** Collisionless SPARTA against dense `crucible.py` profiles: 2.41 +/- 0.29 vs 2.14 % (40 mm), 6.03 +/- 0.30 vs 5.38 % (70 mm), 10.34 +/- 0.54 vs 10.31 % (120 mm). The 70 mm difference, about 2 sigma, is unexplained; candidates are the 64-facet bore and the finite sampling slab.
 
-| Fill (recess) | crucible.py (FM) | d = 2.5 A | d = 5.68 A | d = 8 A |
+Range/mean at 46 deg, 1 um/h (free-molecular temperature schedule):
+
+| Fill (recess) | Free-molecular (dense) | d = 2.5 A | d = 5.68 A | d = 8 A |
 |---|---|---|---|---|
-| 40 mm | 2.42 % | 2.31 +/- 0.08 % | 2.23 +/- 0.13 % | 2.30 +/- 0.13 % |
-| 70 mm | 6.12 % | 5.81 +/- 0.15 % | 5.54 +/- 0.21 % | 5.25 +/- 0.20 % |
-| 120 mm | 11.56 % | 11.26 +/- 0.21 % | 9.18 +/- 0.26 % | 7.92 +/- 0.20 % |
+| 40 mm | 2.14 % | 2.28 +/- 0.18 % | 1.97 +/- 0.24 % | 2.38 +/- 0.29 % |
+| 70 mm | 5.38 % | 5.42 +/- 0.32 % | 5.38 +/- 0.28 % | 5.01 +/- 0.41 % |
+| 120 mm | 10.31 % | 9.90 +/- 0.51 % | 8.59 +/- 0.44 % | 7.74 +/- 0.40 % |
 
-- **Collisions reduce the fill-level sensitivity in this geometry.** Near-full charges are unaffected, but at 120 mm recess range/mean drops from 11.6 % to 7.9-9.2 % for d = 5.7-8 A. Over the admissible fills, the collisional non-uniformity at a fixed 46 deg port still grows 3.5-5x (2.2-2.3 % to 7.9-11.3 %, depending on d). The unsourced Ga diameter is now the largest uncertainty at deep fills (7.9 to 11.3 %).
-- **Numerics at the most collisional state (120 mm, d = 8 A):** a second seed gives 8.13 +/- 0.24 % (base 7.92 +/- 0.20). Cells refined from D/16 to D/24 give 8.36 +/- 0.19 %, a +0.4 point shift (about 1.6 sigma), so discretization error there is about 0.4 points. First-half and second-half estimates agree within about 0.3 points in most runs (0.6 at 70 mm, d = 8 A). Moving the sampling slab from 3.0-3.5 D to 2.5-3.0 D gives 8.03 +/- 0.24 %, no measurable change.
-- **Delivered rate.** Holding the free-molecular temperature schedule, DSMC delivers 0.96-1.07 of the target centre flux, depending on d and fill. Collisions can raise the centre flux of a near-full charge by up to 7 % (d = 8 A, 40 mm). At fixed temperature (953.6 C, set for the 40 mm fill), the centre flux falls to 0.95 at 70 mm and 0.82 at 120 mm (d = 5.68 A). Holding the rate needs +8.5 K over this fill range. At fixed temperature the lower pressure makes the 120 mm profile less flattened (9.83 % vs 9.18 %).
-- **Rate dependence.** At 0.5 um/h (929 C), the 120 mm fill gives 10.85 % vs 9.18 % at 1 um/h (d = 5.68 A). The non-uniformity therefore depends on the growth rate as well as the fill.
-- **Port angle with collisions** (`cases/sparta_ga/ga_angle.json`, 2026-09-30). Range/mean over 200 mm, 1 um/h hold, DSMC for d = 5.68 / 8 A (free-molecular in brackets):
+- **Collisions matter mainly for a nearly empty cup.** At 40 and 70 mm the collisional values agree with the free-molecular ones within the scatter. At 120 mm, range/mean falls from 10.3 % to 8.6 % (d = 5.68 A) and 7.7 % (d = 8 A); d = 2.5 A is indistinguishable from collisionless. Over the admissible fills, non-uniformity at a fixed 46 deg port grows roughly 3.5-5x. The unsourced Ga diameter is the largest physical uncertainty at deep fill.
+- **Observed changes in the tested checks** (120 mm, 46 deg, d = 8 A; base 7.74 +/- 0.40 %). These are one-state sensitivities, not discretization-error bounds.
+  - Second seed: 7.17 +/- 0.55 %.
+  - Sampling slab moved to 2.5-3.0 D: 7.65 +/- 0.57 %.
+  - Cells D/24 (with 2x particles and a 2/3 timestep, changed together): 8.25 +/- 0.49 %.
+- **Other states** (d = 5.68 A, 120 mm, 46 deg):
+  - At 0.5 um/h: 9.83 +/- 0.46 % vs 8.59 % at 1 um/h. Uniformity depends on the rate as well as the fill.
+  - At fixed temperature (953.6 C, the 40 mm schedule value): 8.86 +/- 0.42 %.
+- **Port angle with collisions** (`cases/sparta_ga/ga_angle.json`), range/mean for d = 5.68 / 8 A, with the dense free-molecular value in brackets:
 
 | Fill | 46 deg | 48 deg | 50 deg | 54 deg | 58 deg | 62 deg |
 |---|---|---|---|---|---|---|
-| 40 mm (spill limit 48.2 deg) | 2.23 / 2.30 (2.42) | 0.58 / 0.95 (1.32) | inadmissible | inadmissible | inadmissible | inadmissible |
-| 70 mm | 5.54 / 5.25 (6.12) | - | 2.72 / 2.58 (3.16) | 0.70 / 0.23 (1.05) | 3.40 / 3.22 (2.97) | - |
-| 120 mm | 9.18 / 7.92 (11.56) | - | 6.96 / 5.27 (8.60) | 3.62 / 2.19 (5.54) | 1.08 / 0.57 (2.76) | 2.28 / 2.99 (1.49) |
+| 40 mm (spill limit 48.2 deg) | 1.97 / 2.38 (2.14) | 0.60 / 0.85 (1.01) | inadmissible | inadmissible | inadmissible | inadmissible |
+| 70 mm | 5.38 / 5.01 (5.38) | - | 3.00 / 2.27 (2.97) | 0.96 / 0.69 (1.02) | 3.82 / 4.44 (3.32) | - |
+| 120 mm | 8.59 / 7.74 (10.31) | - | 7.20 / 5.32 (7.75) | 4.00 / 2.18 (5.15) | 1.09 / 0.92 (2.55) | 2.37 / 2.94 (1.66) |
 
-  - Collisions lower the minimum non-uniformity and move the deep-fill optimum to a shallower angle. At 120 mm the optimum is about 58 deg (0.6-1.1 %), where the free-molecular optimum lies at 62 deg or beyond. At 70 mm the optimum stays near 54 deg (0.2-0.7 %).
-  - **A fixed port cannot follow the optimum.** A fresh 40 mm fill spills above 48.2 deg, while the depleted charge wants 54-58 deg. At the steepest port a fresh charge allows (48 deg), the 40 mm fill gives 0.6-1.0 %, and interpolation between the 46 and 50 deg runs gives roughly 4 % at 70 mm and 6-8 % at 120 mm (not run at 48 deg). Options for the layout decision: limit the usable fill range, accept the drift, or use a crucible whose geometry reduces it (for example a conical or shorter bore, not yet modelled with collisions).
-  - The melt temperature needed to hold 1 um/h rises with port angle as well as recess, from 953.6 C (40 mm, 46 deg) to 979.5 C (120 mm, 62 deg).
-- **What this supports.** A representative-chamber sensitivity study with a verified collisional model, stated numerical uncertainty (about 0.2-0.4 points) and a bracketed physical unknown (d). It is not a thickness prediction. In Ga-rich PAMBE, thickness follows the active-N map ([nitrogen boundary](NITROGEN_BOUNDARY.md)); the Ga map sets the Ga/N-ratio margin across the wafer.
+  The bootstrap scatter is 0.16-0.49 points.
+  - Collisions move the 120 mm optimum from 62 deg or beyond (free-molecular) to about 58 deg. At 70 mm the optimum stays near 54 deg.
+  - **Minima are about 1 % and not converged.** Numerical checks at two optima (d = 8 A, `cases/sparta_ga/ga_checks.json`, one setting changed per check):
+    - 70 mm / 54 deg: base 0.69, second seed 0.87, half timestep 1.35, finer cells 0.86 %.
+    - 120 mm / 58 deg: base 0.92, second seed 1.47 %.
+    The half-timestep shift (0.66 points) exceeds either run's scatter. That is not conclusive evidence of timestep bias, but it rules out claiming convergence. The remaining checks (doubled particles; timestep and cells at 120 mm) were interrupted by session restarts and are rerunning. Report the optima as "about 1 %, uncertainty unresolved"; sub-percent values are not established.
+  - **A fixed port cannot follow the optimum.** A fresh 40 mm fill spills above 48.2 deg, while the depleted charge prefers 54-58 deg.
+- **Delivered flux.** Under the free-molecular temperature schedule, DSMC delivers 0.96-1.09 of the target centre flux, depending on d, fill and angle. Every comparison above is therefore at approximately, not exactly, constant flux. The temperature rise needed to hold the rate is known only for the free-molecular schedule: 953.6 to 962.1 C from 40 to 120 mm at 46 deg, and up to 979.5 C at 62 deg. A DSMC-held version is running: `sparta_ga.py --mode dsmc-hold` corrects the temperature from a previous run's delivered flux, and `scripts/ga_flux_hold.py` repeats the correction until delivered/target is within +/-1.5 %. Only states meeting that tolerance will be called flux-held.
+- **What this supports.** A representative-chamber sensitivity study with a verified collisional model, a validated uniformity estimator with stated scatter, recorded one-state numerical sensitivities, and a bracketed physical unknown (d). It is not a thickness prediction. In Ga-rich PAMBE, thickness follows the active-N map ([nitrogen boundary](NITROGEN_BOUNDARY.md)); the Ga map sets the Ga/N-ratio margin across the wafer.
 
 ## Next actions
 
-Revised 2026-09-30 after the Stage A review (the review's recommended sequence).
+Revised 2026-09-30 after the third review round. Order of work: recover the incomplete checks, reconcile the notes, then verify flux-held cases. New geometry studies wait until those are done.
 
-1. Done: run isolation and recorded configurations; named R07 benchmarks; versioned summaries; manifests with source hashes (docs/REPRODUCE.md).
-2. Done: numerical uncertainty of the R07 benchmarks (seeds, timestep, cells, time blocks, high-statistics repeat); d = 8.0-10.3 A.
-3. Done: level-melt SPARTA geometry and transport to the inclined, rotating wafer (`sparta_source.py`), verified collisionless against `crucible.py`.
-4. Done (first pass): Ga study over admissible fills, the diameter bracket, hold and fixed temperature, and two rates (above). Done: port angle per fill with collisions. Next: a crucible shape that reduces the fill drift; a Ga diameter from a sourced estimate if one can be found; combination with the nitrogen map into a Ga/N ratio range.
-5. Thermal: diffuse-gray radiation verified in Elmer (V03). R03 data recorded in `data/benchmarks/r03_wu2025.json`: radial temperature differences from the Fig. 14 panel labels (test 2.4-6.0 K over 863-1163 K; R03 simulation 2.5-6.6 K), materials, emissivities and final dimensions. Assessment: each profile runs across one off-axis 6-inch GaAs substrate on a 4x6-inch platen, so a reproduction is 3-D. R03's own model misplaces the profile maxima, and the measured differences (2-6 K) are close to the stated +/-2 K error. R03 can therefore test only the trend of the temperature difference with temperature, and only through geometry ranges (heater meander, platen, hull). A single-wafer 200 mm heater case (R04/R05 full texts, or commissioning maps) would discriminate better. Next: an Elmer 3-D sensitivity model of the R03 trend, weighed against the search for a better thermal case.
-6. Nitrogen: boundary and measurement access planned ([nitrogen boundary](NITROGEN_BOUNDARY.md)); aperture-plate sensitivity done (hole aspect dominates); hole Knudsen number 0.2-250 depending on open area, so the plate drawing decides between the free-molecular model and DSMC.
-7. Still wanted: full texts of R04 and R05, the RIBER MBE 49 technical PDF, and a representative aperture-plate drawing.
+1. Done: run isolation and recorded configurations; named R07 benchmarks; frozen batch files; versioned summaries; manifests with source hashes ([REPRODUCE](../../docs/REPRODUCE.md)).
+2. Done: numerical uncertainty of the R07 benchmarks (seeds, timestep, cells, time blocks, high-statistics repeat); d = 8.0-10.3 A, an effective-parameter sensitivity interval. The 7-15 % absolute-rate deficit remains open.
+3. Done: level-melt SPARTA geometry and transport to the inclined, rotating wafer, verified collisionless against `crucible.py`; uniformity estimator validated against dense references and applied to all Ga records.
+4. In progress: numerical checks at the angle optima (4 of 8 complete; the rest were interrupted by session restarts and are rerunning through the memory-guarded batch runner).
+5. Queued: DSMC-held delivered flux (`ga_dsmchold.json`, then `ga_flux_hold.py` iterating to +/-1.5 %) for the 46 deg fill series and the angle optima. Afterwards, restate the temperature rise needed to hold the rate and the angle comparison at held flux.
+6. Then: a representative aperture-plate geometry (R13 patent Figs. 7-8 are the current lead; see [validation reference search](VALIDATION_REFERENCE_SEARCH_2026-09-30.md)), and a defensible Ga collision cross-section. None was found; the bracket stays explicitly unsourced until a justified gas-phase potential is available.
+7. Later: crucible-shape study to reduce fill drift (after 4-6).
+8. Thermal: diffuse-gray radiation verified in Elmer (V03). R03 data recorded in `data/benchmarks/r03_wu2025.json`: radial temperature differences from the Fig. 14 panel labels (test 2.4-6.0 K over 863-1163 K; R03 simulation 2.5-6.6 K), materials, emissivities and final dimensions. Each profile runs across one off-axis 6-inch GaAs substrate on a 4x6-inch platen, so a reproduction is 3-D. R03's own model misplaces the profile maxima, and the measured differences (2-6 K) are close to its +/-2 K error. A full R03 reconstruction stays deferred. R05 (backing-ring and platen temperature maps) and R16 (thermal transients) are the candidates to examine first.
+9. Nitrogen: boundary and measurement access planned ([nitrogen boundary](NITROGEN_BOUNDARY.md)); aperture-plate sensitivity done (hole aspect dominates); hole Knudsen number 0.2-250 depending on open area, so the plate drawing decides between the free-molecular model and DSMC.
+10. Still wanted: full texts of R04 and R05, the RIBER MBE 49 technical PDF, and a representative aperture-plate drawing.

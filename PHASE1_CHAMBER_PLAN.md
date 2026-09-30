@@ -1,16 +1,28 @@
 # GaN/AlN MBE chamber twin: Phase-1 implementation plan
 
-Revision: 2026-09-28, adding the representative-chamber stage and commissioning-based calibration; previous revision 2026-09-14. Status: reviewed design and evidence intake; Stage A implementation started 2026-09-28 (beam, crucible, DSMC source and Elmer verification cases; see the status table in the [developer guide](docs/DEVELOPER.md)). Nothing in this repository is experimentally validated for the proposed machine; subsystem models are checked only against published cases on other machines.
+Revision: 2026-09-30, aligning the outcome and acceptance protocol to reducing wafer nonuniformity; the 2026-09-28 revision added the representative-chamber stage and commissioning-based calibration. Status: reviewed design and evidence intake; Stage A implementation started 2026-09-28 (beam, crucible, DSMC source and Elmer verification cases; see the status table in the [developer guide](docs/DEVELOPER.md)). Nothing in this repository is experimentally validated for the proposed machine; subsystem models are checked only against published cases on other machines.
 
 This revision governs the initial implementation and replaces the [archived September 7 plan](ref/archive/PHASE1_CHAMBER_PLAN_2026-09-07_original.md). Use [mbe_twin.md](mbe_twin.md) for detailed physics, [the review](docs/PLAN_REVIEW.md) for proposal corrections, [the data plan](docs/DATA_AND_VALIDATION_PLAN.md) for measurement requirements, and [ref](ref/README.md) for retrieved evidence.
 
 ## 1. Required outcome
 
+The ultimate goal is to reduce nonuniformity across the 200 mm wafer. The first measurable outcome is more uniform grown-layer thickness; improvements in material properties require separately defined observables and evidence within the supported material scope. Source placement, heater design, recipe exploration and the simulator itself serve this goal.
+
 Build an offline, reproducible GaN/AlN growth-chamber simulator that runs on the user's RTX 5050-class laptop. Represent the proposed machine through versioned geometry, materials, source states, recipes and instruments. Release predictions with numerical error, parameter uncertainty, calibration domain and experimental validation status.
 
 First outputs: wafer temperature histories/maps, absolute arriving Ga/Al/N species fluxes, pressure/gauge histories, signed net growth and thickness/interface maps. The functional application must support recipe input, parameter validation, batch execution, pause/restart, field inspection, exported results and a run manifest. All views and reports consume the same versioned results.
 
-The present delivery is a plan and reference library. It does not establish a functioning twin, measured laptop runtime or a qualified chamber design.
+Stage A provides subsystem models and representative-chamber studies. It does not establish an integrated, experimentally validated twin or a measured improvement on the proposed machine.
+
+### 1.1 Project success and design decisions
+
+Success requires a twin-guided change to demonstrate reduced measured wafer nonuniformity against a declared machine/recipe baseline, with repeatability and measurement uncertainty accounted for. Prediction accuracy and software delivery are enabling acceptance gates; passing them does not by itself demonstrate this improvement.
+
+- Predeclare the baseline, material/stack, usable wafer area, edge exclusion, mean thickness or growth-rate constraint, and relevant source-fill and operating range. Compare candidates on that same basis.
+- Use thickness half-range/mean (%) as the initial primary outcome metric and area-weighted standard deviation (%) as a companion. Report range/mean explicitly when used in beam studies; it is twice half-range/mean. Report improvement in percentage points, with uncertainty. Numerical targets remain pending baseline measurements and process requirements.
+- Assess temperature, species-flux and Ga/N maps as causes or indicators of growth nonuniformity. A flatter Ga map alone is not evidence of a more uniform grown layer; candidate selection must account for the nitrogen boundary, growth regime and surface kinetics.
+- Rank designs and operating settings by the expected reduction in wafer nonuniformity across the declared campaign, subject to mean growth/thickness, material-quality and equipment constraints. Do not obtain an apparent improvement by changing the wafer mask or sacrificing an agreed process requirement.
+- Before the machine exists, report predicted improvements for the representative chamber with their uncertainty and a measurement plan. Confirm the selected changes on independent physical wafers using [the improvement protocol](docs/DATA_AND_VALIDATION_PLAN.md#demonstrating-wafer-uniformity-improvement).
 
 ## 2. Scope and machine baseline
 
@@ -38,6 +50,8 @@ GaN and AlN require separate kinetics/material cards; support sequential binary 
 Zero model error or zero accuracy loss from every approximation cannot be guaranteed. Preserve the accuracy objective by rejecting accelerations that exceed their declared error allowance or fail independent validation. Narrow a supported operating envelope explicitly; never silently extrapolate.
 
 These are **proposed engineering acceptance goals**, not achieved accuracy or vendor guarantees. Final tolerances must reflect process sensitivity and measurement capability. Register maps and predeclare spatial sampling and edge exclusions.
+
+The table below specifies model prediction errors, not wafer-uniformity targets. The project outcome and its separate baseline-to-candidate comparison are defined in section 1.1.
 
 | Quantity | Initial planning goal | Required evidence |
 |---|---|---|
@@ -96,6 +110,8 @@ This is the project's single roadmap. Implementation is by the user and Claude; 
 
 Each package produces reproducible inputs, outputs and an evidence report. Numerical verification may pass while experimental validation remains pending; these statuses must be distinct.
 
+Each package must also identify the wafer-uniformity decision it supports and the uncertainty it resolves. WP0 records the outcome metric, baseline and pending targets; WP3-5 connect temperature and species delivery to growth variation; WP6 exports baseline/candidate maps, outcome metrics, constraints and uncertainty. Independent physical comparison under section 1.1 is required to claim project success. Additional physics is prioritized by its effect on that decision.
+
 | WP | Deliverables | Dependencies | Exit gate |
 |---|---|---|---|
 | 0: Requirements/data | Wafer/stack decision, machine ledger, tolerances, source register, data split, laptop inventory; representative-chamber envelope with design-variable ranges; full texts of the published test cases | This review | Critical unknowns labeled; common coordinates and first benchmark defined; each first-slice subsystem has a named published test case or a recorded gap |
@@ -132,11 +148,13 @@ The slice runs in two stages with the same code and output contracts.
 2. Reproduce the published effusion-source thickness distributions (R07) with the direct-beam kernel and Molflow crucible emission.
 3. Build the representative 200 mm chamber with one Ga source, one heater/holder/wafer stack (GaN-on-Si(111) unless decided otherwise), and a nitrogen boundary. The nitrogen boundary combines an aperture-plate transport model with a total active-N range bounded by R10–R12.
 4. Grow a GaN test layer in the N-limited and metal-limited regimes.
-5. Run the design studies that must finish before freeze: heater zone count and geometry, temperature-sensor count and placement (observability), and source throw, aim and aperture layout for 200 mm uniformity. Report each as a comparison between options with its sensitivity, not as an absolute prediction for the proposed machine.
+5. Run the design studies that must finish before freeze: heater zone count and geometry, temperature-sensor count and placement (observability), and source throw, aim and aperture layout. Rank options by their expected contribution to reducing 200 mm wafer nonuniformity over the declared fill and recipe range. Where growth physics is not yet qualified, report temperature/flux/Ga-to-N metrics as intermediate evidence and identify the missing link to thickness. Include a baseline, constraints, uncertainty and a commissioning measurement plan; representative comparisons are not achieved machine improvements.
 
 All Stage A outputs carry the `representative_chamber` label. The published-case reproductions are the only validation claims made in this stage. See [REFERENCE_CHAMBER.md](ref/notes/REFERENCE_CHAMBER.md).
 
 **Stage B: proposed machine (from design freeze onward).** Replace representative geometry with the frozen drawings, and calibrate with commissioning data (section 6.1). Then repeat the GaN workflow and extend it with AlN-specific data and a separate Al cell. Provisional geometry may exercise software but stays labeled synthetic.
+
+Use the validated workflow to select candidate improvements, then compare independent baseline and candidate wafers under the section 1.1 outcome contract. Record model qualification and measured wafer improvement as separate milestones.
 
 Across both stages, deliver executable unit/physics benchmarks; a thermal and absolute flux map on the same registered wafer; integrated thickness and conserved inventories through a shutter event; a sensor-space measurement comparison or explicit data gap; a laptop report and reference-versus-accelerated difference map; and a run bundle containing input/source/geometry hashes, versions, settings, seeds, warnings and outputs.
 
@@ -148,7 +166,7 @@ Use [DATA_AND_VALIDATION_PLAN.md](docs/DATA_AND_VALIDATION_PLAN.md) and [machine
 
 For each parameter record value, unit, provenance, source/locator, uncertainty, validity conditions and revision. Missing values stay null. Do not create apparently verified geometry, sticking probabilities or barriers from generic examples.
 
-The present release is a concept with sourced requirements. Implementation, numerical verification, calibration, experimental validation and connection remain separate milestones.
+The project has sourced requirements and Stage A subsystem implementations. Numerical verification, calibration, experimental validation, measured wafer-uniformity improvement and machine connection remain separate milestones. Baseline wafer data, outcome targets and acceptable process tradeoffs are still required to assess the ultimate goal.
 
 ## 9. Lessons from the supplied legacy simulator
 

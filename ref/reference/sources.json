@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "collection": "reference",
-  "compiled_date": "2026-09-29",
+  "compiled_date": "2026-09-30",
   "scope": "Public sources for a representative 200 mm plasma-assisted GaN chamber and for published simulation-versus-measurement test cases per subsystem. The proposed machine does not exist yet and no partner machine data is accessible. These sources define a representative envelope and validation cases; they do not describe or validate the proposed chamber.",
   "review_levels": {
     "full_text_reviewed": "Local copy read for the stated claims.",
@@ -9,6 +9,125 @@
     "abstract_or_index_only": "Only the abstract, index entry or search snippet was read (publisher blocked automated full-text access). Numbers must be checked against the full text before use."
   },
   "sources": [
+    {
+      "id": "R16",
+      "title": "Growth-induced temperature changes during transition metal nitride epitaxy on transparent SiC substrates",
+      "authors": "D. S. Katzer et al.",
+      "year": 2020,
+      "publication": "Journal of Vacuum Science & Technology B 38, 032204",
+      "doi": "10.1116/6.0000063",
+      "url": "https://doi.org/10.1116/6.0000063",
+      "review_level": "online_page_reviewed",
+      "source_locator": "Journal HTML sections II-IV; separate NAMBE2019 conference PDF, supplementary page 2",
+      "supports": "Measured substrate-temperature transients, heater power and thermocouple/optical signals during shutter and film changes; radiative explanation of emissivity feedback.",
+      "does_not_support": "A 200 mm radial temperature validation case or direct transfer from NbNx/AlN on transparent SiC to GaN-on-Si.",
+      "use": "Candidate thermal-transient and observation-model benchmark; assess geometry and uncertainty before digitization.",
+      "accessed": "2026-09-30",
+      "status": "conference_supplement_downloaded_journal_html_reviewed",
+      "artifacts": [
+        {
+          "path": "ref/reference/R16_Katzer_2019_NAMBE_abstract.pdf",
+          "url": "https://avsconferences.org/NAMBE2019/Sessions/SupplementalDocumentDownload/37118?sessionId=37073",
+          "status": "downloaded",
+          "sha256": "e64673d6838c1b782bec934a6a7dcbded7ed503b1cfa8806828658717bad2ef4",
+          "bytes": 184406,
+          "pages": 2
+        }
+      ],
+      "follow_up": "See ref/notes/VALIDATION_REFERENCE_SEARCH_2026-09-30.md for reviewed passages, artifact scope and remaining gaps.",
+      "artifact_scope": "The local two-page file is the 2019 conference abstract with a plotted supplement, not the 2020 journal paper."
+    },
+    {
+      "id": "R17",
+      "title": "Optical in-situ temperature management for high-quality ZnO molecular beam epitaxy",
+      "authors": "M. Albert, C. Golla, C. Meier",
+      "year": 2021,
+      "publication": "Journal of Crystal Growth 557, 126009",
+      "doi": "10.1016/j.jcrysgro.2020.126009",
+      "url": "https://doi.org/10.1016/j.jcrysgro.2020.126009",
+      "related_urls": [
+        "https://ris.uni-paderborn.de/record/20900"
+      ],
+      "review_level": "abstract_or_index_only",
+      "source_locator": "Publisher abstract/highlights; author institution bibliographic record (no full text uploaded)",
+      "supports": "Comparison of emissivity-corrected pyrometry, band-gap thermometry and reflectivity growth-rate measurement; FEM substrate-temperature analysis is reported.",
+      "does_not_support": "Reconstructible thermal benchmark geometry or quantified model errors until full text is obtained; ZnO results do not validate GaN kinetics.",
+      "use": "Thermometry-method and possible thermal-benchmark lead; obtain full text before choosing over R03.",
+      "accessed": "2026-09-30",
+      "status": "url_only",
+      "artifacts": [],
+      "follow_up": "See ref/notes/VALIDATION_REFERENCE_SEARCH_2026-09-30.md. No local full-text artifact acquired in this search."
+    },
+    {
+      "id": "R18",
+      "title": "Characterisation of an RF atomic nitrogen plasma source",
+      "authors": "D. Voulot et al.",
+      "year": 1999,
+      "publication": "Journal of Crystal Growth 201-202, 399-401",
+      "doi": "10.1016/S0022-0248(98)01361-X",
+      "url": "https://doi.org/10.1016/S0022-0248(98)01361-X",
+      "related_urls": [
+        "https://svta.com/components/sources/rf-plasma-sources/"
+      ],
+      "review_level": "abstract_or_index_only",
+      "source_locator": "Publisher abstract and exposed source/measurement/results sections; SVTA publication list",
+      "supports": "Absolute dissociation and total atomic-N output measurements versus source pressure and RF power, for an SVTA RF4.5 source with a single exit aperture.",
+      "does_not_support": "A 200 mm wafer-plane map or a representative multi-hole plate drawing; total atoms/s is not local atoms/m2/s.",
+      "use": "Candidate absolute nitrogen-boundary calibration case; obtain complete figures and measurement uncertainties.",
+      "accessed": "2026-09-30",
+      "status": "url_only",
+      "artifacts": [],
+      "follow_up": "See ref/notes/VALIDATION_REFERENCE_SEARCH_2026-09-30.md. No local full-text artifact acquired in this search."
+    },
+    {
+      "id": "R19",
+      "title": "Active nitrogen species dependence on radiofrequency plasma source operating parameters and their role in GaN growth",
+      "authors": "E. Iliopoulos et al.",
+      "year": 2005,
+      "publication": "Journal of Crystal Growth 278, 426-430",
+      "doi": "10.1016/j.jcrysgro.2005.01.013",
+      "url": "https://doi.org/10.1016/j.jcrysgro.2005.01.013",
+      "review_level": "abstract_or_index_only",
+      "source_locator": "Publisher abstract, introduction and exposed experimental-methods section",
+      "supports": "OES and growth-rate comparisons distinguish atomic and metastable molecular nitrogen; the authors attribute an important growth contribution to excited molecules in their source conditions.",
+      "does_not_support": "Universal species dominance, an absolute wafer-plane map or replacement of the operational active-N definition by atomic-N density alone.",
+      "use": "Test the nitrogen boundary's species assumptions alongside G04 and R12; reconcile source and process conditions before transferring conclusions.",
+      "accessed": "2026-09-30",
+      "status": "url_only",
+      "artifacts": [],
+      "follow_up": "See ref/notes/VALIDATION_REFERENCE_SEARCH_2026-09-30.md. No local full-text artifact acquired in this search."
+    },
+    {
+      "id": "R20",
+      "title": "In situ investigation of growth modes during plasma-assisted molecular beam epitaxy of (0001)GaN",
+      "authors": "G. Koblmuller, S. Fernandez-Garrido, E. Calleja, J. S. Speck",
+      "year": 2007,
+      "publication": "Applied Physics Letters 91, 161904",
+      "doi": "10.1063/1.2789691",
+      "url": "https://doi.org/10.1063/1.2789691",
+      "related_urls": [
+        "https://arxiv.org/abs/2401.17341",
+        "https://arxiv.org/pdf/2401.17341"
+      ],
+      "review_level": "full_text_reviewed",
+      "source_locator": "Author manuscript PDF pp. 3-7, Fig. 3 on p. 19; publication 2007, repository deposit 2024",
+      "supports": "Growth-mode boundaries measured with RHEED/QMS on a 2-inch (0001)GaN template; map fixed at N flux 4.8 nm/min and miscut below 0.5 degrees.",
+      "does_not_support": "Universal growth boundaries, a 200 mm map or independent wafers: experiments used one template with successive growth/recovery cycles.",
+      "use": "Candidate growth-regime benchmark linking temperature and Ga/N predictions to surface behavior; extract full-text conditions before reserving holdouts.",
+      "accessed": "2026-09-30",
+      "status": "downloaded",
+      "artifacts": [
+        {
+          "path": "ref/reference/R20_Koblmuller_2007_GaN_growth_modes.pdf",
+          "url": "https://arxiv.org/pdf/2401.17341",
+          "status": "downloaded",
+          "sha256": "4a576e9f782faa9ed5d56eddf5d2738b1c9fbfb95b8052d4dceecc579b4b186c",
+          "bytes": 912484,
+          "pages": 19
+        }
+      ],
+      "follow_up": "See ref/notes/VALIDATION_REFERENCE_SEARCH_2026-09-30.md for reviewed passages, artifact scope and remaining gaps."
+    },
     {
       "id": "R01",
       "title": "RIBER MBE 49 GaN: plasma-assisted GaN production system for 200 mm GaN-on-Si",
@@ -264,14 +383,26 @@
     {
       "id": "R13",
       "title": "System and method for increasing III-nitride semiconductor growth rate and reducing damaging ion flux (US 10,526,723)",
-      "year": "unverified",
+      "year": 2020,
       "url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/10526723",
-      "accessed": "2026-09-28",
-      "review_level": "abstract_or_index_only",
-      "supports": "Example of a public patent describing III-nitride plasma source design; patents are the main public source of source and aperture geometry.",
-      "does_not_support": "Measured wafer-plane distributions; assignee and claims unreviewed.",
+      "accessed": "2026-09-30",
+      "review_level": "full_text_reviewed",
+      "supports": "Patent aperture tables specify 712 and 4000 holes, each 0.008 inch (0.2032 mm) diameter, and reported conductances. These constrain representative open area.",
+      "does_not_support": "Plate thickness, spatial hole pattern, independent wafer-plane N map or the proposed machine geometry. Conductance values are reported calculations, not independent measurements.",
       "use": "Geometry lead for the aperture-plate transport model.",
-      "status": "url_only"
+      "status": "downloaded",
+      "artifacts": [
+        {
+          "path": "ref/reference/R13_US10526723_plasma_aperture.pdf",
+          "url": "https://patentimages.storage.googleapis.com/fc/80/16/2853782fe84bca/US10526723.pdf",
+          "status": "downloaded",
+          "sha256": "afcff0007ed551c45342faffb217f852f63ef610572d06919aedf429c1b58916",
+          "bytes": 1849433,
+          "pages": 18
+        }
+      ],
+      "follow_up": "See ref/notes/VALIDATION_REFERENCE_SEARCH_2026-09-30.md for reviewed passages, artifact scope and remaining gaps.",
+      "source_locator": "PDF page 9, sheet 7: Figs. 7-8; accompanying aperture discussion"
     },
     {
       "id": "R14",
