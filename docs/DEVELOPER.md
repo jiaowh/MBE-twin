@@ -8,14 +8,15 @@ The project goal is to reduce wafer nonuniformity, first in grown-layer thicknes
 
 ## Status
 
-| Area | Status (2026-09-30) |
+| Area | Status (2026-10-01) |
 |---|---|
 | Direct beam and free-molecular crucible emission | Implemented; verified against closed-form and deterministic references; reproduces R07's measured fill-level profiles (Bi) |
-| Collisional crucible (SPARTA DSMC) | One fitted parameter (Bi hard-sphere diameter, effective-parameter sensitivity interval 8.0-10.3 A) reproduces R07's profile shapes at 0.35-11 A/s to 0.004-0.023 RMS, noise-corrected, with seed, timestep and cell checks (free-molecular: 0.04-0.20). Absolute centre rates are 7-15 % low (systematic, unexplained) |
-| Production Ga transport (200 mm, level melt) | Sensitivity study. At 46 deg, collisional range/mean (annulus-fit estimator, checked against dense references) is about 2 % at 40 mm recess, 5.0-5.4 % at 70 mm and 7.7-9.9 % at 120 mm, against 10.3 % free-molecular. Estimator scatter is 0.2-0.6 points. Angle optima from one-setting checks (seed, half timestep, D/24 cells, 2x particles): 0.69-1.35 % at 70 mm / 54 deg, and 0.92-1.93 % at 120 mm / 58 deg, where every check exceeds the base. Report these as about 1 % and about 1.5-2 %; not converged. The temperature schedule is free-molecular, so delivered flux is 0.96-1.09 of target. DSMC-held runs, iterated to +/-1.5 %, are parked until the user resumes. Not a thickness prediction |
-| Heater and wafer thermal (Elmer) | Conduction (V02) and diffuse-gray radiation (V03) verified; R03 data recorded, reproduction deferred (weak discrimination) |
-| Nitrogen | Boundary and measurement access planned; aperture-plate sensitivity and hole Knudsen estimate done ([nitrogen boundary](../ref/notes/NITROGEN_BOUNDARY.md)) |
-| Vacuum, growth chemistry | Planned; not implemented |
+| Collisional crucible (SPARTA DSMC) | One fitted parameter (Bi hard-sphere diameter, effective-parameter sensitivity interval 8.0-10.3 A) reproduces R07's profile shapes at 0.35-11 A/s to 0.004-0.023 RMS, noise-corrected, with seed, timestep and cell checks (free-molecular: 0.04-0.20). Absolute centre rates are 7-15 % low in the monatomic model; with Bi2 in the vapour (running, `r07_bi2`) the 11 A/s rate is +4.7 % and the 3.5 A/s rate -6.5 % at d = 8 A, and the zero-bias diameter moves towards 8 A |
+| Production Ga transport (200 mm, level melt) | Sensitivity study. At 46 deg, collisional range/mean (annulus-fit estimator, checked against dense references) is about 2 % at 40 mm recess, 5.0-5.4 % at 70 mm and 7.7-9.9 % at 120 mm, against 10.3 % free-molecular. Estimator scatter is 0.2-0.6 points. Angle optima from one-setting checks (seed, half timestep, D/24 cells, 2x particles): 0.69-1.35 % at 70 mm / 54 deg, and 0.92-1.93 % at 120 mm / 58 deg, where every check exceeds the base. Report these as about 1 % and about 1.5-2 %; not converged. The temperature schedule is free-molecular, so delivered flux is 0.96-1.09 of target. Centre-flux-hold runs, iterated to +/-1.5 %, are running (queued after the R07 Bi2 batch). Not a thickness prediction |
+| Heater and wafer thermal (Elmer; reduced model) | Conduction (V02) and diffuse-gray radiation (V03) verified; R03 data recorded, reproduction deferred (weak discrimination); axisymmetric 200 mm heater model verified against the V03 reference and used for the zone study |
+| Nitrogen | Published plates (R13, R30): hole Knudsen number (free-molecular at 0.5-3 sccm for many-hole plates), free-molecular maps, and aim-offset / port-angle optima below 1 % with pointing-tolerance costs ([nitrogen boundary](../ref/notes/NITROGEN_BOUNDARY.md)). Not validated; total active-N output not modelled |
+| Growth chemistry | First steady-state GaN regime model from literature constants (G01, G02, R20), closed Ga balance; growth window and thickness on the wafer ([growth note](../ref/notes/GROWTH_EVIDENCE.md)). No transients, AlN or morphology; not validated |
+| Vacuum | Planned; not implemented |
 | Integrated chamber twin | Not implemented |
 
 How to reproduce each result: [REPRODUCE.md](REPRODUCE.md).
@@ -55,6 +56,7 @@ Python 3.11+ with numpy 2.0+; the tests also need pytest and scipy, and the digi
 - `scripts/ga_flux_hold.py`: centre-flux hold of the Ga source (first correction plus iterations); exit status 0 only if every state is within tolerance.
 - `src/mbe_twin/growth.py`: steady-state GaN growth regime (N-rich / Ga adlayer / droplets), net growth with G02 decomposition, closed Ga balance; parameters with sources in `data/parameters/gan_growth.json`. `scripts/growth_window.py` applies it on the wafer.
 - `scripts/nitrogen_plate_scenarios.py`, `scripts/nitrogen_aim_study.py`: published N plates (flow regime, maps) and the aim-offset / port-angle scan.
+- `src/mbe_twin/heater.py`: axisymmetric heater-ledge-wafer radiation and conduction (power- or temperature-driven zones, Newton solve); `scripts/heater_zones.py` optimizes zone powers by sequential linear programming. Set `OPENBLAS_NUM_THREADS=1` for such small dense solves: on the shared laptop multithreaded BLAS made a 130x130 solve 1000x slower.
 - `scripts/sparta_r07.py --set x_dimer=X`: R07 with a Bi + Bi2 vapour; x_dimer = 0 writes exactly the monatomic input.
 
 **Nitrogen, radiation and studies**

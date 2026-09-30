@@ -190,6 +190,49 @@ Range/mean at 46 deg, 1 um/h (free-molecular temperature schedule):
 - **Delivered flux.** Under the free-molecular temperature schedule, DSMC delivers 0.96-1.09 of the target centre flux, depending on d, fill and angle. Every comparison above is therefore at approximately, not exactly, constant flux. The temperature rise needed to hold the rate is known only for the free-molecular schedule: 953.6 to 962.1 C from 40 to 120 mm at 46 deg, and up to 979.5 C at 62 deg. A **centre-flux hold** was queued on 2026-09-30 but did not start: the job file had been parked, and the queue failed with a missing-file error. It was restarted at 22:03 that night (after the R07 two-species batch in the same queue). `sparta_ga.py --mode dsmc-hold` corrects the temperature from a previous run's delivered centre flux, and `scripts/ga_flux_hold.py` repeats the correction until delivered/target is within +/-1.5 %; it exits non-zero unless every state meets that tolerance. What is held is the Ga arrival at the wafer centre (r < 10 mm), expressed as the Ga flux of 1 um/h GaN at Ga/N = 1. It is not a growth rate, which also needs the N supply and incorporation/desorption, and not the wafer-average flux; each run now records both centre and wafer-mean delivered/target. Only states meeting the tolerance will be called centre-flux-held.
 - **What this supports.** A representative-chamber sensitivity study with a verified collisional model, a validated uniformity estimator with stated scatter, recorded one-state numerical sensitivities, and a bracketed physical unknown (d). It is not a thickness prediction. In Ga-rich PAMBE, thickness follows the active-N map ([nitrogen boundary](NITROGEN_BOUNDARY.md)); the Ga map sets the Ga/N-ratio margin across the wafer.
 
+## Heater zones and wafer temperature (2026-10-01)
+
+`src/mbe_twin/heater.py` (tests in `tests/test_heater.py`), study `scripts/heater_zones.py` (record `results/heater_zones/manifest.json`). This is a reduced, axisymmetric (rotation-averaged) model of a representative 200 mm holder, not a reconstruction of any machine.
+
+- **Model.**
+  - Heater: a gray disk (radius 115 mm) with power-driven zones and an adiabatic back.
+  - Wafer: Si, 725 um, emissivity 0.7 (R28).
+  - Holder ledge: carries the wafer rim over an overlap (base 3 mm).
+  - Radiation in the gap: diffuse-gray ring radiosity, open at the rim.
+  - Fronts radiate to 300 K surroundings, and the model includes lateral conduction in the wafer and ledge.
+- **Verification.**
+  - The isothermal limit matches the V03 ring-radiosity reference within 0.004-0.03 K, converging with ring count.
+  - The global energy balance closes to 1e-11 W.
+  - Heater emissivity has no effect in power-driven mode, as expected for an adiabatic heater: its radiosity is fixed by its power and irradiation.
+- **Optimization.** Zone powers are chosen to minimize the wafer temperature range at a 740 C mean, by sequential linear programming; for 1-3 zones this reproduces a direct minimization. The 6- and 12-zone layouts stand for a heater with a designed radial power density (element pitch), not for independently controlled zones.
+
+Wafer temperature range (K) at the optimum, 740 C mean. In brackets: the worst range after a +/-5 % error in one zone's power.
+
+| Case | 1 zone | 2 zones | 3 zones | 6 zones | 12 zones |
+|---|---|---|---|---|---|
+| Base (gap 10 mm, 3 mm overlap, contact 200 W/m^2K, k_Si 30) | 86 | 35 [43] | 17 [26] | 11 [18] | 6.3 [12] |
+| 1 mm overlap | 62 | 16 [24] | 6.6 [16] | 4.8 [11] | 1.7 [8.3] |
+| 5 mm overlap | 104 | 50 | 23 | 15 | 9.8 |
+| Contact 1000 / 50 W/m^2K | 87 / 86 | 33 / 36 | 12 / 21 | 6.5 / 15 | 0.4 / 14 |
+| Gap 5 / 20 mm | 43 / 124 | 26 / 40 | 14 / 20 | 9.5 / 16 | 1.9 / 13 |
+| k_Si 20 / 40 W/mK | 97 / 79 | 46 / 29 | 23 / 13 | 15 / 8.2 | 9.0 / 4.8 |
+| Heater radius 130 mm | 66 | 22 | 10 | 3.9 | 3.5 |
+| Ledge emissivity 0.15 / 0.6 | 78 / 101 | 35 / 37 | 18 / 15 | 11 / 10 | 7.5 / 5.4 |
+
+- **Zones help, but the radial power-density design helps more.** Uniform-density zones leave steps in the wafer profile. Going from 3 zones to a designed profile (12-zone proxy) roughly halves the range.
+- **The wafer edge support is as important as the heater.**
+  - Overlap and wafer-ledge contact move the achievable range by a factor 3-10 at every zone count.
+  - This agrees with R05's qualitative finding that ring and ledge geometry control the edge. R05's recommendation concerns a backing ring above the wafer, which this model does not include.
+- **A smaller gap and an overhanging heater help** in this model.
+  - R05 instead found that a larger heater gap improved uniformity. Its mechanism was heater power reflected by a shiny platen through semi-transparent GaAs, and the model has neither a platen nor a transparent wafer.
+  - This is an unresolved qualitative disagreement. The 200 mm holder design (platen or no platen) decides which mechanism applies.
+- **Control precision matters.** A 5 % error in one zone's power adds 6-10 K to the range at every zone count. Holding a few-kelvin range needs zone powers held to about 1-2 %, or feedback from wafer temperature at more than one radius. This bears directly on the design-freeze sensor decision.
+- **Thickness effect** (growth model, [growth note](GROWTH_EVIDENCE.md)): about 0.03 / 0.11-0.16 / 0.45-0.64 % thickness range/mean per K of wafer range at 700 / 740 / 780 C. For example, 6 K at 740 C is about 1 %, and 17 K is about 2-3 %.
+- **Limits.**
+  - Representative dimensions; heater emissivity, ledge properties, contact and Si conductivity are bracketed, not sourced.
+  - No platen, side shields, cell or plasma heat loads, spectral or semi-transparent optics (GaN-on-Si stack), transients or bow.
+  - No published 200 mm heater benchmark exists, so none of these numbers is validated.
+
 ## Next actions
 
 Revised 2026-09-30 (night) after the third review round and its audit. Prediction accuracy stays the first outcome; wafer-uniformity improvement follows once the relevant predictions are qualified. Order: fix completion reporting and the flux/growth distinction (done), resolve the R07 pressure and species interpretation, finish a bounded centre-flux-hold comparison, then move the main effort to nitrogen and thermal prediction accuracy and a first growth model. Further angle refinement, crucible shapes and adjustable sources wait.
@@ -201,7 +244,7 @@ Revised 2026-09-30 (night) after the third review round and its audit. Predictio
 5. Running since 2026-09-30 22:03 (after the R07 two-species batch): centre-flux hold (`ga_dsmchold.json`, then `ga_flux_hold.py --iterate` to +/-1.5 %; exit status fails on any missing or unconverged state) for the 46 deg fill series and the angle optima at d = 5.68 and 8 A. Afterwards, restate the temperature rise needed to hold the centre Ga flux and the angle comparison at held centre flux, with wafer-mean flux alongside.
 6. Then: a representative aperture-plate geometry (R13 patent Figs. 7-8 are the current lead; see [validation reference search](VALIDATION_REFERENCE_SEARCH_2026-09-30.md)), and a defensible Ga collision cross-section. None was found. The dispersion argument gives an exploratory scenario range of about 4-9.6 A, not a bound ([physics-data note](PHYSICS_DATA_SEARCH_2026-09-30.md), section 2); whether new Ga batches use 4 / 6 / 9.6 A waits for the two-species R07 result. The nitrogen plate model needs hole diameter, thickness and count scenarios (R13: 712/4000 x 0.203 mm; R30: about 2000 x 0.343 mm) and a flow-regime check before those plates can be run.
 7. Later: crucible-shape study to reduce fill drift (after 4-6).
-8. Thermal: diffuse-gray radiation verified in Elmer (V03). R03 data recorded in `data/benchmarks/r03_wu2025.json`: radial temperature differences from the Fig. 14 panel labels (test 2.4-6.0 K over 863-1163 K; R03 simulation 2.5-6.6 K), materials, emissivities and final dimensions. Each profile runs across one off-axis 6-inch GaAs substrate on a 4x6-inch platen, so a reproduction is 3-D. R03's own model misplaces the profile maxima, and the measured differences (2-6 K) are close to its +/-2 K error. A full R03 reconstruction stays deferred. R05 has been screened (full text): not reconstructible, but its measured mechanisms (backing-ring overlap, platen reflectivity, heater gap, zone ratio) are qualitative checks the 200 mm heater model must show. R16 can inform transient validation but does not establish radial accuracy.
+8. Thermal: a reduced axisymmetric heater-ledge-wafer model and zone study exist (section above, 2026-10-01). Next: a platen and side-shield variant, and a check of R05's heater-gap mechanism. Diffuse-gray radiation verified in Elmer (V03). R03 data recorded in `data/benchmarks/r03_wu2025.json`: radial temperature differences from the Fig. 14 panel labels (test 2.4-6.0 K over 863-1163 K; R03 simulation 2.5-6.6 K), materials, emissivities and final dimensions. Each profile runs across one off-axis 6-inch GaAs substrate on a 4x6-inch platen, so a reproduction is 3-D. R03's own model misplaces the profile maxima, and the measured differences (2-6 K) are close to its +/-2 K error. A full R03 reconstruction stays deferred. R05 has been screened (full text): not reconstructible, but its measured mechanisms (backing-ring overlap, platen reflectivity, heater gap, zone ratio) are qualitative checks the 200 mm heater model must show. R16 can inform transient validation but does not establish radial accuracy.
 9. Nitrogen: boundary and measurement access planned ([nitrogen boundary](NITROGEN_BOUNDARY.md)); aperture-plate sensitivity done (hole aspect dominates); hole Knudsen number 0.2-250 depending on open area, so the plate drawing decides between the free-molecular model and DSMC.
 10. Still wanted: full text of R04 (R05 obtained 2026-09-30), the RIBER MBE 49 technical PDF, and a representative aperture-plate drawing.
 
