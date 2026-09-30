@@ -46,6 +46,7 @@ The batch runner treats a job as complete only when its directory holds `summary
 | Result | Command | Output |
 |---|---|---|
 | Estimator check against dense free-molecular profiles, noise-free and with each run's recorded noise | `python scripts/check_uniformity_estimator.py` | printed table; writes `tests/data/fm_profile_120mm_46deg.json` |
+| README figures (schematics, and plots from the `data/runs/` records) | `python scripts/make_readme_figures.py` | `docs/figures/*.png` |
 
 ## Free-molecular and analytical studies
 

@@ -193,3 +193,14 @@ Revised 2026-09-30 after the third review round. Order of work: recover the inco
 8. Thermal: diffuse-gray radiation verified in Elmer (V03). R03 data recorded in `data/benchmarks/r03_wu2025.json`: radial temperature differences from the Fig. 14 panel labels (test 2.4-6.0 K over 863-1163 K; R03 simulation 2.5-6.6 K), materials, emissivities and final dimensions. Each profile runs across one off-axis 6-inch GaAs substrate on a 4x6-inch platen, so a reproduction is 3-D. R03's own model misplaces the profile maxima, and the measured differences (2-6 K) are close to its +/-2 K error. A full R03 reconstruction stays deferred. R05 (backing-ring and platen temperature maps) and R16 (thermal transients) are the candidates to examine first.
 9. Nitrogen: boundary and measurement access planned ([nitrogen boundary](NITROGEN_BOUNDARY.md)); aperture-plate sensitivity done (hole aspect dominates); hole Knudsen number 0.2-250 depending on open area, so the plate drawing decides between the free-molecular model and DSMC.
 10. Still wanted: full texts of R04 and R05, the RIBER MBE 49 technical PDF, and a representative aperture-plate drawing.
+
+### Exploratory (non-essential)
+
+Not on the critical path. Run only when the laptop is otherwise idle, and after items 4-5.
+
+- **Adjustable Ga source over a campaign** (added 2026-09-30). The collisional optimum port angle moves from about 48 deg (40 mm recess) to about 54 deg (70 mm) and 58 deg (120 mm). The spill limit only constrains the full cup, so a source that steepens as the charge depletes never violates it. The angle study above relocates the cell on the 350 mm sphere, always aimed at the wafer centre. A realistic mechanism (a bellows/gimbal pivot at the port flange) mainly shifts the aim point and changes the polar angle little, so that study does not describe it. Compare over a 40 -> 120 mm campaign, against the fixed 46 deg port:
+  - (a) a cell pivoting about its flange by +/-5-10 deg, with the aim point allowed to move;
+  - (b) two Ga cells at different angles with a fill-dependent flux split (no moving parts);
+  - (c) a fixed port with a shaped crucible (overlaps item 7).
+
+  Method: free-molecular screening with `crucible.py` first; DSMC (d bracket) only for the promising cases. Engineering caveats to record with any result: vacuum-compatible tilt with heater, thermocouple and shroud feedthroughs; shutter alignment; Ga creep or spitting at the lip when a hot cell is tilted (adjust between runs, not during growth); flux recalibration after each move. No production system re-aiming cells for uniformity is known to us; multiple same-species cells and large-volume depletion-tolerant crucibles are the usual industrial answers.
