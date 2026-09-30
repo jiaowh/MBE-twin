@@ -135,7 +135,12 @@ What it shows:
 - **Temperature is a trade-off.** A hotter wafer widens the window, but the evaporation loss rises steeply with temperature. A 10 °C difference between wafer centre and edge then changes thickness by about 0.3 % at 700 °C, 1–1.6 % at 740 °C and 4.5–6.4 % at 780 °C (range/mean). So the chosen growth temperature sets how even the heater must be.
 - **Uncertain edges of the window.** Three published measurements of where droplets start disagree by up to a factor of four, partly because each lab measures temperature differently. The real machine's own measurements will settle it.
 
-A provisional summary of what these results suggest for the machine design, and what they cannot yet say, is in [docs/SOURCE_DESIGN_PROVISIONAL.md](docs/SOURCE_DESIGN_PROVISIONAL.md).
+**Putting the pieces together.** Chaining the gallium, nitrogen, heater and growth models gives a predicted thickness map for a whole machine layout. Changing one part at a time shows which change does the work:
+- With a deep-holed nitrogen plate aimed at the wafer centre, the layer varies by about ±27 %. Aiming it off-centre brings this to about ±0.5–1.5 %; nothing else helps until that is fixed.
+- With a thin nitrogen plate, a simple layout already gives about ±0.5 % at 700 °C and ±1.4 % at 740 °C. A better heater brings 740 °C down to about ±0.5 %, and all improvements together to about ±0.2 %.
+- Improvements can interact. With the centre-aimed deep-holed plate, a more even heater made the layer slightly *less* even, because the cooler edge had been partly making up for the nitrogen shortfall there.
+
+These are predictions for a representative chamber, without pointing errors or heater imperfections, not measurements. A provisional summary of what the results suggest for the machine design, and what they cannot yet say, is in [docs/SOURCE_DESIGN_PROVISIONAL.md](docs/SOURCE_DESIGN_PROVISIONAL.md).
 
 ## 7. Wafer temperature
 
