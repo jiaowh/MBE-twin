@@ -84,3 +84,5 @@ On the development laptop (4 WSL cores, serial SPARTA, four jobs in parallel):
 - Re-post-processing one Ga run takes a few minutes.
 
 Runs made before 2026-09-29 (under `results/sparta_r07/`, with names such as `cal_*`, `conv_*`, `pred_*`) have no recorded configuration. They are superseded by the batches above and kept only as history.
+
+Study records of 2026-10-01 (nitrogen scenarios and aim, growth window, heater zones and sensors, wafer outcome) are versioned as copies of their manifests in `data/runs/studies/<name>.json`; the scripts write to `results/<name>/manifest.json`, which git ignores.
