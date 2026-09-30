@@ -76,7 +76,8 @@ Each subsystem has a baseline and a candidate option, and all combinations are e
 3. **Ga collision size.** Unsourced; about 6-8 A (widest 6-9 A) is an argued scenario range after the Bi2 result, not a bound. It matters mainly for a depleted charge.
 4. **N plate.** Thickness, pattern, hole tilt, active radius and output profile unknown; transitional hole flow above about 3 sccm or with few holes is not modelled; total active-N output is not modelled.
 5. **Temperature scale and droplet onset.** The literature disagrees by up to a factor 3-4 at 700 C; each lab's temperature scale differs.
-6. **Heater.** No reconstructible published heater benchmark. The reduced axisymmetric model (2026-10-01) has no platen, shields or semi-transparent optics, and it disagrees qualitatively with R05 on the effect of the heater gap. R05's mechanism, reflected power through GaAs, is not in the model.
+6. **Heater.** No reconstructible published heater benchmark. The reduced axisymmetric model (2026-10-01) has only a same-size platen variant, no shields or semi-transparent optics, and it disagrees qualitatively with R05 on the effect of the heater gap. R05's mechanism, reflected power through GaAs, is not in the model.
+7. **Background N2 scattering.** At about 1e-3 Pa and above, background scattering removes 10-20 % of the direct Ga beam and changes the Ga map by up to about 1 point, shifting the angle optimum. This is an estimate that is not yet in the beam model; it needs the effective N2 pumping speed and growth pressure.
 
 ## 4. Measurements to specify at design freeze
 
@@ -84,6 +85,7 @@ These make commissioning tests (FAT/SAT) serve as calibration ([Phase-1 plan, se
 
 - **N-limited (Ga-rich) thickness maps** of calibration wafers at two or more growth temperatures and N source settings, with the N source aim recorded. This is the only direct test of the N map, which the studies above identify as the most uncertain and most consequential input.
 - **Ga-limited (N-rich) thickness maps** at two or more fill levels over a campaign. They measure the Ga map and its drift.
+- **Growth-time chamber pressure and effective N2 pumping speed**, and beam-flux calibrations with the plasma gas flowing as well as off (background scattering changes the delivered flux by 10-20 %).
 - **Wafer temperature at more than one radius** (multi-spot pyrometry or an instrumented wafer), logged with per-zone heater power.
 - **N source alignment** with a mechanical reference that allows the aim to be measured and adjusted, and the plate drawing (thickness, pattern, tilt) from the vendor.
 - **Droplet onset and N-rich boundary** (RHEED/QMS) at the operating temperatures, on the machine's own temperature scale.

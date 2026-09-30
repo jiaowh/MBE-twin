@@ -39,6 +39,7 @@ The batch runner treats a job as complete only when its directory holds `summary
 | Wafer temperature sensor count and placement for 3-zone control | `python scripts/heater_sensors.py` | `results/heater_sensors/manifest.json` |
 | Baseline versus candidate layouts: thickness half-range/mean from the chained models (8 combinations, two plates, 700 / 740 C) | `python scripts/wafer_outcome.py` | `results/wafer_outcome/manifest.json` |
 | Nitrogen pointing tolerance: 5 mm aim scans at 55-65 deg per plate, then the worst case within +/-5 / +/-10 mm | `python scripts/nitrogen_aim_study.py --aspects A --offsets ... --angles 55 60 65 --out results/nitrogen_aim_fine_A` (offset lists in the records); `python scripts/nitrogen_aim_tolerance.py` | `data/runs/studies/nitrogen_aim_fine_*.json`, `nitrogen_aim_tolerance.json` |
+| Beam attenuation by background N2 (estimate) | `python scripts/background_scattering.py` | (printed) |
 | Nitrogen aim robustness (output profile, plate radius) | `python scripts/nitrogen_aim_robustness.py` | `results/nitrogen_aim_robustness/manifest.json` |
 | R07 Bi + Bi2 against monatomic runs; diameter scans | `python scripts/summarize_bi2.py` | (printed) |
 | R07 with Bi + Bi2 vapour (Kubaschewski fractions, x = 0.5 check, d scan at 3.5 A/s) | `python scripts/sparta_batch.py cases/sparta_r07/r07_bi2.json` | `data/runs/sparta_r07/r07_bi2/` |

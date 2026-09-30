@@ -190,6 +190,22 @@ Range/mean at 46 deg, 1 um/h (free-molecular temperature schedule):
 - **Delivered flux.** Under the free-molecular temperature schedule, DSMC delivers 0.96-1.09 of the target centre flux, depending on d, fill and angle. Every comparison above is therefore at approximately, not exactly, constant flux. The temperature rise needed to hold the rate is known only for the free-molecular schedule: 953.6 to 962.1 C from 40 to 120 mm at 46 deg, and up to 979.5 C at 62 deg. A **centre-flux hold** was queued on 2026-09-30 but did not start: the job file had been parked, and the queue failed with a missing-file error. It was restarted at 22:03 that night (after the R07 two-species batch in the same queue). `sparta_ga.py --mode dsmc-hold` corrects the temperature from a previous run's delivered centre flux, and `scripts/ga_flux_hold.py` repeats the correction until delivered/target is within +/-1.5 %; it exits non-zero unless every state meets that tolerance. What is held is the Ga arrival at the wafer centre (r < 10 mm), expressed as the Ga flux of 1 um/h GaN at Ga/N = 1. It is not a growth rate, which also needs the N supply and incorporation/desorption, and not the wafer-average flux; each run now records both centre and wafer-mean delivered/target. Only states meeting the tolerance will be called centre-flux-held.
 - **What this supports.** A representative-chamber sensitivity study with a verified collisional model, a validated uniformity estimator with stated scatter, recorded one-state numerical sensitivities, and a bracketed physical unknown (d). It is not a thickness prediction. In Ga-rich PAMBE, thickness follows the active-N map ([nitrogen boundary](NITROGEN_BOUNDARY.md)); the Ga map sets the Ga/N-ratio margin across the wafer.
 
+## Beam scattering by the background N2 (estimate, 2026-10-01)
+
+`scripts/background_scattering.py`. During plasma growth the chamber holds N2 at p = Q / S. The beam models so far assume a collisionless chamber. This estimate uses cos^n point sources, hard-sphere cross-sections, and a fast-beam mean free path through 300 K N2. Scattered atoms are treated as lost from the direct beam, and their redeposition is not modelled. Flow and effective pumping speed are bracketed; no growth-pressure measurement is sourced.
+
+| Chamber state | p (Pa) | Ga direct-beam loss | Ga range/mean change | N change |
+|---|---|---|---|---|
+| 0.5 sccm, 2 m^3/s | 4e-4 | 3-5 % | -0.1 to -0.3 points | +0.1 |
+| 2 sccm, 2 m^3/s | 1.7e-3 | 12-17 % | -0.2 to -1.1 points | +0.5 |
+| 2 sccm, 0.5 m^3/s | 6.8e-3 | 41-53 % | -2.6 to +0.8 points | +1.9 |
+| 10 sccm, 0.5 m^3/s | 3.4e-2 | above 90 % | several points to tens of points | +11 |
+
+- **At growth pressures of about 1e-3 Pa and above, background scattering is a first-order effect.** It changes the Ga map by up to about 1 point, comparable to the angle optima, and moves the optimum port angle (the 58 deg case improves from 2.2 to 1.1 %).
+- **The delivered flux drops by 10-20 %.** Flux calibrations with the N2 off overstate the growth-time flux by that much.
+- **The estimate is rough.** A total scattering cross-section is larger than the hard-sphere one used here, which would make the effect larger. Cryopanel-cooled gas is denser at the same pressure. Some scattered atoms redeposit diffusely.
+- **For the twin**, the beam transport needs an attenuation term (next actions). The chamber's effective N2 pumping speed and growth pressure become required inputs; the vacuum package is not yet started.
+
 ## Heater zones and wafer temperature (2026-10-01)
 
 `src/mbe_twin/heater.py` (tests in `tests/test_heater.py`), study `scripts/heater_zones.py` (record `results/heater_zones/manifest.json`). This is a reduced, axisymmetric (rotation-averaged) model of a representative 200 mm holder, not a reconstruction of any machine.
@@ -269,9 +285,10 @@ Next:
 9. Decided (2026-10-01): with Bi2 represented, the Bi enhancement over its dispersion value is 1.5-1.9x, so the Ga scenario range is about 6-8 A (widest 6-9 A). The existing 5.68 and 8 A Ga runs bracket it; no rerun. Optional: a 4 A run for the dispersion-only floor. Scenarios, not bounds.
 10. Nitrogen: check that a steep (60-65 deg), off-centre N port clears the Ga cell and shutters; obtain plate thickness, pattern and hole tilt; a hole-scale DSMC only if the chosen flow range is transitional (above about 3 sccm, or few holes).
 11. Heater: a larger-than-heater platen or edge-ring variant (the same-size platen, 2026-10-01, is worse); a side-shield variant; check R05's heater-gap mechanism (reflected power through a transparent wafer) against a Si wafer; spectral emissivity of the GaN-on-Si stack.
-12. Growth: independent validation data. R20's growth map is conditional on one N flux and one shared template, so it cannot serve as independent wafer validation. Commissioning N-limited and Ga-limited thickness maps are the real test.
-13. Later: crucible shapes (R24 reservoir; R25 is a line-of-sight model with walls hidden from the substrate, so a code-to-code check must reproduce that assumption) and the adjustable-source study below.
-14. Still wanted: full text of R04, the RIBER MBE 49 technical PDF, and a representative aperture-plate drawing. R03 reconstruction stays deferred (weak discrimination); R16 may inform transient validation.
+12. Beam transport: add background-gas attenuation exp(-s/lambda) to the direct-beam kernel (after the flux-hold batch, which imports beam.py), and re-evaluate the Ga angle optima and the N aim at the expected growth pressure. Requires the effective N2 pumping speed.
+13. Growth: independent validation data. R20's growth map is conditional on one N flux and one shared template, so it cannot serve as independent wafer validation. Commissioning N-limited and Ga-limited thickness maps are the real test.
+14. Later: crucible shapes (R24 reservoir; R25 is a line-of-sight model with walls hidden from the substrate, so a code-to-code check must reproduce that assumption) and the adjustable-source study below.
+15. Still wanted: full text of R04, the RIBER MBE 49 technical PDF, and a representative aperture-plate drawing. R03 reconstruction stays deferred (weak discrimination); R16 may inform transient validation.
 
 ### Exploratory (non-essential)
 
