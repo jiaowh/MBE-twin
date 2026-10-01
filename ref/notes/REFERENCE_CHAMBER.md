@@ -187,7 +187,22 @@ Range/mean at 46 deg, 1 um/h (free-molecular temperature schedule):
     - Neither check moves the optimum angle. That would need a finer angle scan at converged settings.
     - Delivered/target centre flux in these runs: 1.08-1.09 at 70 mm / 54 deg and 1.00-1.03 at 120 mm / 58 deg (free-molecular schedule).
   - **A fixed port cannot follow the optimum.** A fresh 40 mm fill spills above 48.2 deg, while the depleted charge prefers 54-58 deg.
-- **Delivered flux.** Under the free-molecular temperature schedule, DSMC delivers 0.96-1.09 of the target centre flux, depending on d, fill and angle. Every comparison above is therefore at approximately, not exactly, constant flux. The temperature rise needed to hold the rate is known only for the free-molecular schedule: 953.6 to 962.1 C from 40 to 120 mm at 46 deg, and up to 979.5 C at 62 deg. A **centre-flux hold** was queued on 2026-09-30 but did not start: the job file had been parked, and the queue failed with a missing-file error. It was restarted at 22:03 that night (after the R07 two-species batch in the same queue). `sparta_ga.py --mode dsmc-hold` corrects the temperature from a previous run's delivered centre flux, and `scripts/ga_flux_hold.py` repeats the correction until delivered/target is within +/-1.5 %; it exits non-zero unless every state meets that tolerance. What is held is the Ga arrival at the wafer centre (r < 10 mm), expressed as the Ga flux of 1 um/h GaN at Ga/N = 1. It is not a growth rate, which also needs the N supply and incorporation/desorption, and not the wafer-average flux; each run now records both centre and wafer-mean delivered/target. Only states meeting the tolerance will be called centre-flux-held.
+- **Delivered flux.** Under the free-molecular temperature schedule, DSMC delivers 0.96-1.09 of the target centre flux, depending on d, fill and angle. Every comparison above is therefore at approximately, not exactly, constant flux. The temperature rise needed to hold the rate is known only for the free-molecular schedule: 953.6 to 962.1 C from 40 to 120 mm at 46 deg, and up to 979.5 C at 62 deg. **Centre-flux hold (complete, 2026-10-01).** `sparta_ga.py --mode dsmc-hold` corrects the melt temperature from the previous run's delivered centre flux, and `scripts/ga_flux_hold.py` iterated until delivered/target was within +/-1.5 % (it exits non-zero otherwise). What is held is the Ga arrival at the wafer centre (r < 10 mm), expressed as the Ga flux of 1 um/h GaN at Ga/N = 1. It is not a growth rate, which also needs the N supply and incorporation/desorption. All 12 states (fills 40 / 70 / 120 mm at 46 deg and at the angle optima, d = 5.68 and 8 A) were held after one correction, one after two (records `data/runs/sparta_ga/ga_dsmchold/`, table by `scripts/summarize_flux_hold.py`).
+
+  | State | d = 8 A: T, range/mean | d = 5.68 A: T, range/mean | Wafer-mean / target |
+  |---|---|---|---|
+  | 40 mm, 46 deg | 950.2 C, 1.95 +/- 0.19 % | 951.7 C, 2.19 +/- 0.20 % | 0.99-1.00 |
+  | 70 mm, 46 deg | 954.5 C, 4.50 +/- 0.25 % | 955.7 C, 5.17 +/- 0.31 % | 0.98 |
+  | 120 mm, 46 deg | 963.3 C, 8.29 +/- 0.42 % | 963.2 C, 8.31 +/- 0.52 % | 0.965-0.97 |
+  | 40 mm, 48 deg | 951.2 C, 0.72 +/- 0.18 % | 953.4 C, 1.08 +/- 0.26 % | 0.99-1.00 |
+  | 70 mm, 54 deg | 960.5 C, 1.25 +/- 0.30 % | 962.3 C, 0.34 +/- 0.23 % | 1.00-1.01 |
+  | 120 mm, 58 deg | 972.8 C, 1.88 +/- 0.38 % | 974.0 C, 1.81 +/- 0.45 % | 0.99-1.00 |
+
+  - **Temperature rise to hold the centre flux over a campaign (40 to 120 mm):** +13.1 K (8 A) and +11.5 K (5.68 A) at 46 deg, against +8.5 K from the free-molecular schedule. Along the angle optima (48 to 58 deg) it is +21.6 K and +20.6 K.
+  - **The uniformity results stand at held flux.** At 46 deg range/mean grows from about 2 % to about 8.3 % as the charge is consumed. At the angle optima: about 0.7-1.1 % fresh, 0.3-1.3 % half and 1.8-1.9 % depleted, confirming "about 1 %" and "1.5-2 %".
+  - **The wafer mean sits up to 3.5 % below the held centre flux** for a depleted charge at 46 deg (edge-low profile); at the optima the two agree within 1 %.
+  - **Run-to-run variability at deep fill is about 1 point.** The 120 mm / 46 deg / 8 A state gave 6.86 % at its first correction and 8.29 % at its second, 0.9 K apart, which is larger than the bootstrap scatter (0.4). This is consistent with the earlier seed check (7.17 against 7.74 %).
+  - The growth window recomputed with these held maps (`growth_window.py --held`) is unchanged in substance ([growth note](GROWTH_EVIDENCE.md)).
 - **What this supports.** A representative-chamber sensitivity study with a verified collisional model, a validated uniformity estimator with stated scatter, recorded one-state numerical sensitivities, and a bracketed physical unknown (d). It is not a thickness prediction. In Ga-rich PAMBE, thickness follows the active-N map ([nitrogen boundary](NITROGEN_BOUNDARY.md)); the Ga map sets the Ga/N-ratio margin across the wafer.
 
 ## Beam scattering by the background N2 (estimate, 2026-10-01)
@@ -279,8 +294,7 @@ Done:
 6. First GaN growth model and growth window ([growth note](GROWTH_EVIDENCE.md)).
 7. Axisymmetric 200 mm heater model, zone study and sensor study (section above).
 
-Running:
-8. Centre-flux hold (`ga_dsmchold.json`, then `ga_flux_hold.py --iterate` to +/-1.5 %) for the 46 deg fill series and the angle optima at d = 5.68 and 8 A. Afterwards, restate the temperature rise needed to hold the centre Ga flux and the angle comparison at held flux, and rerun the growth window with the held Ga maps.
+8. Centre-flux hold complete (2026-10-01 08:14): all 12 states held within 1.5 %; temperature rise and held-flux uniformity in the Ga section above; growth window recomputed with the held maps.
 
 Next:
 9. Decided (2026-10-01): with Bi2 represented, the Bi enhancement over its dispersion value is 1.5-1.9x, so the Ga scenario range is about 6-8 A (widest 6-9 A). The existing 5.68 and 8 A Ga runs bracket it; no rerun. Optional: a 4 A run for the dispersion-only floor. Scenarios, not bounds.

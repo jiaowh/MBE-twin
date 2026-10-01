@@ -1,11 +1,11 @@
 {
   "schema_version": "0.1",
   "run_id": "growth_window",
-  "created_utc": "2026-09-30T21:45:45+00:00",
+  "created_utc": "2026-10-01T00:15:25+00:00",
   "label": "representative_chamber",
   "validation_status": "not_validated",
   "package_version": "0.1.0",
-  "git_commit": "b6ed5a31775da92a68ffcb7b0cd26105e743c6ec-dirty",
+  "git_commit": "185181c789b0cac0586eb11a68d3b9318b799371-dirty",
   "python": "3.12.10",
   "numpy": "2.5.1",
   "platform": "Windows-11-10.0.26200-SP0",
@@ -16,12 +16,12 @@
     "src/mbe_twin/profile_fit.py": "d8feb410c319fc0f51180d0e00f3c8f6a1b3260d772a66d9c531eed393f80768"
   },
   "solver": null,
-  "inputs_sha256": "db70c308c01f11e725613cea9ee550991e8970be574a0407cdbd1d044ed9e7e2",
+  "inputs_sha256": "e49487f889900375aea7fe6ad777501f11ffee86e7a41b248ea4730784d59af2",
   "inputs": {
     "ga_records": {
       "40 mm, 46 deg": "ga_dsmchold/fill040_d8_dsmchold.json",
       "70 mm, 46 deg": "ga_dsmchold/fill070_d8_dsmchold.json",
-      "120 mm, 46 deg": "ga_dsmchold/fill120_d8_dsmchold.json",
+      "120 mm, 46 deg": "ga_dsmchold/fill120_d8_dsmchold_it2.json",
       "40 mm, 48 deg": "ga_dsmchold/fill040_d8_48deg_dsmchold.json",
       "70 mm, 54 deg": "ga_dsmchold/fill070_d8_54deg_dsmchold.json",
       "120 mm, 58 deg": "ga_dsmchold/fill120_d8_58deg_dsmchold.json"
@@ -6354,7 +6354,7 @@
         "scenario": "G01_adsorption",
         "window": null,
         "width": 0.0,
-        "ratio_spread": 1.071375667759214,
+        "ratio_spread": 1.0870947194640168,
         "thickness_range_over_mean_pct": null
       },
       {
@@ -6364,11 +6364,11 @@
         "dT_edge_K": -10.0,
         "scenario": "Heying_growth",
         "window": [
-          1.071375667759214,
-          1.1209424931360956
+          1.0837611069722477,
+          1.1171573372690398
         ],
-        "width": 0.04956682537688173,
-        "ratio_spread": 1.071375667759214,
+        "width": 0.03339623029679206,
+        "ratio_spread": 1.0870947194640168,
         "thickness_range_over_mean_pct": 0.2718862835457148
       },
       {
@@ -6378,11 +6378,11 @@
         "dT_edge_K": -10.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.071375667759214,
-          1.2807796177734412
+          1.0837611069722477,
+          1.2783915472479312
         ],
-        "width": 0.2094039500142273,
-        "ratio_spread": 1.071375667759214,
+        "width": 0.19463044027568355,
+        "ratio_spread": 1.0870947194640168,
         "thickness_range_over_mean_pct": 0.2718862835457148
       },
       {
@@ -6391,13 +6391,10 @@
         "T0_C": 700.0,
         "dT_edge_K": -5.0,
         "scenario": "G01_adsorption",
-        "window": [
-          1.071375667759214,
-          1.0719623444849138
-        ],
-        "width": 0.0005866767256998973,
-        "ratio_spread": 1.071375667759214,
-        "thickness_range_over_mean_pct": 0.1483518171191341
+        "window": null,
+        "width": 0.0,
+        "ratio_spread": 1.0870947194640168,
+        "thickness_range_over_mean_pct": null
       },
       {
         "ga": "120 mm, 46 deg",
@@ -6406,11 +6403,11 @@
         "dT_edge_K": -5.0,
         "scenario": "Heying_growth",
         "window": [
-          1.071375667759214,
-          1.1278094542294392
+          1.0837611069722477,
+          1.1225613655422408
         ],
-        "width": 0.056433786470225344,
-        "ratio_spread": 1.071375667759214,
+        "width": 0.03880025856999314,
+        "ratio_spread": 1.0870947194640168,
         "thickness_range_over_mean_pct": 0.1483518171191341
       },
       {
@@ -6420,11 +6417,11 @@
         "dT_edge_K": -5.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.071375667759214,
-          1.2925557771232048
+          1.0837611069722477,
+          1.2866250115557927
         ],
-        "width": 0.2211801093639909,
-        "ratio_spread": 1.071375667759214,
+        "width": 0.20286390458354497,
+        "ratio_spread": 1.0870947194640168,
         "thickness_range_over_mean_pct": 0.1483518171191341
       },
       {
@@ -6433,13 +6430,10 @@
         "T0_C": 700.0,
         "dT_edge_K": 0.0,
         "scenario": "G01_adsorption",
-        "window": [
-          1.071375667759214,
-          1.0726054919842405
-        ],
-        "width": 0.001229824225026599,
-        "ratio_spread": 1.071375667759214,
-        "thickness_range_over_mean_pct": 0.0
+        "window": null,
+        "width": 0.0,
+        "ratio_spread": 1.0870947194640168,
+        "thickness_range_over_mean_pct": null
       },
       {
         "ga": "120 mm, 46 deg",
@@ -6448,11 +6442,11 @@
         "dT_edge_K": 0.0,
         "scenario": "Heying_growth",
         "window": [
-          1.071375667759214,
-          1.129893795272232
+          1.0837611069722477,
+          1.1264289379761272
         ],
-        "width": 0.058518127513018214,
-        "ratio_spread": 1.071375667759214,
+        "width": 0.0426678310038795,
+        "ratio_spread": 1.0870947194640168,
         "thickness_range_over_mean_pct": 0.0
       },
       {
@@ -6462,11 +6456,11 @@
         "dT_edge_K": 0.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.071375667759214,
-          1.295970165620245
+          1.0837611069722477,
+          1.2919960295530568
         ],
-        "width": 0.22459449786103103,
-        "ratio_spread": 1.071375667759214,
+        "width": 0.2082349225808091,
+        "ratio_spread": 1.0870947194640168,
         "thickness_range_over_mean_pct": 0.0
       },
       {
@@ -6475,13 +6469,10 @@
         "T0_C": 700.0,
         "dT_edge_K": 5.0,
         "scenario": "G01_adsorption",
-        "window": [
-          1.071375667759214,
-          1.0726054919842405
-        ],
-        "width": 0.001229824225026599,
-        "ratio_spread": 1.071375667759214,
-        "thickness_range_over_mean_pct": 0.17784009716009916
+        "window": null,
+        "width": 0.0,
+        "ratio_spread": 1.0870947194640168,
+        "thickness_range_over_mean_pct": null
       },
       {
         "ga": "120 mm, 46 deg",
@@ -6490,11 +6481,11 @@
         "dT_edge_K": 5.0,
         "scenario": "Heying_growth",
         "window": [
-          1.071375667759214,
-          1.129893795272232
+          1.0837611069722477,
+          1.1287857892171975
         ],
-        "width": 0.058518127513018214,
-        "ratio_spread": 1.071375667759214,
+        "width": 0.04502468224494982,
+        "ratio_spread": 1.0870947194640168,
         "thickness_range_over_mean_pct": 0.17784009716009916
       },
       {
@@ -6504,11 +6495,11 @@
         "dT_edge_K": 5.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.071375667759214,
-          1.295970165620245
+          1.0837611069722477,
+          1.2949736000681091
         ],
-        "width": 0.22459449786103103,
-        "ratio_spread": 1.071375667759214,
+        "width": 0.21121249309586143,
+        "ratio_spread": 1.0870947194640168,
         "thickness_range_over_mean_pct": 0.17784009716009916
       },
       {
@@ -6517,13 +6508,10 @@
         "T0_C": 700.0,
         "dT_edge_K": 10.0,
         "scenario": "G01_adsorption",
-        "window": [
-          1.071375667759214,
-          1.0726054919842405
-        ],
-        "width": 0.001229824225026599,
-        "ratio_spread": 1.071375667759214,
-        "thickness_range_over_mean_pct": 0.3906656954345436
+        "window": null,
+        "width": 0.0,
+        "ratio_spread": 1.0870947194640168,
+        "thickness_range_over_mean_pct": null
       },
       {
         "ga": "120 mm, 46 deg",
@@ -6532,11 +6520,11 @@
         "dT_edge_K": 10.0,
         "scenario": "Heying_growth",
         "window": [
-          1.071375667759214,
-          1.129893795272232
+          1.0837611069722477,
+          1.1298111099131767
         ],
-        "width": 0.058518127513018214,
-        "ratio_spread": 1.071375667759214,
+        "width": 0.04605000294092898,
+        "ratio_spread": 1.0870947194640168,
         "thickness_range_over_mean_pct": 0.3906656954345436
       },
       {
@@ -6546,11 +6534,11 @@
         "dT_edge_K": 10.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.071375667759214,
-          1.295970165620245
+          1.0837611069722477,
+          1.2959665897899613
         ],
-        "width": 0.22459449786103103,
-        "ratio_spread": 1.071375667759214,
+        "width": 0.21220548281771356,
+        "ratio_spread": 1.0870947194640168,
         "thickness_range_over_mean_pct": 0.3906656954345436
       },
       {
@@ -6560,11 +6548,11 @@
         "dT_edge_K": -10.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.071375667759214,
-          1.5508706931816103
+          1.0837611069722477,
+          1.568799245486565
         ],
-        "width": 0.4794950254223964,
-        "ratio_spread": 1.071375667759214,
+        "width": 0.4850381385143172,
+        "ratio_spread": 1.0870947194640168,
         "thickness_range_over_mean_pct": 1.1209462706632234
       },
       {
@@ -6574,11 +6562,11 @@
         "dT_edge_K": -10.0,
         "scenario": "Heying_growth",
         "window": [
-          1.071375667759214,
-          1.8421725166135983
+          1.0837611069722477,
+          1.8634686094884338
         ],
-        "width": 0.7707968488543844,
-        "ratio_spread": 1.071375667759214,
+        "width": 0.7797075025161861,
+        "ratio_spread": 1.0870947194640168,
         "thickness_range_over_mean_pct": 1.1209462706632234
       },
       {
@@ -6588,11 +6576,11 @@
         "dT_edge_K": -10.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.071375667759214,
-          1.9320629765145003
+          1.0837611069722477,
+          1.9525044806125629
         ],
-        "width": 0.8606873087552864,
-        "ratio_spread": 1.071375667759214,
+        "width": 0.8687433736403152,
+        "ratio_spread": 1.0870947194640168,
         "thickness_range_over_mean_pct": 1.1209462706632234
       },
       {
@@ -6602,11 +6590,11 @@
         "dT_edge_K": -5.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.071375667759214,
-          1.7138551135717421
+          1.0837611069722477,
+          1.7272870750094875
         ],
-        "width": 0.6424794458125282,
-        "ratio_spread": 1.071375667759214,
+        "width": 0.6435259680372398,
+        "ratio_spread": 1.0870947194640168,
         "thickness_range_over_mean_pct": 0.6089115662652946
       },
       {
@@ -6616,11 +6604,11 @@
         "dT_edge_K": -5.0,
         "scenario": "Heying_growth",
         "window": [
-          1.071375667759214,
-          2.086548659762447
+          1.0837611069722477,
+          2.1075158725102257
         ],
-        "width": 1.015172992003233,
-        "ratio_spread": 1.071375667759214,
+        "width": 1.023754765537978,
+        "ratio_spread": 1.0870947194640168,
         "thickness_range_over_mean_pct": 0.6089115662652946
       },
       {
@@ -6630,11 +6618,11 @@
         "dT_edge_K": -5.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.071375667759214,
-          2.075739107390585
+          1.0837611069722477,
+          2.0745876919119146
         ],
-        "width": 1.004363439631371,
-        "ratio_spread": 1.071375667759214,
+        "width": 0.9908265849396669,
+        "ratio_spread": 1.0870947194640168,
         "thickness_range_over_mean_pct": 0.6089115662652946
       },
       {
@@ -6644,11 +6632,11 @@
         "dT_edge_K": 0.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.071375667759214,
-          1.8011951913383677
+          1.0837611069722477,
+          1.7956717657504664
         ],
-        "width": 0.7298195235791538,
-        "ratio_spread": 1.071375667759214,
+        "width": 0.7119106587782187,
+        "ratio_spread": 1.0870947194640168,
         "thickness_range_over_mean_pct": 0.0
       },
       {
@@ -6658,11 +6646,11 @@
         "dT_edge_K": 0.0,
         "scenario": "Heying_growth",
         "window": [
-          1.071375667759214,
-          2.2445659729349936
+          1.0837611069722477,
+          2.237682935944744
         ],
-        "width": 1.1731903051757797,
-        "ratio_spread": 1.071375667759214,
+        "width": 1.1539218289724962,
+        "ratio_spread": 1.0870947194640168,
         "thickness_range_over_mean_pct": 0.0
       },
       {
@@ -6672,11 +6660,11 @@
         "dT_edge_K": 0.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.071375667759214,
-          2.105983090149346
+          1.0837611069722477,
+          2.099525022226582
         ],
-        "width": 1.034607422390132,
-        "ratio_spread": 1.071375667759214,
+        "width": 1.0157639152543345,
+        "ratio_spread": 1.0870947194640168,
         "thickness_range_over_mean_pct": 0.0
       },
       {
@@ -6686,11 +6674,11 @@
         "dT_edge_K": 5.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.071375667759214,
+          1.0837611069722477,
           1.8011951913383677
         ],
-        "width": 0.7298195235791538,
-        "ratio_spread": 1.071375667759214,
+        "width": 0.71743408436612,
+        "ratio_spread": 1.0870947194640168,
         "thickness_range_over_mean_pct": 0.7233004669069322
       },
       {
@@ -6700,11 +6688,11 @@
         "dT_edge_K": 5.0,
         "scenario": "Heying_growth",
         "window": [
-          1.071375667759214,
+          1.0837611069722477,
           2.2445659729349936
         ],
-        "width": 1.1731903051757797,
-        "ratio_spread": 1.071375667759214,
+        "width": 1.160804865962746,
+        "ratio_spread": 1.0870947194640168,
         "thickness_range_over_mean_pct": 0.7233004669069322
       },
       {
@@ -6714,11 +6702,11 @@
         "dT_edge_K": 5.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.071375667759214,
+          1.0837611069722477,
           2.105983090149346
         ],
-        "width": 1.034607422390132,
-        "ratio_spread": 1.071375667759214,
+        "width": 1.0222219831770982,
+        "ratio_spread": 1.0870947194640168,
         "thickness_range_over_mean_pct": 0.7233004669069322
       },
       {
@@ -6728,11 +6716,11 @@
         "dT_edge_K": 10.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.071375667759214,
+          1.0837611069722477,
           1.8011951913383677
         ],
-        "width": 0.7298195235791538,
-        "ratio_spread": 1.071375667759214,
+        "width": 0.71743408436612,
+        "ratio_spread": 1.0870947194640168,
         "thickness_range_over_mean_pct": 1.5816213228236111
       },
       {
@@ -6742,11 +6730,11 @@
         "dT_edge_K": 10.0,
         "scenario": "Heying_growth",
         "window": [
-          1.071375667759214,
+          1.0837611069722477,
           2.2445659729349936
         ],
-        "width": 1.1731903051757797,
-        "ratio_spread": 1.071375667759214,
+        "width": 1.160804865962746,
+        "ratio_spread": 1.0870947194640168,
         "thickness_range_over_mean_pct": 1.5816213228236111
       },
       {
@@ -6756,11 +6744,11 @@
         "dT_edge_K": 10.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.071375667759214,
+          1.0837611069722477,
           2.105983090149346
         ],
-        "width": 1.034607422390132,
-        "ratio_spread": 1.071375667759214,
+        "width": 1.0222219831770982,
+        "ratio_spread": 1.0870947194640168,
         "thickness_range_over_mean_pct": 1.5816213228236111
       },
       {
@@ -6770,11 +6758,11 @@
         "dT_edge_K": -10.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.071375667759214,
-          5.676866700178187
+          1.0837611069722477,
+          5.742493062201704
         ],
-        "width": 4.605491032418973,
-        "ratio_spread": 1.071375667759214,
+        "width": 4.658731955229456,
+        "ratio_spread": 1.0870947194640168,
         "thickness_range_over_mean_pct": 4.452551808850414
       },
       {
@@ -6784,11 +6772,11 @@
         "dT_edge_K": -10.0,
         "scenario": "Heying_growth",
         "window": [
-          1.071375667759214,
-          7.552317569881361
+          1.0837611069722477,
+          7.639624732993372
         ],
-        "width": 6.480941902122147,
-        "ratio_spread": 1.071375667759214,
+        "width": 6.555863626021124,
+        "ratio_spread": 1.0870947194640168,
         "thickness_range_over_mean_pct": 4.452551808850414
       },
       {
@@ -6798,11 +6786,11 @@
         "dT_edge_K": -10.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.071375667759214,
-          4.051625561448176
+          1.0837611069722477,
+          4.098463625458202
         ],
-        "width": 2.9802498936889625,
-        "ratio_spread": 1.071375667759214,
+        "width": 3.0147025184859544,
+        "ratio_spread": 1.0870947194640168,
         "thickness_range_over_mean_pct": 4.452551808850414
       },
       {
@@ -6812,11 +6800,11 @@
         "dT_edge_K": -5.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.071375667759214,
-          7.108286780843042
+          1.0837611069722477,
+          7.19046080857421
         ],
-        "width": 6.036911113083828,
-        "ratio_spread": 1.071375667759214,
+        "width": 6.106699701601962,
+        "ratio_spread": 1.0870947194640168,
         "thickness_range_over_mean_pct": 2.425059878034191
       },
       {
@@ -6826,11 +6814,11 @@
         "dT_edge_K": -5.0,
         "scenario": "Heying_growth",
         "window": [
-          1.071375667759214,
-          9.432466071199467
+          1.0837611069722477,
+          9.541508341496856
         ],
-        "width": 8.361090403440254,
-        "ratio_spread": 1.071375667759214,
+        "width": 8.457747234524609,
+        "ratio_spread": 1.0870947194640168,
         "thickness_range_over_mean_pct": 2.425059878034191
       },
       {
@@ -6840,11 +6828,11 @@
         "dT_edge_K": -5.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.071375667759214,
-          4.529047796349324
+          1.0837611069722477,
+          4.5658676476545645
         ],
-        "width": 3.4576721285901098,
-        "ratio_spread": 1.071375667759214,
+        "width": 3.4821065406823166,
+        "ratio_spread": 1.0870947194640168,
         "thickness_range_over_mean_pct": 2.425059878034191
       },
       {
@@ -6854,67 +6842,67 @@
         "dT_edge_K": 0.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.071375667759214,
+          1.0837611069722477,
+          8.341428624904347
+        ],
+        "width": 7.2576675179320995,
+        "ratio_spread": 1.0870947194640168,
+        "thickness_range_over_mean_pct": 0.0
+      },
+      {
+        "ga": "120 mm, 46 deg",
+        "n": "flat",
+        "T0_C": 780.0,
+        "dT_edge_K": 0.0,
+        "scenario": "Heying_growth",
+        "window": [
+          1.0837611069722477,
+          11.009875187310849
+        ],
+        "width": 9.926114080338602,
+        "ratio_spread": 1.0870947194640168,
+        "thickness_range_over_mean_pct": 0.0
+      },
+      {
+        "ga": "120 mm, 46 deg",
+        "n": "flat",
+        "T0_C": 780.0,
+        "dT_edge_K": 0.0,
+        "scenario": "Ref14_growth",
+        "window": [
+          1.0837611069722477,
+          4.7245101778023715
+        ],
+        "width": 3.6407490708301236,
+        "ratio_spread": 1.0870947194640168,
+        "thickness_range_over_mean_pct": 0.0
+      },
+      {
+        "ga": "120 mm, 46 deg",
+        "n": "flat",
+        "T0_C": 780.0,
+        "dT_edge_K": 5.0,
+        "scenario": "G01_adsorption",
+        "window": [
+          1.0837611069722477,
           8.367086577089832
         ],
-        "width": 7.2957109093306185,
-        "ratio_spread": 1.071375667759214,
-        "thickness_range_over_mean_pct": 0.0
+        "width": 7.2833254701175845,
+        "ratio_spread": 1.0870947194640168,
+        "thickness_range_over_mean_pct": 2.9029987136662467
       },
       {
         "ga": "120 mm, 46 deg",
         "n": "flat",
         "T0_C": 780.0,
-        "dT_edge_K": 0.0,
+        "dT_edge_K": 5.0,
         "scenario": "Heying_growth",
         "window": [
-          1.071375667759214,
+          1.0837611069722477,
           11.043741190825015
         ],
-        "width": 9.9723655230658,
-        "ratio_spread": 1.071375667759214,
-        "thickness_range_over_mean_pct": 0.0
-      },
-      {
-        "ga": "120 mm, 46 deg",
-        "n": "flat",
-        "T0_C": 780.0,
-        "dT_edge_K": 0.0,
-        "scenario": "Ref14_growth",
-        "window": [
-          1.071375667759214,
-          4.739042611237092
-        ],
-        "width": 3.6676669434778777,
-        "ratio_spread": 1.071375667759214,
-        "thickness_range_over_mean_pct": 0.0
-      },
-      {
-        "ga": "120 mm, 46 deg",
-        "n": "flat",
-        "T0_C": 780.0,
-        "dT_edge_K": 5.0,
-        "scenario": "G01_adsorption",
-        "window": [
-          1.071375667759214,
-          8.367086577089832
-        ],
-        "width": 7.2957109093306185,
-        "ratio_spread": 1.071375667759214,
-        "thickness_range_over_mean_pct": 2.9029987136662467
-      },
-      {
-        "ga": "120 mm, 46 deg",
-        "n": "flat",
-        "T0_C": 780.0,
-        "dT_edge_K": 5.0,
-        "scenario": "Heying_growth",
-        "window": [
-          1.071375667759214,
-          11.043741190825015
-        ],
-        "width": 9.9723655230658,
-        "ratio_spread": 1.071375667759214,
+        "width": 9.959980083852768,
+        "ratio_spread": 1.0870947194640168,
         "thickness_range_over_mean_pct": 2.9029987136662467
       },
       {
@@ -6924,11 +6912,11 @@
         "dT_edge_K": 5.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.071375667759214,
+          1.0837611069722477,
           4.739042611237092
         ],
-        "width": 3.6676669434778777,
-        "ratio_spread": 1.071375667759214,
+        "width": 3.6552815042648437,
+        "ratio_spread": 1.0870947194640168,
         "thickness_range_over_mean_pct": 2.9029987136662467
       },
       {
@@ -6938,11 +6926,11 @@
         "dT_edge_K": 10.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.071375667759214,
+          1.0837611069722477,
           8.367086577089832
         ],
-        "width": 7.2957109093306185,
-        "ratio_spread": 1.071375667759214,
+        "width": 7.2833254701175845,
+        "ratio_spread": 1.0870947194640168,
         "thickness_range_over_mean_pct": 6.382692396004912
       },
       {
@@ -6952,11 +6940,11 @@
         "dT_edge_K": 10.0,
         "scenario": "Heying_growth",
         "window": [
-          1.071375667759214,
+          1.0837611069722477,
           11.043741190825015
         ],
-        "width": 9.9723655230658,
-        "ratio_spread": 1.071375667759214,
+        "width": 9.959980083852768,
+        "ratio_spread": 1.0870947194640168,
         "thickness_range_over_mean_pct": 6.382692396004912
       },
       {
@@ -6966,11 +6954,11 @@
         "dT_edge_K": 10.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.071375667759214,
+          1.0837611069722477,
           4.739042611237092
         ],
-        "width": 3.6676669434778777,
-        "ratio_spread": 1.071375667759214,
+        "width": 3.6552815042648437,
+        "ratio_spread": 1.0870947194640168,
         "thickness_range_over_mean_pct": 6.382692396004912
       },
       {
@@ -6981,7 +6969,7 @@
         "scenario": "G01_adsorption",
         "window": null,
         "width": 0.0,
-        "ratio_spread": 1.0712423508424522,
+        "ratio_spread": 1.0862305910491326,
         "thickness_range_over_mean_pct": null
       },
       {
@@ -6991,11 +6979,11 @@
         "dT_edge_K": -10.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0712423508424522,
-          1.1227586620622498
+          1.0836262488700565,
+          1.1185430036858905
         ],
-        "width": 0.051516311219797606,
-        "ratio_spread": 1.0712423508424522,
+        "width": 0.034916754815834006,
+        "ratio_spread": 1.0862305910491326,
         "thickness_range_over_mean_pct": 0.4032362173444121
       },
       {
@@ -7005,11 +6993,11 @@
         "dT_edge_K": -10.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0712423508424522,
-          1.2829307613332628
+          1.0836262488700565,
+          1.2799471326228744
         ],
-        "width": 0.21168841049081055,
-        "ratio_spread": 1.0712423508424522,
+        "width": 0.19632088375281787,
+        "ratio_spread": 1.0862305910491326,
         "thickness_range_over_mean_pct": 0.4032362173444121
       },
       {
@@ -7018,13 +7006,10 @@
         "T0_C": 700.0,
         "dT_edge_K": -5.0,
         "scenario": "G01_adsorption",
-        "window": [
-          1.0712423508424522,
-          1.0724545240033025
-        ],
-        "width": 0.0012121731608503161,
-        "ratio_spread": 1.0712423508424522,
-        "thickness_range_over_mean_pct": 0.3216137756739266
+        "window": null,
+        "width": 0.0,
+        "ratio_spread": 1.0862305910491326,
+        "thickness_range_over_mean_pct": null
       },
       {
         "ga": "120 mm, 46 deg",
@@ -7033,11 +7018,11 @@
         "dT_edge_K": -5.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0712423508424522,
-          1.1287694402842492
+          1.0836262488700565,
+          1.123592200393602
         ],
-        "width": 0.057527089441796964,
-        "ratio_spread": 1.0712423508424522,
+        "width": 0.03996595152354554,
+        "ratio_spread": 1.0862305910491326,
         "thickness_range_over_mean_pct": 0.3216137756739266
       },
       {
@@ -7047,11 +7032,11 @@
         "dT_edge_K": -5.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0712423508424522,
-          1.293729446125857
+          1.0836262488700565,
+          1.2877092741499558
         ],
-        "width": 0.22248709528340482,
-        "ratio_spread": 1.0712423508424522,
+        "width": 0.2040830252798993,
+        "ratio_spread": 1.0862305910491326,
         "thickness_range_over_mean_pct": 0.3216137756739266
       },
       {
@@ -7060,13 +7045,10 @@
         "T0_C": 700.0,
         "dT_edge_K": 0.0,
         "scenario": "G01_adsorption",
-        "window": [
-          1.0712423508424522,
-          1.0726054919842405
-        ],
-        "width": 0.00136314114178826,
-        "ratio_spread": 1.0712423508424522,
-        "thickness_range_over_mean_pct": 0.2524622520506955
+        "window": null,
+        "width": 0.0,
+        "ratio_spread": 1.0862305910491326,
+        "thickness_range_over_mean_pct": null
       },
       {
         "ga": "120 mm, 46 deg",
@@ -7075,11 +7057,11 @@
         "dT_edge_K": 0.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0712423508424522,
-          1.129893795272232
+          1.0836262488700565,
+          1.1270978755294014
         ],
-        "width": 0.058651444429779875,
-        "ratio_spread": 1.0712423508424522,
+        "width": 0.0434716266593449,
+        "ratio_spread": 1.0862305910491326,
         "thickness_range_over_mean_pct": 0.2524622520506955
       },
       {
@@ -7089,11 +7071,11 @@
         "dT_edge_K": 0.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0712423508424522,
-          1.295970165620245
+          1.0836262488700565,
+          1.2926649671063308
         ],
-        "width": 0.2247278147777927,
-        "ratio_spread": 1.0712423508424522,
+        "width": 0.2090387182362743,
+        "ratio_spread": 1.0862305910491326,
         "thickness_range_over_mean_pct": 0.2524622520506955
       },
       {
@@ -7102,13 +7084,10 @@
         "T0_C": 700.0,
         "dT_edge_K": 5.0,
         "scenario": "G01_adsorption",
-        "window": [
-          1.0712423508424522,
-          1.0726054919842405
-        ],
-        "width": 0.00136314114178826,
-        "ratio_spread": 1.0712423508424522,
-        "thickness_range_over_mean_pct": 0.3542385199557529
+        "window": null,
+        "width": 0.0,
+        "ratio_spread": 1.0862305910491326,
+        "thickness_range_over_mean_pct": null
       },
       {
         "ga": "120 mm, 46 deg",
@@ -7117,11 +7096,11 @@
         "dT_edge_K": 5.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0712423508424522,
-          1.129893795272232
+          1.0836262488700565,
+          1.1291521946506307
         ],
-        "width": 0.058651444429779875,
-        "ratio_spread": 1.0712423508424522,
+        "width": 0.04552594578057412,
+        "ratio_spread": 1.0862305910491326,
         "thickness_range_over_mean_pct": 0.3542385199557529
       },
       {
@@ -7131,11 +7110,11 @@
         "dT_edge_K": 5.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0712423508424522,
-          1.295970165620245
+          1.0836262488700565,
+          1.2952894155361478
         ],
-        "width": 0.2247278147777927,
-        "ratio_spread": 1.0712423508424522,
+        "width": 0.2116631666660913,
+        "ratio_spread": 1.0862305910491326,
         "thickness_range_over_mean_pct": 0.3542385199557529
       },
       {
@@ -7144,13 +7123,10 @@
         "T0_C": 700.0,
         "dT_edge_K": 10.0,
         "scenario": "G01_adsorption",
-        "window": [
-          1.0712423508424522,
-          1.0726054919842405
-        ],
-        "width": 0.00136314114178826,
-        "ratio_spread": 1.0712423508424522,
-        "thickness_range_over_mean_pct": 0.5032592790967451
+        "window": null,
+        "width": 0.0,
+        "ratio_spread": 1.0862305910491326,
+        "thickness_range_over_mean_pct": null
       },
       {
         "ga": "120 mm, 46 deg",
@@ -7159,11 +7135,11 @@
         "dT_edge_K": 10.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0712423508424522,
-          1.129893795272232
+          1.0836262488700565,
+          1.1298827647743164
         ],
-        "width": 0.058651444429779875,
-        "ratio_spread": 1.0712423508424522,
+        "width": 0.04625651590425983,
+        "ratio_spread": 1.0862305910491326,
         "thickness_range_over_mean_pct": 0.5032592790967451
       },
       {
@@ -7173,11 +7149,11 @@
         "dT_edge_K": 10.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0712423508424522,
+          1.0836262488700565,
           1.295970165620245
         ],
-        "width": 0.2247278147777927,
-        "ratio_spread": 1.0712423508424522,
+        "width": 0.21234391675018838,
+        "ratio_spread": 1.0862305910491326,
         "thickness_range_over_mean_pct": 0.5032592790967451
       },
       {
@@ -7187,11 +7163,11 @@
         "dT_edge_K": -10.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.0712423508424522,
-          1.5507373762648486
+          1.0836262488700565,
+          1.5686643873843735
         ],
-        "width": 0.4794950254223964,
-        "ratio_spread": 1.0712423508424522,
+        "width": 0.485038138514317,
+        "ratio_spread": 1.0862305910491326,
         "thickness_range_over_mean_pct": 1.1071849501882207
       },
       {
@@ -7201,11 +7177,11 @@
         "dT_edge_K": -10.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0712423508424522,
-          1.8420391996968364
+          1.0836262488700565,
+          1.8633337513862427
         ],
-        "width": 0.7707968488543842,
-        "ratio_spread": 1.0712423508424522,
+        "width": 0.7797075025161861,
+        "ratio_spread": 1.0862305910491326,
         "thickness_range_over_mean_pct": 1.1071849501882207
       },
       {
@@ -7215,11 +7191,11 @@
         "dT_edge_K": -10.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0712423508424522,
-          1.9319296595977384
+          1.0836262488700565,
+          1.9528687699529652
         ],
-        "width": 0.8606873087552862,
-        "ratio_spread": 1.0712423508424522,
+        "width": 0.8692425210829087,
+        "ratio_spread": 1.0862305910491326,
         "thickness_range_over_mean_pct": 1.1071849501882207
       },
       {
@@ -7229,11 +7205,11 @@
         "dT_edge_K": -5.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.0712423508424522,
-          1.7137217966549803
+          1.0836262488700565,
+          1.7280832012395453
         ],
-        "width": 0.642479445812528,
-        "ratio_spread": 1.0712423508424522,
+        "width": 0.6444569523694887,
+        "ratio_spread": 1.0862305910491326,
         "thickness_range_over_mean_pct": 0.6454638290750048
       },
       {
@@ -7243,11 +7219,11 @@
         "dT_edge_K": -5.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0712423508424522,
-          2.086415342845685
+          1.0836262488700565,
+          2.1078801618506273
         ],
-        "width": 1.0151729920032326,
-        "ratio_spread": 1.0712423508424522,
+        "width": 1.0242539129805708,
+        "ratio_spread": 1.0862305910491326,
         "thickness_range_over_mean_pct": 0.6454638290750048
       },
       {
@@ -7257,11 +7233,11 @@
         "dT_edge_K": -5.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0712423508424522,
-          2.078058980750175
+          1.0836262488700565,
+          2.076273282890307
         ],
-        "width": 1.0068166299077226,
-        "ratio_spread": 1.0712423508424522,
+        "width": 0.9926470340202507,
+        "ratio_spread": 1.0862305910491326,
         "thickness_range_over_mean_pct": 0.6454638290750048
       },
       {
@@ -7271,11 +7247,11 @@
         "dT_edge_K": 0.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.0712423508424522,
-          1.8011951913383677
+          1.0836262488700565,
+          1.7963407033037404
         ],
-        "width": 0.7299528404959155,
-        "ratio_spread": 1.0712423508424522,
+        "width": 0.7127144544336839,
+        "ratio_spread": 1.0862305910491326,
         "thickness_range_over_mean_pct": 0.25978265214793517
       },
       {
@@ -7285,11 +7261,11 @@
         "dT_edge_K": 0.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0712423508424522,
-          2.2445659729349936
+          1.0836262488700565,
+          2.238351873498018
         ],
-        "width": 1.1733236220925414,
-        "ratio_spread": 1.0712423508424522,
+        "width": 1.1547256246279616,
+        "ratio_spread": 1.0862305910491326,
         "thickness_range_over_mean_pct": 0.25978265214793517
       },
       {
@@ -7299,11 +7275,11 @@
         "dT_edge_K": 0.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0712423508424522,
-          2.105983090149346
+          1.0836262488700565,
+          2.1001939597798565
         ],
-        "width": 1.0347407393068937,
-        "ratio_spread": 1.0712423508424522,
+        "width": 1.0165677109098,
+        "ratio_spread": 1.0862305910491326,
         "thickness_range_over_mean_pct": 0.25978265214793517
       },
       {
@@ -7313,11 +7289,11 @@
         "dT_edge_K": 5.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.0712423508424522,
+          1.0836262488700565,
           1.8011951913383677
         ],
-        "width": 0.7299528404959155,
-        "ratio_spread": 1.0712423508424522,
+        "width": 0.7175689424683112,
+        "ratio_spread": 1.0862305910491326,
         "thickness_range_over_mean_pct": 0.7617934792219894
       },
       {
@@ -7327,11 +7303,11 @@
         "dT_edge_K": 5.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0712423508424522,
+          1.0836262488700565,
           2.2445659729349936
         ],
-        "width": 1.1733236220925414,
-        "ratio_spread": 1.0712423508424522,
+        "width": 1.160939724064937,
+        "ratio_spread": 1.0862305910491326,
         "thickness_range_over_mean_pct": 0.7617934792219894
       },
       {
@@ -7341,11 +7317,11 @@
         "dT_edge_K": 5.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0712423508424522,
+          1.0836262488700565,
           2.105983090149346
         ],
-        "width": 1.0347407393068937,
-        "ratio_spread": 1.0712423508424522,
+        "width": 1.0223568412792894,
+        "ratio_spread": 1.0862305910491326,
         "thickness_range_over_mean_pct": 0.7617934792219894
       },
       {
@@ -7355,11 +7331,11 @@
         "dT_edge_K": 10.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.0712423508424522,
+          1.0836262488700565,
           1.8011951913383677
         ],
-        "width": 0.7299528404959155,
-        "ratio_spread": 1.0712423508424522,
+        "width": 0.7175689424683112,
+        "ratio_spread": 1.0862305910491326,
         "thickness_range_over_mean_pct": 1.5920995271326501
       },
       {
@@ -7369,11 +7345,11 @@
         "dT_edge_K": 10.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0712423508424522,
+          1.0836262488700565,
           2.2445659729349936
         ],
-        "width": 1.1733236220925414,
-        "ratio_spread": 1.0712423508424522,
+        "width": 1.160939724064937,
+        "ratio_spread": 1.0862305910491326,
         "thickness_range_over_mean_pct": 1.5920995271326501
       },
       {
@@ -7383,11 +7359,11 @@
         "dT_edge_K": 10.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0712423508424522,
+          1.0836262488700565,
           2.105983090149346
         ],
-        "width": 1.0347407393068937,
-        "ratio_spread": 1.0712423508424522,
+        "width": 1.0223568412792894,
+        "ratio_spread": 1.0862305910491326,
         "thickness_range_over_mean_pct": 1.5920995271326501
       },
       {
@@ -7397,11 +7373,11 @@
         "dT_edge_K": -10.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.0712423508424522,
-          5.676733383261426
+          1.0836262488700565,
+          5.742358204099513
         ],
-        "width": 4.605491032418973,
-        "ratio_spread": 1.0712423508424522,
+        "width": 4.658731955229456,
+        "ratio_spread": 1.0862305910491326,
         "thickness_range_over_mean_pct": 4.430760914973033
       },
       {
@@ -7411,11 +7387,11 @@
         "dT_edge_K": -10.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0712423508424522,
-          7.552184252964599
+          1.0836262488700565,
+          7.639489874891181
         ],
-        "width": 6.480941902122147,
-        "ratio_spread": 1.0712423508424522,
+        "width": 6.555863626021124,
+        "ratio_spread": 1.0862305910491326,
         "thickness_range_over_mean_pct": 4.430760914973033
       },
       {
@@ -7425,11 +7401,11 @@
         "dT_edge_K": -10.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0712423508424522,
-          4.051492244531414
+          1.0836262488700565,
+          4.098328767356011
         ],
-        "width": 2.980249893688962,
-        "ratio_spread": 1.0712423508424522,
+        "width": 3.0147025184859544,
+        "ratio_spread": 1.0862305910491326,
         "thickness_range_over_mean_pct": 4.430760914973033
       },
       {
@@ -7439,11 +7415,11 @@
         "dT_edge_K": -5.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.0712423508424522,
-          7.108153463926281
+          1.0836262488700565,
+          7.190325950472019
         ],
-        "width": 6.036911113083828,
-        "ratio_spread": 1.0712423508424522,
+        "width": 6.106699701601962,
+        "ratio_spread": 1.0862305910491326,
         "thickness_range_over_mean_pct": 2.4065590330865088
       },
       {
@@ -7453,11 +7429,11 @@
         "dT_edge_K": -5.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0712423508424522,
-          9.432332754282708
+          1.0836262488700565,
+          9.541373483394667
         ],
-        "width": 8.361090403440256,
-        "ratio_spread": 1.0712423508424522,
+        "width": 8.45774723452461,
+        "ratio_spread": 1.0862305910491326,
         "thickness_range_over_mean_pct": 2.4065590330865088
       },
       {
@@ -7467,11 +7443,11 @@
         "dT_edge_K": -5.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0712423508424522,
-          4.5289144794325615
+          1.0836262488700565,
+          4.566663773884623
         ],
-        "width": 3.4576721285901093,
-        "ratio_spread": 1.0712423508424522,
+        "width": 3.4830375250145664,
+        "ratio_spread": 1.0862305910491326,
         "thickness_range_over_mean_pct": 2.4065590330865088
       },
       {
@@ -7481,11 +7457,11 @@
         "dT_edge_K": 0.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.0712423508424522,
-          8.367086577089832
+          1.0836262488700565,
+          8.342097562457623
         ],
-        "width": 7.295844226247381,
-        "ratio_spread": 1.0712423508424522,
+        "width": 7.258471313587566,
+        "ratio_spread": 1.0862305910491326,
         "thickness_range_over_mean_pct": 0.2911480839567224
       },
       {
@@ -7495,53 +7471,53 @@
         "dT_edge_K": 0.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0712423508424522,
+          1.0836262488700565,
+          11.010544124864122
+        ],
+        "width": 9.926917875994066,
+        "ratio_spread": 1.0862305910491326,
+        "thickness_range_over_mean_pct": 0.2911480839567224
+      },
+      {
+        "ga": "120 mm, 46 deg",
+        "n": "L/r 0 (+55 mm, 45 deg)",
+        "T0_C": 780.0,
+        "dT_edge_K": 0.0,
+        "scenario": "Ref14_growth",
+        "window": [
+          1.0836262488700565,
+          4.725179115355646
+        ],
+        "width": 3.641552866485589,
+        "ratio_spread": 1.0862305910491326,
+        "thickness_range_over_mean_pct": 0.2911480839567224
+      },
+      {
+        "ga": "120 mm, 46 deg",
+        "n": "L/r 0 (+55 mm, 45 deg)",
+        "T0_C": 780.0,
+        "dT_edge_K": 5.0,
+        "scenario": "G01_adsorption",
+        "window": [
+          1.0836262488700565,
+          8.367086577089832
+        ],
+        "width": 7.283460328219776,
+        "ratio_spread": 1.0862305910491326,
+        "thickness_range_over_mean_pct": 2.912451017522036
+      },
+      {
+        "ga": "120 mm, 46 deg",
+        "n": "L/r 0 (+55 mm, 45 deg)",
+        "T0_C": 780.0,
+        "dT_edge_K": 5.0,
+        "scenario": "Heying_growth",
+        "window": [
+          1.0836262488700565,
           11.043741190825015
         ],
-        "width": 9.972498839982563,
-        "ratio_spread": 1.0712423508424522,
-        "thickness_range_over_mean_pct": 0.2911480839567224
-      },
-      {
-        "ga": "120 mm, 46 deg",
-        "n": "L/r 0 (+55 mm, 45 deg)",
-        "T0_C": 780.0,
-        "dT_edge_K": 0.0,
-        "scenario": "Ref14_growth",
-        "window": [
-          1.0712423508424522,
-          4.739042611237092
-        ],
-        "width": 3.6678002603946394,
-        "ratio_spread": 1.0712423508424522,
-        "thickness_range_over_mean_pct": 0.2911480839567224
-      },
-      {
-        "ga": "120 mm, 46 deg",
-        "n": "L/r 0 (+55 mm, 45 deg)",
-        "T0_C": 780.0,
-        "dT_edge_K": 5.0,
-        "scenario": "G01_adsorption",
-        "window": [
-          1.0712423508424522,
-          8.367086577089832
-        ],
-        "width": 7.295844226247381,
-        "ratio_spread": 1.0712423508424522,
-        "thickness_range_over_mean_pct": 2.912451017522036
-      },
-      {
-        "ga": "120 mm, 46 deg",
-        "n": "L/r 0 (+55 mm, 45 deg)",
-        "T0_C": 780.0,
-        "dT_edge_K": 5.0,
-        "scenario": "Heying_growth",
-        "window": [
-          1.0712423508424522,
-          11.043741190825015
-        ],
-        "width": 9.972498839982563,
-        "ratio_spread": 1.0712423508424522,
+        "width": 9.96011494195496,
+        "ratio_spread": 1.0862305910491326,
         "thickness_range_over_mean_pct": 2.912451017522036
       },
       {
@@ -7551,11 +7527,11 @@
         "dT_edge_K": 5.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0712423508424522,
+          1.0836262488700565,
           4.739042611237092
         ],
-        "width": 3.6678002603946394,
-        "ratio_spread": 1.0712423508424522,
+        "width": 3.655416362367035,
+        "ratio_spread": 1.0862305910491326,
         "thickness_range_over_mean_pct": 2.912451017522036
       },
       {
@@ -7565,11 +7541,11 @@
         "dT_edge_K": 10.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.0712423508424522,
+          1.0836262488700565,
           8.367086577089832
         ],
-        "width": 7.295844226247381,
-        "ratio_spread": 1.0712423508424522,
+        "width": 7.283460328219776,
+        "ratio_spread": 1.0862305910491326,
         "thickness_range_over_mean_pct": 6.38595480862857
       },
       {
@@ -7579,11 +7555,11 @@
         "dT_edge_K": 10.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0712423508424522,
+          1.0836262488700565,
           11.043741190825015
         ],
-        "width": 9.972498839982563,
-        "ratio_spread": 1.0712423508424522,
+        "width": 9.96011494195496,
+        "ratio_spread": 1.0862305910491326,
         "thickness_range_over_mean_pct": 6.38595480862857
       },
       {
@@ -7593,11 +7569,11 @@
         "dT_edge_K": 10.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0712423508424522,
+          1.0836262488700565,
           4.739042611237092
         ],
-        "width": 3.6678002603946394,
-        "ratio_spread": 1.0712423508424522,
+        "width": 3.655416362367035,
+        "ratio_spread": 1.0862305910491326,
         "thickness_range_over_mean_pct": 6.38595480862857
       },
       {
@@ -7608,7 +7584,7 @@
         "scenario": "G01_adsorption",
         "window": null,
         "width": 0.0,
-        "ratio_spread": 1.0686861320500074,
+        "ratio_spread": 1.0854582538967112,
         "thickness_range_over_mean_pct": null
       },
       {
@@ -7618,11 +7594,11 @@
         "dT_edge_K": -10.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0685403566085165,
-          1.1186891560919177
+          1.0808930187341443,
+          1.11517750763959
         ],
-        "width": 0.05014879948340112,
-        "ratio_spread": 1.0686861320500074,
+        "width": 0.034284488905445665,
+        "ratio_spread": 1.0854582538967112,
         "thickness_range_over_mean_pct": 0.19561355896746105
       },
       {
@@ -7632,11 +7608,11 @@
         "dT_edge_K": -10.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0685403566085165,
-          1.2783514730237557
+          1.0808930187341443,
+          1.2764421254836378
         ],
-        "width": 0.2098111164152392,
-        "ratio_spread": 1.0686861320500074,
+        "width": 0.19554910674949344,
+        "ratio_spread": 1.0854582538967112,
         "thickness_range_over_mean_pct": 0.19561355896746105
       },
       {
@@ -7645,13 +7621,10 @@
         "T0_C": 700.0,
         "dT_edge_K": -5.0,
         "scenario": "G01_adsorption",
-        "window": [
-          1.0685403566085165,
-          1.070700692874423
-        ],
-        "width": 0.002160336265906393,
-        "ratio_spread": 1.0686861320500074,
-        "thickness_range_over_mean_pct": 0.22816194829303355
+        "window": null,
+        "width": 0.0,
+        "ratio_spread": 1.0854582538967112,
+        "thickness_range_over_mean_pct": null
       },
       {
         "ga": "120 mm, 46 deg",
@@ -7660,11 +7633,11 @@
         "dT_edge_K": -5.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0685403566085165,
-          1.1260033418578514
+          1.0808930187341443,
+          1.1208170356121527
         ],
-        "width": 0.05746298524933491,
-        "ratio_spread": 1.0686861320500074,
+        "width": 0.039924016878008395,
+        "ratio_spread": 1.0854582538967112,
         "thickness_range_over_mean_pct": 0.22816194829303355
       },
       {
@@ -7674,11 +7647,11 @@
         "dT_edge_K": -5.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0685403566085165,
-          1.2906553112331374
+          1.0808930187341443,
+          1.2848084616349515
         ],
-        "width": 0.22211495462462083,
-        "ratio_spread": 1.0686861320500074,
+        "width": 0.2039154429008072,
+        "ratio_spread": 1.0854582538967112,
         "thickness_range_over_mean_pct": 0.22816194829303355
       },
       {
@@ -7687,13 +7660,10 @@
         "T0_C": 700.0,
         "dT_edge_K": 0.0,
         "scenario": "G01_adsorption",
-        "window": [
-          1.0685403566085165,
-          1.0724960092207425
-        ],
-        "width": 0.003955652612225968,
-        "ratio_spread": 1.0686861320500074,
-        "thickness_range_over_mean_pct": 0.30171460361686075
+        "window": null,
+        "width": 0.0,
+        "ratio_spread": 1.0854582538967112,
+        "thickness_range_over_mean_pct": null
       },
       {
         "ga": "120 mm, 46 deg",
@@ -7702,11 +7672,11 @@
         "dT_edge_K": 0.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0685403566085165,
-          1.1297981261818433
+          1.0808930187341443,
+          1.1253183875326318
         ],
-        "width": 0.06125776957332674,
-        "ratio_spread": 1.0686861320500074,
+        "width": 0.04442536879848746,
+        "ratio_spread": 1.0854582538967112,
         "thickness_range_over_mean_pct": 0.30171460361686075
       },
       {
@@ -7716,11 +7686,11 @@
         "dT_edge_K": 0.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0685403566085165,
-          1.2959145417844626
+          1.0808930187341443,
+          1.290922211509701
         ],
-        "width": 0.2273741851759461,
-        "ratio_spread": 1.0686861320500074,
+        "width": 0.21002919277555665,
+        "ratio_spread": 1.0854582538967112,
         "thickness_range_over_mean_pct": 0.30171460361686075
       },
       {
@@ -7729,13 +7699,10 @@
         "T0_C": 700.0,
         "dT_edge_K": 5.0,
         "scenario": "G01_adsorption",
-        "window": [
-          1.0685403566085165,
-          1.0726054919842405
-        ],
-        "width": 0.0040651353757239495,
-        "ratio_spread": 1.0686861320500074,
-        "thickness_range_over_mean_pct": 0.47976535172861234
+        "window": null,
+        "width": 0.0,
+        "ratio_spread": 1.0854582538967112,
+        "thickness_range_over_mean_pct": null
       },
       {
         "ga": "120 mm, 46 deg",
@@ -7744,11 +7711,11 @@
         "dT_edge_K": 5.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0685403566085165,
-          1.129893795272232
+          1.0808930187341443,
+          1.1281617387944924
         ],
-        "width": 0.061353438663715565,
-        "ratio_spread": 1.0686861320500074,
+        "width": 0.0472687200603481,
+        "ratio_spread": 1.0854582538967112,
         "thickness_range_over_mean_pct": 0.47976535172861234
       },
       {
@@ -7758,53 +7725,50 @@
         "dT_edge_K": 5.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0685403566085165,
+          1.0808930187341443,
+          1.2944247896646162
+        ],
+        "width": 0.21353177093047182,
+        "ratio_spread": 1.0854582538967112,
+        "thickness_range_over_mean_pct": 0.47976535172861234
+      },
+      {
+        "ga": "120 mm, 46 deg",
+        "n": "L/r 2.92 (+75 mm, 65 deg)",
+        "T0_C": 700.0,
+        "dT_edge_K": 10.0,
+        "scenario": "G01_adsorption",
+        "window": null,
+        "width": 0.0,
+        "ratio_spread": 1.0854582538967112,
+        "thickness_range_over_mean_pct": null
+      },
+      {
+        "ga": "120 mm, 46 deg",
+        "n": "L/r 2.92 (+75 mm, 65 deg)",
+        "T0_C": 700.0,
+        "dT_edge_K": 10.0,
+        "scenario": "Heying_growth",
+        "window": [
+          1.0808930187341443,
+          1.129685639341095
+        ],
+        "width": 0.048792620606950665,
+        "ratio_spread": 1.0854582538967112,
+        "thickness_range_over_mean_pct": 0.69290597058678
+      },
+      {
+        "ga": "120 mm, 46 deg",
+        "n": "L/r 2.92 (+75 mm, 65 deg)",
+        "T0_C": 700.0,
+        "dT_edge_K": 10.0,
+        "scenario": "Ref14_growth",
+        "window": [
+          1.0808930187341443,
           1.295970165620245
         ],
-        "width": 0.22742980901172838,
-        "ratio_spread": 1.0686861320500074,
-        "thickness_range_over_mean_pct": 0.47976535172861234
-      },
-      {
-        "ga": "120 mm, 46 deg",
-        "n": "L/r 2.92 (+75 mm, 65 deg)",
-        "T0_C": 700.0,
-        "dT_edge_K": 10.0,
-        "scenario": "G01_adsorption",
-        "window": [
-          1.0685403566085165,
-          1.0726054919842405
-        ],
-        "width": 0.0040651353757239495,
-        "ratio_spread": 1.0686861320500074,
-        "thickness_range_over_mean_pct": 0.69290597058678
-      },
-      {
-        "ga": "120 mm, 46 deg",
-        "n": "L/r 2.92 (+75 mm, 65 deg)",
-        "T0_C": 700.0,
-        "dT_edge_K": 10.0,
-        "scenario": "Heying_growth",
-        "window": [
-          1.0685403566085165,
-          1.129893795272232
-        ],
-        "width": 0.061353438663715565,
-        "ratio_spread": 1.0686861320500074,
-        "thickness_range_over_mean_pct": 0.69290597058678
-      },
-      {
-        "ga": "120 mm, 46 deg",
-        "n": "L/r 2.92 (+75 mm, 65 deg)",
-        "T0_C": 700.0,
-        "dT_edge_K": 10.0,
-        "scenario": "Ref14_growth",
-        "window": [
-          1.0685403566085165,
-          1.295970165620245
-        ],
-        "width": 0.22742980901172838,
-        "ratio_spread": 1.0686861320500074,
+        "width": 0.21507714688610058,
+        "ratio_spread": 1.0854582538967112,
         "thickness_range_over_mean_pct": 0.69290597058678
       },
       {
@@ -7814,11 +7778,11 @@
         "dT_edge_K": -10.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.0685403566085165,
-          1.548035382030913
+          1.0808930187341443,
+          1.5659311572484613
         ],
-        "width": 0.4794950254223964,
-        "ratio_spread": 1.0686861320500074,
+        "width": 0.485038138514317,
+        "ratio_spread": 1.0854582538967112,
         "thickness_range_over_mean_pct": 0.8563130699271791
       },
       {
@@ -7828,11 +7792,11 @@
         "dT_edge_K": -10.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0685403566085165,
-          1.8393372054629007
+          1.0808930187341443,
+          1.8606005212503303
         ],
-        "width": 0.7707968488543842,
-        "ratio_spread": 1.0686861320500074,
+        "width": 0.7797075025161859,
+        "ratio_spread": 1.0854582538967112,
         "thickness_range_over_mean_pct": 0.8563130699271791
       },
       {
@@ -7842,11 +7806,11 @@
         "dT_edge_K": -10.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0685403566085165,
-          1.9292276653638032
+          1.0808930187341443,
+          1.9498662447516963
         ],
-        "width": 0.8606873087552867,
-        "ratio_spread": 1.0686861320500074,
+        "width": 0.868973226017552,
+        "ratio_spread": 1.0854582538967112,
         "thickness_range_over_mean_pct": 0.8563130699271791
       },
       {
@@ -7856,11 +7820,11 @@
         "dT_edge_K": -5.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.0685403566085165,
-          1.711019802421045
+          1.0808930187341443,
+          1.72507356861558
         ],
-        "width": 0.6424794458125285,
-        "ratio_spread": 1.0686861320500074,
+        "width": 0.6441805498814357,
+        "ratio_spread": 1.0854582538967112,
         "thickness_range_over_mean_pct": 0.43682204214528647
       },
       {
@@ -7870,11 +7834,11 @@
         "dT_edge_K": -5.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0685403566085165,
-          2.0837133486117496
+          1.0808930187341443,
+          2.1048776366493587
         ],
-        "width": 1.015172992003233,
-        "ratio_spread": 1.0686861320500074,
+        "width": 1.0239846179152143,
+        "ratio_spread": 1.0854582538967112,
         "thickness_range_over_mean_pct": 0.43682204214528647
       },
       {
@@ -7884,11 +7848,11 @@
         "dT_edge_K": -5.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0685403566085165,
-          2.073146011643429
+          1.0808930187341443,
+          2.0724768032000025
         ],
-        "width": 1.0046056550349123,
-        "ratio_spread": 1.0686861320500074,
+        "width": 0.9915837844658582,
+        "ratio_spread": 1.0854582538967112,
         "thickness_range_over_mean_pct": 0.43682204214528647
       },
       {
@@ -7898,11 +7862,11 @@
         "dT_edge_K": 0.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.0685403566085165,
-          1.8011951913383677
+          1.0808930187341443,
+          1.7946431845200632
         ],
-        "width": 0.7326548347298512,
-        "ratio_spread": 1.0686861320500074,
+        "width": 0.7137501657859189,
+        "ratio_spread": 1.0854582538967112,
         "thickness_range_over_mean_pct": 0.31049467182100426
       },
       {
@@ -7912,11 +7876,11 @@
         "dT_edge_K": 0.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0685403566085165,
-          2.2445659729349936
+          1.0808930187341443,
+          2.236662511139266
         ],
-        "width": 1.176025616326477,
-        "ratio_spread": 1.0686861320500074,
+        "width": 1.1557694924051216,
+        "ratio_spread": 1.0854582538967112,
         "thickness_range_over_mean_pct": 0.31049467182100426
       },
       {
@@ -7926,11 +7890,11 @@
         "dT_edge_K": 0.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0685403566085165,
-          2.105983090149346
+          1.0808930187341443,
+          2.0985020479953724
         ],
-        "width": 1.0374427335408294,
-        "ratio_spread": 1.0686861320500074,
+        "width": 1.017609029261228,
+        "ratio_spread": 1.0854582538967112,
         "thickness_range_over_mean_pct": 0.31049467182100426
       },
       {
@@ -7940,11 +7904,11 @@
         "dT_edge_K": 5.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.0685403566085165,
+          1.0808930187341443,
           1.8011951913383677
         ],
-        "width": 0.7326548347298512,
-        "ratio_spread": 1.0686861320500074,
+        "width": 0.7203021726042234,
+        "ratio_spread": 1.0854582538967112,
         "thickness_range_over_mean_pct": 1.0347194030093259
       },
       {
@@ -7954,11 +7918,11 @@
         "dT_edge_K": 5.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0685403566085165,
+          1.0808930187341443,
           2.2445659729349936
         ],
-        "width": 1.176025616326477,
-        "ratio_spread": 1.0686861320500074,
+        "width": 1.1636729542008493,
+        "ratio_spread": 1.0854582538967112,
         "thickness_range_over_mean_pct": 1.0347194030093259
       },
       {
@@ -7968,11 +7932,11 @@
         "dT_edge_K": 5.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0685403566085165,
+          1.0808930187341443,
           2.105983090149346
         ],
-        "width": 1.0374427335408294,
-        "ratio_spread": 1.0686861320500074,
+        "width": 1.0250900714152016,
+        "ratio_spread": 1.0854582538967112,
         "thickness_range_over_mean_pct": 1.0347194030093259
       },
       {
@@ -7982,11 +7946,11 @@
         "dT_edge_K": 10.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.0685403566085165,
+          1.0808930187341443,
           1.8011951913383677
         ],
-        "width": 0.7326548347298512,
-        "ratio_spread": 1.0686861320500074,
+        "width": 0.7203021726042234,
+        "ratio_spread": 1.0854582538967112,
         "thickness_range_over_mean_pct": 1.8943822361633618
       },
       {
@@ -7996,11 +7960,11 @@
         "dT_edge_K": 10.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0685403566085165,
+          1.0808930187341443,
           2.2445659729349936
         ],
-        "width": 1.176025616326477,
-        "ratio_spread": 1.0686861320500074,
+        "width": 1.1636729542008493,
+        "ratio_spread": 1.0854582538967112,
         "thickness_range_over_mean_pct": 1.8943822361633618
       },
       {
@@ -8010,11 +7974,11 @@
         "dT_edge_K": 10.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0685403566085165,
+          1.0808930187341443,
           2.105983090149346
         ],
-        "width": 1.0374427335408294,
-        "ratio_spread": 1.0686861320500074,
+        "width": 1.0250900714152016,
+        "ratio_spread": 1.0854582538967112,
         "thickness_range_over_mean_pct": 1.8943822361633618
       },
       {
@@ -8024,11 +7988,11 @@
         "dT_edge_K": -10.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.0685403566085165,
-          5.67403138902749
+          1.0808930187341443,
+          5.7396249739636005
         ],
-        "width": 4.605491032418973,
-        "ratio_spread": 1.0686861320500074,
+        "width": 4.658731955229456,
+        "ratio_spread": 1.0854582538967112,
         "thickness_range_over_mean_pct": 4.16123503640859
       },
       {
@@ -8038,11 +8002,11 @@
         "dT_edge_K": -10.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0685403566085165,
-          7.549482258730663
+          1.0808930187341443,
+          7.636756644755268
         ],
-        "width": 6.480941902122146,
-        "ratio_spread": 1.0686861320500074,
+        "width": 6.555863626021123,
+        "ratio_spread": 1.0854582538967112,
         "thickness_range_over_mean_pct": 4.16123503640859
       },
       {
@@ -8052,11 +8016,11 @@
         "dT_edge_K": -10.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0685403566085165,
-          4.048790250297479
+          1.0808930187341443,
+          4.095595537220099
         ],
-        "width": 2.9802498936889625,
-        "ratio_spread": 1.0686861320500074,
+        "width": 3.0147025184859544,
+        "ratio_spread": 1.0854582538967112,
         "thickness_range_over_mean_pct": 4.16123503640859
       },
       {
@@ -8066,11 +8030,11 @@
         "dT_edge_K": -5.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.0685403566085165,
-          7.105451469692345
+          1.0808930187341443,
+          7.187592720336106
         ],
-        "width": 6.036911113083828,
-        "ratio_spread": 1.0686861320500074,
+        "width": 6.106699701601961,
+        "ratio_spread": 1.0854582538967112,
         "thickness_range_over_mean_pct": 2.125853594886372
       },
       {
@@ -8080,11 +8044,11 @@
         "dT_edge_K": -5.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0685403566085165,
-          9.42963076004877
+          1.0808930187341443,
+          9.538640253258754
         ],
-        "width": 8.361090403440254,
-        "ratio_spread": 1.0686861320500074,
+        "width": 8.457747234524609,
+        "ratio_spread": 1.0854582538967112,
         "thickness_range_over_mean_pct": 2.125853594886372
       },
       {
@@ -8094,11 +8058,11 @@
         "dT_edge_K": -5.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0685403566085165,
-          4.526212485198626
+          1.0808930187341443,
+          4.563654141260657
         ],
-        "width": 3.4576721285901098,
-        "ratio_spread": 1.0686861320500074,
+        "width": 3.4827611225265125,
+        "ratio_spread": 1.0854582538967112,
         "thickness_range_over_mean_pct": 2.125853594886372
       },
       {
@@ -8108,11 +8072,11 @@
         "dT_edge_K": 0.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.0685403566085165,
-          8.367086577089832
+          1.0808930187341443,
+          8.34052083241866
         ],
-        "width": 7.298546220481316,
-        "ratio_spread": 1.0686861320500074,
+        "width": 7.259627813684515,
+        "ratio_spread": 1.0854582538967112,
         "thickness_range_over_mean_pct": 0.3481344959197439
       },
       {
@@ -8122,53 +8086,53 @@
         "dT_edge_K": 0.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0685403566085165,
+          1.0808930187341443,
+          11.00901663562612
+        ],
+        "width": 9.928123616891975,
+        "ratio_spread": 1.0854582538967112,
+        "thickness_range_over_mean_pct": 0.3481344959197439
+      },
+      {
+        "ga": "120 mm, 46 deg",
+        "n": "L/r 2.92 (+75 mm, 65 deg)",
+        "T0_C": 780.0,
+        "dT_edge_K": 0.0,
+        "scenario": "Ref14_growth",
+        "window": [
+          1.0808930187341443,
+          4.7235356423794865
+        ],
+        "width": 3.642642623645342,
+        "ratio_spread": 1.0854582538967112,
+        "thickness_range_over_mean_pct": 0.3481344959197439
+      },
+      {
+        "ga": "120 mm, 46 deg",
+        "n": "L/r 2.92 (+75 mm, 65 deg)",
+        "T0_C": 780.0,
+        "dT_edge_K": 5.0,
+        "scenario": "G01_adsorption",
+        "window": [
+          1.0808930187341443,
+          8.367086577089832
+        ],
+        "width": 7.286193558355688,
+        "ratio_spread": 1.0854582538967112,
+        "thickness_range_over_mean_pct": 3.2561420837685264
+      },
+      {
+        "ga": "120 mm, 46 deg",
+        "n": "L/r 2.92 (+75 mm, 65 deg)",
+        "T0_C": 780.0,
+        "dT_edge_K": 5.0,
+        "scenario": "Heying_growth",
+        "window": [
+          1.0808930187341443,
           11.043741190825015
         ],
-        "width": 9.975200834216498,
-        "ratio_spread": 1.0686861320500074,
-        "thickness_range_over_mean_pct": 0.3481344959197439
-      },
-      {
-        "ga": "120 mm, 46 deg",
-        "n": "L/r 2.92 (+75 mm, 65 deg)",
-        "T0_C": 780.0,
-        "dT_edge_K": 0.0,
-        "scenario": "Ref14_growth",
-        "window": [
-          1.0685403566085165,
-          4.739042611237092
-        ],
-        "width": 3.670502254628575,
-        "ratio_spread": 1.0686861320500074,
-        "thickness_range_over_mean_pct": 0.3481344959197439
-      },
-      {
-        "ga": "120 mm, 46 deg",
-        "n": "L/r 2.92 (+75 mm, 65 deg)",
-        "T0_C": 780.0,
-        "dT_edge_K": 5.0,
-        "scenario": "G01_adsorption",
-        "window": [
-          1.0685403566085165,
-          8.367086577089832
-        ],
-        "width": 7.298546220481316,
-        "ratio_spread": 1.0686861320500074,
-        "thickness_range_over_mean_pct": 3.2561420837685264
-      },
-      {
-        "ga": "120 mm, 46 deg",
-        "n": "L/r 2.92 (+75 mm, 65 deg)",
-        "T0_C": 780.0,
-        "dT_edge_K": 5.0,
-        "scenario": "Heying_growth",
-        "window": [
-          1.0685403566085165,
-          11.043741190825015
-        ],
-        "width": 9.975200834216498,
-        "ratio_spread": 1.0686861320500074,
+        "width": 9.96284817209087,
+        "ratio_spread": 1.0854582538967112,
         "thickness_range_over_mean_pct": 3.2561420837685264
       },
       {
@@ -8178,11 +8142,11 @@
         "dT_edge_K": 5.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0685403566085165,
+          1.0808930187341443,
           4.739042611237092
         ],
-        "width": 3.670502254628575,
-        "ratio_spread": 1.0686861320500074,
+        "width": 3.658149592502947,
+        "ratio_spread": 1.0854582538967112,
         "thickness_range_over_mean_pct": 3.2561420837685264
       },
       {
@@ -8192,11 +8156,11 @@
         "dT_edge_K": 10.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.0685403566085165,
+          1.0808930187341443,
           8.367086577089832
         ],
-        "width": 7.298546220481316,
-        "ratio_spread": 1.0686861320500074,
+        "width": 7.286193558355688,
+        "ratio_spread": 1.0854582538967112,
         "thickness_range_over_mean_pct": 6.742924273357704
       },
       {
@@ -8206,11 +8170,11 @@
         "dT_edge_K": 10.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0685403566085165,
+          1.0808930187341443,
           11.043741190825015
         ],
-        "width": 9.975200834216498,
-        "ratio_spread": 1.0686861320500074,
+        "width": 9.96284817209087,
+        "ratio_spread": 1.0854582538967112,
         "thickness_range_over_mean_pct": 6.742924273357704
       },
       {
@@ -8220,11 +8184,11 @@
         "dT_edge_K": 10.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0685403566085165,
+          1.0808930187341443,
           4.739042611237092
         ],
-        "width": 3.670502254628575,
-        "ratio_spread": 1.0686861320500074,
+        "width": 3.658149592502947,
+        "ratio_spread": 1.0854582538967112,
         "thickness_range_over_mean_pct": 6.742924273357704
       },
       {
@@ -8235,7 +8199,7 @@
         "scenario": "G01_adsorption",
         "window": null,
         "width": 0.0,
-        "ratio_spread": 1.079705327148329,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": null
       },
       {
@@ -8245,11 +8209,11 @@
         "dT_edge_K": -10.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0790893925964005,
-          1.1234043187663438
+          1.0915640048912505,
+          1.118861896421133
         ],
-        "width": 0.04431492616994337,
-        "ratio_spread": 1.079705327148329,
+        "width": 0.02729789152988249,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 1.1756493299107844
       },
       {
@@ -8259,11 +8223,11 @@
         "dT_edge_K": -10.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0790893925964005,
-          1.28433415414286
+          1.0915640048912505,
+          1.2804333347677148
         ],
-        "width": 0.20524476154645943,
-        "ratio_spread": 1.079705327148329,
+        "width": 0.18886932987646432,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 1.1756493299107844
       },
       {
@@ -8274,7 +8238,7 @@
         "scenario": "G01_adsorption",
         "window": null,
         "width": 0.0,
-        "ratio_spread": 1.079705327148329,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": null
       },
       {
@@ -8284,11 +8248,11 @@
         "dT_edge_K": -5.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0790893925964005,
-          1.1281742046105034
+          1.0915640048912505,
+          1.1234612776924615
         ],
-        "width": 0.049084812014102974,
-        "ratio_spread": 1.079705327148329,
+        "width": 0.03189727280121102,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 1.067074432431485
       },
       {
@@ -8298,11 +8262,11 @@
         "dT_edge_K": -5.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0790893925964005,
-          1.2935785634565726
+          1.0915640048912505,
+          1.287643711384715
         ],
-        "width": 0.21448917086017216,
-        "ratio_spread": 1.079705327148329,
+        "width": 0.1960797064934645,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 1.067074432431485
       },
       {
@@ -8313,7 +8277,7 @@
         "scenario": "G01_adsorption",
         "window": null,
         "width": 0.0,
-        "ratio_spread": 1.079705327148329,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": null
       },
       {
@@ -8323,11 +8287,11 @@
         "dT_edge_K": 0.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0790893925964005,
-          1.129323687500915
+          1.0915640048912505,
+          1.1264167088968535
         ],
-        "width": 0.050234294904514476,
-        "ratio_spread": 1.079705327148329,
+        "width": 0.03485270400560303,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 0.9400521080172183
       },
       {
@@ -8337,11 +8301,11 @@
         "dT_edge_K": 0.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0790893925964005,
-          1.2954005151212806
+          1.0915640048912505,
+          1.2920061231474687
         ],
-        "width": 0.21631112252488016,
-        "ratio_spread": 1.079705327148329,
+        "width": 0.20044211825621816,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 0.9400521080172183
       },
       {
@@ -8352,7 +8316,7 @@
         "scenario": "G01_adsorption",
         "window": null,
         "width": 0.0,
-        "ratio_spread": 1.079705327148329,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": null
       },
       {
@@ -8362,11 +8326,11 @@
         "dT_edge_K": 5.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0790893925964005,
-          1.129347564894434
+          1.0915640048912505,
+          1.1285216059732863
         ],
-        "width": 0.05025817229803353,
-        "ratio_spread": 1.079705327148329,
+        "width": 0.03695760108203583,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 0.791637133718508
       },
       {
@@ -8376,11 +8340,11 @@
         "dT_edge_K": 5.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0790893925964005,
-          1.295432250713671
+          1.0915640048912505,
+          1.2946582065811565
         ],
-        "width": 0.2163428581172706,
-        "ratio_spread": 1.079705327148329,
+        "width": 0.203094201689906,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 0.791637133718508
       },
       {
@@ -8391,7 +8355,7 @@
         "scenario": "G01_adsorption",
         "window": null,
         "width": 0.0,
-        "ratio_spread": 1.079705327148329,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": null
       },
       {
@@ -8401,11 +8365,11 @@
         "dT_edge_K": 10.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0790893925964005,
-          1.1293714465237492
+          1.0915640048912505,
+          1.1292853117587196
         ],
-        "width": 0.05028205392734875,
-        "ratio_spread": 1.079705327148329,
+        "width": 0.03772130686746911,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 0.6394142635356521
       },
       {
@@ -8415,11 +8379,11 @@
         "dT_edge_K": 10.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0790893925964005,
-          1.29546398950507
+          1.0915640048912505,
+          1.2953951699573698
         ],
-        "width": 0.21637459690866945,
-        "ratio_spread": 1.079705327148329,
+        "width": 0.2038311650661193,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 0.6394142635356521
       },
       {
@@ -8429,11 +8393,11 @@
         "dT_edge_K": -10.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.0790893925964005,
-          1.5585844180187967
+          1.0915640048912505,
+          1.5766021434055673
         ],
-        "width": 0.4794950254223962,
-        "ratio_spread": 1.079705327148329,
+        "width": 0.48503813851431676,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 1.9506677407430508
       },
       {
@@ -8443,11 +8407,11 @@
         "dT_edge_K": -10.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0790893925964005,
-          1.8498862414507844
+          1.0915640048912505,
+          1.8712715074074364
         ],
-        "width": 0.7707968488543839,
-        "ratio_spread": 1.079705327148329,
+        "width": 0.7797075025161859,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 1.9506677407430508
       },
       {
@@ -8457,11 +8421,11 @@
         "dT_edge_K": -10.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0790893925964005,
-          1.939776701351687
+          1.0915640048912505,
+          1.961147181787483
         ],
-        "width": 0.8606873087552864,
-        "ratio_spread": 1.079705327148329,
+        "width": 0.8695831768962325,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 1.9506677407430508
       },
       {
@@ -8471,11 +8435,11 @@
         "dT_edge_K": -5.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.0790893925964005,
-          1.7215688384089287
+          1.0915640048912505,
+          1.7361800400616398
         ],
-        "width": 0.6424794458125282,
-        "ratio_spread": 1.079705327148329,
+        "width": 0.6446160351703893,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 1.4878949859731723
       },
       {
@@ -8485,11 +8449,11 @@
         "dT_edge_K": -5.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0790893925964005,
-          2.094262384599633
+          1.0915640048912505,
+          2.1161585736851456
         ],
-        "width": 1.0151729920032326,
-        "ratio_spread": 1.079705327148329,
+        "width": 1.024594568793895,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 1.4878949859731723
       },
       {
@@ -8499,11 +8463,11 @@
         "dT_edge_K": -5.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0790893925964005,
-          2.0799232404771235
+          1.0915640048912505,
+          2.076881920393722
         ],
-        "width": 1.000833847880723,
-        "ratio_spread": 1.079705327148329,
+        "width": 0.9853179155024714,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 1.4878949859731723
       },
       {
@@ -8513,11 +8477,11 @@
         "dT_edge_K": 0.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.0790893925964005,
-          1.8006269319189157
+          1.0915640048912505,
+          1.7957497677015177
         ],
-        "width": 0.7215375393225152,
-        "ratio_spread": 1.079705327148329,
+        "width": 0.7041857628102672,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 0.9671998475906989
       },
       {
@@ -8527,11 +8491,11 @@
         "dT_edge_K": 0.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0790893925964005,
-          2.243998934286444
+          1.0915640048912505,
+          2.2378205322935933
         ],
-        "width": 1.1649095416900437,
-        "ratio_spread": 1.079705327148329,
+        "width": 1.1462565274023429,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 0.9671998475906989
       },
       {
@@ -8541,11 +8505,11 @@
         "dT_edge_K": 0.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0790893925964005,
-          2.105415669928627
+          1.0915640048912505,
+          2.0996439913591436
         ],
-        "width": 1.0263262773322266,
-        "ratio_spread": 1.079705327148329,
+        "width": 1.008079986467893,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 0.9671998475906989
       },
       {
@@ -8555,11 +8519,11 @@
         "dT_edge_K": 5.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.0790893925964005,
-          1.8007713019756084
+          1.0915640048912505,
+          1.8006756387479794
         ],
-        "width": 0.721681909379208,
-        "ratio_spread": 1.079705327148329,
+        "width": 0.7091116338567289,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 0.4536259400732892
       },
       {
@@ -8569,11 +8533,11 @@
         "dT_edge_K": 5.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0790893925964005,
-          2.2442100037836976
+          1.0915640048912505,
+          2.244090783551676
         ],
-        "width": 1.1651206111872972,
-        "ratio_spread": 1.079705327148329,
+        "width": 1.1525267786604254,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 0.4536259400732892
       },
       {
@@ -8583,11 +8547,11 @@
         "dT_edge_K": 5.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0790893925964005,
-          2.1055250800475673
+          1.0915640048912505,
+          2.1054132272405006
         ],
-        "width": 1.0264356874511669,
-        "ratio_spread": 1.079705327148329,
+        "width": 1.0138492223492501,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 0.4536259400732892
       },
       {
@@ -8597,11 +8561,11 @@
         "dT_edge_K": 10.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.0790893925964005,
-          1.800915697155936
+          1.0915640048912505,
+          1.8008200262575331
         ],
-        "width": 0.7218263045595354,
-        "ratio_spread": 1.079705327148329,
+        "width": 0.7092560213662826,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 0.8239733109936189
       },
       {
@@ -8611,11 +8575,11 @@
         "dT_edge_K": 10.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0790893925964005,
-          2.244421107774358
+          1.0915640048912505,
+          2.244301876327759
         ],
-        "width": 1.1653317151779574,
-        "ratio_spread": 1.079705327148329,
+        "width": 1.1527378714365084,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 0.8239733109936189
       },
       {
@@ -8625,11 +8589,11 @@
         "dT_edge_K": 10.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0790893925964005,
-          2.1056345003149257
+          1.0915640048912505,
+          2.105522641695074
         ],
-        "width": 1.0265451077185253,
-        "ratio_spread": 1.079705327148329,
+        "width": 1.0139586368038236,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 0.8239733109936189
       },
       {
@@ -8639,11 +8603,11 @@
         "dT_edge_K": -10.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.0790893925964005,
-          5.684580425015374
+          1.0915640048912505,
+          5.750295960120707
         ],
-        "width": 4.605491032418974,
-        "ratio_spread": 1.079705327148329,
+        "width": 4.658731955229456,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 5.29926417699667
       },
       {
@@ -8653,11 +8617,11 @@
         "dT_edge_K": -10.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0790893925964005,
-          7.560031294718548
+          1.0915640048912505,
+          7.647427630912375
         ],
-        "width": 6.480941902122147,
-        "ratio_spread": 1.079705327148329,
+        "width": 6.555863626021125,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 5.29926417699667
       },
       {
@@ -8667,11 +8631,11 @@
         "dT_edge_K": -10.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0790893925964005,
-          4.059339286285363
+          1.0915640048912505,
+          4.106266523377205
         ],
-        "width": 2.9802498936889625,
-        "ratio_spread": 1.079705327148329,
+        "width": 3.014702518485955,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 5.29926417699667
       },
       {
@@ -8681,11 +8645,11 @@
         "dT_edge_K": -5.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.0790893925964005,
-          7.116000505680229
+          1.0915640048912505,
+          7.198263706493213
         ],
-        "width": 6.036911113083828,
-        "ratio_spread": 1.079705327148329,
+        "width": 6.106699701601963,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 3.295629366145693
       },
       {
@@ -8695,11 +8659,11 @@
         "dT_edge_K": -5.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0790893925964005,
-          9.440179796036654
+          1.0915640048912505,
+          9.549311239415859
         ],
-        "width": 8.361090403440254,
-        "ratio_spread": 1.079705327148329,
+        "width": 8.457747234524609,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 3.295629366145693
       },
       {
@@ -8709,11 +8673,11 @@
         "dT_edge_K": -5.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0790893925964005,
-          4.53676152118651
+          1.0915640048912505,
+          4.574760612706717
         ],
-        "width": 3.4576721285901098,
-        "ratio_spread": 1.079705327148329,
+        "width": 3.4831966078154664,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 3.295629366145693
       },
       {
@@ -8723,11 +8687,11 @@
         "dT_edge_K": 0.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.0790893925964005,
-          8.366536396103793
+          1.0915640048912505,
+          8.341638423044769
         ],
-        "width": 7.287447003507393,
-        "ratio_spread": 1.079705327148329,
+        "width": 7.250074418153519,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 1.0834488180171609
       },
       {
@@ -8737,11 +8701,11 @@
         "dT_edge_K": 0.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0790893925964005,
-          11.043198379702314
+          1.0915640048912505,
+          11.01008498545127
         ],
-        "width": 9.964108987105913,
-        "ratio_spread": 1.079705327148329,
+        "width": 9.91852098056002,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 1.0834488180171609
       },
       {
@@ -8751,11 +8715,11 @@
         "dT_edge_K": 0.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0790893925964005,
-          4.738482440845593
+          1.0915640048912505,
+          4.724719975942794
         ],
-        "width": 3.6593930482491928,
-        "ratio_spread": 1.079705327148329,
+        "width": 3.633155971051543,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 1.0834488180171609
       },
       {
@@ -8765,11 +8729,11 @@
         "dT_edge_K": 5.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.0790893925964005,
+          1.0915640048912505,
           8.367086577089832
         ],
-        "width": 7.287997184493432,
-        "ratio_spread": 1.079705327148329,
+        "width": 7.275522572198582,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 2.0401527957150902
       },
       {
@@ -8779,11 +8743,11 @@
         "dT_edge_K": 5.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0790893925964005,
+          1.0915640048912505,
           11.043741190825015
         ],
-        "width": 9.964651798228616,
-        "ratio_spread": 1.079705327148329,
+        "width": 9.952177185933765,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 2.0401527957150902
       },
       {
@@ -8793,11 +8757,11 @@
         "dT_edge_K": 5.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0790893925964005,
-          4.738824762916908
+          1.0915640048912505,
+          4.7385730200823275
         ],
-        "width": 3.659735370320507,
-        "ratio_spread": 1.079705327148329,
+        "width": 3.647009015191077,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 2.0401527957150902
       },
       {
@@ -8807,11 +8771,11 @@
         "dT_edge_K": 10.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.0790893925964005,
+          1.0915640048912505,
           8.367086577089832
         ],
-        "width": 7.287997184493432,
-        "ratio_spread": 1.079705327148329,
+        "width": 7.275522572198582,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 5.483260676084098
       },
       {
@@ -8821,11 +8785,11 @@
         "dT_edge_K": 10.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0790893925964005,
+          1.0915640048912505,
           11.043741190825015
         ],
-        "width": 9.964651798228616,
-        "ratio_spread": 1.079705327148329,
+        "width": 9.952177185933765,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 5.483260676084098
       },
       {
@@ -8835,11 +8799,11 @@
         "dT_edge_K": 10.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0790893925964005,
-          4.739042611237092
+          1.0915640048912505,
+          4.7389153532755905
         ],
-        "width": 3.659953218640691,
-        "ratio_spread": 1.079705327148329,
+        "width": 3.64735134838434,
+        "ratio_spread": 1.094954226238618,
         "thickness_range_over_mean_pct": 5.483260676084098
       },
       {
@@ -8850,7 +8814,7 @@
         "scenario": "G01_adsorption",
         "window": null,
         "width": 0.0,
-        "ratio_spread": 1.068789405436973,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": null
       },
       {
@@ -8860,11 +8824,11 @@
         "dT_edge_K": -10.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0645057984465756,
-          1.114916666825983
+          1.076811819812692,
+          1.1106308038656323
         ],
-        "width": 0.050410868379407336,
-        "ratio_spread": 1.068789405436973,
+        "width": 0.03381898405294037,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 1.0626123916260208
       },
       {
@@ -8874,11 +8838,11 @@
         "dT_edge_K": -10.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0645057984465756,
-          1.2756786761989427
+          1.076811819812692,
+          1.2720596278049898
         ],
-        "width": 0.21117287775236715,
-        "ratio_spread": 1.068789405436973,
+        "width": 0.1952478079922979,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 1.0626123916260208
       },
       {
@@ -8887,13 +8851,10 @@
         "T0_C": 700.0,
         "dT_edge_K": -5.0,
         "scenario": "G01_adsorption",
-        "window": [
-          1.0645057984465756,
-          1.0658294001529538
-        ],
-        "width": 0.0013236017063782413,
-        "ratio_spread": 1.068789405436973,
-        "thickness_range_over_mean_pct": 1.0023748488487811
+        "window": null,
+        "width": 0.0,
+        "ratio_spread": 1.0861994093569627,
+        "thickness_range_over_mean_pct": null
       },
       {
         "ga": "120 mm, 46 deg",
@@ -8902,11 +8863,11 @@
         "dT_edge_K": -5.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0645057984465756,
-          1.1211320491363825
+          1.076811819812692,
+          1.1159681797831216
         ],
-        "width": 0.05662625068980698,
-        "ratio_spread": 1.068789405436973,
+        "width": 0.039156359970429655,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 1.0023748488487811
       },
       {
@@ -8916,11 +8877,11 @@
         "dT_edge_K": -5.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0645057984465756,
-          1.2858823053071888
+          1.076811819812692,
+          1.2799596058059204
         ],
-        "width": 0.22137650686061328,
-        "ratio_spread": 1.068789405436973,
+        "width": 0.20314778599322847,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 1.0023748488487811
       },
       {
@@ -8929,13 +8890,10 @@
         "T0_C": 700.0,
         "dT_edge_K": 0.0,
         "scenario": "G01_adsorption",
-        "window": [
-          1.0645057984465756,
-          1.0687598416528257
-        ],
-        "width": 0.004254043206250113,
-        "ratio_spread": 1.068789405436973,
-        "thickness_range_over_mean_pct": 0.9331779052834506
+        "window": null,
+        "width": 0.0,
+        "ratio_spread": 1.0861994093569627,
+        "thickness_range_over_mean_pct": null
       },
       {
         "ga": "120 mm, 46 deg",
@@ -8944,11 +8902,11 @@
         "dT_edge_K": 0.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0645057984465756,
-          1.1261761700522606
+          1.076811819812692,
+          1.1209356816030112
         ],
-        "width": 0.061670371605685004,
-        "ratio_spread": 1.068789405436973,
+        "width": 0.04412386179031924,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 0.9331779052834506
       },
       {
@@ -8958,11 +8916,11 @@
         "dT_edge_K": 0.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0645057984465756,
-          1.2924751567472246
+          1.076811819812692,
+          1.2866086533267904
         ],
-        "width": 0.22796935830064902,
-        "ratio_spread": 1.068789405436973,
+        "width": 0.2097968335140985,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 0.9331779052834506
       },
       {
@@ -8971,13 +8929,10 @@
         "T0_C": 700.0,
         "dT_edge_K": 5.0,
         "scenario": "G01_adsorption",
-        "window": [
-          1.0645057984465756,
-          1.0706841148247688
-        ],
-        "width": 0.006178316378193216,
-        "ratio_spread": 1.068789405436973,
-        "thickness_range_over_mean_pct": 0.9822063853310941
+        "window": null,
+        "width": 0.0,
+        "ratio_spread": 1.0861994093569627,
+        "thickness_range_over_mean_pct": null
       },
       {
         "ga": "120 mm, 46 deg",
@@ -8986,11 +8941,11 @@
         "dT_edge_K": 5.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0645057984465756,
-          1.1286168819440332
+          1.076811819812692,
+          1.1247436088449283
         ],
-        "width": 0.06411108349745764,
-        "ratio_spread": 1.068789405436973,
+        "width": 0.04793178903223638,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 0.9822063853310941
       },
       {
@@ -9000,11 +8955,11 @@
         "dT_edge_K": 5.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0645057984465756,
-          1.2951911931841955
+          1.076811819812692,
+          1.2913150149595034
         ],
-        "width": 0.23068539473761995,
-        "ratio_spread": 1.068789405436973,
+        "width": 0.2145031951468115,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 0.9822063853310941
       },
       {
@@ -9013,13 +8968,10 @@
         "T0_C": 700.0,
         "dT_edge_K": 10.0,
         "scenario": "G01_adsorption",
-        "window": [
-          1.0645057984465756,
-          1.0716085302163698
-        ],
-        "width": 0.007102731769794257,
-        "ratio_spread": 1.068789405436973,
-        "thickness_range_over_mean_pct": 1.0812893148489928
+        "window": null,
+        "width": 0.0,
+        "ratio_spread": 1.0861994093569627,
+        "thickness_range_over_mean_pct": null
       },
       {
         "ga": "120 mm, 46 deg",
@@ -9028,11 +8980,11 @@
         "dT_edge_K": 10.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0645057984465756,
-          1.1296365606516399
+          1.076811819812692,
+          1.1271264184082936
         ],
-        "width": 0.06513076220506431,
-        "ratio_spread": 1.068789405436973,
+        "width": 0.05031459859560172,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 1.0812893148489928
       },
       {
@@ -9042,11 +8994,11 @@
         "dT_edge_K": 10.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0645057984465756,
-          1.2957451219763942
+          1.076811819812692,
+          1.2938095277527581
         ],
-        "width": 0.23123932352981869,
-        "ratio_spread": 1.068789405436973,
+        "width": 0.21699770794006623,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 1.0812893148489928
       },
       {
@@ -9056,11 +9008,11 @@
         "dT_edge_K": -10.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.0645057984465756,
-          1.544000823868972
+          1.076811819812692,
+          1.561849958327009
         ],
-        "width": 0.4794950254223964,
-        "ratio_spread": 1.068789405436973,
+        "width": 0.485038138514317,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 1.5029489452086873
       },
       {
@@ -9070,11 +9022,11 @@
         "dT_edge_K": -10.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0645057984465756,
-          1.8353026473009597
+          1.076811819812692,
+          1.856519322328878
         ],
-        "width": 0.7707968488543842,
-        "ratio_spread": 1.068789405436973,
+        "width": 0.7797075025161861,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 1.5029489452086873
       },
       {
@@ -9084,11 +9036,11 @@
         "dT_edge_K": -10.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0645057984465756,
-          1.925193107201862
+          1.076811819812692,
+          1.9474489441787004
         ],
-        "width": 0.8606873087552864,
-        "ratio_spread": 1.068789405436973,
+        "width": 0.8706371243660085,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 1.5029489452086873
       },
       {
@@ -9098,11 +9050,11 @@
         "dT_edge_K": -5.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.0645057984465756,
-          1.7069852442591038
+          1.076811819812692,
+          1.72443363213602
         ],
-        "width": 0.6424794458125282,
-        "ratio_spread": 1.068789405436973,
+        "width": 0.6476218123233282,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 1.2438026786309304
       },
       {
@@ -9112,11 +9064,11 @@
         "dT_edge_K": -5.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0645057984465756,
-          2.0796787904498086
+          1.076811819812692,
+          2.1030857504798783
         ],
-        "width": 1.015172992003233,
-        "ratio_spread": 1.068789405436973,
+        "width": 1.0262739306671864,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 1.2438026786309304
       },
       {
@@ -9126,11 +9078,11 @@
         "dT_edge_K": -5.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0645057984465756,
-          2.072141694174068
+          1.076811819812692,
+          2.068535491936205
         ],
-        "width": 1.0076358957274922,
-        "ratio_spread": 1.068789405436973,
+        "width": 0.991723672123513,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 1.2438026786309304
       },
       {
@@ -9140,11 +9092,11 @@
         "dT_edge_K": 0.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.0645057984465756,
-          1.798365043832412
+          1.076811819812692,
+          1.7905080597495346
         ],
-        "width": 0.7338592453858364,
-        "ratio_spread": 1.068789405436973,
+        "width": 0.7136962399368427,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 0.9603369607516847
       },
       {
@@ -9154,11 +9106,11 @@
         "dT_edge_K": 0.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0645057984465756,
-          2.242123977038944
+          1.076811819812692,
+          2.232546425714827
         ],
-        "width": 1.1776181785923683,
-        "ratio_spread": 1.068789405436973,
+        "width": 1.1557346059021352,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 0.9603369607516847
       },
       {
@@ -9168,11 +9120,11 @@
         "dT_edge_K": 0.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0645057984465756,
-          2.103448873009545
+          1.076811819812692,
+          2.0943859625709336
         ],
-        "width": 1.0389430745629693,
-        "ratio_spread": 1.068789405436973,
+        "width": 1.0175741427582417,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 0.9603369607516847
       },
       {
@@ -9182,11 +9134,11 @@
         "dT_edge_K": 5.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.0645057984465756,
-          1.801052434446933
+          1.076811819812692,
+          1.8009567562845703
         ],
-        "width": 0.7365466360003574,
-        "ratio_spread": 1.068789405436973,
+        "width": 0.7241449364718784,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 1.3941619299746935
       },
       {
@@ -9196,11 +9148,11 @@
         "dT_edge_K": 5.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0645057984465756,
-          2.244491136255022
+          1.076811819812692,
+          2.244371901088267
         ],
-        "width": 1.1799853378084464,
-        "ratio_spread": 1.068789405436973,
+        "width": 1.1675600812755749,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 1.3941619299746935
       },
       {
@@ -9210,11 +9162,11 @@
         "dT_edge_K": 5.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0645057984465756,
-          2.1058062125188917
+          1.076811819812692,
+          2.104606855595137
         ],
-        "width": 1.041300414072316,
-        "ratio_spread": 1.068789405436973,
+        "width": 1.027795035782445,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 1.3941619299746935
       },
       {
@@ -9224,11 +9176,11 @@
         "dT_edge_K": 10.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.0645057984465756,
-          1.8011951913383677
+          1.076811819812692,
+          1.8011011437941242
         ],
-        "width": 0.7366893928917921,
-        "ratio_spread": 1.068789405436973,
+        "width": 0.7242893239814323,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 2.257059470946405
       },
       {
@@ -9238,11 +9190,11 @@
         "dT_edge_K": 10.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0645057984465756,
+          1.076811819812692,
           2.2445659729349936
         ],
-        "width": 1.180060174488418,
-        "ratio_spread": 1.068789405436973,
+        "width": 1.1677541531223017,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 2.257059470946405
       },
       {
@@ -9252,11 +9204,11 @@
         "dT_edge_K": 10.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0645057984465756,
-          2.10591563278625
+          1.076811819812692,
+          2.105803759231665
         ],
-        "width": 1.0414098343396745,
-        "ratio_spread": 1.068789405436973,
+        "width": 1.028991939418973,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 2.257059470946405
       },
       {
@@ -9266,11 +9218,11 @@
         "dT_edge_K": -10.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.0645057984465756,
-          5.669996830865549
+          1.076811819812692,
+          5.7355437750421485
         ],
-        "width": 4.605491032418973,
-        "ratio_spread": 1.068789405436973,
+        "width": 4.658731955229457,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 3.968398950619842
       },
       {
@@ -9280,11 +9232,11 @@
         "dT_edge_K": -10.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0645057984465756,
-          7.545447700568722
+          1.076811819812692,
+          7.632675445833816
         ],
-        "width": 6.480941902122147,
-        "ratio_spread": 1.068789405436973,
+        "width": 6.555863626021124,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 3.968398950619842
       },
       {
@@ -9294,11 +9246,11 @@
         "dT_edge_K": -10.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0645057984465756,
-          4.044755692135538
+          1.076811819812692,
+          4.091514338298646
         ],
-        "width": 2.980249893688962,
-        "ratio_spread": 1.068789405436973,
+        "width": 3.0147025184859544,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 3.968398950619842
       },
       {
@@ -9308,11 +9260,11 @@
         "dT_edge_K": -5.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.0645057984465756,
-          7.101416911530404
+          1.076811819812692,
+          7.183511521414654
         ],
-        "width": 6.036911113083828,
-        "ratio_spread": 1.068789405436973,
+        "width": 6.106699701601962,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 2.4316425579601035
       },
       {
@@ -9322,11 +9274,11 @@
         "dT_edge_K": -5.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0645057984465756,
-          9.425596201886831
+          1.076811819812692,
+          9.534559054337302
         ],
-        "width": 8.361090403440256,
-        "ratio_spread": 1.068789405436973,
+        "width": 8.45774723452461,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 2.4316425579601035
       },
       {
@@ -9336,11 +9288,11 @@
         "dT_edge_K": -5.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0645057984465756,
-          4.522177927036685
+          1.076811819812692,
+          4.563014204781098
         ],
-        "width": 3.4576721285901093,
-        "ratio_spread": 1.068789405436973,
+        "width": 3.486202384968406,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 2.4316425579601035
       },
       {
@@ -9350,11 +9302,11 @@
         "dT_edge_K": 0.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.0645057984465756,
-          8.366378549687012
+          1.076811819812692,
+          8.336404746994221
         ],
-        "width": 7.301872751240436,
-        "ratio_spread": 1.068789405436973,
+        "width": 7.259592927181529,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 1.0767687663460457
       },
       {
@@ -9364,11 +9316,11 @@
         "dT_edge_K": 0.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0645057984465756,
-          11.043262309790126
+          1.076811819812692,
+          11.004900550201679
         ],
-        "width": 9.978756511343551,
-        "ratio_spread": 1.068789405436973,
+        "width": 9.928088730388987,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 1.0767687663460457
       },
       {
@@ -9378,11 +9330,11 @@
         "dT_edge_K": 0.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0645057984465756,
-          4.737520449332899
+          1.076811819812692,
+          4.719419556955048
         ],
-        "width": 3.6730146508863233,
-        "ratio_spread": 1.068789405436973,
+        "width": 3.642607737142356,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 1.0767687663460457
       },
       {
@@ -9392,11 +9344,11 @@
         "dT_edge_K": 5.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.0645057984465756,
+          1.076811819812692,
           8.367086577089832
         ],
-        "width": 7.302580778643257,
-        "ratio_spread": 1.068789405436973,
+        "width": 7.290274757277141,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 3.6686858768070394
       },
       {
@@ -9406,11 +9358,11 @@
         "dT_edge_K": 5.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0645057984465756,
+          1.076811819812692,
           11.043741190825015
         ],
-        "width": 9.97923539237844,
-        "ratio_spread": 1.068789405436973,
+        "width": 9.966929371012323,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 3.6686858768070394
       },
       {
@@ -9420,11 +9372,11 @@
         "dT_edge_K": 5.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0645057984465756,
-          4.739042611237092
+          1.076811819812692,
+          4.738854137618919
         ],
-        "width": 3.674536812790516,
-        "ratio_spread": 1.068789405436973,
+        "width": 3.662042317806227,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 3.6686858768070394
       },
       {
@@ -9434,11 +9386,11 @@
         "dT_edge_K": 10.0,
         "scenario": "G01_adsorption",
         "window": [
-          1.0645057984465756,
+          1.076811819812692,
           8.367086577089832
         ],
-        "width": 7.302580778643257,
-        "ratio_spread": 1.068789405436973,
+        "width": 7.290274757277141,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 7.169547841162804
       },
       {
@@ -9448,11 +9400,11 @@
         "dT_edge_K": 10.0,
         "scenario": "Heying_growth",
         "window": [
-          1.0645057984465756,
+          1.076811819812692,
           11.043741190825015
         ],
-        "width": 9.97923539237844,
-        "ratio_spread": 1.068789405436973,
+        "width": 9.966929371012323,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 7.169547841162804
       },
       {
@@ -9462,11 +9414,11 @@
         "dT_edge_K": 10.0,
         "scenario": "Ref14_growth",
         "window": [
-          1.0645057984465756,
+          1.076811819812692,
           4.739042611237092
         ],
-        "width": 3.674536812790516,
-        "ratio_spread": 1.068789405436973,
+        "width": 3.6622307914244,
+        "ratio_spread": 1.0861994093569627,
         "thickness_range_over_mean_pct": 7.169547841162804
       },
       {

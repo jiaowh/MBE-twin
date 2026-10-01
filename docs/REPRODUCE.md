@@ -48,7 +48,7 @@ The batch runner treats a job as complete only when its directory holds `summary
 | Ga on 200 mm at 46 deg: fills, diameter bracket, fixed T, 0.5 um/h, seed / cell / slab checks | `python scripts/sparta_batch.py cases/sparta_ga/ga_batch.json` | `data/runs/sparta_ga/ga_batch/` |
 | Ga port angle per fill | `python scripts/sparta_batch.py cases/sparta_ga/ga_angle.json` | `data/runs/sparta_ga/ga_angle/` |
 | Ga numerical checks at angle optima (one setting changed per check) | `python scripts/sparta_batch.py cases/sparta_ga/ga_checks.json` | `data/runs/sparta_ga/ga_checks/` |
-| Ga at held centre Ga flux (first correction and iterations to +/-1.5 %; exit 1 unless every state is held) | `python scripts/ga_flux_hold.py --iterate` (after `ga_batch` and `ga_angle`; runs `ga_dsmchold.json`, then generated `cases/sparta_ga/iterations/ga_dsmchold.json`) | `data/runs/sparta_ga/ga_dsmchold/` |
+| Ga at held centre Ga flux (first correction and iterations to +/-1.5 %; exit 1 unless every state is held; table: `python scripts/summarize_flux_hold.py`) | `python scripts/ga_flux_hold.py --iterate` (after `ga_batch` and `ga_angle`; runs `ga_dsmchold.json`, then generated `cases/sparta_ga/iterations/ga_dsmchold.json`) | `data/runs/sparta_ga/ga_dsmchold/` |
 | Any single run by name | `python scripts/sparta_r07.py r07_11 --out results/my_run`; `python scripts/sparta_ga.py --fill 0.12 --diameter 8e-10 --angle 58` | (add `--record NAME`) |
 
 **Post-processing only.** `python scripts/sparta_ga.py --reuse results/<batch>/<name> --record <batch>/<name>` recomputes a Ga summary from the stored dumps and `config.json`. On 2026-09-30 all Ga records were regenerated this way with the revised uniformity estimator (next section). The dumps and inputs were not rerun.

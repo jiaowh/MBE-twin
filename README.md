@@ -105,7 +105,7 @@ What the angle study means:
 - **No fixed angle is best for a whole campaign.** A fresh charge would spill beyond 48.2°, while an emptying cup prefers 54–58°. Choosing a port angle is a real design trade-off.
 - **The best values are only known roughly.** We repeated the two best cases with a different random seed, a halved time step, a finer grid and twice the simulated atoms. The results moved between 0.7 and 1.4 % at 70 mm, and between 0.9 and 1.9 % at 120 mm. So the best achievable is about 1 % for a half-empty cup and about 1.5–2 % for a nearly empty one. Pinning it down further would need much longer runs.
 
-**Keeping the gallium supply constant.** As the cup empties, less vapour escapes, so the oven must run hotter to keep the same gallium supply. The no-collision model puts the increase at about 8.5 °C between 40 and 120 mm. With collisions, the supply actually delivered at those temperatures is 4 % below to 9 % above the target. So the twin now adjusts the temperature from the collision simulation itself, repeating until the supply at the wafer centre is within ±1.5 % of the target. These runs started on the night of 30 September.
+**Keeping the gallium supply constant.** As the cup empties, less vapour escapes, so the oven must run hotter to keep the same gallium supply. The no-collision model puts the increase at about 8.5 °C between 40 and 120 mm. With collisions, the supply actually delivered at those temperatures is 4 % below to 9 % above the target. So the twin now adjusts the temperature from the collision simulation itself, repeating until the supply at the wafer centre is within ±1.5 % of the target. All twelve cases reached that, most after a single adjustment. Keeping the supply constant from a fresh to a nearly empty cup needs about 12–13 °C more at the 46° port, more than the 8.5 °C the simple model suggests, and about 21 °C if the port angle follows the best angle. The unevenness results above hold at constant supply: about 2 % fresh to 8.3 % nearly empty at 46°, and about 1 % to 2 % at the best angles.
 
 What is held constant is the gallium arriving at the centre of the wafer, not the growth rate. The growth rate also depends on the nitrogen supply and on how much gallium actually sticks, which the twin does not model yet. The runs also record the average gallium supply over the whole wafer, since the edge receives less than the centre.
 
@@ -178,19 +178,18 @@ At 740 °C, every 1 °C of temperature spread adds roughly 0.1–0.16 % to the t
 | Part | Status |
 |---|---|
 | Gallium beam model | Tested against a real experiment: shape within 1–2 %; with paired bismuth atoms included, rate within −6.5 to +5 % |
-| Gallium on the 200 mm wafer | Fill and port-angle study done, including numerical checks at the best angles; constant-gallium-supply runs running |
+| Gallium on the 200 mm wafer | Fill and port-angle study done at constant gallium supply, with numerical checks at the best angles |
 | Nitrogen source | Two published plates modelled: a narrow jet unless aimed off-centre, then about 1 % or below but sensitive to pointing; plate thickness and pattern unknown |
 | Wafer heater | First 200 mm model: zone count, edge support and control precision compared; not yet checked against any measured heater |
 | Surface growth chemistry | First model from published constants: growth window and thickness from the gallium, nitrogen and temperature maps; not yet tested against a wafer |
 | The real machine | Needs its drawings and first measurements, which will turn the representative twin into its own twin |
 
 **Next.**
-1. Finish the constant-gallium-supply runs (running) and redraw the growth window with them.
-2. Optionally add a gallium run at 4 Å, the smallest plausible atom size, to complete the range.
-3. Add the background-gas effect to the beam models, and re-check the best port angles and nitrogen aim at a realistic growth pressure.
-4. Check that a steep, off-centre nitrogen port fits next to the gallium cell and shutters, and find what the real plates look like (thickness, hole pattern, hole angles).
-5. Design a crucible shape that keeps the spray steadier as it empties. Two patented production designs are now on file: a cup with a narrow inner opening, whose output does not depend on the fill, and a Riber-type cell reported to give 0.4 % over 190 mm.
-6. Try a larger heat-spreading plate and heat shields in the heater model, and find a stronger heater experiment. Emissivity data for the silicon wafer and the boron-nitride parts are now on file. A production-heater study (R05) measured what spoils wafer temperature (ring overlap, a shiny platen, a too-small heater gap), which the heater model must be able to show, but it lacks the dimensions needed to recreate it exactly.
+1. Optionally add a gallium run at 4 Å, the smallest plausible atom size, to complete the range.
+2. Add the background-gas effect to the beam models, and re-check the best port angles and nitrogen aim at a realistic growth pressure.
+3. Check that a steep, off-centre nitrogen port fits next to the gallium cell and shutters, and find what the real plates look like (thickness, hole pattern, hole angles).
+4. Design a crucible shape that keeps the spray steadier as it empties. Two patented production designs are now on file: a cup with a narrow inner opening, whose output does not depend on the fill, and a Riber-type cell reported to give 0.4 % over 190 mm.
+5. Try a larger heat-spreading plate and heat shields in the heater model, and find a stronger heater experiment. Emissivity data for the silicon wafer and the boron-nitride parts are now on file. A production-heater study (R05) measured what spoils wafer temperature (ring overlap, a shiny platen, a too-small heater gap), which the heater model must be able to show, but it lacks the dimensions needed to recreate it exactly.
 
 The sources and calculations from the latest search are in the [physics-data note](ref/notes/PHYSICS_DATA_SEARCH_2026-09-30.md).
 
