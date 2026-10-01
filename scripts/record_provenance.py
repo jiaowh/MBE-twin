@@ -32,11 +32,19 @@ IMPACT = {
     "src/mbe_twin/heater.py": "Later change adds the optional platen; without it the model is the earlier one exactly "
                               "(regression test in tests/test_heater.py).",
     "scripts/heater_zones.py": "Later changes add the platen variations and optional heater limits to optimize(); without "
-                               "limits the iteration is the earlier one (recorded heater_zones ranges reproduce bit for bit).",
+                               "limits the iteration is the earlier one (recorded heater_zones ranges reproduce bit for bit). The later "
+                               "at_limit() is a new function; at_mean() and optimize() are unchanged.",
     "scripts/growth_window.py": "Later change adds the --held option (centre-flux-held Ga maps); the default path is unchanged.",
     "src/mbe_twin/beam.py": "Later change adds the cylinder and holder-lip occluders and an optional background-gas mean free "
                             "path; without one the flux is exactly the earlier one (tests/test_beam.py, zero-pressure regression).",
-    "scripts/nitrogen_aim_study.py": "Later changes add command-line options (--aspects/--offsets/--angles) and record fields; "
+    "scripts/layout_comparison.py": "CHANGES RESULTS. After the 2026-10-01 project audit the Ga centre flux is held absolute "
+                                    "(it followed each state's N before), every heater state is held to the element limit, and "
+                                    "the N output is bounded by a coupled feed/pressure balance. The six-layout record "
+                                    "layout_comparison.json (6aca3b3) is superseded for B and C by layout_comparison_bc.json; "
+                                    "its A, C-Ga54, R0 and D window margins were computed with the old Ga protocol.",
+    "data/design/design_envelope.json": "Later change adds the nitrogen_source and acceptance blocks and a note on the output "
+                                        "bound; every input the earlier records read is unchanged.",
+    "scripts/nitrogen_aim_study.py":"Later changes add command-line options (--aspects/--offsets/--angles) and record fields; "
                                      "the grid evaluation and seeds of the default run are unchanged.",
 }
 

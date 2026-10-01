@@ -1,0 +1,316 @@
+{
+  "schema_version": "0.1",
+  "run_id": "nitrogen_rate_limits",
+  "created_utc": "2026-10-01T11:12:34+00:00",
+  "label": "representative_chamber",
+  "validation_status": "not_validated",
+  "package_version": "0.1.0",
+  "git_commit": "161f74bec2e3302ad0a4463eb77798ad70760963-dirty",
+  "python": "3.12.13",
+  "numpy": "2.4.4",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "source_sha256": {
+    "scripts/nitrogen_rate_limits.py": "2b78853cd2e6a374a3adde646fcf5c944e5ab7820144d8cfdc21d557195e1820",
+    "scripts/layout_comparison.py": "7646eb8f1d88ae415d064279316210718eaa6f839d705c38d2344cb8678dc94e",
+    "scripts/heater_zones.py": "d9eb317630af09faeea8dda8e7d9a43b1b729b6c981db9a4c0d17843489c04de",
+    "src/mbe_twin/vacuum.py": "21b1538e8ea911537a4d42f584dd08efca470db7db594259be2d16b4c806db7b",
+    "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+    "data/runs/studies/layout_comparison_bc.json": "92c723ebbe1452f3ff4df01672cf7e264a719ee16eab47c4845e28f5557d2642"
+  },
+  "solver": null,
+  "inputs_sha256": "8d151121ebe30045c136326cf1b76cf2067c72eb08edac11cc6cc39c77d392b1",
+  "inputs": {
+    "record": "data/runs/studies/layout_comparison_bc.json",
+    "map_caches": [
+      {
+        "file": "N_2.92_46_105_f2b9d2751fb1.npz",
+        "key": "f2b9d2751fb1940fc4dfd1a40a3da71ac3cebc355d92c7fcf3c83ba846b75841",
+        "reused": true
+      },
+      {
+        "file": "Ga_46_40_99_c8359a2887e8.npz",
+        "key": "c8359a2887e8c8122e55f47a113219542e345c89f719892a05594396c0d66cb3",
+        "reused": true
+      },
+      {
+        "file": "Ga_46_70_99_507a544e71a4.npz",
+        "key": "507a544e71a4ea0d88b51cd732ddd069c27fff71894cbf4ef858752941993248",
+        "reused": true
+      },
+      {
+        "file": "Ga_46_120_99_27752fcac526.npz",
+        "key": "27752fcac5268378f9cdedf529c7c8a1e2ea14b7a8496f8236601e62805d7903",
+        "reused": true
+      },
+      {
+        "file": "N_2.92_65_75_0a615aad9bed.npz",
+        "key": "0a615aad9bed1d6b171e811df409933021a1c529c5525e1d69c5cbe8692edf95",
+        "reused": true
+      }
+    ],
+    "targets_um_h": [
+      1.0,
+      0.5,
+      0.25
+    ],
+    "n_feeds": 500,
+    "kn_valid": 10.0,
+    "plate": {
+      "holes": 2000,
+      "hole_diameter_m": 0.000343,
+      "thickness_m": 0.0005,
+      "transmission": 0.426595
+    }
+  },
+  "outputs": {
+    "feed_at_kn_valid_sccm": 5.944272827561997,
+    "rows": [
+      {
+        "layout": "B",
+        "T0_C": 700.0,
+        "S_eff_m3_s": 0.5,
+        "ceiling": "feed limit",
+        "feed_ceiling_sccm": 10.0,
+        "max_rate_eta1_um_h": 0.7042597396966629,
+        "best_feed_sccm": 8.379999999999999,
+        "best_pressure_Pa": 0.031085612300933547,
+        "eta_min": {
+          "1": 1.4149350218136714,
+          "0.5": 0.7134156862519901,
+          "0.25": 0.36265601847114953
+        }
+      },
+      {
+        "layout": "B",
+        "T0_C": 700.0,
+        "S_eff_m3_s": 0.5,
+        "ceiling": "plate free-molecular",
+        "feed_ceiling_sccm": 5.944272827561997,
+        "max_rate_eta1_um_h": 0.6680283463100561,
+        "best_feed_sccm": 5.944272827561997,
+        "best_pressure_Pa": 0.022050281685986432,
+        "eta_min": {
+          "1": 1.4907140483660148,
+          "0.5": 0.7516237632292996,
+          "0.25": 0.382078620660942
+        }
+      },
+      {
+        "layout": "B",
+        "T0_C": 700.0,
+        "S_eff_m3_s": 2.0,
+        "ceiling": "feed limit",
+        "feed_ceiling_sccm": 10.0,
+        "max_rate_eta1_um_h": 1.7115709189121797,
+        "best_feed_sccm": 10.0,
+        "best_pressure_Pa": 0.009273750686436023,
+        "eta_min": {
+          "1": 0.5863079813696532,
+          "0.5": 0.29561874180462006,
+          "0.25": 0.15027412202210347
+        }
+      },
+      {
+        "layout": "B",
+        "T0_C": 700.0,
+        "S_eff_m3_s": 2.0,
+        "ceiling": "plate free-molecular",
+        "feed_ceiling_sccm": 5.944272827561997,
+        "max_rate_eta1_um_h": 1.1465065912184225,
+        "best_feed_sccm": 5.944272827561997,
+        "best_pressure_Pa": 0.005512570421496608,
+        "eta_min": {
+          "1": 0.8731528829308868,
+          "0.5": 0.44024704567746065,
+          "0.25": 0.22379412705074758
+        }
+      },
+      {
+        "layout": "B",
+        "T0_C": 740.0,
+        "S_eff_m3_s": 0.5,
+        "ceiling": "feed limit",
+        "feed_ceiling_sccm": 10.0,
+        "max_rate_eta1_um_h": 0.6762578194319164,
+        "best_feed_sccm": 8.379999999999999,
+        "best_pressure_Pa": 0.031085612300933547,
+        "eta_min": {
+          "1": 1.4542227988108236,
+          "0.5": 0.7527034632491424,
+          "0.25": 0.4019437954683016
+        }
+      },
+      {
+        "layout": "B",
+        "T0_C": 740.0,
+        "S_eff_m3_s": 0.5,
+        "ceiling": "plate free-molecular",
+        "feed_ceiling_sccm": 5.944272827561997,
+        "max_rate_eta1_um_h": 0.6400264260453098,
+        "best_feed_sccm": 5.944272827561997,
+        "best_pressure_Pa": 0.022050281685986432,
+        "eta_min": {
+          "1": 1.532105942831709,
+          "0.5": 0.7930156576949937,
+          "0.25": 0.423470515126636
+        }
+      },
+      {
+        "layout": "B",
+        "T0_C": 740.0,
+        "S_eff_m3_s": 2.0,
+        "ceiling": "feed limit",
+        "feed_ceiling_sccm": 10.0,
+        "max_rate_eta1_um_h": 1.6835689986474331,
+        "best_feed_sccm": 10.0,
+        "best_pressure_Pa": 0.009273750686436023,
+        "eta_min": {
+          "1": 0.602587695185893,
+          "0.5": 0.31189845562085977,
+          "0.25": 0.16655383583834318
+        }
+      },
+      {
+        "layout": "B",
+        "T0_C": 740.0,
+        "S_eff_m3_s": 2.0,
+        "ceiling": "plate free-molecular",
+        "feed_ceiling_sccm": 5.944272827561997,
+        "max_rate_eta1_um_h": 1.1185046709536761,
+        "best_feed_sccm": 5.944272827561997,
+        "best_pressure_Pa": 0.005512570421496608,
+        "eta_min": {
+          "1": 0.8973972724047142,
+          "0.5": 0.4644914351512881,
+          "0.25": 0.248038516524575
+        }
+      },
+      {
+        "layout": "C",
+        "T0_C": 700.0,
+        "S_eff_m3_s": 0.5,
+        "ceiling": "feed limit",
+        "feed_ceiling_sccm": 10.0,
+        "max_rate_eta1_um_h": 0.5193478586049399,
+        "best_feed_sccm": 8.56,
+        "best_pressure_Pa": 0.031753322350356945,
+        "eta_min": {
+          "1": 1.9106246542344605,
+          "0.5": 0.9633443075876791,
+          "0.25": 0.4897041342642884
+        }
+      },
+      {
+        "layout": "C",
+        "T0_C": 700.0,
+        "S_eff_m3_s": 0.5,
+        "ceiling": "plate free-molecular",
+        "feed_ceiling_sccm": 5.944272827561997,
+        "max_rate_eta1_um_h": 0.48976343572422926,
+        "best_feed_sccm": 5.944272827561997,
+        "best_pressure_Pa": 0.022050281685986432,
+        "eta_min": {
+          "1": 2.0240728971634114,
+          "0.5": 1.0205453485086227,
+          "0.25": 0.5187815741812284
+        }
+      },
+      {
+        "layout": "C",
+        "T0_C": 700.0,
+        "S_eff_m3_s": 2.0,
+        "ceiling": "feed limit",
+        "feed_ceiling_sccm": 10.0,
+        "max_rate_eta1_um_h": 1.249823171256933,
+        "best_feed_sccm": 10.0,
+        "best_pressure_Pa": 0.009273750686436023,
+        "eta_min": {
+          "1": 0.801460111113783,
+          "0.5": 0.40409927407191626,
+          "0.25": 0.20541885555098302
+        }
+      },
+      {
+        "layout": "C",
+        "T0_C": 700.0,
+        "S_eff_m3_s": 2.0,
+        "ceiling": "plate free-molecular",
+        "feed_ceiling_sccm": 5.944272827561997,
+        "max_rate_eta1_um_h": 0.8349482699128887,
+        "best_feed_sccm": 5.944272827561997,
+        "best_pressure_Pa": 0.005512570421496608,
+        "eta_min": {
+          "1": 1.1956917187240483,
+          "0.5": 0.6028723686306994,
+          "0.25": 0.30646269358402495
+        }
+      },
+      {
+        "layout": "C",
+        "T0_C": 740.0,
+        "S_eff_m3_s": 0.5,
+        "ceiling": "feed limit",
+        "feed_ceiling_sccm": 10.0,
+        "max_rate_eta1_um_h": 0.4913459383401935,
+        "best_feed_sccm": 8.56,
+        "best_pressure_Pa": 0.031753322350356945,
+        "eta_min": {
+          "1": 1.9636759917047897,
+          "0.5": 1.0163956450580083,
+          "0.25": 0.5427554717346177
+        }
+      },
+      {
+        "layout": "C",
+        "T0_C": 740.0,
+        "S_eff_m3_s": 0.5,
+        "ceiling": "plate free-molecular",
+        "feed_ceiling_sccm": 5.944272827561997,
+        "max_rate_eta1_um_h": 0.46176151545948285,
+        "best_feed_sccm": 5.944272827561997,
+        "best_pressure_Pa": 0.022050281685986432,
+        "eta_min": {
+          "1": 2.080274293965228,
+          "0.5": 1.0767467453104385,
+          "0.25": 0.5749829709830441
+        }
+      },
+      {
+        "layout": "C",
+        "T0_C": 740.0,
+        "S_eff_m3_s": 2.0,
+        "ceiling": "feed limit",
+        "feed_ceiling_sccm": 10.0,
+        "max_rate_eta1_um_h": 1.2218212509921866,
+        "best_feed_sccm": 10.0,
+        "best_pressure_Pa": 0.009273750686436023,
+        "eta_min": {
+          "1": 0.8237138440641416,
+          "0.5": 0.42635300702227485,
+          "0.25": 0.22767258850134153
+        }
+      },
+      {
+        "layout": "C",
+        "T0_C": 740.0,
+        "S_eff_m3_s": 2.0,
+        "ceiling": "plate free-molecular",
+        "feed_ceiling_sccm": 5.944272827561997,
+        "max_rate_eta1_um_h": 0.8069463496481424,
+        "best_feed_sccm": 5.944272827561997,
+        "best_pressure_Pa": 0.005512570421496608,
+        "eta_min": {
+          "1": 1.2288918790694738,
+          "0.5": 0.6360725289761249,
+          "0.25": 0.3396628539294505
+        }
+      }
+    ]
+  },
+  "disabled_physics": [],
+  "warnings": [
+    "eta is a missing source input; eta_min above 1 means the rate is unreachable at any conversion",
+    "Nominal state only; direct-beam attenuation, scattered atoms not redeposited",
+    "Pressure from the N2 feed alone (atoms recombine on the walls); other gas loads not included"
+  ]
+}

@@ -47,7 +47,16 @@
                              "note": "Shallow finite holes (R30's 0.343 mm holes in a 0.5 mm plate) are the leading candidate. L/r 0 is the ideal reference, not a manufacturable specification. L/r 5.8 (1 mm plate) is kept only as the alternative a source might require. The vendor plate drawing is missing."},
     "active_radius_m": {"value": 0.020, "status": "assumed"},
     "output_profile": {"value": "uniform", "status": "assumed", "note": "+/-50 % radial profiles moved the optima by at most 0.24 points (nitrogen_aim_robustness)."},
-    "active_N_output_capability_atoms_s": {"value": null, "status": "missing", "note": "Total active-N output versus power and flow is not modelled and no vendor value is in hand; the comparison reports the output each layout requires."}
+    "active_N_output_capability_atoms_s": {"value": null, "status": "missing", "note": "Total active-N output versus power and flow is not modelled and no vendor value is in hand. It is bounded by the feed: at most 8.956e17 N atoms/s per sccm of N2 (nitrogen_source)."}
+  },
+  "nitrogen_source": {
+    "active_n_fraction_of_feed_atoms": {"scenarios": [1.0, 0.3, 0.1, 0.03], "status": "missing", "note": "Fraction of the N atoms in the N2 feed that leave the plate as growth-active N. No repository source gives it for any RF source (R10-R12, R18 are abstract-only or unread on this point). 1.0 is the atom-content bound (every molecule dissociated and emitted), not an achievable efficiency; the lower values bracket a partly dissociating source. Set at commissioning from the Ga-rich growth rate versus flow and power."},
+    "feed_limit_sccm": {"value": 10.0, "status": "missing", "source": "H02 (SVTA RF-6.02 sheet) lists 0.1-10 sccm; the selected source's flow range and MFC are not specified"},
+    "plate": {"value": {"holes": 2000, "hole_diameter_m": 0.343e-3, "thickness_m": 0.5e-3}, "status": "assumed", "source": "R30 (Veeco UNI-Bulb, about 2000 x #80 drill) in a 0.5 mm plate: L/r 2.92, the leading plate of the layouts. Thickness not published.", "note": "Used for the hole Knudsen check at the operating feed; Kn >= 10 is the free-molecular validity criterion of scripts/nitrogen_plate_scenarios.py."}
+  },
+  "acceptance": {
+    "thickness_uniformity_target_pct": {"value": null, "status": "missing", "note": "No agreed target (data/intake/machine_requirements.json). Results report the share of states within 1 / 2 / 3 / 5 % half-range/mean as tradeoffs, not as pass/fail."},
+    "minimum_growth_rate_um_h": {"value": null, "status": "missing", "note": "No agreed minimum. Results report the rate each operating scenario can reach."}
   },
   "pointing_and_adjustment": {
     "pointing_tolerance_deg": {"value": 0.8, "extended": 1.6, "status": "assumed", "note": "Axis tilt in any direction (a cone of half-angle tolerance)."},

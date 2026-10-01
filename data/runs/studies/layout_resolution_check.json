@@ -1,0 +1,101 @@
+{
+  "schema_version": "0.1",
+  "run_id": "layout_resolution_check",
+  "created_utc": "2026-10-01T11:10:54+00:00",
+  "label": "representative_chamber",
+  "validation_status": "verified_numerically",
+  "package_version": "0.1.0",
+  "git_commit": "161f74bec2e3302ad0a4463eb77798ad70760963-dirty",
+  "python": "3.12.13",
+  "numpy": "2.4.4",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "source_sha256": {
+    "scripts/layout_resolution_check.py": "eee7dc3f367db2a70a0da439305b1aca8731ca3e489b863bcd6c9e40bca80078",
+    "scripts/layout_comparison.py": "7646eb8f1d88ae415d064279316210718eaa6f839d705c38d2344cb8678dc94e",
+    "scripts/heater_zones.py": "d9eb317630af09faeea8dda8e7d9a43b1b729b6c981db9a4c0d17843489c04de",
+    "src/mbe_twin/beam.py": "90a90503e0a530d61bed26d42ca161b2d0e4d0d2f6d0f794ccf7fc4c9083ed93",
+    "src/mbe_twin/aperture.py": "08ff8b237847ca4a16a60b866748fa348a757f18a69abe7c8dbdaf652a466e6b",
+    "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff"
+  },
+  "solver": null,
+  "inputs_sha256": "086854318cbd4e3e01c8307f92572b3acdb3f929cf0d71deae21a86f060012e1",
+  "inputs": {
+    "record": "data/runs/studies/layout_comparison_bc.json",
+    "eta": 1.0,
+    "speed": 2.0,
+    "t0_C": 740.0,
+    "limit": "1473 K element",
+    "target": "1",
+    "grids": [
+      39,
+      77,
+      153
+    ]
+  },
+  "outputs": {
+    "rows": [
+      {
+        "layout": "B",
+        "pressure_Pa": 0.0048402969896739366,
+        "rate_nm_min": 16.666666666200154,
+        "direct": {
+          "39": {
+            "thickness_pct": 1.0551154051095533,
+            "std_pct": 0.579979140420297,
+            "rate_nm_min": 16.666666666200157
+          },
+          "77": {
+            "thickness_pct": 1.0591136018200356,
+            "std_pct": 0.5794144605048531,
+            "rate_nm_min": 16.66666666620015
+          },
+          "153": {
+            "thickness_pct": 1.065516570511906,
+            "std_pct": 0.5788715222170646,
+            "rate_nm_min": 16.666666666200157
+          }
+        },
+        "record_nominal": {
+          "thickness_pct": 1.055805277933911,
+          "std_pct": 0.5804128744357882,
+          "margin": 0.49278579415788576,
+          "q_atoms_s": 4.674417118011347e+18,
+          "rate_nm_min": 16.666666666200157
+        }
+      },
+      {
+        "layout": "C",
+        "pressure_Pa": 0.007134834764756979,
+        "rate_nm_min": 16.666666663995848,
+        "direct": {
+          "39": {
+            "thickness_pct": 0.940975561316612,
+            "std_pct": 0.6189715816887964,
+            "rate_nm_min": 16.666666663995844
+          },
+          "77": {
+            "thickness_pct": 0.9409716616690836,
+            "std_pct": 0.6192792439359827,
+            "rate_nm_min": 16.666666663995848
+          },
+          "153": {
+            "thickness_pct": 0.9457255938856227,
+            "std_pct": 0.6196848859544964,
+            "rate_nm_min": 16.66666666399585
+          }
+        },
+        "record_nominal": {
+          "thickness_pct": 0.9412307570331898,
+          "std_pct": 0.6191304122682935,
+          "margin": 0.4887565574015551,
+          "q_atoms_s": 6.890319711726856e+18,
+          "rate_nm_min": 16.66666666399585
+        }
+      }
+    ]
+  },
+  "disabled_physics": [],
+  "warnings": [
+    "Nominal state only; the Monte Carlo event sample is the same seed as the comparison"
+  ]
+}

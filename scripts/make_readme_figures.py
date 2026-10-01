@@ -282,36 +282,35 @@ def n_aim():
 
 
 def layouts():
-    """Thickness spread and nitrogen demand of the candidate layouts at equal growth rate."""
-    o = load("studies/layout_comparison.json")
-    rows = [r for r in o["rows"] if r["T0_C"] == 740.0 and r["heater_limit"] == "1473 K element"
-            and r["pressure_case"] == "2 sccm / 2 m3/s"]
-    names = [r["layout"] for r in rows]
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10.5, 3.9), gridspec_kw={"width_ratios": [1.6, 1]})
-    y = np.arange(len(rows))[::-1]
-    for yi, r in zip(y, rows):
-        g = r["grid"]["thickness_pct"]
-        ax1.plot([g[0], g[3]], [yi, yi], c=GREY, lw=6, alpha=0.35, solid_capstyle="butt")
-        ax1.plot([g[0], r["grid_0.8deg"]["thickness_pct_max"]], [yi, yi], c=BLUE, lw=6, alpha=0.6,
-                 solid_capstyle="butt")
-        ax1.plot(r["nominal"]["thickness_pct"], yi, "o", c="k", ms=5)
-    ax1.set_yticks(y, names)
+    """B and C at operating points the nitrogen feed and pumping can supply: rate reached, and uniformity versus rate."""
+    o = load("studies/layout_comparison_bc.json")
+    colours = {"B": BLUE, "C": ORANGE}
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10.5, 4.0))
+    for name, c in colours.items():
+        for speed, ls in ((2.0, "-"), (0.5, "--")):
+            pts = [r for r in o["operating_surface"] if r["layout"] == name and r["S_eff_m3_s"] == speed
+                   and r["target_um_h"] == 1.0]
+            ax1.plot([r["eta"] for r in pts], [max(r["rate_nm_min"] * 0.06, 0.0) for r in pts], ls, c=c,
+                     label=f"{name}, {speed:g} m$^3$/s pumping")
     ax1.set_xscale("log")
-    ax1.set_xlabel("thickness half-range / mean (%) on r <= 94 mm")
-    ax1.plot([], [], "o", c="k", label="nominal")
-    ax1.plot([], [], c=BLUE, lw=6, alpha=0.6, label="all uncertainties, pointing within 0.8°")
-    ax1.plot([], [], c=GREY, lw=6, alpha=0.35, label="... and pointing within 1.6°")
-    ax1.legend(frameon=False, fontsize=8, loc="upper center", bbox_to_anchor=(0.5, -0.2), ncol=3)
-    ref = rows[0]["nominal"]["q_atoms_s"]
-    for yi, r in zip(y, rows):
-        q = r["grid"]["q_atoms_s"]
-        ax2.barh(yi, r["nominal"]["q_atoms_s"] / ref, color=GREEN, alpha=0.7)
-        ax2.plot([q[0] / ref, q[1] / ref], [yi, yi], c="k", lw=1)
-    ax2.set_yticks(y, [""] * len(y))
-    ax2.axvline(1.0, c=GREY, ls=":")
-    ax2.set_xlabel(f"active-N output needed for 1 µm/h\n(relative to {names[0]})")
-    fig.suptitle("Candidate layouts at 740 °C, 1200 °C heater element limit, 2 sccm N$_2$ with 2 m$^3$/s pumping "
-                 "(representative chamber)", fontsize=10)
+    ax1.axhline(1.0, c=GREY, ls=":")
+    ax1.set_xlabel("fraction of the feed's N atoms leaving as active N")
+    ax1.set_ylabel("growth rate reached (µm/h)")
+    ax1.set_title("Rate within a 10 sccm feed limit", fontsize=10)
+    ax1.legend(frameon=False, fontsize=8)
+    rows = [r for r in o["rows"] if r["evaluated"] and r["eta"] == 1.0 and r["S_eff_m3_s"] == 2.0 and r["T0_C"] == 740.0
+            and r["heater_limit"] == "1473 K element" and r["target"] != "max"]
+    for name, c in colours.items():
+        rr = sorted((r for r in rows if r["layout"] == name), key=lambda r: float(r["target"]))
+        x = np.array([float(r["target"]) for r in rr]) * (0.97 if name == "B" else 1.03)
+        ax2.vlines(x, [r["grid"]["thickness_pct"][0] for r in rr], [r["grid_0.8deg"]["thickness_pct_max"] for r in rr],
+                   colors=c, lw=6, alpha=0.5)
+        ax2.plot(x, [r["nominal"]["thickness_pct"] for r in rr], "o", c=c, ms=5, label=f"{name}: nominal; bar = grid range, top = worst with pointing within 0.8°")
+    ax2.set_xlabel("growth rate (µm/h)")
+    ax2.set_ylabel("thickness half-range / mean (%), r <= 94 mm")
+    ax2.set_title("Uniformity versus rate (all feed atoms active, 2 m$^3$/s)", fontsize=10)
+    ax2.legend(frameon=False, fontsize=8)
+    fig.suptitle("Layouts B and C at 740 °C with the 1200 °C element limit (representative chamber)", fontsize=10)
     fig.savefig(OUT / "layouts.png")
     plt.close(fig)
 

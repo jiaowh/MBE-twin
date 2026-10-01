@@ -82,6 +82,29 @@ def at_mean(model, fractions, target_k, p0=3000.0):
     raise RuntimeError("power iteration did not converge")
 
 
+def at_limit(model, fractions, t_limit, p_hi):
+    """Solve with power fractions at the total power that puts the hottest heater ring at t_limit.
+
+    For a state that would need the element above its limit to hold the wafer mean: the power is
+    capped instead, and the wafer reaches whatever temperature that gives. p_hi is a total power
+    at which the element is at or above the limit (bisection on the total power).
+    """
+    f = np.asarray(fractions, float)
+    lo, hi = 0.0, float(p_hi)
+    if model.solve(heater_power=hi * f)["t_heater"].max() < t_limit:
+        raise ValueError("p_hi does not reach the element limit")
+    for _ in range(60):
+        mid = 0.5 * (lo + hi)
+        r = model.solve(heater_power=mid * f)
+        if r["t_heater"].max() > t_limit:
+            hi = mid
+        else:
+            lo = mid
+        if hi - lo < 1e-6 * hi:
+            break
+    return model.solve(heater_power=lo * f)
+
+
 def violation(model, r, limits):
     """Largest relative excess over the heater limits (0 when all are met).
 

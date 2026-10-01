@@ -164,54 +164,55 @@ The first published heater experiment we examined (R03) turned out to be a weak 
 - **Control precision matters.** A 5 % error in one zone's power adds 6–10 °C. So either the zone powers must be held very precisely, or the wafer temperature must be measured at more than one radius.
 - **The wafer has to be measured.** The silicon wafer's own heat emission is only known to ±10 %, and that alone shifts an unmeasured wafer by about 18 °C. In the model, one temperature sensor fixes the average but not the centre-to-edge shape; one sensor per heater zone gets close to the best shape the zones allow.
 
-- **The heater element has a temperature limit.** The best smooth-density design pushes the outer heating ring to about 1380 °C to keep the wafer edge warm. The proposal's heater is rated 1200 °C, though it does not say whether that applies to the element or the wafer. Held to 1200 °C at the element, the best design's spread grows from about 2 °C to 3 °C, and it needs some spare temperature: a wafer that emits 10 % less heat than expected would need the element about 20 °C above the limit.
+- **The heater element has a temperature limit.** The best smooth-density design pushes the outer heating ring to about 1380 °C to keep the wafer edge warm. The proposal's heater is rated 1200 °C, though it does not say whether that applies to the element or the wafer. Held to 1200 °C at the element, the best design's spread grows from about 2 °C to 3 °C, and it needs some spare temperature: a wafer that emits 10 % more heat than expected loses more from its growing face, and would need the element about 22 °C above the limit (section 8).
 
 At 740 °C, every 1 °C of temperature spread adds roughly 0.1–0.16 % to the thickness spread (section 6). So these numbers feed directly into the heater and sensor choices for the real machine.
 
 ## 8. Choosing a layout
 
-The studies above each looked at one part. To choose a machine layout, the twin now compares **complete layouts**: where every source sits, how the nitrogen source is aimed, and which heater. It checks first that the parts fit, then how each layout performs when many things are slightly off at once.
+The studies above each looked at one part. To choose a machine layout, the twin now compares **complete layouts**: where every source sits, how the nitrogen source is aimed, and which heater. It checks first that the parts fit. Then it works out what the nitrogen supply, the pumps and the heater can actually deliver, and how each layout performs there when many things are slightly off at once.
 
-**Do the parts fit?** Each source is modelled as a solid body with its mounting flange, plus a shutter blade that swings aside. The model checks that nothing collides as the shutters open, and that no part blocks another source's beam. With typical dimensions (the real drawings don't exist yet), all the candidate layouts fit, but eleven sources on one ring leave only about 9 mm between neighbours. Two practical points came out of this:
+**Do the parts fit?** Each source is modelled as a solid body with its mounting flange, plus a shutter blade that swings aside. The model checks the main collisions as the shutters open, and that no part blocks another source's beam. With typical dimensions (the real drawings don't exist yet), it found no clash. This is a screening, not a sign-off: eleven sources on one ring leave only about 9 mm between neighbours, and some combinations of parts and shutter movements are not checked yet. Two practical points came out of this:
 - To aim the nitrogen source off-centre, its port has to be built pointing at the aim point. An adjustable mount can only trim the aim by a degree or two.
 - How the source tilts matters. If it pivots at its mounting flange, about 30 cm behind the plate, a small tilt also shifts the plate sideways. That doubles how far the aim point moves: 8–16 mm per 0.8°, rather than 4–8 mm.
 
-**The same growth rate for everyone.** A layout that aims nitrogen off-centre sends more of it past the wafer. So each layout is compared at the same growth rate (1 µm per hour), and the twin reports how much active nitrogen the source must then deliver.
+**How fast can a 200 mm wafer grow?** The growth rate is set by the active nitrogen reaching the wafer, and three things limit it:
+- **The gas itself.** One standard cubic centimetre per minute (sccm) of nitrogen gas contains about 9 × 10¹⁷ nitrogen atoms per second. Only some fraction of them leaves the source as active atoms. Nobody has published that fraction for this kind of source, so the twin treats it as an unknown and asks how large it must be.
+- **The pumps.** More gas means a higher chamber pressure, and the leftover gas knocks atoms out of both beams on their way to the wafer. Past a certain flow, adding gas lowers the growth rate.
+- **The source's holes.** At high flow, the gas behind the source plate becomes dense enough that the holes no longer spray atoms in the simple way the model assumes. For the plate assumed here, that happens above about 6 sccm.
 
-**Many things off at once.** For each layout the twin evaluates about 18,000 combinations of:
+![Growth rate the nitrogen supply can reach, and thickness spread at each rate, for layouts B and C](docs/figures/layouts.png)
+
+*Left: growth rate reached within a 10 sccm gas limit, against the fraction of the gas's atoms that leave the source active, for good (2 m³/s, solid) and poor (0.5 m³/s, dashed) pumping. Right: thickness spread at three growth rates. Dot = everything as designed; bar top = worst combination with the source aimed within 0.8°. Representative chamber, 740 °C.*
+
+What this shows:
+- **1 µm/h is only just possible.** With good pumping, layout B needs at least 60 % of the gas's atoms to leave the source active, and layout C needs 82 %. With poor pumping, neither layout reaches 1 µm/h at all. If only about a third of the atoms leave active, the ceiling is about 0.5 µm/h (B) and 0.35 µm/h (C).
+- **Layout C needs about 50 % more nitrogen than B.** At 1 µm/h its gas flow is already above the point where the source's holes stop behaving simply, so its results there are outside what the model can vouch for.
+
+**Many things off at once.** At each reachable growth rate the twin evaluates about 18,000 combinations of:
 - the nitrogen source tilted up to 0.8° (or 1.6°) in any direction, about either pivot point;
 - the gallium cup fresh to nearly empty, with both plausible atom sizes;
-- heater imperfections (wafer emission ±10 %, poor or good edge contact, one zone 2 % off);
+- heater imperfections (wafer emission ±10 %, poor or good edge contact, one zone 2 % off), one at a time;
 - the holder's rim height (1–3 mm);
 - the three published droplet limits.
 
-It repeats this at five chamber pressures and with the heater held to its temperature limit.
-
-![Thickness spread of each candidate layout, nominal and with all uncertainties combined, and the nitrogen each needs for the same growth rate](docs/figures/layouts.png)
-
-*Left: dot = everything as designed; blue = the range over all combinations with pointing within 0.8°; grey = pointing within 1.6°. The scale is logarithmic. Right: active nitrogen needed for 1 µm/h, relative to layout A. Representative chamber, 740 °C.*
+As on a real machine, the gallium oven is set once and then held at a fixed output, and the heater is never allowed above its temperature limit.
 
 What the comparison shows (layouts are defined in [docs/LAYOUT_COMPARISON.md](docs/LAYOUT_COMPARISON.md)):
-- **Aiming nitrogen at the wafer centre fails** (layout A): about ±11 % thickness, whatever else is done.
-- **Two off-centre layouts work, and the model cannot choose between them.**
-  - Layout B keeps the nitrogen source on the same ring as the ovens and aims it 105 mm off-centre. It gives about ±0.8 % as designed and ±2.1 % in the worst combination.
-  - Layout C uses a steeper 65° port. It is better as designed (±0.35 %) but worse in the worst case (±3.1 %), and needs 37 % more nitrogen.
-  - Each is better in about half of the combinations. Which wins depends on how accurately the real source can be aimed and how high the holder's rim is.
-  - B is the provisional lead because it is more forgiving and needs less nitrogen. Its catch is a port machined at an unusual angle.
-- **Deep holes make everything worse**, and a perfectly thin plate is best but needs about twice the nitrogen of layout A.
-- **Combinations matter.** No single imperfection pushes B or C past about ±1.6 %, but together they reach ±2–3 %, because several of them act on the same wafer edge.
-- **Growth temperature decides the gallium side.** At 740 °C every layout stays in the smooth-growth window in every combination. At 700 °C, 4–23 % of the combinations leave it. There a steeper gallium port helps the window, though not the thickness.
-- **Chamber pressure:** results barely move up to about 2 × 10⁻³ Pa. At 4 × 10⁻² Pa every layout fails.
-- **The biggest open question is nitrogen supply.** 1 µm/h on a 200 mm wafer needs about 4–7 × 10¹⁸ active nitrogen atoms per second from the source. No manufacturer figure is in hand to show a single source can do that.
+- **Aiming nitrogen at the wafer centre fails**: about ±11 % thickness, whatever else is done.
+- **At 1 µm/h, layout B is ahead.** B gives about ±1.1 % as designed and ±2.4 % in the worst combination; C gives ±0.9 % and ±2.8 %. B is the better of the two in 70 % of the combinations.
+- **At slower growth the two are level.** C is better as designed, and their worst cases are about the same. At 740 °C, slower growth does not make the wafer more even. A fixed amount of material evaporates from the surface whatever the growth rate, so a slower layer is more affected by the temperature pattern.
+- **The heater needs spare temperature.** A wafer that emits 10 % more heat than expected loses more from its growing face. To stay at temperature it would need the heater element about 22 °C above its limit; held at the limit, the wafer runs about 15 °C cold. With the gallium supply fixed, gallium then piles up into droplets in most of those cases. That takes about a tenth of all combinations out of the smooth-growth window.
+- **Whether either layout "passes" is not yet decided.** The project has not agreed a uniformity target or a minimum growth rate. At 1 µm/h, a ±2 % target would be met in about 89 % (B) and 80 % (C) of the combinations, and a ±1 % target in about a third.
 
-[docs/LAYOUT_COMPARISON.md](docs/LAYOUT_COMPARISON.md) lists, for each layout, the conditions under which it fails and the measurement on the real machine that would show whether that condition holds.
+[docs/LAYOUT_COMPARISON.md](docs/LAYOUT_COMPARISON.md) lists, for each layout, the conditions under which it fails, the hardware information that would settle each one, and the decisions the project still has to make.
 
 ## 9. How results are made trustworthy
 
 - **Statistical error bars.** Collision simulations are statistical, like an opinion poll, so every result carries an error estimate from splitting the run into independent pieces. Important cases are rerun with another random seed, smaller time steps and finer grids.
 - **A checked unevenness formula.** Turning a noisy simulated spray into one range/mean number needs a smoothing formula. Ours was tested against exact answers: it is off by at most 0.2 points, and its random scatter is 0.3–0.5 points.
 - **Every result can be rerun.** Each run gets its own folder and records its full settings before it starts. Saved results carry a fingerprint of the exact code that produced them, and batch files spell out every setting. A generated table next to the saved results shows which version of the code made each one, what has changed since, and whether that change could alter its numbers.
-- **Automatic tests.** About 180 automatic tests check the code; all pass. Every number is traced to a published source, and unknown or unexplained results are labelled rather than hidden.
+- **Automatic tests.** About 190 automatic tests check the code; all pass. Every number is traced to a published source, and unknown or unexplained results are labelled rather than hidden.
 - **The laptop stays safe.** Simulation output is read one snapshot at a time. A new job starts only when enough memory is free, both in Windows and in the Linux environment where the collision simulator runs. When the laptop is shared with other work, jobs also wait for a free processor core, and an overnight queue stops starting new jobs at a set hour.
 
 ## 10. Where things stand
@@ -223,14 +224,14 @@ What the comparison shows (layouts are defined in [docs/LAYOUT_COMPARISON.md](do
 | Nitrogen source | Two published plates modelled: a narrow jet unless aimed off-centre, then about 1 % or below for plates up to 2 mm with 0.34 mm holes (3.5 % for the deepest R13 case) but sensitive to pointing; plate thickness and pattern unknown |
 | Wafer heater | First 200 mm model: zone count, edge support, control precision and the element temperature limit compared; not yet checked against any measured heater |
 | Surface growth chemistry | First model from published constants: growth window and thickness from the gallium, nitrogen and temperature maps; not yet tested against a wafer |
-| Complete layouts | Fit checked with typical part sizes; six layouts compared at equal growth rate under combined uncertainty and five pressures; two candidates remain (section 8) |
+| Complete layouts | No clash found with typical part sizes (screening only). Layouts B and C compared at growth rates the nitrogen supply, pumps and heater can deliver, under combined uncertainty. B is the working candidate and C the alternative; 1 µm/h needs most of the source's gas to leave as active nitrogen (section 8) |
 | The real machine | Needs its drawings and first measurements, which will turn the representative twin into its own twin |
 
 **Next.**
-1. With the hardware team: get the chamber, source, shutter and holder drawings, the nitrogen plate drawing, and the source's active-nitrogen output. Each of these can change the choice between layouts B and C (see the failure conditions in [docs/LAYOUT_COMPARISON.md](docs/LAYOUT_COMPARISON.md)).
-2. Agree the commissioning measurements, keeping the ones used to tune the model separate from the ones used to test it: temperature maps, thickness maps grown with nitrogen or gallium as the limiting supply, growth pressures, and repeated reference runs.
-3. Re-optimize the nitrogen aim at the expected growth pressure, and include where the gas-scattered atoms land.
-4. Settle the growth temperature on the machine's own scale; it decides whether the gallium port angle matters.
+1. With the hardware team: the nitrogen source's active output versus gas flow and power, the source plate drawing, the effective pumping speed for nitrogen, the heater element's real temperature rating, and the mount, holder and chamber drawings. The first three decide whether 1 µm/h is reachable at all; section 7 of [docs/LAYOUT_COMPARISON.md](docs/LAYOUT_COMPARISON.md) says what each one settles.
+2. With the project: agree the uniformity target, the minimum growth rate and the growth temperature. Until then the comparison reports trade-offs, not a pass or fail.
+3. Agree the commissioning measurements, keeping the ones used to tune the model separate from the ones used to test it: growth rate versus source flow and power, growth pressures, temperature maps, thickness maps grown with nitrogen or gallium as the limiting supply, and repeated reference runs.
+4. Then re-optimize the nitrogen aim at the pressure the real flow gives, and include where the gas-scattered atoms land.
 
 Searches for steeper nitrogen ports, more gallium atom sizes, adjustable gallium ovens and further heater variants are on hold until the comparison shows that they could change a decision.
 
