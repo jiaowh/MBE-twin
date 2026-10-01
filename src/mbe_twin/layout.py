@@ -191,6 +191,27 @@ def disk_to_disk(d1, d2, **kw):
     return float(np.min(np.linalg.norm(p[:, None, :] - q[None, :, :], axis=-1)))
 
 
+def disk_cover_radius(radius, n_r=8, n_phi=48):
+    """Largest distance from any point of the disk to its nearest `disk_points` sample.
+
+    Rings are R/n_r apart (a point is at most R/(2 n_r) from one) and samples on a ring at most
+    2 r sin(pi / (2 n_phi)) apart along it, so the triangle inequality bounds the gap.
+    """
+    return radius / (2 * n_r) + 2 * radius * np.sin(np.pi / (2 * n_phi))
+
+
+def disk_to_cylinder_bounds(disk, cyl, n_r=3, n_phi=24):
+    """(certified lower bound, sampled value) of the distance between a disk and a solid cylinder."""
+    s = disk_to_cylinder(disk, cyl, n_r=n_r, n_phi=n_phi)
+    return s - disk_cover_radius(disk.radius, n_r, n_phi), s
+
+
+def disk_to_disk_bounds(d1, d2, n_r=3, n_phi=24):
+    """(certified lower bound, sampled value) of the distance between two disks."""
+    s = disk_to_disk(d1, d2, n_r=n_r, n_phi=n_phi)
+    return s - disk_cover_radius(d1.radius, n_r, n_phi) - disk_cover_radius(d2.radius, n_r, n_phi), s
+
+
 def shutter_sweep(port, wafer, steps=10):
     """Blade positions from closed to fully open."""
     return [port.shutter(wafer, port.shutter_open_deg * k / steps) for k in range(steps + 1)]

@@ -50,8 +50,8 @@
     "active_N_output_capability_atoms_s": {"value": null, "status": "missing", "note": "Total active-N output versus power and flow is not modelled and no vendor value is in hand. It is bounded by the feed: at most 8.956e17 N atoms/s per sccm of N2 (nitrogen_source)."}
   },
   "nitrogen_source": {
-    "active_n_fraction_of_feed_atoms": {"scenarios": [1.0, 0.3, 0.1, 0.03], "status": "missing", "note": "Fraction of the N atoms in the N2 feed that leave the plate as growth-active N. No repository source gives it for any RF source (R10-R12, R18 are abstract-only or unread on this point). 1.0 is the atom-content bound (every molecule dissociated and emitted), not an achievable efficiency; the lower values bracket a partly dissociating source. Set at commissioning from the Ga-rich growth rate versus flow and power."},
-    "feed_limit_sccm": {"value": 10.0, "status": "missing", "source": "H02 (SVTA RF-6.02 sheet) lists 0.1-10 sccm; the selected source's flow range and MFC are not specified"},
+    "active_n_fraction_of_feed_atoms": {"scenarios": [1.0, 0.3, 0.1], "status": "missing", "note": "Fraction of the N atoms in the N2 feed that leave the plate as growth-active N. No repository source gives it for any RF source (R10-R12, R18 are abstract-only or unread on this point). 1.0 is the atom-content bound (every molecule dissociated and emitted), not an achievable efficiency; the lower values bracket a partly dissociating source. Set at commissioning from the Ga-rich growth rate versus flow and power. scripts/nitrogen_output_evidence.py infers a range from published growth rates (data/parameters/nitrogen_output_evidence.json)."},
+    "feed_limit_sccm": {"value": 10.0, "scenarios": [10.0, 35.0], "status": "missing", "source": "H02 (SVTA RF-6.02 sheet) lists 0.1-10 sccm; R26 ran a Veeco UNI-Bulb in its bright mode up to 34 sccm with a 4000-hole plate. The selected source's flow range and MFC are not specified"},
     "plate": {"value": {"holes": 2000, "hole_diameter_m": 0.343e-3, "thickness_m": 0.5e-3}, "status": "assumed", "source": "R30 (Veeco UNI-Bulb, about 2000 x #80 drill) in a 0.5 mm plate: L/r 2.92, the leading plate of the layouts. Thickness not published.", "note": "Used for the hole Knudsen check at the operating feed; Kn >= 10 is the free-molecular validity criterion of scripts/nitrogen_plate_scenarios.py."}
   },
   "acceptance": {
@@ -77,7 +77,7 @@
   },
   "vacuum": {
     "nitrogen_flow_sccm": {"bracket": [0.5, 2.0, 10.0], "status": "missing"},
-    "effective_N2_speed_m3_s": {"bracket": [0.5, 2.0], "status": "missing", "note": "Proposal turbo >= 2000 L/s nameplate (known); the effective speed at the chamber is not."},
+    "effective_N2_speed_m3_s": {"bracket": [0.5, 2.0, 4.0], "status": "missing", "note": "Proposal turbo >= 2000 L/s nameplate (known); the effective speed at the chamber is not. 4 m^3/s: R26 kept the growth pressure below 1e-4 Torr with more than 30 sccm using one CTI-8 and two CTI-10 cryo pumps, which implies at least about 4 m^3/s for N2."},
     "pressure_cases": {"vacuum (regression)": [0.0, 2.0], "0.5 sccm / 2 m3/s": [0.5, 2.0], "2 sccm / 2 m3/s": [2.0, 2.0], "2 sccm / 0.5 m3/s": [2.0, 0.5], "10 sccm / 0.5 m3/s": [10.0, 0.5]},
     "gas_temperature_K": {"value": 300.0, "status": "assumed"},
     "collision_diameters_m": {"Ga": [6e-10, 8e-10], "N": 3e-10, "N2": 3.7e-10, "status": "assumed (Ga: scenario range after the Bi2 result; N atom not sourced)"},
@@ -101,6 +101,14 @@
                "ga_port_deg": 54, "n": {"L_over_r": 2.92, "polar_deg": 65.0, "aim_offset_mm": 75.0}, "heater": "designed density"},
     "R0 (ideal reference)": {"description": "Thin plate (L/r 0) at its 45 deg / +55 mm optimum; designed-density heater. Not a manufacturable plate specification.",
                              "ga_port_deg": 46, "n": {"L_over_r": 0.0, "polar_deg": 45.0, "aim_offset_mm": 55.0}, "heater": "designed density"},
+    "B-p": {"description": "B re-aimed at the pressure its own feed creates at 1 um/h (eta = 1, 2 m^3/s): +97.5 mm from the same 46 deg cone (scripts/nitrogen_aim_pressure.py).",
+            "ga_port_deg": 46, "n": {"L_over_r": 2.92, "polar_deg": 46.0, "aim_offset_mm": 97.5}, "heater": "designed density"},
+    "C-p": {"description": "C re-aimed at the pressure its own feed creates at 1 um/h (eta = 1, 2 m^3/s): +67.5 mm from the 65 deg port (scripts/nitrogen_aim_pressure.py).",
+            "ga_port_deg": 46, "n": {"L_over_r": 2.92, "polar_deg": 65.0, "aim_offset_mm": 67.5}, "heater": "designed density"},
+    "B-L": {"description": "Large high-conductance plate (8000 x 0.5 mm holes in 0.5 mm over a 30 mm active radius, L/r 2.0; free-molecular to 35 sccm, scripts/nitrogen_plate_design.py) on the 46 deg cone, aimed +90 mm: the aim found at the pressure of 1 um/h with eta 0.3, 4 m^3/s and a 35 sccm feed limit (scripts/nitrogen_aim_pressure.py, record nitrogen_aim_bigplate.json). Plate not a published design; its discharge behaviour at low flow is unknown.",
+            "ga_port_deg": 46, "n": {"L_over_r": 2.0, "polar_deg": 46.0, "aim_offset_mm": 90.0, "plate_radius_m": 0.030,
+                                     "plate": {"holes": 8000, "hole_diameter_m": 0.5e-3, "thickness_m": 0.5e-3}},
+            "heater": "designed density"},
     "D (deep-hole alternative)": {"description": "L/r 5.8 (1 mm plate) at 65 deg / +110 mm, if the source hardware requires a thicker plate; designed-density heater.",
                                   "ga_port_deg": 46, "n": {"L_over_r": 5.83, "polar_deg": 65.0, "aim_offset_mm": 110.0}, "heater": "designed density"}
   }

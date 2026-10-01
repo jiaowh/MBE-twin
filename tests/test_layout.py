@@ -88,3 +88,31 @@ def test_pressure_and_mean_free_path():
     n, sigma = 1e-3 / (1.380649e-23 * 300.0), np.pi * (3.7e-10) ** 2
     assert lam == pytest.approx(1.0 / (n * sigma * np.sqrt(2.0)), rel=1e-12)  # equal speeds: sqrt(2)
     assert mean_speed(300.0, 28.0134) == pytest.approx(476.2, rel=1e-3)
+
+
+def test_disk_distance_bounds_bracket_the_exact_distance():
+    from mbe_twin.beam import DiskOccluder
+    from mbe_twin.layout import disk_cover_radius, disk_to_cylinder_bounds, disk_to_disk_bounds
+    from mbe_twin.beam import CylinderOccluder
+    # coplanar disks: exact gap = centre distance - radii; offset in angle so no sample sits on the closest points
+    d1 = DiskOccluder((0.0, 0.0, 0.0), (0.0, 0.0, 1.0), 0.03)
+    for ang in (0.0, 0.037, 0.11):
+        c = 0.075 * np.array([np.cos(ang), np.sin(ang), 0.0])
+        d2 = DiskOccluder(tuple(c), (0.0, 0.0, 1.0), 0.02)
+        exact = 0.075 - 0.05
+        lo, sampled = disk_to_disk_bounds(d1, d2, n_r=3, n_phi=24)
+        assert lo <= exact + 1e-12 <= sampled + 1e-12
+        assert sampled - lo == pytest.approx(disk_cover_radius(0.03, 3, 24) + disk_cover_radius(0.02, 3, 24))
+    # disk facing a cylinder end: exact gap is the axial distance
+    cyl = CylinderOccluder((0.0, 0.0, 0.02), (0.0, 0.0, 1.0), 0.01, 0.1)
+    lo, sampled = disk_to_cylinder_bounds(d1, cyl, n_r=3, n_phi=24)
+    assert lo <= 0.02 <= sampled + 1e-12
+    # the covering radius really covers: no point of the disk is farther than it from a sample
+    from mbe_twin.layout import disk_points
+    pts = disk_points((0, 0, 0), (0, 0, 1), 0.03, n_r=3, n_phi=24)
+    rng = np.random.default_rng(1)
+    r = 0.03 * np.sqrt(rng.random(4000))
+    t = 2 * np.pi * rng.random(4000)
+    q = np.stack([r * np.cos(t), r * np.sin(t), np.zeros_like(r)], 1)
+    nearest = np.min(np.linalg.norm(q[:, None] - pts[None], axis=-1), axis=1)
+    assert nearest.max() <= disk_cover_radius(0.03, 3, 24)

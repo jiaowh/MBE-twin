@@ -45,6 +45,7 @@ def main():
     ap.add_argument("--t0", type=float, default=740.0)
     ap.add_argument("--limit", default="1473 K element")
     ap.add_argument("--target", default="1", help="row target label (1, 0.5, 0.25 or max)")
+    ap.add_argument("--feed-limit", type=float, default=10.0)
     ap.add_argument("--out", default="results/layout_resolution_check")
     args = ap.parse_args()
     rec = json.loads((ROOT / args.record).read_text(encoding="utf-8"))
@@ -56,9 +57,13 @@ def main():
     vac = env["vacuum"]
     out_rows = []
     for name in rec["inputs"]["layouts"]:
-        row = next(r for r in rec["outputs"]["rows"] if r["layout"] == name and r["eta"] == args.eta
-                   and r["S_eff_m3_s"] == args.speed and r["T0_C"] == args.t0 and r["heater_limit"] == args.limit
-                   and r["target"] == args.target)
+        row = next((r for r in rec["outputs"]["rows"] if r["layout"] == name and r["eta"] == args.eta
+                    and r["S_eff_m3_s"] == args.speed and r.get("feed_limit_sccm", 10.0) == args.feed_limit
+                    and r["T0_C"] == args.t0 and r["heater_limit"] == args.limit and r["target"] == args.target
+                    and r.get("evaluated", True)), None)
+        if row is None:
+            print(f"{name}: no evaluated row for this scenario")
+            continue
         lay = env["layouts"][name]
         n = lay["n"]
         p = row["operating_point"]["pressure_Pa"]
@@ -69,7 +74,8 @@ def main():
         port = SourcePort("N", polar_deg=n["polar_deg"], azimuth_deg=0.0, throw=env["chamber"]["source_throw_m"]["value"],
                           aim_offset=n["aim_offset_mm"] / 1e3)
         pos, ax = port.pose(wafer)
-        src = aperture_plate_sources("N", wafer, ev, hex_holes(0.020, 0.010), throw=port.throw,
+        radius = n.get("plate_radius_m", 0.020)
+        src = aperture_plate_sources("N", wafer, ev, hex_holes(radius, radius / 2), throw=port.throw,
                                      polar_angle=np.radians(port.polar_deg), azimuth=0.0, total_rate=1.0,
                                      aim_offset=port.aim_offset, axis=ax, centre=pos)
         mfp = beam_mean_free_path(p, vac["collision_diameters_m"]["N"], 14.007, vac["beam_temperatures_K"]["N"])
@@ -80,8 +86,9 @@ def main():
             att, lipg = lc.ga_ratios(lay["ga_port_deg"], 70, rho, wafer, [p], opening, env)
             g = lc.ga_shape(lc.ga_record(lay["ga_port_deg"], 70, "8"), rho) * att["8"][0] * lipg[1]
             t_maps, _ = lc.heater_states(lay["heater"], opening, args.t0 + lc.C, rec["inputs"]["heater_limits_K"][args.limit], rho)
-            r = lc.evaluate(n_map[None, None, :], (g / g[0])[None, None, :], t_maps[:1], params, "Ref14_growth", rho, rate,
-                            k_atoms, (0, 0, 0, 0))
+            ones = np.ones((len(lc.P_GRID), m))   # attenuation already in the direct maps
+            r = lc.evaluate(n_map[None, None, :], ones, (g / g[0])[None, None, :], ones[None], t_maps[:1], params,
+                            "Ref14_growth", rho, rate, k_atoms, (0, 0, 0, 0), 1.0, 2.0, 1e3, 300.0, 0.0, 1e6)
             res[m] = {"thickness_pct": float(r["thickness"][0, 0, 0, 0]), "std_pct": float(r["std"][0, 0, 0, 0]),
                       "rate_nm_min": float(r["mean_net"][0, 0, 0, 0])}
             print(f"{name}: {m:3d} radii, direct at {p:.2e} Pa: thickness {res[m]['thickness_pct']:.3f} %, "
@@ -93,7 +100,7 @@ def main():
     manifest = build_manifest(
         "layout_resolution_check", label="representative_chamber", validation_status="verified_numerically",
         inputs={"record": args.record, "eta": args.eta, "speed": args.speed, "t0_C": args.t0, "limit": args.limit,
-                "target": args.target,
+                "target": args.target, "feed_limit": args.feed_limit,
                 "grids": GRIDS},
         outputs={"rows": out_rows},
         sources=[Path(__file__), ROOT / "scripts/layout_comparison.py", ROOT / "scripts/heater_zones.py",

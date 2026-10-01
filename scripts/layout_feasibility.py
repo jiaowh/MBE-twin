@@ -12,9 +12,11 @@ bodies are spread out. The azimuth step between neighbours on the cone is propor
 sum of their body radii, so large bodies get more room.
 
 Checks, all with the assumed dimensions of the envelope:
-1. Clearance (m) between every pair of solids: bodies (as capsules, a lower bound), flanges,
-   shutter blades over their whole opening sweep against the other sources' bodies and
-   blades (closed and open), and every solid against the holder/heater assembly. The swing
+1. Clearance (m) between every pair of solids, as a certified lower bound: bodies as capsules,
+   flanges and shutter blades as disks whose sampled distances are reduced by the samples'
+   covering radius. Pairs: body/body, flange/flange, flange/body, flange/blade, blade/body over
+   each blade's opening sweep, blade/blade with both shutters at every pair of sweep positions,
+   and every solid against the holder/heater assembly (a capsule for the bodies). The swing
    side of each shutter (two choices per source) is chosen to maximize the smallest
    clearance (exhaustive over 2^11 combinations). A layout fails if any clearance is below
    the margin (5 mm).
@@ -39,8 +41,9 @@ from pathlib import Path
 import numpy as np
 
 from mbe_twin.beam import HolderLip, rotation_averaged_flux
-from mbe_twin.layout import (SourcePort, cylinder_clearance, disk_points, disk_to_cylinder, disk_to_disk,
-                             holder_assembly, shutter_sweep, wafer_frame)
+from mbe_twin.beam import DiskOccluder
+from mbe_twin.layout import (SourcePort, cylinder_clearance, disk_to_cylinder_bounds, disk_to_disk_bounds,
+                             holder_assembly, point_to_cylinder, shutter_sweep, wafer_frame)
 from mbe_twin.manifest import build_manifest, write_manifest
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -79,33 +82,64 @@ def build_ports(env, layout):
     return ports
 
 
-def pair_clearances(p, q, wafer):
-    """Smallest clearance between ports p and q for each pair of shutter sides (2 x 2)."""
-    out = np.empty((2, 2))
+SWEEP_STEPS = 6
+DISK_SAMPLING = {"n_r": 4, "n_phi": 36}
+REFINED = {"n_r": 16, "n_phi": 128}   # covering radius 0.056 R: 2.6 mm on a 46 mm Ga blade
+
+
+def flange_disk(port, wafer):
+    """The mounting flange as a disk at the body's far end, normal to the source axis."""
+    return DiskOccluder(tuple(port.flange_centre(wafer)), tuple(port.pose(wafer)[1]), port.flange_radius, name=f"{port.name} flange")
+
+
+def pair_clearances(p, q, wafer, sampling=None):
+    """Certified lower bound (m) on the clearance between ports p and q, for each pair of shutter sides (2 x 2).
+
+    Solids: bodies (capsules: a lower bound), flanges and shutter blades (disks: sampled distance minus the
+    samples' covering radius, mbe_twin.layout.disk_to_disk_bounds). Pairs: body/body, flange/flange,
+    flange/body (both ways), flange/blade and blade/body over each blade's sweep, and blade/blade with both
+    shutters at every pair of sweep positions (moving together or one at a time). Where the bound is below the
+    margin but the sampled value is not, the combination is recomputed with REFINED sampling, so that a loose
+    bound is not reported as a conflict. Also returns the body and flange gaps and the closest sampled value
+    (an upper estimate of the same minimum)."""
+    out, sampled = np.empty((2, 2)), np.empty((2, 2))
     body_gap = cylinder_clearance(p.body(wafer), q.body(wafer))
-    fp = disk_points(p.flange_centre(wafer), p.pose(wafer)[1], p.flange_radius, n_r=1, n_phi=72)
-    fq = disk_points(q.flange_centre(wafer), q.pose(wafer)[1], q.flange_radius, n_r=1, n_phi=72)
-    flange_gap = float(np.min(np.linalg.norm(fp[:, None] - fq[None], axis=-1)))
     for i, si in enumerate((1, -1)):
         for j, sj in enumerate((1, -1)):
-            pp, qq = replace(p, shutter_side=si), replace(q, shutter_side=sj)
-            gaps = [body_gap, flange_gap]
-            for a, b in ((pp, qq), (qq, pp)):
-                bb = b.body(wafer)
-                static = (b.shutter(wafer, 0.0), b.shutter(wafer))
-                for blade in shutter_sweep(a, wafer, steps=6):
-                    gaps.append(disk_to_cylinder(blade, bb, n_r=3, n_phi=24))
-                    gaps.extend(disk_to_disk(blade, s, n_r=3, n_phi=24) for s in static)
-            out[i, j] = min(gaps)
-    return out, body_gap, flange_gap
+            for smp in (sampling or DISK_SAMPLING, REFINED):
+                lo, hi, flange_lo = _combo_gaps(replace(p, shutter_side=si), replace(q, shutter_side=sj), wafer, smp, body_gap)
+                if lo >= MARGIN or hi < MARGIN:
+                    break
+            out[i, j], sampled[i, j] = lo, hi
+    return out, body_gap, flange_lo, sampled
+
+
+def _combo_gaps(pp, qq, wafer, smp, body_gap):
+    fp, fq = flange_disk(pp, wafer), flange_disk(qq, wafer)
+    gaps = [disk_to_disk_bounds(fp, fq, **smp), disk_to_cylinder_bounds(fp, qq.body(wafer), **smp),
+            disk_to_cylinder_bounds(fq, pp.body(wafer), **smp)]
+    flange_lo = min(g[0] for g in gaps)
+    sw_p, sw_q = shutter_sweep(pp, wafer, steps=SWEEP_STEPS), shutter_sweep(qq, wafer, steps=SWEEP_STEPS)
+    for blades, body, fl in ((sw_p, qq.body(wafer), fq), (sw_q, pp.body(wafer), fp)):
+        for blade in blades:
+            gaps.append(disk_to_cylinder_bounds(blade, body, **smp))
+            gaps.append(disk_to_disk_bounds(blade, fl, **smp))
+    for bp in sw_p:
+        for bq in sw_q:
+            gaps.append(disk_to_disk_bounds(bp, bq, **smp))
+    return min([body_gap] + [g[0] for g in gaps]), min([body_gap] + [g[1] for g in gaps]), flange_lo
 
 
 def holder_clearance(p, wafer, assembly):
-    gaps = [disk_to_cylinder(b, assembly, n_r=3, n_phi=24) for b in shutter_sweep(p, wafer, steps=6)]
+    """Certified lower bound on the clearance of the port's blade (over its sweep) and body to the holder assembly."""
+    gaps = [disk_to_cylinder_bounds(b, assembly, **DISK_SAMPLING)[0] for b in shutter_sweep(p, wafer, steps=SWEEP_STEPS)]
+    # body: exact distance from points on its axis to the solid assembly, less the body radius and half the
+    # point spacing (a certified bound; a capsule would round the 130 mm assembly's face and over-state the risk)
     pos, a = p.pose(wafer)
-    axis_pts = pos[None, :] - np.linspace(0.0, p.body_length, 30)[:, None] * a
-    from mbe_twin.layout import point_to_cylinder
-    gaps.append(float(point_to_cylinder(axis_pts, assembly).min()) - p.body_radius)
+    n_ax = 61
+    axis_pts = pos[None, :] - np.linspace(0.0, p.body_length, n_ax)[:, None] * a
+    gaps.append(float(point_to_cylinder(axis_pts, assembly).min()) - p.body_radius - 0.5 * p.body_length / (n_ax - 1))
+    gaps.append(disk_to_cylinder_bounds(flange_disk(p, wafer), assembly, **DISK_SAMPLING)[0])
     return min(gaps)
 
 
@@ -177,9 +211,9 @@ def main():
     for name in names:
         layout = env["layouts"][name]
         ports = build_ports(env, layout)
-        table, body_gaps, flange_gaps = {}, {}, {}
+        table, body_gaps, flange_gaps, sampled = {}, {}, {}, {}
         for i, j in itertools.combinations(range(len(ports)), 2):
-            table[(i, j)], body_gaps[(i, j)], flange_gaps[(i, j)] = pair_clearances(ports[i], ports[j], wafer)
+            table[(i, j)], body_gaps[(i, j)], flange_gaps[(i, j)], sampled[(i, j)] = pair_clearances(ports[i], ports[j], wafer)
         worst, sides = best_sides(ports, table)
         ports = [replace(p, shutter_side=(1, -1)[s]) for p, s in zip(ports, sides)]
         holder = {p.name: holder_clearance(p, wafer, assembly) for p in ports}
@@ -204,14 +238,16 @@ def main():
                  for k, o in openings.items() for h in (0.001, 0.002, 0.003)}
         flange_pos = {p.name: [float(np.hypot(*p.flange_centre(wafer)[:2])), float(-p.flange_centre(wafer)[2])] for p in ports}
         ok = worst >= MARGIN and min(holder.values()) >= MARGIN
+        worst_sampled = min(sampled[k][sides[k[0]], sides[k[1]]] for k in sampled)
         row = {"layout": name, "feasible_at_margin": bool(ok), "min_clearance_m": float(worst),
+               "min_clearance_sampled_m": float(worst_sampled), "clearance_is": "certified lower bound (sampled value: upper estimate)",
                "closest_pairs": pairs[:5], "holder_clearance_m": holder, "shutter_sides": {p.name: p.shutter_side for p in ports},
                "port_azimuths_deg": {p.name: p.azimuth_deg for p in ports}, "port_polar_deg": {p.name: p.polar_deg for p in ports},
                "flange_centre_radial_and_depth_m": flange_pos, "holder_opening_m": opening,
                "shadowing": shadows, "lip_shadow_inner_edge_mm": reach, "nitrogen_adjustment": adj, "rho_m": RHO.tolist()}
         rows.append(row)
-        print(f"\n{name}: {'FEASIBLE' if ok else 'CONFLICT'} at {1e3 * MARGIN:.0f} mm margin; smallest clearance "
-              f"{1e3 * worst:.1f} mm ({pairs[0][1]}-{pairs[0][2]}); holder/heater assembly {1e3 * min(holder.values()):.0f} mm "
+        print(f"\n{name}: {'NO CONFLICT FOUND' if ok else 'CONFLICT'} at {1e3 * MARGIN:.0f} mm margin; smallest clearance "
+              f"{1e3 * worst:.1f} mm certified ({1e3 * worst_sampled:.1f} sampled; {pairs[0][1]}-{pairs[0][2]}); holder/heater assembly {1e3 * min(holder.values()):.0f} mm "
               f"({min(holder, key=holder.get)})", flush=True)
         for g, s in shadows.items():
             for k, v in s.items():
@@ -230,7 +266,8 @@ def main():
         outputs={"rows": rows},
         sources=[Path(__file__), ROOT / "src/mbe_twin/layout.py", ROOT / "src/mbe_twin/beam.py", ENVELOPE],
         warnings=["Simplified solids with assumed dimensions; no chamber drawing, cryoshroud, RHEED or pyrometer lines of sight",
-                  "Body clearance treats bodies as capsules (a lower bound); blades are thin disks sampled on rings",
+                  "Clearances are certified lower bounds for the modelled solids (capsule bodies, disk flanges and blades); "
+                  "real cell, shutter and flange drawings may differ",
                   "Shadowing with flat cos^n emitters; the beam models of the comparison are not used here"])
     print(f"Wrote {write_manifest(manifest, Path(args.out) / 'manifest.json')}")
 

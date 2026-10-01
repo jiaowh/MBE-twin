@@ -1,206 +1,254 @@
-# Layouts B and C at physically achievable operating points
+# Source layouts at physically achievable operating points
 
-Status: 2026-10-01 (second revision, after the [project audit](PROJECT_AUDIT_2026-10-01.md)), `representative_chamber`. These are model comparisons on a typical 200 mm RIBER/Veeco-class geometry, not predictions for the proposed machine. No nitrogen map, heater result or growth model here is validated against a measurement.
+Status: 2026-10-02 (third revision, after the [project audit](PROJECT_AUDIT_2026-10-01.md) and its [follow-up](PROJECT_AUDIT_FOLLOWUP_2026-10-01.md)), `representative_chamber`. These are model comparisons on a typical 200 mm RIBER/Veeco-class geometry, not predictions for the proposed machine. No nitrogen map, heater result or growth model here is validated against a measurement.
 
-**Question this document answers:** under what physically achievable conditions does layout B or layout C meet the project's requirements?
-**Short answer:** neither can be called a pass yet, because two requirements are not agreed: the uniformity target and the minimum growth rate. What the model can say is which conditions each layout needs, and what it trades. Section 1 gives those conditions; section 7 lists the hardware inputs that decide them.
+**The question:** under what physically achievable conditions does a layout meet the project's requirements?
 
-Records:
-- Inputs: the [design envelope](../data/design/design_envelope.json), where every input is marked known, assumed or missing.
-- [layout_comparison_bc.json](../data/runs/studies/layout_comparison_bc.json): the uncertainty grid at each operating point.
-- [nitrogen_rate_limits.json](../data/runs/studies/nitrogen_rate_limits.json): conversion thresholds and maximum rates.
+**The short answer:** no layout can be called a pass, because neither a uniformity target nor a minimum growth rate is agreed (section 8). The model can, however, say which conditions each layout needs, and where its results are inside the model's validity. Two conditions dominate:
+- **Nitrogen supply sets the reachable growth rate.** That rate depends on a source conversion fraction nobody has published. The literature implies it lies between 6 and 57 % at high flow.
+- **The aperture plate must stay free-molecular at the flow that rate needs.** With the published-type plate, it stops being free-molecular above about 6 sccm.
+
+Records (all in `data/runs/studies/`):
+- [layout_comparison_bc.json](../data/runs/studies/layout_comparison_bc.json): uncertainty grid with a per-state nitrogen balance.
+- [nitrogen_rate_limits.json](../data/runs/studies/nitrogen_rate_limits.json): minimum conversion fractions and the highest reachable rates.
+- [nitrogen_output_evidence.json](../data/runs/studies/nitrogen_output_evidence.json): conversion fractions inferred from the literature.
+- [nitrogen_aim_pressure.json](../data/runs/studies/nitrogen_aim_pressure.json) and [nitrogen_aim_bigplate.json](../data/runs/studies/nitrogen_aim_bigplate.json): aims re-optimized at the operating pressure.
+- [heater_robustness.json](../data/runs/studies/heater_robustness.json): combined heater errors and Ga control.
+- [layout_feasibility_bc.json](../data/runs/studies/layout_feasibility_bc.json): certified clearances.
 - [layout_resolution_check.json](../data/runs/studies/layout_resolution_check.json): radial resolution.
-- [layout_feasibility.json](../data/runs/studies/layout_feasibility.json): mechanical checks.
+- `results/sparta_hole/manifest.json`: hole-scale DSMC (section 6).
 
-Commands are in [REPRODUCE.md](REPRODUCE.md).
+Inputs are in the [design envelope](../data/design/design_envelope.json); commands are in [REPRODUCE.md](REPRODUCE.md); hardware requests are in [HARDWARE_REQUESTS.md](HARDWARE_REQUESTS.md).
 
 ## 1. Summary
 
-**Nitrogen supply decides the growth rate before uniformity does.** 1 sccm of N2 carries at most 8.96e17 N atoms/s. Only a fraction eta of these leaves the plate as growth-active N, and the repository has no source for eta for any RF source. More feed raises the growth pressure, which attenuates both beams. Solving feed, pressure and attenuation together:
+**Layouts compared.** All use the same Ga cells (46 deg cone), 350 mm throw, designed-density heater (1 mm holder overlap) and 1200 C element limit.
 
-| 740 C, 1200 C element limit | B (46 deg, +105 mm) | C (65 deg, +75 mm) |
+| Layout | Nitrogen port | Aim | Plate |
+|---|---|---|---|
+| B | 46 deg (cell cone) | +105 mm (vacuum optimum) | R30 hole set: 2000 x 0.343 mm in 0.5 mm, L/r 2.92, 20 mm active radius |
+| C | 65 deg | +75 mm (vacuum optimum) | as B |
+| **B-p** | 46 deg | **+97.5 mm** (optimum at the 1 um/h pressure) | as B |
+| C-p | 65 deg | +67.5 mm (optimum at the 1 um/h pressure) | as B |
+| **B-L** | 46 deg | **+90 mm** (optimum at its operating pressure) | **8000 x 0.5 mm in 0.5 mm, L/r 2.0, 30 mm active radius** (designed here, not a published plate) |
+
+**What each layout needs to reach a rate inside the model's validity** (740 C):
+
+| | B-p | B-L |
 |---|---|---|
-| Active N for 1 um/h at the self-consistent pressure (2 m^3/s) | 4.7e18 /s (4.2-5.2e18 over the grid) | 6.9e18 /s (6.3-7.6e18) |
-| N2 feed for 1 um/h if every feed atom were active (eta = 1) | 5.2 sccm, 4.8e-3 Pa | 7.7 sccm, 7.1e-3 Pa |
-| Smallest eta for 1 / 0.5 / 0.25 um/h within the 10 sccm feed limit, 2 m^3/s | 0.60 / 0.31 / 0.17 | 0.82 / 0.43 / 0.23 |
-| The same, 0.5 m^3/s | unreachable / 0.75 / 0.40 | unreachable / unreachable / 0.54 |
-| Highest rate at eta = 1: 2 / 0.5 m^3/s | 1.68 / 0.68 um/h | 1.22 / 0.49 um/h |
-| Highest rate at eta = 1 with the plate holes free-molecular (feed <= 5.9 sccm) | 1.12 um/h (needs eta >= 0.90 for 1 um/h) | 0.81 um/h (1 um/h not reachable) |
+| Plate holes free-molecular (Kn >= 10) up to | 5.9 sccm | 41.6 sccm |
+| Smallest conversion eta for 1 um/h, 2 m^3/s, within that limit | 0.88 | 0.40 (35 sccm feed) |
+| Smallest eta for 1 um/h, 4 m^3/s, within that limit | 0.80 | 0.22 |
+| Rate at the literature range eta 0.06-0.57, 4 m^3/s, 35 sccm feed | 0.04-0.7 um/h (plate limit) | 0.23-2.5 um/h |
 
-- At 0.5 m^3/s effective pumping, neither layout reaches 1 um/h at any conversion. Attenuation caps the rate at about 8.4 sccm, where more feed starts lowering it.
-- At 2 m^3/s, 1 um/h needs at least 60 % (B) or 82 % (C) of the feed's atoms to leave the plate as active N. The model has no evidence that an RF source reaches this. If eta is about 0.3, the ceiling is 0.48 um/h (B) and 0.34 um/h (C).
-- With the leading plate (R30 hole set, 2000 x 0.343 mm in 0.5 mm), the holes leave the free-molecular regime above 5.9 sccm (smallest Kn = 10). Every map behind these results assumes free-molecular holes. C at 1 um/h needs 7.7 sccm, outside the plate model's validity. B at 5.2 sccm is inside it.
+- **Conversion is the deciding unknown.** Published N-limited growth rates from one group's Riber 32 with a Veeco UNI-Bulb (R26, R30, R13), back-calculated with this repository's plate model over the bracketed, unpublished geometry, give eta = 0.06-0.57 at 15-34 sccm, and at most 0.34 at 34 sccm (section 3). That range is too wide to decide the design. The source's output versus flow is the most valuable single input (hardware request 1).
+- **With the published-type plate, 1 um/h on 200 mm is reachable within the strict validity criterion (hole Kn >= 10) only if eta >= 0.8-0.9.** That lies above the literature range. Hole-scale DSMC (section 6) shows that B-family maps do not change down to Kn 0.3. With Kn >= 3 as the criterion, B-p reaches 1 um/h at eta = 0.3 with 4 m^3/s and 35 sccm: about 20 sccm, 0.73 % nominal, 2.11 % worst within +/-0.8 deg.
+- **A large, high-conductance plate (B-L) is the only layout here that reaches 1 um/h inside the model's validity at a conversion inside the literature range.** It needs eta >= 0.22 with 4 m^3/s effective pumping and a 35 sccm feed (R26 ran a UNI-Bulb at 34 sccm with cryo pumping that implies at least about 4 m^3/s). Whether such a plate keeps the discharge lit at low flow is unknown; it is a vendor question.
 
-**Uniformity at the operating points that can be reached** (740 C, 1473 K element limit, 2 m^3/s, eta = 1 unless stated; thickness half-range/mean on r <= 94 mm, area-weighted std/mean in brackets):
+**Uniformity where the model is valid** (thickness half-range/mean on r <= 94 mm; the worst case is over every combination of the other uncertainties, with pointing within +/-0.8 deg; only states whose own feed keeps the plate free-molecular and reaches the rate count):
 
-| Rate | B nominal | B worst, +/-0.8 deg pointing and all other grid factors | C nominal | C worst, +/-0.8 deg | B thinner in matched states |
-|---|---|---|---|---|---|
-| 1 um/h | 1.06 % (0.58) | 2.38 % (1.43) | 0.94 % (0.62) | 2.76 % (1.69) | 70 % |
-| 0.5 um/h | 1.07 % (0.57) | 2.88 % | 0.68 % (0.44) | 2.98 % | 49 % |
-| 0.25 um/h | 1.39 % (0.74) | 4.22 % | 0.90 % (0.57) | 4.07 % | 42 % |
-| 0.25 um/h at eta = 0.3 | 1.65 % | 4.49 % | 1.44 % | 4.75 % | 58 % |
-| 1 um/h at 700 C | 0.87 % (0.49) | 1.82 % (1.07) | 0.79 % (0.51) | 2.19 % (1.30) | 71 % |
+| 740 C, eta = 1, 2 m^3/s, 10 sccm | B | **B-p** | C-p | **B-L** |
+|---|---|---|---|---|
+| 1 um/h: nominal / worst (+/-0.8 deg) / worst (+/-1.6 deg) | 1.06 / 2.40 / 3.28 % | **0.43 / 1.75 / 2.96 %** | outside validity (Kn 7.4-7.8) | **0.64 / 1.74 / 2.71 %** |
+| 0.5 um/h | 1.07 / 2.89 / 3.74 % | 0.59 / 2.24 / 3.52 % | 0.40 / 3.74 / 5.27 % | 0.79 / 2.28 / 3.25 % |
+| 0.25 um/h | 1.39 / 4.22 / 5.06 % | 0.92 / 3.53 / 4.48 % | 0.72 / 4.71 / 6.30 % | 0.93 / 3.06 / 4.08 % |
+| B-L at eta = 0.3, 4 m^3/s, 35 sccm, 1 um/h | | | | 0.44 / 1.40 / 2.38 % |
 
-- **At 1 um/h, B is now ahead.** It is thinner in 70 % of matched states. Counting only states that also stay in the growth window, B wins 64 % and C 27 %. C's nominal advantage over the earlier comparison shrank (0.35 to 0.94 %), because the pressure its own feed creates (7.1e-3 Pa) degrades its vacuum-optimized aim more than B's.
-- **At lower rates, B and C are unranked** (42-58 %). C is better nominally, and their worst cases are within 0.15 points of each other.
-- **At 740 C, a lower rate does not buy uniformity.** Decomposition is then a larger share of the net rate, so the temperature map imprints more, and the worst case grows from 2.4 to 4.2 % (B) as the rate falls from 1 to 0.25 um/h. At 700 C the worst case is flat (1.8-2.0 %).
-- **Shares of the +/-0.8 deg states that are in the window and within a threshold** (1 um/h, 740 C):
+- **Re-aiming for the growth pressure is the largest single improvement.** At 1 um/h, B-p beats B in 78 % of matched states within +/-0.8 deg (72 % over the full +/-1.6 deg ensemble). Its worst case falls from 2.40 to 1.75 %. B and B-p use the same port and mount; only the aim differs by 7.5 mm.
+- **B-p versus B-L** (eta = 1, 1 um/h): B-p is thinner in 61 % of matched states within +/-0.8 deg and 52 % over the full ensemble. The two are close; B-L wins on validity and supply, B-p on the plate being a published design.
+- **The C family has no valid 1 um/h operating point** with this plate at any scenario: its feed, 7.2-8.2 sccm at eta = 1, already exceeds the plate limit. At 0.5 um/h, where both are valid, B-p is thinner than C-p in 55 % of matched states within +/-0.8 deg (67 % over the full ensemble), and C-p's worst case is larger (3.74 % against 2.24 %).
+- **Shares within a threshold** (all +/-0.8 deg states that are valid, in the growth window and within the threshold, 740 C, 1 um/h, eta = 1, 2 m^3/s):
 
-  | Threshold | B | C |
-  |---|---|---|
-  | 1 % | 36 % | 30 % |
-  | 2 % | 89 % | 80 % |
-  | 3 % | 90 % | 90 % |
+  | Layout | within 1 % | within 2 % | within 3 % |
+  |---|---|---|---|
+  | B | 34 % | 85 % | 87 % |
+  | B-p | 64 % | 87 % | 87 % |
+  | B-L | 72 % | 85 % | 85 % |
 
-  These are grid shares, not probabilities. The ceiling of 90 % is set by the heater (next point).
-- **The heater limit now applies in every state.** The designed-density optimum runs the element at the 1473 K limit. A wafer whose emissivity is 10 % **higher** (0.77, not lower) loses more from its growth face and needs 1494.8 K to hold 740 C. Capped at the limit, it runs 14.5 K cold. Because the Ga flux is held fixed, the cold state leaves the Ga-rich window, by forming droplets, in two thirds of its combinations at 740 C and almost all at 700 C. This alone removes about 10 % of all states. The fix is about 22 K of element headroom, or a Ga-flux correction tied to the measured wafer temperature.
-- **Ga flux is now held absolute.** The earlier comparison let the Ga centre flux follow each state's re-set nitrogen. Holding it fixed lowers the in-window share at 700 C from 84-85 % to 75-76 %. At 740 C, all states without the capped heater stay in the window.
+  The 85-90 % ceiling comes from the Ga protocol (next point), not from thickness.
+- **Ga control decides the growth window.** With the Ga cell held at fixed output (this grid's protocol), two cases leave the window:
+  - the wafer state of higher emissivity, which runs about 14 K cold at the element limit;
+  - at 700 C, the per-state change in nitrogen (only 36-40 % of +/-0.8 deg states stay in at 1 um/h).
 
-**Recommendation.** Keep **B as the provisional working candidate** and C as the alternative. B needs 32 % less active nitrogen, reaches 1 um/h inside the plate model's validity and wins at 1 um/h. C's case rests on lower target rates and better pointing control. Neither is ready for design freeze until:
-1. the uniformity target and minimum growth rate are agreed;
-2. eta, or the source's output versus flow and power, is known: it decides whether 1 um/h exists at all;
-3. the effective N2 pumping speed is known: 0.5 m^3/s rules out 1 um/h for both layouts;
-4. the heater's element rating and headroom are confirmed.
+  A Ga correction driven by one centre pyrometer (+/-2 K) keeps 91-100 % of combined heater-error states in the window at 740 C and 83-85 % at 700 C (scripts/heater_robustness.py, nominal pointing). At B-L's operating pressure (1e-2 Pa), a fixed Ga output also leaves the window when the Ga collision diameter differs from the calibrated one, because Ga attenuation then differs. So Ga should be calibrated at growth pressure, not in vacuum.
+- **Mechanical:** with certified lower bounds on every modelled clearance, B, B-p and B-L clear the 5 mm margin at 6.3 mm (Ga-Al, 8.9 mm sampled), and C, C-p at 10.9 mm (20.6 mm sampled). These are bounds for the modelled solids with assumed dimensions, not a sign-off.
+
+**Recommendation.** Carry **B-p as the provisional working layout**: B's port and mount, aimed +97.5 mm. B-p is the best layout with a published plate, and its aim can be trimmed after commissioning. Specify the plate as a decision in its own right: the large plate of B-L is what makes 1 um/h reachable at realistic conversion. Drop C and C-p as alternatives unless the plate changes: with this plate they have no valid 1 um/h point. A layout cannot be qualified until:
+1. the uniformity target and the minimum rate are agreed (section 8);
+2. the source's output versus flow, and the plate options the vendor can supply, are known (hardware requests 1-2);
+3. the effective pumping speed is known (request 3);
+4. Ga is calibrated at growth conditions, with a temperature reading that drives the Ga flux.
 
 ## 2. Design envelope
 
-Inputs that decide the comparison (full list in [design_envelope.json](../data/design/design_envelope.json)):
-
 | Input | Value used | Status |
 |---|---|---|
-| Uniformity target | none; shares within 1 / 2 / 3 / 5 % reported | missing |
-| Minimum growth rate | none; 1 / 0.5 / 0.25 um/h and the highest reachable rate reported | missing |
-| Active-N fraction of the feed atoms, eta | scenarios 1 (bound) / 0.3 / 0.1 / 0.03; thresholds solved exactly | missing (no source in the repository) |
-| N2 feed limit | 10 sccm | missing (H02 lists 0.1-10 sccm; the selected source's range is not specified) |
-| Effective N2 pumping speed | 0.5 and 2 m^3/s | missing (2000 L/s nameplate known) |
-| Nitrogen plate | R30 hole set, 2000 x 0.343 mm, 0.5 mm thick (L/r 2.92), 20 mm active radius, uniform output | assumed (thickness and pattern unpublished) |
-| Growth temperature | 700 and 740 C, source labs' scales | missing |
-| Heater element limit | 1473 K (1200 C as the element rating) and 1373 K (100 K life margin) | rating known, its object missing |
-| Uniformity mask | r <= 94 mm for both layouts | assumed (edge exclusion missing) |
-| Throw, cell cone | 350 mm, 46 deg | assumed |
+| Uniformity target, minimum rate | none; shares within 1 / 2 / 3 / 5 % and rates 1 / 0.5 / 0.25 um/h reported | missing |
+| Active-N fraction of feed atoms eta | scenarios 1 (bound) / 0.3 / 0.1; thresholds solved exactly; literature inference 0.06-0.57 | missing |
+| Feed limit | 10 sccm (H02) and 35 sccm (R26 ran 34 sccm) | missing |
+| Effective N2 pumping speed | 0.5 / 2 / 4 m^3/s (4 implied by R26) | missing |
+| Plates | as in the table of section 1 | R30 set assumed in 0.5 mm; the large plate designed here |
+| Free-molecular criterion | smallest hole Kn >= 10 over 300 / 600 K and N2 diameter x/ 1.3 | method of nitrogen_plate_scenarios.py |
+| Growth temperature | 700 and 740 C (source labs' scales) | missing |
+| Heater element limit | 1473 K (1200 C as the element rating); 1373 K in heater_robustness.py | rating known, its object missing |
+| Mask | r <= 94 mm | assumed |
 
-## 3. Mechanical screening
+## 3. Nitrogen supply
 
-`scripts/layout_feasibility.py` places all eleven sources as solids, using typical dimensions for the stated flange classes. Recorded results:
-- smallest gap: 9.0 mm (B, Ga to Al cell) and 20.6 mm (C);
-- off-centre port axis: 14.9 deg (B) and 6.4 deg (C);
-- aim shift per 0.8 deg of tilt: 4-8 mm about the plate, 8-16 mm about the mounting flange.
+**Atom budget.** 1 sccm of N2 carries 8.956e17 N atoms/s. 1 um/h on the 94 mm mask needs 4.5-6.9e18 active N atoms/s leaving the plate at the pressures it creates (B-p 4.5e18, B-L 6.1e18 at eta = 0.3 and 4 m^3/s, C-p 6.8e18).
 
-**What this establishes:** no conflict was found in the modelled checks, with assumed dimensions. It is not a mechanical sign-off. The checks cover body/body, sampled flange/flange, shutter/body, and shutter/shutter with the other shutter at its end positions. They do not cover:
-- every cross-type pair (for example flange/body);
-- both shutters moving through their sweeps at once;
-- the distance between continuous disks, which sampled points do not bound.
+**Coupled operating point** (scripts/layout_comparison.py `operating_point`, scripts/nitrogen_rate_limits.py):
+- The feed gives the output, q = eta x 2 x feed x 4.478e17 /s.
+- The feed also gives the pressure, p = feed / S_eff, which attenuates the direct N and Ga beams. Attenuation is interpolated from tables up to 0.15 Pa.
+- The rate rises with feed until attenuation grows faster than the feed. At 0.5 m^3/s it peaks near 8.4 sccm at 0.62-0.69 um/h for every layout, so 0.5 m^3/s cannot give 1 um/h at any eta.
 
-The cryoshroud, RHEED and pyrometer lines of sight, the main shutter and the manipulator need the chamber drawing. B's 9 mm Ga-Al gap is tight enough that the real cell and shutter drawings decide it.
+**What the literature implies for eta** (scripts/nitrogen_output_evidence.py, evidence file [nitrogen_output_evidence.json](../data/parameters/nitrogen_output_evidence.json)):
 
-The off-centre aim must be machined into the port (a tilt adapter of about +/-2 deg can only trim). A tilt about the mounting flange doubles the aim shift per degree.
+| Point | Flow, power | N-limited rate | Inferred eta (admissible geometries) |
+|---|---|---|---|
+| R26: 4000 x 0.203 mm plate | 15 sccm, 500 W | 6.1 um/h GaN | 0.10-0.56 |
+| R26 | 20 sccm, 600 W | 8.2 um/h | 0.10-0.57 |
+| R26 | 34 sccm, 500 W | 8.4 um/h | 0.06-0.34 |
+| R13: original 712-hole plate | 1.3 sccm | about 1.3 um/h | 0.25-0.98 |
+| R30: 2000 x 0.343 mm, InN | 2.5 / 7.5 sccm, 350 W | 2.0 / 4.6 um/h | 0.17-0.75 / 0.13-0.57 |
+| R12: Hakuto HDRS, plate unknown | 3 sccm, 300 W | 0.72 um/h | 0.09-0.95 |
 
-## 4. Method
+- The geometry (throw 0.15-0.27 m, source angle 20-40 deg, plate thickness 0.5-2 mm) is not published. It is bracketed, and a geometry is admitted only if every point from the same chamber gives eta <= 1 (345 of 405 admitted).
+- These are inferences under the plate model, not measurements.
+- Two direct source measurements bound the absolute scale: Voulot et al. (R18, abstract): at most 0.85e18 atoms/s, with dissociation up to 0.4; and a 2024 source study: 18 % at 400 W, falling with flow.
+- Conversion falls with flow: 34 sccm at 500 W gave only 2 % more rate than 20 sccm at 600 W.
 
-`scripts/layout_comparison.py` chains:
-- the Ga DSMC records (centre-flux-held);
-- the free-molecular nitrogen plate;
-- the heater model under its element limit;
-- the growth model, on the 94 mm mask.
+## 4. Re-aiming at the operating pressure
 
-**Operating point (one per layout and scenario).**
-- Active-N output is q = eta x 2 x feed.
-- Pressure is p = feed / S_eff, counting the whole feed as N2 because atoms recombine on the walls. Other gas loads are not included.
-- Direct-beam attenuation of N and Ga at p is interpolated, in log, from tables computed on a grid of 0-0.05 Pa.
-- The feed for the target rate is a fixed point. If it needs more than the feed limit, or does not exist, the row runs at the highest reachable rate.
-- The hole Knudsen number at that feed is reported. Kn < 10 means the plate model is outside its validity.
+The vacuum optima of B and C are not optimal at the pressure their own feed creates (scripts/nitrogen_aim_pressure.py, 6 port angles x 15 offsets).
 
-**Protocol over the uncertainty grid.**
-- **Nitrogen:** the output is re-set in each state for the operating rate, up to the output that the feed limit gives. Where the rate peaks below the feed limit, the peak feed is the cap. A state needing more grows slower and is counted as supply-limited.
-- **Ga:** a fixed absolute centre flux, set once in the nominal state (70 mm fill, d = 8 A, nominal pointing, heater and 2 mm lip) to the middle of its Ga-rich window. Because N is re-set per state, the centre Ga/N ratio moves with it.
-- **Heater:** zone ratios optimized for the nominal holder under the element limit, with the mean held by one wafer reading. A state needing more than the limit is capped there and grown at the temperature it reaches.
+| At the 1 um/h pressure (eta = 1, 2 m^3/s) | Best aim | Nominal | Current aim |
+|---|---|---|---|
+| 46 deg (B family) | +97.5 mm | 0.42 % | +105 mm: 1.06 % |
+| 65 deg (C family) | +67.5 mm | 0.42 % | +75 mm: 0.94 % |
+| 60 deg | +75 mm | 0.35 % | - |
 
-**Uncertainty grid** (all combinations; a grid, not a probability distribution):
-- **N pointing:** 0.8 and 1.6 deg in 12 directions, about the plate centre or the mounting flange (49 maps).
+- The optimum moves inward as pressure rises, because attenuation removes more of the long paths to the far edge.
+- For the large plate (L/r 2.0, 30 mm), the best aim at its operating pressure (eta = 0.3, 4 m^3/s, 1 um/h, 1.1e-2 Pa) is +90 mm on the 46 deg cone (0.44 %). The 65 deg family's best lies at the scan edge (+45 mm, 2.2 %) and is unresolved.
+- Monte Carlo scatter at single aims is about 0.3-0.5 points; the same event sample is used across aims.
+
+## 5. Comparison under combined uncertainty
+
+**Protocol** (scripts/layout_comparison.py):
+- **Nitrogen:**
+  - In every state the output is re-set for the operating rate, at fixed eta. Each state therefore has its own feed, pressure and attenuation. They are solved together: the lowest feed whose rate reaches the target, on a feed grid refined by bisection.
+  - A state that cannot reach the target runs at the feed that maximizes its rate (supply-limited).
+  - A state is **valid** if it reaches the rate with its plate free-molecular at its own feed. Only valid states enter worst cases and rankings.
+- **Ga:** the cell output is set once, in the nominal state, to the middle of the Ga-rich window, and then held. Arrival in each state follows that state's map shapes and its own attenuation.
+- **Heater:** zone ratios optimized under the element limit and held. The mean is held by one reading; a state needing more than the limit is capped and grown at the temperature it reaches.
+
+**Grid** (all combinations; a grid, not a probability distribution):
+- **Pointing:** 0.8 and 1.6 deg in 12 directions, about the plate centre or the mounting flange (49 maps).
 - **Ga:** fill 40 / 70 / 120 mm and collision diameter 5.68 / 8 A.
-- **Heater:** seven categories, each perturbed alone and **not combined with each other**: nominal; emissivity 0.63 / 0.77; contact 50 / 1000 W m^-2 K^-1; +/-2 % in the worst zone.
-- **Holder lip:** 1 / 2 / 3 mm.
-- **Droplet-onset law:** three literature scenarios.
+- **Heater:** seven categories, not combined. Combined heater errors are evaluated separately below.
+- **Lip:** 1 / 2 / 3 mm.
+- **Droplet law:** three literature scenarios.
 
-**Not in the grid:**
-- N plate output profile and plate geometry;
-- scattered-beam redeposition;
-- Ga cell pointing;
-- combined heater errors;
-- per-state pressure (the pressure stays at the operating point's).
-
-**Scenarios** (not uncertainties): eta, S_eff, growth temperature, element limit and target rate. B and C are ranked only at equal target rates.
+Results are reported for the +/-0.8 deg ensemble and the full +/-1.6 deg ensemble separately.
 
 **Numerical checks.**
-- Area means use annulus weights. On 39 radii they reproduce the exact disk mean of (r/R)^2 to within 1e-3.
-- On 39 / 77 / 153 radii, the nominal thickness is 1.055 / 1.059 / 1.066 % (B) and 0.941 / 0.941 / 0.946 % (C).
-- Computing attenuation and lip shadow directly, rather than as ratio profiles, agrees with the record to 0.001 points.
-- Map caches carry a hash of their inputs and generating code, and a mismatched cache stops the run. The Ga records consumed are listed with their hashes.
+- Radial resolution, 39 / 77 / 153 radii: nominal thickness within 0.011 points for every layout. The ratio-profile approximation agrees with direct attenuation to 0.001 points (layout_resolution_check.json).
+- Area means use annulus weights.
+- Map caches are keyed by inputs and code.
 
-## 5. Failure conditions
+**Combined heater errors** (heater_robustness.py, nominal pointing, 1 um/h):
+- States: emissivity 0.63 / 0.70 / 0.77 x contact 50 / 200 / 1000 W m^-2 K^-1 x zone error 0 / +/-2 %.
+- About half of the states need the element above 1473 K, up to 1500 K (27 K headroom). Capped, they run up to 18 K cold.
+- Thickness rises at most to 1.63 % (B) at 740 C and 1.02 % at 700 C, against the one-error-at-a-time 1.5 %.
+- Growth window, 740 C: fixed Ga 75 %; temperature-corrected Ga 100 %; centre pyrometer with +/-2 K bias 91-100 %.
+- Growth window, 700 C: 67 % fixed; 78-85 % corrected.
 
-| Condition | Effect in the model | Layouts | Measurement or input that decides it |
+**Mechanical feasibility** (layout_feasibility.py, record layout_feasibility_bc.json):
+- Clearances are certified lower bounds: capsule bodies, plus disk flanges and blades whose sampled distances are reduced by the samples' covering radius, refined where near the margin.
+- Pairs checked: body/body, flange/flange, flange/body, flange/blade, blade/body over each blade's sweep, and blade/blade with both shutters at every pair of sweep positions.
+- B, B-p, B-L: 6.3 mm certified (8.9 mm sampled), Ga1-Al1. C, C-p: 10.9 mm certified (20.6 mm sampled), Ga3-Al3. Holder assembly: 190-208 mm.
+- B-L is checked with the same assumed nitrogen source body (CF100, 45 mm radius). Its 30 mm active plate fits inside that body, but a real large-plate source may be larger.
+- Off-centre port axis: B / B-p about 15 deg; C / C-p 6.4 / 5.6 deg.
+- Aim shift per 0.8 deg: 4-8 mm about the plate, 8-17 mm about the flange.
+- Not checked: cryoshroud, RHEED and pyrometer lines of sight, main shutter, real drawings.
+
+## 6. Hole flow beyond the free-molecular range
+
+scripts/sparta_hole.py runs SPARTA (2d axisymmetric DSMC, neutral N2 at 300 K) on one hole of the R30 set in a 0.5 mm plate:
+- fed from a wide reservoir at Kn 100, 10, 3, 1 and 0.3;
+- giving the transmission and the angular intensity I(theta);
+- I(theta) is fitted as the free-molecular table times a smooth ratio;
+- the B and C maps are rebuilt from it, with errors from 8 time blocks.
+
+**Validation at Kn 100.**
+- Transmission 0.434 against 0.427 free-molecular, after normalizing by the feed face's coverage.
+- B's map: -0.04 +/- 0.07 points from free-molecular.
+- C's map differs by +0.46 +/- 0.14 points. C's nominal map responds strongly to the beam shape near the axis, and the DSMC feed misses the most grazing inlet directions.
+
+Lower-Kn results are therefore read against the Kn 100 DSMC run, which shares that set-up.
+
+Against the Kn 100 run, with errors from both runs' blocks (record [sparta_hole.json](../data/runs/studies/sparta_hole.json)):
+
+| Hole Kn (reservoir) | Transmission | Beam on axis vs free-molecular | B map change | C map change | B delivered fraction |
+|---|---|---|---|---|---|
+| 110 (reference) | 0.434 +/- 0.004 | 0.98 +/- 0.03 | - | - | - |
+| 11 | 0.433 +/- 0.007 | 0.98 +/- 0.03 | +0.01 +/- 0.09 points | -0.06 +/- 0.17 | 1.00 +/- 0.02 |
+| 3.2 | 0.436 +/- 0.003 | 0.99 +/- 0.02 | +0.01 +/- 0.08 | -0.12 +/- 0.18 | 1.01 +/- 0.02 |
+| 1.05 | 0.443 +/- 0.003 | 0.95 +/- 0.03 | -0.10 +/- 0.09 | +0.35 +/- 0.28 | 1.00 +/- 0.02 |
+| 0.31 | 0.479 +/- 0.004 | 0.79 +/- 0.02 | -0.02 +/- 0.09 | **+2.2 +/- 0.3** | 0.94 +/- 0.02 |
+
+- **B-family maps do not change detectably down to Kn 0.3.** The beam broadens (on-axis intensity -21 % at Kn 0.3), but B's aim spreads the dose over an annulus, and that absorbs it. For the B family, the Kn >= 10 criterion of the layout studies is therefore conservative by a factor of three or more in Kn.
+- **C's map degrades sharply in transitional flow** (+2.2 points at Kn 0.3). It depends on the beam shape near the axis.
+- **Consequence:** with Kn >= 3 as the criterion, B-p also reaches 1 um/h at eta = 0.3 with 4 m^3/s and a 35 sccm feed. It runs at 18-21 sccm and Kn 2.9-3.1, giving 0.73 % nominal, 2.11 % worst within +/-0.8 deg and 3.09 % within +/-1.6 deg. B-L gives 0.44 / 1.40 / 2.38 % at the same operating point.
+- **Limits:**
+  - one hole, neutral N2 at 300 K;
+  - no interaction between neighbouring holes' plumes, which at high flow adds collisions downstream;
+  - no atoms or hot discharge gas;
+  - this is evidence for the B family's sensitivity, not a validation of the plate model.
+
+
+## 7. Failure conditions
+
+| Condition | Effect in the model | Layouts | What settles it |
 |---|---|---|---|
-| eta below 0.60 (B) or 0.82 (C) at 10 sccm and 2 m^3/s | 1 um/h not reachable; the rate scales with eta (0.3: 0.48 / 0.34 um/h) | both, C first | active-N output versus flow and power (vendor), then the Ga-rich growth rate at commissioning |
-| Effective N2 speed about 0.5 m^3/s | 1 um/h not reachable at any eta; nominal 3.5 % (B) at the rate peak | both | effective speed at the chamber with the shroud cold; growth pressure at two or more flows |
-| Feed above 5.9 sccm with the R30-like plate | holes transitional, so the N maps are outside the model's validity | C at 1 um/h; both when feed-limited | plate drawing (hole count, diameter, thickness); a plate with more or larger holes moves this limit |
-| Element limit with no headroom above the designed-density optimum | the emissivity-0.77 state runs 14.5 K cold; with Ga held, about 10 % of states make droplets | both | vendor element rating and its object; heater power at the operating point; wafer temperature at more than one radius |
-| Pointing worse than +/-0.8 deg, or tilt about the mounting flange | worst case 2.4-2.8 % (+/-0.8 deg) and 3.2-3.9 % (+/-1.6 deg) at 1 um/h | both, C more | aim-point repeatability on the actual mount |
-| Holder lip 3 mm at C's 65 deg port | C nominal 0.94 to 1.25 % at 1 um/h | C | holder drawing |
-| Growth at 700 C (source-lab scale) | 24-25 % of +/-0.8 deg states leave the Ga-rich window | both | droplet onset and N-rich boundary (RHEED) on the machine's scale |
-| Low rate at 740 C | decomposition share imprints the temperature map: worst 4.1-4.2 % at 0.25 um/h | both | growth temperature and rate decision |
-| Eleven sources on one 46 deg cone with larger bodies than assumed | B's 9 mm gap closes | B | cell, shutter and port drawings |
-
-## 6. What this does not establish
-
-- That any RF source reaches the eta that 1 um/h needs. No conversion figure is in hand.
-- Hole flow above Kn 10, hole-wall recombination, tilted holes and the ion fraction. The plate model is free-molecular with straight holes and uniform output.
-- Where scattered atoms land. Attenuation only removes direct beam, so at high pressure the delivered fraction is a lower bound and its shape is uncertain.
-- Combined heater errors, the N output profile and Ga cell pointing, which are not in the grid.
-- A uniformity pass or fail. No target is agreed, and grid shares are not probabilities.
-- Mechanical clearance beyond the modelled checks (section 3).
-- An improvement on real wafers, which only measured wafers can show, under the [improvement protocol](DATA_AND_VALIDATION_PLAN.md#demonstrating-wafer-uniformity-improvement).
-
-## 7. Hardware inputs requested
-
-Each request is tied to the threshold in this document that it decides.
-
-| Input | What is needed | What it decides |
-|---|---|---|
-| Nitrogen source output | Active-N output (atoms/s), or the Ga-rich growth rate on a stated geometry, versus N2 flow (2-10 sccm) and RF power (up to 600 W), for the plate to be fitted; flow range and MFC calibration standard | Whether eta reaches 0.60 (B) / 0.82 (C) for 1 um/h; otherwise the achievable rate |
-| Plate drawing | Hole count, diameter, plate thickness, pattern and active radius; hole tilt if any | Hole Knudsen limit (5.9 sccm for the R30-like plate); the N map shape (L/r) |
-| Pumping | Effective N2 speed at the chamber with the cryoshroud cold; pump model and conductance | 0.5 versus 2 m^3/s: whether 1 um/h exists for either layout |
-| Heater | Element temperature limit and what the 1200 C rating refers to; zone power capacity; lifetime in active N | Whether the designed-density heater has the about 22 K headroom the 0.77-emissivity state needs |
-| Source mount and port | Port schedule and machining tolerance; mount type, tilt pivot and repeatability | Pointing tolerance (+/-0.8 or 1.6 deg) and pivot (plate or flange) |
-| Holder | Lip height, opening radius, contact design | Lip shadow at C's 65 deg port; heater edge support |
-| Chamber drawing | Port and flange schedule, cryoshroud, RHEED and pyrometer lines of sight, cell and shutter drawings | Mechanical clearance beyond the modelled checks; B's 9 mm Ga-Al gap |
+| eta below about 0.8 (published-type plate) or 0.22-0.40 (large plate) | 1 um/h not reachable inside the model's validity; the rate scales with eta | B-p; B-L | source output versus flow (request 1) |
+| Effective N2 speed about 0.5 m^3/s | rate peaks at 0.62-0.69 um/h near 8.4 sccm | all | pumping (request 3) |
+| Feed above the plate's free-molecular limit | maps are extrapolations; single-hole DSMC shows no change for the B family down to Kn 0.3, but +2.2 points for C at Kn 0.3 | B, B-p above 5.9 sccm (strict) or about 20 sccm (Kn 3); C family at any 1 um/h point | plate drawing (request 2); a multi-hole DSMC |
+| Large plate that will not stay lit at low flow | B-L limited to high-flow operation | B-L | vendor discharge data (request 2) |
+| Ga calibrated in vacuum, growth at 1e-2 Pa | Ga/N shifted by the unknown Ga scattering; B-L keeps 45 % in window at 1 um/h, eta 0.3 | B-L, any high-pressure point | calibrate Ga at growth pressure (RHEED) |
+| Element limit with no headroom; Ga not corrected for temperature | up to 18 K cold; 25 % of combined heater states make droplets at 740 C | all | heater rating (request 4); a pyrometer-driven Ga correction |
+| Growth at 700 C | 36-40 % of +/-0.8 deg states in window at 1 um/h with fixed Ga | all | growth temperature on the machine's scale |
+| Pointing worse than +/-0.8 deg or a flange pivot | worst case 2.7-3.3 % (+/-1.6 deg) at 1 um/h | all | mount repeatability (request 5) |
+| Larger cell or shutter bodies than assumed | 6.3 mm certified Ga-Al gap closes | B family | cell and shutter drawings (request 5) |
 
 ## 8. Decisions needed from the project
 
-1. **Uniformity target** (half-range/mean on the agreed mask). At 1 um/h and 740 C: a 2 % target keeps 89 % (B) and 80 % (C) of the +/-0.8 deg states. A 1 % target keeps 36 % and 30 %.
-2. **Minimum growth rate.** If 0.5 um/h is acceptable, the conversion needed falls to 0.31 (B) / 0.43 (C), and B and C become unranked.
-3. **Growth temperature** on the machine's scale. 700 C makes thickness insensitive to the heater but narrows the Ga-rich window.
+1. **Uniformity target** (half-range/mean or std/mean on the agreed mask). For reference, published MOCVD results report about 1 % (1 sigma) per layer for AlGaN/GaN HEMT stacks on 200 mm Si (single-wafer rotating-disk reactor, J. Mater. Res. stress-engineering study) and 2.1 % (1 sigma) for a 5.3 um LED stack (JJAP 52, 08JB25); these are search-level citations, not yet in the reference manifest. In these results std/mean is about 0.4-0.6 of half-range/mean. The choice decides the layout:
+   - a 2 % half-range target is met in 85-87 % of B-p's and B-L's +/-0.8 deg states at 1 um/h;
+   - a 1 % target is met in 64 % (B-p) and 72 % (B-L).
+2. **Minimum growth rate.** 1 um/h needs the large plate at realistic conversion; 0.25 um/h is reachable with the published-type plate at eta >= 0.2-0.25.
+3. **Growth temperature.** 740 C keeps the window with a temperature-corrected Ga flux. 700 C is less sensitive to heater errors in thickness, but its window is narrow.
+4. **Plate as a specification.** Whether to ask the vendor for a high-conductance plate like B-L's.
 
 ## 9. Measurements to plan with the hardware team
 
-Calibration and validation are kept separate: commissioning data that set model parameters are not reused to test them.
+Calibration and validation stay separate.
 
-**Calibration (fits model inputs):**
-1. Ga-rich growth rate at the wafer centre versus source power and flow. This sets eta, the most decisive unknown here.
-2. Growth pressure and effective N2 speed at two or more flows, and beam flux with the plasma gas on and off. These set the attenuation.
-3. Wafer temperature maps at two or more heater settings, with per-zone power and element temperature. These set the emissivity, contact and edge support.
-4. Ga-limited (N-rich) thickness maps at two or more fills. These set the Ga collision size and the fill drift.
-5. The aim point and its repeatability after remounting.
+**Calibration:**
+1. Ga-rich growth rate at the wafer centre versus N2 flow and RF power. This sets eta.
+2. Growth pressure at two or more flows.
+3. Ga flux at growth pressure (RHEED).
+4. Temperature maps at two or more heater settings.
+5. Ga-limited thickness maps at two fills.
+6. The aim point and its repeatability.
 
-**Independent validation (not used in any fit):**
-1. N-limited thickness maps with the chosen plate at its design aim and at one deliberately offset aim (+/-1 deg).
-2. At least three repeated reference runs at the design point, to measure run-to-run scatter.
-3. One growth temperature not used in the heater calibration.
+**Validation:**
+1. N-limited thickness maps at the design aim and at one deliberately offset aim.
+2. Three or more repeated reference runs.
+3. One growth temperature not used in calibration.
 
-## Appendix: earlier six-layout screening (superseded protocol)
+## Appendix: superseded records
 
-The first comparison (record [layout_comparison.json](../data/runs/studies/layout_comparison.json), commit 6aca3b3) evaluated six layouts at fixed pressures. Its Ga flux followed each state's nitrogen, its perturbed heater states were not held to the limit, and its pressures did not follow the feed that the growth rate needs. Two kinds of result survive, because in Ga-rich growth thickness follows the N map:
-- **map-shape conclusions:** the centre-aimed shallow-hole plate (A) gives about 11 % whatever else is done; deep holes (D, L/r 5.8) are worse than B and C; a thin plate (R0) has the best map but needs about twice A's nitrogen;
-- **active-N ratios between layouts.**
-
-Its window margins, heater-limited states and absolute nitrogen demands are superseded by this document.
+- **layout_comparison.json (6aca3b3)** compared six layouts at fixed pressures, with the Ga flux following N and unconstrained heater states. Its map-shape conclusions stand: centre-aimed shallow holes give about 11 %; deep holes are worse.
+- **Earlier versions of layout_comparison_bc.json** held the pressure at the nominal operating point for every state, and ranked C's out-of-domain 1 um/h states.
+- **layout_feasibility.json** used sampled, not certified, clearances.

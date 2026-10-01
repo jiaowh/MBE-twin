@@ -7,7 +7,7 @@ Reported together: thickness half-range/mean and area-weighted standard deviatio
 usable area (r <= 94 mm, the same mask for every layout), the growth rate reached, the Ga-rich
 window margin, and every equipment-limit violation (feed, plate flow regime, heater element).
 
-Nitrogen balance (one operating point per layout and scenario):
+Nitrogen balance (an operating point per layout and scenario, then per uncertain state):
 - The active-N output leaving the plate is q = eta x 2 x (N2 feed in molecules/s); eta, the
   fraction of the feed's N atoms that leave as growth-active N, is a missing source input and
   is set by scenario (1 is the atom-content bound, not an achievable efficiency).
@@ -22,21 +22,28 @@ Nitrogen balance (one operating point per layout and scenario):
   and less attenuation, so uniformity trades against rate. Rows whose reachable rate is below
   0.1 um/h are recorded as operating points only (decomposition rivals growth there; this is
   a reporting floor, not a requirement). Layouts are ranked only at equal target rates.
-- The plate holes are checked at that feed: Knudsen number lambda/(2 r) behind the plate of
-  the envelope's hole set (free-molecular conductance, as scripts/nitrogen_plate_scenarios.py).
-  Kn < 10 means the free-molecular plate model behind every N map is outside its validity.
+- The plate holes are checked at that feed: Knudsen number lambda/(2 r) behind the layout's
+  plate (free-molecular conductance, as scripts/nitrogen_plate_scenarios.py; the smallest over
+  300 / 600 K gas and the N2 diameter x/ 1.3). Kn < 10 means the free-molecular plate model
+  behind every N map is outside its validity.
+- Scenarios: eta (envelope), effective N2 pumping speed 0.5 / 2 / 4 m^3/s and feed limit 10 /
+  35 sccm (H02's range; R26 ran a UNI-Bulb at 34 sccm with cryo pumping that implies at least
+  about 4 m^3/s).
 
 Operating protocol over the uncertainty grid:
-- Nitrogen: in every state the output is re-set for the operating rate, i.e. the rate is
-  calibrated in the state the machine is in, up to the output that the feed limit gives. A
-  state that would need more is supply-limited: it runs at the limit and grows slower. Where
-  the rate peaks below the feed limit, the peak feed is the limit. The pressure stays at the
-  operating point's.
-- Ga: a fixed absolute centre flux. It is set once, in the nominal state (70 mm fill, d = 8 A,
-  nominal pointing, nominal heater, 2 mm lip), to the middle of that state's Ga-rich window at
-  the centre, under the same droplet law. Every other state uses the same centre flux (the
-  centre-flux hold of the Ga DSMC records); only the map shapes change. Because N is re-set
-  per state, the centre Ga/N ratio moves with it. The window margin is the minimum over the
+- Nitrogen: in every state the output is re-set for the operating rate (the rate is calibrated
+  in the state the machine is in) at fixed eta, so each state has its own feed, pressure and
+  attenuation, solved as a fixed point (solve_states). A state that would need more than the
+  feed limit runs at the limit and grows slower (supply-limited); where the rate peaks below
+  the feed limit, the peak feed is the limit. A state is valid if it reaches the operating
+  rate with the plate holes free-molecular (Kn >= 10) at its own feed; only valid states are
+  ranked.
+- Ga: a fixed cell output. It is set once, in the nominal state (70 mm fill, d = 8 A, nominal
+  pointing, nominal heater, 2 mm lip), so that the centre flux is the middle of that state's
+  Ga-rich window, under the same droplet law. Every other state keeps the cell output (the
+  centre-flux hold of the Ga DSMC records makes the vacuum centre flux equal across fills);
+  its arrival changes with the map shapes and with the state's own attenuation. Because N is
+  re-set per state, the centre Ga/N ratio moves with it. The window margin is the minimum over the
   usable area of the distance to N-rich growth and to droplets, as a fraction of the local N
   flux; negative means part of the wafer leaves the window.
 - Heater: zone powers optimized for the nominal holder under the element limit, then held at
@@ -56,21 +63,23 @@ Uncertain states (a grid, not a probability distribution; all combinations are e
 - holder lip height 1 / 2 / 3 mm (shadow ratio profiles);
 - droplet-onset law: the three literature scenarios.
 Not in the grid: the N plate output profile, the plate geometry, scattered-beam redeposition,
-Ga pointing, and combinations of heater perturbations. Operating scenarios (not uncertainty
-states): conversion fraction, effective pumping speed, growth temperature 700 / 740 C, element
-limit 1473 / 1373 K.
+Ga pointing, and combinations of heater perturbations (scripts/heater_robustness.py combines
+them for the nominal maps). Operating scenarios (not uncertainty states): conversion fraction,
+effective pumping speed, feed limit, growth temperature 700 / 740 C, the 1473 K element limit
+(the 1373 K interpretation is in heater_robustness.py).
 
 Approximations: background attenuation and lip shadow enter as ratio profiles computed for the
 nominal pose (nitrogen: its plate model; Ga: the free-molecular level-melt crucible of the same
 fill and port), attenuation interpolated in log between pressures of a fixed grid. Free-molecular
 straight-hole nitrogen plates with uniform output. Ranking compares layouts in matched states
 (same tilt, Ga fill and diameter, heater category, lip and droplet law) over the fills every
-layout admits.
+layout admits, counting only states valid for both layouts, separately for pointing within
++/-0.8 deg and for the whole +/-1.6 deg ensemble.
 
 Caches: every map file is keyed by a hash of its generating inputs and code; a cached file
 whose key does not match is an error, not a reuse.
 
-Usage: python scripts/layout_comparison.py [--out results/layout_comparison_bc] [--layouts B C]
+Usage: python scripts/layout_comparison.py [--out results/layout_comparison_bc] [--layouts B C B-p C-p B-L]
                                           [--maps DIR] (directory of keyed map files)
 """
 
@@ -96,7 +105,7 @@ from mbe_twin.beam import HolderLip, Wafer, crucible_source_on_cone, level_melt_
 from mbe_twin.crucible import Crucible, simulate  # noqa: E402
 from mbe_twin.growth import load_parameters, steady_state  # noqa: E402
 from mbe_twin.layout import SourcePort  # noqa: E402
-from mbe_twin.manifest import build_manifest, canonical_hash, source_sha256, write_manifest  # noqa: E402
+from mbe_twin.manifest import build_manifest, canonical_hash, write_manifest  # noqa: E402
 from mbe_twin.metrics import radial_ring_weights  # noqa: E402
 from mbe_twin.vacuum import K_B, SCCM_PA_M3_S, T_STD, beam_mean_free_path, pressure_from_flow  # noqa: E402
 
@@ -113,12 +122,12 @@ TOLS_DEG = (0.8, 1.6)
 TILT_DIRS_DEG = tuple(range(0, 360, 30))
 LIP_H = (0.001, 0.002, 0.003)
 T0_C = (700.0, 740.0)
-LIMITS = {"1473 K element": 1473.15, "1373 K element": 1373.15}
+LIMITS = {"1473 K element": 1473.15}
 N_PARTICLES, N_SEED = 20_000, 80   # as nitrogen_aim_study.py (first aspect of a run)
 GA_FM_PARTICLES = 60_000
 GA_D = {"5.68": 6e-10, "8": 8e-10}  # DSMC diameter -> background-collision diameter scenario
 HEATER_STATES = ("nominal", "eps 0.63", "eps 0.77", "contact 50", "contact 1000", "zone +2 % (worst)", "zone -2 % (worst)")
-P_GRID = (0.0, 2.5e-4, 5e-4, 1e-3, 2e-3, 4e-3, 7e-3, 1e-2, 1.5e-2, 2e-2, 3e-2, 4e-2, 5e-2)  # Pa, attenuation tables
+P_GRID = (0.0, 2.5e-4, 5e-4, 1e-3, 2e-3, 4e-3, 7e-3, 1e-2, 1.5e-2, 2e-2, 3e-2, 4e-2, 5e-2, 7e-2, 0.1, 0.15)  # Pa
 N_ATOMS_PER_SCCM = 2.0 * SCCM_PA_M3_S / (K_B * T_STD)   # N atoms/s in 1 sccm of N2 (8.956e17)
 KN_VALID = 10.0
 THRESHOLDS_PCT = (1.0, 2.0, 3.0, 5.0)
@@ -202,7 +211,8 @@ def nitrogen_maps(lay, env, rho, wafer, pressures, opening):
     n = lay["n"]
     a = n["L_over_r"]
     ev = simulate(Crucible(1e-4, a * 1e-4), N_PARTICLES, rng=N_SEED)
-    holes = hex_holes(0.020, 0.010)
+    radius = n.get("plate_radius_m", 0.020)
+    holes = hex_holes(radius, radius / 2)
     pivots = env["pointing_and_adjustment"]["tilt_pivot_behind_plate_m"]["value"]
     base = SourcePort("N", polar_deg=n["polar_deg"], azimuth_deg=0.0, throw=env["chamber"]["source_throw_m"]["value"],
                       aim_offset=n["aim_offset_mm"] / 1e3)
@@ -264,6 +274,15 @@ def plate_knudsen(q_sccm, plate, t_gas, d_factor=1.0):
     p = q_sccm * SCCM_PA_M3_S * (t_gas / T_STD) / conductance
     lam = K_B * t_gas / (np.sqrt(2) * np.pi * (3.7e-10 * d_factor) ** 2 * p)
     return float(lam / (2 * r))
+
+
+def layout_plate(lay, env):
+    """The layout's aperture plate (envelope nitrogen_source plate unless the layout gives its own), with the
+    free-molecular hole transmission of its L/r."""
+    plate = dict(lay["n"].get("plate", env["nitrogen_source"]["plate"]["value"]))
+    plate["transmission"] = simulate(Crucible(1.0, plate["thickness_m"] / (plate["hole_diameter_m"] / 2)), 200_000, rng=5,
+                                     record_events=False).transmission
+    return plate
 
 
 def operating_point(delivered, dec_mean, target, eta, speed, feed_max, t_gas, k_atoms, n_feed=400):
@@ -336,65 +355,142 @@ def heater_states(option, opening, t0_k, limit, rho):
     return maps, rep
 
 
-def evaluate(n_maps, ga, t_maps, params, law, rho, target, k_atoms, nominal_idx, s_max=np.inf):
-    """Growth over the grid. n_maps (N, L, rho) absolute per unit output; ga (G, L, rho) centre-normalized;
-    t_maps (H, rho). s_max: the output (in nm/min per unit map) the feed limit allows. Returns arrays
-    over (N, G, H, L)."""
+def att_at_many(table, p, grid=P_GRID):
+    """att_at for an array of pressures: result shape p.shape + (rho,)."""
+    grid = np.asarray(grid)
+    p = np.asarray(p, float)
+    if np.any(p < 0.0) or np.any(p > grid[-1]):
+        raise ValueError(f"pressure outside the attenuation table (0-{grid[-1]:g} Pa): max {p.max():.3g} Pa")
+    k = np.clip(np.searchsorted(grid, p, side="right") - 1, 0, len(grid) - 2)
+    u = (p - grid[k]) / (grid[k + 1] - grid[k])
+    lt = np.log(table)
+    return np.exp((1.0 - u)[..., None] * lt[k] + u[..., None] * lt[k + 1])
+
+
+def solve_states(n_vac, att_n, dec_mean, target, eta, speed, feed_cap, t_gas, k_atoms, p_start, rho, n_grid=400):
+    """Per-state nitrogen balance: the output each (pointing, heater, lip) state needs for the target rate sets
+    its feed and so its own pressure and attenuation. n_vac (N, L, rho) per unit output without attenuation;
+    dec_mean (H,). Each state takes the lowest feed up to feed_cap whose rate reaches the target (feed grid, then
+    bisection, where the rate rises with the feed); a state that cannot reach it runs at the feed that maximizes
+    its rate (supply-limited). The scan stops at the attenuation table's top pressure if that comes before
+    feed_cap. p_start is unused (kept for the call signature).
+    Returns s (nm/min per unit map), feed (sccm), p (Pa), limited, attenuation (N, H, L, rho)."""
+    per_feed = eta * N_ATOMS_PER_SCCM / k_atoms             # output per sccm, in nm/min per unit map
+    to_p = SCCM_PA_M3_S * (t_gas / T_STD) / speed
+    # scan no further than the attenuation table reaches (with the envelope's caps it always does)
+    f_top = min(feed_cap, P_GRID[-1] / to_p)
+    feeds = np.linspace(f_top / n_grid, f_top, n_grid)
+    att_g = att_at_many(att_n, feeds * to_p)                                         # (F, rho)
+    mean = area_mean(n_vac[None] * att_g[:, None, None, :], rho)                     # (F, N, L)
+    rate = per_feed * feeds[:, None, None, None] * mean[:, :, None, :] - dec_mean[None, None, :, None]   # (F, N, H, L)
+    ok = rate >= target
+    limited = ~ok.any(0)
+    k = np.where(limited, np.argmax(rate, 0), np.argmax(ok, 0))
+    hi = feeds[k]
+    lo = np.where((k > 0) & ~limited, feeds[np.maximum(k - 1, 0)], hi)
+
+    def rate_at(f):
+        att = att_at_many(att_n, f * to_p)                                           # (N, H, L, rho)
+        return per_feed * f * area_mean(n_vac[:, None] * att, rho) - dec_mean[None, :, None], att
+
+    for _ in range(40):   # bisection on [lo, hi] where the target is crossed (rate increasing there)
+        mid = 0.5 * (lo + hi)
+        r, _ = rate_at(mid)
+        up = r >= target
+        hi = np.where(~limited & up, mid, hi)
+        lo = np.where(~limited & ~up, mid, lo)
+    # supply-limited states: refine the rate-maximizing feed between the grid neighbours (ternary search)
+    a = np.where(limited, feeds[np.maximum(k - 1, 0)], hi)
+    b = np.where(limited, feeds[np.minimum(k + 1, n_grid - 1)], hi)
+    for _ in range(60):
+        m1, m2 = a + (b - a) / 3, b - (b - a) / 3
+        r1, _ = rate_at(m1)
+        r2, _ = rate_at(m2)
+        a = np.where(limited & (r1 < r2), m1, a)
+        b = np.where(limited & (r1 >= r2), m2, b)
+    feed = np.where(limited, 0.5 * (a + b), hi)
+    _, att = rate_at(feed)
+    s = feed * per_feed
+    if not limited.any():
+        # exact equal rate: solve s from the attenuation at the found feed (removes the bisection residual)
+        s = (target + dec_mean[None, :, None]) / area_mean(n_vac[:, None] * att, rho)
+        feed = s / per_feed
+    else:
+        s_eq = (target + dec_mean[None, :, None]) / area_mean(n_vac[:, None] * att, rho)
+        s = np.where(limited, s, s_eq)
+        feed = s / per_feed
+    return s, feed, feed * to_p, limited, att
+
+
+def evaluate(n_vac, att_n, g_vac, att_g, t_maps, params, law, rho, target, k_atoms, nominal_idx, eta, speed, feed_cap,
+             t_gas, p_start, kn_per_sccm):
+    """Growth over the grid with a per-state nitrogen balance. n_vac (N, L, rho): N flux per unit plate output with
+    the lip, no attenuation; att_n (P, rho) its attenuation table; g_vac (G, L, rho): Ga shapes with the lip, centre 1
+    without attenuation; att_g (G, P, rho); t_maps (H, rho). Returns arrays over (N, G, H, L)."""
     dec = params.decomposition(t_maps)                    # (H, rho)
     fcrit = params.critical_excess(law, t_maps)           # (H, rho)
-    mean_n = area_mean(n_maps, rho)                       # (N, L)
-    s_req = (target + area_mean(dec, rho))[None, :, None] / mean_n[:, None, :]   # (N, H, L) output for the target
-    s = np.minimum(s_req, s_max)
-    j_n = s[:, None, :, :, None] * n_maps[:, None, None, :, :]               # (N, 1, H, L, rho)
-    # Ga centre flux: set once from the nominal state's window, then held (absolute)
+    s, feed, p, limited, att = solve_states(n_vac, att_n, area_mean(dec, rho), target, eta, speed, feed_cap, t_gas,
+                                            k_atoms, p_start, rho)
+    j_n = s[..., None] * n_vac[:, None] * att                                           # (N, H, L, rho)
+    # Ga cell output held: its arrival at each state follows that state's attenuation
+    ga = np.stack([g_vac[g][None, None] * att_at_many(att_g[g], p) for g in range(len(g_vac))], 1)   # (N, G, H, L, rho)
     i_n, i_g, i_h, i_l = nominal_idx
-    jn0 = j_n[i_n, 0, i_h, i_l]
-    g0 = ga[i_g, i_l]
-    lo = float(np.max(jn0 / (jn0[0] * g0)))
-    hi = float(np.min((jn0 + fcrit[i_h]) / (jn0[0] * g0)))
+    jn0 = j_n[i_n, i_h, i_l]
+    gn = ga[i_n, i_g, i_h, i_l]
+    lo = float(np.max(jn0 / (jn0[0] * gn / gn[0])))
+    hi = float(np.min((jn0 + fcrit[i_h]) / (jn0[0] * gn / gn[0])))
     r0 = 0.5 * (lo + hi) if hi > lo else lo * 1.02
-    ga_centre = r0 * float(jn0[0])
-    j_ga = np.broadcast_to(ga_centre * ga[None, :, None, :, :], (j_n.shape[0],) + ga.shape[:1] + j_n.shape[2:])
-    j_n = np.broadcast_to(j_n, j_ga.shape)
-    st = steady_state(j_ga, j_n, np.broadcast_to(t_maps[None, None, :, None, :], j_ga.shape), params, law)
+    a_ga = r0 * float(jn0[0]) / float(gn[0])
+    j_ga = a_ga * ga
+    j_nb = np.broadcast_to(j_n[:, None], j_ga.shape)
+    st = steady_state(j_ga, j_nb, np.broadcast_to(t_maps[None, None, :, None, :], j_ga.shape), params, law)
     h = st["net_growth"]
     mean_h = area_mean(h, rho)
     thick = 100 * (h.max(-1) - h.min(-1)) / (2 * mean_h)
     std = 100 * area_std(h, rho) / mean_h
     margin = np.minimum(st["margin_to_n_rich"], st["margin_to_droplets"]).min(-1)
-    q = np.broadcast_to((s * k_atoms)[:, None, :, :], thick.shape)          # atoms/s
-    limited = np.broadcast_to((s_req > s_max)[:, None, :, :], thick.shape)
-    q_nom = s[i_n, i_h, i_l] * k_atoms
-    rate_fixed = np.broadcast_to((q_nom / k_atoms * mean_n[:, None, None, :] - area_mean(dec, rho)[None, None, :, None]),
-                                 thick.shape)                                 # nm/min at the nominal output
-    return {"thickness": thick, "std": std, "margin": margin, "q": q, "supply_limited": limited, "rate_fixed": rate_fixed,
-            "r0": r0, "ga_centre": ga_centre, "window_nominal": [lo, hi], "mean_net": mean_h}
+    kn = kn_per_sccm / feed
+    valid = (~limited) & (kn >= KN_VALID)
+
+    def b(x):
+        return np.broadcast_to(x[:, None], thick.shape)
+    return {"thickness": thick, "std": std, "margin": margin, "q": b(s * k_atoms), "feed": b(feed), "pressure": b(p),
+            "kn": b(kn), "supply_limited": b(limited), "valid": b(valid), "mean_net": mean_h,
+            "r0": r0, "ga_centre": r0 * float(jn0[0]), "window_nominal": [lo, hi]}
 
 
 def summarize(res, factor_axes, nominal_idx, idx08):
-    th, sd, mg, rate, lim = res["thickness"], res["std"], res["margin"], res["mean_net"], res["supply_limited"]
+    th, sd, mg, rate = res["thickness"], res["std"], res["margin"], res["mean_net"]
+    lim, val = res["supply_limited"], res["valid"]
     nom = tuple(nominal_idx)
     one = {}
     for name, ax in factor_axes.items():
         sl = list(nom)
         sl[ax] = slice(None)
         one[name] = {"thickness_max_pct": float(np.max(th[tuple(sl)])), "margin_min": float(np.min(mg[tuple(sl)]))}
-    t8, m8, r8 = th[idx08], mg[idx08], rate[idx08]
+
+    def block(idx):
+        t, m, v, r = th[idx], mg[idx], val[idx], rate[idx]
+        tv = t[v]
+        return {"thickness_pct_max": float(t.max()), "std_pct_max": float(sd[idx].max()), "margin_min": float(m.min()),
+                "fraction_in_window": float(np.mean(m >= 0.0)), "fraction_supply_limited": float(np.mean(lim[idx])),
+                "fraction_valid": float(np.mean(v)),
+                "valid_thickness_pct_max": float(tv.max()) if tv.size else None,
+                "valid_fraction_in_window": float(np.mean(m[v] >= 0.0)) if tv.size else None,
+                "rate_nm_min": [float(r.min()), float(r.max())],
+                "feed_sccm": [float(res["feed"][idx].min()), float(res["feed"][idx].max())],
+                "pressure_Pa": [float(res["pressure"][idx].min()), float(res["pressure"][idx].max())],
+                "kn_min": float(res["kn"][idx].min()),
+                # share of all states that are valid, in the window and within each threshold
+                "fraction_valid_in_window_within_pct": {f"{x:g}": float(np.mean(v & (m >= 0.0) & (t <= x)))
+                                                        for x in THRESHOLDS_PCT}}
+    allidx = slice(None)
     return {"nominal": {"thickness_pct": float(th[nom]), "std_pct": float(sd[nom]), "margin": float(mg[nom]),
-                        "q_atoms_s": float(res["q"][nom]), "rate_nm_min": float(rate[nom])},
+                        "q_atoms_s": float(res["q"][nom]), "rate_nm_min": float(rate[nom]), "feed_sccm": float(res["feed"][nom]),
+                        "pressure_Pa": float(res["pressure"][nom]), "kn": float(res["kn"][nom]), "valid": bool(val[nom])},
             "grid": {"thickness_pct": [float(th.min()), float(np.median(th)), float(np.percentile(th, 90)), float(th.max())],
-                     "std_pct_max": float(sd.max()), "margin_min": float(mg.min()), "fraction_in_window": float(np.mean(mg >= 0.0)),
-                     "fraction_supply_limited": float(np.mean(lim)),
-                     "rate_nm_min": [float(rate.min()), float(rate.max())],
-                     "q_atoms_s": [float(res["q"].min()), float(res["q"].max())],
-                     "rate_at_nominal_output_nm_min": [float(res["rate_fixed"].min()), float(res["rate_fixed"].max())]},
-            "grid_0.8deg": {"thickness_pct_max": float(t8.max()), "std_pct_max": float(sd[idx08].max()),
-                            "margin_min": float(m8.min()), "fraction_in_window": float(np.mean(m8 >= 0.0)),
-                            "fraction_supply_limited": float(np.mean(lim[idx08])),
-                            "rate_nm_min": [float(r8.min()), float(r8.max())],
-                            # share of states in the window whose thickness is at most each threshold
-                            "fraction_in_window_and_within_pct": {f"{t:g}": float(np.mean((t8 <= t) & (m8 >= 0.0)))
-                                                                  for t in THRESHOLDS_PCT}},
+                     **block(allidx)},
+            "grid_0.8deg": block(idx08),
             "one_factor": one, "centre_ga_n": res["r0"], "ga_centre_nm_min": res["ga_centre"],
             "window_nominal": res["window_nominal"]}
 
@@ -402,7 +498,7 @@ def summarize(res, factor_axes, nominal_idx, idx08):
 def main():
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--out", default="results/layout_comparison_bc")
-    ap.add_argument("--layouts", nargs="+", default=["B", "C"])
+    ap.add_argument("--layouts", nargs="+", default=["B", "C", "B-p", "C-p", "B-L"])
     ap.add_argument("--maps", help="directory with keyed map files (written to --out otherwise)")
     args = ap.parse_args()
     env = json.loads(ENVELOPE.read_text(encoding="utf-8"))
@@ -417,11 +513,8 @@ def main():
     t_gas = vac["gas_temperature_K"]["value"]
     nsrc = env["nitrogen_source"]
     etas = nsrc["active_n_fraction_of_feed_atoms"]["scenarios"]
-    feed_max = nsrc["feed_limit_sccm"]["value"]
+    feed_limits = nsrc["feed_limit_sccm"]["scenarios"]
     speeds = vac["effective_N2_speed_m3_s"]["bracket"]
-    plate = dict(nsrc["plate"]["value"])
-    plate["transmission"] = simulate(Crucible(1.0, plate["thickness_m"] / (plate["hole_diameter_m"] / 2)), 200_000, rng=5,
-                                     record_events=False).transmission
     params = load_parameters()
     gp = json.loads((ROOT / "data/parameters/gan_growth.json").read_text(encoding="utf-8"))
     k_atoms = gp["units"]["ml_per_s_per_nm_per_min"] * 1.14e19  # atoms m^-2 s^-1 per nm/min (1 ML = 1.14e15 cm^-2)
@@ -497,17 +590,22 @@ def main():
         lay = env["layouts"][name]
         opening = opening_of[name]
         states, maps, att_n, lip_n = nmaps[name]
+        plate = layout_plate(lay, env)
+        kn_per_sccm = min(plate_knudsen(1.0, plate, t, f) for t in (300.0, 600.0) for f in (1.3, 1.0, 1 / 1.3))
         port = lay["ga_port_deg"]
         fills = env["ga_source"]["port_options_deg"][str(port)]["admissible_fills_mm"]
         g_labels = [(fill, d) for fill in fills for d in GA_D]
         ga_base = {lab: ga_shape(ga_record(port, lab[0], lab[1]), rho) for lab in g_labels}
         nominal_idx = (0, g_labels.index((70, "8")), 0, LIP_H.index(0.002))
         idx08 = [0] + [i for i, s in enumerate(states) if s[1] == 0.8]
+        n_vac = maps[:, None, :] * lip_n[None, :, :]                                        # (N, L, rho)
+        g_vac = np.array([ga_base[lab][None, :] * gamaps[(port, lab[0], opening)][1] for lab in g_labels])  # (G, L, rho)
+        att_g = np.array([gamaps[(port, lab[0], opening)][0][lab[1]] for lab in g_labels])                # (G, P, rho)
 
         def delivered(p):
             return float(area_mean(maps[0] * att_at(att_n, p) * lip_n[LIP_H.index(0.002)], rho))
 
-        for eta, speed, t0, lname in itertools.product(etas, speeds, T0_C, LIMITS):
+        for eta, speed, feed_max, t0, lname in itertools.product(etas, speeds, feed_limits, T0_C, LIMITS):
             t_maps, hrep = heat[(lay["heater"], t0, lname)]
             dec_mean = float(area_mean(params.decomposition(t_maps[0]), rho))
             ops = []
@@ -518,39 +616,28 @@ def main():
                 elif tgt == TARGETS_UM_H[0]:
                     ops.append(("max", op))   # the highest reachable rate, once
             for label, op in ops:
-                p = op["pressure_Pa"]
-                op["kn_plate"] = {f"{t:g} K": [plate_knudsen(op["feed_sccm"], plate, t, f) for f in (1.3, 1.0, 1 / 1.3)]
-                                  for t in (300.0, 600.0)}
-                op["plate_free_molecular"] = min(min(v) for v in op["kn_plate"].values()) >= KN_VALID
+                op["kn_min"] = kn_per_sccm / op["feed_sccm"]
+                op["plate_free_molecular"] = op["kn_min"] >= KN_VALID
                 # past the rate peak more feed lowers the rate, so the peak feed is the most any state can use
                 feed_cap = op["feed_sccm"] if op.get("rate_peaks_below_feed_limit") else feed_max
-                q_max = eta * N_ATOMS_PER_SCCM * feed_cap
-                head = {"layout": name, "eta": eta, "S_eff_m3_s": speed, "target": label, "T0_C": t0,
-                        "heater_limit": lname, "operating_point": op, "q_max_atoms_s": q_max}
+                head = {"layout": name, "eta": eta, "S_eff_m3_s": speed, "feed_limit_sccm": feed_max, "target": label,
+                        "T0_C": t0, "heater_limit": lname, "operating_point": op, "feed_cap_sccm": feed_cap}
                 if op["rate_nm_min"] < 1000.0 * USEFUL_RATE_UM_H / 60.0:
                     rows.append({**head, "evaluated": False,
                                  "reason": f"reachable rate below {USEFUL_RATE_UM_H:g} um/h: decomposition comparable to growth"})
-                    print(f"{name:2s} eta {eta:5.2f} S {speed:3.1f} {t0:.0f} C {lname}: at most "
-                          f"{op['rate_nm_min'] * 0.06:5.2f} um/h, not evaluated", flush=True)
                     continue
-                n_full = maps[:, None, :] * att_at(att_n, p)[None, None, :] * lip_n[None, :, :]       # (N, L, rho)
-                ga = []
-                for fill, d in g_labels:
-                    att_g, lip_g = gamaps[(port, fill, opening)]
-                    g = ga_base[(fill, d)][None, :] * att_at(att_g[d], p)[None, :] * lip_g
-                    ga.append(g / g[:, :1])
-                ga = np.array(ga)                                                                      # (G, L, rho)
                 per_law = {}
                 for law in laws:
-                    res = evaluate(n_full, ga, t_maps, params, law, rho, op["rate_nm_min"], k_atoms, nominal_idx,
-                                   s_max=q_max / k_atoms)
+                    res = evaluate(n_vac, att_n, g_vac, att_g, t_maps, params, law, rho, op["rate_nm_min"], k_atoms,
+                                   nominal_idx, eta, speed, feed_cap, t_gas, op["pressure_Pa"], kn_per_sccm)
                     if not np.all(res["mean_net"] > 0.0):
                         raise SystemExit(f"layout_comparison: non-positive net growth in an evaluated row ({name}, {label})")
                     per_law[law] = res
-                    keep[(name, eta, speed, label, t0, lname, law)] = (res["thickness"].astype(np.float32),
-                                                                        res["margin"].astype(np.float32), g_labels)
+                    keep[(name, eta, speed, feed_max, label, t0, lname, law)] = (
+                        res["thickness"].astype(np.float32), res["margin"].astype(np.float32), res["valid"].copy(), g_labels)
                 comb = {k: np.stack([per_law[l][k] for l in laws], -1)
-                        for k in ("thickness", "std", "margin", "q", "supply_limited", "rate_fixed", "mean_net")}
+                        for k in ("thickness", "std", "margin", "q", "feed", "pressure", "kn", "supply_limited", "valid",
+                                  "mean_net")}
                 comb.update({"r0": {l: per_law[l]["r0"] for l in laws}, "ga_centre": {l: per_law[l]["ga_centre"] for l in laws},
                              "window_nominal": {l: per_law[l]["window_nominal"] for l in laws}})
                 axes = {"Ga fill and diameter": 1, "heater perturbation": 2, "lip height": 3, "droplet law": 4}
@@ -562,63 +649,69 @@ def main():
                         sl = (idx,) + nom[1:]
                         summ["one_factor"][f"pointing {pname} pivot +/-{tol} deg"] = {
                             "thickness_max_pct": float(comb["thickness"][sl].max()), "margin_min": float(comb["margin"][sl].min())}
-                # window losses by heater state (capped states grow colder with the same Ga flux)
                 summ["fraction_in_window_by_heater_state"] = {
                     hs: float(np.mean(comb["margin"][:, :, i] >= 0.0)) for i, hs in enumerate(HEATER_STATES)}
                 summ["heater_capped_fraction"] = float(np.mean(hrep["state_capped"]))
                 rows.append({**head, "evaluated": True, "heater": hrep, **summ})
                 g8 = summ["grid_0.8deg"]
-                print(f"{name:2s} eta {eta:5.2f} S {speed:3.1f} {label:>4s} {t0:.0f} C {lname}: feed {op['feed_sccm']:5.2f} sccm, "
-                      f"p {p:7.1e} Pa, rate {op['rate_nm_min'] * 0.06:4.2f} um/h, "
-                      f"Kn min {min(min(v) for v in op['kn_plate'].values()):5.1f}; thickness nominal "
-                      f"{summ['nominal']['thickness_pct']:.2f} % (std {summ['nominal']['std_pct']:.2f} %), +/-0.8 deg max "
-                      f"{g8['thickness_pct_max']:.2f} %, in window {100 * g8['fraction_in_window']:.0f} %, "
-                      f"supply-limited {100 * g8['fraction_supply_limited']:.0f} %", flush=True)
+                print(f"{name:4s} eta {eta:4.2f} S {speed:3.1f} feed<={feed_max:4.0f} {label:>4s} {t0:.0f} C: feed {op['feed_sccm']:5.2f} "
+                      f"sccm, p {op['pressure_Pa']:7.1e} Pa, {op['rate_nm_min'] * 0.06:4.2f} um/h, Kn {op['kn_min']:5.1f}; nominal "
+                      f"{summ['nominal']['thickness_pct']:.2f} %, +/-0.8 deg max {g8['thickness_pct_max']:.2f} % (valid "
+                      f"{100 * g8['fraction_valid']:.0f} %, valid max {g8['valid_thickness_pct_max'] if g8['valid_thickness_pct_max'] is None else round(g8['valid_thickness_pct_max'], 2)} %), "
+                      f"in window {100 * g8['fraction_in_window']:.0f} %, feed {g8['feed_sccm'][0]:.2f}-{g8['feed_sccm'][1]:.2f}", flush=True)
         # operating-point surface: finer scan of the conversion fraction, nominal state, 740 C, 1473 K
         t_maps, _ = heat[(lay["heater"], 740.0, "1473 K element")]
         dec_mean = float(area_mean(params.decomposition(t_maps[0]), rho))
-        for speed in speeds:
-            feed_table_max = P_GRID[-1] * speed / (SCCM_PA_M3_S * t_gas / T_STD)   # feed at the table's top pressure
+        for speed, feed_max in itertools.product(speeds, feed_limits):
             for eta in np.geomspace(0.01, 1.0, 25):
                 for tgt in TARGETS_UM_H:
                     op = operating_point(delivered, dec_mean, 1000.0 * tgt / 60.0, float(eta), speed, feed_max, t_gas, k_atoms)
-                    op["kn_min"] = min(plate_knudsen(op["feed_sccm"], plate, t, 1.3) for t in (300.0, 600.0))
-                    free = operating_point(delivered, dec_mean, 1000.0 * tgt / 60.0, float(eta), speed, feed_table_max, t_gas,
-                                           k_atoms)
-                    op["without_feed_limit"] = {"feed_sccm": free["feed_sccm"], "pressure_Pa": free["pressure_Pa"],
-                                                "target_reached": free["target_reached"], "rate_nm_min": free["rate_nm_min"]}
-                    op_table.append({"layout": name, "eta": float(eta), "S_eff_m3_s": speed, "target_um_h": tgt, **op})
+                    op["kn_min"] = kn_per_sccm / op["feed_sccm"]
+                    op_table.append({"layout": name, "eta": float(eta), "S_eff_m3_s": speed, "feed_limit_sccm": feed_max,
+                                     "target_um_h": tgt, **op})
 
-    # ---- ranking in matched states, only where both layouts run at the same target rate ---------------
+    # ---- ranking: matched states where both layouts are valid, per pointing ensemble, at equal target rate -----
     ranking = []
     common_fills = set.intersection(*[set(env["ga_source"]["port_options_deg"][str(env["layouts"][n]["ga_port_deg"])]
                                           ["admissible_fills_mm"]) for n in names])
-    for eta, speed, tgt, t0, lname in itertools.product(etas, speeds, TARGETS_UM_H, T0_C, LIMITS):
+    ref_states = nmaps[names[0]][0]
+    ensembles = {"+/-0.8 deg": [0] + [i for i, s in enumerate(ref_states) if s[1] == 0.8],
+                 "+/-0.8 and 1.6 deg": list(range(len(ref_states)))}
+    for eta, speed, feed_max, tgt, t0, lname in itertools.product(etas, speeds, feed_limits, TARGETS_UM_H, T0_C, LIMITS):
         label = f"{tgt:g}"
-        if not all((name, eta, speed, label, t0, lname, laws[0]) in keep for name in names):
+        present = [n for n in names if (n, eta, speed, feed_max, label, t0, lname, laws[0]) in keep]
+        if len(present) < 2:
             continue
         vals = {}
-        for name in names:
-            th_l, mg_l = [], []
+        for name in present:
+            th_l, mg_l, va_l = [], [], []
             for law in laws:
-                th, mg, g_labels = keep[(name, eta, speed, label, t0, lname, law)]
+                th, mg, va, g_labels = keep[(name, eta, speed, feed_max, label, t0, lname, law)]
                 gi = [i for i, (f, d) in enumerate(g_labels) if f in common_fills]
                 th_l.append(th[:, gi])
                 mg_l.append(mg[:, gi])
-            vals[name] = (np.stack(th_l, -1), np.stack(mg_l, -1))
+                va_l.append(va[:, gi])
+            vals[name] = (np.stack(th_l, -1), np.stack(mg_l, -1), np.stack(va_l, -1))
         pairs = {}
-        for a, b in itertools.permutations(names, 2):
-            ta, ma = vals[a]
-            tb, mb = vals[b]
-            pairs[f"{a} | {b}"] = {"thinner": float(np.mean(ta < tb)),
-                                   "thinner_and_in_window": float(np.mean((ta < tb) & (ma >= 0.0)))}
-        ranking.append({"eta": eta, "S_eff_m3_s": speed, "target_um_h": tgt, "T0_C": t0, "heater_limit": lname,
-                        "pairwise": pairs, "matched_fills_mm": sorted(common_fills)})
+        for a, b in itertools.permutations(present, 2):
+            ta, ma, va = vals[a]
+            tb, mb, vb = vals[b]
+            pe = {}
+            for ens, idx in ensembles.items():
+                both = va[idx] & vb[idx]
+                n_both = int(both.sum())
+                pe[ens] = {"matched_valid_fraction": float(np.mean(both)), "matched_valid_states": n_both,
+                           "thinner": float(np.mean((ta[idx] < tb[idx])[both])) if n_both else None,
+                           "thinner_and_in_window": float(np.mean(((ta[idx] < tb[idx]) & (ma[idx] >= 0.0))[both])) if n_both else None}
+            pairs[f"{a} | {b}"] = pe
+        ranking.append({"eta": eta, "S_eff_m3_s": speed, "feed_limit_sccm": feed_max, "target_um_h": tgt, "T0_C": t0,
+                        "heater_limit": lname, "layouts": present, "pairwise": pairs, "matched_fills_mm": sorted(common_fills)})
 
     manifest = build_manifest(
         "layout_comparison", label="representative_chamber", validation_status="not_validated",
         inputs={"envelope": env, "layouts": names, "conversion_fractions": etas, "effective_speeds_m3_s": speeds,
-                "feed_limit_sccm": feed_max, "plate": plate, "kn_valid": KN_VALID, "p_grid_Pa": P_GRID, "T0_C": T0_C,
+                "feed_limits_sccm": feed_limits, "plates": {n: layout_plate(env["layouts"][n], env) for n in names},
+                "kn_valid": KN_VALID, "p_grid_Pa": P_GRID, "T0_C": T0_C,
                 "heater_limits_K": LIMITS, "tilts_deg": TOLS_DEG, "tilt_directions_deg": TILT_DIRS_DEG,
                 "lip_heights_m": LIP_H, "heater_states": HEATER_STATES, "ga_diameters": GA_D, "n_particles": N_PARTICLES,
                 "n_seed": N_SEED, "usable_radius_m": usable, "target_nm_min": target, "atoms_per_m2_s_per_nm_min": k_atoms,
@@ -633,6 +726,7 @@ def main():
                   "Background attenuation removes direct beam only; scattered arrival not modelled",
                   "Attenuation and lip shadow as nominal-pose ratio profiles; free-molecular N plates with uniform output",
                   "Heater perturbations are not combined with each other; N profile and plate geometry are not in the grid",
+                  "Per-state pressure from the state's own feed; attenuation tables are nominal-pose ratio profiles",
                   "No uniformity target or minimum growth rate is agreed: threshold shares are tradeoffs, not pass/fail"],
         disabled_physics=["transients", "morphology", "AlN", "scattered-beam redeposition", "Ga pointing error",
                           "transitional plate-hole flow"])

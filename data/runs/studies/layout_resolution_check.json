@@ -1,24 +1,24 @@
 {
   "schema_version": "0.1",
   "run_id": "layout_resolution_check",
-  "created_utc": "2026-10-01T11:10:54+00:00",
+  "created_utc": "2026-10-01T16:01:58+00:00",
   "label": "representative_chamber",
   "validation_status": "verified_numerically",
   "package_version": "0.1.0",
-  "git_commit": "161f74bec2e3302ad0a4463eb77798ad70760963-dirty",
+  "git_commit": "353cf475087b3a8cc0069057192dd115cc50e26a-dirty",
   "python": "3.12.13",
   "numpy": "2.4.4",
   "platform": "Windows-11-10.0.26200-SP0",
   "source_sha256": {
-    "scripts/layout_resolution_check.py": "eee7dc3f367db2a70a0da439305b1aca8731ca3e489b863bcd6c9e40bca80078",
-    "scripts/layout_comparison.py": "7646eb8f1d88ae415d064279316210718eaa6f839d705c38d2344cb8678dc94e",
+    "scripts/layout_resolution_check.py": "b8891d35d6333839bc9c4be0ec669f2247223a4b28a87373d77aaf738f1adfb9",
+    "scripts/layout_comparison.py": "3a81b973b1085ab43746be824c7b9881a898f300b20c5f515b5ffe7724e4acbc",
     "scripts/heater_zones.py": "d9eb317630af09faeea8dda8e7d9a43b1b729b6c981db9a4c0d17843489c04de",
     "src/mbe_twin/beam.py": "90a90503e0a530d61bed26d42ca161b2d0e4d0d2f6d0f794ccf7fc4c9083ed93",
     "src/mbe_twin/aperture.py": "08ff8b237847ca4a16a60b866748fa348a757f18a69abe7c8dbdaf652a466e6b",
     "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff"
   },
   "solver": null,
-  "inputs_sha256": "086854318cbd4e3e01c8307f92572b3acdb3f929cf0d71deae21a86f060012e1",
+  "inputs_sha256": "0ba250bb0404086a2dfd20d5a6c8c95e661f9bf32299695593f8b930f33e0b8e",
   "inputs": {
     "record": "data/runs/studies/layout_comparison_bc.json",
     "eta": 1.0,
@@ -26,6 +26,7 @@
     "t0_C": 740.0,
     "limit": "1473 K element",
     "target": "1",
+    "feed_limit": 10.0,
     "grids": [
       39,
       77,
@@ -56,11 +57,15 @@
           }
         },
         "record_nominal": {
-          "thickness_pct": 1.055805277933911,
-          "std_pct": 0.5804128744357882,
-          "margin": 0.49278579415788576,
+          "thickness_pct": 1.0558052779339115,
+          "std_pct": 0.5804128744357879,
+          "margin": 0.49278579415788565,
           "q_atoms_s": 4.674417118011347e+18,
-          "rate_nm_min": 16.666666666200157
+          "rate_nm_min": 16.66666666620015,
+          "feed_sccm": 5.219352075911909,
+          "pressure_Pa": 0.004840296989673936,
+          "kn": 11.388909468276161,
+          "valid": true
         }
       },
       {
@@ -85,11 +90,114 @@
           }
         },
         "record_nominal": {
-          "thickness_pct": 0.9412307570331898,
-          "std_pct": 0.6191304122682935,
-          "margin": 0.4887565574015551,
+          "thickness_pct": 0.9412307570332007,
+          "std_pct": 0.619130412268294,
+          "margin": 0.4887565574015552,
           "q_atoms_s": 6.890319711726856e+18,
-          "rate_nm_min": 16.66666666399585
+          "rate_nm_min": 16.666666663995848,
+          "feed_sccm": 7.69358052205623,
+          "pressure_Pa": 0.007134834764756979,
+          "kn": 7.726276225381337,
+          "valid": false
+        }
+      },
+      {
+        "layout": "B-p",
+        "pressure_Pa": 0.004698608102758916,
+        "rate_nm_min": 16.666666664548384,
+        "direct": {
+          "39": {
+            "thickness_pct": 0.4246817369684231,
+            "std_pct": 0.24263801196771487,
+            "rate_nm_min": 16.666666664548384
+          },
+          "77": {
+            "thickness_pct": 0.4246784065779206,
+            "std_pct": 0.23938730418749915,
+            "rate_nm_min": 16.666666664548384
+          },
+          "153": {
+            "thickness_pct": 0.4246789327313775,
+            "std_pct": 0.2381384091335967,
+            "rate_nm_min": 16.666666664548384
+          }
+        },
+        "record_nominal": {
+          "thickness_pct": 0.4252702664515017,
+          "std_pct": 0.24282859391196707,
+          "margin": 0.49768437041311037,
+          "q_atoms_s": 4.537583993961213e+18,
+          "rate_nm_min": 16.66666666454838,
+          "feed_sccm": 5.066567197704803,
+          "pressure_Pa": 0.004698608102758916,
+          "kn": 11.732347752645625,
+          "valid": true
+        }
+      },
+      {
+        "layout": "C-p",
+        "pressure_Pa": 0.007071703938052943,
+        "rate_nm_min": 16.666666664293164,
+        "direct": {
+          "39": {
+            "thickness_pct": 0.41775769212739455,
+            "std_pct": 0.2819174289160978,
+            "rate_nm_min": 16.666666664293164
+          },
+          "77": {
+            "thickness_pct": 0.4208141570412931,
+            "std_pct": 0.2798470087295227,
+            "rate_nm_min": 16.66666666429316
+          },
+          "153": {
+            "thickness_pct": 0.4237690299538163,
+            "std_pct": 0.28013203438731743,
+            "rate_nm_min": 16.666666664293164
+          }
+        },
+        "record_nominal": {
+          "thickness_pct": 0.41784324806324663,
+          "std_pct": 0.2819928897446951,
+          "margin": 0.49211628005568875,
+          "q_atoms_s": 6.82935241619745e+18,
+          "rate_nm_min": 16.666666664293164,
+          "feed_sccm": 7.6255057712476155,
+          "pressure_Pa": 0.007071703938052944,
+          "kn": 7.795250578624178,
+          "valid": false
+        }
+      },
+      {
+        "layout": "B-L",
+        "pressure_Pa": 0.005338446114771205,
+        "rate_nm_min": 16.666666664927675,
+        "direct": {
+          "39": {
+            "thickness_pct": 0.6408996849895012,
+            "std_pct": 0.28981495418034625,
+            "rate_nm_min": 16.666666664927668
+          },
+          "77": {
+            "thickness_pct": 0.6450554676670338,
+            "std_pct": 0.2863827405274972,
+            "rate_nm_min": 16.66666666492767
+          },
+          "153": {
+            "thickness_pct": 0.6450531639454998,
+            "std_pct": 0.28601574001237684,
+            "rate_nm_min": 16.666666664927675
+          }
+        },
+        "record_nominal": {
+          "thickness_pct": 0.6403332710687479,
+          "std_pct": 0.2893770949602366,
+          "margin": 0.4998795748578048,
+          "q_atoms_s": 5.155494374767429e+18,
+          "rate_nm_min": 16.666666664927668,
+          "feed_sccm": 5.756512435232193,
+          "pressure_Pa": 0.005338446114771207,
+          "kn": 72.22993984287157,
+          "valid": true
         }
       }
     ]

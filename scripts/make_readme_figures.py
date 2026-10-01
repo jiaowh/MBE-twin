@@ -282,35 +282,45 @@ def n_aim():
 
 
 def layouts():
-    """B and C at operating points the nitrogen feed and pumping can supply: rate reached, and uniformity versus rate."""
+    """Growth rate the nitrogen supply can reach, and uniformity at the reachable rates, for the leading layouts."""
     o = load("studies/layout_comparison_bc.json")
-    colours = {"B": BLUE, "C": ORANGE}
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10.5, 4.0))
-    for name, c in colours.items():
-        for speed, ls in ((2.0, "-"), (0.5, "--")):
+    ev_path = RUNS / "studies/nitrogen_output_evidence.json"
+    eta_lit = json.loads(ev_path.read_text(encoding="utf-8"))["outputs"].get("eta_high_flow_joint") if ev_path.exists() else None
+    colours = {"B": GREY, "B-p": BLUE, "B-L": GREEN}
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(11, 4.2))
+    if eta_lit:
+        ax1.axvspan(eta_lit[0], eta_lit[1], color=ORANGE, alpha=0.15, lw=0)
+        ax1.text(np.sqrt(eta_lit[0] * eta_lit[1]), 0.04, "published\nhigh-flow\nrange", ha="center", fontsize=7, color=ORANGE)
+    for name in ("B-p", "B-L"):
+        for (speed, feed), ls in (((2.0, 10.0), "--"), ((4.0, 35.0), "-")):
             pts = [r for r in o["operating_surface"] if r["layout"] == name and r["S_eff_m3_s"] == speed
-                   and r["target_um_h"] == 1.0]
-            ax1.plot([r["eta"] for r in pts], [max(r["rate_nm_min"] * 0.06, 0.0) for r in pts], ls, c=c,
-                     label=f"{name}, {speed:g} m$^3$/s pumping")
+                   and r["feed_limit_sccm"] == feed and r["target_um_h"] == 1.0]
+            eta = np.array([r["eta"] for r in pts])
+            rate = np.array([max(r["rate_nm_min"] * 0.06, 0.0) for r in pts])
+            valid = np.array([r["kn_min"] >= 10.0 for r in pts])
+            ax1.plot(eta, np.where(valid, rate, np.nan), ls, c=colours[name], lw=2,
+                     label=f"{name}: {speed:g} m$^3$/s, up to {feed:g} sccm")
+            ax1.plot(eta, np.where(~valid, rate, np.nan), ":", c=colours[name], lw=1)
     ax1.set_xscale("log")
-    ax1.axhline(1.0, c=GREY, ls=":")
+    ax1.axhline(1.0, c=GREY, ls=":", lw=1)
     ax1.set_xlabel("fraction of the feed's N atoms leaving as active N")
     ax1.set_ylabel("growth rate reached (µm/h)")
-    ax1.set_title("Rate within a 10 sccm feed limit", fontsize=10)
-    ax1.legend(frameon=False, fontsize=8)
-    rows = [r for r in o["rows"] if r["evaluated"] and r["eta"] == 1.0 and r["S_eff_m3_s"] == 2.0 and r["T0_C"] == 740.0
-            and r["heater_limit"] == "1473 K element" and r["target"] != "max"]
-    for name, c in colours.items():
+    ax1.set_title("Rate (dotted: plate holes outside the model's range)", fontsize=9)
+    ax1.legend(frameon=False, fontsize=7, loc="upper left")
+    rows = [r for r in o["rows"] if r["evaluated"] and r["eta"] == 1.0 and r["S_eff_m3_s"] == 2.0 and r["feed_limit_sccm"] == 10.0
+            and r["T0_C"] == 740.0 and r["target"] != "max"]
+    for k, name in enumerate(colours):
         rr = sorted((r for r in rows if r["layout"] == name), key=lambda r: float(r["target"]))
-        x = np.array([float(r["target"]) for r in rr]) * (0.97 if name == "B" else 1.03)
-        ax2.vlines(x, [r["grid"]["thickness_pct"][0] for r in rr], [r["grid_0.8deg"]["thickness_pct_max"] for r in rr],
-                   colors=c, lw=6, alpha=0.5)
-        ax2.plot(x, [r["nominal"]["thickness_pct"] for r in rr], "o", c=c, ms=5, label=f"{name}: nominal; bar = grid range, top = worst with pointing within 0.8°")
+        x = np.array([float(r["target"]) for r in rr]) * (1 + 0.035 * (k - 1))
+        top = [r["grid_0.8deg"]["valid_thickness_pct_max"] for r in rr]
+        ax2.vlines(x, [r["nominal"]["thickness_pct"] for r in rr], top, colors=colours[name], lw=5, alpha=0.45)
+        ax2.plot(x, [r["nominal"]["thickness_pct"] for r in rr], "o", c=colours[name], ms=5,
+                 label=f"{name}: as designed (dot) to worst within 0.8° (bar top)")
     ax2.set_xlabel("growth rate (µm/h)")
     ax2.set_ylabel("thickness half-range / mean (%), r <= 94 mm")
-    ax2.set_title("Uniformity versus rate (all feed atoms active, 2 m$^3$/s)", fontsize=10)
-    ax2.legend(frameon=False, fontsize=8)
-    fig.suptitle("Layouts B and C at 740 °C with the 1200 °C element limit (representative chamber)", fontsize=10)
+    ax2.set_title("Uniformity at reachable rates (all feed atoms active, 2 m$^3$/s)", fontsize=9)
+    ax2.legend(frameon=False, fontsize=7, loc="upper right")
+    fig.suptitle("Nitrogen supply and uniformity, 740 °C, 1200 °C element limit (representative chamber)", fontsize=10)
     fig.savefig(OUT / "layouts.png")
     plt.close(fig)
 

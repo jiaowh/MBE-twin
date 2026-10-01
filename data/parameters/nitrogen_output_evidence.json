@@ -1,0 +1,55 @@
+{
+  "schema_version": "nitrogen-output-evidence-0.1",
+  "revision_date": "2026-10-01",
+  "purpose": "Published N-limited growth rates with the N2 flow, RF power and aperture plate that produced them. scripts/nitrogen_output_evidence.py back-calculates, with the repository's plate model and a bracketed geometry, the fraction eta of the feed's N atoms that left the plate as growth-active N. These are inferences under stated geometric assumptions, not measurements of eta.",
+  "conventions": {
+    "flow": "sccm of N2 (273.15 K, 101325 Pa); 1 sccm = 8.956e17 N atoms/s",
+    "rate": "N-limited (metal-rich) growth rate at the substrate centre, um/h, as published",
+    "material_N_density_cm3": {"GaN": 4.38e22, "InN": 3.24e22},
+    "material_note": "Wurtzite, from a and c: GaN 3.189 / 5.185 A, InN 3.537 / 5.704 A (two formula units per cell). The growth model's GaN atom rate (gan_growth.json units) is scaled by N density for InN."
+  },
+  "systems": {
+    "GT_Riber32": {"description": "Georgia Tech Riber 32 MBE, Veeco UNI-Bulb RF source, cryo-pumped (one CTI-8 and two CTI-10 during growth after the modification), growth pressure below 1e-4 Torr at more than 30 sccm",
+                   "source": "R26 section II-III.A; R30 section II",
+                   "throw_m": {"bracket": [0.15, 0.267], "status": "missing", "note": "Not published. Bracket: a compact research chamber to the 10.5 inch typical of a plasma source (H02)."},
+                   "source_polar_deg": {"bracket": [20.0, 40.0], "status": "missing", "note": "Angle between the source axis and the substrate normal; not published."},
+                   "substrate": "1 x 1 cm or 2 inch; rate taken as the centre value"},
+    "MIB_HDRS": {"description": "University of Milan-Bicocca MBE, Hakuto HDRS RF source, substrate not rotating, rate at the pyrometer spot (about 5 mm)",
+                 "source": "R12 sections 2-3",
+                 "throw_m": {"bracket": [0.15, 0.267], "status": "missing"},
+                 "source_polar_deg": {"bracket": [20.0, 40.0], "status": "missing"},
+                 "substrate": "GaN/sapphire template; rate at the pyrometer spot"}
+  },
+  "plates": {
+    "R13_original": {"holes": 712, "hole_diameter_m": 0.2032e-3, "thickness_m": {"bracket": [0.5e-3, 2.0e-3], "status": "missing"}, "source": "R13 aperture table (PDF p. 9)"},
+    "R13_modified": {"holes": 4000, "hole_diameter_m": 0.2032e-3, "thickness_m": {"bracket": [0.5e-3, 2.0e-3], "status": "missing"}, "source": "R13 aperture table; R26 'custom 5.6x higher conductance aperture'"},
+    "R30_UNI-Bulb": {"holes": 2000, "hole_diameter_m": 0.343e-3, "thickness_m": {"bracket": [0.5e-3, 2.0e-3], "status": "missing"}, "source": "R30 section II"},
+    "HDRS_unknown": {"holes": null, "hole_diameter_m": null, "thickness_m": null, "status": "missing", "note": "Plate not published; bracketed with the L/r 0-5.8 range of the other plates"}
+  },
+  "points": [
+    {"id": "R26-a", "system": "GT_Riber32", "plate": "R13_modified", "material": "GaN", "T_growth_C": 600, "flow_sccm": 15.0, "power_W": 500, "rate_um_h": 6.1,
+     "locator": "R26 section III.B: flow 3-17 sccm at 350 W, then 350-500 W at 15 sccm, 'resulted in growth rates of 1.5 um/h to 6.1 um/h'",
+     "assignment": "assumed: the 6.1 um/h end belongs to 15 sccm, 500 W (the end of the power series; Fig. 1 not digitized)"},
+    {"id": "R26-b", "system": "GT_Riber32", "plate": "R13_modified", "material": "GaN", "T_growth_C": 600, "flow_sccm": 20.0, "power_W": 600, "rate_um_h": 8.2,
+     "locator": "R26 section III.B: 'Under this same condition using 20 sccm nitrogen without argon, the growth rate dropped to 8.2 um/h'"},
+    {"id": "R26-c", "system": "GT_Riber32", "plate": "R13_modified", "material": "GaN", "T_growth_C": 600, "flow_sccm": 34.0, "power_W": 500, "rate_um_h": 8.4,
+     "locator": "R26 section III.B: 'pure nitrogen at 500 W RF power and increasing the flow to 34 sccm ... 8.4 um/h'"},
+    {"id": "R13-old", "system": "GT_Riber32", "plate": "R13_original", "material": "GaN", "T_growth_C": null, "flow_sccm": 1.3, "power_W": null, "rate_um_h": 1.3,
+     "locator": "R13 aperture table (PDF p. 9): 'Old Condition 712 holes, 1.3 sccm and ~1.3 um/hour'",
+     "assignment": "approximate ('~'); pumping before the added cryo pumps"},
+    {"id": "R30-a", "system": "GT_Riber32", "plate": "R30_UNI-Bulb", "material": "InN", "T_growth_C": null, "flow_sccm": 2.5, "power_W": 350, "rate_um_h": 2.01,
+     "locator": "R30 section III: '350 W and 2.5 sccm nitrogen flow resulted in a growth rate of 2.01 um/hr'", "assignment": "metal-modulated epitaxy, metal-rich: N-limited"},
+    {"id": "R30-b", "system": "GT_Riber32", "plate": "R30_UNI-Bulb", "material": "InN", "T_growth_C": null, "flow_sccm": 2.5, "power_W": 550, "rate_um_h": 2.54,
+     "locator": "R30 section III: '550 W with 2.5 sccm ... increased the growth rate up to 2.54 um/hr'"},
+    {"id": "R30-c", "system": "GT_Riber32", "plate": "R30_UNI-Bulb", "material": "InN", "T_growth_C": null, "flow_sccm": 7.5, "power_W": 350, "rate_um_h": 4.58,
+     "locator": "R30 section III: 'nitrogen flow as high as 7.5 sccm, the resulting growth rate was 4.58 um/hr'"},
+    {"id": "R12-a", "system": "MIB_HDRS", "plate": "HDRS_unknown", "material": "GaN", "T_growth_C": 600, "flow_sccm": 3.0, "power_W": 300, "rate_um_h": 0.7152,
+     "locator": "R12 section 3, Fig. 4: 3 sccm, 300 W, 'GaN growth rate of 11.92 +/- 0.01 nm/min' (N-limited, Ga-rich, no Ga desorption at 600 C)"}
+  ],
+  "direct_source_measurements": [
+    {"id": "R18", "statement": "SVTA RF4.5 source, single exit aperture: dissociation fraction up to 0.4 (about 0.1 Torr source pressure) and total atomic flux up to 0.85e18 atoms/s (about 0.3 Torr)", "review_level": "abstract_only", "url": "https://doi.org/10.1016/S0022-0248(98)01361-X",
+     "use": "An absolute output scale for a production source of that era: 0.85e18 atoms/s is a fifth of what layout B needs for 1 um/h on 200 mm (4.7e18)"},
+    {"id": "Vacuum-2024", "statement": "RF nitrogen atom source: 18 % dissociation at 400 W; up to 0.7 at very low N2 flow, falling as the flow rises", "review_level": "abstract_only (search excerpt)", "url": "https://www.sciencedirect.com/science/article/abs/pii/S0042207X24008662",
+     "use": "Dissociation is high only at low flow, where the absolute output is small"}
+  ]
+}

@@ -42,8 +42,15 @@ IMPACT = {
                                     "the N output is bounded by a coupled feed/pressure balance. The six-layout record "
                                     "layout_comparison.json (6aca3b3) is superseded for B and C by layout_comparison_bc.json; "
                                     "its A, C-Ga54, R0 and D window margins were computed with the old Ga protocol.",
-    "data/design/design_envelope.json": "Later change adds the nitrogen_source and acceptance blocks and a note on the output "
-                                        "bound; every input the earlier records read is unchanged.",
+    "scripts/layout_feasibility.py": "CHANGES RESULTS. Clearances became certified lower bounds (disk samples less their covering "
+                                     "radius, refined where the bound is near the margin) and now include flange/body, "
+                                     "flange/blade and simultaneous blade/blade pairs. The six-layout record "
+                                     "layout_feasibility.json is superseded for B, C, B-p and C-p by layout_feasibility_bc.json.",
+    "src/mbe_twin/layout.py": "Later change adds disk_cover_radius and the disk distance bounds; existing functions are "
+                              "unchanged (tests/test_layout.py).",
+    "data/design/design_envelope.json": "Later changes add the nitrogen_source and acceptance blocks, a note on the output "
+                                        "bound, the B-p and C-p layouts and wider pumping, feed and conversion scenarios; every "
+                                        "input the earlier records read is unchanged.",
     "scripts/nitrogen_aim_study.py":"Later changes add command-line options (--aspects/--offsets/--angles) and record fields; "
                                      "the grid evaluation and seeds of the default run are unchanged.",
 }
