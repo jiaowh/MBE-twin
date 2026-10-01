@@ -25,7 +25,7 @@ def hex_holes(plate_radius, pitch):
 
 
 def aperture_plate_sources(name, wafer, hole_events, holes_xy, *, throw, polar_angle, azimuth,
-                           total_rate, profile=None, aim_offset=0.0, axis=None):
+                           total_rate, profile=None, aim_offset=0.0, axis=None, centre=None):
     """One `CrucibleSource` per hole, with the plate centred where `crucible_source_on_cone`
     would put an orifice.
 
@@ -33,12 +33,14 @@ def aperture_plate_sources(name, wafer, hole_events, holes_xy, *, throw, polar_a
     with r the hole's distance from the plate centre, sets relative output per hole
     (default uniform). Hole positions are in the plate plane, in the source frame's first two
     axes. `axis`, if given, replaces the aimed plate normal (e.g. to apply a pointing error);
-    the plate centre stays where the cone puts it.
+    the plate centre stays where the cone puts it unless `centre` (chamber coordinates) moves
+    it, as a tilt about a pivot behind the plate does (mbe_twin.layout.SourcePort.pose).
     """
     ref = crucible_source_on_cone(name, wafer, hole_events, throw=throw, polar_angle=polar_angle,
                                   azimuth=azimuth, emission_rate=1.0, aim_offset=aim_offset)
-    if axis is not None:
-        ref = CrucibleSource(name, ref.lip_center, tuple(np.asarray(axis, float) / np.linalg.norm(axis)),
+    if axis is not None or centre is not None:
+        ax = ref.axis if axis is None else tuple(np.asarray(axis, float) / np.linalg.norm(axis))
+        ref = CrucibleSource(name, ref.lip_center if centre is None else tuple(np.asarray(centre, float)), ax,
                              1.0, hole_events)
     xy = np.asarray(holes_xy, float)
     w = np.ones(len(xy)) if profile is None else np.asarray(profile(np.hypot(xy[:, 0], xy[:, 1])), float)

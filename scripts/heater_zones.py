@@ -82,11 +82,50 @@ def at_mean(model, fractions, target_k, p0=3000.0):
     raise RuntimeError("power iteration did not converge")
 
 
-def optimize(model, target_k, iters=40):
-    """Sequential linear programming for the minimax zone powers (see module docstring)."""
+def violation(model, r, limits):
+    """Largest relative excess over the heater limits (0 when all are met).
+
+    limits: dict with optional t_heater_max (K, every heater ring), flux_max (W/m^2, each
+    zone's mean power density) and p_total_max (W).
+    """
+    if not limits:
+        return 0.0
+    v = 0.0
+    if limits.get("t_heater_max") is not None:
+        v = max(v, float(r["t_heater"].max()) / limits["t_heater_max"] - 1.0)
+    if limits.get("flux_max") is not None:
+        v = max(v, float(np.max(r["zone_power"] / model.zone_area)) / limits["flux_max"] - 1.0)
+    if limits.get("p_total_max") is not None:
+        v = max(v, float(r["zone_power"].sum()) / limits["p_total_max"] - 1.0)
+    return max(v, 0.0)
+
+
+def limit_report(model, r):
+    """Heater quantities that the limits act on."""
+    return {"t_heater_max_K": float(r["t_heater"].max()), "zone_flux_max_W_m2": float(np.max(r["zone_power"] / model.zone_area)),
+            "zone_flux_W_m2": (r["zone_power"] / model.zone_area).tolist(), "total_power_W": float(r["zone_power"].sum())}
+
+
+def optimize(model, target_k, iters=40, limits=None):
+    """Sequential linear programming for the minimax zone powers (see module docstring).
+
+    With `limits` (see `violation`) the linear programme also keeps the linearized heater ring
+    temperatures, zone power densities and total power within them. Each limit is softened by
+    one slack variable with a large cost, so an infeasible start is driven towards
+    feasibility; a step is accepted when it lowers range + 1e4 K x relative violation. Without
+    limits the iteration is the unconstrained one. The returned result carries "violation"
+    (largest relative excess, 0 when every limit holds).
+    """
     n = model.n_zones
     r = at_mean(model, np.full(n, 1.0 / n), target_k)
+    limits = {k: v for k, v in (limits or {}).items() if v is not None}
+    penalty = 1e4
+
+    def merit(res):
+        return res["wafer_range"] + penalty * violation(model, res, limits)
+
     if n == 1:
+        r["violation"] = violation(model, r, limits)
         return r, np.array([1.0])
     p = r["zone_power"].copy()
     w = r["area_wafer"] / r["area_wafer"].sum()
@@ -94,30 +133,51 @@ def optimize(model, target_k, iters=40):
     for _ in range(iters):
         t0 = best["t_wafer"]
         s = np.empty((len(t0), n))
+        sh = np.empty((model.nh, n))
         for k in range(n):
             dp = np.zeros(n)
             dp[k] = 0.01 * p.sum()
-            s[:, k] = (model.solve(heater_power=p + dp)["t_wafer"] - t0) / dp[k]
+            rk = model.solve(heater_power=p + dp)
+            s[:, k] = (rk["t_wafer"] - t0) / dp[k]
+            sh[:, k] = (rk["t_heater"] - best["t_heater"]) / dp[k]
         m = len(t0)
-        c = np.concatenate([np.zeros(n), [1.0, -1.0]])  # variables dP, upper u, lower l
-        a_ub = np.vstack([np.hstack([s, -np.ones((m, 1)), np.zeros((m, 1))]),
-                          np.hstack([-s, np.zeros((m, 1)), np.ones((m, 1))])])
+        n_slack = 3 if limits else 0
+        c = np.concatenate([np.zeros(n), [1.0, -1.0], np.full(n_slack, penalty)])  # dP, upper u, lower l, slacks
+        a_ub = np.vstack([np.hstack([s, -np.ones((m, 1)), np.zeros((m, 1 + n_slack))]),
+                          np.hstack([-s, np.zeros((m, 1)), np.ones((m, 1)), np.zeros((m, n_slack))])])
         b_ub = np.concatenate([-t0, t0])
-        a_eq = np.concatenate([w @ s, [0.0, 0.0]])[None, :]
+        if limits:
+            rows, rhs = [], []
+            if "t_heater_max" in limits:  # relative excess: (T + S dP) / T_max - 1 <= slack_0
+                tm = limits["t_heater_max"]
+                rows.append(np.hstack([sh / tm, np.zeros((model.nh, 2)), -np.ones((model.nh, 1)), np.zeros((model.nh, 2))]))
+                rhs.append(1.0 - best["t_heater"] / tm)
+            if "flux_max" in limits:
+                fa = limits["flux_max"] * model.zone_area
+                rows.append(np.hstack([np.diag(1.0 / fa), np.zeros((n, 3)), -np.ones((n, 1)), np.zeros((n, 1))]))
+                rhs.append(1.0 - p / fa)
+            if "p_total_max" in limits:
+                pt = limits["p_total_max"]
+                rows.append(np.hstack([np.full((1, n), 1.0 / pt), np.zeros((1, 4)), -np.ones((1, 1))]))
+                rhs.append([1.0 - p.sum() / pt])
+            a_ub = np.vstack([a_ub] + rows)
+            b_ub = np.concatenate([b_ub] + [np.atleast_1d(x) for x in rhs])
+        a_eq = np.concatenate([w @ s, [0.0, 0.0], np.zeros(n_slack)])[None, :]
         lim = trust * p.sum() / n
-        bounds = [(max(-p[k], -lim), lim) for k in range(n)] + [(None, None), (None, None)]
+        bounds = [(max(-p[k], -lim), lim) for k in range(n)] + [(None, None), (None, None)] + [(0.0, None)] * n_slack
         lp = linprog(c, A_ub=a_ub, b_ub=b_ub, A_eq=a_eq, b_eq=[target_k - w @ t0], bounds=bounds, method="highs")
         if lp.status != 0:
             trust *= 0.5
         else:
             p_new = np.maximum(p + lp.x[:n], 0.0)
             r_new = at_mean(model, p_new / p_new.sum(), target_k, p0=p_new.sum())
-            if r_new["wafer_range"] < best["wafer_range"] - 1e-4:
+            if merit(r_new) < merit(best) - 1e-4:
                 p, best = r_new["zone_power"].copy(), r_new
                 continue
             trust *= 0.5
         if trust < 1e-3:
             break
+    best["violation"] = violation(model, best, limits)
     return best, p / p.sum()
 
 

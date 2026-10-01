@@ -29,6 +29,7 @@
   },
   "proposal": {"path": "MBE_Phase1_Proposal_v1.2.pptx", "sha256": "DD5D2F7B7698E693FD7654FDCB4F4934FC4D0BF270176D3E84F50E6837FDB94B", "slides": [8, 11, 19]},
   "materials_initial": ["GaN", "AlN"],
+  "design_envelope": {"path": "data/design/design_envelope.json", "note": "Representative baseline and alternative layouts with each input marked known / assumed / missing; used by scripts/layout_feasibility.py and scripts/layout_comparison.py. Not a machine configuration."},
   "reference_chamber": {
     "status": "representative_not_proposed_machine",
     "reason": "Proposed machine not built; no partner machine drawings or run data accessible",

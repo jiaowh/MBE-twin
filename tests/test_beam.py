@@ -4,8 +4,9 @@ import numpy as np
 import pytest
 from scipy import integrate
 
-from mbe_twin.beam import (DiskOccluder, EffusionSource, Wafer, arrival_flux, dose,
-                           rotation_averaged_flux, source_on_cone, wafer_flux)
+from mbe_twin.beam import (CylinderOccluder, DiskOccluder, EffusionSource, HolderLip, Wafer, arrival_flux,
+                           crucible_source_on_cone, dose, rotation_averaged_flux, source_on_cone, wafer_flux)
+from mbe_twin.crucible import Crucible, simulate
 
 H = 0.4  # m, source-to-wafer distance for coaxial cases
 Q = 1e18  # particles/s
@@ -180,3 +181,81 @@ def test_input_validation():
     zero_axis = EffusionSource("x", (0, 0, 0), (0, 0, 0), emission_rate=1.0)
     with pytest.raises(ValueError):
         arrival_flux([zero_axis], [0, 0, 1], (0, 0, -1))
+
+
+def test_zero_pressure_attenuation_is_exact_regression():
+    wafer = Wafer(radius=0.1)
+    srcs = [source_on_cone("Ga", wafer, throw=0.35, polar_angle=np.radians(46.0), azimuth=0.0,
+                           emission_rate=Q, cosine_exponent=2.0, aperture_radius=0.01)]
+    ev = simulate(Crucible(0.01, 0.02), 2000, rng=3)
+    srcs.append(crucible_source_on_cone("N", wafer, ev, throw=0.35, polar_angle=np.radians(60.0),
+                                        azimuth=1.0, emission_rate=Q))
+    rho = np.linspace(0.0, 0.1, 6)
+    base = rotation_averaged_flux(srcs, wafer, rho, n_angles=12)
+    for lam in (None, np.inf, lambda s: None):
+        assert np.array_equal(rotation_averaged_flux(srcs, wafer, rho, n_angles=12, mean_free_path=lam), base)
+
+
+def test_attenuation_is_beer_lambert_along_each_path():
+    wafer, src = coaxial(1.0)
+    rho = np.linspace(0.0, 0.1, 11)
+    lam = 0.7
+    expect = point_source_flux(rho, 1.0) * np.exp(-np.hypot(rho, H) / lam)
+    assert np.allclose(wafer_flux([src], wafer, rho, 0.0, mean_free_path=lam), expect, rtol=1e-12)
+    # per-source mean free paths: a callable selects by source
+    other = EffusionSource("N", position=(0.0, 0.0, 0.0), axis=(0.0, 0.0, 1.0), emission_rate=Q)
+    both = wafer_flux([src, other], wafer, rho, 0.0, mean_free_path=lambda s: lam if s.name == "Ga1" else None)
+    assert np.allclose(both, expect + point_source_flux(rho, 1.0), rtol=1e-12)
+    with pytest.raises(ValueError):
+        wafer_flux([src], wafer, rho, 0.0, mean_free_path=-1.0)
+
+
+def test_crucible_source_attenuation_uses_lip_distance():
+    wafer = Wafer(radius=0.1)
+    ev = simulate(Crucible(0.01, 0.0), 4000, rng=5)
+    src = crucible_source_on_cone("Ga", wafer, ev, throw=0.35, polar_angle=np.radians(30.0), azimuth=0.0,
+                                  emission_rate=Q)
+    pts = wafer.points(np.linspace(0.0, 0.1, 5), 0.4)
+    f0 = arrival_flux([src], pts, wafer.normal)
+    f1 = arrival_flux([src], pts, wafer.normal, mean_free_path=0.5)
+    s = np.linalg.norm(pts - np.asarray(src.lip_center), axis=-1)
+    assert np.allclose(f1, f0 * np.exp(-s / 0.5), rtol=1e-12)
+
+
+def test_holder_lip_shadow_band_has_the_geometric_width():
+    # wafer at z = 0 facing -z; lip 2 mm proud of the face (towards -z) from r = 97 mm.
+    # A distant source at 65 deg from the normal shadows a band of width h tan(65 deg) inside the
+    # lip on the source side, and nothing on the far side.
+    wafer = Wafer(radius=0.1)
+    lip = HolderLip(center=(0.0, 0.0, 0.0), normal=(0.0, 0.0, -1.0), inner_radius=0.097, height=0.002)
+    th = np.radians(65.0)
+    far = 100.0
+    src = np.array([far * np.sin(th), 0.0, -far * np.cos(th)])
+    x = np.linspace(0.080, 0.0969, 400)
+    ends = np.stack([x, np.zeros_like(x), np.zeros_like(x)], 1)
+    starts = ends + (src - ends) / np.linalg.norm(src - ends, axis=1)[:, None] * 1.0  # 1 m towards the source
+    shadow = lip.blocks(starts, ends)
+    edge = 0.097 - 0.002 * np.tan(th)
+    assert not shadow[x < edge - 1e-5].any() and shadow[x > edge + 1e-5].all()
+    far_side = np.stack([-x, np.zeros_like(x), np.zeros_like(x)], 1)
+    starts2 = far_side + (src - far_side) / np.linalg.norm(src - far_side, axis=1)[:, None]
+    assert not lip.blocks(starts2, far_side).any()
+    # a point under the lip is covered
+    covered = np.array([[0.098, 0.0, 0.0]])
+    assert lip.blocks(covered + np.array([[0.0, 0.0, -0.5]]), covered).all()
+
+
+def test_cylinder_occluder_blocks_only_segments_through_the_solid():
+    cyl = CylinderOccluder(base=(0.0, 0.0, 0.0), axis=(0.0, 0.0, 1.0), radius=0.05, length=0.2)
+    starts = np.array([[-1.0, 0.0, 0.1],   # straight through the middle
+                       [-1.0, 0.049, 0.1],  # just inside the radius
+                       [-1.0, 0.051, 0.1],  # just outside the radius
+                       [-1.0, 0.0, 0.21],   # above the top face
+                       [-1.0, 0.0, -0.3],   # through the bottom cap diagonally
+                       [-1.0, 0.0, 0.1]])   # stops before reaching it
+    ends = np.array([[1.0, 0.0, 0.1], [1.0, 0.049, 0.1], [1.0, 0.051, 0.1], [1.0, 0.0, 0.21],
+                     [1.0, 0.0, 0.3], [-0.06, 0.0, 0.1]])
+    assert cyl.blocks(starts, ends).tolist() == [True, True, False, False, True, False]
+    # segment along the axis, inside / outside
+    assert cyl.blocks(np.array([[0.0, 0.0, -1.0]]), np.array([[0.0, 0.0, 0.05]])).all()
+    assert not cyl.blocks(np.array([[0.1, 0.0, -1.0]]), np.array([[0.1, 0.0, 1.0]])).any()

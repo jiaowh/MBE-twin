@@ -1,0 +1,98 @@
+{
+  "schema_version": "design-envelope-0.1",
+  "revision_date": "2026-10-01",
+  "label": "representative_chamber",
+  "purpose": "Inputs for the layout feasibility check (scripts/layout_feasibility.py) and the layout comparison under uncertainty (scripts/layout_comparison.py). One baseline layout and a small set of alternatives on the representative 200 mm chamber. Every input says whether it is known (from the proposal or a cited source), assumed (a working value chosen here, to be replaced) or missing (a vendor or project input that no repository source provides; the value given is a placeholder or a bracket).",
+  "status_meanings": {
+    "known": "stated in the proposal (MBE_Phase1_Proposal_v1.2.pptx, ref/proposal/SLIDE_TEXT.md) or a cited reference",
+    "assumed": "chosen here for the representative chamber; not a requirement and not a measurement",
+    "missing": "a vendor or project input that must be obtained before design freeze; the value is a placeholder or bracket"
+  },
+  "operating_point": {
+    "net_growth_rate_um_h": {"value": 1.0, "status": "assumed", "note": "Working rate of every earlier study; the project has no rate requirement yet (data/intake/machine_requirements.json: mean_thickness_or_growth_rate_constraint null). All layouts are compared at this equal wafer-mean net rate."},
+    "growth_temperature_C": {"value": [700, 740], "status": "missing", "note": "The proposed machine's growth temperature on its own calibrated scale is not set. 700 C (narrow Ga window, temperature-insensitive thickness) and 740 C (wide window, 0.11-0.16 %/K) bracket the two regimes. Temperatures are the source labs' scales (growth.py)."},
+    "growth_regime": {"value": "Ga-rich (adlayer), plasma-assisted", "status": "known", "source": "proposal slide 11 (RF nitrogen); ref/notes/GROWTH_EVIDENCE.md"},
+    "droplet_onset_law": {"value": ["Ref14_growth", "Heying_growth", "G01_adsorption"], "status": "missing", "note": "Literature disagrees by up to 3-4x at 700 C (data/parameters/gan_growth.json); the machine's own onset is a commissioning measurement. Treated as an uncertainty, with the centre Ga/N set from the onset at the centre (calibration)."}
+  },
+  "wafer_and_mask": {
+    "wafer_diameter_m": {"value": 0.200, "status": "known", "source": "user decision 2026-09-28"},
+    "usable_radius_m": {"value": 0.094, "status": "assumed", "note": "Uniformity is evaluated on r <= 94 mm for every layout: the 3 mm holder overlap of the baseline holder (opening 97 mm) minus a 3 mm edge exclusion. The mask is the same for all layouts, so no improvement comes from changing it. Edge exclusion is missing in the intake ledger (edge_exclusion_m null)."},
+    "holder_lip_height_m": {"value": 0.002, "bracket": [0.001, 0.003], "status": "assumed", "note": "Face-down wafer resting on the holder ledge; the ledge stands this far proud of the growth face and shadows grazing beams. Same as the heater model's ledge thickness."},
+    "holder_opening_radius_m": {"value": {"3 mm overlap": 0.097, "1 mm overlap": 0.099}, "status": "assumed", "note": "Holder design choice; the 1 mm overlap is the heater model's better edge support."}
+  },
+  "chamber": {
+    "source_throw_m": {"value": 0.350, "status": "assumed", "source": "R14 8-inch layout study; H02 gives a typical 10.5 inch (267 mm) for a plasma source"},
+    "effusion_cell_positions": {"value": 10, "occupancy": {"Ga": 3, "Al": 3, "Si": 1, "Mg": 1, "spare": 2}, "status": "known", "source": "proposal slide 8 (HARDWARE_EVIDENCE.md)"},
+    "nitrogen_source_ports": {"value": 1, "status": "assumed", "note": "One RF plasma source; the proposal states one 600 W 13.56 MHz source."},
+    "cell_cone_polar_deg": {"value": 46.0, "status": "assumed", "note": "Common effusion-cell cone at the R14 / Ga-study optimum angle; cells spaced evenly in azimuth."},
+    "holder_assembly": {"radius_m": 0.13, "depth_m": 0.30, "status": "assumed", "note": "Heater, holder and manipulator behind the wafer as one solid cylinder; a chamber drawing is missing (HARDWARE_EVIDENCE P0)."},
+    "chamber_drawing": {"value": null, "status": "missing", "note": "Port and flange schedule, cryoshroud, RHEED and pyrometer lines of sight (P0 request)."}
+  },
+  "source_bodies": {
+    "note": "In-vacuum bodies as solid cylinders from the lip back to the mounting flange; shutter blades are disks on rotary arms beside the cell. Dimensions are typical of the stated flange classes, not drawings.",
+    "Ga": {"lip_radius_m": 0.03575, "body_radius_m": 0.060, "body_length_m": 0.30, "flange": "CF150", "flange_radius_m": 0.1015,
+           "shutter_radius_m": 0.046, "shutter_standoff_m": 0.025, "shutter_arm_m": 0.066,
+           "status": {"lip_radius_m": "assumed (R14 71.5 mm bore)", "flange": "known for the 1000 cc ABI class (H03: ABI 1000 on CF150)", "other": "assumed"}},
+    "Al": {"lip_radius_m": 0.020, "body_radius_m": 0.045, "body_length_m": 0.30, "flange": "CF100", "flange_radius_m": 0.076,
+           "shutter_radius_m": 0.030, "shutter_standoff_m": 0.025, "shutter_arm_m": 0.040,
+           "status": {"flange": "assumed (H03 ABI 500 class on CF100; Al cell model missing, H04)", "other": "assumed"}},
+    "Si_Mg_spare": {"lip_radius_m": 0.012, "body_radius_m": 0.032, "body_length_m": 0.30, "flange": "CF63", "flange_radius_m": 0.057,
+                    "shutter_radius_m": 0.022, "shutter_standoff_m": 0.025, "shutter_arm_m": 0.030, "status": "assumed"},
+    "N_plasma": {"lip_radius_m": 0.020, "body_radius_m": 0.045, "body_length_m": 0.30, "flange": "CF100", "flange_radius_m": 0.076,
+                 "shutter_radius_m": 0.030, "shutter_standoff_m": 0.025, "shutter_arm_m": 0.040,
+                 "status": {"lip_radius_m": "assumed (20 mm active plate radius of the nitrogen studies)", "other": "missing (source model not selected; HARDWARE_EVIDENCE H02)"}}
+  },
+  "nitrogen_plate": {
+    "hole_aspect_L_over_r": {"leading": 2.92, "reference": 0.0, "alternative": 5.83, "status": "missing",
+                             "note": "Shallow finite holes (R30's 0.343 mm holes in a 0.5 mm plate) are the leading candidate. L/r 0 is the ideal reference, not a manufacturable specification. L/r 5.8 (1 mm plate) is kept only as the alternative a source might require. The vendor plate drawing is missing."},
+    "active_radius_m": {"value": 0.020, "status": "assumed"},
+    "output_profile": {"value": "uniform", "status": "assumed", "note": "+/-50 % radial profiles moved the optima by at most 0.24 points (nitrogen_aim_robustness)."},
+    "active_N_output_capability_atoms_s": {"value": null, "status": "missing", "note": "Total active-N output versus power and flow is not modelled and no vendor value is in hand; the comparison reports the output each layout requires."}
+  },
+  "pointing_and_adjustment": {
+    "pointing_tolerance_deg": {"value": 0.8, "extended": 1.6, "status": "assumed", "note": "Axis tilt in any direction (a cone of half-angle tolerance)."},
+    "tilt_pivot_behind_plate_m": {"value": {"plate": 0.0, "flange": 0.30}, "status": "assumed", "note": "A tilt adapter or flange machining error pivots the source about its mounting flange, which also moves the plate sideways. 0 m reproduces the plate-centred tilt of nitrogen_aim_tolerance.py."},
+    "tilt_adjuster_range_deg": {"value": 2.0, "status": "missing", "note": "Range of a tilting adapter, if one is fitted. A port whose axis is machined to the aim needs only trim."}
+  },
+  "heater": {
+    "rating_C": {"value": 1200, "status": "known", "source": "proposal slide 11; object of the rating (element, holder or wafer) is not stated (PLAN_REVIEW item 8)"},
+    "element_temperature_limit_K": {"interpretations": {"A: 1200 C is the element limit": 1473.15, "B: element limit with 100 K life margin in active N": 1373.15}, "status": "missing", "note": "If 1200 C were the wafer rating the element would run hotter; the selected unit's element limit, zone power capacity and lifetime in active N must come from the vendor (H05 lists 1000 C standard, 1200 C on request)."},
+    "total_power_limit_W": {"value": null, "status": "missing"},
+    "zone_power_density_limit_W_m2": {"value": null, "status": "missing", "note": "Not applied separately: at these temperatures the element temperature limit binds first (reported)."},
+    "options": {
+      "3 zones": {"zone_edges_mm": [0, 60, 95, 115], "holder_opening_m": 0.097, "status": "assumed"},
+      "designed density": {"zone_edges_mm": "12 equal rings to 115 mm (a designed element pitch, not 12 controllers)", "holder_opening_m": 0.099, "status": "assumed"}
+    },
+    "uncertain_properties": {"wafer_emissivity": [0.63, 0.77], "wafer_ledge_contact_W_m2K": [50, 1000], "zone_power_error_fraction": 0.02, "status": "assumed",
+                             "control": "one wafer-temperature reading holds the wafer mean (all zones scaled together); the zone ratios stay at their nominal optimum"}
+  },
+  "vacuum": {
+    "nitrogen_flow_sccm": {"bracket": [0.5, 2.0, 10.0], "status": "missing"},
+    "effective_N2_speed_m3_s": {"bracket": [0.5, 2.0], "status": "missing", "note": "Proposal turbo >= 2000 L/s nameplate (known); the effective speed at the chamber is not."},
+    "pressure_cases": {"vacuum (regression)": [0.0, 2.0], "0.5 sccm / 2 m3/s": [0.5, 2.0], "2 sccm / 2 m3/s": [2.0, 2.0], "2 sccm / 0.5 m3/s": [2.0, 0.5], "10 sccm / 0.5 m3/s": [10.0, 0.5]},
+    "gas_temperature_K": {"value": 300.0, "status": "assumed"},
+    "collision_diameters_m": {"Ga": [6e-10, 8e-10], "N": 3e-10, "N2": 3.7e-10, "status": "assumed (Ga: scenario range after the Bi2 result; N atom not sourced)"},
+    "beam_temperatures_K": {"Ga": 1235.0, "N": 600.0, "status": "assumed"}
+  },
+  "ga_source": {
+    "port_options_deg": {"46": {"admissible_fills_mm": [40, 70, 120], "min_level_recess_mm": 37.0},
+                         "54": {"admissible_fills_mm": [70, 120], "min_level_recess_mm": 49.2}},
+    "collision_diameter_A": {"values": [5.68, 8.0], "status": "assumed"},
+    "status": "assumed (R14 bore; DSMC records data/runs/sparta_ga)",
+    "note": "A level melt in the 71.5 mm bore spills above R tan(angle): 37.0 mm at 46 deg, 49.2 mm at 54 deg. A 54 deg port gives up the fill range between 37 and 49 mm of recess."
+  },
+  "layouts": {
+    "A (baseline)": {"description": "All sources on the 46 deg cone aimed at the wafer centre; shallow-hole plate; 3-zone heater on a 3 mm overlap.",
+                     "ga_port_deg": 46, "n": {"L_over_r": 2.92, "polar_deg": 46.0, "aim_offset_mm": 0.0}, "heater": "3 zones"},
+    "B": {"description": "As A, but the nitrogen axis aimed off-centre from the same 46 deg cone (an off-axis port or tilted mount); designed-density heater on a 1 mm overlap.",
+          "ga_port_deg": 46, "n": {"L_over_r": 2.92, "polar_deg": 46.0, "aim_offset_mm": 105.0}, "heater": "designed density"},
+    "C": {"description": "Nitrogen on a steep 65 deg port aimed near the wafer edge; designed-density heater.",
+          "ga_port_deg": 46, "n": {"L_over_r": 2.92, "polar_deg": 65.0, "aim_offset_mm": 75.0}, "heater": "designed density"},
+    "C-Ga54": {"description": "C with the Ga cells on a 54 deg port (fills 70-120 mm only).",
+               "ga_port_deg": 54, "n": {"L_over_r": 2.92, "polar_deg": 65.0, "aim_offset_mm": 75.0}, "heater": "designed density"},
+    "R0 (ideal reference)": {"description": "Thin plate (L/r 0) at its 45 deg / +55 mm optimum; designed-density heater. Not a manufacturable plate specification.",
+                             "ga_port_deg": 46, "n": {"L_over_r": 0.0, "polar_deg": 45.0, "aim_offset_mm": 55.0}, "heater": "designed density"},
+    "D (deep-hole alternative)": {"description": "L/r 5.8 (1 mm plate) at 65 deg / +110 mm, if the source hardware requires a thicker plate; designed-density heater.",
+                                  "ga_port_deg": 46, "n": {"L_over_r": 5.83, "polar_deg": 65.0, "aim_offset_mm": 110.0}, "heater": "designed density"}
+  }
+}

@@ -80,3 +80,17 @@ def test_axis_override_is_a_pointing_error_about_the_plate_centre():
     tilt = aperture_plate_sources("N", WAFER, ev, xy, aim_offset=0.075, axis=tilted, **kw)
     moved = aperture_plate_sources("N", WAFER, ev, xy, aim_offset=shift, **kw)
     assert arrival_flux(tilt, pts, WAFER.normal) == pytest.approx(arrival_flux(moved, pts, WAFER.normal), rel=1e-9)
+
+
+def test_centre_override_moves_every_hole_with_the_plate():
+    ev = simulate(Crucible(0.0005, 0.001), 2000, rng=2)
+    holes = hex_holes(0.01, 0.005)
+    kw = dict(throw=0.3, polar_angle=ANGLE, azimuth=0.0, total_rate=1.0)
+    base = aperture_plate_sources("N", WAFER, ev, holes, **kw)
+    shift = np.array([0.003, -0.002, 0.001])
+    moved = aperture_plate_sources("N", WAFER, ev, holes, centre=np.asarray(base[0].lip_center) - np.asarray(
+        base[0].lip_center) + np.asarray(aperture_plate_sources("N", WAFER, ev, [[0.0, 0.0]], **kw)[0].lip_center) + shift,
+        **kw)
+    for a, b in zip(base, moved):
+        assert np.allclose(np.asarray(b.lip_center) - np.asarray(a.lip_center), shift, atol=1e-15)
+        assert np.allclose(b.axis, a.axis)
