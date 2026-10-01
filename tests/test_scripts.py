@@ -172,3 +172,34 @@ def test_batch_no_start_after(tmp_path):
     r = _batch(tmp_path, [{"name": "late", "args": ["ok"]}], "--no-start-after", "2000-01-01T00:00")
     assert r.returncode == 1 and "late: NOT STARTED" in r.stdout
     assert not (tmp_path / "res" / "b" / "late").exists()
+
+
+def test_nitrogen_aim_tolerance_fails_without_scans(tmp_path, monkeypatch):
+    mod = _load("nitrogen_aim_tolerance")
+    monkeypatch.setattr(sys, "argv", ["nitrogen_aim_tolerance.py", "--studies", str(tmp_path),
+                                      "--out", str(tmp_path / "out")])
+    with pytest.raises(SystemExit, match="required aim scans not found"):
+        mod.main()
+    assert not (tmp_path / "out").exists()
+
+
+def test_nitrogen_aim_tolerance_reads_versioned_scans_by_default():
+    mod = _load("nitrogen_aim_tolerance")
+    scans = mod.load_scans(ROOT / "data/runs/studies")
+    assert [s["L_over_r"] for s in scans] == list(mod.PLATES)
+
+
+def test_nitrogen_aim_tolerance_fails_on_partial_scans(tmp_path):
+    # Only the thin-plate and L/r 2.92 records: the other required plates must not vanish silently.
+    import shutil
+    mod = _load("nitrogen_aim_tolerance")
+    for name in ("nitrogen_aim_study.json", "nitrogen_aim_fine_2.92.json"):
+        shutil.copy(ROOT / "data/runs/studies" / name, tmp_path / name)
+    with pytest.raises(SystemExit, match="nitrogen_aim_fine_5.83.json") as err:
+        mod.load_scans(tmp_path)
+    assert "nitrogen_aim_fine_19.69.json" in str(err.value)
+    assert [s["L_over_r"] for s in mod.load_scans(tmp_path, [0.0, 2.92])] == [0.0, 2.92]
+    with pytest.raises(SystemExit, match="nitrogen_aim_fine_11.66.json"):
+        mod.load_scans(tmp_path, [2.92, 11.66])
+    with pytest.raises(SystemExit, match="no aim scan defined"):
+        mod.load_scans(tmp_path, [2.92, 7.0])
