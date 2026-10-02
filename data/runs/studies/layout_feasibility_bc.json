@@ -1,17 +1,17 @@
 {
   "schema_version": "0.1",
   "run_id": "layout_feasibility",
-  "created_utc": "2026-10-01T16:08:05+00:00",
+  "created_utc": "2026-10-02T02:02:08+00:00",
   "label": "representative_chamber",
   "validation_status": "not_validated",
   "package_version": "0.1.0",
-  "git_commit": "353cf475087b3a8cc0069057192dd115cc50e26a-dirty",
+  "git_commit": "d0f136d72c01bdc369d55eb286ce81b34c9ecd5d-dirty",
   "python": "3.12.13",
   "numpy": "2.4.4",
   "platform": "Windows-11-10.0.26200-SP0",
   "source_sha256": {
-    "scripts/layout_feasibility.py": "124909715c26bdb3fe41905be40fe6354ec771bc149ef5cfa7a57923e263b39c",
-    "src/mbe_twin/layout.py": "8baa0487be5908b9e06802f9c4dc4017bbde7a670f477063cfa716cc9d330c4d",
+    "scripts/layout_feasibility.py": "51c27c9311c3174603f906f97824357e38e37f72b65adb3a723b22bf7fc2318b",
+    "src/mbe_twin/layout.py": "489e036db4879cad618d995082f958db33c6e2d83e2392c70b8e9ffa075b9917",
     "src/mbe_twin/beam.py": "90a90503e0a530d61bed26d42ca161b2d0e4d0d2f6d0f794ccf7fc4c9083ed93",
     "data/design/design_envelope.json": "e1d2e14d6e2277cab563a3231116889ed4f053186e600e3ae68e050ec1c79906"
   },
@@ -535,48 +535,48 @@
       {
         "layout": "B",
         "feasible_at_margin": true,
-        "min_clearance_m": 0.006319257128996939,
+        "min_clearance_m": 0.006090182704601159,
         "min_clearance_sampled_m": 0.008885738651283172,
         "clearance_is": "certified lower bound (sampled value: upper estimate)",
         "closest_pairs": [
           [
-            0.006319257128996939,
+            0.006090182704601159,
             "Ga1",
             "Al1"
           ],
           [
-            0.006319848080750356,
+            0.0060907736563545764,
             "Ga3",
             "Al3"
           ],
           [
-            0.006322992177164457,
+            0.006093917752768677,
             "Ga2",
             "Al2"
           ],
           [
-            0.012053233375484716,
+            0.011653723085592704,
             "spare1",
             "spare2"
           ],
           [
-            0.012413271886118273,
-            "Al3",
-            "spare1"
+            0.011931318586516646,
+            "Al2",
+            "Mg"
           ]
         ],
         "holder_clearance_m": {
           "N": 0.22263247944395753,
           "Ga1": 0.20763247944395752,
-          "Al1": 0.22263247944395753,
-          "Si": 0.23494771285266344,
+          "Al1": 0.22198578840488434,
+          "Si": 0.22814578741272856,
           "Ga2": 0.20763247944395752,
-          "Al2": 0.22263247944395753,
-          "Mg": 0.234962092706494,
+          "Al2": 0.22199007611277669,
+          "Mg": 0.22816016726655913,
           "Ga3": 0.20763247944395752,
-          "Al3": 0.22263247944395753,
-          "spare1": 0.2349487361780361,
-          "spare2": 0.23495102687165903
+          "Al3": 0.2219991575323231,
+          "spare1": 0.22814681073810122,
+          "spare2": 0.22814910143172415
         },
         "shutter_sides": {
           "N": 1,
@@ -1145,48 +1145,48 @@
       {
         "layout": "C",
         "feasible_at_margin": true,
-        "min_clearance_m": 0.010885723195394971,
+        "min_clearance_m": 0.010656648770999191,
         "min_clearance_sampled_m": 0.020648706833005882,
         "clearance_is": "certified lower bound (sampled value: upper estimate)",
         "closest_pairs": [
           [
-            0.010885723195394971,
+            0.010656648770999191,
             "Ga3",
             "Al3"
           ],
           [
-            0.010910074133806937,
+            0.010680999709411157,
             "Ga2",
             "Al2"
           ],
           [
-            0.010979136257282873,
+            0.010750061832887093,
             "Ga1",
             "Al1"
           ],
           [
-            0.020820498353039396,
+            0.020521907998987204,
             "spare1",
             "spare2"
           ],
           [
-            0.022441861090267377,
-            "Al2",
-            "Mg"
+            0.021997871592184793,
+            "Al3",
+            "spare1"
           ]
         ],
         "holder_clearance_m": {
           "N": 0.1898569586366236,
           "Ga1": 0.20763247944395752,
-          "Al1": 0.22263247944395753,
-          "Si": 0.23494989011312206,
+          "Al1": 0.221984556446017,
+          "Si": 0.22814796467318718,
           "Ga2": 0.20763247944395752,
-          "Al2": 0.22263247944395753,
-          "Mg": 0.23495369516424494,
+          "Al2": 0.22198400643785776,
+          "Mg": 0.22815176972431006,
           "Ga3": 0.20763247944395752,
-          "Al3": 0.22263247944395753,
-          "spare1": 0.23497251177720735,
-          "spare2": 0.23496384776871712
+          "Al3": 0.22198373309426117,
+          "spare1": 0.22817058633727247,
+          "spare2": 0.22816192232878224
         },
         "shutter_sides": {
           "N": -1,
@@ -1751,48 +1751,48 @@
       {
         "layout": "B-p",
         "feasible_at_margin": true,
-        "min_clearance_m": 0.006319257128996939,
+        "min_clearance_m": 0.006090182704601159,
         "min_clearance_sampled_m": 0.008885738651283172,
         "clearance_is": "certified lower bound (sampled value: upper estimate)",
         "closest_pairs": [
           [
-            0.006319257128996939,
+            0.006090182704601159,
             "Ga1",
             "Al1"
           ],
           [
-            0.006319848080750356,
+            0.0060907736563545764,
             "Ga3",
             "Al3"
           ],
           [
-            0.006322992177164457,
+            0.006093917752768677,
             "Ga2",
             "Al2"
           ],
           [
-            0.012053233375484716,
+            0.011653723085592704,
             "spare1",
             "spare2"
           ],
           [
-            0.012413271886118273,
-            "Al3",
-            "spare1"
+            0.011931318586516646,
+            "Al2",
+            "Mg"
           ]
         ],
         "holder_clearance_m": {
           "N": 0.22263247944395753,
           "Ga1": 0.20763247944395752,
-          "Al1": 0.22263247944395753,
-          "Si": 0.23494771285266344,
+          "Al1": 0.22198578840488434,
+          "Si": 0.22814578741272856,
           "Ga2": 0.20763247944395752,
-          "Al2": 0.22263247944395753,
-          "Mg": 0.234962092706494,
+          "Al2": 0.22199007611277669,
+          "Mg": 0.22816016726655913,
           "Ga3": 0.20763247944395752,
-          "Al3": 0.22263247944395753,
-          "spare1": 0.2349487361780361,
-          "spare2": 0.23495102687165903
+          "Al3": 0.2219991575323231,
+          "spare1": 0.22814681073810122,
+          "spare2": 0.22814910143172415
         },
         "shutter_sides": {
           "N": 1,
@@ -2357,48 +2357,48 @@
       {
         "layout": "C-p",
         "feasible_at_margin": true,
-        "min_clearance_m": 0.010885723195394971,
+        "min_clearance_m": 0.010656648770999191,
         "min_clearance_sampled_m": 0.020648706833005882,
         "clearance_is": "certified lower bound (sampled value: upper estimate)",
         "closest_pairs": [
           [
-            0.010885723195394971,
+            0.010656648770999191,
             "Ga3",
             "Al3"
           ],
           [
-            0.010910074133806937,
+            0.010680999709411157,
             "Ga2",
             "Al2"
           ],
           [
-            0.010979136257282873,
+            0.010750061832887093,
             "Ga1",
             "Al1"
           ],
           [
-            0.020820498353039396,
+            0.020521907998987204,
             "spare1",
             "spare2"
           ],
           [
-            0.022441861090267377,
-            "Al2",
-            "Mg"
+            0.021997871592184793,
+            "Al3",
+            "spare1"
           ]
         ],
         "holder_clearance_m": {
           "N": 0.1898569586366236,
           "Ga1": 0.20763247944395752,
-          "Al1": 0.22263247944395753,
-          "Si": 0.23494989011312206,
+          "Al1": 0.221984556446017,
+          "Si": 0.22814796467318718,
           "Ga2": 0.20763247944395752,
-          "Al2": 0.22263247944395753,
-          "Mg": 0.23495369516424494,
+          "Al2": 0.22198400643785776,
+          "Mg": 0.22815176972431006,
           "Ga3": 0.20763247944395752,
-          "Al3": 0.22263247944395753,
-          "spare1": 0.23497251177720735,
-          "spare2": 0.23496384776871712
+          "Al3": 0.22198373309426117,
+          "spare1": 0.22817058633727247,
+          "spare2": 0.22816192232878224
         },
         "shutter_sides": {
           "N": -1,
@@ -2963,48 +2963,48 @@
       {
         "layout": "B-L",
         "feasible_at_margin": true,
-        "min_clearance_m": 0.006319257128996939,
+        "min_clearance_m": 0.006090182704601159,
         "min_clearance_sampled_m": 0.008885738651283172,
         "clearance_is": "certified lower bound (sampled value: upper estimate)",
         "closest_pairs": [
           [
-            0.006319257128996939,
+            0.006090182704601159,
             "Ga1",
             "Al1"
           ],
           [
-            0.006319848080750356,
+            0.0060907736563545764,
             "Ga3",
             "Al3"
           ],
           [
-            0.006322992177164457,
+            0.006093917752768677,
             "Ga2",
             "Al2"
           ],
           [
-            0.012053233375484716,
+            0.011653723085592704,
             "spare1",
             "spare2"
           ],
           [
-            0.012413271886118273,
-            "Al3",
-            "spare1"
+            0.011931318586516646,
+            "Al2",
+            "Mg"
           ]
         ],
         "holder_clearance_m": {
           "N": 0.22263247944395753,
           "Ga1": 0.20763247944395752,
-          "Al1": 0.22263247944395753,
-          "Si": 0.23494771285266344,
+          "Al1": 0.22198578840488434,
+          "Si": 0.22814578741272856,
           "Ga2": 0.20763247944395752,
-          "Al2": 0.22263247944395753,
-          "Mg": 0.234962092706494,
+          "Al2": 0.22199007611277669,
+          "Mg": 0.22816016726655913,
           "Ga3": 0.20763247944395752,
-          "Al3": 0.22263247944395753,
-          "spare1": 0.2349487361780361,
-          "spare2": 0.23495102687165903
+          "Al3": 0.2219991575323231,
+          "spare1": 0.22814681073810122,
+          "spare2": 0.22814910143172415
         },
         "shutter_sides": {
           "N": 1,
@@ -3571,7 +3571,7 @@
   "disabled_physics": [],
   "warnings": [
     "Simplified solids with assumed dimensions; no chamber drawing, cryoshroud, RHEED or pyrometer lines of sight",
-    "Clearances are certified lower bounds for the modelled solids (capsule bodies, disk flanges and blades); real cell, shutter and flange drawings may differ",
+    "Clearances are certified lower bounds for the modelled solids (capsule bodies, disk flanges and blades) over the continuous shutter motion; real cell, shutter and flange drawings may differ",
     "Shadowing with flat cos^n emitters; the beam models of the comparison are not used here"
   ]
 }

@@ -70,15 +70,27 @@ def make(layout, geo_kw, prop_kw):
 
 def at_mean(model, fractions, target_k, p0=3000.0):
     """Solve with power fractions, scaling the total power until the wafer mean hits target_k."""
+    return at_reading(model, fractions, target_k, lambda r: r["wafer_mean"], p0)
+
+
+def centre_reading(r, bias_k=0.0):
+    """What a pyrometer on the wafer centre reads (true centre temperature plus its bias)."""
+    return float(np.interp(0.0, r["r_wafer"], r["t_wafer"])) + bias_k
+
+
+def at_reading(model, fractions, target_k, reading, p0=3000.0):
+    """Solve with power fractions, scaling the total power until reading(result) hits target_k: a controller
+    holding one sensor (the wafer mean for at_mean, a biased centre pyrometer for centre_reading)."""
     f = np.asarray(fractions, float)
     p_a, p_b = p0, 1.3 * p0
-    t_a = model.solve(heater_power=p_a * f)["wafer_mean"]
+    t_a = reading(model.solve(heater_power=p_a * f))
     for _ in range(40):
         r = model.solve(heater_power=p_b * f)
-        if abs(r["wafer_mean"] - target_k) < 1e-3:
+        t_b = reading(r)
+        if abs(t_b - target_k) < 1e-3:
             return r
         # emissive losses scale roughly as T^4: secant in T^4
-        p_a, p_b, t_a = p_b, p_b + (p_b - p_a) * (target_k ** 4 - r["wafer_mean"] ** 4) / (r["wafer_mean"] ** 4 - t_a ** 4), r["wafer_mean"]
+        p_a, p_b, t_a = p_b, p_b + (p_b - p_a) * (target_k ** 4 - t_b ** 4) / (t_b ** 4 - t_a ** 4), t_b
     raise RuntimeError("power iteration did not converge")
 
 

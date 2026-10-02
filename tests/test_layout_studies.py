@@ -152,6 +152,21 @@ def test_supply_limited_and_invalid_states():
     assert not bad["valid"].any() and not bad["supply_limited"].any()
 
 
+def test_feasible_state_below_the_rate_is_not_valid():
+    """N supply reaches the target, but with the Ga supply held from the nominal state part of the wafer is
+    Ga-limited: the state is N-feasible, off-target and excluded from equal-rate comparisons."""
+    lc = _load("layout_comparison")
+    rho = np.linspace(0.0, 0.094, 21)
+    edge_peaked = 10.0 * (0.25 + 1.5 * (rho / 0.094) ** 2)
+    n_maps = np.stack([np.full_like(rho, 10.0), edge_peaked])[:, None, :]
+    res = _run(lc, n_maps, rho)
+    assert res["n_feasible"].all()
+    assert res["valid"][0].all() and res["on_target"][0].all()
+    assert res["mean_net"][1, 0, 0, 0] < (1.0 - 10 * lc.RATE_TOL) * 1000.0 / 60.0
+    assert not res["on_target"][1].any() and not res["valid"][1].any()
+    assert res["margin"][1, 0, 0, 0] < 0.0
+
+
 def test_operating_point_feed_budget():
     """1 sccm N2 holds at most 8.956e17 N atoms/s; beyond the feed limit the rate is the best reachable."""
     lc = _load("layout_comparison")

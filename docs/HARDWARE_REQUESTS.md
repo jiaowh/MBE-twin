@@ -41,7 +41,7 @@ We are choosing where to mount the nitrogen plasma source and the gallium cells 
 - Wafer holder drawing: lip height above the wafer face, opening radius, wafer support.
 - Effusion cell, shutter and flange drawings for the Ga and Al cells.
 
-**Why.** The working layout needs the nitrogen port machined about 15 deg off the line to the wafer centre. A pointing error of 0.8 deg moves the aim 4-16 mm depending on where the mount pivots, which roughly doubles the thickness spread. With the nitrogen source on the cell ring, the gallium and aluminium cells leave a guaranteed gap of about 6 mm (9 mm at the closest sampled points) with our assumed dimensions; the real drawings decide whether that fits.
+**Why.** The working layout needs the nitrogen port machined about 15 deg off the line to the wafer centre. A pointing error of 0.8 deg moves the aim 4-16 mm depending on where the mount pivots, which roughly doubles the thickness spread. With the nitrogen source on the cell ring, the gallium and aluminium cells leave a guaranteed gap of about 6 mm over the whole shutter motion (9 mm at the closest computed position) with our assumed dimensions; the real drawings decide whether that fits.
 
 ## 6. Chamber drawing
 

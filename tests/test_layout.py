@@ -116,3 +116,65 @@ def test_disk_distance_bounds_bracket_the_exact_distance():
     q = np.stack([r * np.cos(t), r * np.sin(t), np.zeros_like(r)], 1)
     nearest = np.min(np.linalg.norm(q[:, None] - pts[None], axis=-1), axis=1)
     assert nearest.max() <= disk_cover_radius(0.03, 3, 24)
+
+
+def test_sweep_step_bound_is_the_half_step_chord():
+    from mbe_twin.layout import sweep_step_bound
+    reach, step = 0.111, np.radians(15.0)
+    t = np.linspace(0.0, step, 2001)
+    # distance of a point on the circle at angle t to the same point at the nearer end of the step
+    moved = 2 * reach * np.sin(0.5 * np.minimum(t, step - t))
+    assert moved.max() == pytest.approx(sweep_step_bound(reach, step), rel=1e-6)
+
+
+def test_swept_bound_catches_a_minimum_between_sampled_shutter_angles():
+    """A thin post next to the blade's outer rim at 7.5 deg, halfway between the 0 and 15 deg samples of a
+    6-step sweep: the sampled poses miss the closest approach, the swept bound does not."""
+    from mbe_twin.beam import CylinderOccluder
+    from mbe_twin.layout import disk_cover_radius, disk_to_cylinder_bounds, shutter_reach, swept_lower_bound
+    port = SourcePort("Ga", polar_deg=46.0, azimuth_deg=0.0, throw=0.35, shutter_radius=0.045, shutter_arm=0.065)
+    pivot, a, u = port._shutter_pivot(WAFER)
+    reach = shutter_reach(port)
+    rim = pivot + rotate(-reach * u, a, np.radians(7.5) * port.shutter_side)       # outer rim point at 7.5 deg
+    radial = (rim - pivot) / np.linalg.norm(rim - pivot)
+    post = CylinderOccluder(tuple(rim + 0.003 * radial - 0.02 * a), tuple(a), 0.001, 0.04)  # 2 mm from the rim at 7.5 deg
+    smp = {"n_r": 16, "n_phi": 256}
+
+    def gap(ang):
+        return disk_to_cylinder_bounds(port.shutter(WAFER, ang[0]), post, **smp)
+    dense = np.linspace(0.0, 90.0, 721)
+    true_min = min(gap((x,))[1] for x in dense)
+    at = dense[int(np.argmin([gap((x,))[1] for x in dense]))]
+    assert at == pytest.approx(7.5, abs=0.5)
+    assert true_min == pytest.approx(0.002, abs=3e-4)
+    sampled_poses = min(gap((x,))[1] for x in np.linspace(0.0, 90.0, 7))
+    assert sampled_poses > true_min + 1e-3                    # the 7 sampled poses over-state the gap
+    sw = swept_lower_bound(gap, [reach], [90.0], initial_steps=6, tol=1e-4)
+    assert sw["converged"]
+    assert sw["lower"] <= true_min                            # certified over the whole motion
+    # refined near the minimum: within the disk samples' covering radius (the pose-level bound) and tol
+    assert sw["lower"] >= true_min - disk_cover_radius(port.shutter_radius, 16, 256) - 2e-4
+    assert sw["sampled"] == pytest.approx(true_min, abs=2e-4)
+
+
+def test_swept_bound_with_two_moving_blades():
+    """Two blades whose closest approach needs both at intermediate angles: the bound stays below every
+    sampled pair and below the dense two-angle scan."""
+    from mbe_twin.beam import DiskOccluder
+    from mbe_twin.layout import disk_cover_radius, disk_to_disk_bounds, swept_lower_bound
+
+    def blade(c, ang):
+        t = np.radians(ang)
+        return DiskOccluder((c[0] + 0.065 * np.cos(t), c[1] + 0.065 * np.sin(t), 0.0), (0.0, 0.0, 1.0), 0.02)
+    c1, c2 = (0.0, 0.0), (0.0, 0.18)
+    smp = {"n_r": 8, "n_phi": 96}
+
+    def gap(ang):
+        return disk_to_disk_bounds(blade(c1, 37.0 + ang[0]), blade(c2, 323.0 - ang[1]), **smp)
+    grid = np.linspace(0.0, 90.0, 61)
+    dense = min(gap((x, y))[1] for x in grid for y in grid)
+    sw = swept_lower_bound(gap, [0.085, 0.085], [90.0, 90.0], initial_steps=6, tol=2e-4)
+    assert sw["lower"] <= dense
+    assert dense > 0.005
+    assert sw["sampled"] == pytest.approx(dense, abs=5e-4)
+    assert sw["lower"] >= dense - 2 * disk_cover_radius(0.02, 8, 96) - 5e-4

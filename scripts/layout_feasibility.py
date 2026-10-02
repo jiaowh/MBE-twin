@@ -15,8 +15,11 @@ Checks, all with the assumed dimensions of the envelope:
 1. Clearance (m) between every pair of solids, as a certified lower bound: bodies as capsules,
    flanges and shutter blades as disks whose sampled distances are reduced by the samples'
    covering radius. Pairs: body/body, flange/flange, flange/body, flange/blade, blade/body over
-   each blade's opening sweep, blade/blade with both shutters at every pair of sweep positions,
-   and every solid against the holder/heater assembly (a capsule for the bodies). The swing
+   each blade's continuous opening motion, blade/blade over every combination of the two blades'
+   angles, and every solid against the holder/heater assembly (a capsule for the bodies). The
+   motion between sampled shutter angles is bounded, not interpolated: a blade point moves at most
+   the chord of half an angular step (mbe_twin.layout.swept_lower_bound, refined where the bound
+   is lowest). The swing
    side of each shutter (two choices per source) is chosen to maximize the smallest
    clearance (exhaustive over 2^11 combinations). A layout fails if any clearance is below
    the margin (5 mm).
@@ -43,7 +46,7 @@ import numpy as np
 from mbe_twin.beam import HolderLip, rotation_averaged_flux
 from mbe_twin.beam import DiskOccluder
 from mbe_twin.layout import (SourcePort, cylinder_clearance, disk_to_cylinder_bounds, disk_to_disk_bounds,
-                             holder_assembly, point_to_cylinder, shutter_sweep, wafer_frame)
+                             holder_assembly, point_to_cylinder, shutter_reach, swept_lower_bound, wafer_frame)
 from mbe_twin.manifest import build_manifest, write_manifest
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -82,9 +85,10 @@ def build_ports(env, layout):
     return ports
 
 
-SWEEP_STEPS = 6
+SWEEP_STEPS = 6       # initial angular grid of each shutter's opening; refined by swept_lower_bound
 DISK_SAMPLING = {"n_r": 4, "n_phi": 36}
 REFINED = {"n_r": 16, "n_phi": 128}   # covering radius 0.056 R: 2.6 mm on a 46 mm Ga blade
+FLOOR = 0.030         # clearances certified above this need no tighter bound (the pair cannot set the minimum)
 
 
 def flange_disk(port, wafer):
@@ -97,11 +101,13 @@ def pair_clearances(p, q, wafer, sampling=None):
 
     Solids: bodies (capsules: a lower bound), flanges and shutter blades (disks: sampled distance minus the
     samples' covering radius, mbe_twin.layout.disk_to_disk_bounds). Pairs: body/body, flange/flange,
-    flange/body (both ways), flange/blade and blade/body over each blade's sweep, and blade/blade with both
-    shutters at every pair of sweep positions (moving together or one at a time). Where the bound is below the
-    margin but the sampled value is not, the combination is recomputed with REFINED sampling, so that a loose
-    bound is not reported as a conflict. Also returns the body and flange gaps and the closest sampled value
-    (an upper estimate of the same minimum)."""
+    flange/body (both ways); flange/blade and blade/body over each blade's continuous opening motion; and
+    blade/blade over every combination of the two blades' angles (moving together or one at a time). Motion
+    between sampled angles is bounded by mbe_twin.layout.swept_lower_bound (each blade point moves at most a
+    chord of the step, refined where the bound is lowest). Where the bound is below the margin but the
+    sampled value is not, the combination is recomputed with REFINED disk sampling, so that a loose bound is
+    not reported as a conflict. Also returns the body and flange gaps and the closest sampled value (an upper
+    estimate of the same minimum)."""
     out, sampled = np.empty((2, 2)), np.empty((2, 2))
     body_gap = cylinder_clearance(p.body(wafer), q.body(wafer))
     for i, si in enumerate((1, -1)):
@@ -119,20 +125,31 @@ def _combo_gaps(pp, qq, wafer, smp, body_gap):
     gaps = [disk_to_disk_bounds(fp, fq, **smp), disk_to_cylinder_bounds(fp, qq.body(wafer), **smp),
             disk_to_cylinder_bounds(fq, pp.body(wafer), **smp)]
     flange_lo = min(g[0] for g in gaps)
-    sw_p, sw_q = shutter_sweep(pp, wafer, steps=SWEEP_STEPS), shutter_sweep(qq, wafer, steps=SWEEP_STEPS)
-    for blades, body, fl in ((sw_p, qq.body(wafer), fq), (sw_q, pp.body(wafer), fp)):
-        for blade in blades:
-            gaps.append(disk_to_cylinder_bounds(blade, body, **smp))
-            gaps.append(disk_to_disk_bounds(blade, fl, **smp))
-    for bp in sw_p:
-        for bq in sw_q:
-            gaps.append(disk_to_disk_bounds(bp, bq, **smp))
-    return min([body_gap] + [g[0] for g in gaps]), min([body_gap] + [g[1] for g in gaps]), flange_lo
+    lo, hi = [body_gap] + [g[0] for g in gaps], [body_gap] + [g[1] for g in gaps]
+    for mover, body, fl in ((pp, qq.body(wafer), fq), (qq, pp.body(wafer), fp)):
+        def blade_gap(ang, mover=mover, body=body, fl=fl):
+            blade = mover.shutter(wafer, ang[0])
+            a, b = disk_to_cylinder_bounds(blade, body, **smp), disk_to_disk_bounds(blade, fl, **smp)
+            return min(a[0], b[0]), min(a[1], b[1])
+        sw = swept_lower_bound(blade_gap, [shutter_reach(mover)], [mover.shutter_open_deg], SWEEP_STEPS, floor=FLOOR)
+        lo.append(sw["lower"])
+        hi.append(sw["sampled"])
+
+    def blades_gap(ang):
+        return disk_to_disk_bounds(pp.shutter(wafer, ang[0]), qq.shutter(wafer, ang[1]), **smp)
+    sw = swept_lower_bound(blades_gap, [shutter_reach(pp), shutter_reach(qq)], [pp.shutter_open_deg, qq.shutter_open_deg],
+                           SWEEP_STEPS, floor=FLOOR)
+    lo.append(sw["lower"])
+    hi.append(sw["sampled"])
+    return min(lo), min(hi), flange_lo
 
 
 def holder_clearance(p, wafer, assembly):
-    """Certified lower bound on the clearance of the port's blade (over its sweep) and body to the holder assembly."""
-    gaps = [disk_to_cylinder_bounds(b, assembly, **DISK_SAMPLING)[0] for b in shutter_sweep(p, wafer, steps=SWEEP_STEPS)]
+    """Certified lower bound on the clearance of the port's blade (over its continuous sweep) and body to the
+    holder assembly."""
+    sw = swept_lower_bound(lambda ang: disk_to_cylinder_bounds(p.shutter(wafer, ang[0]), assembly, **DISK_SAMPLING),
+                           [shutter_reach(p)], [p.shutter_open_deg], SWEEP_STEPS, floor=FLOOR)
+    gaps = [sw["lower"]]
     # body: exact distance from points on its axis to the solid assembly, less the body radius and half the
     # point spacing (a certified bound; a capsule would round the 130 mm assembly's face and over-state the risk)
     pos, a = p.pose(wafer)
@@ -266,8 +283,8 @@ def main():
         outputs={"rows": rows},
         sources=[Path(__file__), ROOT / "src/mbe_twin/layout.py", ROOT / "src/mbe_twin/beam.py", ENVELOPE],
         warnings=["Simplified solids with assumed dimensions; no chamber drawing, cryoshroud, RHEED or pyrometer lines of sight",
-                  "Clearances are certified lower bounds for the modelled solids (capsule bodies, disk flanges and blades); "
-                  "real cell, shutter and flange drawings may differ",
+                  "Clearances are certified lower bounds for the modelled solids (capsule bodies, disk flanges and blades) "
+                  "over the continuous shutter motion; real cell, shutter and flange drawings may differ",
                   "Shadowing with flat cos^n emitters; the beam models of the comparison are not used here"])
     print(f"Wrote {write_manifest(manifest, Path(args.out) / 'manifest.json')}")
 

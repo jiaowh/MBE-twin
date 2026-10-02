@@ -24,9 +24,12 @@ The dimensions are design inputs (data/design/design_envelope.json); none comes 
 drawing of the proposed machine.
 """
 
+import heapq
+import itertools
 from dataclasses import dataclass, replace
 
 import numpy as np
+from scipy.spatial import cKDTree
 
 from .beam import CylinderOccluder, DiskOccluder, EffusionSource, Wafer, source_on_cone
 
@@ -188,7 +191,7 @@ def disk_to_cylinder(disk, cyl, **kw):
 def disk_to_disk(d1, d2, **kw):
     p = disk_points(d1.center, d1.normal, d1.radius, **kw)
     q = disk_points(d2.center, d2.normal, d2.radius, **kw)
-    return float(np.min(np.linalg.norm(p[:, None, :] - q[None, :, :], axis=-1)))
+    return float(cKDTree(q).query(p, k=1)[0].min())
 
 
 def disk_cover_radius(radius, n_r=8, n_phi=48):
@@ -213,8 +216,79 @@ def disk_to_disk_bounds(d1, d2, n_r=3, n_phi=24):
 
 
 def shutter_sweep(port, wafer, steps=10):
-    """Blade positions from closed to fully open."""
+    """Blade positions from closed to fully open (samples only: see swept_lower_bound for the motion between)."""
     return [port.shutter(wafer, port.shutter_open_deg * k / steps) for k in range(steps + 1)]
+
+
+def shutter_reach(port):
+    """Largest distance of a blade point from the shutter's pivot axis: the arm plus the blade radius (the blade
+    lies in a plane normal to that axis)."""
+    return port.shutter_arm + port.shutter_radius
+
+
+def sweep_step_bound(reach, step_rad):
+    """Largest distance from a blade point, at any angle inside an arm rotation of `step_rad`, to the same point
+    at the nearer end of the step. A point `reach` from the pivot axis moves on a circle, so it is at most the
+    chord of half the step away: 2 reach sin(step / 4)."""
+    return 2.0 * reach * np.sin(0.25 * step_rad)
+
+
+def swept_lower_bound(gap, reaches, spans_deg, initial_steps=6, tol=2.5e-4, floor=np.inf, max_evals=3000):
+    """Certified lower bound on a clearance over continuous shutter motion (one or two moving blades).
+
+    gap(angles_deg) -> (certified lower bound, sampled value) of the clearance with blade k at angles_deg[k]
+    (0 closed .. spans_deg[k] open); reaches[k] is shutter_reach of blade k. Over a box of angles every blade
+    is within sweep_step_bound(reach, box width) of its pose at the corner nearest in each angle, so the
+    clearance anywhere in the box is at least min(corner bounds) - sum of those distances. Branch and bound
+    from an initial grid: the box with the lowest bound is split (every angle halved) until that bound is
+    within `tol` of the lowest corner bound evaluated, reaches `floor` (a clearance large enough not to
+    matter), or `max_evals` gap evaluations are spent; the bound reported is certified in every case.
+
+    Returns dict: lower (certified over the whole motion), sampled (smallest sampled value at an evaluated
+    pose: an upper estimate of the same minimum), at_deg (angles of that pose), evals, converged.
+    """
+    reaches = np.asarray(reaches, float)
+    spans = np.asarray(spans_deg, float)
+    dim = len(spans)
+    cache = {}
+
+    def at(angles):
+        key = tuple(round(float(a), 9) for a in angles)
+        if key not in cache:
+            cache[key] = gap(key)
+        return cache[key]
+
+    def box_bound(lo, hi):
+        corners = [at(c) for c in itertools.product(*zip(lo, hi))]
+        slack = sum(sweep_step_bound(r, np.radians(h - l)) for r, l, h in zip(reaches, lo, hi))
+        return min(c[0] for c in corners) - slack
+
+    heap, k = [], 0
+    edges = [np.linspace(0.0, s, initial_steps + 1) for s in spans]
+    for idx in itertools.product(range(initial_steps), repeat=dim):
+        lo = tuple(edges[d][i] for d, i in enumerate(idx))
+        hi = tuple(edges[d][i + 1] for d, i in enumerate(idx))
+        heapq.heappush(heap, (box_bound(lo, hi), k, lo, hi))
+        k += 1
+    converged = False
+    while True:
+        bound, _, lo, hi = heap[0]
+        best = min(v[0] for v in cache.values())
+        if bound >= best - tol or bound >= floor:
+            converged = True
+            break
+        if len(cache) >= max_evals:
+            break
+        heapq.heappop(heap)
+        mid = tuple(0.5 * (a + b) for a, b in zip(lo, hi))
+        for half in itertools.product((0, 1), repeat=dim):
+            clo = tuple(lo[d] if h == 0 else mid[d] for d, h in enumerate(half))
+            chi = tuple(mid[d] if h == 0 else hi[d] for d, h in enumerate(half))
+            heapq.heappush(heap, (box_bound(clo, chi), k, clo, chi))
+            k += 1
+    pose = min(cache, key=lambda a: cache[a][1])
+    return {"lower": float(heap[0][0]), "sampled": float(cache[pose][1]), "at_deg": list(pose), "evals": len(cache),
+            "converged": converged}
 
 
 def holder_assembly(wafer, radius, depth, lip_height):

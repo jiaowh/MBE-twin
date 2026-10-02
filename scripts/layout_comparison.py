@@ -35,9 +35,12 @@ Operating protocol over the uncertainty grid:
   in the state the machine is in) at fixed eta, so each state has its own feed, pressure and
   attenuation, solved as a fixed point (solve_states). A state that would need more than the
   feed limit runs at the limit and grows slower (supply-limited); where the rate peaks below
-  the feed limit, the peak feed is the limit. A state is valid if it reaches the operating
-  rate with the plate holes free-molecular (Kn >= 10) at its own feed; only valid states are
-  ranked.
+  the feed limit, the peak feed is the limit. A state is N-feasible if its feed supplies the
+  N-limited operating rate with the plate holes free-molecular (Kn >= 10, or --kn-valid) at that
+  feed. It is valid if it is N-feasible and the wafer-mean rate actually grown with the held Ga
+  supply reaches the operating rate (within RATE_TOL; where Ga runs short part of the wafer is
+  Ga-limited and grows slower). Only valid states are ranked; N-feasible states below the rate
+  are kept, labelled off-target.
 - Ga: a fixed cell output. It is set once, in the nominal state (70 mm fill, d = 8 A, nominal
   pointing, nominal heater, 2 mm lip), so that the centre flux is the middle of that state's
   Ga-rich window, under the same droplet law. Every other state keeps the cell output (the
@@ -129,7 +132,8 @@ GA_D = {"5.68": 6e-10, "8": 8e-10}  # DSMC diameter -> background-collision diam
 HEATER_STATES = ("nominal", "eps 0.63", "eps 0.77", "contact 50", "contact 1000", "zone +2 % (worst)", "zone -2 % (worst)")
 P_GRID = (0.0, 2.5e-4, 5e-4, 1e-3, 2e-3, 4e-3, 7e-3, 1e-2, 1.5e-2, 2e-2, 3e-2, 4e-2, 5e-2, 7e-2, 0.1, 0.15)  # Pa
 N_ATOMS_PER_SCCM = 2.0 * SCCM_PA_M3_S / (K_B * T_STD)   # N atoms/s in 1 sccm of N2 (8.956e17)
-KN_VALID = 10.0
+KN_VALID = 10.0   # default plate-validity criterion; --kn-valid relaxes it for a scenario study
+RATE_TOL = 1e-6   # relative: a state reaches the operating rate if its wafer-mean net rate is within this of it
 THRESHOLDS_PCT = (1.0, 2.0, 3.0, 5.0)
 TARGETS_UM_H = (1.0, 0.5, 0.25)   # wafer-mean net rates; 1 um/h is the envelope working rate
 USEFUL_RATE_UM_H = 0.1   # reporting floor, not a requirement: below it decomposition rivals growth
@@ -423,10 +427,15 @@ def solve_states(n_vac, att_n, dec_mean, target, eta, speed, feed_cap, t_gas, k_
 
 
 def evaluate(n_vac, att_n, g_vac, att_g, t_maps, params, law, rho, target, k_atoms, nominal_idx, eta, speed, feed_cap,
-             t_gas, p_start, kn_per_sccm):
+             t_gas, p_start, kn_per_sccm, kn_valid=KN_VALID):
     """Growth over the grid with a per-state nitrogen balance. n_vac (N, L, rho): N flux per unit plate output with
     the lip, no attenuation; att_n (P, rho) its attenuation table; g_vac (G, L, rho): Ga shapes with the lip, centre 1
-    without attenuation; att_g (G, P, rho); t_maps (H, rho). Returns arrays over (N, G, H, L)."""
+    without attenuation; att_g (G, P, rho); t_maps (H, rho). Returns arrays over (N, G, H, L).
+
+    Three separate state labels: n_feasible (the feed reaches the N-limited target within the cap and the plate
+    holes have Kn >= kn_valid), on_target (the wafer-mean net rate actually grown, with the held Ga supply, is
+    within RATE_TOL of the target; where Ga runs short, part of the wafer is Ga-limited and grows slower) and
+    valid = both. Only valid states enter equal-rate comparisons; the growth window is reported separately."""
     dec = params.decomposition(t_maps)                    # (H, rho)
     fcrit = params.critical_excess(law, t_maps)           # (H, rho)
     s, feed, p, limited, att = solve_states(n_vac, att_n, area_mean(dec, rho), target, eta, speed, feed_cap, t_gas,
@@ -450,18 +459,21 @@ def evaluate(n_vac, att_n, g_vac, att_g, t_maps, params, law, rho, target, k_ato
     std = 100 * area_std(h, rho) / mean_h
     margin = np.minimum(st["margin_to_n_rich"], st["margin_to_droplets"]).min(-1)
     kn = kn_per_sccm / feed
-    valid = (~limited) & (kn >= KN_VALID)
+    n_feasible = np.broadcast_to(((~limited) & (kn >= kn_valid))[:, None], thick.shape)
+    on_target = mean_h >= target * (1.0 - RATE_TOL)
+    valid = n_feasible & on_target
 
     def b(x):
         return np.broadcast_to(x[:, None], thick.shape)
     return {"thickness": thick, "std": std, "margin": margin, "q": b(s * k_atoms), "feed": b(feed), "pressure": b(p),
-            "kn": b(kn), "supply_limited": b(limited), "valid": b(valid), "mean_net": mean_h,
+            "kn": b(kn), "supply_limited": b(limited), "n_feasible": n_feasible, "on_target": on_target, "valid": valid,
+            "mean_net": mean_h,
             "r0": r0, "ga_centre": r0 * float(jn0[0]), "window_nominal": [lo, hi]}
 
 
 def summarize(res, factor_axes, nominal_idx, idx08):
     th, sd, mg, rate = res["thickness"], res["std"], res["margin"], res["mean_net"]
-    lim, val = res["supply_limited"], res["valid"]
+    lim, val, feas = res["supply_limited"], res["valid"], res["n_feasible"]
     nom = tuple(nominal_idx)
     one = {}
     for name, ax in factor_axes.items():
@@ -470,11 +482,14 @@ def summarize(res, factor_axes, nominal_idx, idx08):
         one[name] = {"thickness_max_pct": float(np.max(th[tuple(sl)])), "margin_min": float(np.min(mg[tuple(sl)]))}
 
     def block(idx):
-        t, m, v, r = th[idx], mg[idx], val[idx], rate[idx]
+        t, m, v, r, f = th[idx], mg[idx], val[idx], rate[idx], feas[idx]
         tv = t[v]
+        off = f & ~v   # N supply feasible but grown below the operating rate (Ga-limited somewhere)
         return {"thickness_pct_max": float(t.max()), "std_pct_max": float(sd[idx].max()), "margin_min": float(m.min()),
                 "fraction_in_window": float(np.mean(m >= 0.0)), "fraction_supply_limited": float(np.mean(lim[idx])),
-                "fraction_valid": float(np.mean(v)),
+                "fraction_valid": float(np.mean(v)), "fraction_n_feasible": float(np.mean(f)),
+                "fraction_feasible_off_target": float(np.mean(off)),
+                "off_target_rate_nm_min_min": float(r[off].min()) if off.any() else None,
                 "valid_thickness_pct_max": float(tv.max()) if tv.size else None,
                 "valid_fraction_in_window": float(np.mean(m[v] >= 0.0)) if tv.size else None,
                 "rate_nm_min": [float(r.min()), float(r.max())],
@@ -487,7 +502,8 @@ def summarize(res, factor_axes, nominal_idx, idx08):
     allidx = slice(None)
     return {"nominal": {"thickness_pct": float(th[nom]), "std_pct": float(sd[nom]), "margin": float(mg[nom]),
                         "q_atoms_s": float(res["q"][nom]), "rate_nm_min": float(rate[nom]), "feed_sccm": float(res["feed"][nom]),
-                        "pressure_Pa": float(res["pressure"][nom]), "kn": float(res["kn"][nom]), "valid": bool(val[nom])},
+                        "pressure_Pa": float(res["pressure"][nom]), "kn": float(res["kn"][nom]), "valid": bool(val[nom]),
+                        "n_feasible": bool(feas[nom])},
             "grid": {"thickness_pct": [float(th.min()), float(np.median(th)), float(np.percentile(th, 90)), float(th.max())],
                      **block(allidx)},
             "grid_0.8deg": block(idx08),
@@ -500,6 +516,8 @@ def main():
     ap.add_argument("--out", default="results/layout_comparison_bc")
     ap.add_argument("--layouts", nargs="+", default=["B", "C", "B-p", "C-p", "B-L"])
     ap.add_argument("--maps", help="directory with keyed map files (written to --out otherwise)")
+    ap.add_argument("--kn-valid", type=float, default=KN_VALID,
+                    help="plate-hole Kn below which a state is outside the plate model (default 10: free-molecular)")
     args = ap.parse_args()
     env = json.loads(ENVELOPE.read_text(encoding="utf-8"))
     out = Path(args.out)
@@ -618,6 +636,7 @@ def main():
             for label, op in ops:
                 op["kn_min"] = kn_per_sccm / op["feed_sccm"]
                 op["plate_free_molecular"] = op["kn_min"] >= KN_VALID
+                op["plate_within_kn_valid"] = op["kn_min"] >= args.kn_valid
                 # past the rate peak more feed lowers the rate, so the peak feed is the most any state can use
                 feed_cap = op["feed_sccm"] if op.get("rate_peaks_below_feed_limit") else feed_max
                 head = {"layout": name, "eta": eta, "S_eff_m3_s": speed, "feed_limit_sccm": feed_max, "target": label,
@@ -629,15 +648,15 @@ def main():
                 per_law = {}
                 for law in laws:
                     res = evaluate(n_vac, att_n, g_vac, att_g, t_maps, params, law, rho, op["rate_nm_min"], k_atoms,
-                                   nominal_idx, eta, speed, feed_cap, t_gas, op["pressure_Pa"], kn_per_sccm)
+                                   nominal_idx, eta, speed, feed_cap, t_gas, op["pressure_Pa"], kn_per_sccm, args.kn_valid)
                     if not np.all(res["mean_net"] > 0.0):
                         raise SystemExit(f"layout_comparison: non-positive net growth in an evaluated row ({name}, {label})")
                     per_law[law] = res
                     keep[(name, eta, speed, feed_max, label, t0, lname, law)] = (
                         res["thickness"].astype(np.float32), res["margin"].astype(np.float32), res["valid"].copy(), g_labels)
                 comb = {k: np.stack([per_law[l][k] for l in laws], -1)
-                        for k in ("thickness", "std", "margin", "q", "feed", "pressure", "kn", "supply_limited", "valid",
-                                  "mean_net")}
+                        for k in ("thickness", "std", "margin", "q", "feed", "pressure", "kn", "supply_limited", "n_feasible",
+                                  "on_target", "valid", "mean_net")}
                 comb.update({"r0": {l: per_law[l]["r0"] for l in laws}, "ga_centre": {l: per_law[l]["ga_centre"] for l in laws},
                              "window_nominal": {l: per_law[l]["window_nominal"] for l in laws}})
                 axes = {"Ga fill and diameter": 1, "heater perturbation": 2, "lip height": 3, "droplet law": 4}
@@ -711,7 +730,7 @@ def main():
         "layout_comparison", label="representative_chamber", validation_status="not_validated",
         inputs={"envelope": env, "layouts": names, "conversion_fractions": etas, "effective_speeds_m3_s": speeds,
                 "feed_limits_sccm": feed_limits, "plates": {n: layout_plate(env["layouts"][n], env) for n in names},
-                "kn_valid": KN_VALID, "p_grid_Pa": P_GRID, "T0_C": T0_C,
+                "kn_valid": args.kn_valid, "rate_tolerance_rel": RATE_TOL, "p_grid_Pa": P_GRID, "T0_C": T0_C,
                 "heater_limits_K": LIMITS, "tilts_deg": TOLS_DEG, "tilt_directions_deg": TILT_DIRS_DEG,
                 "lip_heights_m": LIP_H, "heater_states": HEATER_STATES, "ga_diameters": GA_D, "n_particles": N_PARTICLES,
                 "n_seed": N_SEED, "usable_radius_m": usable, "target_nm_min": target, "atoms_per_m2_s_per_nm_min": k_atoms,
