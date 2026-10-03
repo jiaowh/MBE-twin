@@ -7,7 +7,8 @@ Its heater states are perturbed one at a time, which is optimistic. This study r
 cold limit with the combined heater errors of scripts/heater_robustness.py (emissivity x contact
 x worst-zone power error, 27 states) under the 1473 K element limit, with two controllers:
 - mean: one reading holds the wafer mean;
-- centre pyrometer with a bias of -2 / 0 / +2 K, the heater re-solved holding that reading.
+- centre pyrometer with a bias of -b / 0 / +b K (b = 2 K by default, --pyrometer-bias), the heater
+  re-solved holding that reading.
 Ga is steered from the controller's reading (temperature-corrected protocol), each state with
 its own feed, pressure and attenuation, over the +/-0.8 deg pointing ensemble, the Ga fills and
 diameters, the three droplet laws and the 2 mm lip.
@@ -16,7 +17,8 @@ For each supply scenario, layout and rate, the coldest temperature (10 K steps) 
 ADMIT of the states are valid and in the window is reported for each controller, with the
 worst-case thickness there.
 
-Usage: python scripts/operating_cold_limit.py [--out results/operating_cold_limit]
+Usage: python scripts/operating_cold_limit.py [--out results/operating_cold_limit] [--scattered none|gas|gas-gamma0.1|gas+plume]
+                                             [--pyrometer-bias 2] [--t-max 760]
 """
 
 import argparse
@@ -47,20 +49,30 @@ def _load(name):
 oo = _load("operating_optimum")
 hr = _load("heater_robustness")
 lc = oo.lc
-T_C = tuple(range(690, 770, 10))
 SCENARIOS = [{"eta": 1.0, "S_eff_m3_s": 2.0, "feed_limit_sccm": 10.0},
              {"eta": 0.3, "S_eff_m3_s": 4.0, "feed_limit_sccm": 35.0}]
 RATES_UM_H = (0.5, 1.0, 1.25, 1.5)
 LIMIT_NAME = "1473 K element"
 ADMIT = 0.95
-CONTROLLERS = {"mean": ("mean",), "centre pyrometer +/-2 K": ("pyrometer -2 K", "pyrometer +0 K", "pyrometer +2 K")}
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--out", default="results/operating_cold_limit")
+    ap.add_argument("--scattered", default="none", choices=lc.SCATTER_VARIANTS,
+                    help="add gas-scattered atoms (reads the comparison record of that variant)")
+    ap.add_argument("--pyrometer-bias", type=float, default=2.0, help="centre pyrometer bias b (K): states at -b, 0, +b")
+    ap.add_argument("--t-max", type=int, default=760, help="hottest growth temperature scanned (C, 10 K steps from 690)")
     args = ap.parse_args()
-    rec = json.loads(oo.RECORD.read_text(encoding="utf-8"))
+    bias = args.pyrometer_bias
+    hr.BIASES_K = (-bias, 0.0, bias)
+    pyro = f"centre pyrometer +/-{bias:g} K"
+    controllers = {"mean": ("mean",), pyro: tuple(f"pyrometer {b:+g} K" for b in hr.BIASES_K)}
+    t_c = tuple(range(690, args.t_max + 10, 10))
+    record = lc.comparison_record(args.scattered)
+    rec = json.loads(record.read_text(encoding="utf-8"))
+    if rec["inputs"].get("scattered", "none") != args.scattered:
+        raise SystemExit(f"operating_cold_limit: {record.name} was not run with --scattered {args.scattered}")
     env = rec["inputs"]["envelope"]
     rho = np.asarray(rec["outputs"]["rho_m"])
     params = load_parameters()
@@ -69,20 +81,21 @@ def main():
     t_gas = env["vacuum"]["gas_temperature_K"]["value"]
     lip2 = lc.LIP_H.index(0.002)
     inputs = {}
-    for name in oo.LAYOUTS:
-        inp = oo.load_inputs(rec, env, name, rho)
+    scatter = lc.scatter_factors(args.scattered, rho)
+    for name, sc in itertools.product(oo.LAYOUTS, SCENARIOS):
+        inp = oo.load_inputs(rec, env, name, rho, scatter, sc["S_eff_m3_s"])
         inp = {**inp, "n_vac": inp["n_vac"][:, [lip2]], "g_vac": inp["g_vac"][:, [lip2]]}
-        inputs[name] = inp
+        inputs[(name, sc["S_eff_m3_s"])] = inp
     states_at = {}
-    for t0 in T_C:
+    for t0 in t_c:
         states_at[t0] = [s for s in hr.combined_states(t0 + lc.C, rho) if s["limit"] == LIMIT_NAME]
         print(f"combined heater states at {t0} C done", flush=True)
     rows = []
     for scen, name, rate in itertools.product(SCENARIOS, oo.LAYOUTS, RATES_UM_H):
-        inp = inputs[name]
+        inp = inputs[(name, scen["S_eff_m3_s"])]
         target = 1000.0 * rate / 60.0
         per_t = []
-        for t0 in T_C:
+        for t0 in t_c:
             states = states_at[t0]
             nom = next(s for s in states if s["controller"] == "mean" and all(s[k] == v for k, v in hr.NOMINAL.items()))
             dec_nom = float(lc.area_mean(params.decomposition(nom["t_map"]), rho))
@@ -94,7 +107,7 @@ def main():
             entry = {"T_C": t0, "reachable": bool(op["target_reached"]), "nominal_shortfall_K": float(t0 + lc.C - nom["wafer_mean_K"])}
             if op["target_reached"]:
                 feed_cap = op["feed_sccm"] if op.get("rate_peaks_below_feed_limit") else scen["feed_limit_sccm"]
-                for cname, groups in CONTROLLERS.items():
+                for cname, groups in controllers.items():
                     sub = [s for s in states if s["controller"] in groups]
                     t_maps = np.array([s["t_map"] for s in sub])
                     reading = np.array([s["reading_K"] for s in sub])
@@ -108,27 +121,29 @@ def main():
                                                        and entry["nominal_shortfall_K"] <= 1.0)}
             per_t.append(entry)
         row = {**scen, "layout": name, "rate_um_h": rate, "temperatures": per_t}
-        for cname in CONTROLLERS:
+        for cname in controllers:
             ok = [e for e in per_t if e["reachable"] and e[cname]["admissible"]]
             row[f"coldest_{cname}"] = ({"T_C": ok[0]["T_C"], "worst_pct": ok[0][cname]["worst_pct"],
                                         "in_window_fraction": ok[0][cname]["in_window_fraction"]} if ok else None)
         rows.append(row)
-        cm, cp = row["coldest_mean"], row["coldest_centre pyrometer +/-2 K"]
+        cm, cp = row["coldest_mean"], row[f"coldest_{pyro}"]
         print(f"eta {scen['eta']:.1f} S {scen['S_eff_m3_s']:.0f} feed<={scen['feed_limit_sccm']:.0f} {name:4s} {rate:4.2f} um/h: coldest "
               f"(mean controller) {cm['T_C'] if cm else 'none'} C" + (f" worst {cm['worst_pct']:.2f} %" if cm else "")
               + f"; (centre pyrometer) {cp['T_C'] if cp else 'none'} C" + (f" worst {cp['worst_pct']:.2f} %" if cp else "")
               + "  | window by T (pyrometer): " + " ".join(
-                  f"{e['T_C']}:{100 * e['centre pyrometer +/-2 K']['in_window_fraction']:.0f}" if e["reachable"] else f"{e['T_C']}:-"
+                  f"{e['T_C']}:{100 * e[pyro]['in_window_fraction']:.0f}" if e["reachable"] else f"{e['T_C']}:-"
                   for e in per_t), flush=True)
     manifest = build_manifest(
         "operating_cold_limit", label="representative_chamber", validation_status="not_validated",
-        inputs={"record": str(oo.RECORD.relative_to(ROOT)), "record_run_id": rec["run_id"], "layouts": oo.LAYOUTS, "T_C": T_C,
+        inputs={"record": str(record.relative_to(ROOT)), "scattered": args.scattered, "record_run_id": rec["run_id"],
+                "layouts": oo.LAYOUTS, "T_C": t_c, "pyrometer_bias_K": bias,
                 "scenarios": SCENARIOS, "rates_um_h": RATES_UM_H, "element_limit": LIMIT_NAME, "admit": ADMIT,
-                "controllers": CONTROLLERS, "lip_m": 0.002, "pointing_ensemble_deg": 0.8},
+                "controllers": controllers, "lip_m": 0.002, "pointing_ensemble_deg": 0.8},
         outputs={"rows": rows},
         sources=[Path(__file__), ROOT / "scripts/operating_optimum.py", ROOT / "scripts/heater_robustness.py",
                  ROOT / "scripts/layout_comparison.py", ROOT / "scripts/heater_zones.py", ROOT / "src/mbe_twin/growth.py",
-                 ROOT / "src/mbe_twin/heater.py", ROOT / "data/parameters/gan_growth.json", oo.RECORD],
+                 ROOT / "src/mbe_twin/heater.py", ROOT / "data/parameters/gan_growth.json", record]
+        + lc.scatter_sources(scatter),
         warnings=["Representative chamber; no model in the chain is validated on the proposed machine",
                   "Crystal quality, morphology and impurities are not modelled: this is the growth-window limit only",
                   "Decomposition fitted to 720-805 C; lower temperatures are extrapolations (decomposition is below 1 % of the rate there)",

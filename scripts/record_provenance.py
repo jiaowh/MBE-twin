@@ -12,6 +12,13 @@ again until the note is re-read and re-pinned; a mismatch without an applicable 
 as "not reviewed". `--hashes` prints the current pins to paste after a review. The result is written next to the records as
 data/runs/studies/PROVENANCE.md, so that it is found with them rather than in commit messages.
 
+Besides source_sha256, a record can depend on data tables it names only under inputs (the scattered-arrival
+factor tables: inputs.scattered_tables_sha256 and inputs.scattered_plume_tables_sha256), and records run
+with --scattered gas+plume before 2026-10-03 loaded the plume tables without recording them. Both are checked
+like sources (see recorded_hashes): an input hash against the current file, and an unrecorded plume dependency
+against the hashes stored by the comparison record the study read, which used the same files at the time. A
+plume dependency that cannot be traced either way is reported as not reviewed.
+
 The records themselves are never modified.
 
 Usage: python scripts/record_provenance.py [--check]   (--check: exit 1 if a mismatch has no note)
@@ -31,6 +38,8 @@ STUDIES = ROOT / "data/runs/studies"
 # to that version do or do not alter older records, optional "records": [record names] and "recorded": [12-hex
 # recorded versions] the note is limited to}. Values given as plain strings are written as {"note": ...} reviews
 # and pinned in PINS below.
+SRC_ONLY = (" Later change (2026-10-03 audit) only lists the scattered-arrival tables it reads (layout_comparison.scatter_sources) "
+            "among the manifest sources; the computation is unchanged.")
 IMPACT = {
     "src/mbe_twin/aperture.py": "Later changes only add optional arguments (`axis`, then `centre`) whose defaults reproduce the "
                                 "earlier sources exactly (tests/test_aperture.py).",
@@ -58,7 +67,14 @@ IMPACT = {
                  "LIMITS['1473 K element'] (layout_resolution_check also evaluate's thickness; nitrogen_rate_limits also "
                  "P_GRID), all unchanged since their runs (function-level comparison with 353cf47 and d0f136d). The later "
                  "changes are the per-state balance in evaluate/solve_states (d0f136d), and the on-target validity label, "
-                 "RATE_TOL and --kn-valid (2026-10-02), which do not change thickness, operating points or maps."}],
+                 "RATE_TOL and --kn-valid (2026-10-02), which do not change thickness, operating points or maps."},
+        {"note": "Later change (2026-10-03) adds the --scattered option (scatter_factors, with_scattered, comparison_record; "
+                 "per-speed attenuation tables inside the scenario loop). With the default --scattered none the tables "
+                 "are the earlier ones: layout_comparison_bc.json, heater_robustness.json, operating_optimum.json and "
+                 "operating_cold_limit.json reproduce bit for bit (checked 2026-10-03). Records that only import "
+                 "constants or helpers (P_GRID, att_at, operating_point, ...) are unaffected. The 2026-10-03 audit changes "
+                 "add scatter_sources (manifest sources only) and a check that stops a gas+plume run whose plume tables do "
+                 "not bracket the feed limit; neither changes a number of a run that completes."}],
     "scripts/layout_feasibility.py": "CHANGES RESULTS. Clearances became certified lower bounds (disk samples less their covering "
                                      "radius, refined where the bound is near the margin), then bounds over the continuous "
                                      "shutter motion (2026-10-02), and now include flange/body, flange/blade and simultaneous "
@@ -73,6 +89,28 @@ IMPACT = {
                                         "input the earlier records read is unchanged.",
     "scripts/nitrogen_aim_study.py":"Later changes add command-line options (--aspects/--offsets/--angles) and record fields; "
                                      "the grid evaluation and seeds of the default run are unchanged.",
+    "scripts/heater_robustness.py": "Later change (2026-10-03) adds --scattered (scattered-arrival factors, per pumping speed) and --out; with the default --scattered none the record reproduces bit for bit (checked 2026-10-03)." + SRC_ONLY,
+    "scripts/operating_optimum.py": "Later change (2026-10-03) adds --scattered; load_inputs takes the factors and the pumping speed, and inputs are keyed by layout and speed. With the default --scattered none operating_optimum.json reproduces bit for bit (checked 2026-10-03)." + SRC_ONLY,
+    "scripts/operating_cold_limit.py": "Later change (2026-10-03) adds --scattered, --pyrometer-bias (default 2 K, the earlier controllers) and --t-max (default 760 C, the earlier range); with the defaults operating_cold_limit.json reproduces bit for bit (checked 2026-10-03)." + SRC_ONLY,
+    "scripts/nitrogen_aim_pressure.py": "Later change (2026-10-03) adds --scattered and --factor-layout to the --combine evaluation (evaluate takes an optional factor); without them nitrogen_aim_pressure.json and nitrogen_aim_bigplate.json reproduce bit for bit (checked 2026-10-03)." + SRC_ONLY,
+    "scripts/nitrogen_rate_limits.py": "Later change (2026-10-03) applies the scattered-arrival factors when the comparison record was run with --scattered; for the default record (scattered none) the attenuation is the earlier one and nitrogen_rate_limits.json reproduces bit for bit (checked 2026-10-03)." + SRC_ONLY,
+    "scripts/scattered_plume_tables.py": "Later change (2026-10-03 audit) covers the grid pressures through the first one whose "
+                                         "feed reaches the 35 sccm limit and adds --extend (reuses a record's covered entries); "
+                                         "the covered entries of the earlier records are computed exactly as before.",
+    "src/mbe_twin/sparta.py": "Later change (2026-10-03) lets wsl_path return a POSIX path unchanged when run inside WSL; on "
+                              "Windows (where every record ran) the path is the earlier one.",
+    "data/runs/studies/scattered_plume_tables_B.json": [
+        {"records": ["nitrogen_aim_pressure_sc_plume.json", "nitrogen_aim_bigplate_sc_plume.json"], "current": "b054859e2d28",
+         "note": "Loaded without a recorded hash; the table is the version written before these records ran (created "
+                 "2026-10-02 19:29-20:59 UTC, records 21:09 UTC) and unchanged since."}],
+    "data/runs/studies/scattered_plume_tables_B-p.json": [
+        {"records": ["nitrogen_aim_pressure_sc_plume.json", "nitrogen_aim_bigplate_sc_plume.json"], "current": "ae8f858f0781",
+         "note": "Loaded without a recorded hash; the table is the version written before these records ran (created "
+                 "2026-10-02 19:29-20:59 UTC, records 21:09 UTC) and unchanged since."}],
+    "data/runs/studies/scattered_plume_tables_B-L.json": [
+        {"records": ["nitrogen_aim_pressure_sc_plume.json", "nitrogen_aim_bigplate_sc_plume.json"], "current": "e34fb89c9738",
+         "note": "Loaded without a recorded hash; the table is the version written before these records ran (created "
+                 "2026-10-02 19:29-20:59 UTC, records 21:09 UTC) and unchanged since."}],
     "data/runs/studies/layout_comparison_bc.json": [
         {"records": ["nitrogen_rate_limits.json"],
          "note": "Regenerated after the 2026-10-02 audit (on-target validity label). The operating points and nominal values "
@@ -80,6 +118,12 @@ IMPACT = {
                  "contents (checked array by array)."}],
 }
 PINS = {   # reviewed 2026-10-02
+    "scripts/nitrogen_aim_pressure.py": "3ed2958db5f2",  # reviewed 2026-10-03
+    "scripts/nitrogen_rate_limits.py": "29392adf050d",  # reviewed 2026-10-03
+    "scripts/heater_robustness.py": "7f545f5d98da",  # reviewed 2026-10-03
+    "scripts/operating_optimum.py": "4d5b02c42380",  # reviewed 2026-10-03
+    "scripts/operating_cold_limit.py": "07b9707d9806",  # reviewed 2026-10-03
+    "src/mbe_twin/sparta.py": "a293265e2ca3", "scripts/scattered_plume_tables.py": "e6e482fe953c",  # reviewed 2026-10-03
     "src/mbe_twin/aperture.py": "08ff8b237847", "scripts/nitrogen_aim_tolerance.py": "30922a1a37e6",
     "src/mbe_twin/heater.py": "b24c80baae47", "scripts/heater_zones.py": "2cf7e07a02dc",
     "scripts/growth_window.py": "e43c637528a9", "src/mbe_twin/beam.py": "90a90503e0a5",
@@ -87,7 +131,7 @@ PINS = {   # reviewed 2026-10-02
     "data/design/design_envelope.json": "e1d2e14d6e22", "scripts/nitrogen_aim_study.py": "16c682df1ad2",
 }
 for _r in IMPACT["scripts/layout_comparison.py"]:
-    _r["current"] = "393ba87d9d7a"
+    _r["current"] = "43ae5196080f"   # re-reviewed 2026-10-03 (audit changes)
 for _r in IMPACT["data/runs/studies/layout_comparison_bc.json"]:
     _r["current"] = "e57fc0415cd3"
 
@@ -110,6 +154,39 @@ def applicable_note(path, current, record, recorded):
             continue
         return r["note"]
     return None
+
+
+# input-hash fields -> {file: recorded hash}
+INPUT_HASHES = {
+    "scattered_tables_sha256": lambda v: {"data/runs/studies/scattered_tables.json": v},
+    "scattered_plume_tables_sha256": lambda v: {f"data/runs/studies/scattered_plume_tables_{k}.json": h for k, h in v.items()},
+}
+PLUME_PREFIX = "data/runs/studies/scattered_plume_tables_"
+UNTRACED = "untraced"
+
+
+def recorded_hashes(m):
+    """{file: recorded hash} a record depends on: its sources, input-hash fields, and (for gas+plume records that
+    did not record them) the plume tables, traced through the comparison record it read; UNTRACED if none."""
+    out = dict(m.get("source_sha256", {}))
+    inputs = m.get("inputs", {})
+    for key, expand in INPUT_HASHES.items():
+        if isinstance(inputs.get(key), (str, dict)) and inputs[key]:
+            for path, h in expand(inputs[key]).items():
+                out.setdefault(path, h)
+    if inputs.get("scattered") == "gas+plume" and not any(p.startswith(PLUME_PREFIX) for p in out):
+        traced = False
+        for path in list(out):
+            if path.startswith("data/runs/studies/layout_comparison") and (ROOT / path).exists():
+                hashes = json.loads((ROOT / path).read_text(encoding="utf-8"))["inputs"].get("scattered_plume_tables_sha256")
+                if hashes:
+                    traced = True
+                    for k, h in hashes.items():
+                        out.setdefault(f"{PLUME_PREFIX}{k}.json", h)
+        if not traced:
+            for f in sorted((ROOT / "data/runs/studies").glob("scattered_plume_tables_*.json")):
+                out.setdefault(f.relative_to(ROOT).as_posix(), UNTRACED)
+    return out
 
 
 def sha_lf(data):
@@ -157,14 +234,16 @@ def main():
     for rec in sorted(STUDIES.glob("*.json")):
         m = json.loads(rec.read_text(encoding="utf-8"))
         mismatches = []
-        for path, recorded in m.get("source_sha256", {}).items():
+        for path, recorded in recorded_hashes(m).items():
             f = ROOT / path
             current = sha_lf(f.read_bytes()) if f.exists() else "missing"
             if current == recorded:
                 continue
             hist = history(path)
             match = next((i for i, (_, _, s) in enumerate(hist) if s == recorded), None)
-            if match is None:
+            if recorded == UNTRACED:
+                version, later = "not recorded (loaded without a hash)", []
+            elif match is None:
                 version, later = "no committed version (uncommitted working copy at run time)", hist[:1]
             else:
                 version, later = f"`{hist[match][0][:7]}`", hist[:match]

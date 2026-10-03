@@ -1,0 +1,2521 @@
+{
+  "schema_version": "0.1",
+  "run_id": "operating_cold_limit",
+  "created_utc": "2026-10-02T21:12:17+00:00",
+  "label": "representative_chamber",
+  "validation_status": "not_validated",
+  "package_version": "0.1.0",
+  "git_commit": "eb6abd80b63e34e9f2c7709ec3bc452ceb66e0ff-dirty",
+  "python": "3.12.13",
+  "numpy": "2.4.4",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "source_sha256": {
+    "scripts/operating_cold_limit.py": "a5ffdd440e6e2edf67aabe73999a625fc2c029bc27260115b3d62b9dac8f6368",
+    "scripts/operating_optimum.py": "2becba325906dd846b663d6ac9e96e05b2006d3a72c82d480b860d3a7044f58c",
+    "scripts/heater_robustness.py": "f2ef34f3a1c3ec2659a63993be27f769909e162844450699cec80ec505707472",
+    "scripts/layout_comparison.py": "5e0008b444f1c2969eae551fd167acd4d6f2a37f76a6cbbd70019680e28ed644",
+    "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+    "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+    "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+    "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+    "data/runs/studies/layout_comparison_bc_sc.json": "ae80fd332107b61e8381c134963b7648c5d5a84277c7d89c5e692534c618f499",
+    "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6"
+  },
+  "solver": null,
+  "inputs_sha256": "17c96e25409251070153ebcec6a165f653952a628e92640af86adc8c3930c585",
+  "inputs": {
+    "record": "data\\runs\\studies\\layout_comparison_bc_sc.json",
+    "scattered": "gas",
+    "record_run_id": "layout_comparison",
+    "layouts": [
+      "B-p",
+      "B-L"
+    ],
+    "T_C": [
+      690,
+      700,
+      710,
+      720,
+      730,
+      740,
+      750,
+      760
+    ],
+    "pyrometer_bias_K": 2.0,
+    "scenarios": [
+      {
+        "eta": 1.0,
+        "S_eff_m3_s": 2.0,
+        "feed_limit_sccm": 10.0
+      },
+      {
+        "eta": 0.3,
+        "S_eff_m3_s": 4.0,
+        "feed_limit_sccm": 35.0
+      }
+    ],
+    "rates_um_h": [
+      0.5,
+      1.0,
+      1.25,
+      1.5
+    ],
+    "element_limit": "1473 K element",
+    "admit": 0.95,
+    "controllers": {
+      "mean": [
+        "mean"
+      ],
+      "centre pyrometer +/-2 K": [
+        "pyrometer -2 K",
+        "pyrometer +0 K",
+        "pyrometer +2 K"
+      ]
+    },
+    "lip_m": 0.002,
+    "pointing_ensemble_deg": 0.8
+  },
+  "outputs": {
+    "rows": [
+      {
+        "eta": 1.0,
+        "S_eff_m3_s": 2.0,
+        "feed_limit_sccm": 10.0,
+        "layout": "B-p",
+        "rate_um_h": 0.5,
+        "temperatures": [
+          {
+            "T_C": 690,
+            "reachable": true,
+            "nominal_shortfall_K": -1.3301360013429075e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.837119341563786,
+              "worst_pct": 1.828570452016851,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.8308093278463649,
+              "worst_pct": 1.8285707616366909,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 700,
+            "reachable": true,
+            "nominal_shortfall_K": 1.3983481039758772e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9126748971193416,
+              "worst_pct": 1.9195743133104766,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9282304526748971,
+              "worst_pct": 1.919575149635406,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 710,
+            "reachable": true,
+            "nominal_shortfall_K": 2.9331204132176936e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.974238683127572,
+              "worst_pct": 2.0473137855767294,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9732510288065843,
+              "worst_pct": 2.0473140283199633,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 720,
+            "reachable": true,
+            "nominal_shortfall_K": -3.4219738154206425e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9994238683127572,
+              "worst_pct": 2.224540956335961,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9784087791495198,
+              "worst_pct": 2.2245423192769214,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 730,
+            "reachable": true,
+            "nominal_shortfall_K": 8.071765478234738e-12,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": 2.4688625500019405,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9754183813443073,
+              "worst_pct": 2.468860764993512,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 740,
+            "reachable": true,
+            "nominal_shortfall_K": -3.012701199622825e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": 2.8095892772342994,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9730589849108368,
+              "worst_pct": 2.809593633153136,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 750,
+            "reachable": true,
+            "nominal_shortfall_K": 3.54702933691442e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": 3.283998546055057,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9741838134430727,
+              "worst_pct": 3.284000621877696,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 760,
+            "reachable": true,
+            "nominal_shortfall_K": -1.2050804798491299e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": 4.129633921039501,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9721262002743484,
+              "worst_pct": 4.1296355949653725,
+              "admissible": true
+            }
+          }
+        ],
+        "coldest_mean": {
+          "T_C": 710,
+          "worst_pct": 2.0473137855767294,
+          "in_window_fraction": 0.974238683127572
+        },
+        "coldest_centre pyrometer +/-2 K": {
+          "T_C": 710,
+          "worst_pct": 2.0473140283199633,
+          "in_window_fraction": 0.9732510288065843
+        }
+      },
+      {
+        "eta": 1.0,
+        "S_eff_m3_s": 2.0,
+        "feed_limit_sccm": 10.0,
+        "layout": "B-p",
+        "rate_um_h": 1.0,
+        "temperatures": [
+          {
+            "T_C": 690,
+            "reachable": true,
+            "nominal_shortfall_K": -1.3301360013429075e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.6789300411522634,
+              "worst_pct": 1.8619301456386699,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.6570919067215364,
+              "worst_pct": 1.8619303020389064,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 700,
+            "reachable": true,
+            "nominal_shortfall_K": 1.3983481039758772e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.8263374485596707,
+              "worst_pct": 1.9079567354972975,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.8182167352537723,
+              "worst_pct": 1.9079571581026822,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 710,
+            "reachable": true,
+            "nominal_shortfall_K": 2.9331204132176936e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9069958847736626,
+              "worst_pct": 1.9714978518691166,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9221673525377229,
+              "worst_pct": 1.971497972049377,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 720,
+            "reachable": true,
+            "nominal_shortfall_K": -3.4219738154206425e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9674897119341563,
+              "worst_pct": 2.0591591456024996,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9722633744855967,
+              "worst_pct": 2.0591598200915726,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 730,
+            "reachable": true,
+            "nominal_shortfall_K": 8.071765478234738e-12,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9984362139917695,
+              "worst_pct": 2.1801284597740493,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.983758573388203,
+              "worst_pct": 2.180127574337568,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 740,
+            "reachable": true,
+            "nominal_shortfall_K": -3.012701199622825e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": 2.3467863344048006,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9798902606310014,
+              "worst_pct": 2.3467884591529327,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 750,
+            "reachable": true,
+            "nominal_shortfall_K": 3.54702933691442e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": 2.565877977918624,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9775582990397805,
+              "worst_pct": 2.5658789628260648,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 760,
+            "reachable": true,
+            "nominal_shortfall_K": -1.2050804798491299e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": 2.990825218683513,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9756104252400549,
+              "worst_pct": 2.990826036192747,
+              "admissible": true
+            }
+          }
+        ],
+        "coldest_mean": {
+          "T_C": 720,
+          "worst_pct": 2.0591591456024996,
+          "in_window_fraction": 0.9674897119341563
+        },
+        "coldest_centre pyrometer +/-2 K": {
+          "T_C": 720,
+          "worst_pct": 2.0591598200915726,
+          "in_window_fraction": 0.9722633744855967
+        }
+      },
+      {
+        "eta": 1.0,
+        "S_eff_m3_s": 2.0,
+        "feed_limit_sccm": 10.0,
+        "layout": "B-p",
+        "rate_um_h": 1.25,
+        "temperatures": [
+          {
+            "T_C": 690,
+            "reachable": true,
+            "nominal_shortfall_K": -1.3301360013429075e-11,
+            "mean": {
+              "valid_fraction": 0.88,
+              "in_window_fraction": 0.5898765432098766,
+              "worst_pct": 1.6868912003019259,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.88,
+              "in_window_fraction": 0.5638134430727023,
+              "worst_pct": 1.6868913289915524,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 700,
+            "reachable": true,
+            "nominal_shortfall_K": 1.3983481039758772e-11,
+            "mean": {
+              "valid_fraction": 0.88,
+              "in_window_fraction": 0.7704526748971193,
+              "worst_pct": 1.7248730597400794,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.88,
+              "in_window_fraction": 0.7489986282578875,
+              "worst_pct": 1.7248734078489325,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 710,
+            "reachable": true,
+            "nominal_shortfall_K": 2.9331204132176936e-11,
+            "mean": {
+              "valid_fraction": 0.8266666666666667,
+              "in_window_fraction": 0.8826337448559671,
+              "worst_pct": 1.7773732583668018,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.8479012345679012,
+              "in_window_fraction": 0.8858710562414266,
+              "worst_pct": 1.7773733574720723,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 720,
+            "reachable": true,
+            "nominal_shortfall_K": -3.4219738154206425e-11,
+            "mean": {
+              "valid_fraction": 0.8237037037037037,
+              "in_window_fraction": 0.9488065843621399,
+              "worst_pct": 1.8499556090253635,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.8237037037037037,
+              "in_window_fraction": 0.9568449931412895,
+              "worst_pct": 1.8499561660238475,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 730,
+            "reachable": true,
+            "nominal_shortfall_K": 8.071765478234738e-12,
+            "mean": {
+              "valid_fraction": 0.7214814814814815,
+              "in_window_fraction": 0.9938271604938271,
+              "worst_pct": 1.9501748712104707,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.7580246913580246,
+              "in_window_fraction": 0.9849382716049383,
+              "worst_pct": 1.9501741458421276,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 740,
+            "reachable": true,
+            "nominal_shortfall_K": -3.012701199622825e-11,
+            "mean": {
+              "valid_fraction": 0.6637037037037037,
+              "in_window_fraction": 1.0,
+              "worst_pct": 2.087372221245932,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.6765432098765433,
+              "in_window_fraction": 0.981042524005487,
+              "worst_pct": 2.0873739646784064,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 750,
+            "reachable": true,
+            "nominal_shortfall_K": 3.54702933691442e-11,
+            "mean": {
+              "valid_fraction": 0.44296296296296295,
+              "in_window_fraction": 1.0,
+              "worst_pct": 2.251147000841851,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.4883950617283951,
+              "in_window_fraction": 0.9778052126200274,
+              "worst_pct": 2.2511477935260076,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 760,
+            "reachable": true,
+            "nominal_shortfall_K": -1.2050804798491299e-11,
+            "mean": {
+              "valid_fraction": 0.21333333333333335,
+              "in_window_fraction": 1.0,
+              "worst_pct": 2.602476088520138,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.26024691358024693,
+              "in_window_fraction": 0.9761316872427983,
+              "worst_pct": 2.602476750760755,
+              "admissible": false
+            }
+          }
+        ],
+        "coldest_mean": null,
+        "coldest_centre pyrometer +/-2 K": null
+      },
+      {
+        "eta": 1.0,
+        "S_eff_m3_s": 2.0,
+        "feed_limit_sccm": 10.0,
+        "layout": "B-p",
+        "rate_um_h": 1.5,
+        "temperatures": [
+          {
+            "T_C": 690,
+            "reachable": true,
+            "nominal_shortfall_K": -1.3301360013429075e-11,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.49465020576131685,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.45689986282578876,
+              "worst_pct": null,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 700,
+            "reachable": true,
+            "nominal_shortfall_K": 1.3983481039758772e-11,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.6978600823045268,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.6582990397805213,
+              "worst_pct": null,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 710,
+            "reachable": true,
+            "nominal_shortfall_K": 2.9331204132176936e-11,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.8534979423868313,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.8376680384087791,
+              "worst_pct": null,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 720,
+            "reachable": true,
+            "nominal_shortfall_K": -3.4219738154206425e-11,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.9269958847736626,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.9372290809327847,
+              "worst_pct": null,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 730,
+            "reachable": true,
+            "nominal_shortfall_K": 8.071765478234738e-12,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.9841975308641975,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.981042524005487,
+              "worst_pct": null,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 740,
+            "reachable": true,
+            "nominal_shortfall_K": -3.012701199622825e-11,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.981755829903978,
+              "worst_pct": null,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 750,
+            "reachable": true,
+            "nominal_shortfall_K": 3.54702933691442e-11,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.9783539094650205,
+              "worst_pct": null,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 760,
+            "reachable": true,
+            "nominal_shortfall_K": -1.2050804798491299e-11,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.9762962962962963,
+              "worst_pct": null,
+              "admissible": false
+            }
+          }
+        ],
+        "coldest_mean": null,
+        "coldest_centre pyrometer +/-2 K": null
+      },
+      {
+        "eta": 1.0,
+        "S_eff_m3_s": 2.0,
+        "feed_limit_sccm": 10.0,
+        "layout": "B-L",
+        "rate_um_h": 0.5,
+        "temperatures": [
+          {
+            "T_C": 690,
+            "reachable": true,
+            "nominal_shortfall_K": -1.3301360013429075e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.8782716049382716,
+              "worst_pct": 1.8544262859787355,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.8644718792866941,
+              "worst_pct": 1.8544266125062558,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 700,
+            "reachable": true,
+            "nominal_shortfall_K": 1.3983481039758772e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9381069958847736,
+              "worst_pct": 1.9509385483873876,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.940164609053498,
+              "worst_pct": 1.9509394322195415,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 710,
+            "reachable": true,
+            "nominal_shortfall_K": 2.9331204132176936e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9849382716049383,
+              "worst_pct": 2.084430349345087,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.975281207133059,
+              "worst_pct": 2.0844306011314457,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 720,
+            "reachable": true,
+            "nominal_shortfall_K": -3.4219738154206425e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": 2.2690506640901944,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9759396433470507,
+              "worst_pct": 2.269052079992716,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 730,
+            "reachable": true,
+            "nominal_shortfall_K": 8.071765478234738e-12,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": 2.524093576395937,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9718792866941015,
+              "worst_pct": 2.524091730964461,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 740,
+            "reachable": true,
+            "nominal_shortfall_K": -3.012701199622825e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": 2.873629564895057,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9715500685871056,
+              "worst_pct": 2.8736340033119987,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 750,
+            "reachable": true,
+            "nominal_shortfall_K": 3.54702933691442e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": 3.291703491933388,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9728395061728395,
+              "worst_pct": 3.291705511962651,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 760,
+            "reachable": true,
+            "nominal_shortfall_K": -1.2050804798491299e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": 4.184042606799936,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9718518518518519,
+              "worst_pct": 4.184044293013048,
+              "admissible": true
+            }
+          }
+        ],
+        "coldest_mean": {
+          "T_C": 710,
+          "worst_pct": 2.084430349345087,
+          "in_window_fraction": 0.9849382716049383
+        },
+        "coldest_centre pyrometer +/-2 K": {
+          "T_C": 710,
+          "worst_pct": 2.0844306011314457,
+          "in_window_fraction": 0.975281207133059
+        }
+      },
+      {
+        "eta": 1.0,
+        "S_eff_m3_s": 2.0,
+        "feed_limit_sccm": 10.0,
+        "layout": "B-L",
+        "rate_um_h": 1.0,
+        "temperatures": [
+          {
+            "T_C": 690,
+            "reachable": true,
+            "nominal_shortfall_K": -1.3301360013429075e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.7236213991769548,
+              "worst_pct": 1.6474582233791535,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.6900960219478738,
+              "worst_pct": 1.6474583887800625,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 700,
+            "reachable": true,
+            "nominal_shortfall_K": 1.3983481039758772e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.8523456790123457,
+              "worst_pct": 1.6964090720080598,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.8376131687242798,
+              "worst_pct": 1.6964095199794043,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 710,
+            "reachable": true,
+            "nominal_shortfall_K": 2.9331204132176936e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9183539094650206,
+              "worst_pct": 1.7641594393667253,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9308916323731139,
+              "worst_pct": 1.7641595670662293,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 720,
+            "reachable": true,
+            "nominal_shortfall_K": -3.4219738154206425e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9748971193415638,
+              "worst_pct": 1.8579171006549051,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9750068587105624,
+              "worst_pct": 1.857917819244477,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 730,
+            "reachable": true,
+            "nominal_shortfall_K": 8.071765478234738e-12,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9997530864197531,
+              "worst_pct": 1.9874595038354281,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.980960219478738,
+              "worst_pct": 1.9874585669792884,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 740,
+            "reachable": true,
+            "nominal_shortfall_K": -3.012701199622825e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": 2.165025500706083,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9769821673525377,
+              "worst_pct": 2.165027755303552,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 750,
+            "reachable": true,
+            "nominal_shortfall_K": 3.54702933691442e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": 2.3776806533578747,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9761042524005487,
+              "worst_pct": 2.377681681402488,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 760,
+            "reachable": true,
+            "nominal_shortfall_K": -1.2050804798491299e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": 2.8305453751768277,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9751165980795611,
+              "worst_pct": 2.830546233121491,
+              "admissible": true
+            }
+          }
+        ],
+        "coldest_mean": {
+          "T_C": 720,
+          "worst_pct": 1.8579171006549051,
+          "in_window_fraction": 0.9748971193415638
+        },
+        "coldest_centre pyrometer +/-2 K": {
+          "T_C": 720,
+          "worst_pct": 1.857917819244477,
+          "in_window_fraction": 0.9750068587105624
+        }
+      },
+      {
+        "eta": 1.0,
+        "S_eff_m3_s": 2.0,
+        "feed_limit_sccm": 10.0,
+        "layout": "B-L",
+        "rate_um_h": 1.25,
+        "temperatures": [
+          {
+            "T_C": 690,
+            "reachable": true,
+            "nominal_shortfall_K": -1.3301360013429075e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.6780246913580247,
+              "worst_pct": 1.714102496833815,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.6391220850480109,
+              "worst_pct": 1.7141026299466464,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 700,
+            "reachable": true,
+            "nominal_shortfall_K": 1.3983481039758772e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.8239506172839506,
+              "worst_pct": 1.753520011671918,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.7994513031550069,
+              "worst_pct": 1.7535203722820203,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 710,
+            "reachable": true,
+            "nominal_shortfall_K": 2.9331204132176936e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9088065843621399,
+              "worst_pct": 1.8080893971928644,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9114677640603567,
+              "worst_pct": 1.8080895000138355,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 720,
+            "reachable": true,
+            "nominal_shortfall_K": -3.4219738154206425e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9660082304526749,
+              "worst_pct": 1.8836228260377506,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9620850480109739,
+              "worst_pct": 1.8836234047652252,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 730,
+            "reachable": true,
+            "nominal_shortfall_K": 8.071765478234738e-12,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9987654320987654,
+              "worst_pct": 1.9880046783136291,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9792866941015089,
+              "worst_pct": 1.988003923638766,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 740,
+            "reachable": true,
+            "nominal_shortfall_K": -3.012701199622825e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": 2.1311158724547288,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9764609053497942,
+              "worst_pct": 2.1311176890189247,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 750,
+            "reachable": true,
+            "nominal_shortfall_K": 3.54702933691442e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": 2.3026159395369805,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.97519890260631,
+              "worst_pct": 2.3026167681313123,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 760,
+            "reachable": true,
+            "nominal_shortfall_K": -1.2050804798491299e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": 2.667149981725723,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9747599451303155,
+              "worst_pct": 2.6671506729559473,
+              "admissible": true
+            }
+          }
+        ],
+        "coldest_mean": {
+          "T_C": 720,
+          "worst_pct": 1.8836228260377506,
+          "in_window_fraction": 0.9660082304526749
+        },
+        "coldest_centre pyrometer +/-2 K": {
+          "T_C": 720,
+          "worst_pct": 1.8836234047652252,
+          "in_window_fraction": 0.9620850480109739
+        }
+      },
+      {
+        "eta": 1.0,
+        "S_eff_m3_s": 2.0,
+        "feed_limit_sccm": 10.0,
+        "layout": "B-L",
+        "rate_um_h": 1.5,
+        "temperatures": [
+          {
+            "T_C": 690,
+            "reachable": true,
+            "nominal_shortfall_K": -1.3301360013429075e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.6246913580246913,
+              "worst_pct": 1.7863897709569516,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.5886145404663923,
+              "worst_pct": 1.7863898759816053,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 700,
+            "reachable": true,
+            "nominal_shortfall_K": 1.3983481039758772e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.7961316872427984,
+              "worst_pct": 1.8173215811587722,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.7601646090534979,
+              "worst_pct": 1.8173218649890612,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 710,
+            "reachable": true,
+            "nominal_shortfall_K": 2.9331204132176936e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9015637860082305,
+              "worst_pct": 1.86003491382813,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.887599451303155,
+              "worst_pct": 1.860034994556649,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 720,
+            "reachable": true,
+            "nominal_shortfall_K": -3.4219738154206425e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9568724279835391,
+              "worst_pct": 1.9190192983927337,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9499588477366255,
+              "worst_pct": 1.9190197516412937,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 730,
+            "reachable": true,
+            "nominal_shortfall_K": 8.071765478234738e-12,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9955555555555555,
+              "worst_pct": 2.0003559653000162,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9775308641975309,
+              "worst_pct": 2.0003553757240273,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 740,
+            "reachable": true,
+            "nominal_shortfall_K": -3.012701199622825e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": 2.11156035166907,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9758573388203018,
+              "worst_pct": 2.111561766959369,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 750,
+            "reachable": true,
+            "nominal_shortfall_K": 3.54702933691442e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": 2.243760965408043,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.974320987654321,
+              "worst_pct": 2.243761608265964,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 760,
+            "reachable": true,
+            "nominal_shortfall_K": -1.2050804798491299e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": 2.5300338460255953,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9740192043895748,
+              "worst_pct": 2.5300343836453645,
+              "admissible": true
+            }
+          }
+        ],
+        "coldest_mean": {
+          "T_C": 720,
+          "worst_pct": 1.9190192983927337,
+          "in_window_fraction": 0.9568724279835391
+        },
+        "coldest_centre pyrometer +/-2 K": {
+          "T_C": 730,
+          "worst_pct": 2.0003553757240273,
+          "in_window_fraction": 0.9775308641975309
+        }
+      },
+      {
+        "eta": 0.3,
+        "S_eff_m3_s": 4.0,
+        "feed_limit_sccm": 35.0,
+        "layout": "B-p",
+        "rate_um_h": 0.5,
+        "temperatures": [
+          {
+            "T_C": 690,
+            "reachable": true,
+            "nominal_shortfall_K": -1.3301360013429075e-11,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.8411522633744856,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.8346227709190672,
+              "worst_pct": null,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 700,
+            "reachable": true,
+            "nominal_shortfall_K": 1.3983481039758772e-11,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.9138271604938272,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.9303703703703704,
+              "worst_pct": null,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 710,
+            "reachable": true,
+            "nominal_shortfall_K": 2.9331204132176936e-11,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.9720987654320987,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.9747599451303155,
+              "worst_pct": null,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 720,
+            "reachable": true,
+            "nominal_shortfall_K": -3.4219738154206425e-11,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.9988477366255144,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.9807407407407407,
+              "worst_pct": null,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 730,
+            "reachable": true,
+            "nominal_shortfall_K": 8.071765478234738e-12,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.9768998628257888,
+              "worst_pct": null,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 740,
+            "reachable": true,
+            "nominal_shortfall_K": -3.012701199622825e-11,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.9744032921810699,
+              "worst_pct": null,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 750,
+            "reachable": true,
+            "nominal_shortfall_K": 3.54702933691442e-11,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.9750342935528121,
+              "worst_pct": null,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 760,
+            "reachable": true,
+            "nominal_shortfall_K": -1.2050804798491299e-11,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.9738820301783265,
+              "worst_pct": null,
+              "admissible": false
+            }
+          }
+        ],
+        "coldest_mean": null,
+        "coldest_centre pyrometer +/-2 K": null
+      },
+      {
+        "eta": 0.3,
+        "S_eff_m3_s": 4.0,
+        "feed_limit_sccm": 35.0,
+        "layout": "B-p",
+        "rate_um_h": 1.0,
+        "temperatures": [
+          {
+            "T_C": 690,
+            "reachable": true,
+            "nominal_shortfall_K": -1.3301360013429075e-11,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.6237037037037036,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.5844444444444444,
+              "worst_pct": null,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 700,
+            "reachable": true,
+            "nominal_shortfall_K": 1.3983481039758772e-11,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.802798353909465,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.7806035665294925,
+              "worst_pct": null,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 710,
+            "reachable": true,
+            "nominal_shortfall_K": 2.9331204132176936e-11,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.9023045267489712,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.911440329218107,
+              "worst_pct": null,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 720,
+            "reachable": true,
+            "nominal_shortfall_K": -3.4219738154206425e-11,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.9678189300411523,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.9686419753086419,
+              "worst_pct": null,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 730,
+            "reachable": true,
+            "nominal_shortfall_K": 8.071765478234738e-12,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.9992592592592593,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.9819478737997257,
+              "worst_pct": null,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 740,
+            "reachable": true,
+            "nominal_shortfall_K": -3.012701199622825e-11,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.9772565157750343,
+              "worst_pct": null,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 750,
+            "reachable": true,
+            "nominal_shortfall_K": 3.54702933691442e-11,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.9758024691358025,
+              "worst_pct": null,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 760,
+            "reachable": true,
+            "nominal_shortfall_K": -1.2050804798491299e-11,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.9738545953360768,
+              "worst_pct": null,
+              "admissible": false
+            }
+          }
+        ],
+        "coldest_mean": null,
+        "coldest_centre pyrometer +/-2 K": null
+      },
+      {
+        "eta": 0.3,
+        "S_eff_m3_s": 4.0,
+        "feed_limit_sccm": 35.0,
+        "layout": "B-p",
+        "rate_um_h": 1.25,
+        "temperatures": [
+          {
+            "T_C": 690,
+            "reachable": true,
+            "nominal_shortfall_K": -1.3301360013429075e-11,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.6212345679012345,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.5992866941015089,
+              "worst_pct": null,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 700,
+            "reachable": true,
+            "nominal_shortfall_K": 1.3983481039758772e-11,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.7880658436213992,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.7709465020576132,
+              "worst_pct": null,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 710,
+            "reachable": true,
+            "nominal_shortfall_K": 2.9331204132176936e-11,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.8930864197530864,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.8953360768175583,
+              "worst_pct": null,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 720,
+            "reachable": true,
+            "nominal_shortfall_K": -3.4219738154206425e-11,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.9533333333333334,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.9574485596707819,
+              "worst_pct": null,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 730,
+            "reachable": true,
+            "nominal_shortfall_K": 8.071765478234738e-12,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.9944855967078189,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.9813443072702333,
+              "worst_pct": null,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 740,
+            "reachable": true,
+            "nominal_shortfall_K": -3.012701199622825e-11,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.9777503429355281,
+              "worst_pct": null,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 750,
+            "reachable": true,
+            "nominal_shortfall_K": 3.54702933691442e-11,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.9754732510288066,
+              "worst_pct": null,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 760,
+            "reachable": true,
+            "nominal_shortfall_K": -1.2050804798491299e-11,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.9731138545953361,
+              "worst_pct": null,
+              "admissible": false
+            }
+          }
+        ],
+        "coldest_mean": null,
+        "coldest_centre pyrometer +/-2 K": null
+      },
+      {
+        "eta": 0.3,
+        "S_eff_m3_s": 4.0,
+        "feed_limit_sccm": 35.0,
+        "layout": "B-p",
+        "rate_um_h": 1.5,
+        "temperatures": [
+          {
+            "T_C": 690,
+            "reachable": true,
+            "nominal_shortfall_K": -1.3301360013429075e-11,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.5412345679012346,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.5277366255144033,
+              "worst_pct": null,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 700,
+            "reachable": true,
+            "nominal_shortfall_K": 1.3983481039758772e-11,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.72559670781893,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.70960219478738,
+              "worst_pct": null,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 710,
+            "reachable": true,
+            "nominal_shortfall_K": 2.9331204132176936e-11,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.8588477366255144,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.8548971193415638,
+              "worst_pct": null,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 720,
+            "reachable": true,
+            "nominal_shortfall_K": -3.4219738154206425e-11,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.9227983539094651,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.9384362139917696,
+              "worst_pct": null,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 730,
+            "reachable": true,
+            "nominal_shortfall_K": 8.071765478234738e-12,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.9796707818930042,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.9798628257887517,
+              "worst_pct": null,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 740,
+            "reachable": true,
+            "nominal_shortfall_K": -3.012701199622825e-11,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.9997530864197531,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.9812620027434842,
+              "worst_pct": null,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 750,
+            "reachable": true,
+            "nominal_shortfall_K": 3.54702933691442e-11,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.9779149519890261,
+              "worst_pct": null,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 760,
+            "reachable": true,
+            "nominal_shortfall_K": -1.2050804798491299e-11,
+            "mean": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": null,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 0.0,
+              "in_window_fraction": 0.9747325102880658,
+              "worst_pct": null,
+              "admissible": false
+            }
+          }
+        ],
+        "coldest_mean": null,
+        "coldest_centre pyrometer +/-2 K": null
+      },
+      {
+        "eta": 0.3,
+        "S_eff_m3_s": 4.0,
+        "feed_limit_sccm": 35.0,
+        "layout": "B-L",
+        "rate_um_h": 0.5,
+        "temperatures": [
+          {
+            "T_C": 690,
+            "reachable": true,
+            "nominal_shortfall_K": -1.3301360013429075e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.8517695473251029,
+              "worst_pct": 1.7462947780818179,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.8424142661179698,
+              "worst_pct": 1.7462951023466473,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 700,
+            "reachable": true,
+            "nominal_shortfall_K": 1.3983481039758772e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9195884773662552,
+              "worst_pct": 1.842072160530449,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.933443072702332,
+              "worst_pct": 1.842073037962869,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 710,
+            "reachable": true,
+            "nominal_shortfall_K": 2.9331204132176936e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9755555555555555,
+              "worst_pct": 1.9745036781714835,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9751714677640604,
+              "worst_pct": 1.9745039280534866,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 720,
+            "reachable": true,
+            "nominal_shortfall_K": -3.4219738154206425e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9995884773662551,
+              "worst_pct": 2.1576006222497304,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9798079561042524,
+              "worst_pct": 2.157602026975805,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 730,
+            "reachable": true,
+            "nominal_shortfall_K": 8.071765478234738e-12,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": 2.4103507131712654,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9762688614540467,
+              "worst_pct": 2.410348883690955,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 740,
+            "reachable": true,
+            "nominal_shortfall_K": -3.012701199622825e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": 2.75638320242723,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9743484224965706,
+              "worst_pct": 2.756387599870556,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 750,
+            "reachable": true,
+            "nominal_shortfall_K": 3.54702933691442e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": 3.173929836111012,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9749519890260631,
+              "worst_pct": 3.1739318928864972,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 760,
+            "reachable": true,
+            "nominal_shortfall_K": -1.2050804798491299e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": 4.064990453224051,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.973443072702332,
+              "worst_pct": 4.064992162768684,
+              "admissible": true
+            }
+          }
+        ],
+        "coldest_mean": {
+          "T_C": 710,
+          "worst_pct": 1.9745036781714835,
+          "in_window_fraction": 0.9755555555555555
+        },
+        "coldest_centre pyrometer +/-2 K": {
+          "T_C": 710,
+          "worst_pct": 1.9745039280534866,
+          "in_window_fraction": 0.9751714677640604
+        }
+      },
+      {
+        "eta": 0.3,
+        "S_eff_m3_s": 4.0,
+        "feed_limit_sccm": 35.0,
+        "layout": "B-L",
+        "rate_um_h": 1.0,
+        "temperatures": [
+          {
+            "T_C": 690,
+            "reachable": true,
+            "nominal_shortfall_K": -1.3301360013429075e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.7518518518518519,
+              "worst_pct": 1.668162162909194,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.7091083676268861,
+              "worst_pct": 1.6681623186698682,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 700,
+            "reachable": true,
+            "nominal_shortfall_K": 1.3983481039758772e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.8767078189300411,
+              "worst_pct": 1.713982018926458,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.8501234567901235,
+              "worst_pct": 1.7139824396313263,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 710,
+            "reachable": true,
+            "nominal_shortfall_K": 2.9331204132176936e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9348148148148148,
+              "worst_pct": 1.7772149591797226,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9355006858710563,
+              "worst_pct": 1.7772150787655787,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 720,
+            "reachable": true,
+            "nominal_shortfall_K": -3.4219738154206425e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.982880658436214,
+              "worst_pct": 1.864482109823698,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9734705075445816,
+              "worst_pct": 1.8644827807943996,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 730,
+            "reachable": true,
+            "nominal_shortfall_K": 8.071765478234738e-12,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": 1.9847442710329803,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9762688614540467,
+              "worst_pct": 1.9847433988740584,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 740,
+            "reachable": true,
+            "nominal_shortfall_K": -3.012701199622825e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": 2.1490297164161696,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9725925925925926,
+              "worst_pct": 2.149031808265146,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 750,
+            "reachable": true,
+            "nominal_shortfall_K": 3.54702933691442e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": 2.3439150967559237,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9739368998628258,
+              "worst_pct": 2.3439160456946757,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 760,
+            "reachable": true,
+            "nominal_shortfall_K": -1.2050804798491299e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": 2.767592651895999,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9714677640603566,
+              "worst_pct": 2.767593445552979,
+              "admissible": true
+            }
+          }
+        ],
+        "coldest_mean": {
+          "T_C": 720,
+          "worst_pct": 1.864482109823698,
+          "in_window_fraction": 0.982880658436214
+        },
+        "coldest_centre pyrometer +/-2 K": {
+          "T_C": 720,
+          "worst_pct": 1.8644827807943996,
+          "in_window_fraction": 0.9734705075445816
+        }
+      },
+      {
+        "eta": 0.3,
+        "S_eff_m3_s": 4.0,
+        "feed_limit_sccm": 35.0,
+        "layout": "B-L",
+        "rate_um_h": 1.25,
+        "temperatures": [
+          {
+            "T_C": 690,
+            "reachable": true,
+            "nominal_shortfall_K": -1.3301360013429075e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.6738271604938272,
+              "worst_pct": 1.3397897017441864,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.6415089163237312,
+              "worst_pct": 1.3397898834833797,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 700,
+            "reachable": true,
+            "nominal_shortfall_K": 1.3983481039758772e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.822716049382716,
+              "worst_pct": 1.373338478242278,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.7976680384087792,
+              "worst_pct": 1.3733387889702329,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 710,
+            "reachable": true,
+            "nominal_shortfall_K": 2.9331204132176936e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9076543209876543,
+              "worst_pct": 1.4196443657171756,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.906721536351166,
+              "worst_pct": 1.4196444538127995,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 720,
+            "reachable": true,
+            "nominal_shortfall_K": -3.4219738154206425e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9641975308641976,
+              "worst_pct": 1.4837026987939477,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9593689986282579,
+              "worst_pct": 1.4837031925870636,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 730,
+            "reachable": true,
+            "nominal_shortfall_K": 8.071765478234738e-12,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9977777777777778,
+              "worst_pct": 1.5731598469836432,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9780521262002744,
+              "worst_pct": 1.5731591954304205,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 740,
+            "reachable": true,
+            "nominal_shortfall_K": -3.012701199622825e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": 1.69691511551979,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9746502057613169,
+              "worst_pct": 1.696916719333268,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 750,
+            "reachable": true,
+            "nominal_shortfall_K": 3.54702933691442e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": 1.9130588426776318,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.973443072702332,
+              "worst_pct": 1.9130596366890242,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 760,
+            "reachable": true,
+            "nominal_shortfall_K": -1.2050804798491299e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": 2.2274487393134885,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9715226337448559,
+              "worst_pct": 2.2274493801680504,
+              "admissible": true
+            }
+          }
+        ],
+        "coldest_mean": {
+          "T_C": 720,
+          "worst_pct": 1.4837026987939477,
+          "in_window_fraction": 0.9641975308641976
+        },
+        "coldest_centre pyrometer +/-2 K": {
+          "T_C": 720,
+          "worst_pct": 1.4837031925870636,
+          "in_window_fraction": 0.9593689986282579
+        }
+      },
+      {
+        "eta": 0.3,
+        "S_eff_m3_s": 4.0,
+        "feed_limit_sccm": 35.0,
+        "layout": "B-L",
+        "rate_um_h": 1.5,
+        "temperatures": [
+          {
+            "T_C": 690,
+            "reachable": true,
+            "nominal_shortfall_K": -1.3301360013429075e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.6164609053497943,
+              "worst_pct": 1.2925482263647647,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.5843347050754458,
+              "worst_pct": 1.2925483350295295,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 700,
+            "reachable": true,
+            "nominal_shortfall_K": 1.3983481039758772e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.7891358024691358,
+              "worst_pct": 1.3246622251659448,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.7556927297668038,
+              "worst_pct": 1.3246625192908394,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 710,
+            "reachable": true,
+            "nominal_shortfall_K": 2.9331204132176936e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.894074074074074,
+              "worst_pct": 1.3690810013233017,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.8804115226337449,
+              "worst_pct": 1.3690810851146793,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 720,
+            "reachable": true,
+            "nominal_shortfall_K": -3.4219738154206425e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9498765432098766,
+              "worst_pct": 1.430515246766376,
+              "admissible": false
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9467489711934156,
+              "worst_pct": 1.4305157179867722,
+              "admissible": false
+            }
+          },
+          {
+            "T_C": 730,
+            "reachable": true,
+            "nominal_shortfall_K": 8.071765478234738e-12,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9922633744855968,
+              "worst_pct": 1.5153538103145932,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9771742112482853,
+              "worst_pct": 1.5153531963290159,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 740,
+            "reachable": true,
+            "nominal_shortfall_K": -3.012701199622825e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": 1.631567681648797,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.975281207133059,
+              "worst_pct": 1.6315691583148184,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 750,
+            "reachable": true,
+            "nominal_shortfall_K": 3.54702933691442e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": 1.7703837964199705,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9733058984910836,
+              "worst_pct": 1.7703844692064623,
+              "admissible": true
+            }
+          },
+          {
+            "T_C": 760,
+            "reachable": true,
+            "nominal_shortfall_K": -1.2050804798491299e-11,
+            "mean": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 1.0,
+              "worst_pct": 2.0676938421950193,
+              "admissible": true
+            },
+            "centre pyrometer +/-2 K": {
+              "valid_fraction": 1.0,
+              "in_window_fraction": 0.9716598079561043,
+              "worst_pct": 2.0676944041135883,
+              "admissible": true
+            }
+          }
+        ],
+        "coldest_mean": {
+          "T_C": 730,
+          "worst_pct": 1.5153538103145932,
+          "in_window_fraction": 0.9922633744855968
+        },
+        "coldest_centre pyrometer +/-2 K": {
+          "T_C": 730,
+          "worst_pct": 1.5153531963290159,
+          "in_window_fraction": 0.9771742112482853
+        }
+      }
+    ]
+  },
+  "disabled_physics": [],
+  "warnings": [
+    "Representative chamber; no model in the chain is validated on the proposed machine",
+    "Crystal quality, morphology and impurities are not modelled: this is the growth-window limit only",
+    "Decomposition fitted to 720-805 C; lower temperatures are extrapolations (decomposition is below 1 % of the rate there)",
+    "Lip 2 mm only; one Ga steering rule (the window middle at the reading)"
+  ]
+}

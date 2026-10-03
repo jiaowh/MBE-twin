@@ -1,6 +1,6 @@
 # Hardware information requested for the 200 mm GaN MBE design
 
-Status: 2026-10-02. For the hardware team and for nitrogen-source, heater and chamber vendors.
+Status: 2026-10-03 (updated for the model with scattered atoms, and for the commissioning rehearsals). For the hardware team and for nitrogen-source, heater and chamber vendors.
 
 We are choosing where to mount the nitrogen plasma source and the gallium cells on a 200 mm GaN-on-Si MBE chamber, which nitrogen aperture plate to specify, and which heater to use, using a computer model of the chamber. The working layout mounts the nitrogen source on the same ring as the effusion cells, aimed about 100 mm off the wafer centre. The model shows that the choice, and whether the target growth rate is reachable at all, now depend on a few hardware facts that no published source gives. Each request below says what we need, in what form, and which decision it settles. Approximate or preliminary figures are useful; please say how each figure was obtained (measured, calculated or specified).
 
@@ -11,7 +11,7 @@ We are choosing where to mount the nitrogen plasma source and the gallium cells 
 - If output in atoms/s is not available: the N-limited (gallium-rich) GaN growth rate at the wafer centre for those flows and powers, with the source-to-wafer distance, the source angle to the wafer normal, the wafer size and the growth temperature of that measurement.
 - The flow range in which the discharge stays in its bright (inductive) mode with that plate, and the mass-flow controller's calibration gas and standard conditions.
 
-**Why.** On a 200 mm wafer, 1 um/h of GaN needs about 4.5-7e18 active N atoms/s leaving the plate, depending on the layout. One sccm of N2 contains 9e17 N atoms/s. With a plate like the published Veeco UNI-Bulb one, 1 um/h stays within the flow range our model can vouch for only if 80-90 % of the feed's atoms leave the plate as active nitrogen. With a large high-conductance plate and strong pumping, 22 % would do. Published growth rates suggest roughly 6-57 % at 15-34 sccm, depending on chamber geometry that the papers do not state. If the real figure is near the low end, one source reaches only about 0.05-0.3 um/h on 200 mm, and the design must plan for that or for more than one source.
+**Why.** On a 200 mm wafer, 1 um/h of GaN needs about 4.5-7e18 active N atoms/s leaving the plate, depending on the layout. One sccm of N2 contains 9e17 N atoms/s. With a plate like the published Veeco UNI-Bulb one, 1 um/h stays within the flow range our model can vouch for only if about 80 % of the feed's atoms leave the plate as active nitrogen. With a large high-conductance plate and strong pumping (4 m^3/s, up to 35 sccm), about 18 % would do, 22 % at 2 m^3/s; if the chamber walls return nitrogen atoms rather than absorbing them, less (10-12 %). Published growth rates suggest roughly 6-57 % at 15-34 sccm, depending on chamber geometry that the papers do not state. If the real figure is near the low end, one source reaches only about 0.05-0.3 um/h on 200 mm, and the design must plan for that or for more than one source.
 
 ## 2. Aperture plate drawing
 
@@ -25,13 +25,17 @@ We are choosing where to mount the nitrogen plasma source and the gallium cells 
 
 **What we need.** The effective pumping speed for N2 at the growth chamber during growth (with the cryoshroud cold), or the chamber pressure measured at two or more N2 flows; pump models and the conductance of the pumping port.
 
-**Why.** Gas the pumps cannot remove scatters both beams. With 0.5 m^3/s effective speed, 1 um/h is unreachable for either layout at any conversion; with 2 m^3/s it needs the high conversion above; a published cryo-pumped chamber reached at least about 4 m^3/s.
+**Why.** Gas the pumps cannot remove scatters both beams, and the growth pressure sets how far the model can be trusted. With 2 m^3/s, 1 um/h needs the higher conversion figures above; a published cryo-pumped chamber reached at least about 4 m^3/s. With 0.5 m^3/s the model no longer rules 1 um/h out, but the growth pressure it would need (near 0.1 Pa) is outside what the model can vouch for, so low pumping is neither excluded nor shown to work.
+
+**Please also tell us:** whether the pumping can be throttled reproducibly in a few steps down to about a quarter of full speed (a gate valve with position readout, or a throttle valve). Commissioning uses such a series, at fixed nitrogen flow, to separate how the chamber gas scatters the nitrogen from how much active nitrogen the source makes; without it the two cannot be told apart.
 
 ## 4. Substrate heater
 
 **What we need.** The heater element's maximum temperature and what the quoted 1200 C rating refers to (element, holder or wafer); zone layout and power per zone; expected element lifetime in an active-nitrogen atmosphere at that temperature. Also: whether a pyrometer (or other sensor) can view the wafer centre during growth, and its accuracy.
 
-**Why.** To hold 740 C across realistic wafer and holder variations, the model needs the element up to about 1500 K, about 27 K above 1200 C. Without that headroom some wafers run up to 18 K cold and, with a fixed gallium supply, form gallium droplets. A wafer-centre temperature reading accurate to about 2 K, used to correct the gallium supply, removes most of that risk in the model.
+**Why.** To hold 740 C across realistic wafer and holder variations, the model needs the element up to about 1500 K, about 27 K above 1200 C. Without that headroom the model's colder heater cases run up to 18 K cold and, with a fixed gallium supply, form gallium droplets. A wafer-centre temperature reading, used to correct the gallium supply, removes most of that risk in the model.
+
+The reading's error budget is tight. In the model, the error with which the gallium is placed in the growth window must stay within about 3 K equivalent at the working point (1 um/h at 720 C). With the gallium placed 3 K off, the standard plate already needs 730 C; at 4 K the working temperature rises by 10 C, and the large plate at realistic conversion has no working temperature. At 5 K or more, no growth temperature keeps 95 % of the modelled cases (combinations of heater, pointing, gallium-fill and growth-law uncertainty, not a wafer yield) in the smooth-growth range. That budget is shared: calibrating the window edge and the gallium-to-nitrogen ratio uses 2-4 K of it, so the reading itself should be **reproducible to about 1-2 K** between calibration runs and production, from wafer to wafer, and while a GaN layer grows on the silicon wafer (which changes the apparent emissivity as the layer thickens). An absolute accuracy is not needed: the growth window is calibrated against the instrument's own reading. Please tell us whether your pyrometer corrects for the growing layer (emissivity-corrected or reflectance-compensated pyrometry, or band-edge thermometry of the substrate), and its stated reproducibility and drift during growth.
 
 ## 5. Mounts, ports and holder
 

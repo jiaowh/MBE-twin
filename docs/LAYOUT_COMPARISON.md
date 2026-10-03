@@ -1,12 +1,20 @@
 # Source layouts at physically achievable operating points
 
-Status: 2026-10-02 (fourth revision, after the [project audit](PROJECT_AUDIT_2026-10-01.md), its [follow-up](PROJECT_AUDIT_FOLLOWUP_2026-10-01.md) and the [2026-10-02 audit](PROJECT_AUDIT_2026-10-02.md)), `representative_chamber`. These are model comparisons on a typical 200 mm RIBER/Veeco-class geometry, not predictions for the proposed machine. No nitrogen map, heater result or growth model here is validated against a measurement.
+Status: 2026-10-03 (fifth revision: section 10 adds the gas-scattered atoms and the nitrogen plume; sections 1-8 are the direct-beam model and stay as recorded; fourth revision after the [project audit](PROJECT_AUDIT_2026-10-01.md), its [follow-up](PROJECT_AUDIT_FOLLOWUP_2026-10-01.md) and the [2026-10-02 audit](PROJECT_AUDIT_2026-10-02.md)), `representative_chamber`. These are model comparisons on a typical 200 mm RIBER/Veeco-class geometry, not predictions for the proposed machine. No nitrogen map, heater result or growth model here is validated against a measurement.
 
 **The question:** under what physically achievable conditions does a layout meet the project's requirements?
 
 **The short answer:** no layout can be called a pass, because neither a uniformity target nor a minimum growth rate is agreed (section 8). The model can, however, say which conditions each layout needs, and where its results are inside the model's validity. Two conditions dominate:
 - **Nitrogen supply sets the reachable growth rate.** That rate depends on a source conversion fraction nobody has published. The literature implies it lies between 6 and 57 % at high flow.
 - **The aperture plate must stay free-molecular at the flow that rate needs.** With the published-type plate, it stops being free-molecular above about 6 sccm.
+
+**Update 2026-10-03 (section 10).** Atoms scattered by the chamber gas are now followed instead of dropped, and the nitrogen plate's own plume is added:
+- Most scattered Ga still reaches the wafer, and 13-21 % more N arrives.
+- 1 um/h with the large plate needs eta >= 0.18 instead of 0.23 (4 m^3/s, 35 sccm).
+- The growth-pressure Ga failure mode largely disappears.
+- Worst-case spreads rise by 0.1-0.5 points.
+- The aims and the working operating point (1 um/h at 720 C) are unchanged.
+- Whether the chamber walls return N atoms is a new deciding unknown, and commissioning has to measure it.
 
 Records (all in `data/runs/studies/`):
 - [layout_comparison_bc.json](../data/runs/studies/layout_comparison_bc.json): uncertainty grid with a per-state nitrogen balance.
@@ -18,6 +26,11 @@ Records (all in `data/runs/studies/`):
 - [layout_resolution_check.json](../data/runs/studies/layout_resolution_check.json): radial resolution.
 - [sparta_hole.json](../data/runs/studies/sparta_hole.json), its grid / timestep / reservoir variants and [sparta_hole_convergence.json](../data/runs/studies/sparta_hole_convergence.json): hole-scale DSMC (section 6).
 - [layout_comparison_bc_kn3.json](../data/runs/studies/layout_comparison_bc_kn3.json): the comparison with the plate criterion relaxed to Kn >= 3.
+- Scattered atoms and the plume (section 10):
+  - [scattered_redeposition.json](../data/runs/studies/scattered_redeposition.json), [scattered_tables.json](../data/runs/studies/scattered_tables.json) and scattered_plume_tables_*.json;
+  - the comparison with them: layout_comparison_bc_sc.json, _sc_plume.json and _sc_gamma0.1.json;
+  - the downstream studies on them: nitrogen_rate_limits_sc*.json, operating_cold_limit_*.json, operating_optimum_sc_plume.json, heater_robustness_sc_plume.json, nitrogen_aim_*_sc_plume.json;
+  - [commissioning_rehearsal.json](../data/runs/studies/commissioning_rehearsal.json).
 
 Inputs are in the [design envelope](../data/design/design_envelope.json); commands are in [REPRODUCE.md](REPRODUCE.md); hardware requests are in [HARDWARE_REQUESTS.md](HARDWARE_REQUESTS.md).
 
@@ -261,14 +274,16 @@ Against the Kn 100 run, base set-up, without attenuation (record [sparta_hole.js
 | Condition | Effect in the model | Layouts | What settles it |
 |---|---|---|---|
 | eta below about 0.8 (published-type plate) or 0.22-0.40 (large plate) | 1 um/h not reachable inside the model's validity; the rate scales with eta | B-p; B-L | source output versus flow (request 1) |
-| Effective N2 speed about 0.5 m^3/s | rate peaks at 0.62-0.69 um/h near 8.4 sccm | all | pumping (request 3) |
-| Feed above the plate's free-molecular limit | maps are extrapolations; single-hole DSMC shows no detectable change for B-p down to Kn 3 (grid, timestep and reservoir checked), +0.13 to +0.22 points at Kn 0.3, and +1.9 to +2.2 points for C at Kn 0.3 | B, B-p above 5.9 sccm (strict) or about 20 sccm (Kn 3); C family at any 1 um/h point | plate drawing (request 2); a multi-hole DSMC |
+| Effective N2 speed about 0.5 m^3/s | direct-beam model: rate peaks at 0.62-0.69 um/h near 8.4 sccm. With scattered atoms followed (section 10) the ceiling disappears, but 1 um/h then needs about 0.1 Pa, outside the model's validity | all | pumping (request 3) |
+| Feed above the plate's free-molecular limit | maps are extrapolations; single-hole DSMC shows no detectable change for B-p down to Kn 3 (grid, timestep and reservoir checked), +0.13 to +0.22 points at Kn 0.3, and +1.9 to +2.2 points for C at Kn 0.3 | B, B-p above 5.9 sccm (strict) or about 20 sccm (Kn 3); C family at any 1 um/h point | plate drawing (request 2); a whole-plate DSMC if the plume matters (its first-order effect is 0.4-0.6 points for B-p at 19 sccm, none measurable for B-L: section 10) |
 | Large plate that will not stay lit at low flow | B-L limited to high-flow operation | B-L | vendor discharge data (request 2) |
-| Ga calibrated in vacuum, growth at 1e-2 Pa | Ga/N shifted by the unknown Ga scattering; B-L keeps 45 % in window at 1 um/h, eta 0.3 | B-L, any high-pressure point | calibrate Ga at growth pressure (RHEED) |
+| Ga calibrated in vacuum, growth at 1e-2 Pa | Ga/N shifted by the unknown Ga scattering; B-L keeps 45 % in window at 1 um/h, eta 0.3 (direct-only model; with scattered Ga kept, the arrival depends far less on the atom size, so this is likely overstated: section 10) | B-L, any high-pressure point | calibrate Ga at growth pressure (RHEED) |
 | Element limit with no headroom; Ga not corrected for temperature | up to 18 K cold; with fixed Ga output 32 % of B-p's combined heater and pointing states leave the window at 740 C (45 % with a centre pyrometer) | all | heater rating (request 4); a pyrometer-driven Ga correction |
 | Growth at 700 C | 36-40 % of +/-0.8 deg states in window at 1 um/h with fixed Ga | all | growth temperature on the machine's scale |
 | Pointing worse than +/-0.8 deg or a flange pivot | worst case 2.7-3.3 % (+/-1.6 deg) at 1 um/h | all | mount repeatability (request 5) |
 | Larger cell or shutter bodies than assumed | 6.1 mm certified Ga-Al gap closes | B family | cell and shutter drawings (request 5) |
+| Pyrometer error above about 3 K during growth | at 4 K the operating point moves to 730 C, and B-L at eta = 0.3 has none; from 5 K Ga steering keeps at most 94 % of states in the window at any temperature (section 8) | all | an emissivity-corrected reading checked against anchors (COMMISSIONING_PLAN.md, step 5) |
+| Chamber walls returning most N atoms (gamma about 0.1) | fitted eta 1.4-1.6 times off if assumed otherwise; map shape 0.15-0.3 points off | all | a measurement of N-atom wall loss or background (COMMISSIONING_PLAN.md) |
 
 ## 8. Operating point for the project's goals
 
@@ -298,6 +313,17 @@ For each supply scenario it reports the points that no other point beats on all 
 
 - With one heater error at a time, the limits are 10-20 K colder (scripts/operating_optimum.py: 1 um/h at 700 C). The combined-error values above are the ones to use.
 - With the mean controller the share in the window reaches 100 % from 730 C. With the pyrometer it plateaus at 96-97 % from 720 C upward: the missing states come from the pyrometer's bias, and a reading 2 K high is the worst case (heater_robustness.py). A better-calibrated pyrometer lowers every limit.
+- **The pyrometer's accuracy is the binding requirement** (2026-10-03; with scattered atoms and the plume, section 10; `operating_cold_limit.py --pyrometer-bias`, records operating_cold_limit_sc_plume_bias{2,3,4,5,10}.json):
+
+  | Pyrometer bias | Best share in the window at any temperature | Coldest temperature for 1 um/h (worst case) |
+  |---|---|---|
+  | +/-2 K | 98-99 % | 720 C (1.53-1.80 %) |
+  | +/-3 K | 96-97 % | 720 C for B-L, 730 C for B-p (1.53-1.80 %) |
+  | +/-4 K | 95-96 % | 730 C at eta = 1 (1.72-1.92 %); none for B-L at eta = 0.3 |
+  | +/-5 K | 94 % | none up to 790 C |
+  | +/-10 K | 89 % | none up to 790 C |
+
+  The direct-beam model gives the same thresholds (at most 94 % at +/-5 K, 89 % at +/-10 K). A plain single-wavelength pyrometer on GaN-on-Si can err by more than that as the layer grows (thin-film interference), so the reading must be emissivity-corrected and checked against temperature anchors (COMMISSIONING_PLAN.md, steps 2 and 5).
 
 **Working operating point (adopted 2026-10-02, provisional): 1 um/h at 720 C** (on the source labs' temperature scale), with Ga steered from a centre pyrometer. It stands until a crystal-quality minimum temperature or the hardware answers (requests 1-3) change it.
 - **Why 720 C:** it is the coldest temperature at which 1 um/h keeps the growth window under combined heater errors, in every scenario and layout that reaches 1 um/h. It is also the coldest temperature inside the range the decomposition law was fitted to (720-805 C).
@@ -323,7 +349,7 @@ For each supply scenario it reports the points that no other point beats on all 
 
 ## 9. Measurements to plan with the hardware team
 
-Calibration and validation stay separate.
+The full sequence, with the model input each run fixes, the held-out validation runs and the pairs of unknowns one number cannot separate, is in [COMMISSIONING_PLAN.md](COMMISSIONING_PLAN.md). In short, calibration and validation stay separate.
 
 **Calibration:**
 1. Ga-rich growth rate at the wafer centre versus N2 flow and RF power. This sets eta.
@@ -337,6 +363,89 @@ Calibration and validation stay separate.
 1. N-limited thickness maps at the design aim and at one deliberately offset aim.
 2. Three or more repeated reference runs.
 3. One growth temperature not used in calibration.
+
+## 10. Scattered atoms and the nitrogen plume (2026-10-03)
+
+Sections 2-8 attenuate the direct Ga and N beams by the chamber's N2 and drop every scattered atom. At the leading operating points that removes 50-70 % of the Ga beam and 25-30 % of the N beam. The atoms are now followed to where they land, and the plate's own gas plume is added. Section 8's operating point is re-checked with both.
+
+**Method** (`src/mbe_twin/scattering.py`, tests in `tests/test_scattering.py`):
+- **Test-particle transport.** The beam is a trace gas in fixed gas fields, so each atom is followed on its own (no DSMC). It collides as a hard sphere with Maxwellian partners, isotropically in the centre-of-mass frame. Heavy Ga (70 amu) on N2 (28 amu) is therefore deflected little; N (14 amu) scatters broadly.
+- **Gas fields.** The chamber's N2 at 300 K and the operating pressure. Optionally also the free-molecular plume of the nitrogen plate: the feed leaving the active disk with the holes' cos^n. Its density is computed exactly per azimuth, and it is not modified by its own collisions (first order).
+- **Chamber.** No drawing exists, so a 0.5 m sphere stands in for the cryoshroud, with an absorbing 0.13 m holder disk in the wafer plane. Ga sticks to the walls. N recombines with probability gamma = 1 per wall hit, or 0.1 as an upper case: without a pump, the returned N then accumulates.
+- **Sources.** The N atoms leave the plate disk (B-p 20 mm, B-L 30 mm) with the holes' on-axis peaking, cos^n with n = 2/W - 1 (3.70 for L/r 2.92, 2.91 for L/r 2). Ga leaves a point on the 46 deg cone, aimed at the centre, cos^2, with cos^1 and cos^4 as a beam-width check.
+- **Checks.**
+  - In vacuum the arrival matches the analytic map within 0.52 % per bin, absolutely.
+  - Direct survival through static gas is exponential.
+  - Collisions conserve momentum and energy, and Ga's deflection stays below the kinematic limit.
+  - The plume density matches the disk's solid angle on axis and a fine area quadrature off axis within 1 %.
+
+**Where the atoms land** (record [scattered_redeposition.json](../data/runs/studies/scattered_redeposition.json), 12 x 1e6 atoms per case). Arrival relative to vacuum, as the wafer mean over r <= 94 mm, with the half-range/mean of the arrival-to-vacuum profile in brackets (the shape change; about +/-0.2 points):
+
+| | B-p, 19.4 sccm, 8.2e-3 Pa: direct only | B-p: direct + scattered | B-L, 26 sccm, 1.1e-2 Pa: direct only | B-L: direct + scattered |
+|---|---|---|---|---|
+| Ga, 8 A | 0.40 (0.99) | 0.89 (0.63) | 0.30 (1.92) | 0.87 (0.50) |
+| Ga, 6 A | 0.53 (0.80) | 0.92 (0.65) | 0.43 (1.69) | 0.90 (0.85) |
+| Ga, 8 A, beam cos^1 / cos^4 | 0.40 / 0.40 | 0.94 / 0.85 | 0.30 / 0.30 | 0.92 / 0.80 |
+| N, gamma 1 | 0.77 (0.47) | 0.87 (0.36) | 0.70 (0.99) | 0.85 (0.76) |
+| N, gamma 0.1 | 0.77 (0.85) | 1.30 (0.70) | 0.70 (0.91) | 1.37 (0.85) |
+| N, gamma 1, plume at 300 K | 0.66 (1.14) | 0.82 (0.97) | 0.61 (0.82) | 0.81 (0.77) |
+| N, gamma 1, plume at 600 K | 0.69 (0.93) | 0.85 (0.77) | 0.64 (1.26) | 0.83 (0.79) |
+
+- **Ga is not lost.** 85-94 % of the vacuum amount arrives, against 30-53 % when scattered atoms are dropped, and the 6 and 8 A atom sizes now differ by only 3-4 %.
+- **Scattered N adds 13-21 %** with full wall recombination, and more if the walls return atoms. The scattered part lands almost evenly, so it reduces the shape change the pressure causes.
+- **The plume.**
+  - In front of the plate its density is 9 times the chamber's for B-p (0.076 Pa equivalent) and 4 times for B-L (0.048 Pa).
+  - It costs each N atom 0.09-0.14 collisions, less than a static gas of that density would, because the plume gas moves with the beam.
+  - It removes a further 3-6 % of the N.
+  - For B-p it adds 0.4-0.6 points of shape change (300 K gas) and 0.4 points (600 K). For B-L it changes the shape by nothing measurable: B-L's plate is larger and its plume thinner.
+
+**In the comparison.** `scripts/scattered_tables.py` tabulates, on the comparison's pressure grid and radii, the factor that adds the scattered atoms to the comparison's own direct-attenuated maps. The factor is the Monte Carlo total arrival divided by the deterministic direct arrival of the same surrogate source, attenuated as the comparison attenuates it:
+- per layout for N, with gamma = 1 or 0.1, 8e6 atoms per pressure;
+- for Ga, both atom sizes, 4e6 atoms per pressure.
+
+The batch means are fitted as a quadratic in r^2 (median reduced chi^2 1.2). The parts ran in parallel and were merged by `scripts/merge_scattered_tables.py`. `scripts/scattered_plume_tables.py` adds the plume per pumping speed (2 and 4 m^3/s, up to 35 sccm, 300 K gas). `layout_comparison.py --scattered gas | gas+plume | gas-gamma0.1` multiplies its attenuation tables by these factors (records layout_comparison_bc_sc*.json; layouts B, B-p and B-L). With the default `--scattered none`, every earlier record reproduces bit for bit.
+
+740 C, 1 um/h, fixed Ga output (the comparison's protocol). Each cell gives nominal / worst within +/-0.8 deg, then the share of states in the growth window:
+
+| Model | B-p, eta 1, 2 m^3/s | B-L, eta 1, 2 m^3/s | B-L, eta 0.3, 4 m^3/s, 35 sccm |
+|---|---|---|---|
+| Direct beam only (sections 1-8) | 5.07 sccm; 0.43 / 1.75 %; 87 % | 5.76 sccm; 0.64 / 1.74 %; 85 % | 22.7 sccm, 1.1e-2 Pa; 0.44 / 1.40 %; 45 % |
+| + scattered atoms | 4.68 sccm; 0.73 / 2.08 %; 90 % | 5.21 sccm; 0.83 / 1.89 %; 90 % | 18.3 sccm, 8.5e-3 Pa; 0.78 / 1.87 %; 90 % |
+| + scattered atoms and plume | 4.76 sccm; 0.39 / 1.83 %; 89 % | 5.27 sccm; 0.73 / 1.82 %; 90 % | 19.0 sccm, 8.8e-3 Pa; 0.64 / 1.54 %; 90 % |
+| + scattered atoms, walls return N (gamma 0.1) | 3.19 sccm; 0.55 / 1.90 %; 90 % | 3.33 sccm; 0.74 / 1.85 %; 90 % | 11.3 sccm, 5.2e-3 Pa; 0.50 / 1.73 %; 90 % |
+
+**What changes:**
+- **Less feed for the same rate, and fewer constraints from pressure.**
+  - With scattered atoms and the plume, the smallest conversion for 1 um/h falls from 0.23 to 0.18 for B-L (4 m^3/s, 35 sccm), and from 0.40 to 0.22 at 2 m^3/s (records nitrogen_rate_limits_sc*.json).
+  - With walls that return N (gamma = 0.1) it falls to 0.10-0.12.
+  - B-p within its strict plate limit barely moves (0.78-0.82, against 0.80-0.88): the plate, not the pressure, limits it.
+- **The growth-pressure Ga failure mode largely disappears.** With a fixed Ga output, B-L at eta = 0.3 keeps 90 % of states in the window instead of 45 %, because the arriving Ga no longer depends strongly on the atom size. Calibrating Ga at growth pressure stays the plan, but the twin no longer predicts a large error if it is not.
+- **Uniformity is somewhat worse, and model-dependent by a few tenths of a point.** Keeping the scattered atoms undoes part of the pressure shape the aims were tuned against. Worst cases at 740 C rise by 0.1-0.5 points; the plume brings some of it back. The variants differ by 0.2-0.4 points, comparable to the factor tables' statistical scatter.
+- **The aims stay.**
+  - Re-optimizing at 46 deg with scattered atoms and the plume (the section 4 aim scans re-evaluated; records nitrogen_aim_pressure_sc_plume.json and nitrogen_aim_bigplate_sc_plume.json) leaves B-p's best aim at +97.5 mm (0.38 %).
+  - B-L's best moves half a step, from +90 to between +90 and +97.5 mm (0.64 against 0.60 %, inside the 0.3-0.5 point scatter of single-aim maps).
+- **The 0.5 m^3/s ceiling was an artefact of dropping scattered atoms.** Direct-only, the rate peaked at 0.62-0.69 um/h near 8 sccm whatever the conversion. With the scattered atoms followed, the rate keeps rising with feed up to 35 sccm (about 2.9 um/h at eta = 1). That regime, near 0.1 Pa, is outside what this model can vouch for:
+  - the beams are diffusive there;
+  - the plume is collisional, and is not tabulated for 0.5 m^3/s;
+  - the discharge's behaviour at that back pressure is unknown.
+
+  So low pumping is no longer excluded by the model, but it is not shown to work either.
+
+**The operating point** (section 8) is unchanged, re-checked with the combined heater errors and a centre pyrometer (records operating_cold_limit_gas.json, operating_cold_limit_sc_plume_bias2.json, operating_cold_limit_gas-gamma0.1.json). **1 um/h at 720 C** remains the coldest admissible point in every layout and scattered-atom variant. Its worst case is 1.53-1.80 % with scattered atoms and the plume (1.39-1.72 % direct only; 1.53-2.06 % across the variants). Faster growth gets cheaper: B-L at eta = 0.3 reaches 1.25 um/h at 720 C (740 C direct only), and 1.5 um/h at 730 C (not reachable direct only).
+
+**What commissioning must separate** (rehearsal record [commissioning_rehearsal.json](../data/runs/studies/commissioning_rehearsal.json), [COMMISSIONING_PLAN.md](COMMISSIONING_PLAN.md) section 6.1; revised after the 2026-10-03 audit):
+- **Growth rates at several flows do not test the scattered-atom model by themselves.** The first rehearsal fitted one conversion for all flows and rejected the direct-only model in 90-100 % of draws. If the conversion may change with flow, as the plan's own fit allows, no model is rejected more often than chance. The fitted eta then differs between the models by a factor of 1.5-3.
+- **A throttle series separates them.** Grow at the working flow and power with the pumping throttled to a quarter of full speed: the pressure changes while the discharge, and eta, do not. That rejects every wrong model, including the wrong wall recombination, in 100 % of draws, for constant or flow-dependent eta, and recovers eta at the working flow within 0-3 %. A 10 % gauge-factor error moves eta by 1-3 %.
+- **Extrapolating eta in flow stays risky.** At a held-out flow beyond the calibrated ones the predicted rate is off by 3-17 % when eta falls with flow, but by about 1 % inside the calibrated range.
+
+**Limits:**
+- cos^n surrogate sources, used only as a ratio on the comparison's own maps;
+- a spherical chamber, hard spheres, uniform 300 K chamber gas, no pump;
+- the plume is first order and at 300 K (600 K gives about two thirds of its effect), not tabulated for 0.5 m^3/s;
+- the Ga factors at 0.07-0.15 Pa fit the quadratic poorly (beyond any reachable operating point);
+- the N wall recombination is not sourced.
+
+The record scattered_redeposition.json hashes `src/mbe_twin/scattering.py` at a version with two functions (`direct_flux`, `binned_direct_flux`) that were added while it ran and that it does not call.
 
 ## Appendix: superseded records
 

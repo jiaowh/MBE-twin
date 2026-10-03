@@ -254,3 +254,86 @@ def test_state_past_the_rate_peak_runs_at_its_best_feed():
     assert res["supply_limited"].all() and not res["valid"].any()
     assert res["pressure"][0, 0, 0, 0] == pytest.approx(p0, rel=0.02)
     assert res["feed"][0, 0, 0, 0] < 35.0
+
+
+def test_scattered_factors_multiply_the_attenuation_tables():
+    lc = _load("layout_comparison")
+    att_n, att_g = np.full((3, 4), 0.5), np.full((2, 3, 4), 0.25)
+    labels = [(70, "8"), (70, "5.68")]
+    same_n, same_g = lc.with_scattered(None, "B-L", 46, att_n, att_g, labels)
+    assert same_n is att_n and same_g is att_g
+    fac = {"N": {"B-L": np.full((3, 4), 2.0)}, "Ga": {"8": np.full((3, 4), 3.0), "5.68": np.full((3, 4), 4.0)}}
+    n, g = lc.with_scattered(fac, "B-L", 46, att_n, att_g, labels)
+    assert np.all(n == 1.0) and np.all(g[0] == 0.75) and np.all(g[1] == 1.0)
+    with pytest.raises(SystemExit):
+        lc.with_scattered(fac, "C", 46, att_n, att_g, labels)
+    with pytest.raises(SystemExit):
+        lc.with_scattered(fac, "B-L", 54, att_n, att_g, labels)
+    assert lc.scatter_factors("none", np.zeros(3)) is None
+    assert lc.comparison_record("none").name == "layout_comparison_bc.json"
+    assert lc.comparison_record("gas").name == "layout_comparison_bc_sc.json"
+
+
+def test_plume_factors_depend_on_the_pumping_speed():
+    lc = _load("layout_comparison")
+    att_n, att_g = np.full((3, 4), 0.5), np.full((1, 3, 4), 0.25)
+    fac = {"N": {"B-L": np.full((3, 4), 2.0)}, "Ga": {"8": np.ones((3, 4))},
+           "N_plume": {"B-L": {"4": np.full((3, 4), 1.5)}}}
+    assert np.all(lc.with_scattered(fac, "B-L", 46, att_n, att_g, [(70, "8")], 4.0)[0] == 0.75)
+    assert np.all(lc.with_scattered(fac, "B-L", 46, att_n, att_g, [(70, "8")], 0.5)[0] == 1.0)   # gas-only fallback
+    with pytest.raises(SystemExit):
+        lc.with_scattered(fac, "B-L", 46, att_n, att_g, [(70, "8")])
+    assert lc.comparison_record("gas+plume").name == "layout_comparison_bc_sc_plume.json"
+
+
+def test_scatter_sources_list_every_table_read():
+    lc = _load("layout_comparison")
+    assert lc.scatter_sources(None) == []
+    assert lc.scatter_sources({"N": {}, "sha256": "x"}) == [lc.SCATTER_TABLES]
+    paths = lc.scatter_sources({"N": {}, "plume_sha256": {"B": "a", "B-L": "b"}})
+    assert [p.name for p in paths] == ["scattered_tables.json", "scattered_plume_tables_B.json",
+                                       "scattered_plume_tables_B-L.json"]
+
+
+@pytest.mark.xfail(reason="extended plume tables (2026-10-03 audit) not yet archived", strict=False)
+def test_archived_plume_tables_bracket_their_feed_limit():
+    """Every pressure a feed up to the tables' limit produces lies between plume-covered grid points (2026-10-03 audit)."""
+    import json
+    lc = _load("layout_comparison")
+    for path in sorted((ROOT / "data/runs/studies").glob("scattered_plume_tables_*.json")):
+        rec = json.loads(path.read_text(encoding="utf-8"))
+        to_p = lc.SCCM_PA_M3_S * rec["inputs"]["gas_temperature_K"] / lc.T_STD
+        for speed, v in rec["outputs"]["factors"][rec["inputs"]["layouts"][0]].items():
+            p_max = rec["inputs"]["feed_max_sccm"] * to_p / float(speed)
+            upper = int(np.searchsorted(lc.P_GRID, p_max * (1 - 1e-9)))
+            assert lc.P_GRID[upper] >= p_max * (1 - 1e-9)
+            assert all(v["covered"][: upper + 1]), f"{path.name} S = {speed}"
+
+
+def test_provenance_checks_input_table_hashes():
+    rp = _load("record_provenance")
+    m = {"source_sha256": {"scripts/x.py": "1"},
+         "inputs": {"scattered_tables_sha256": "2", "scattered_plume_tables_sha256": {"B-L": "3"}}}
+    h = rp.recorded_hashes(m)
+    assert h == {"scripts/x.py": "1", "data/runs/studies/scattered_tables.json": "2",
+                 "data/runs/studies/scattered_plume_tables_B-L.json": "3"}
+    # a gas+plume study that did not record the plume tables is traced through the comparison record it read
+    comp = "data/runs/studies/layout_comparison_bc_sc_plume.json"
+    import json
+    hashes = json.loads((ROOT / comp).read_text(encoding="utf-8"))["inputs"]["scattered_plume_tables_sha256"]
+    h = rp.recorded_hashes({"source_sha256": {comp: "4"}, "inputs": {"scattered": "gas+plume"}})
+    assert all(h[f"{rp.PLUME_PREFIX}{k}.json"] == v for k, v in hashes.items())
+    # without a comparison record the dependency is reported as untraced
+    h = rp.recorded_hashes({"source_sha256": {}, "inputs": {"scattered": "gas+plume"}})
+    assert h and set(h.values()) == {rp.UNTRACED}
+
+
+def test_rehearsal_fit_recovers_a_quadratic_conversion_exactly():
+    cr = _load("commissioning_rehearsal")
+    q = np.array([5.0, 10.0, 15.0, 20.0, 25.0])
+    x = (q - 26.1) / 26.1
+    g = 1.0 + 0.1 * q
+    coef = np.array([0.3, -0.05, 0.02])
+    r = (coef[0] + coef[1] * x + coef[2] * x * x) * g
+    c, chi2, dof = cr.fit(r, q, g, np.column_stack([x ** k for k in range(3)]))
+    assert np.allclose(c, coef) and chi2 < 1e-12 and dof == 2

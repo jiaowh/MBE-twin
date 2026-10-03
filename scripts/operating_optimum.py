@@ -30,7 +30,7 @@ window, and the nominal heater state reaches the labelled temperature under the 
 Not represented: crystal quality, morphology and impurity incorporation, which also set a
 lower temperature bound in practice; scattered-beam redeposition; combined heater errors.
 
-Usage: python scripts/operating_optimum.py [--out results/operating_optimum]
+Usage: python scripts/operating_optimum.py [--out results/operating_optimum] [--scattered none|gas|gas-gamma0.1|gas+plume]
 """
 
 import argparse
@@ -66,8 +66,10 @@ ADMIT = 0.95
 DECOMPOSITION_VALID_C = 720.0
 
 
-def load_inputs(rec, env, name, rho):
-    """N maps (+/-0.8 deg ensemble, all lips) and Ga shapes / tables from the comparison's keyed caches."""
+def load_inputs(rec, env, name, rho, scatter=None, speed=None):
+    """N maps (+/-0.8 deg ensemble, all lips) and Ga shapes / tables from the comparison's keyed caches; scatter: the
+    comparison's scattered-arrival factors (layout_comparison.scatter_factors) or None; speed: the effective pumping
+    speed (m^3/s) for the plume variant."""
     lay = env["layouts"][name]
     n = lay["n"]
     prefix = f"N_{n['L_over_r']:g}_{n['polar_deg']:g}_{n['aim_offset_mm']:g}_"
@@ -89,10 +91,11 @@ def load_inputs(rec, env, name, rho):
             raise SystemExit(f"operating_optimum: Ga cache key mismatch for {gf['file']}")
         g_vac.append(lc.ga_shape(lc.ga_record(port, fill, d), rho)[None, :] * zg["lip"])   # (L, rho)
         att_g.append(zg[f"att_{d}"])
+    att_n, att_g = lc.with_scattered(scatter, name, port, zn["att"], np.array(att_g), labels, speed)
     plate = lc.layout_plate(lay, env)
     kn_per_sccm = min(lc.plate_knudsen(1.0, plate, t, f) for t in (300.0, 600.0) for f in (1.3, 1.0, 1 / 1.3))
-    return {"n_vac": n_vac, "att_n": zn["att"], "lip_n": zn["lip"], "map0": zn["maps"][0], "g_vac": np.array(g_vac),
-            "att_g": np.array(att_g), "labels": labels, "nominal_g": labels.index((70, "8")), "kn_per_sccm": kn_per_sccm,
+    return {"n_vac": n_vac, "att_n": att_n, "lip_n": zn["lip"], "map0": zn["maps"][0], "g_vac": np.array(g_vac),
+            "att_g": att_g, "labels": labels, "nominal_g": labels.index((70, "8")), "kn_per_sccm": kn_per_sccm,
             "heater": lay["heater"]}
 
 
@@ -156,8 +159,13 @@ def balanced(front):
 def main():
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--out", default="results/operating_optimum")
+    ap.add_argument("--scattered", default="none", choices=lc.SCATTER_VARIANTS,
+                    help="add gas-scattered atoms (reads the comparison record of that variant)")
     args = ap.parse_args()
-    rec = json.loads(RECORD.read_text(encoding="utf-8"))
+    record = lc.comparison_record(args.scattered)
+    rec = json.loads(record.read_text(encoding="utf-8"))
+    if rec["inputs"].get("scattered", "none") != args.scattered:
+        raise SystemExit(f"operating_optimum: {record.name} was not run with --scattered {args.scattered}")
     env = rec["inputs"]["envelope"]
     rho = np.asarray(rec["outputs"]["rho_m"])
     params = load_parameters()
@@ -165,7 +173,9 @@ def main():
     k_atoms = rec["inputs"]["atoms_per_m2_s_per_nm_min"]
     t_gas = env["vacuum"]["gas_temperature_K"]["value"]
     openings = env["wafer_and_mask"]["holder_opening_radius_m"]["value"]
-    inputs = {name: load_inputs(rec, env, name, rho) for name in LAYOUTS}
+    scatter = lc.scatter_factors(args.scattered, rho)
+    inputs = {(name, sc["S_eff_m3_s"]): load_inputs(rec, env, name, rho, scatter, sc["S_eff_m3_s"])
+              for name in LAYOUTS for sc in SCENARIOS}
     heat = {}
     for t0 in T_C:
         for opt in sorted({inp["heater"] for inp in inputs.values()}):
@@ -174,7 +184,7 @@ def main():
         print(f"heater states at {t0} C done", flush=True)
     points = []
     for scen, name, t0 in itertools.product(SCENARIOS, LAYOUTS, T_C):
-        inp = inputs[name]
+        inp = inputs[(name, scen["S_eff_m3_s"])]
         t_maps, hrep = heat[(inp["heater"], t0)]
         reading = np.array(hrep["state_wafer_mean_K"])
         dec_nom = float(lc.area_mean(params.decomposition(t_maps[0]), rho))
@@ -222,12 +232,13 @@ def main():
                   + ("  <- balanced" if p is pick else "") + ("  (decomposition extrapolated)" if p["extrapolated_decomposition"] else ""))
     manifest = build_manifest(
         "operating_optimum", label="representative_chamber", validation_status="not_validated",
-        inputs={"record": str(RECORD.relative_to(ROOT)), "record_run_id": rec["run_id"], "layouts": LAYOUTS, "T_C": T_C,
+        inputs={"record": str(record.relative_to(ROOT)), "scattered": args.scattered, "record_run_id": rec["run_id"], "layouts": LAYOUTS, "T_C": T_C,
                 "rates_um_h": RATES_UM_H, "scenarios": SCENARIOS, "element_limit": LIMIT, "admit": ADMIT, "kn_valid": lc.KN_VALID,
                 "rate_tolerance_rel": lc.RATE_TOL, "pointing_ensemble_deg": 0.8, "decomposition_valid_from_C": DECOMPOSITION_VALID_C},
         outputs={"points": points, "fronts": fronts, "rho_m": rho},
         sources=[Path(__file__), ROOT / "scripts/layout_comparison.py", ROOT / "scripts/heater_zones.py",
-                 ROOT / "src/mbe_twin/growth.py", ROOT / "src/mbe_twin/heater.py", ROOT / "data/parameters/gan_growth.json", RECORD],
+                 ROOT / "src/mbe_twin/growth.py", ROOT / "src/mbe_twin/heater.py", ROOT / "data/parameters/gan_growth.json", record]
+        + lc.scatter_sources(scatter),
         warnings=["Representative chamber; no model in the chain is validated on the proposed machine",
                   "Crystal quality, morphology and impurities are not modelled: the temperature objective is bounded only by the growth window",
                   "Decomposition fitted to 720-805 C; lower temperatures are extrapolated",

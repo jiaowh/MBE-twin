@@ -23,8 +23,15 @@ scripts/layout_comparison.py (layouts B-p, C-p in the envelope).
 Options --aspect, --plate-radius, --eta, --speed and --feed-max set another plate and operating point
 (the large-plate variant: --aspect 2.0 --plate-radius 0.03 --eta 0.3 --speed 4 --feed-max 35).
 
+--scattered VARIANT --factor-layout NAME (with --combine): the attenuation of every aim is multiplied by
+the scattered-arrival factor of layout NAME (layout_comparison.scatter_factors: gas-scattered atoms,
+and with gas+plume the plate's plume at --speed), interpolated in log onto the scan pressures. The
+factor belongs to that layout's own aim and angle; it varies little with the aim, so the re-aim is
+meaningful near that layout (same plate, same port angle), not across port angles.
+
 Usage: python scripts/nitrogen_aim_pressure.py --angles 46 55 65 --out results/nitrogen_aim_pressure_a
        python scripts/nitrogen_aim_pressure.py --combine results/nitrogen_aim_pressure_a results/nitrogen_aim_pressure_b
+                                               [--scattered gas+plume --factor-layout B-p]
 """
 
 import argparse
@@ -83,7 +90,8 @@ def scan(angles, offsets, env, rho, wafer, aspect=L_OVER_R, plate_radius=PLATE_R
     return out
 
 
-def evaluate(rows, env, rho, dec_map, k_atoms, eta=ETA, speed=SPEED, feed_max=None, p_scan=P_SCAN):
+def evaluate(rows, env, rho, dec_map, k_atoms, eta=ETA, speed=SPEED, feed_max=None, p_scan=P_SCAN, factor=None):
+    """factor: optional (len(p_scan), rho) multiplier of every aim's attenuation (scattered arrival)."""
     t_gas = env["vacuum"]["gas_temperature_K"]["value"]
     feed_max = feed_max or env["nitrogen_source"]["feed_limit_sccm"]["value"]
     dec_mean = float(lc.area_mean(dec_map, rho))
@@ -91,7 +99,7 @@ def evaluate(rows, env, rho, dec_map, k_atoms, eta=ETA, speed=SPEED, feed_max=No
     res = []
     for r in rows:
         maps = np.array(r["maps"])
-        att = maps / maps[0]
+        att = maps / maps[0] * (1.0 if factor is None else factor)
 
         def at(p):
             return maps[0] * lc.att_at(att, p, p_scan)
@@ -134,6 +142,8 @@ def main():
     ap.add_argument("--eta", type=float, default=ETA, help="active-N fraction of the feed atoms for the operating point")
     ap.add_argument("--speed", type=float, default=SPEED, help="effective N2 pumping speed (m^3/s)")
     ap.add_argument("--feed-max", type=float, help="feed limit (sccm); default the envelope's")
+    ap.add_argument("--scattered", default="none", choices=lc.SCATTER_VARIANTS, help="add gas-scattered atoms (with --combine)")
+    ap.add_argument("--factor-layout", help="layout whose scattered-arrival factors are applied (with --scattered)")
     args = ap.parse_args()
     env = json.loads(lc.ENVELOPE.read_text(encoding="utf-8"))
     usable = env["wafer_and_mask"]["usable_radius_m"]["value"]
@@ -161,7 +171,16 @@ def main():
                                  740.0 + lc.C, lc.LIMITS["1473 K element"], rho)
     gp = json.loads((ROOT / "data/parameters/gan_growth.json").read_text(encoding="utf-8"))
     k_atoms = gp["units"]["ml_per_s_per_nm_per_min"] * 1.14e19
-    res = evaluate(rows, env, rho, params.decomposition(t_maps[0]), k_atoms, args.eta, args.speed, args.feed_max, p_scan)
+    factor, scatter = None, lc.scatter_factors(args.scattered, rho)
+    if scatter is not None:
+        if not args.factor_layout:
+            raise SystemExit("nitrogen_aim_pressure: --scattered needs --factor-layout")
+        f_n = scatter["N"][args.factor_layout]
+        if "N_plume" in scatter:
+            f_n = scatter["N_plume"][args.factor_layout].get(f"{args.speed:g}", f_n)
+        factor = np.array([lc.att_at(f_n, p) for p in p_scan])
+    res = evaluate(rows, env, rho, params.decomposition(t_maps[0]), k_atoms, args.eta, args.speed, args.feed_max, p_scan,
+                   factor)
     summary = {}
     for case in res[0]["cases"]:
         per_angle = {}
@@ -187,14 +206,16 @@ def main():
                 "offsets_mm": sorted({r["offset_mm"] for r in res}), "L_over_r": args.aspect,
                 "plate_radius_m": args.plate_radius, "eta": args.eta, "S_eff_m3_s": args.speed, "feed_max_sccm": args.feed_max,
                 "targets_um_h": TARGETS_UM_H, "n_particles": lc.N_PARTICLES, "n_seed": lc.N_SEED, "usable_radius_m": usable,
-                "lip_height_m": 0.002, "T0_C": 740.0, "heater_limit": "1473 K element"},
+                "lip_height_m": 0.002, "T0_C": 740.0, "heater_limit": "1473 K element", "scattered": args.scattered,
+                "factor_layout": args.factor_layout},
         outputs={"summary": summary, "aims": res},
         sources=[Path(__file__), ROOT / "scripts/layout_comparison.py", ROOT / "scripts/heater_zones.py",
                  ROOT / "src/mbe_twin/aperture.py", ROOT / "src/mbe_twin/beam.py", ROOT / "src/mbe_twin/crucible.py",
                  ROOT / "src/mbe_twin/layout.py", ROOT / "src/mbe_twin/vacuum.py", ROOT / "src/mbe_twin/growth.py",
-                 lc.ENVELOPE],
+                 lc.ENVELOPE] + lc.scatter_sources(scatter),
         warnings=["Nominal pose only; pointing robustness of new optima is evaluated by layout_comparison.py",
-                  "Direct-beam attenuation only; scattered atoms not redeposited",
+                  ("Direct-beam attenuation only; scattered atoms not redeposited" if scatter is None else
+                   f"Scattered arrival ({args.scattered}) from layout {args.factor_layout}'s factors, applied to every aim"),
                   "Free-molecular plate; uniform output; Monte Carlo scatter about 0.3-0.5 points at single aims"])
     print(f"Wrote {write_manifest(manifest, out / 'manifest.json')}")
 

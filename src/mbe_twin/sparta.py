@@ -140,8 +140,11 @@ def propagate_slab(positions, velocities, slab, plane_z, radii_edges):
 
 
 def wsl_path(path):
-    """/mnt/<drive>/... path for a Windows path, for use inside WSL."""
-    p = PureWindowsPath(Path(path).resolve())
+    """/mnt/<drive>/... path for a Windows path, for use inside WSL (a POSIX path, when run inside WSL, as is)."""
+    resolved = Path(path).resolve()
+    p = PureWindowsPath(resolved)
+    if not p.drive:
+        return resolved.as_posix()
     return "/mnt/" + p.drive[0].lower() + "/" + "/".join(p.parts[1:])
 
 

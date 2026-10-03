@@ -65,8 +65,17 @@ Uncertain states (a grid, not a probability distribution; all combinations are e
   power (worst zone for each sign);
 - holder lip height 1 / 2 / 3 mm (shadow ratio profiles);
 - droplet-onset law: the three literature scenarios.
-Not in the grid: the N plate output profile, the plate geometry, scattered-beam redeposition,
-Ga pointing, and combinations of heater perturbations (scripts/heater_robustness.py combines
+Scattered atoms (--scattered): by default the background gas only removes atoms from the direct
+beams. With --scattered gas (or gas-gamma0.1) the attenuation tables are multiplied, entry by entry
+on the same pressure grid, by the factors of scripts/scattered_tables.py (record
+data/runs/studies/scattered_tables.json): the total arrival of direct and gas-scattered atoms over the
+direct arrival, from a test-particle Monte Carlo of cos^n surrogate sources (N walls recombining
+with gamma = 1, or 0.1 as an upper case; Ga sticking). With --scattered gas+plume the N factor also
+includes the nitrogen plate's own plume (scripts/scattered_plume_tables.py, records
+scattered_plume_tables_<layout>.json), which depends on the feed and so on the pumping speed: tables
+for 2 and 4 m^3/s up to 35 sccm; the 0.5 m^3/s scenarios and higher feeds keep the gas-only factor.
+Available for the layouts those records tabulate (B, B-p, B-L) and the 46 deg Ga port.
+Not in the grid: the N plate output profile, the plate geometry, Ga pointing, and combinations of heater perturbations (scripts/heater_robustness.py combines
 them for the nominal maps). Operating scenarios (not uncertainty states): conversion fraction,
 effective pumping speed, feed limit, growth temperature 700 / 740 C, the 1473 K element limit
 (the 1373 K interpretation is in heater_robustness.py).
@@ -84,6 +93,7 @@ whose key does not match is an error, not a reuse.
 
 Usage: python scripts/layout_comparison.py [--out results/layout_comparison_bc] [--layouts B C B-p C-p B-L]
                                           [--maps DIR] (directory of keyed map files)
+                                          [--scattered none|gas|gas-gamma0.1|gas+plume] [--kn-valid 10]
 """
 
 import argparse
@@ -114,6 +124,8 @@ from mbe_twin.vacuum import K_B, SCCM_PA_M3_S, T_STD, beam_mean_free_path, press
 
 ROOT = Path(__file__).resolve().parents[1]
 ENVELOPE = ROOT / "data/design/design_envelope.json"
+SCATTER_TABLES = ROOT / "data/runs/studies/scattered_tables.json"
+SCATTER_VARIANTS = ("none", "gas", "gas-gamma0.1", "gas+plume")
 GA_RECORDS = ROOT / "data/runs/sparta_ga"
 _spec = importlib.util.spec_from_file_location("heater_zones", ROOT / "scripts/heater_zones.py")
 hz = importlib.util.module_from_spec(_spec)
@@ -257,6 +269,70 @@ def ga_ratios(port, fill_mm, rho, wafer, pressures, opening, env):
     lip = np.array([rotation_averaged_flux(src, wafer, rho, n_angles=36, occluders=(
         HolderLip((0.0, 0.0, 0.0), tuple(wafer.normal), opening, h),)) / f0 for h in LIP_H])
     return att, lip
+
+
+def scatter_factors(variant, rho):
+    """Scattered-arrival factors (scripts/scattered_tables.py) on P_GRID x rho: {"N": {layout: (P, rho)},
+    "Ga": {diameter label: (P, rho)} for the 46 deg port, "sha256": record hash}, or None for 'none'."""
+    if variant == "none":
+        return None
+    if variant not in SCATTER_VARIANTS:
+        raise SystemExit(f"layout_comparison: unknown scattered variant {variant}")
+    o = json.loads(SCATTER_TABLES.read_text(encoding="utf-8"))["outputs"]
+    if not np.allclose(o["p_grid_Pa"], P_GRID) or not np.allclose(o["rho_m"], rho):
+        raise SystemExit("layout_comparison: scattered-factor tables are on a different pressure grid or radii")
+    gas_variant = "gas" if variant == "gas+plume" else variant
+    fac = {"N": {k: np.asarray(v[gas_variant]) for k, v in o["factors"]["N"].items()},
+           "Ga": {d: np.asarray(o["factors"]["Ga"][f"46_{d}"]) for d in GA_D}, "sha256": file_sha256(SCATTER_TABLES)}
+    if variant == "gas+plume":
+        fac["N_plume"], fac["plume_sha256"] = {}, {}
+        for name in fac["N"]:
+            path = ROOT / f"data/runs/studies/scattered_plume_tables_{name}.json"
+            po = json.loads(path.read_text(encoding="utf-8"))["outputs"]
+            if not np.allclose(po["p_grid_Pa"], P_GRID) or not np.allclose(po["rho_m"], rho):
+                raise SystemExit(f"layout_comparison: {path.name} is on a different pressure grid or radii")
+            pin = json.loads(path.read_text(encoding="utf-8"))["inputs"]
+            to_p = SCCM_PA_M3_S * (pin["gas_temperature_K"] / T_STD)
+            for s, v in po["factors"][name].items():
+                # every pressure a feed up to the table's limit produces must lie between plume-covered grid points
+                need = np.searchsorted(P_GRID, pin["feed_max_sccm"] * to_p / float(s) * (1 - 1e-9))
+                if not all(v["covered"][: need + 1]):
+                    raise SystemExit(f"layout_comparison: {path.name} (S = {s}) does not cover the grid pressures bracketing "
+                                     f"{pin['feed_max_sccm']:g} sccm; extend it (scattered_plume_tables.py --extend)")
+            fac["plume_feed_max_sccm"] = min(fac.get("plume_feed_max_sccm", np.inf), pin["feed_max_sccm"])
+            fac["N_plume"][name] = {s: np.array([np.asarray(f) if c else g for f, c, g in
+                                                 zip(v["factors"], v["covered"], fac["N"][name])])
+                                    for s, v in po["factors"][name].items()}
+            fac["plume_sha256"][name] = file_sha256(path)
+    return fac
+
+
+def scatter_sources(fac):
+    """The factor tables a study read through scatter_factors, for its manifest sources (empty for 'none')."""
+    if fac is None:
+        return []
+    return [SCATTER_TABLES] + [ROOT / f"data/runs/studies/scattered_plume_tables_{name}.json" for name in fac.get("plume_sha256", {})]
+
+
+def comparison_record(variant):
+    """The archived comparison record for a scattered-arrival variant (none: the default record)."""
+    suffix = {"none": "", "gas": "_sc", "gas-gamma0.1": "_sc_gamma0.1", "gas+plume": "_sc_plume"}[variant]
+    return ROOT / f"data/runs/studies/layout_comparison_bc{suffix}.json"
+
+
+def with_scattered(fac, name, port, att_n, att_g, g_labels, speed=None):
+    """Attenuation tables times the scattered-arrival factors (unchanged when fac is None). With the plume
+    variant the N factor depends on the effective pumping speed (gas-only where the plume is not tabulated)."""
+    if fac is None:
+        return att_n, att_g
+    if name not in fac["N"] or port != 46:
+        raise SystemExit(f"layout_comparison: no scattered-arrival factors for layout {name} (Ga port {port})")
+    f_n = fac["N"][name]
+    if "N_plume" in fac:
+        if speed is None:
+            raise SystemExit("layout_comparison: the plume factors need the effective pumping speed")
+        f_n = fac["N_plume"][name].get(f"{speed:g}", f_n)
+    return att_n * f_n, att_g * np.array([fac["Ga"][d] for _, d in g_labels])
 
 
 def att_at(table, p, grid=P_GRID):
@@ -518,6 +594,8 @@ def main():
     ap.add_argument("--maps", help="directory with keyed map files (written to --out otherwise)")
     ap.add_argument("--kn-valid", type=float, default=KN_VALID,
                     help="plate-hole Kn below which a state is outside the plate model (default 10: free-molecular)")
+    ap.add_argument("--scattered", default="none", choices=SCATTER_VARIANTS,
+                    help="add gas-scattered atoms to the direct beams (scripts/scattered_tables.py factors)")
     args = ap.parse_args()
     env = json.loads(ENVELOPE.read_text(encoding="utf-8"))
     out = Path(args.out)
@@ -539,6 +617,10 @@ def main():
     target = 1000.0 * env["operating_point"]["net_growth_rate_um_h"]["value"] / 60.0
     laws = env["operating_point"]["droplet_onset_law"]["value"]
     names = args.layouts
+    scatter = scatter_factors(args.scattered, rho)
+    if scatter and "N_plume" in scatter and max(feed_limits) > scatter["plume_feed_max_sccm"]:
+        raise SystemExit(f"layout_comparison: feed limit {max(feed_limits):g} sccm beyond the plume tables' "
+                         f"{scatter['plume_feed_max_sccm']:g} sccm")
     unknown = [n for n in names if n not in env["layouts"]]
     if unknown:
         raise SystemExit(f"layout_comparison: unknown layouts {unknown}")
@@ -619,11 +701,14 @@ def main():
         n_vac = maps[:, None, :] * lip_n[None, :, :]                                        # (N, L, rho)
         g_vac = np.array([ga_base[lab][None, :] * gamaps[(port, lab[0], opening)][1] for lab in g_labels])  # (G, L, rho)
         att_g = np.array([gamaps[(port, lab[0], opening)][0][lab[1]] for lab in g_labels])                # (G, P, rho)
+        att_n0, att_g0 = att_n, att_g
 
-        def delivered(p):
-            return float(area_mean(maps[0] * att_at(att_n, p) * lip_n[LIP_H.index(0.002)], rho))
+        def delivered_with(att_n):
+            return lambda p: float(area_mean(maps[0] * att_at(att_n, p) * lip_n[LIP_H.index(0.002)], rho))
 
         for eta, speed, feed_max, t0, lname in itertools.product(etas, speeds, feed_limits, T0_C, LIMITS):
+            att_n, att_g = with_scattered(scatter, name, port, att_n0, att_g0, g_labels, speed)
+            delivered = delivered_with(att_n)
             t_maps, hrep = heat[(lay["heater"], t0, lname)]
             dec_mean = float(area_mean(params.decomposition(t_maps[0]), rho))
             ops = []
@@ -682,6 +767,7 @@ def main():
         t_maps, _ = heat[(lay["heater"], 740.0, "1473 K element")]
         dec_mean = float(area_mean(params.decomposition(t_maps[0]), rho))
         for speed, feed_max in itertools.product(speeds, feed_limits):
+            delivered = delivered_with(with_scattered(scatter, name, port, att_n0, att_g0, g_labels, speed)[0])
             for eta in np.geomspace(0.01, 1.0, 25):
                 for tgt in TARGETS_UM_H:
                     op = operating_point(delivered, dec_mean, 1000.0 * tgt / 60.0, float(eta), speed, feed_max, t_gas, k_atoms)
@@ -736,19 +822,25 @@ def main():
                 "n_seed": N_SEED, "usable_radius_m": usable, "target_nm_min": target, "atoms_per_m2_s_per_nm_min": k_atoms,
                 "n_atoms_per_sccm": N_ATOMS_PER_SCCM, "ga_records_sha256": ga_used, "map_caches": caches,
                 "thresholds_pct": THRESHOLDS_PCT, "targets_um_h": TARGETS_UM_H,
-                "useful_rate_floor_um_h": USEFUL_RATE_UM_H},
+                "useful_rate_floor_um_h": USEFUL_RATE_UM_H, "scattered": args.scattered,
+                "scattered_tables_sha256": scatter["sha256"] if scatter else None,
+                "scattered_plume_tables_sha256": scatter.get("plume_sha256") if scatter else None},
         outputs={"rows": rows, "ranking": ranking, "operating_surface": op_table, "rho_m": rho},
-        sources=SOURCES,
+        sources=SOURCES + scatter_sources(scatter),
         warnings=["Representative-chamber comparison; no model in the chain is validated on the proposed machine",
                   "Uncertainty grid, not a probability distribution: shares are over grid states",
                   "Conversion fraction of the N2 feed to active N is a missing input, set by scenario",
-                  "Background attenuation removes direct beam only; scattered arrival not modelled",
+                  ("Background attenuation removes direct beam only; scattered arrival not modelled" if scatter is None else
+                   f"Gas-scattered arrival added ({args.scattered}) from cos^n surrogate sources as ratio factors; "
+                   + ("the nitrogen plate plume included for 2 and 4 m^3/s up to 35 sccm (300 K, first order)"
+                      if args.scattered == "gas+plume" else "the nitrogen plate plume is not included")),
                   "Attenuation and lip shadow as nominal-pose ratio profiles; free-molecular N plates with uniform output",
                   "Heater perturbations are not combined with each other; N profile and plate geometry are not in the grid",
                   "Per-state pressure from the state's own feed; attenuation tables are nominal-pose ratio profiles",
                   "No uniformity target or minimum growth rate is agreed: threshold shares are tradeoffs, not pass/fail"],
-        disabled_physics=["transients", "morphology", "AlN", "scattered-beam redeposition", "Ga pointing error",
-                          "transitional plate-hole flow"])
+        disabled_physics=["transients", "morphology", "AlN", "Ga pointing error", "transitional plate-hole flow"]
+        + (["scattered-beam redeposition"] if scatter is None else [] if args.scattered == "gas+plume"
+           else ["nitrogen plate plume"]))
     print(f"Wrote {write_manifest(manifest, out / 'manifest.json')}")
 
 

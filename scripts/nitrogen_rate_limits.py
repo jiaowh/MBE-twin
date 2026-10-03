@@ -18,6 +18,9 @@ range is also given per row.
 The rate is maximized over the feed up to the ceiling, because it peaks where attenuation
 grows faster than the feed. eta is solved by bisection on that maximum (linear in eta).
 
+If the comparison record was run with --scattered, the same scattered-arrival factors are applied
+to the N attenuation (per pumping speed for the plume variant), so the limits match that record.
+
 Usage: python scripts/nitrogen_rate_limits.py [--record data/runs/studies/layout_comparison_bc.json]
                                               [--maps results/layout_comparison_bc]
 """
@@ -61,6 +64,8 @@ def main():
     t_gas = env["vacuum"]["gas_temperature_K"]["value"]
     params = load_parameters()
     lip_i = lc.LIP_H.index(0.002)
+    variant = inp.get("scattered", "none")
+    scatter = lc.scatter_factors(variant, rho)
     # eta range inferred from published high-flow growth rates (scripts/nitrogen_output_evidence.py), if recorded
     eta_ev = None
     if EVIDENCE_RECORD.exists():
@@ -79,7 +84,7 @@ def main():
         z = np.load(ROOT / args.maps / cache["file"], allow_pickle=False)
         if str(z["cache_key"]) != cache["key"]:
             raise SystemExit(f"nitrogen_rate_limits: {cache['file']} does not carry the key recorded in {args.record}")
-        maps, att, lip = z["maps"], z["att"], z["lip"]
+        maps, att0, lip = z["maps"], z["att"], z["lip"]
 
         def delivered(p):
             return float(lc.area_mean(maps[0] * lc.att_at(att, p) * lip[lip_i], rho))
@@ -89,6 +94,12 @@ def main():
             t_maps, _ = lc.heater_states(env["layouts"][name]["heater"], opening, t0 + lc.C, lc.LIMITS["1473 K element"], rho)
             dec = float(lc.area_mean(params.decomposition(t_maps[0]), rho))
             for speed in env["vacuum"]["effective_N2_speed_m3_s"]["bracket"]:
+                att = att0
+                if scatter is not None:
+                    f_n = scatter["N"][name]
+                    if "N_plume" in scatter:
+                        f_n = scatter["N_plume"][name].get(f"{speed:g}", f_n)
+                    att = att0 * f_n
                 for ceiling, q_max in [(f"feed limit {f:g} sccm", f) for f in feed_limits] + [("plate free-molecular", q_kn)]:
                     q_max = min(q_max, lc.P_GRID[-1] * speed / (lc.SCCM_PA_M3_S * t_gas / lc.T_STD))   # attenuation table top
                     feeds = np.linspace(q_max / N_FEEDS, q_max, N_FEEDS)
@@ -110,14 +121,16 @@ def main():
                           + " / ".join(f"{v:.2f}" for v in row["eta_min"].values()), flush=True)
     manifest = build_manifest(
         "nitrogen_rate_limits", label="representative_chamber", validation_status="not_validated",
-        inputs={"record": args.record, "map_caches": inp["map_caches"], "targets_um_h": TARGETS_UM_H, "n_feeds": N_FEEDS,
+        inputs={"record": args.record, "scattered": variant, "map_caches": inp["map_caches"], "targets_um_h": TARGETS_UM_H, "n_feeds": N_FEEDS,
                 "kn_valid": lc.KN_VALID, "plates": inp["plates"]},
         outputs={"feed_at_kn_valid_sccm": q_kn_all, "rows": rows},
         sources=[Path(__file__), ROOT / "scripts/layout_comparison.py", ROOT / "scripts/heater_zones.py",
                  *([EVIDENCE_RECORD] if EVIDENCE_RECORD.exists() else []),
-                 ROOT / "src/mbe_twin/vacuum.py", ROOT / "src/mbe_twin/growth.py", ROOT / args.record],
+                 ROOT / "src/mbe_twin/vacuum.py", ROOT / "src/mbe_twin/growth.py", ROOT / args.record]
+        + lc.scatter_sources(scatter),
         warnings=["eta is a missing source input; eta_min above 1 means the rate is unreachable at any conversion",
-                  "Nominal state only; direct-beam attenuation, scattered atoms not redeposited",
+                  ("Nominal state only; direct-beam attenuation, scattered atoms not redeposited" if scatter is None else
+                   f"Nominal state only; gas-scattered arrival added ({variant}), as the comparison record"),
                   "Pressure from the N2 feed alone (atoms recombine on the walls); other gas loads not included"])
     print(f"Wrote {write_manifest(manifest, Path(args.out) / 'manifest.json')}")
 

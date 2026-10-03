@@ -172,3 +172,15 @@ def test_streamed_accumulation_matches_loading_everything(tmp_path):
     half = len(steps) // 2
     assert acc["halves"][1] == pytest.approx([(snap >= half).sum(), pos[snap >= half, 0].sum()])
     assert acc["total"] == pytest.approx([len(pos), pos[:, 0].sum()]) and acc["samples"] == len(pos)
+
+
+def test_wsl_path_handles_windows_and_posix_paths():
+    from pathlib import PurePosixPath
+
+    from mbe_twin.sparta import wsl_path
+    here = Path(__file__).resolve()
+    out = wsl_path(here)
+    if PurePosixPath(here.as_posix()).is_absolute() and ":" not in str(here):   # running inside WSL / Linux
+        assert out == here.as_posix()
+    else:
+        assert out.startswith("/mnt/") and out.endswith("tests/test_sparta.py")

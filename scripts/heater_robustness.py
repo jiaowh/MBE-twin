@@ -35,7 +35,7 @@ of the B family (1 mm overlap holder):
    pointing / 70 mm / d = 8 A and over the whole ensemble: the heater's contribution when its
    errors act together.
 
-Usage: python scripts/heater_robustness.py [--layouts B-p B B-L]
+Usage: python scripts/heater_robustness.py [--layouts B-p B B-L] [--scattered none|gas|gas-gamma0.1|gas+plume] [--out results/heater_robustness]
 """
 
 import argparse
@@ -139,7 +139,7 @@ def mid(lo, hi):
     return np.where(hi > lo, 0.5 * (lo + hi), lo * 1.02)
 
 
-def layout_inputs(rec, env, name, rho):
+def layout_inputs(rec, env, name, rho, scatter=None, speed=None):
     """N maps (+/-0.8 deg ensemble, 2 mm lip) and Ga shapes / attenuation tables from the comparison's keyed caches."""
     lay = env["layouts"][name]
     n = lay["n"]
@@ -163,9 +163,10 @@ def layout_inputs(rec, env, name, rho):
             raise SystemExit(f"heater_robustness: Ga cache key mismatch for {gf['file']}")
         g_vac.append(lc.ga_shape(lc.ga_record(port, fill, d), rho) * zg["lip"][lip])
         att_g.append(zg[f"att_{d}"])
+    att_n, att_g = lc.with_scattered(scatter, name, port, zn["att"], np.array(att_g), labels, speed)
     plate = lc.layout_plate(lay, env)
     kn_per_sccm = min(lc.plate_knudsen(1.0, plate, t, f) for t in (300.0, 600.0) for f in (1.3, 1.0, 1 / 1.3))
-    return {"n_vac": n_vac, "att_n": zn["att"], "g_vac": np.array(g_vac), "att_g": np.array(att_g), "labels": labels,
+    return {"n_vac": n_vac, "att_n": att_n, "g_vac": np.array(g_vac), "att_g": att_g, "labels": labels,
             "nominal_g": labels.index((70, "8")), "kn_per_sccm": kn_per_sccm, "n_states": len(idx08)}
 
 
@@ -215,14 +216,21 @@ def protocols(inp, states, row, env, params, laws, rho, k_atoms):
 def main():
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--layouts", nargs="+", default=["B-p", "B", "B-L"])
+    ap.add_argument("--scattered", default="none", choices=lc.SCATTER_VARIANTS,
+                    help="add gas-scattered atoms (reads the comparison record of that variant)")
+    ap.add_argument("--out", default="results/heater_robustness")
     args = ap.parse_args()
-    rec = json.loads(RECORD.read_text(encoding="utf-8"))
+    record = lc.comparison_record(args.scattered)
+    rec = json.loads(record.read_text(encoding="utf-8"))
+    if rec["inputs"].get("scattered", "none") != args.scattered:
+        raise SystemExit(f"heater_robustness: {record.name} was not run with --scattered {args.scattered}")
     env = rec["inputs"]["envelope"]
     rho = np.asarray(rec["outputs"]["rho_m"])
     params = load_parameters()
     laws = env["operating_point"]["droplet_onset_law"]["value"]
     k_atoms = rec["inputs"]["atoms_per_m2_s_per_nm_min"]
-    inputs = {name: layout_inputs(rec, env, name, rho) for name in args.layouts}
+    scatter = lc.scatter_factors(args.scattered, rho)
+    inputs = {name: layout_inputs(rec, env, name, rho, scatter, SCENARIO["S_eff_m3_s"]) for name in args.layouts}
     out, used_rows = {}, {}
     for t0 in T0_C:
         t0_k = t0 + lc.C
@@ -294,17 +302,18 @@ def main():
     manifest = build_manifest(
         "heater_robustness", label="representative_chamber", validation_status="not_validated",
         inputs={"eps": EPS, "contact": CONTACT, "zone_error": ZONE, "opening_m": OPENING, "T0_C": T0_C, "limits_K": LIMITS,
-                "pyrometer_bias_K": BIASES_K, "record": str(RECORD.relative_to(ROOT)), "record_run_id": rec["run_id"],
+                "pyrometer_bias_K": BIASES_K, "record": str(record.relative_to(ROOT)), "scattered": args.scattered, "record_run_id": rec["run_id"],
                 "scenario": SCENARIO, "layouts": args.layouts, "rows": used_rows, "kn_valid": lc.KN_VALID,
                 "rate_tolerance_rel": lc.RATE_TOL, "map_caches": [c for c in rec["inputs"]["map_caches"]]},
         outputs=out,
         sources=[Path(__file__), ROOT / "scripts/heater_zones.py", ROOT / "scripts/layout_comparison.py",
-                 ROOT / "src/mbe_twin/heater.py", ROOT / "src/mbe_twin/growth.py", RECORD],
+                 ROOT / "src/mbe_twin/heater.py", ROOT / "src/mbe_twin/growth.py", record]
+        + lc.scatter_sources(scatter),
         warnings=["Pointing within +/-0.8 deg, Ga fills and diameters, droplet laws; lip 2 mm only",
                   "The controller's Ga(T) table is computed from the model itself; on the machine it would be a "
                   "commissioning calibration", "Reduced axisymmetric heater model",
                   "Grid of states, not a probability distribution"])
-    print(f"Wrote {write_manifest(manifest, ROOT / 'results/heater_robustness/manifest.json')}")
+    print(f"Wrote {write_manifest(manifest, Path(args.out) / 'manifest.json')}")
 
 
 if __name__ == "__main__":
