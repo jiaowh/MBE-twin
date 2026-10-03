@@ -295,7 +295,6 @@ def test_scatter_sources_list_every_table_read():
                                        "scattered_plume_tables_B-L.json"]
 
 
-@pytest.mark.xfail(reason="extended plume tables (2026-10-03 audit) not yet archived", strict=False)
 def test_archived_plume_tables_bracket_their_feed_limit():
     """Every pressure a feed up to the tables' limit produces lies between plume-covered grid points (2026-10-03 audit)."""
     import json

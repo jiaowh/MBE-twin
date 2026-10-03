@@ -1,16 +1,16 @@
 {
   "schema_version": "0.1",
   "run_id": "scattered_plume_tables",
-  "created_utc": "2026-10-02T20:59:26+00:00",
+  "created_utc": "2026-10-03T05:45:00+00:00",
   "label": "representative_chamber",
   "validation_status": "not_validated",
   "package_version": "0.1.0",
-  "git_commit": "eb6abd80b63e34e9f2c7709ec3bc452ceb66e0ff-dirty",
+  "git_commit": "3b9ea389c10ead029a70eaf51142f34edaf688fd-dirty",
   "python": "3.12.13",
   "numpy": "2.4.4",
   "platform": "Windows-11-10.0.26200-SP0",
   "source_sha256": {
-    "scripts/scattered_plume_tables.py": "57c257738b42209660b73babac22abd46a16db7bf9ff8752bc2eb60cea0025cd",
+    "scripts/scattered_plume_tables.py": "e6e482fe953cd3a172e65983265cc55efa9d302e3aeba58be88740f59fea7165",
     "scripts/scattered_tables.py": "a46b2443f5689577a9e3465221e379033e664b54e3a33be25941092505a4c42e",
     "src/mbe_twin/scattering.py": "919857e2093235bc337ddfed1b39be13ba7eccb4d05d9ffe0b550aa7ac859b73",
     "src/mbe_twin/crucible.py": "981dab446a3caf8230a0ba691141ac8500a259d98518f810e4d8c7eda68256d2",
@@ -18,7 +18,7 @@
     "data/design/design_envelope.json": "e1d2e14d6e2277cab563a3231116889ed4f053186e600e3ae68e050ec1c79906"
   },
   "solver": null,
-  "inputs_sha256": "70e2da5018a49429094056e6609968004139caa96a58a493fbb760bdd38f574a",
+  "inputs_sha256": "999cb025c9fe3367b8712f899ebecb32ff8ffa3ec6281faa730b8ace5924bd02",
   "inputs": {
     "layouts": [
       "B"
@@ -107,7 +107,12 @@
       0.094
     ],
     "gas_temperature_K": 300.0,
-    "seed": 20261005
+    "seed": 20261015,
+    "coverage_rule": "through the first grid pressure whose feed reaches feed_max_sccm",
+    "extends": {
+      "run_id": "scattered_plume_tables",
+      "seed": 20261005
+    }
   },
   "outputs": {
     "rho_m": [
@@ -624,7 +629,47 @@
               1.56738034150717,
               1.5662405286989063
             ],
-            null,
+            [
+              1.980365657525788,
+              1.9802522348389822,
+              1.9799124967524253,
+              1.979348033187697,
+              1.9785614940140979,
+              1.9775565890486484,
+              1.9763380880560888,
+              1.9749118207488798,
+              1.9732846767872025,
+              1.9714646057789573,
+              1.9694606172797653,
+              1.9672827807929678,
+              1.9649422257696258,
+              1.9624511416085206,
+              1.9598227776561539,
+              1.9570714432067466,
+              1.9542125075022412,
+              1.9512623997322989,
+              1.9482386090343018,
+              1.9451596844933519,
+              1.9420452351422712,
+              1.9389159299616021,
+              1.935793497879607,
+              1.932700727772268,
+              1.9296614684632882,
+              1.92670062872409,
+              1.923844177273816,
+              1.9211191427793297,
+              1.9185536138552135,
+              1.9161767390637712,
+              1.9140187269150255,
+              1.91211084586672,
+              1.9104854243243181,
+              1.9091758506410037,
+              1.9082165731176803,
+              1.9076431000029717,
+              1.9074919994932222,
+              1.9078008997324951,
+              1.9086084888125756
+            ],
             null,
             null,
             null,
@@ -642,7 +687,7 @@
             true,
             true,
             true,
-            false,
+            true,
             false,
             false,
             false,
@@ -1020,7 +1065,47 @@
               1.1665941533976116,
               1.165428414106032
             ],
-            null,
+            [
+              1.266615235573214,
+              1.2665937615359804,
+              1.26652944095401,
+              1.2664225784164949,
+              1.2662736815720885,
+              1.2660834611289051,
+              1.2658528308545212,
+              1.2655829075759735,
+              1.265275011179761,
+              1.2649306646118434,
+              1.2645515938776422,
+              1.2641397280420397,
+              1.26369719922938,
+              1.2632263426234682,
+              1.2627296964675707,
+              1.262210002064416,
+              1.2616702037761924,
+              1.2611134490245512,
+              1.2605430882906037,
+              1.2599626751149235,
+              1.2593759660975445,
+              1.2587869208979632,
+              1.2581997022351363,
+              1.2576186758874823,
+              1.257048410692881,
+              1.2564936785486738,
+              1.2559594544116626,
+              1.2554509162981116,
+              1.2549734452837455,
+              1.254532625503751,
+              1.254134244152776,
+              1.253784291484929,
+              1.2534889608137807,
+              1.2532546485123628,
+              1.2530879540131683,
+              1.2529956798081512,
+              1.252984831448728,
+              1.2530626175457746,
+              1.2532364497696302
+            ],
             null,
             null,
             null,
@@ -1038,7 +1123,7 @@
             true,
             true,
             true,
-            false,
+            true,
             false,
             false,
             false,
@@ -1082,7 +1167,8 @@
             "half_range_points": 0.44745509840679065,
             "half_range_points_err": 0.11375474221185693,
             "plume_collisions_per_emitted_atom": 0.001959625,
-            "feed_sccm": 0.2695780903034789
+            "feed_sccm": 0.2695780903034789,
+            "from_record": "scattered_plume_tables"
           },
           {
             "bins": [
@@ -1113,7 +1199,8 @@
             "half_range_points": 0.10541875818518355,
             "half_range_points_err": 0.12810876841042104,
             "plume_collisions_per_emitted_atom": 0.00391375,
-            "feed_sccm": 0.5391561806069578
+            "feed_sccm": 0.5391561806069578,
+            "from_record": "scattered_plume_tables"
           },
           {
             "bins": [
@@ -1144,7 +1231,8 @@
             "half_range_points": 0.4124664813759636,
             "half_range_points_err": 0.10557911820784588,
             "plume_collisions_per_emitted_atom": 0.007850875,
-            "feed_sccm": 1.0783123612139156
+            "feed_sccm": 1.0783123612139156,
+            "from_record": "scattered_plume_tables"
           },
           {
             "bins": [
@@ -1175,7 +1263,8 @@
             "half_range_points": 0.09527263359536181,
             "half_range_points_err": 0.08404538095779858,
             "plume_collisions_per_emitted_atom": 0.01574725,
-            "feed_sccm": 2.156624722427831
+            "feed_sccm": 2.156624722427831,
+            "from_record": "scattered_plume_tables"
           },
           {
             "bins": [
@@ -1206,7 +1295,8 @@
             "half_range_points": 0.2620401445670016,
             "half_range_points_err": 0.18003438753768738,
             "plume_collisions_per_emitted_atom": 0.03163675,
-            "feed_sccm": 4.313249444855662
+            "feed_sccm": 4.313249444855662,
+            "from_record": "scattered_plume_tables"
           },
           {
             "bins": [
@@ -1237,7 +1327,8 @@
             "half_range_points": 0.2387015309340561,
             "half_range_points_err": 0.10264523300716523,
             "plume_collisions_per_emitted_atom": 0.05575025,
-            "feed_sccm": 7.54818652849741
+            "feed_sccm": 7.54818652849741,
+            "from_record": "scattered_plume_tables"
           },
           {
             "bins": [
@@ -1268,7 +1359,8 @@
             "half_range_points": 0.4677604333853984,
             "half_range_points_err": 0.14287121779200285,
             "plume_collisions_per_emitted_atom": 0.080290875,
-            "feed_sccm": 10.783123612139157
+            "feed_sccm": 10.783123612139157,
+            "from_record": "scattered_plume_tables"
           },
           {
             "bins": [
@@ -1299,7 +1391,8 @@
             "half_range_points": 0.4436200573123322,
             "half_range_points_err": 0.10472958354173685,
             "plume_collisions_per_emitted_atom": 0.121833,
-            "feed_sccm": 16.174685418208732
+            "feed_sccm": 16.174685418208732,
+            "from_record": "scattered_plume_tables"
           },
           {
             "bins": [
@@ -1330,7 +1423,8 @@
             "half_range_points": 0.7375450242572168,
             "half_range_points_err": 0.1129299330594509,
             "plume_collisions_per_emitted_atom": 0.16424875,
-            "feed_sccm": 21.566247224278314
+            "feed_sccm": 21.566247224278314,
+            "from_record": "scattered_plume_tables"
           },
           {
             "bins": [
@@ -1361,9 +1455,40 @@
             "half_range_points": 1.189115631650009,
             "half_range_points_err": 0.2138221114525256,
             "plume_collisions_per_emitted_atom": 0.252649875,
-            "feed_sccm": 32.349370836417464
+            "feed_sccm": 32.349370836417464,
+            "from_record": "scattered_plume_tables"
           },
-          null,
+          {
+            "bins": [
+              1.9785813414001479,
+              1.9570542563892814,
+              1.9508258176445357,
+              1.9256181463932087,
+              1.933611445474048,
+              1.920439464185669,
+              1.9048380038736161,
+              1.9279083318538826,
+              1.905502941775278,
+              1.9018873473563978
+            ],
+            "bins_err": [
+              0.011994777156235011,
+              0.013508449540061694,
+              0.008901096661053395,
+              0.005223452233935717,
+              0.007183373333035441,
+              0.006437023352047468,
+              0.009868229646128508,
+              0.011451852018390433,
+              0.012242139205345382,
+              0.010307120546061166
+            ],
+            "reduced_chi2": 1.2237807150858657,
+            "half_range_points": 1.8741503579911047,
+            "half_range_points_err": 0.2034297770940837,
+            "plume_collisions_per_emitted_atom": 0.344937625,
+            "feed_sccm": 43.13249444855663
+          },
           null,
           null,
           null,
@@ -1400,7 +1525,8 @@
             "half_range_points": 0.13107971876679153,
             "half_range_points_err": 0.15610549455755052,
             "plume_collisions_per_emitted_atom": 0.003939375,
-            "feed_sccm": 0.5391561806069578
+            "feed_sccm": 0.5391561806069578,
+            "from_record": "scattered_plume_tables"
           },
           {
             "bins": [
@@ -1431,7 +1557,8 @@
             "half_range_points": 0.2532473921305113,
             "half_range_points_err": 0.14873304283417796,
             "plume_collisions_per_emitted_atom": 0.00779975,
-            "feed_sccm": 1.0783123612139156
+            "feed_sccm": 1.0783123612139156,
+            "from_record": "scattered_plume_tables"
           },
           {
             "bins": [
@@ -1462,7 +1589,8 @@
             "half_range_points": 0.16610415167922196,
             "half_range_points_err": 0.08470152062289567,
             "plume_collisions_per_emitted_atom": 0.015661625,
-            "feed_sccm": 2.156624722427831
+            "feed_sccm": 2.156624722427831,
+            "from_record": "scattered_plume_tables"
           },
           {
             "bins": [
@@ -1493,7 +1621,8 @@
             "half_range_points": 0.16130513364800791,
             "half_range_points_err": 0.13490921508252957,
             "plume_collisions_per_emitted_atom": 0.031308,
-            "feed_sccm": 4.313249444855662
+            "feed_sccm": 4.313249444855662,
+            "from_record": "scattered_plume_tables"
           },
           {
             "bins": [
@@ -1524,7 +1653,8 @@
             "half_range_points": 0.34329687205100334,
             "half_range_points_err": 0.15811882688112938,
             "plume_collisions_per_emitted_atom": 0.06320325,
-            "feed_sccm": 8.626498889711325
+            "feed_sccm": 8.626498889711325,
+            "from_record": "scattered_plume_tables"
           },
           {
             "bins": [
@@ -1555,7 +1685,8 @@
             "half_range_points": 0.24945228845301914,
             "half_range_points_err": 0.15311860732817115,
             "plume_collisions_per_emitted_atom": 0.111295875,
-            "feed_sccm": 15.09637305699482
+            "feed_sccm": 15.09637305699482,
+            "from_record": "scattered_plume_tables"
           },
           {
             "bins": [
@@ -1586,7 +1717,8 @@
             "half_range_points": 0.3827576061308062,
             "half_range_points_err": 0.10615112722442617,
             "plume_collisions_per_emitted_atom": 0.1605835,
-            "feed_sccm": 21.566247224278314
+            "feed_sccm": 21.566247224278314,
+            "from_record": "scattered_plume_tables"
           },
           {
             "bins": [
@@ -1617,9 +1749,40 @@
             "half_range_points": 0.5907985424299379,
             "half_range_points_err": 0.1281135094469836,
             "plume_collisions_per_emitted_atom": 0.24374475,
-            "feed_sccm": 32.349370836417464
+            "feed_sccm": 32.349370836417464,
+            "from_record": "scattered_plume_tables"
           },
-          null,
+          {
+            "bins": [
+              1.267530225308796,
+              1.2524773883301474,
+              1.2676524582169513,
+              1.25665323487449,
+              1.2572915787384773,
+              1.2533847441131627,
+              1.2530935132774703,
+              1.2583976794910376,
+              1.2591676832502587,
+              1.2520217128259308
+            ],
+            "bins_err": [
+              0.003890089937788271,
+              0.005372005281851208,
+              0.0054655679904772655,
+              0.0035052748473471586,
+              0.005910168792788785,
+              0.005468973630478818,
+              0.0043836615246114164,
+              0.0075393098262378855,
+              0.007464111451048254,
+              0.0030717138572607405
+            ],
+            "reduced_chi2": 1.0408147037263873,
+            "half_range_points": 0.5409719154387085,
+            "half_range_points_err": 0.21820273217578645,
+            "plume_collisions_per_emitted_atom": 0.33005,
+            "feed_sccm": 43.13249444855663
+          },
           null,
           null,
           null,

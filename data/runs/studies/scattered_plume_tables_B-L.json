@@ -1,7 +1,7 @@
 {
   "schema_version": "0.1",
   "run_id": "scattered_plume_tables",
-  "created_utc": "2026-10-02T19:29:22+00:00",
+  "created_utc": "2026-10-03T05:08:59+00:00",
   "label": "representative_chamber",
   "validation_status": "not_validated",
   "package_version": "0.1.0",
@@ -10,7 +10,7 @@
   "numpy": "2.4.4",
   "platform": "Windows-11-10.0.26200-SP0",
   "source_sha256": {
-    "scripts/scattered_plume_tables.py": "57c257738b42209660b73babac22abd46a16db7bf9ff8752bc2eb60cea0025cd",
+    "scripts/scattered_plume_tables.py": "e6e482fe953cd3a172e65983265cc55efa9d302e3aeba58be88740f59fea7165",
     "scripts/scattered_tables.py": "a46b2443f5689577a9e3465221e379033e664b54e3a33be25941092505a4c42e",
     "src/mbe_twin/scattering.py": "919857e2093235bc337ddfed1b39be13ba7eccb4d05d9ffe0b550aa7ac859b73",
     "src/mbe_twin/crucible.py": "981dab446a3caf8230a0ba691141ac8500a259d98518f810e4d8c7eda68256d2",
@@ -18,7 +18,7 @@
     "data/design/design_envelope.json": "e1d2e14d6e2277cab563a3231116889ed4f053186e600e3ae68e050ec1c79906"
   },
   "solver": null,
-  "inputs_sha256": "bddeda88e2e69929120e563c98b9b27c50f497fcc0d79b814890bf0b7391a617",
+  "inputs_sha256": "19d41b6a8f29e08b2a68fee1a6fa99cef122208f112a9e796b3da56600070507",
   "inputs": {
     "layouts": [
       "B-L"
@@ -107,7 +107,12 @@
       0.094
     ],
     "gas_temperature_K": 300.0,
-    "seed": 20261007
+    "seed": 20261017,
+    "coverage_rule": "through the first grid pressure whose feed reaches feed_max_sccm",
+    "extends": {
+      "run_id": "scattered_plume_tables",
+      "seed": 20261007
+    }
   },
   "outputs": {
     "rho_m": [
@@ -624,7 +629,47 @@
               1.6998695374000747,
               1.700598190557429
             ],
-            null,
+            [
+              2.157279596642245,
+              2.15719277235025,
+              2.1569327488905023,
+              2.1565008745117025,
+              2.155899396295024,
+              2.1551314601541076,
+              2.1542011108350625,
+              2.1531132919164677,
+              2.1518738458093702,
+              2.1504895137572864,
+              2.148967935836201,
+              2.1473176509545673,
+              2.1455480968533087,
+              2.143669610105816,
+              2.14169342611795,
+              2.1396316791280396,
+              2.137497402206882,
+              2.1353045272577442,
+              2.1330678850163616,
+              2.1308032050509387,
+              2.128527115762149,
+              2.126257144383133,
+              2.1240117169795028,
+              2.121810158449337,
+              2.119672692523185,
+              2.117620441764063,
+              2.115675427567458,
+              2.113860570161324,
+              2.1121996886060845,
+              2.1107175007946326,
+              2.109439623452329,
+              2.1083925721370043,
+              2.1076037612389564,
+              2.1071015039809544,
+              2.1069150124182334,
+              2.1070743974385002,
+              2.107610668761928,
+              2.10855573494116,
+              2.1099424033613077
+            ],
             null,
             null,
             null,
@@ -642,7 +687,7 @@
             true,
             true,
             true,
-            false,
+            true,
             false,
             false,
             false,
@@ -1020,7 +1065,47 @@
               1.2419231795849386,
               1.2401219509829498
             ],
-            null,
+            [
+              1.3690776819059713,
+              1.3690531853000405,
+              1.3689798243688178,
+              1.368857985772011,
+              1.3686883139424666,
+              1.3684717110861708,
+              1.3682093371822475,
+              1.3679026099829596,
+              1.3675532050137094,
+              1.3671630555730365,
+              1.3667343527326206,
+              1.3662695453372793,
+              1.3657713400049698,
+              1.3652427011267865,
+              1.3646868508669643,
+              1.3641072691628753,
+              1.3635076937250314,
+              1.3628921200370832,
+              1.362264801355819,
+              1.3616302487111667,
+              1.3609932309061927,
+              1.3603587745171022,
+              1.3597321638932394,
+              1.359118941157086,
+              1.3585249062042641,
+              1.3579561167035334,
+              1.3574188880967928,
+              1.3569197935990795,
+              1.3564656641985702,
+              1.3560635886565797,
+              1.3557209135075612,
+              1.3554452430591077,
+              1.3552444393919496,
+              1.3551266223599576,
+              1.3551001695901395,
+              1.3551737164826432,
+              1.3553561562107541,
+              1.3556566397208973,
+              1.356084575732636
+            ],
             null,
             null,
             null,
@@ -1038,7 +1123,7 @@
             true,
             true,
             true,
-            false,
+            true,
             false,
             false,
             false,
@@ -1082,7 +1167,8 @@
             "half_range_points": 0.24731324381505262,
             "half_range_points_err": 0.13740190487463078,
             "plume_collisions_per_emitted_atom": 0.001262375,
-            "feed_sccm": 0.2695780903034789
+            "feed_sccm": 0.2695780903034789,
+            "from_record": "scattered_plume_tables"
           },
           {
             "bins": [
@@ -1113,7 +1199,8 @@
             "half_range_points": 0.27460571699150943,
             "half_range_points_err": 0.12919131483791968,
             "plume_collisions_per_emitted_atom": 0.002517625,
-            "feed_sccm": 0.5391561806069578
+            "feed_sccm": 0.5391561806069578,
+            "from_record": "scattered_plume_tables"
           },
           {
             "bins": [
@@ -1144,7 +1231,8 @@
             "half_range_points": 0.42875830176924645,
             "half_range_points_err": 0.12827309115528876,
             "plume_collisions_per_emitted_atom": 0.005098,
-            "feed_sccm": 1.0783123612139156
+            "feed_sccm": 1.0783123612139156,
+            "from_record": "scattered_plume_tables"
           },
           {
             "bins": [
@@ -1175,7 +1263,8 @@
             "half_range_points": 0.12992048151567592,
             "half_range_points_err": 0.11144724547796675,
             "plume_collisions_per_emitted_atom": 0.010201,
-            "feed_sccm": 2.156624722427831
+            "feed_sccm": 2.156624722427831,
+            "from_record": "scattered_plume_tables"
           },
           {
             "bins": [
@@ -1206,7 +1295,8 @@
             "half_range_points": 0.06467141834030639,
             "half_range_points_err": 0.11133352306597377,
             "plume_collisions_per_emitted_atom": 0.020485375,
-            "feed_sccm": 4.313249444855662
+            "feed_sccm": 4.313249444855662,
+            "from_record": "scattered_plume_tables"
           },
           {
             "bins": [
@@ -1237,7 +1327,8 @@
             "half_range_points": 0.26630005083282543,
             "half_range_points_err": 0.09231071768388067,
             "plume_collisions_per_emitted_atom": 0.036298750000000005,
-            "feed_sccm": 7.54818652849741
+            "feed_sccm": 7.54818652849741,
+            "from_record": "scattered_plume_tables"
           },
           {
             "bins": [
@@ -1268,7 +1359,8 @@
             "half_range_points": 0.5022591048321515,
             "half_range_points_err": 0.17849214006352995,
             "plume_collisions_per_emitted_atom": 0.052351125,
-            "feed_sccm": 10.783123612139157
+            "feed_sccm": 10.783123612139157,
+            "from_record": "scattered_plume_tables"
           },
           {
             "bins": [
@@ -1299,7 +1391,8 @@
             "half_range_points": 0.37415370494850225,
             "half_range_points_err": 0.10198623518714905,
             "plume_collisions_per_emitted_atom": 0.079803125,
-            "feed_sccm": 16.174685418208732
+            "feed_sccm": 16.174685418208732,
+            "from_record": "scattered_plume_tables"
           },
           {
             "bins": [
@@ -1330,7 +1423,8 @@
             "half_range_points": 0.5350770968563611,
             "half_range_points_err": 0.1973894934342147,
             "plume_collisions_per_emitted_atom": 0.10813275,
-            "feed_sccm": 21.566247224278314
+            "feed_sccm": 21.566247224278314,
+            "from_record": "scattered_plume_tables"
           },
           {
             "bins": [
@@ -1361,9 +1455,40 @@
             "half_range_points": 1.1493478988226946,
             "half_range_points_err": 0.13434469475924496,
             "plume_collisions_per_emitted_atom": 0.167577,
-            "feed_sccm": 32.349370836417464
+            "feed_sccm": 32.349370836417464,
+            "from_record": "scattered_plume_tables"
           },
-          null,
+          {
+            "bins": [
+              2.156548080187766,
+              2.156524413761849,
+              2.1221546997376577,
+              2.1097881928703393,
+              2.1244355971859195,
+              2.1260281490465687,
+              2.1025151948078284,
+              2.1199878990701606,
+              2.106927705442411,
+              2.10073025048947
+            ],
+            "bins_err": [
+              0.01095203362455075,
+              0.013000676682256865,
+              0.0071185717353816,
+              0.010482057471231118,
+              0.014856626648800808,
+              0.010381092237652727,
+              0.010562318651211572,
+              0.01107931531163434,
+              0.01033022198295136,
+              0.01107242213171286
+            ],
+            "reduced_chi2": 1.3119660338451997,
+            "half_range_points": 1.1816256530527836,
+            "half_range_points_err": 0.21863481719713007,
+            "plume_collisions_per_emitted_atom": 0.23011987499999997,
+            "feed_sccm": 43.13249444855663
+          },
           null,
           null,
           null,
@@ -1400,7 +1525,8 @@
             "half_range_points": 0.20763340809795192,
             "half_range_points_err": 0.12087189711087407,
             "plume_collisions_per_emitted_atom": 0.002534875,
-            "feed_sccm": 0.5391561806069578
+            "feed_sccm": 0.5391561806069578,
+            "from_record": "scattered_plume_tables"
           },
           {
             "bins": [
@@ -1431,7 +1557,8 @@
             "half_range_points": 0.4068456599912394,
             "half_range_points_err": 0.14503314322155003,
             "plume_collisions_per_emitted_atom": 0.0051094999999999995,
-            "feed_sccm": 1.0783123612139156
+            "feed_sccm": 1.0783123612139156,
+            "from_record": "scattered_plume_tables"
           },
           {
             "bins": [
@@ -1462,7 +1589,8 @@
             "half_range_points": 0.28452029324566513,
             "half_range_points_err": 0.17439775582934053,
             "plume_collisions_per_emitted_atom": 0.010188125,
-            "feed_sccm": 2.156624722427831
+            "feed_sccm": 2.156624722427831,
+            "from_record": "scattered_plume_tables"
           },
           {
             "bins": [
@@ -1493,7 +1621,8 @@
             "half_range_points": 0.38878528003540874,
             "half_range_points_err": 0.11200271049508975,
             "plume_collisions_per_emitted_atom": 0.020290375,
-            "feed_sccm": 4.313249444855662
+            "feed_sccm": 4.313249444855662,
+            "from_record": "scattered_plume_tables"
           },
           {
             "bins": [
@@ -1524,7 +1653,8 @@
             "half_range_points": 0.25770437989480716,
             "half_range_points_err": 0.1535335975636764,
             "plume_collisions_per_emitted_atom": 0.0409905,
-            "feed_sccm": 8.626498889711325
+            "feed_sccm": 8.626498889711325,
+            "from_record": "scattered_plume_tables"
           },
           {
             "bins": [
@@ -1555,7 +1685,8 @@
             "half_range_points": 0.2227900361964571,
             "half_range_points_err": 0.11045184598408235,
             "plume_collisions_per_emitted_atom": 0.07251099999999999,
-            "feed_sccm": 15.09637305699482
+            "feed_sccm": 15.09637305699482,
+            "from_record": "scattered_plume_tables"
           },
           {
             "bins": [
@@ -1586,7 +1717,8 @@
             "half_range_points": 0.3585828123581031,
             "half_range_points_err": 0.12387015689705747,
             "plume_collisions_per_emitted_atom": 0.10475262499999999,
-            "feed_sccm": 21.566247224278314
+            "feed_sccm": 21.566247224278314,
+            "from_record": "scattered_plume_tables"
           },
           {
             "bins": [
@@ -1617,9 +1749,40 @@
             "half_range_points": 0.6677373346691835,
             "half_range_points_err": 0.10500359101043442,
             "plume_collisions_per_emitted_atom": 0.16004012500000003,
-            "feed_sccm": 32.349370836417464
+            "feed_sccm": 32.349370836417464,
+            "from_record": "scattered_plume_tables"
           },
-          null,
+          {
+            "bins": [
+              1.369158553687332,
+              1.3678592707849728,
+              1.3600020157268211,
+              1.3550636075085747,
+              1.3512972131625043,
+              1.3661516931995048,
+              1.3626981204887847,
+              1.3568327647933616,
+              1.3566680905988902,
+              1.3509112710776112
+            ],
+            "bins_err": [
+              0.004275864227756029,
+              0.007669351894185366,
+              0.0037458887447582943,
+              0.005441129317099951,
+              0.005287790080910965,
+              0.0078046894175959804,
+              0.0055334325075027686,
+              0.007084763846125464,
+              0.005000832166863546,
+              0.005551310911762287
+            ],
+            "reduced_chi2": 0.972946424386713,
+            "half_range_points": 0.5132064226804777,
+            "half_range_points_err": 0.17538386867383587,
+            "plume_collisions_per_emitted_atom": 0.216753625,
+            "feed_sccm": 43.13249444855663
+          },
           null,
           null,
           null,

@@ -442,6 +442,7 @@ The batch means are fitted as a quadratic in r^2 (median reduced chi^2 1.2). The
 - cos^n surrogate sources, used only as a ratio on the comparison's own maps;
 - a spherical chamber, hard spheres, uniform 300 K chamber gas, no pump;
 - the plume is first order and at 300 K (600 K gives about two thirds of its effect), not tabulated for 0.5 m^3/s;
+- the plume tables first stopped at 32 sccm, so states between 32 and 35 sccm mixed plume and gas-only factors (2026-10-03 audit). They now cover the grid pressure above 35 sccm at both speeds, and the gas+plume records were rerun. Only feed-ceiling results moved: maximum rates at 35 sccm fell by 1-3 %, worst cases there by up to 0.3 points, and B-L at 1.5 um/h is no longer reachable at 790 C. Every value quoted in this section, the conversion limits and the cold limits at 1 um/h are unchanged;
 - the Ga factors at 0.07-0.15 Pa fit the quadratic poorly (beyond any reachable operating point);
 - the N wall recombination is not sourced.
 

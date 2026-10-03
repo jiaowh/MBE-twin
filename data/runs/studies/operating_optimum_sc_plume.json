@@ -1,23 +1,26 @@
 {
   "schema_version": "0.1",
   "run_id": "operating_optimum",
-  "created_utc": "2026-10-02T21:09:59+00:00",
+  "created_utc": "2026-10-03T05:47:52+00:00",
   "label": "representative_chamber",
   "validation_status": "not_validated",
   "package_version": "0.1.0",
-  "git_commit": "eb6abd80b63e34e9f2c7709ec3bc452ceb66e0ff-dirty",
+  "git_commit": "3b9ea389c10ead029a70eaf51142f34edaf688fd-dirty",
   "python": "3.12.13",
   "numpy": "2.4.4",
   "platform": "Windows-11-10.0.26200-SP0",
   "source_sha256": {
-    "scripts/operating_optimum.py": "2becba325906dd846b663d6ac9e96e05b2006d3a72c82d480b860d3a7044f58c",
-    "scripts/layout_comparison.py": "5e0008b444f1c2969eae551fd167acd4d6f2a37f76a6cbbd70019680e28ed644",
+    "scripts/operating_optimum.py": "4d5b02c42380d4b852d649cb7b33c2f21ad854223e2dca3ad6fcd8fd6d2b767a",
+    "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
     "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
     "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
     "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
     "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
-    "data/runs/studies/layout_comparison_bc_sc_plume.json": "0ef1e75749e58dbe943c32f567f2cf4f99cbdcbac00c39ce49b621b5339a65e6",
-    "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6"
+    "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+    "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+    "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+    "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+    "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
   },
   "solver": null,
   "inputs_sha256": "5a54017f2e90ff73c014e3d6b4149474c258ad2a92cd8712d4079df8b76d9ffd",
@@ -10130,13 +10133,13 @@
         "reachable": true,
         "feed_sccm": [
           27.83902407176238,
-          32.529133715940745
+          32.61168915157784
         ],
         "pressure_Pa": [
           0.012908608429760769,
-          0.015083353806368735
+          0.015121633732764162
         ],
-        "kn_min": 1.827368930101276,
+        "kn_min": 1.822743004795996,
         "valid_fraction": 0.0,
         "in_window_fraction": 1.0,
         "worst_pct": null,
@@ -10310,13 +10313,13 @@
         "reachable": true,
         "feed_sccm": [
           28.426356428262874,
-          33.31268074604636
+          33.773671738214716
         ],
         "pressure_Pa": [
           0.013180947121973896,
-          0.015446674796783579
+          0.015660430573286685
         ],
-        "kn_min": 1.7843874147737213,
+        "kn_min": 1.7600315635318051,
         "valid_fraction": 0.0,
         "in_window_fraction": 1.0,
         "worst_pct": null,
@@ -11570,16 +11573,16 @@
         "reachable": true,
         "feed_sccm": [
           29.362701629056648,
-          32.46810359301212
+          32.49570495478896
         ],
         "pressure_Pa": [
           0.013615118719404013,
-          0.015055054899148603
+          0.015067853306534833
         ],
-        "kn_min": 12.806185175257713,
+        "kn_min": 12.79530779467787,
         "valid_fraction": 1.0,
         "in_window_fraction": 1.0,
-        "worst_pct": 1.9745358148764753,
+        "worst_pct": 1.973131482170025,
         "nominal_pct": 1.037854450730677,
         "heater_capped_fraction": 0.2857142857142857,
         "nominal_shortfall_K": -3.012701199622825e-11,
@@ -11750,16 +11753,16 @@
         "reachable": true,
         "feed_sccm": [
           29.592680647764354,
-          32.809169298971
+          32.917675069006464
         ],
         "pressure_Pa": [
           0.013721757123534337,
-          0.015213202815386403
+          0.015263515588353834
         ],
-        "kn_min": 12.673059263179944,
+        "kn_min": 12.631285351408419,
         "valid_fraction": 1.0,
         "in_window_fraction": 1.0,
-        "worst_pct": 2.146084198834203,
+        "worst_pct": 2.140478070197275,
         "nominal_pct": 1.1963664153976414,
         "heater_capped_fraction": 0.42857142857142855,
         "nominal_shortfall_K": 3.54702933691442e-11,
@@ -11930,16 +11933,16 @@
         "reachable": true,
         "feed_sccm": [
           29.914296459788584,
-          33.28339108052445
+          33.50843056810561
         ],
         "pressure_Pa": [
           0.013870886366410757,
-          0.015433093543996615
+          0.015537441549118163
         ],
-        "kn_min": 12.492493505112272,
+        "kn_min": 12.408595086435593,
         "valid_fraction": 1.0,
         "in_window_fraction": 1.0,
-        "worst_pct": 2.3861214020217707,
+        "worst_pct": 2.3742479212008685,
         "nominal_pct": 1.317740470282296,
         "heater_capped_fraction": 0.42857142857142855,
         "nominal_shortfall_K": -1.2050804798491299e-11,
@@ -12105,22 +12108,22 @@
         "T_C": 770,
         "rate_um_h": 1.5,
         "extrapolated_decomposition": false,
-        "nominal_feed_sccm": 32.67196524274133,
-        "nominal_kn": 12.726279053383216,
+        "nominal_feed_sccm": 32.74763687473322,
+        "nominal_kn": 12.696871792369622,
         "reachable": true,
         "feed_sccm": [
           30.363742360584205,
-          33.935784407298776
+          34.32899294149151
         ],
         "pressure_Pa": [
           0.014079288827961717,
-          0.0157356001970966
+          0.015917926092790715
         ],
-        "kn_min": 12.252333463437976,
+        "kn_min": 12.111993719425966,
         "valid_fraction": 1.0,
         "in_window_fraction": 1.0,
-        "worst_pct": 2.7172240388907203,
-        "nominal_pct": 1.4462153916546827,
+        "worst_pct": 2.6963030487547432,
+        "nominal_pct": 1.4364622513580156,
         "heater_capped_fraction": 0.42857142857142855,
         "nominal_shortfall_K": -7.048583938740194e-12,
         "admissible": true
@@ -12285,25 +12288,25 @@
         "T_C": 780,
         "rate_um_h": 1.5,
         "extrapolated_decomposition": false,
-        "nominal_feed_sccm": 33.51002867855924,
-        "nominal_kn": 12.408003314172051,
+        "nominal_feed_sccm": 33.79245499546208,
+        "nominal_kn": 12.304301269540773,
         "reachable": true,
         "feed_sccm": [
           30.990435444564852,
-          34.832885637849394
+          34.999999999998806
         ],
         "pressure_Pa": [
           0.01436987859884923,
-          0.01615157485472767
+          0.01622906370126249
         ],
-        "kn_min": 11.936781558222771,
-        "valid_fraction": 1.0,
+        "kn_min": 11.87978705433079,
+        "valid_fraction": 0.8971428571428571,
         "in_window_fraction": 1.0,
-        "worst_pct": 3.172964127586566,
-        "nominal_pct": 1.4335978662588644,
+        "worst_pct": 2.862953478193504,
+        "nominal_pct": 1.4128713022091197,
         "heater_capped_fraction": 0.42857142857142855,
         "nominal_shortfall_K": 6.366462912410498e-12,
-        "admissible": true
+        "admissible": false
       },
       {
         "eta": 0.3,
@@ -13054,13 +13057,13 @@
         "reachable": true,
         "feed_sccm": [
           27.915555638179768,
-          32.69515286241436
+          32.85534485969126
         ],
         "pressure_Pa": [
           0.012944095163090632,
-          0.015160334815047296
+          0.015234613847282705
         ],
-        "kn_min": 1.8180899329562106,
+        "kn_min": 1.8092255165626823,
         "valid_fraction": 0.0,
         "in_window_fraction": 1.0,
         "worst_pct": null,
@@ -13170,13 +13173,13 @@
         "reachable": true,
         "feed_sccm": [
           28.578212465031807,
-          33.59226479095981
+          34.19583922910596
         ],
         "pressure_Pa": [
           0.013251360873235163,
-          0.015576314433205212
+          0.015856184376208865
         ],
-        "kn_min": 1.7695361907130753,
+        "kn_min": 1.7383029519282864,
         "valid_fraction": 0.0,
         "in_window_fraction": 1.0,
         "worst_pct": null,
@@ -13281,22 +13284,22 @@
         "T_C": 760,
         "rate_um_h": 0.5,
         "extrapolated_decomposition": false,
-        "nominal_feed_sccm": 33.24606106695143,
-        "nominal_kn": 1.7879630358589942,
+        "nominal_feed_sccm": 33.67370009918163,
+        "nominal_kn": 1.7652568057724258,
         "reachable": true,
         "feed_sccm": [
           29.516468308360878,
-          34.83445703337787
+          34.999999999998806
         ],
         "pressure_Pa": [
           0.013686418411791442,
-          0.016152303491245714
+          0.01622906370126249
         ],
-        "kn_min": 1.7064347585111725,
+        "kn_min": 1.6983636650177718,
         "valid_fraction": 0.0,
         "in_window_fraction": 1.0,
         "worst_pct": null,
-        "nominal_pct": 1.7593406944970058,
+        "nominal_pct": 1.696565750111616,
         "heater_capped_fraction": 0.42857142857142855,
         "nominal_shortfall_K": -1.2050804798491299e-11,
         "admissible": false
@@ -13397,25 +13400,9 @@
         "T_C": 770,
         "rate_um_h": 0.5,
         "extrapolated_decomposition": false,
-        "nominal_feed_sccm": 34.83118310244439,
-        "nominal_kn": 1.7065951535665291,
-        "reachable": true,
-        "feed_sccm": [
-          30.851286172070353,
-          34.999999999998806
-        ],
-        "pressure_Pa": [
-          0.014305356815783583,
-          0.01622906370126249
-        ],
-        "kn_min": 1.6983636650177718,
-        "valid_fraction": 0.0,
-        "in_window_fraction": 1.0,
-        "worst_pct": null,
-        "nominal_pct": 2.2145585926035745,
-        "heater_capped_fraction": 0.42857142857142855,
-        "nominal_shortfall_K": -7.048583938740194e-12,
-        "admissible": false
+        "nominal_feed_sccm": 35.0,
+        "nominal_kn": 1.6983636650177139,
+        "reachable": false
       },
       {
         "eta": 0.1,
@@ -13966,16 +13953,16 @@
         "reachable": true,
         "feed_sccm": [
           29.35553438215844,
-          32.48076982946594
+          32.5113327566384
         ],
         "pressure_Pa": [
           0.013611795356361906,
-          0.015060928075099015
+          0.01507509972344127
         ],
-        "kn_min": 12.801191261309462,
+        "kn_min": 12.78915724599644,
         "valid_fraction": 1.0,
         "in_window_fraction": 0.9904761904761905,
-        "worst_pct": 1.9644176647559883,
+        "worst_pct": 1.962861756415048,
         "nominal_pct": 1.0361583481515597,
         "heater_capped_fraction": 0.2857142857142857,
         "nominal_shortfall_K": 2.9331204132176936e-11,
@@ -14082,16 +14069,16 @@
         "reachable": true,
         "feed_sccm": [
           29.598799172909818,
-          32.85516199810882
+          32.97476274503797
         ],
         "pressure_Pa": [
           0.013724594207372723,
-          0.015234529056646422
+          0.015289986432093047
         ],
-        "kn_min": 12.655318726643229,
+        "kn_min": 12.609417393431642,
         "valid_fraction": 1.0,
         "in_window_fraction": 1.0,
-        "worst_pct": 2.148749666683794,
+        "worst_pct": 2.142557595725599,
         "nominal_pct": 1.074030099588349,
         "heater_capped_fraction": 0.2857142857142857,
         "nominal_shortfall_K": -3.4219738154206425e-11,
@@ -14198,16 +14185,16 @@
         "reachable": true,
         "feed_sccm": [
           29.947109606079426,
-          33.383729688630595
+          33.63403698317278
         ],
         "pressure_Pa": [
           0.013886101413307697,
-          0.015479619305786634
+          0.015595683678015658
         ],
-        "kn_min": 12.45494589069743,
+        "kn_min": 12.362255149733762,
         "valid_fraction": 1.0,
         "in_window_fraction": 1.0,
-        "worst_pct": 2.4104758025780564,
+        "worst_pct": 2.397211142899281,
         "nominal_pct": 1.1665481459903007,
         "heater_capped_fraction": 0.2857142857142857,
         "nominal_shortfall_K": 8.071765478234738e-12,
@@ -14309,22 +14296,22 @@
         "T_C": 740,
         "rate_um_h": 0.5,
         "extrapolated_decomposition": false,
-        "nominal_feed_sccm": 32.848802855827266,
-        "nominal_kn": 12.657768647657225,
+        "nominal_feed_sccm": 32.96687011879025,
+        "nominal_kn": 12.612436224710718,
         "reachable": true,
         "feed_sccm": [
           30.44544535427432,
-          34.125521127751114
+          34.569378770425566
         ],
         "pressure_Pa": [
           0.014117173487652597,
-          0.015823578749173447
+          0.01602939000509505
         ],
-        "kn_min": 12.184210911974558,
+        "kn_min": 12.027770289504826,
         "valid_fraction": 1.0,
         "in_window_fraction": 1.0,
-        "worst_pct": 2.7795198529157834,
-        "nominal_pct": 1.2770450835365774,
+        "worst_pct": 2.758442906222367,
+        "nominal_pct": 1.2683936690378517,
         "heater_capped_fraction": 0.2857142857142857,
         "nominal_shortfall_K": -3.012701199622825e-11,
         "admissible": true
@@ -14425,8 +14412,8 @@
         "T_C": 750,
         "rate_um_h": 0.5,
         "extrapolated_decomposition": false,
-        "nominal_feed_sccm": 33.81168330568065,
-        "nominal_kn": 12.297303956816215,
+        "nominal_feed_sccm": 34.17220037362094,
+        "nominal_kn": 12.16756727268088,
         "reachable": true,
         "feed_sccm": [
           31.152345131014517,
@@ -14437,13 +14424,13 @@
           0.01622906370126249
         ],
         "kn_min": 11.87978705433079,
-        "valid_fraction": 0.9714285714285714,
+        "valid_fraction": 0.88,
         "in_window_fraction": 1.0,
-        "worst_pct": 3.215170284780672,
-        "nominal_pct": 1.5412967399352022,
+        "worst_pct": 2.9216819539770085,
+        "nominal_pct": 1.4949707685079618,
         "heater_capped_fraction": 0.42857142857142855,
         "nominal_shortfall_K": 3.54702933691442e-11,
-        "admissible": true
+        "admissible": false
       },
       {
         "eta": 0.1,
@@ -15225,7 +15212,7 @@
           "S_eff_m3_s": 4.0,
           "feed_limit_sccm": 35.0
         },
-        "admissible_points": 60,
+        "admissible_points": 59,
         "front": [
           {
             "eta": 0.3,
@@ -15403,7 +15390,7 @@
           "S_eff_m3_s": 4.0,
           "feed_limit_sccm": 35.0
         },
-        "admissible_points": 16,
+        "admissible_points": 15,
         "front": [
           {
             "eta": 0.1,

@@ -1,17 +1,17 @@
 {
   "schema_version": "0.1",
   "run_id": "nitrogen_aim_pressure",
-  "created_utc": "2026-10-02T21:09:34+00:00",
+  "created_utc": "2026-10-03T05:46:56+00:00",
   "label": "representative_chamber",
   "validation_status": "not_validated",
   "package_version": "0.1.0",
-  "git_commit": "eb6abd80b63e34e9f2c7709ec3bc452ceb66e0ff-dirty",
+  "git_commit": "3b9ea389c10ead029a70eaf51142f34edaf688fd-dirty",
   "python": "3.12.13",
   "numpy": "2.4.4",
   "platform": "Windows-11-10.0.26200-SP0",
   "source_sha256": {
-    "scripts/nitrogen_aim_pressure.py": "b1eef50e90040c2ceca16333bf1fd0cbc8167ae97b8e30d1ce9e571381029019",
-    "scripts/layout_comparison.py": "5e0008b444f1c2969eae551fd167acd4d6f2a37f76a6cbbd70019680e28ed644",
+    "scripts/nitrogen_aim_pressure.py": "3ed2958db5f21a064894ce635d1f7a21d5106a0b52aec4e36597a4bc4a655c0f",
+    "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
     "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
     "src/mbe_twin/aperture.py": "08ff8b237847ca4a16a60b866748fa348a757f18a69abe7c8dbdaf652a466e6b",
     "src/mbe_twin/beam.py": "90a90503e0a530d61bed26d42ca161b2d0e4d0d2f6d0f794ccf7fc4c9083ed93",
@@ -20,7 +20,10 @@
     "src/mbe_twin/vacuum.py": "21b1538e8ea911537a4d42f584dd08efca470db7db594259be2d16b4c806db7b",
     "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
     "data/design/design_envelope.json": "e1d2e14d6e2277cab563a3231116889ed4f053186e600e3ae68e050ec1c79906",
-    "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6"
+    "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+    "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+    "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+    "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
   },
   "solver": null,
   "inputs_sha256": "14ddab30936d160f770cfed512f7843d6618b4d92689c43c0419b63a6eadf52c",
@@ -157,18 +160,18 @@
         "best": {
           "angle_deg": 46.0,
           "offset_mm": 82.5,
-          "thickness_pct": 0.8175452319386985,
+          "thickness_pct": 0.8008577575559988,
           "pressure_Pa": 0.016229063701263043
         },
         "per_angle": {
           "46": {
             "offset_mm": 82.5,
-            "thickness_pct": 0.8175452319386985,
+            "thickness_pct": 0.8008577575559988,
             "pressure_Pa": 0.016229063701263043
           },
           "65": {
             "offset_mm": 45.0,
-            "thickness_pct": 2.415399550449941,
+            "thickness_pct": 2.425553428714473,
             "pressure_Pa": 0.016229063701263043
           }
         }
@@ -198,7 +201,7 @@
             "target_reached": true
           },
           "feed-limit pressure": {
-            "thickness_pct": 3.2192562932808384,
+            "thickness_pct": 3.2099506991841436,
             "pressure_Pa": 0.016229063701263043
           }
         }
@@ -226,7 +229,7 @@
             "target_reached": true
           },
           "feed-limit pressure": {
-            "thickness_pct": 2.5808280554085705,
+            "thickness_pct": 2.5708437809174844,
             "pressure_Pa": 0.016229063701263043
           }
         }
@@ -254,7 +257,7 @@
             "target_reached": true
           },
           "feed-limit pressure": {
-            "thickness_pct": 1.9559704926014627,
+            "thickness_pct": 1.9419117377857449,
             "pressure_Pa": 0.016229063701263043
           }
         }
@@ -282,7 +285,7 @@
             "target_reached": true
           },
           "feed-limit pressure": {
-            "thickness_pct": 1.4796735707550606,
+            "thickness_pct": 1.4636045657302965,
             "pressure_Pa": 0.016229063701263043
           }
         }
@@ -310,7 +313,7 @@
             "target_reached": true
           },
           "feed-limit pressure": {
-            "thickness_pct": 1.133907592542208,
+            "thickness_pct": 1.1171089217971077,
             "pressure_Pa": 0.016229063701263043
           }
         }
@@ -338,7 +341,7 @@
             "target_reached": true
           },
           "feed-limit pressure": {
-            "thickness_pct": 0.8175452319386985,
+            "thickness_pct": 0.8008577575559988,
             "pressure_Pa": 0.016229063701263043
           }
         }
@@ -366,7 +369,7 @@
             "target_reached": true
           },
           "feed-limit pressure": {
-            "thickness_pct": 1.0418226276351243,
+            "thickness_pct": 1.0422853044541682,
             "pressure_Pa": 0.016229063701263043
           }
         }
@@ -394,7 +397,7 @@
             "target_reached": true
           },
           "feed-limit pressure": {
-            "thickness_pct": 1.4909172685820913,
+            "thickness_pct": 1.4933538162999405,
             "pressure_Pa": 0.016229063701263043
           }
         }
@@ -422,7 +425,7 @@
             "target_reached": true
           },
           "feed-limit pressure": {
-            "thickness_pct": 1.8722488271704594,
+            "thickness_pct": 1.8746883918914887,
             "pressure_Pa": 0.016229063701263043
           }
         }
@@ -450,7 +453,7 @@
             "target_reached": true
           },
           "feed-limit pressure": {
-            "thickness_pct": 2.2797288010026664,
+            "thickness_pct": 2.2822230784075725,
             "pressure_Pa": 0.016229063701263043
           }
         }
@@ -478,7 +481,7 @@
             "target_reached": true
           },
           "feed-limit pressure": {
-            "thickness_pct": 2.617617212882712,
+            "thickness_pct": 2.622337293124158,
             "pressure_Pa": 0.016229063701263043
           }
         }
@@ -506,7 +509,7 @@
             "target_reached": true
           },
           "feed-limit pressure": {
-            "thickness_pct": 3.042367291663246,
+            "thickness_pct": 3.047127592960469,
             "pressure_Pa": 0.016229063701263043
           }
         }
@@ -534,7 +537,7 @@
             "target_reached": true
           },
           "feed-limit pressure": {
-            "thickness_pct": 3.4193080920119887,
+            "thickness_pct": 3.426659165811245,
             "pressure_Pa": 0.016229063701263043
           }
         }
@@ -562,7 +565,7 @@
             "target_reached": true
           },
           "feed-limit pressure": {
-            "thickness_pct": 3.8504248122611493,
+            "thickness_pct": 3.8578517331315267,
             "pressure_Pa": 0.016229063701263043
           }
         }
@@ -590,7 +593,7 @@
             "target_reached": true
           },
           "feed-limit pressure": {
-            "thickness_pct": 4.268283258894542,
+            "thickness_pct": 4.278643363181764,
             "pressure_Pa": 0.016229063701263043
           }
         }
@@ -618,7 +621,7 @@
             "target_reached": true
           },
           "feed-limit pressure": {
-            "thickness_pct": 2.415399550449941,
+            "thickness_pct": 2.425553428714473,
             "pressure_Pa": 0.016229063701263043
           }
         }
@@ -646,7 +649,7 @@
             "target_reached": true
           },
           "feed-limit pressure": {
-            "thickness_pct": 2.7229492914693365,
+            "thickness_pct": 2.73324023338763,
             "pressure_Pa": 0.016229063701263043
           }
         }
@@ -674,7 +677,7 @@
             "target_reached": true
           },
           "feed-limit pressure": {
-            "thickness_pct": 3.0335490630684387,
+            "thickness_pct": 3.0438802109322904,
             "pressure_Pa": 0.016229063701263043
           }
         }
@@ -702,7 +705,7 @@
             "target_reached": true
           },
           "feed-limit pressure": {
-            "thickness_pct": 3.4212490987202773,
+            "thickness_pct": 3.4315594779500853,
             "pressure_Pa": 0.016229063701263043
           }
         }
@@ -730,7 +733,7 @@
             "target_reached": true
           },
           "feed-limit pressure": {
-            "thickness_pct": 3.814403398613216,
+            "thickness_pct": 3.8247633700602672,
             "pressure_Pa": 0.016229063701263043
           }
         }
@@ -758,7 +761,7 @@
             "target_reached": true
           },
           "feed-limit pressure": {
-            "thickness_pct": 4.241352540211065,
+            "thickness_pct": 4.251746720535714,
             "pressure_Pa": 0.016229063701263043
           }
         }
@@ -786,7 +789,7 @@
             "target_reached": true
           },
           "feed-limit pressure": {
-            "thickness_pct": 4.6444518896338876,
+            "thickness_pct": 4.654900369581726,
             "pressure_Pa": 0.016229063701263043
           }
         }
@@ -814,7 +817,7 @@
             "target_reached": true
           },
           "feed-limit pressure": {
-            "thickness_pct": 5.062907472487859,
+            "thickness_pct": 5.073414261331252,
             "pressure_Pa": 0.016229063701263043
           }
         }
@@ -842,7 +845,7 @@
             "target_reached": true
           },
           "feed-limit pressure": {
-            "thickness_pct": 5.450617109754698,
+            "thickness_pct": 5.461179656582221,
             "pressure_Pa": 0.016229063701263043
           }
         }
@@ -870,7 +873,7 @@
             "target_reached": true
           },
           "feed-limit pressure": {
-            "thickness_pct": 5.840681771782375,
+            "thickness_pct": 5.851299732493192,
             "pressure_Pa": 0.016229063701263043
           }
         }
@@ -884,10 +887,10 @@
             "q_atoms_s": 6.7502653324448e+18
           },
           "1 um/h self-consistent": {
-            "thickness_pct": 6.171928522748932,
-            "q_atoms_s": 8.77087535799203e+18,
-            "pressure_Pa": 0.015136875365170421,
-            "feed_sccm": 32.64455963283534,
+            "thickness_pct": 6.173473513559755,
+            "q_atoms_s": 8.775077554010226e+18,
+            "pressure_Pa": 0.015144127562333331,
+            "feed_sccm": 32.66019990052879,
             "target_reached": true
           },
           "0.5 um/h self-consistent": {
@@ -898,7 +901,7 @@
             "target_reached": true
           },
           "feed-limit pressure": {
-            "thickness_pct": 6.21599375729681,
+            "thickness_pct": 6.2266920747240775,
             "pressure_Pa": 0.016229063701263043
           }
         }
@@ -912,10 +915,10 @@
             "q_atoms_s": 6.844553155698452e+18
           },
           "1 um/h self-consistent": {
-            "thickness_pct": 6.53956027728149,
-            "q_atoms_s": 8.903874277229907e+18,
-            "pressure_Pa": 0.015366406396228991,
-            "feed_sccm": 33.1395719289806,
+            "thickness_pct": 6.543757095263563,
+            "q_atoms_s": 8.915324106276077e+18,
+            "pressure_Pa": 0.015386166640007448,
+            "feed_sccm": 33.18218735923442,
             "target_reached": true
           },
           "0.5 um/h self-consistent": {
@@ -926,7 +929,7 @@
             "target_reached": true
           },
           "feed-limit pressure": {
-            "thickness_pct": 6.575492167553677,
+            "thickness_pct": 6.586244420404069,
             "pressure_Pa": 0.016229063701263043
           }
         }
@@ -940,10 +943,10 @@
             "q_atoms_s": 6.952366422347208e+18
           },
           "1 um/h self-consistent": {
-            "thickness_pct": 6.887124311947711,
-            "q_atoms_s": 9.056501677175482e+18,
-            "pressure_Pa": 0.015629812480113314,
-            "feed_sccm": 33.70764000152343,
+            "thickness_pct": 6.89443604614068,
+            "q_atoms_s": 9.076581463879051e+18,
+            "pressure_Pa": 0.015664466401903932,
+            "feed_sccm": 33.78237550598616,
             "target_reached": true
           },
           "0.5 um/h self-consistent": {
@@ -954,7 +957,7 @@
             "target_reached": true
           },
           "feed-limit pressure": {
-            "thickness_pct": 6.912899679546835,
+            "thickness_pct": 6.923677006765834,
             "pressure_Pa": 0.016229063701263043
           }
         }
@@ -968,10 +971,10 @@
             "q_atoms_s": 7.075392828403734e+18
           },
           "1 um/h self-consistent": {
-            "thickness_pct": 7.2416790744934225,
-            "q_atoms_s": 9.231514509694802e+18,
-            "pressure_Pa": 0.01593185159536952,
-            "feed_sccm": 34.3590250246252,
+            "thickness_pct": 7.252684540214989,
+            "q_atoms_s": 9.261906176415336e+18,
+            "pressure_Pa": 0.015984301875702076,
+            "feed_sccm": 34.47214059588865,
             "target_reached": true
           },
           "0.5 um/h self-consistent": {
@@ -982,7 +985,7 @@
             "target_reached": true
           },
           "feed-limit pressure": {
-            "thickness_pct": 7.2549042262619485,
+            "thickness_pct": 7.265736484796429,
             "pressure_Pa": 0.016229063701263043
           }
         }
@@ -996,8 +999,8 @@
             "q_atoms_s": 7.214678011114951e+18
           },
           "1 um/h self-consistent": {
-            "thickness_pct": 7.5806571450474785,
-            "q_atoms_s": 9.403730391294554e+18,
+            "thickness_pct": 7.592676983314945,
+            "q_atoms_s": 9.403730391294556e+18,
             "pressure_Pa": 0.016229063701263043,
             "feed_sccm": 35.0,
             "target_reached": false
@@ -1010,7 +1013,7 @@
             "target_reached": true
           },
           "feed-limit pressure": {
-            "thickness_pct": 7.579875161913349,
+            "thickness_pct": 7.5907545025546534,
             "pressure_Pa": 0.016229063701263043
           }
         }

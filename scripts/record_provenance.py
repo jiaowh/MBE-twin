@@ -99,18 +99,6 @@ IMPACT = {
                                          "the covered entries of the earlier records are computed exactly as before.",
     "src/mbe_twin/sparta.py": "Later change (2026-10-03) lets wsl_path return a POSIX path unchanged when run inside WSL; on "
                               "Windows (where every record ran) the path is the earlier one.",
-    "data/runs/studies/scattered_plume_tables_B.json": [
-        {"records": ["nitrogen_aim_pressure_sc_plume.json", "nitrogen_aim_bigplate_sc_plume.json"], "current": "b054859e2d28",
-         "note": "Loaded without a recorded hash; the table is the version written before these records ran (created "
-                 "2026-10-02 19:29-20:59 UTC, records 21:09 UTC) and unchanged since."}],
-    "data/runs/studies/scattered_plume_tables_B-p.json": [
-        {"records": ["nitrogen_aim_pressure_sc_plume.json", "nitrogen_aim_bigplate_sc_plume.json"], "current": "ae8f858f0781",
-         "note": "Loaded without a recorded hash; the table is the version written before these records ran (created "
-                 "2026-10-02 19:29-20:59 UTC, records 21:09 UTC) and unchanged since."}],
-    "data/runs/studies/scattered_plume_tables_B-L.json": [
-        {"records": ["nitrogen_aim_pressure_sc_plume.json", "nitrogen_aim_bigplate_sc_plume.json"], "current": "e34fb89c9738",
-         "note": "Loaded without a recorded hash; the table is the version written before these records ran (created "
-                 "2026-10-02 19:29-20:59 UTC, records 21:09 UTC) and unchanged since."}],
     "data/runs/studies/layout_comparison_bc.json": [
         {"records": ["nitrogen_rate_limits.json"],
          "note": "Regenerated after the 2026-10-02 audit (on-target validity label). The operating points and nominal values "
