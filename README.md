@@ -114,17 +114,32 @@ The earlier operating-point studies let the gallium controller know every uncert
 
 - With settings fixed at calibration, or with only a growth-rate monitor, no temperature keeps 95 % of the cases in the growth window.
 - A **gallium beam-flux measurement** before growth is what makes the difference. Together with an in-situ growth-rate monitor it reaches 95 % at 730 °C with the current heater design.
-- A little **spare heater power** (zones laid out for an element about 13 K below its rating, about 4 % headroom) lets the standard-plate layout B-p run at **720 °C with a worst-case thickness spread of ±1.53 %**, the most uniform admissible point. More spare power makes the controller more robust but widens the wafer's temperature range, which costs uniformity.
-- **Most of the remaining worst case comes from two things:** the nitrogen source pointing slightly off, and wafer-to-wafer heating differences. Re-aiming the nitrogen source after commissioning, from a measured thickness map, to within about 0.2°, and reading the wafer temperature at three radii with the heater zones trimmed in three groups, bring the worst-case spread at 1 µm/h down to about **±0.5 % (B-p) and ±0.65 % (B-L) at 710 °C**, from ±1.5–1.7 %. The large-plate layout also does better aimed 5 mm further out.
-- Knowing the crucible fill or measuring the beam maps at commissioning adds only 1–2 points; the remaining gap is the instruments' accuracy and wafer-to-wafer heater variation. The beam-flux monitor's accuracy matters most.
+- **Simpler configuration** (one centre pyrometer, no re-aim). A little spare heater power, with the zones laid out for an element about 13 K below its rating (about 4 % headroom), lets the standard-plate layout B-p run at 720 °C with a worst-case thickness spread of ±1.53 %. B-L needs 730 °C (±1.67 %). More spare power makes the controller more robust, but it widens the wafer's temperature range, which costs uniformity.
+- **Most of the remaining worst case comes from two things:** the nitrogen source pointing slightly off, and wafer-to-wafer heating differences. Two changes address them:
+  - re-aim the nitrogen source after commissioning, from a measured thickness map, to within about 0.2°;
+  - read the wafer temperature at three radii and trim the heater zones in three groups.
+
+  With both, the best model results at 1 µm/h are:
+  - **B-L, aimed 5 mm further out (+95 mm): ±0.65 % at 710 °C.**
+  - **B-p: ±0.49 % at 710 °C, only if the gallium charge's fill level is tracked** and the calibrated beam shape for that fill is used. Without fill tracking, only 94.1 % of the modelled cases pass at 710 °C, below the 95 % requirement, and B-p's best point is ±0.54 % at 720 °C.
+  - **Caveats:** 710 °C uses the decomposition law 10 °C below the range it was fitted to (720–805 °C). At 720 °C, inside that range, the values are ±0.54 % (B-p) and ±0.72 % (B-L).
+- Measuring the beam maps at commissioning adds only 1–2 points on top of that. The rest of the gap is the instruments' accuracy and wafer-to-wafer heater variation. The beam-flux monitor's accuracy matters most for staying in the growth window.
 
 ## Current design direction
 
 The provisional choice is **layout B-p**: the nitrogen source sits on the same port ring as the metal cells, with its beam aimed about 97.5 mm from the wafer centre toward the source side. Its aim was selected for growth pressure. **B-L** uses a larger outlet plate designed in this study and an aim offset of about 90 mm. It is a promising alternative if the supplier can build and operate that plate.
 
-The current working operating point is **1 µm/h at about 720 °C**, with gallium supply adjusted from a wafer-centre temperature reading. Since the 5 October update it is chosen for the best worst-case uniformity, which is the project's priority, and it depends on a gallium beam-flux monitor and an in-situ growth-rate monitor. With a commissioning re-aim of the nitrogen source and three-point temperature control of the heater, both layouts reach their most uniform point at 710 °C: ±0.49 % (B-p) and ±0.65 % (B-L, aimed at +95 mm). Without those two, B-p runs at 720 °C (±1.53 %) and B-L at 730 °C (±1.67 %). This is a modelling choice, conditional on nitrogen output, pumping, heater performance and acceptable crystal quality. The temperature is based on the published growth laws' scales and must be calibrated on the real machine.
+The working rate is **1 µm/h**. The temperature is chosen for the best worst-case uniformity, which is the project's priority. Every option needs a gallium beam-flux monitor and an in-situ growth-rate monitor. Three configurations are on the table:
 
-At that operating point, the studies including scattered atoms and the nitrogen plume give worst-case thickness **half-range/mean of about 1.5–1.8%** across the qualifying scenarios. Other scattering and wall assumptions extend that range to about 2.1%. These are model results over a selected set of conditions, not demonstrated wafer uniformity or a probability of production success.
+| Configuration | B-p (standard plate) | B-L (large plate) |
+|---|---|---|
+| One centre pyrometer, no re-aim | 720 °C, ±1.53 % (about 4 % heater headroom) | 730 °C, ±1.67 % |
+| Re-aim to 0.2° + three-point heater control | 720 °C, ±0.54 % | 720 °C, ±0.72 % (aim +95 mm) |
+| Same, at 710 °C (decomposition law extrapolated 10 °C) | ±0.49 %, **needs gallium fill tracking** | ±0.65 % (aim +95 mm) |
+
+B-p's figures assume a source that converts nearly all of its nitrogen feed into active nitrogen, with 2 m³/s of pumping. B-L's assume about 30 % conversion with 4 m³/s of pumping, which is more plausible from the literature. So the two columns are not equally achievable.
+
+All of these are modelling choices. They are conditional on nitrogen output, pumping, heater performance, the instruments' accuracy and acceptable crystal quality, which is not modelled and may set its own lower temperature limit. The temperatures are on the published growth laws' scales and must be calibrated on the real machine. The figures are worst cases over a chosen grid of conditions, not demonstrated wafer uniformity or a probability of production success. The B-L aim change still needs checking with its own transport and pointing tables before an aim is frozen.
 
 The main decisions remain:
 
@@ -134,7 +149,7 @@ The main decisions remain:
 - **Mechanical fit:** simplified models give about 6 mm minimum guaranteed clearance for the B family over the full shutter motion. Actual source, shutter, holder and chamber drawings are needed to check the design.
 - **Acceptance criteria:** uniformity, minimum growth rate and material-quality requirements must be agreed before a layout can be accepted.
 
-The [layout comparison](docs/LAYOUT_COMPARISON.md) contains the assumptions, scenario tables and failure conditions. Its section 10 includes scattering and the nitrogen plume; earlier sections retain the older direct-beam results for comparison.
+The [layout comparison](docs/LAYOUT_COMPARISON.md) contains the assumptions, scenario tables and failure conditions. Sections 11 and 12 govern the operating point: section 11 covers the realistic controller and heater margin, section 12 the worst-case drivers and the re-aim, aim and three-point heater levers. Section 10 adds scattering and the nitrogen plume; sections 1–8 keep the older direct-beam results, in which the controller knew every machine state, for comparison.
 
 ### Reading the uniformity numbers
 

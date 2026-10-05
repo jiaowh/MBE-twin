@@ -220,3 +220,17 @@ def test_provenance_covers_ga_record_dependencies(tmp_path):
         hashes = rp.recorded_hashes(m)
         assert hashes[path] == "0" * 64 != actual          # a changed summary is a mismatch the checker reports
     assert rp.recorded_hashes({"inputs": {"ga_records_sha256": {"missing.json": "x"}}})["data/runs/sparta_ga/missing.json"] == "x"
+
+
+def test_provenance_checks_summary_constituents_and_aim_maps():
+    # audit follow-up 2026-10-05, finding 2: aim-map hashes are dependencies, and a summary's constituent runs are
+    # expanded with their own hashes
+    import importlib.util
+    root = Path(__file__).resolve().parents[1]
+    spec = importlib.util.spec_from_file_location("record_provenance", root / "scripts/record_provenance.py")
+    rp = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(rp)
+    deps = {"source_sha256": {"scripts/realizable_controller.py": "a" * 64},
+            "aim_maps_sha256": {"results/aim_operating/aim_maps_B-L.npz": "b" * 64}}
+    hashes = rp.recorded_hashes({"source_sha256": deps["source_sha256"], "inputs": deps})
+    assert hashes == {"scripts/realizable_controller.py": "a" * 64, "results/aim_operating/aim_maps_B-L.npz": "b" * 64}

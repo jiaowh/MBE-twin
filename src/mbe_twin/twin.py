@@ -32,8 +32,10 @@ steps; control.ControllerModel): the controllers know only the calibration state
 controller_model and instrument readings. The rate monitor measures the centre net rate over
 `sensors.rate_monitor.window_s` of growth (relative error and noise) and scales the commanded feed by
 (target + modelled decomposition) / (measured + modelled decomposition); the Ga cell follows the window
-middle at the reading through the calibrated model, corrected by the last BFM reading. The controller
-uses the true pressure as its gauge reading (an ideal gauge).
+middle at the reading through the calibrated model, corrected by the last BFM reading. The controllers
+read the chamber pressure only through the ion gauge (sensors.ion_gauge, with its sensitivity and noise),
+sampled at the start of each sub-step together with the pyrometer; the gas itself evolves from the true
+feed. The logged gauge_Pa is that controller reading (audit follow-up 2026-10-05, finding 1).
 
 Disabled couplings (estimated effects in the run manifest): Ga cell dynamics and the shutter flux
 transient; collisional change of the Ga crucible transmission with cell temperature; adlayer
@@ -242,6 +244,9 @@ class Twin:
         reading, flag = sensors.pyrometer(c.rho, c.wafer_on_grid(t_nodes), self.rng, spot_radius=py["spot_radius_m"],
                                           bias_k=py.get("bias_K", 0.0), noise_k=py.get("noise_K", 0.0),
                                           valid_min_k=py.get("valid_min_K", 873.0))
+        gauge = c.sensors.get("ion_gauge", {})
+        g_read, g_flag = sensors.ion_gauge(s["pressure"], self.rng, sensitivity=gauge.get("sensitivity", 1.0),
+                                           noise_rel=gauge.get("noise_rel", 0.0))
         h = step.heater
         if h["mode"] == "power":
             demand = h["power_W"]
@@ -270,8 +275,8 @@ class Twin:
         s["energy"]["loss_J"] += dt * (fr["front_loss"] + fr["rim_loss"])
         # ---- realizable Ga steering on the readings at the start of the sub-step ----
         if step.ga_cell["target_K"] == "steered" and flag == "ok":
-            s["ga_target"] = self.cm.ga_target(reading, s["pressure"])
-            cell_mid = cell_end = self.cm.cell_for(s["ga_target"], s["pressure"], s["kappa"])
+            s["ga_target"] = self.cm.ga_target(reading, g_read)
+            cell_mid = cell_end = self.cm.cell_for(s["ga_target"], g_read, s["kappa"])
         # ---- feed and pressure (exact first-order over the sub-step) ----
         if step.n2_sccm == "rate_monitor":
             if s["feed_cmd"] is None:
@@ -295,7 +300,7 @@ class Twin:
             true_arr = float(c.ga_flux(cell_mid, p_mean)[0]) / c.k_atoms
             noise = float(self.rng.normal(0.0, bf["noise_rel"])) if bf.get("noise_rel", 0.0) > 0 else 0.0
             measured = true_arr * (1.0 + bf.get("error_rel", 0.0)) * (1.0 + noise)
-            s["kappa"] = self.cm.model_arrival(cell_mid, p_mean) / measured
+            s["kappa"] = self.cm.model_arrival(cell_mid, g_read) / measured
         j_n = (c.n_flux(flow_mean, p_mean) / c.k_atoms if (step.shutters["n"] and step.plasma)
                else np.zeros_like(c.rho))
         t_wafer = c.wafer_on_grid(t_new)
@@ -331,9 +336,6 @@ class Twin:
         if s["t"] >= s["next_sample"] - 1e-9 or last_of_step:
             if s["t"] >= s["next_sample"] - 1e-9:
                 s["next_sample"] += self.sample_s * max(1, math.floor((s["t"] - s["next_sample"]) / self.sample_s) + 1)
-            gauge = c.sensors.get("ion_gauge", {})
-            g_read, _ = sensors.ion_gauge(p_end, self.rng, sensitivity=gauge.get("sensitivity", 1.0),
-                                          noise_rel=gauge.get("noise_rel", 0.0))
             regime, _ = sensors.regime_indicator(c.rho, info["regime"], c.sensors.get("regime_spot_radius_m", 0.01))
             w = self.weights
             in_window = (info["regime"] == "Ga-adlayer")

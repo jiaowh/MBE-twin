@@ -44,6 +44,8 @@ true state -> pyrometer, ion gauge, regime indicator, thickness map (readings wi
   - `"ga_cell": {"target_K": "steered"}`: the cell follows the window middle at the pyrometer reading through the calibrated model.
   - `"bfm": true` step: a beam-flux monitor at the wafer position reads the centre arrival while the wafer is out of the beam. The reading sets the model's correction factor.
 
+  The controllers read the chamber pressure only through the simulated ion gauge, sampled with the pyrometer at the start of each sub-step (sensitivity and noise included); the gas itself evolves from the true feed. Until the 2026-10-05 follow-up audit the Ga steering and the BFM correction used the true pressure.
+
   The protocol is that of the steady ensemble study (scripts/realizable_controller.py, [LAYOUT_COMPARISON.md](LAYOUT_COMPARISON.md) section 11).
 - **Checkpoints.** `Twin.checkpoint()` / `restore()` serialize the full state, including the RNG. A run resumed at a shutter event is identical to an uninterrupted one (V13).
 

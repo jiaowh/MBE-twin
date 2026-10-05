@@ -1,23 +1,23 @@
 {
   "schema_version": "0.1",
   "run_id": "uniformity_levers",
-  "created_utc": "2026-10-05T06:27:22+00:00",
+  "created_utc": "2026-10-05T07:25:27+00:00",
   "label": "representative_chamber",
   "validation_status": "not_validated",
   "package_version": "0.1.0",
-  "git_commit": "2d3593bc643b56456ad77d84d2e10e5b78636172-dirty",
+  "git_commit": "cdc97ac3e215e1b74be65ec9b8326165f645b55a-dirty",
   "python": "3.12.13",
   "numpy": "2.4.4",
   "platform": "Windows-11-10.0.26300-SP0",
   "source_sha256": {
-    "scripts/summarize_uniformity_levers.py": "1587cab3df6e4d7a451296c86b637c0fa4fc76f0a661c8ff75873e6be0212e39",
-    "scripts/realizable_controller.py": "c62a9828a3f695f24b1b60ac5fba94ed504168a042fd0c1da7df11670b4f1bf7",
+    "scripts/summarize_uniformity_levers.py": "b56d29ed1ef1c91502b325f3c0b442954029f1c8d7cb21ade1611a163973478e",
+    "scripts/realizable_controller.py": "6bad564f89364072ecf9f958bdc5e059e2e5156f040683e4ce365c300b9a7dde",
     "scripts/worst_case_drivers.py": "16b46b6c09620208957dc7c876fb2efa0cf5196d5e70341d41e602174af6033c",
     "scripts/multispot_heater.py": "4af4f9f2d2650e6b1cf322eaebad31568bba93c9eafddaae75a3e6ba4e51fc90",
     "scripts/nitrogen_aim_operating.py": "71245a9cdf9547f65c0b64edeb7f4a263ac209ec46c397f6ad6970415dcd8036"
   },
   "solver": null,
-  "inputs_sha256": "7d14d2e73e4a467cf32d7fa6314342bf0665c915f8b36eb814202cc2754da62f",
+  "inputs_sha256": "f31105d684ed8f0bd5b75068e68a647fec60e9bbd668e324cd9832595b41b8f0",
   "inputs": {
     "runs": [
       "reaim_check08",
@@ -57,7 +57,964 @@
     "controllers": [
       "rate monitor + BFM",
       "rate monitor + BFM + fill"
-    ]
+    ],
+    "constituents": {
+      "reaim_check08": {
+        "source_sha256": {
+          "scripts/realizable_controller.py": "01e36b96197cd0594201a005c6f42da4c1f79d21194f6a248c174ffa2a0c173f",
+          "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
+          "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
+          "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+          "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+          "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+          "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+          "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
+          "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+          "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+          "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+          "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+        },
+        "ga_records_sha256": {
+          "ga_dsmchold/fill040_d5.68_dsmchold.json": "4f48b7c9a7241658f8476c2cd278a3bf8c4d35533e91c94c369463bb5fb3862c",
+          "ga_dsmchold/fill040_d8_dsmchold.json": "c3fc71dcd4aaf83e8bd3f29479447bff874c67a4987d031265af7178c1cba23d",
+          "ga_dsmchold/fill070_d5.68_dsmchold.json": "2ae3126864ad66fdbe4afcb17f26e852852c19e983bde4b05477a9145e03a91e",
+          "ga_dsmchold/fill070_d8_dsmchold.json": "821ffa1cc2ac583d6f323b2e9b2f32498f0682ee96afccf7a6ffad8c5bf78238",
+          "ga_dsmchold/fill120_d5.68_dsmchold.json": "3658e44ba4ee3c62ceff867594454eb935d08b505250c2235a99eee89cb2d3f4",
+          "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
+        }
+      },
+      "reaim_d0.4_h1473": {
+        "source_sha256": {
+          "scripts/realizable_controller.py": "01e36b96197cd0594201a005c6f42da4c1f79d21194f6a248c174ffa2a0c173f",
+          "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
+          "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
+          "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+          "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+          "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+          "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+          "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
+          "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+          "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+          "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+          "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+        },
+        "ga_records_sha256": {
+          "ga_dsmchold/fill040_d5.68_dsmchold.json": "4f48b7c9a7241658f8476c2cd278a3bf8c4d35533e91c94c369463bb5fb3862c",
+          "ga_dsmchold/fill040_d8_dsmchold.json": "c3fc71dcd4aaf83e8bd3f29479447bff874c67a4987d031265af7178c1cba23d",
+          "ga_dsmchold/fill070_d5.68_dsmchold.json": "2ae3126864ad66fdbe4afcb17f26e852852c19e983bde4b05477a9145e03a91e",
+          "ga_dsmchold/fill070_d8_dsmchold.json": "821ffa1cc2ac583d6f323b2e9b2f32498f0682ee96afccf7a6ffad8c5bf78238",
+          "ga_dsmchold/fill120_d5.68_dsmchold.json": "3658e44ba4ee3c62ceff867594454eb935d08b505250c2235a99eee89cb2d3f4",
+          "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
+        }
+      },
+      "reaim_d0.4_h1460": {
+        "source_sha256": {
+          "scripts/realizable_controller.py": "01e36b96197cd0594201a005c6f42da4c1f79d21194f6a248c174ffa2a0c173f",
+          "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
+          "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
+          "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+          "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+          "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+          "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+          "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
+          "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+          "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+          "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+          "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+        },
+        "ga_records_sha256": {
+          "ga_dsmchold/fill040_d5.68_dsmchold.json": "4f48b7c9a7241658f8476c2cd278a3bf8c4d35533e91c94c369463bb5fb3862c",
+          "ga_dsmchold/fill040_d8_dsmchold.json": "c3fc71dcd4aaf83e8bd3f29479447bff874c67a4987d031265af7178c1cba23d",
+          "ga_dsmchold/fill070_d5.68_dsmchold.json": "2ae3126864ad66fdbe4afcb17f26e852852c19e983bde4b05477a9145e03a91e",
+          "ga_dsmchold/fill070_d8_dsmchold.json": "821ffa1cc2ac583d6f323b2e9b2f32498f0682ee96afccf7a6ffad8c5bf78238",
+          "ga_dsmchold/fill120_d5.68_dsmchold.json": "3658e44ba4ee3c62ceff867594454eb935d08b505250c2235a99eee89cb2d3f4",
+          "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
+        }
+      },
+      "reaim_d0.4_h1450": {
+        "source_sha256": {
+          "scripts/realizable_controller.py": "01e36b96197cd0594201a005c6f42da4c1f79d21194f6a248c174ffa2a0c173f",
+          "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
+          "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
+          "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+          "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+          "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+          "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+          "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
+          "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+          "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+          "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+          "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+        },
+        "ga_records_sha256": {
+          "ga_dsmchold/fill040_d5.68_dsmchold.json": "4f48b7c9a7241658f8476c2cd278a3bf8c4d35533e91c94c369463bb5fb3862c",
+          "ga_dsmchold/fill040_d8_dsmchold.json": "c3fc71dcd4aaf83e8bd3f29479447bff874c67a4987d031265af7178c1cba23d",
+          "ga_dsmchold/fill070_d5.68_dsmchold.json": "2ae3126864ad66fdbe4afcb17f26e852852c19e983bde4b05477a9145e03a91e",
+          "ga_dsmchold/fill070_d8_dsmchold.json": "821ffa1cc2ac583d6f323b2e9b2f32498f0682ee96afccf7a6ffad8c5bf78238",
+          "ga_dsmchold/fill120_d5.68_dsmchold.json": "3658e44ba4ee3c62ceff867594454eb935d08b505250c2235a99eee89cb2d3f4",
+          "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
+        }
+      },
+      "reaim_d0.2_h1473": {
+        "source_sha256": {
+          "scripts/realizable_controller.py": "01e36b96197cd0594201a005c6f42da4c1f79d21194f6a248c174ffa2a0c173f",
+          "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
+          "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
+          "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+          "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+          "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+          "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+          "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
+          "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+          "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+          "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+          "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+        },
+        "ga_records_sha256": {
+          "ga_dsmchold/fill040_d5.68_dsmchold.json": "4f48b7c9a7241658f8476c2cd278a3bf8c4d35533e91c94c369463bb5fb3862c",
+          "ga_dsmchold/fill040_d8_dsmchold.json": "c3fc71dcd4aaf83e8bd3f29479447bff874c67a4987d031265af7178c1cba23d",
+          "ga_dsmchold/fill070_d5.68_dsmchold.json": "2ae3126864ad66fdbe4afcb17f26e852852c19e983bde4b05477a9145e03a91e",
+          "ga_dsmchold/fill070_d8_dsmchold.json": "821ffa1cc2ac583d6f323b2e9b2f32498f0682ee96afccf7a6ffad8c5bf78238",
+          "ga_dsmchold/fill120_d5.68_dsmchold.json": "3658e44ba4ee3c62ceff867594454eb935d08b505250c2235a99eee89cb2d3f4",
+          "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
+        }
+      },
+      "reaim_d0.2_h1460": {
+        "source_sha256": {
+          "scripts/realizable_controller.py": "01e36b96197cd0594201a005c6f42da4c1f79d21194f6a248c174ffa2a0c173f",
+          "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
+          "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
+          "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+          "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+          "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+          "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+          "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
+          "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+          "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+          "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+          "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+        },
+        "ga_records_sha256": {
+          "ga_dsmchold/fill040_d5.68_dsmchold.json": "4f48b7c9a7241658f8476c2cd278a3bf8c4d35533e91c94c369463bb5fb3862c",
+          "ga_dsmchold/fill040_d8_dsmchold.json": "c3fc71dcd4aaf83e8bd3f29479447bff874c67a4987d031265af7178c1cba23d",
+          "ga_dsmchold/fill070_d5.68_dsmchold.json": "2ae3126864ad66fdbe4afcb17f26e852852c19e983bde4b05477a9145e03a91e",
+          "ga_dsmchold/fill070_d8_dsmchold.json": "821ffa1cc2ac583d6f323b2e9b2f32498f0682ee96afccf7a6ffad8c5bf78238",
+          "ga_dsmchold/fill120_d5.68_dsmchold.json": "3658e44ba4ee3c62ceff867594454eb935d08b505250c2235a99eee89cb2d3f4",
+          "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
+        }
+      },
+      "reaim_d0.2_h1450": {
+        "source_sha256": {
+          "scripts/realizable_controller.py": "01e36b96197cd0594201a005c6f42da4c1f79d21194f6a248c174ffa2a0c173f",
+          "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
+          "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
+          "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+          "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+          "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+          "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+          "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
+          "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+          "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+          "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+          "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+        },
+        "ga_records_sha256": {
+          "ga_dsmchold/fill040_d5.68_dsmchold.json": "4f48b7c9a7241658f8476c2cd278a3bf8c4d35533e91c94c369463bb5fb3862c",
+          "ga_dsmchold/fill040_d8_dsmchold.json": "c3fc71dcd4aaf83e8bd3f29479447bff874c67a4987d031265af7178c1cba23d",
+          "ga_dsmchold/fill070_d5.68_dsmchold.json": "2ae3126864ad66fdbe4afcb17f26e852852c19e983bde4b05477a9145e03a91e",
+          "ga_dsmchold/fill070_d8_dsmchold.json": "821ffa1cc2ac583d6f323b2e9b2f32498f0682ee96afccf7a6ffad8c5bf78238",
+          "ga_dsmchold/fill120_d5.68_dsmchold.json": "3658e44ba4ee3c62ceff867594454eb935d08b505250c2235a99eee89cb2d3f4",
+          "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
+        }
+      },
+      "reaim_d0.1_h1473": {
+        "source_sha256": {
+          "scripts/realizable_controller.py": "01e36b96197cd0594201a005c6f42da4c1f79d21194f6a248c174ffa2a0c173f",
+          "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
+          "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
+          "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+          "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+          "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+          "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+          "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
+          "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+          "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+          "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+          "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+        },
+        "ga_records_sha256": {
+          "ga_dsmchold/fill040_d5.68_dsmchold.json": "4f48b7c9a7241658f8476c2cd278a3bf8c4d35533e91c94c369463bb5fb3862c",
+          "ga_dsmchold/fill040_d8_dsmchold.json": "c3fc71dcd4aaf83e8bd3f29479447bff874c67a4987d031265af7178c1cba23d",
+          "ga_dsmchold/fill070_d5.68_dsmchold.json": "2ae3126864ad66fdbe4afcb17f26e852852c19e983bde4b05477a9145e03a91e",
+          "ga_dsmchold/fill070_d8_dsmchold.json": "821ffa1cc2ac583d6f323b2e9b2f32498f0682ee96afccf7a6ffad8c5bf78238",
+          "ga_dsmchold/fill120_d5.68_dsmchold.json": "3658e44ba4ee3c62ceff867594454eb935d08b505250c2235a99eee89cb2d3f4",
+          "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
+        }
+      },
+      "reaim_d0.1_h1460": {
+        "source_sha256": {
+          "scripts/realizable_controller.py": "01e36b96197cd0594201a005c6f42da4c1f79d21194f6a248c174ffa2a0c173f",
+          "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
+          "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
+          "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+          "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+          "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+          "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+          "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
+          "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+          "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+          "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+          "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+        },
+        "ga_records_sha256": {
+          "ga_dsmchold/fill040_d5.68_dsmchold.json": "4f48b7c9a7241658f8476c2cd278a3bf8c4d35533e91c94c369463bb5fb3862c",
+          "ga_dsmchold/fill040_d8_dsmchold.json": "c3fc71dcd4aaf83e8bd3f29479447bff874c67a4987d031265af7178c1cba23d",
+          "ga_dsmchold/fill070_d5.68_dsmchold.json": "2ae3126864ad66fdbe4afcb17f26e852852c19e983bde4b05477a9145e03a91e",
+          "ga_dsmchold/fill070_d8_dsmchold.json": "821ffa1cc2ac583d6f323b2e9b2f32498f0682ee96afccf7a6ffad8c5bf78238",
+          "ga_dsmchold/fill120_d5.68_dsmchold.json": "3658e44ba4ee3c62ceff867594454eb935d08b505250c2235a99eee89cb2d3f4",
+          "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
+        }
+      },
+      "reaim_d0.1_h1450": {
+        "source_sha256": {
+          "scripts/realizable_controller.py": "01e36b96197cd0594201a005c6f42da4c1f79d21194f6a248c174ffa2a0c173f",
+          "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
+          "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
+          "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+          "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+          "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+          "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+          "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
+          "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+          "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+          "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+          "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+        },
+        "ga_records_sha256": {
+          "ga_dsmchold/fill040_d5.68_dsmchold.json": "4f48b7c9a7241658f8476c2cd278a3bf8c4d35533e91c94c369463bb5fb3862c",
+          "ga_dsmchold/fill040_d8_dsmchold.json": "c3fc71dcd4aaf83e8bd3f29479447bff874c67a4987d031265af7178c1cba23d",
+          "ga_dsmchold/fill070_d5.68_dsmchold.json": "2ae3126864ad66fdbe4afcb17f26e852852c19e983bde4b05477a9145e03a91e",
+          "ga_dsmchold/fill070_d8_dsmchold.json": "821ffa1cc2ac583d6f323b2e9b2f32498f0682ee96afccf7a6ffad8c5bf78238",
+          "ga_dsmchold/fill120_d5.68_dsmchold.json": "3658e44ba4ee3c62ceff867594454eb935d08b505250c2235a99eee89cb2d3f4",
+          "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
+        }
+      },
+      "aim_BL_a90_d0.2": {
+        "source_sha256": {
+          "scripts/nitrogen_aim_operating.py": "71245a9cdf9547f65c0b64edeb7f4a263ac209ec46c397f6ad6970415dcd8036",
+          "scripts/realizable_controller.py": "6bad564f89364072ecf9f958bdc5e059e2e5156f040683e4ce365c300b9a7dde",
+          "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
+          "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
+          "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+          "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+          "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+          "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+          "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
+          "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+          "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+          "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+          "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+        },
+        "aim_maps_sha256": {
+          "results/aim_operating/aim_maps_B-L.npz": "9693474d8e9078c6a555423c2e9a01404ec60f2ba96cefb3c56ed420769a9e45"
+        },
+        "ga_records_sha256": {
+          "ga_dsmchold/fill040_d5.68_dsmchold.json": "4f48b7c9a7241658f8476c2cd278a3bf8c4d35533e91c94c369463bb5fb3862c",
+          "ga_dsmchold/fill040_d8_dsmchold.json": "c3fc71dcd4aaf83e8bd3f29479447bff874c67a4987d031265af7178c1cba23d",
+          "ga_dsmchold/fill070_d5.68_dsmchold.json": "2ae3126864ad66fdbe4afcb17f26e852852c19e983bde4b05477a9145e03a91e",
+          "ga_dsmchold/fill070_d8_dsmchold.json": "821ffa1cc2ac583d6f323b2e9b2f32498f0682ee96afccf7a6ffad8c5bf78238",
+          "ga_dsmchold/fill120_d5.68_dsmchold.json": "3658e44ba4ee3c62ceff867594454eb935d08b505250c2235a99eee89cb2d3f4",
+          "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
+        }
+      },
+      "aim_BL_a92.5_d0.2": {
+        "source_sha256": {
+          "scripts/nitrogen_aim_operating.py": "71245a9cdf9547f65c0b64edeb7f4a263ac209ec46c397f6ad6970415dcd8036",
+          "scripts/realizable_controller.py": "6bad564f89364072ecf9f958bdc5e059e2e5156f040683e4ce365c300b9a7dde",
+          "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
+          "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
+          "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+          "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+          "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+          "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+          "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
+          "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+          "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+          "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+          "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+        },
+        "aim_maps_sha256": {
+          "results/aim_operating_fine/aim_maps_B-L.npz": "9adc9af56fa14e4edceea74f4a40183713f52e838136a2f2cdd5cca9d73ea03c"
+        },
+        "ga_records_sha256": {
+          "ga_dsmchold/fill040_d5.68_dsmchold.json": "4f48b7c9a7241658f8476c2cd278a3bf8c4d35533e91c94c369463bb5fb3862c",
+          "ga_dsmchold/fill040_d8_dsmchold.json": "c3fc71dcd4aaf83e8bd3f29479447bff874c67a4987d031265af7178c1cba23d",
+          "ga_dsmchold/fill070_d5.68_dsmchold.json": "2ae3126864ad66fdbe4afcb17f26e852852c19e983bde4b05477a9145e03a91e",
+          "ga_dsmchold/fill070_d8_dsmchold.json": "821ffa1cc2ac583d6f323b2e9b2f32498f0682ee96afccf7a6ffad8c5bf78238",
+          "ga_dsmchold/fill120_d5.68_dsmchold.json": "3658e44ba4ee3c62ceff867594454eb935d08b505250c2235a99eee89cb2d3f4",
+          "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
+        }
+      },
+      "aim_BL_a95_d0.2": {
+        "source_sha256": {
+          "scripts/nitrogen_aim_operating.py": "71245a9cdf9547f65c0b64edeb7f4a263ac209ec46c397f6ad6970415dcd8036",
+          "scripts/realizable_controller.py": "6bad564f89364072ecf9f958bdc5e059e2e5156f040683e4ce365c300b9a7dde",
+          "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
+          "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
+          "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+          "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+          "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+          "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+          "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
+          "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+          "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+          "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+          "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+        },
+        "aim_maps_sha256": {
+          "results/aim_operating/aim_maps_B-L.npz": "9693474d8e9078c6a555423c2e9a01404ec60f2ba96cefb3c56ed420769a9e45"
+        },
+        "ga_records_sha256": {
+          "ga_dsmchold/fill040_d5.68_dsmchold.json": "4f48b7c9a7241658f8476c2cd278a3bf8c4d35533e91c94c369463bb5fb3862c",
+          "ga_dsmchold/fill040_d8_dsmchold.json": "c3fc71dcd4aaf83e8bd3f29479447bff874c67a4987d031265af7178c1cba23d",
+          "ga_dsmchold/fill070_d5.68_dsmchold.json": "2ae3126864ad66fdbe4afcb17f26e852852c19e983bde4b05477a9145e03a91e",
+          "ga_dsmchold/fill070_d8_dsmchold.json": "821ffa1cc2ac583d6f323b2e9b2f32498f0682ee96afccf7a6ffad8c5bf78238",
+          "ga_dsmchold/fill120_d5.68_dsmchold.json": "3658e44ba4ee3c62ceff867594454eb935d08b505250c2235a99eee89cb2d3f4",
+          "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
+        }
+      },
+      "aim_BL_a97.5_d0.2": {
+        "source_sha256": {
+          "scripts/nitrogen_aim_operating.py": "71245a9cdf9547f65c0b64edeb7f4a263ac209ec46c397f6ad6970415dcd8036",
+          "scripts/realizable_controller.py": "6bad564f89364072ecf9f958bdc5e059e2e5156f040683e4ce365c300b9a7dde",
+          "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
+          "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
+          "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+          "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+          "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+          "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+          "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
+          "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+          "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+          "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+          "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+        },
+        "aim_maps_sha256": {
+          "results/aim_operating_fine/aim_maps_B-L.npz": "9adc9af56fa14e4edceea74f4a40183713f52e838136a2f2cdd5cca9d73ea03c"
+        },
+        "ga_records_sha256": {
+          "ga_dsmchold/fill040_d5.68_dsmchold.json": "4f48b7c9a7241658f8476c2cd278a3bf8c4d35533e91c94c369463bb5fb3862c",
+          "ga_dsmchold/fill040_d8_dsmchold.json": "c3fc71dcd4aaf83e8bd3f29479447bff874c67a4987d031265af7178c1cba23d",
+          "ga_dsmchold/fill070_d5.68_dsmchold.json": "2ae3126864ad66fdbe4afcb17f26e852852c19e983bde4b05477a9145e03a91e",
+          "ga_dsmchold/fill070_d8_dsmchold.json": "821ffa1cc2ac583d6f323b2e9b2f32498f0682ee96afccf7a6ffad8c5bf78238",
+          "ga_dsmchold/fill120_d5.68_dsmchold.json": "3658e44ba4ee3c62ceff867594454eb935d08b505250c2235a99eee89cb2d3f4",
+          "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
+        }
+      },
+      "aim_BL_a100_d0.2": {
+        "source_sha256": {
+          "scripts/nitrogen_aim_operating.py": "71245a9cdf9547f65c0b64edeb7f4a263ac209ec46c397f6ad6970415dcd8036",
+          "scripts/realizable_controller.py": "6bad564f89364072ecf9f958bdc5e059e2e5156f040683e4ce365c300b9a7dde",
+          "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
+          "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
+          "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+          "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+          "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+          "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+          "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
+          "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+          "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+          "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+          "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+        },
+        "aim_maps_sha256": {
+          "results/aim_operating/aim_maps_B-L.npz": "9693474d8e9078c6a555423c2e9a01404ec60f2ba96cefb3c56ed420769a9e45"
+        },
+        "ga_records_sha256": {
+          "ga_dsmchold/fill040_d5.68_dsmchold.json": "4f48b7c9a7241658f8476c2cd278a3bf8c4d35533e91c94c369463bb5fb3862c",
+          "ga_dsmchold/fill040_d8_dsmchold.json": "c3fc71dcd4aaf83e8bd3f29479447bff874c67a4987d031265af7178c1cba23d",
+          "ga_dsmchold/fill070_d5.68_dsmchold.json": "2ae3126864ad66fdbe4afcb17f26e852852c19e983bde4b05477a9145e03a91e",
+          "ga_dsmchold/fill070_d8_dsmchold.json": "821ffa1cc2ac583d6f323b2e9b2f32498f0682ee96afccf7a6ffad8c5bf78238",
+          "ga_dsmchold/fill120_d5.68_dsmchold.json": "3658e44ba4ee3c62ceff867594454eb935d08b505250c2235a99eee89cb2d3f4",
+          "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
+        }
+      },
+      "aim_BL_a105_d0.2": {
+        "source_sha256": {
+          "scripts/nitrogen_aim_operating.py": "71245a9cdf9547f65c0b64edeb7f4a263ac209ec46c397f6ad6970415dcd8036",
+          "scripts/realizable_controller.py": "6bad564f89364072ecf9f958bdc5e059e2e5156f040683e4ce365c300b9a7dde",
+          "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
+          "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
+          "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+          "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+          "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+          "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+          "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
+          "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+          "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+          "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+          "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+        },
+        "aim_maps_sha256": {
+          "results/aim_operating/aim_maps_B-L.npz": "9693474d8e9078c6a555423c2e9a01404ec60f2ba96cefb3c56ed420769a9e45"
+        },
+        "ga_records_sha256": {
+          "ga_dsmchold/fill040_d5.68_dsmchold.json": "4f48b7c9a7241658f8476c2cd278a3bf8c4d35533e91c94c369463bb5fb3862c",
+          "ga_dsmchold/fill040_d8_dsmchold.json": "c3fc71dcd4aaf83e8bd3f29479447bff874c67a4987d031265af7178c1cba23d",
+          "ga_dsmchold/fill070_d5.68_dsmchold.json": "2ae3126864ad66fdbe4afcb17f26e852852c19e983bde4b05477a9145e03a91e",
+          "ga_dsmchold/fill070_d8_dsmchold.json": "821ffa1cc2ac583d6f323b2e9b2f32498f0682ee96afccf7a6ffad8c5bf78238",
+          "ga_dsmchold/fill120_d5.68_dsmchold.json": "3658e44ba4ee3c62ceff867594454eb935d08b505250c2235a99eee89cb2d3f4",
+          "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
+        }
+      },
+      "aim_BL_a90_d0.8": {
+        "source_sha256": {
+          "scripts/nitrogen_aim_operating.py": "71245a9cdf9547f65c0b64edeb7f4a263ac209ec46c397f6ad6970415dcd8036",
+          "scripts/realizable_controller.py": "6bad564f89364072ecf9f958bdc5e059e2e5156f040683e4ce365c300b9a7dde",
+          "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
+          "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
+          "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+          "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+          "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+          "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+          "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
+          "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+          "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+          "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+          "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+        },
+        "aim_maps_sha256": {
+          "results/aim_operating/aim_maps_B-L.npz": "9693474d8e9078c6a555423c2e9a01404ec60f2ba96cefb3c56ed420769a9e45"
+        },
+        "ga_records_sha256": {
+          "ga_dsmchold/fill040_d5.68_dsmchold.json": "4f48b7c9a7241658f8476c2cd278a3bf8c4d35533e91c94c369463bb5fb3862c",
+          "ga_dsmchold/fill040_d8_dsmchold.json": "c3fc71dcd4aaf83e8bd3f29479447bff874c67a4987d031265af7178c1cba23d",
+          "ga_dsmchold/fill070_d5.68_dsmchold.json": "2ae3126864ad66fdbe4afcb17f26e852852c19e983bde4b05477a9145e03a91e",
+          "ga_dsmchold/fill070_d8_dsmchold.json": "821ffa1cc2ac583d6f323b2e9b2f32498f0682ee96afccf7a6ffad8c5bf78238",
+          "ga_dsmchold/fill120_d5.68_dsmchold.json": "3658e44ba4ee3c62ceff867594454eb935d08b505250c2235a99eee89cb2d3f4",
+          "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
+        }
+      },
+      "aim_BL_a92.5_d0.8": {
+        "source_sha256": {
+          "scripts/nitrogen_aim_operating.py": "71245a9cdf9547f65c0b64edeb7f4a263ac209ec46c397f6ad6970415dcd8036",
+          "scripts/realizable_controller.py": "6bad564f89364072ecf9f958bdc5e059e2e5156f040683e4ce365c300b9a7dde",
+          "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
+          "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
+          "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+          "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+          "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+          "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+          "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
+          "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+          "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+          "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+          "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+        },
+        "aim_maps_sha256": {
+          "results/aim_operating_fine/aim_maps_B-L.npz": "9adc9af56fa14e4edceea74f4a40183713f52e838136a2f2cdd5cca9d73ea03c"
+        },
+        "ga_records_sha256": {
+          "ga_dsmchold/fill040_d5.68_dsmchold.json": "4f48b7c9a7241658f8476c2cd278a3bf8c4d35533e91c94c369463bb5fb3862c",
+          "ga_dsmchold/fill040_d8_dsmchold.json": "c3fc71dcd4aaf83e8bd3f29479447bff874c67a4987d031265af7178c1cba23d",
+          "ga_dsmchold/fill070_d5.68_dsmchold.json": "2ae3126864ad66fdbe4afcb17f26e852852c19e983bde4b05477a9145e03a91e",
+          "ga_dsmchold/fill070_d8_dsmchold.json": "821ffa1cc2ac583d6f323b2e9b2f32498f0682ee96afccf7a6ffad8c5bf78238",
+          "ga_dsmchold/fill120_d5.68_dsmchold.json": "3658e44ba4ee3c62ceff867594454eb935d08b505250c2235a99eee89cb2d3f4",
+          "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
+        }
+      },
+      "aim_BL_a95_d0.8": {
+        "source_sha256": {
+          "scripts/nitrogen_aim_operating.py": "71245a9cdf9547f65c0b64edeb7f4a263ac209ec46c397f6ad6970415dcd8036",
+          "scripts/realizable_controller.py": "6bad564f89364072ecf9f958bdc5e059e2e5156f040683e4ce365c300b9a7dde",
+          "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
+          "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
+          "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+          "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+          "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+          "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+          "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
+          "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+          "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+          "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+          "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+        },
+        "aim_maps_sha256": {
+          "results/aim_operating/aim_maps_B-L.npz": "9693474d8e9078c6a555423c2e9a01404ec60f2ba96cefb3c56ed420769a9e45"
+        },
+        "ga_records_sha256": {
+          "ga_dsmchold/fill040_d5.68_dsmchold.json": "4f48b7c9a7241658f8476c2cd278a3bf8c4d35533e91c94c369463bb5fb3862c",
+          "ga_dsmchold/fill040_d8_dsmchold.json": "c3fc71dcd4aaf83e8bd3f29479447bff874c67a4987d031265af7178c1cba23d",
+          "ga_dsmchold/fill070_d5.68_dsmchold.json": "2ae3126864ad66fdbe4afcb17f26e852852c19e983bde4b05477a9145e03a91e",
+          "ga_dsmchold/fill070_d8_dsmchold.json": "821ffa1cc2ac583d6f323b2e9b2f32498f0682ee96afccf7a6ffad8c5bf78238",
+          "ga_dsmchold/fill120_d5.68_dsmchold.json": "3658e44ba4ee3c62ceff867594454eb935d08b505250c2235a99eee89cb2d3f4",
+          "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
+        }
+      },
+      "aim_BL_a97.5_d0.8": {
+        "source_sha256": {
+          "scripts/nitrogen_aim_operating.py": "71245a9cdf9547f65c0b64edeb7f4a263ac209ec46c397f6ad6970415dcd8036",
+          "scripts/realizable_controller.py": "6bad564f89364072ecf9f958bdc5e059e2e5156f040683e4ce365c300b9a7dde",
+          "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
+          "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
+          "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+          "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+          "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+          "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+          "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
+          "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+          "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+          "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+          "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+        },
+        "aim_maps_sha256": {
+          "results/aim_operating_fine/aim_maps_B-L.npz": "9adc9af56fa14e4edceea74f4a40183713f52e838136a2f2cdd5cca9d73ea03c"
+        },
+        "ga_records_sha256": {
+          "ga_dsmchold/fill040_d5.68_dsmchold.json": "4f48b7c9a7241658f8476c2cd278a3bf8c4d35533e91c94c369463bb5fb3862c",
+          "ga_dsmchold/fill040_d8_dsmchold.json": "c3fc71dcd4aaf83e8bd3f29479447bff874c67a4987d031265af7178c1cba23d",
+          "ga_dsmchold/fill070_d5.68_dsmchold.json": "2ae3126864ad66fdbe4afcb17f26e852852c19e983bde4b05477a9145e03a91e",
+          "ga_dsmchold/fill070_d8_dsmchold.json": "821ffa1cc2ac583d6f323b2e9b2f32498f0682ee96afccf7a6ffad8c5bf78238",
+          "ga_dsmchold/fill120_d5.68_dsmchold.json": "3658e44ba4ee3c62ceff867594454eb935d08b505250c2235a99eee89cb2d3f4",
+          "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
+        }
+      },
+      "aim_BL_a100_d0.8": {
+        "source_sha256": {
+          "scripts/nitrogen_aim_operating.py": "71245a9cdf9547f65c0b64edeb7f4a263ac209ec46c397f6ad6970415dcd8036",
+          "scripts/realizable_controller.py": "6bad564f89364072ecf9f958bdc5e059e2e5156f040683e4ce365c300b9a7dde",
+          "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
+          "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
+          "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+          "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+          "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+          "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+          "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
+          "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+          "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+          "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+          "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+        },
+        "aim_maps_sha256": {
+          "results/aim_operating/aim_maps_B-L.npz": "9693474d8e9078c6a555423c2e9a01404ec60f2ba96cefb3c56ed420769a9e45"
+        },
+        "ga_records_sha256": {
+          "ga_dsmchold/fill040_d5.68_dsmchold.json": "4f48b7c9a7241658f8476c2cd278a3bf8c4d35533e91c94c369463bb5fb3862c",
+          "ga_dsmchold/fill040_d8_dsmchold.json": "c3fc71dcd4aaf83e8bd3f29479447bff874c67a4987d031265af7178c1cba23d",
+          "ga_dsmchold/fill070_d5.68_dsmchold.json": "2ae3126864ad66fdbe4afcb17f26e852852c19e983bde4b05477a9145e03a91e",
+          "ga_dsmchold/fill070_d8_dsmchold.json": "821ffa1cc2ac583d6f323b2e9b2f32498f0682ee96afccf7a6ffad8c5bf78238",
+          "ga_dsmchold/fill120_d5.68_dsmchold.json": "3658e44ba4ee3c62ceff867594454eb935d08b505250c2235a99eee89cb2d3f4",
+          "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
+        }
+      },
+      "aim_BL_a105_d0.8": {
+        "source_sha256": {
+          "scripts/nitrogen_aim_operating.py": "71245a9cdf9547f65c0b64edeb7f4a263ac209ec46c397f6ad6970415dcd8036",
+          "scripts/realizable_controller.py": "6bad564f89364072ecf9f958bdc5e059e2e5156f040683e4ce365c300b9a7dde",
+          "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
+          "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
+          "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+          "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+          "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+          "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+          "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
+          "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+          "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+          "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+          "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+        },
+        "aim_maps_sha256": {
+          "results/aim_operating/aim_maps_B-L.npz": "9693474d8e9078c6a555423c2e9a01404ec60f2ba96cefb3c56ed420769a9e45"
+        },
+        "ga_records_sha256": {
+          "ga_dsmchold/fill040_d5.68_dsmchold.json": "4f48b7c9a7241658f8476c2cd278a3bf8c4d35533e91c94c369463bb5fb3862c",
+          "ga_dsmchold/fill040_d8_dsmchold.json": "c3fc71dcd4aaf83e8bd3f29479447bff874c67a4987d031265af7178c1cba23d",
+          "ga_dsmchold/fill070_d5.68_dsmchold.json": "2ae3126864ad66fdbe4afcb17f26e852852c19e983bde4b05477a9145e03a91e",
+          "ga_dsmchold/fill070_d8_dsmchold.json": "821ffa1cc2ac583d6f323b2e9b2f32498f0682ee96afccf7a6ffad8c5bf78238",
+          "ga_dsmchold/fill120_d5.68_dsmchold.json": "3658e44ba4ee3c62ceff867594454eb935d08b505250c2235a99eee89cb2d3f4",
+          "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
+        }
+      },
+      "aim_Bp_a92.5_d0.2": {
+        "source_sha256": {
+          "scripts/nitrogen_aim_operating.py": "71245a9cdf9547f65c0b64edeb7f4a263ac209ec46c397f6ad6970415dcd8036",
+          "scripts/realizable_controller.py": "6bad564f89364072ecf9f958bdc5e059e2e5156f040683e4ce365c300b9a7dde",
+          "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
+          "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
+          "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+          "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+          "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+          "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+          "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
+          "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+          "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+          "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+          "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+        },
+        "aim_maps_sha256": {
+          "results/aim_operating/aim_maps_B-p.npz": "338057cbe45be51c6e98684c44896f15ca630f0d7373e2a08525c58ee451a4df"
+        },
+        "ga_records_sha256": {
+          "ga_dsmchold/fill040_d5.68_dsmchold.json": "4f48b7c9a7241658f8476c2cd278a3bf8c4d35533e91c94c369463bb5fb3862c",
+          "ga_dsmchold/fill040_d8_dsmchold.json": "c3fc71dcd4aaf83e8bd3f29479447bff874c67a4987d031265af7178c1cba23d",
+          "ga_dsmchold/fill070_d5.68_dsmchold.json": "2ae3126864ad66fdbe4afcb17f26e852852c19e983bde4b05477a9145e03a91e",
+          "ga_dsmchold/fill070_d8_dsmchold.json": "821ffa1cc2ac583d6f323b2e9b2f32498f0682ee96afccf7a6ffad8c5bf78238",
+          "ga_dsmchold/fill120_d5.68_dsmchold.json": "3658e44ba4ee3c62ceff867594454eb935d08b505250c2235a99eee89cb2d3f4",
+          "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
+        }
+      },
+      "aim_Bp_a97.5_d0.2": {
+        "source_sha256": {
+          "scripts/nitrogen_aim_operating.py": "71245a9cdf9547f65c0b64edeb7f4a263ac209ec46c397f6ad6970415dcd8036",
+          "scripts/realizable_controller.py": "6bad564f89364072ecf9f958bdc5e059e2e5156f040683e4ce365c300b9a7dde",
+          "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
+          "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
+          "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+          "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+          "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+          "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+          "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
+          "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+          "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+          "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+          "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+        },
+        "aim_maps_sha256": {
+          "results/aim_operating/aim_maps_B-p.npz": "338057cbe45be51c6e98684c44896f15ca630f0d7373e2a08525c58ee451a4df"
+        },
+        "ga_records_sha256": {
+          "ga_dsmchold/fill040_d5.68_dsmchold.json": "4f48b7c9a7241658f8476c2cd278a3bf8c4d35533e91c94c369463bb5fb3862c",
+          "ga_dsmchold/fill040_d8_dsmchold.json": "c3fc71dcd4aaf83e8bd3f29479447bff874c67a4987d031265af7178c1cba23d",
+          "ga_dsmchold/fill070_d5.68_dsmchold.json": "2ae3126864ad66fdbe4afcb17f26e852852c19e983bde4b05477a9145e03a91e",
+          "ga_dsmchold/fill070_d8_dsmchold.json": "821ffa1cc2ac583d6f323b2e9b2f32498f0682ee96afccf7a6ffad8c5bf78238",
+          "ga_dsmchold/fill120_d5.68_dsmchold.json": "3658e44ba4ee3c62ceff867594454eb935d08b505250c2235a99eee89cb2d3f4",
+          "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
+        }
+      },
+      "aim_Bp_a102.5_d0.2": {
+        "source_sha256": {
+          "scripts/nitrogen_aim_operating.py": "71245a9cdf9547f65c0b64edeb7f4a263ac209ec46c397f6ad6970415dcd8036",
+          "scripts/realizable_controller.py": "6bad564f89364072ecf9f958bdc5e059e2e5156f040683e4ce365c300b9a7dde",
+          "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
+          "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
+          "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+          "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+          "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+          "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+          "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
+          "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+          "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+          "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+          "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+        },
+        "aim_maps_sha256": {
+          "results/aim_operating/aim_maps_B-p.npz": "338057cbe45be51c6e98684c44896f15ca630f0d7373e2a08525c58ee451a4df"
+        },
+        "ga_records_sha256": {
+          "ga_dsmchold/fill040_d5.68_dsmchold.json": "4f48b7c9a7241658f8476c2cd278a3bf8c4d35533e91c94c369463bb5fb3862c",
+          "ga_dsmchold/fill040_d8_dsmchold.json": "c3fc71dcd4aaf83e8bd3f29479447bff874c67a4987d031265af7178c1cba23d",
+          "ga_dsmchold/fill070_d5.68_dsmchold.json": "2ae3126864ad66fdbe4afcb17f26e852852c19e983bde4b05477a9145e03a91e",
+          "ga_dsmchold/fill070_d8_dsmchold.json": "821ffa1cc2ac583d6f323b2e9b2f32498f0682ee96afccf7a6ffad8c5bf78238",
+          "ga_dsmchold/fill120_d5.68_dsmchold.json": "3658e44ba4ee3c62ceff867594454eb935d08b505250c2235a99eee89cb2d3f4",
+          "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
+        }
+      },
+      "aim_Bp_a92.5_d0.8": {
+        "source_sha256": {
+          "scripts/nitrogen_aim_operating.py": "71245a9cdf9547f65c0b64edeb7f4a263ac209ec46c397f6ad6970415dcd8036",
+          "scripts/realizable_controller.py": "6bad564f89364072ecf9f958bdc5e059e2e5156f040683e4ce365c300b9a7dde",
+          "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
+          "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
+          "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+          "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+          "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+          "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+          "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
+          "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+          "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+          "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+          "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+        },
+        "aim_maps_sha256": {
+          "results/aim_operating/aim_maps_B-p.npz": "338057cbe45be51c6e98684c44896f15ca630f0d7373e2a08525c58ee451a4df"
+        },
+        "ga_records_sha256": {
+          "ga_dsmchold/fill040_d5.68_dsmchold.json": "4f48b7c9a7241658f8476c2cd278a3bf8c4d35533e91c94c369463bb5fb3862c",
+          "ga_dsmchold/fill040_d8_dsmchold.json": "c3fc71dcd4aaf83e8bd3f29479447bff874c67a4987d031265af7178c1cba23d",
+          "ga_dsmchold/fill070_d5.68_dsmchold.json": "2ae3126864ad66fdbe4afcb17f26e852852c19e983bde4b05477a9145e03a91e",
+          "ga_dsmchold/fill070_d8_dsmchold.json": "821ffa1cc2ac583d6f323b2e9b2f32498f0682ee96afccf7a6ffad8c5bf78238",
+          "ga_dsmchold/fill120_d5.68_dsmchold.json": "3658e44ba4ee3c62ceff867594454eb935d08b505250c2235a99eee89cb2d3f4",
+          "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
+        }
+      },
+      "aim_Bp_a97.5_d0.8": {
+        "source_sha256": {
+          "scripts/nitrogen_aim_operating.py": "71245a9cdf9547f65c0b64edeb7f4a263ac209ec46c397f6ad6970415dcd8036",
+          "scripts/realizable_controller.py": "6bad564f89364072ecf9f958bdc5e059e2e5156f040683e4ce365c300b9a7dde",
+          "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
+          "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
+          "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+          "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+          "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+          "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+          "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
+          "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+          "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+          "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+          "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+        },
+        "aim_maps_sha256": {
+          "results/aim_operating/aim_maps_B-p.npz": "338057cbe45be51c6e98684c44896f15ca630f0d7373e2a08525c58ee451a4df"
+        },
+        "ga_records_sha256": {
+          "ga_dsmchold/fill040_d5.68_dsmchold.json": "4f48b7c9a7241658f8476c2cd278a3bf8c4d35533e91c94c369463bb5fb3862c",
+          "ga_dsmchold/fill040_d8_dsmchold.json": "c3fc71dcd4aaf83e8bd3f29479447bff874c67a4987d031265af7178c1cba23d",
+          "ga_dsmchold/fill070_d5.68_dsmchold.json": "2ae3126864ad66fdbe4afcb17f26e852852c19e983bde4b05477a9145e03a91e",
+          "ga_dsmchold/fill070_d8_dsmchold.json": "821ffa1cc2ac583d6f323b2e9b2f32498f0682ee96afccf7a6ffad8c5bf78238",
+          "ga_dsmchold/fill120_d5.68_dsmchold.json": "3658e44ba4ee3c62ceff867594454eb935d08b505250c2235a99eee89cb2d3f4",
+          "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
+        }
+      },
+      "aim_Bp_a102.5_d0.8": {
+        "source_sha256": {
+          "scripts/nitrogen_aim_operating.py": "71245a9cdf9547f65c0b64edeb7f4a263ac209ec46c397f6ad6970415dcd8036",
+          "scripts/realizable_controller.py": "6bad564f89364072ecf9f958bdc5e059e2e5156f040683e4ce365c300b9a7dde",
+          "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
+          "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
+          "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+          "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+          "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+          "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+          "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
+          "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+          "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+          "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+          "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+        },
+        "aim_maps_sha256": {
+          "results/aim_operating/aim_maps_B-p.npz": "338057cbe45be51c6e98684c44896f15ca630f0d7373e2a08525c58ee451a4df"
+        },
+        "ga_records_sha256": {
+          "ga_dsmchold/fill040_d5.68_dsmchold.json": "4f48b7c9a7241658f8476c2cd278a3bf8c4d35533e91c94c369463bb5fb3862c",
+          "ga_dsmchold/fill040_d8_dsmchold.json": "c3fc71dcd4aaf83e8bd3f29479447bff874c67a4987d031265af7178c1cba23d",
+          "ga_dsmchold/fill070_d5.68_dsmchold.json": "2ae3126864ad66fdbe4afcb17f26e852852c19e983bde4b05477a9145e03a91e",
+          "ga_dsmchold/fill070_d8_dsmchold.json": "821ffa1cc2ac583d6f323b2e9b2f32498f0682ee96afccf7a6ffad8c5bf78238",
+          "ga_dsmchold/fill120_d5.68_dsmchold.json": "3658e44ba4ee3c62ceff867594454eb935d08b505250c2235a99eee89cb2d3f4",
+          "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
+        }
+      },
+      "ms_h1460_d0.2": {
+        "source_sha256": {
+          "scripts/multispot_heater.py": "4af4f9f2d2650e6b1cf322eaebad31568bba93c9eafddaae75a3e6ba4e51fc90",
+          "scripts/nitrogen_aim_operating.py": "71245a9cdf9547f65c0b64edeb7f4a263ac209ec46c397f6ad6970415dcd8036",
+          "scripts/realizable_controller.py": "6bad564f89364072ecf9f958bdc5e059e2e5156f040683e4ce365c300b9a7dde",
+          "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
+          "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
+          "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+          "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+          "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+          "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+          "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
+          "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+          "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+          "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+          "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+        },
+        "aim_maps_sha256": {
+          "results/aim_operating/aim_maps_B-L.npz": "9693474d8e9078c6a555423c2e9a01404ec60f2ba96cefb3c56ed420769a9e45"
+        },
+        "ga_records_sha256": {
+          "ga_dsmchold/fill040_d5.68_dsmchold.json": "4f48b7c9a7241658f8476c2cd278a3bf8c4d35533e91c94c369463bb5fb3862c",
+          "ga_dsmchold/fill040_d8_dsmchold.json": "c3fc71dcd4aaf83e8bd3f29479447bff874c67a4987d031265af7178c1cba23d",
+          "ga_dsmchold/fill070_d5.68_dsmchold.json": "2ae3126864ad66fdbe4afcb17f26e852852c19e983bde4b05477a9145e03a91e",
+          "ga_dsmchold/fill070_d8_dsmchold.json": "821ffa1cc2ac583d6f323b2e9b2f32498f0682ee96afccf7a6ffad8c5bf78238",
+          "ga_dsmchold/fill120_d5.68_dsmchold.json": "3658e44ba4ee3c62ceff867594454eb935d08b505250c2235a99eee89cb2d3f4",
+          "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
+        }
+      },
+      "ms_h1450_d0.2": {
+        "source_sha256": {
+          "scripts/multispot_heater.py": "4af4f9f2d2650e6b1cf322eaebad31568bba93c9eafddaae75a3e6ba4e51fc90",
+          "scripts/nitrogen_aim_operating.py": "71245a9cdf9547f65c0b64edeb7f4a263ac209ec46c397f6ad6970415dcd8036",
+          "scripts/realizable_controller.py": "6bad564f89364072ecf9f958bdc5e059e2e5156f040683e4ce365c300b9a7dde",
+          "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
+          "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
+          "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+          "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+          "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+          "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+          "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
+          "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+          "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+          "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+          "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+        },
+        "aim_maps_sha256": {
+          "results/aim_operating/aim_maps_B-L.npz": "9693474d8e9078c6a555423c2e9a01404ec60f2ba96cefb3c56ed420769a9e45"
+        },
+        "ga_records_sha256": {
+          "ga_dsmchold/fill040_d5.68_dsmchold.json": "4f48b7c9a7241658f8476c2cd278a3bf8c4d35533e91c94c369463bb5fb3862c",
+          "ga_dsmchold/fill040_d8_dsmchold.json": "c3fc71dcd4aaf83e8bd3f29479447bff874c67a4987d031265af7178c1cba23d",
+          "ga_dsmchold/fill070_d5.68_dsmchold.json": "2ae3126864ad66fdbe4afcb17f26e852852c19e983bde4b05477a9145e03a91e",
+          "ga_dsmchold/fill070_d8_dsmchold.json": "821ffa1cc2ac583d6f323b2e9b2f32498f0682ee96afccf7a6ffad8c5bf78238",
+          "ga_dsmchold/fill120_d5.68_dsmchold.json": "3658e44ba4ee3c62ceff867594454eb935d08b505250c2235a99eee89cb2d3f4",
+          "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
+        }
+      },
+      "ms_h1425_d0.2": {
+        "source_sha256": {
+          "scripts/multispot_heater.py": "4af4f9f2d2650e6b1cf322eaebad31568bba93c9eafddaae75a3e6ba4e51fc90",
+          "scripts/nitrogen_aim_operating.py": "71245a9cdf9547f65c0b64edeb7f4a263ac209ec46c397f6ad6970415dcd8036",
+          "scripts/realizable_controller.py": "6bad564f89364072ecf9f958bdc5e059e2e5156f040683e4ce365c300b9a7dde",
+          "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
+          "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
+          "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+          "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+          "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+          "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+          "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
+          "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+          "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+          "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+          "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+        },
+        "aim_maps_sha256": {
+          "results/aim_operating/aim_maps_B-L.npz": "9693474d8e9078c6a555423c2e9a01404ec60f2ba96cefb3c56ed420769a9e45"
+        },
+        "ga_records_sha256": {
+          "ga_dsmchold/fill040_d5.68_dsmchold.json": "4f48b7c9a7241658f8476c2cd278a3bf8c4d35533e91c94c369463bb5fb3862c",
+          "ga_dsmchold/fill040_d8_dsmchold.json": "c3fc71dcd4aaf83e8bd3f29479447bff874c67a4987d031265af7178c1cba23d",
+          "ga_dsmchold/fill070_d5.68_dsmchold.json": "2ae3126864ad66fdbe4afcb17f26e852852c19e983bde4b05477a9145e03a91e",
+          "ga_dsmchold/fill070_d8_dsmchold.json": "821ffa1cc2ac583d6f323b2e9b2f32498f0682ee96afccf7a6ffad8c5bf78238",
+          "ga_dsmchold/fill120_d5.68_dsmchold.json": "3658e44ba4ee3c62ceff867594454eb935d08b505250c2235a99eee89cb2d3f4",
+          "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
+        }
+      },
+      "ms_h1450_d0.8": {
+        "source_sha256": {
+          "scripts/multispot_heater.py": "4af4f9f2d2650e6b1cf322eaebad31568bba93c9eafddaae75a3e6ba4e51fc90",
+          "scripts/nitrogen_aim_operating.py": "71245a9cdf9547f65c0b64edeb7f4a263ac209ec46c397f6ad6970415dcd8036",
+          "scripts/realizable_controller.py": "6bad564f89364072ecf9f958bdc5e059e2e5156f040683e4ce365c300b9a7dde",
+          "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
+          "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
+          "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+          "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+          "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+          "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+          "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
+          "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+          "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+          "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+          "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+        },
+        "aim_maps_sha256": {
+          "results/aim_operating/aim_maps_B-L.npz": "9693474d8e9078c6a555423c2e9a01404ec60f2ba96cefb3c56ed420769a9e45"
+        },
+        "ga_records_sha256": {
+          "ga_dsmchold/fill040_d5.68_dsmchold.json": "4f48b7c9a7241658f8476c2cd278a3bf8c4d35533e91c94c369463bb5fb3862c",
+          "ga_dsmchold/fill040_d8_dsmchold.json": "c3fc71dcd4aaf83e8bd3f29479447bff874c67a4987d031265af7178c1cba23d",
+          "ga_dsmchold/fill070_d5.68_dsmchold.json": "2ae3126864ad66fdbe4afcb17f26e852852c19e983bde4b05477a9145e03a91e",
+          "ga_dsmchold/fill070_d8_dsmchold.json": "821ffa1cc2ac583d6f323b2e9b2f32498f0682ee96afccf7a6ffad8c5bf78238",
+          "ga_dsmchold/fill120_d5.68_dsmchold.json": "3658e44ba4ee3c62ceff867594454eb935d08b505250c2235a99eee89cb2d3f4",
+          "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
+        }
+      },
+      "ms_h1460_d0.2_cold": {
+        "source_sha256": {
+          "scripts/multispot_heater.py": "4af4f9f2d2650e6b1cf322eaebad31568bba93c9eafddaae75a3e6ba4e51fc90",
+          "scripts/nitrogen_aim_operating.py": "71245a9cdf9547f65c0b64edeb7f4a263ac209ec46c397f6ad6970415dcd8036",
+          "scripts/realizable_controller.py": "6bad564f89364072ecf9f958bdc5e059e2e5156f040683e4ce365c300b9a7dde",
+          "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
+          "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
+          "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+          "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+          "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+          "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+          "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
+          "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+          "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+          "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+          "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+        },
+        "aim_maps_sha256": {
+          "results/aim_operating/aim_maps_B-L.npz": "9693474d8e9078c6a555423c2e9a01404ec60f2ba96cefb3c56ed420769a9e45"
+        },
+        "ga_records_sha256": {
+          "ga_dsmchold/fill040_d5.68_dsmchold.json": "4f48b7c9a7241658f8476c2cd278a3bf8c4d35533e91c94c369463bb5fb3862c",
+          "ga_dsmchold/fill040_d8_dsmchold.json": "c3fc71dcd4aaf83e8bd3f29479447bff874c67a4987d031265af7178c1cba23d",
+          "ga_dsmchold/fill070_d5.68_dsmchold.json": "2ae3126864ad66fdbe4afcb17f26e852852c19e983bde4b05477a9145e03a91e",
+          "ga_dsmchold/fill070_d8_dsmchold.json": "821ffa1cc2ac583d6f323b2e9b2f32498f0682ee96afccf7a6ffad8c5bf78238",
+          "ga_dsmchold/fill120_d5.68_dsmchold.json": "3658e44ba4ee3c62ceff867594454eb935d08b505250c2235a99eee89cb2d3f4",
+          "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
+        }
+      }
+    }
   },
   "outputs": {
     "runs": [
@@ -82,6 +1039,34 @@
           ],
           "T_C": [
             720
+          ],
+          "rate_um_h": 1.0,
+          "scattered": "gas+plume",
+          "scenarios": [
+            [
+              "B-p",
+              {
+                "eta": 1.0,
+                "S_eff_m3_s": 2.0,
+                "feed_limit_sccm": 10.0
+              }
+            ],
+            [
+              "B-L",
+              {
+                "eta": 0.3,
+                "S_eff_m3_s": 4.0,
+                "feed_limit_sccm": 35.0
+              }
+            ]
+          ],
+          "admit": 0.95,
+          "rate_band": 0.03,
+          "element_limit": "1473 K element",
+          "pyrometer_biases_K": [
+            -2.0,
+            0.0,
+            2.0
           ]
         },
         "rows": [
@@ -148,6 +1133,34 @@
             720,
             730,
             740
+          ],
+          "rate_um_h": 1.0,
+          "scattered": "gas+plume",
+          "scenarios": [
+            [
+              "B-p",
+              {
+                "eta": 1.0,
+                "S_eff_m3_s": 2.0,
+                "feed_limit_sccm": 10.0
+              }
+            ],
+            [
+              "B-L",
+              {
+                "eta": 0.3,
+                "S_eff_m3_s": 4.0,
+                "feed_limit_sccm": 35.0
+              }
+            ]
+          ],
+          "admit": 0.95,
+          "rate_band": 0.03,
+          "element_limit": "1473 K element",
+          "pyrometer_biases_K": [
+            -2.0,
+            0.0,
+            2.0
           ]
         },
         "rows": [
@@ -358,6 +1371,34 @@
             720,
             730,
             740
+          ],
+          "rate_um_h": 1.0,
+          "scattered": "gas+plume",
+          "scenarios": [
+            [
+              "B-p",
+              {
+                "eta": 1.0,
+                "S_eff_m3_s": 2.0,
+                "feed_limit_sccm": 10.0
+              }
+            ],
+            [
+              "B-L",
+              {
+                "eta": 0.3,
+                "S_eff_m3_s": 4.0,
+                "feed_limit_sccm": 35.0
+              }
+            ]
+          ],
+          "admit": 0.95,
+          "rate_band": 0.03,
+          "element_limit": "1473 K element",
+          "pyrometer_biases_K": [
+            -2.0,
+            0.0,
+            2.0
           ]
         },
         "rows": [
@@ -568,6 +1609,34 @@
             720,
             730,
             740
+          ],
+          "rate_um_h": 1.0,
+          "scattered": "gas+plume",
+          "scenarios": [
+            [
+              "B-p",
+              {
+                "eta": 1.0,
+                "S_eff_m3_s": 2.0,
+                "feed_limit_sccm": 10.0
+              }
+            ],
+            [
+              "B-L",
+              {
+                "eta": 0.3,
+                "S_eff_m3_s": 4.0,
+                "feed_limit_sccm": 35.0
+              }
+            ]
+          ],
+          "admit": 0.95,
+          "rate_band": 0.03,
+          "element_limit": "1473 K element",
+          "pyrometer_biases_K": [
+            -2.0,
+            0.0,
+            2.0
           ]
         },
         "rows": [
@@ -778,6 +1847,34 @@
             720,
             730,
             740
+          ],
+          "rate_um_h": 1.0,
+          "scattered": "gas+plume",
+          "scenarios": [
+            [
+              "B-p",
+              {
+                "eta": 1.0,
+                "S_eff_m3_s": 2.0,
+                "feed_limit_sccm": 10.0
+              }
+            ],
+            [
+              "B-L",
+              {
+                "eta": 0.3,
+                "S_eff_m3_s": 4.0,
+                "feed_limit_sccm": 35.0
+              }
+            ]
+          ],
+          "admit": 0.95,
+          "rate_band": 0.03,
+          "element_limit": "1473 K element",
+          "pyrometer_biases_K": [
+            -2.0,
+            0.0,
+            2.0
           ]
         },
         "rows": [
@@ -988,6 +2085,34 @@
             720,
             730,
             740
+          ],
+          "rate_um_h": 1.0,
+          "scattered": "gas+plume",
+          "scenarios": [
+            [
+              "B-p",
+              {
+                "eta": 1.0,
+                "S_eff_m3_s": 2.0,
+                "feed_limit_sccm": 10.0
+              }
+            ],
+            [
+              "B-L",
+              {
+                "eta": 0.3,
+                "S_eff_m3_s": 4.0,
+                "feed_limit_sccm": 35.0
+              }
+            ]
+          ],
+          "admit": 0.95,
+          "rate_band": 0.03,
+          "element_limit": "1473 K element",
+          "pyrometer_biases_K": [
+            -2.0,
+            0.0,
+            2.0
           ]
         },
         "rows": [
@@ -1198,6 +2323,34 @@
             720,
             730,
             740
+          ],
+          "rate_um_h": 1.0,
+          "scattered": "gas+plume",
+          "scenarios": [
+            [
+              "B-p",
+              {
+                "eta": 1.0,
+                "S_eff_m3_s": 2.0,
+                "feed_limit_sccm": 10.0
+              }
+            ],
+            [
+              "B-L",
+              {
+                "eta": 0.3,
+                "S_eff_m3_s": 4.0,
+                "feed_limit_sccm": 35.0
+              }
+            ]
+          ],
+          "admit": 0.95,
+          "rate_band": 0.03,
+          "element_limit": "1473 K element",
+          "pyrometer_biases_K": [
+            -2.0,
+            0.0,
+            2.0
           ]
         },
         "rows": [
@@ -1408,6 +2561,34 @@
             720,
             730,
             740
+          ],
+          "rate_um_h": 1.0,
+          "scattered": "gas+plume",
+          "scenarios": [
+            [
+              "B-p",
+              {
+                "eta": 1.0,
+                "S_eff_m3_s": 2.0,
+                "feed_limit_sccm": 10.0
+              }
+            ],
+            [
+              "B-L",
+              {
+                "eta": 0.3,
+                "S_eff_m3_s": 4.0,
+                "feed_limit_sccm": 35.0
+              }
+            ]
+          ],
+          "admit": 0.95,
+          "rate_band": 0.03,
+          "element_limit": "1473 K element",
+          "pyrometer_biases_K": [
+            -2.0,
+            0.0,
+            2.0
           ]
         },
         "rows": [
@@ -1618,6 +2799,34 @@
             720,
             730,
             740
+          ],
+          "rate_um_h": 1.0,
+          "scattered": "gas+plume",
+          "scenarios": [
+            [
+              "B-p",
+              {
+                "eta": 1.0,
+                "S_eff_m3_s": 2.0,
+                "feed_limit_sccm": 10.0
+              }
+            ],
+            [
+              "B-L",
+              {
+                "eta": 0.3,
+                "S_eff_m3_s": 4.0,
+                "feed_limit_sccm": 35.0
+              }
+            ]
+          ],
+          "admit": 0.95,
+          "rate_band": 0.03,
+          "element_limit": "1473 K element",
+          "pyrometer_biases_K": [
+            -2.0,
+            0.0,
+            2.0
           ]
         },
         "rows": [
@@ -1828,6 +3037,34 @@
             720,
             730,
             740
+          ],
+          "rate_um_h": 1.0,
+          "scattered": "gas+plume",
+          "scenarios": [
+            [
+              "B-p",
+              {
+                "eta": 1.0,
+                "S_eff_m3_s": 2.0,
+                "feed_limit_sccm": 10.0
+              }
+            ],
+            [
+              "B-L",
+              {
+                "eta": 0.3,
+                "S_eff_m3_s": 4.0,
+                "feed_limit_sccm": 35.0
+              }
+            ]
+          ],
+          "admit": 0.95,
+          "rate_band": 0.03,
+          "element_limit": "1473 K element",
+          "pyrometer_biases_K": [
+            -2.0,
+            0.0,
+            2.0
           ]
         },
         "rows": [
@@ -2015,13 +3252,17 @@
       },
       {
         "run": "aim_BL_a90_d0.2",
-        "manifest_sha256": "6a7e1c32bb0f43e673d359e59581ab4018a1ff1b764c6418660b268198ec4629",
+        "manifest_sha256": "893b840933de156eb242afb45be96299829b3886d4b587e1ecc960a74bd9584f",
         "settings": {
           "heater_design_limit_K": 1460.0,
-          "heater_control": null,
+          "heater_control": "single",
           "pointing_residual_deg": 0.2,
-          "aim_maps": "results/aim_operating/aim_maps_B-L.npz",
-          "aim_mm": 90.0,
+          "aim_maps": [
+            "results/aim_operating/aim_maps_B-L.npz"
+          ],
+          "aim_mm": [
+            90.0
+          ],
           "rate_monitor_errors": [
             -0.01,
             0.0,
@@ -2036,6 +3277,34 @@
             710,
             720,
             730
+          ],
+          "rate_um_h": 1.0,
+          "scattered": "gas+plume",
+          "scenarios": [
+            [
+              "B-p",
+              {
+                "eta": 1.0,
+                "S_eff_m3_s": 2.0,
+                "feed_limit_sccm": 10.0
+              }
+            ],
+            [
+              "B-L",
+              {
+                "eta": 0.3,
+                "S_eff_m3_s": 4.0,
+                "feed_limit_sccm": 35.0
+              }
+            ]
+          ],
+          "admit": 0.95,
+          "rate_band": 0.03,
+          "element_limit": "1473 K element",
+          "pyrometer_biases_K": [
+            -2.0,
+            0.0,
+            2.0
           ]
         },
         "rows": [
@@ -2151,7 +3420,7 @@
       },
       {
         "run": "aim_BL_a92.5_d0.2",
-        "manifest_sha256": "9a62020c3f1d41a80345972952f7c5ef31ac9d5831d3b6ed00425f9aa778feac",
+        "manifest_sha256": "3d540a3445eca86eed98848202856a161820660012e2b3c9c369199244e7197f",
         "settings": {
           "heater_design_limit_K": 1460.0,
           "heater_control": "single",
@@ -2174,6 +3443,34 @@
           ],
           "T_C": [
             720
+          ],
+          "rate_um_h": 1.0,
+          "scattered": "gas+plume",
+          "scenarios": [
+            [
+              "B-p",
+              {
+                "eta": 1.0,
+                "S_eff_m3_s": 2.0,
+                "feed_limit_sccm": 10.0
+              }
+            ],
+            [
+              "B-L",
+              {
+                "eta": 0.3,
+                "S_eff_m3_s": 4.0,
+                "feed_limit_sccm": 35.0
+              }
+            ]
+          ],
+          "admit": 0.95,
+          "rate_band": 0.03,
+          "element_limit": "1473 K element",
+          "pyrometer_biases_K": [
+            -2.0,
+            0.0,
+            2.0
           ]
         },
         "rows": [
@@ -2217,13 +3514,17 @@
       },
       {
         "run": "aim_BL_a95_d0.2",
-        "manifest_sha256": "9963e1f4833062fead6d192297193c37dc960f82245f6920fd57977096f94006",
+        "manifest_sha256": "a8246299b56858601b7da021e55fae865a01541e80cea474cc7fc1704bd9abed",
         "settings": {
           "heater_design_limit_K": 1460.0,
-          "heater_control": null,
+          "heater_control": "single",
           "pointing_residual_deg": 0.2,
-          "aim_maps": "results/aim_operating/aim_maps_B-L.npz",
-          "aim_mm": 95.0,
+          "aim_maps": [
+            "results/aim_operating/aim_maps_B-L.npz"
+          ],
+          "aim_mm": [
+            95.0
+          ],
           "rate_monitor_errors": [
             -0.01,
             0.0,
@@ -2238,6 +3539,34 @@
             710,
             720,
             730
+          ],
+          "rate_um_h": 1.0,
+          "scattered": "gas+plume",
+          "scenarios": [
+            [
+              "B-p",
+              {
+                "eta": 1.0,
+                "S_eff_m3_s": 2.0,
+                "feed_limit_sccm": 10.0
+              }
+            ],
+            [
+              "B-L",
+              {
+                "eta": 0.3,
+                "S_eff_m3_s": 4.0,
+                "feed_limit_sccm": 35.0
+              }
+            ]
+          ],
+          "admit": 0.95,
+          "rate_band": 0.03,
+          "element_limit": "1473 K element",
+          "pyrometer_biases_K": [
+            -2.0,
+            0.0,
+            2.0
           ]
         },
         "rows": [
@@ -2353,7 +3682,7 @@
       },
       {
         "run": "aim_BL_a97.5_d0.2",
-        "manifest_sha256": "89096f313269943f996910f58e2cb4ea7b60a9959366403a6e81d61a75bbea1c",
+        "manifest_sha256": "106fda1dcee442af127ce00bb0a5a3e93164653e09e1f6f639ae32b71b4aebd0",
         "settings": {
           "heater_design_limit_K": 1460.0,
           "heater_control": "single",
@@ -2376,6 +3705,34 @@
           ],
           "T_C": [
             720
+          ],
+          "rate_um_h": 1.0,
+          "scattered": "gas+plume",
+          "scenarios": [
+            [
+              "B-p",
+              {
+                "eta": 1.0,
+                "S_eff_m3_s": 2.0,
+                "feed_limit_sccm": 10.0
+              }
+            ],
+            [
+              "B-L",
+              {
+                "eta": 0.3,
+                "S_eff_m3_s": 4.0,
+                "feed_limit_sccm": 35.0
+              }
+            ]
+          ],
+          "admit": 0.95,
+          "rate_band": 0.03,
+          "element_limit": "1473 K element",
+          "pyrometer_biases_K": [
+            -2.0,
+            0.0,
+            2.0
           ]
         },
         "rows": [
@@ -2419,13 +3776,17 @@
       },
       {
         "run": "aim_BL_a100_d0.2",
-        "manifest_sha256": "7fb8caf7b8bd20a5d08a343ea93d5dc9f10dde7533924f14261894d09b5fd73e",
+        "manifest_sha256": "c45a3821a3888d4284e0efedffb985aa49e6df0cfd05bc1728199e49a2413e9a",
         "settings": {
           "heater_design_limit_K": 1460.0,
-          "heater_control": null,
+          "heater_control": "single",
           "pointing_residual_deg": 0.2,
-          "aim_maps": "results/aim_operating/aim_maps_B-L.npz",
-          "aim_mm": 100.0,
+          "aim_maps": [
+            "results/aim_operating/aim_maps_B-L.npz"
+          ],
+          "aim_mm": [
+            100.0
+          ],
           "rate_monitor_errors": [
             -0.01,
             0.0,
@@ -2440,6 +3801,34 @@
             710,
             720,
             730
+          ],
+          "rate_um_h": 1.0,
+          "scattered": "gas+plume",
+          "scenarios": [
+            [
+              "B-p",
+              {
+                "eta": 1.0,
+                "S_eff_m3_s": 2.0,
+                "feed_limit_sccm": 10.0
+              }
+            ],
+            [
+              "B-L",
+              {
+                "eta": 0.3,
+                "S_eff_m3_s": 4.0,
+                "feed_limit_sccm": 35.0
+              }
+            ]
+          ],
+          "admit": 0.95,
+          "rate_band": 0.03,
+          "element_limit": "1473 K element",
+          "pyrometer_biases_K": [
+            -2.0,
+            0.0,
+            2.0
           ]
         },
         "rows": [
@@ -2555,13 +3944,17 @@
       },
       {
         "run": "aim_BL_a105_d0.2",
-        "manifest_sha256": "dad8779dbd91cd9ffda610bf7de8e1717cbef384811941432c1fbf0cc36dc90a",
+        "manifest_sha256": "136ac0756c88dac3e3f30bbda7259abb56cf1b55991a04bb1e5d039704f17bd4",
         "settings": {
           "heater_design_limit_K": 1460.0,
-          "heater_control": null,
+          "heater_control": "single",
           "pointing_residual_deg": 0.2,
-          "aim_maps": "results/aim_operating/aim_maps_B-L.npz",
-          "aim_mm": 105.0,
+          "aim_maps": [
+            "results/aim_operating/aim_maps_B-L.npz"
+          ],
+          "aim_mm": [
+            105.0
+          ],
           "rate_monitor_errors": [
             -0.01,
             0.0,
@@ -2576,6 +3969,34 @@
             710,
             720,
             730
+          ],
+          "rate_um_h": 1.0,
+          "scattered": "gas+plume",
+          "scenarios": [
+            [
+              "B-p",
+              {
+                "eta": 1.0,
+                "S_eff_m3_s": 2.0,
+                "feed_limit_sccm": 10.0
+              }
+            ],
+            [
+              "B-L",
+              {
+                "eta": 0.3,
+                "S_eff_m3_s": 4.0,
+                "feed_limit_sccm": 35.0
+              }
+            ]
+          ],
+          "admit": 0.95,
+          "rate_band": 0.03,
+          "element_limit": "1473 K element",
+          "pyrometer_biases_K": [
+            -2.0,
+            0.0,
+            2.0
           ]
         },
         "rows": [
@@ -2691,13 +4112,17 @@
       },
       {
         "run": "aim_BL_a90_d0.8",
-        "manifest_sha256": "7b587dc1a8e701eed96af24ce860f01bb54c291a0034651fa6b7db53a1fc1da8",
+        "manifest_sha256": "d6bf2c3b867ebdb5773342bb6bb569eef3cb628f24b7125d8d5b19d3ed58f501",
         "settings": {
           "heater_design_limit_K": 1460.0,
-          "heater_control": null,
+          "heater_control": "single",
           "pointing_residual_deg": 0.8,
-          "aim_maps": "results/aim_operating/aim_maps_B-L.npz",
-          "aim_mm": 90.0,
+          "aim_maps": [
+            "results/aim_operating/aim_maps_B-L.npz"
+          ],
+          "aim_mm": [
+            90.0
+          ],
           "rate_monitor_errors": [
             -0.01,
             0.0,
@@ -2712,6 +4137,34 @@
             710,
             720,
             730
+          ],
+          "rate_um_h": 1.0,
+          "scattered": "gas+plume",
+          "scenarios": [
+            [
+              "B-p",
+              {
+                "eta": 1.0,
+                "S_eff_m3_s": 2.0,
+                "feed_limit_sccm": 10.0
+              }
+            ],
+            [
+              "B-L",
+              {
+                "eta": 0.3,
+                "S_eff_m3_s": 4.0,
+                "feed_limit_sccm": 35.0
+              }
+            ]
+          ],
+          "admit": 0.95,
+          "rate_band": 0.03,
+          "element_limit": "1473 K element",
+          "pyrometer_biases_K": [
+            -2.0,
+            0.0,
+            2.0
           ]
         },
         "rows": [
@@ -2827,7 +4280,7 @@
       },
       {
         "run": "aim_BL_a92.5_d0.8",
-        "manifest_sha256": "a23c445b3b8123719ac61177da4e9b40d1f60aa052ba7bcc685360dc170abaa0",
+        "manifest_sha256": "79158969b6a8f3cd9fd90a2b525432ebd41ad0db22f02458ecc3d670a2429fbd",
         "settings": {
           "heater_design_limit_K": 1460.0,
           "heater_control": "single",
@@ -2850,6 +4303,34 @@
           ],
           "T_C": [
             720
+          ],
+          "rate_um_h": 1.0,
+          "scattered": "gas+plume",
+          "scenarios": [
+            [
+              "B-p",
+              {
+                "eta": 1.0,
+                "S_eff_m3_s": 2.0,
+                "feed_limit_sccm": 10.0
+              }
+            ],
+            [
+              "B-L",
+              {
+                "eta": 0.3,
+                "S_eff_m3_s": 4.0,
+                "feed_limit_sccm": 35.0
+              }
+            ]
+          ],
+          "admit": 0.95,
+          "rate_band": 0.03,
+          "element_limit": "1473 K element",
+          "pyrometer_biases_K": [
+            -2.0,
+            0.0,
+            2.0
           ]
         },
         "rows": [
@@ -2893,13 +4374,17 @@
       },
       {
         "run": "aim_BL_a95_d0.8",
-        "manifest_sha256": "47c4a674c417a980cc93d5f26f3ff30bb2c37eb706c11c31f59de0974cd88c74",
+        "manifest_sha256": "d05bee579d8aef69c2c4bb212f40bb5c6825fd4eb21519dbde59878b8ad5621e",
         "settings": {
           "heater_design_limit_K": 1460.0,
-          "heater_control": null,
+          "heater_control": "single",
           "pointing_residual_deg": 0.8,
-          "aim_maps": "results/aim_operating/aim_maps_B-L.npz",
-          "aim_mm": 95.0,
+          "aim_maps": [
+            "results/aim_operating/aim_maps_B-L.npz"
+          ],
+          "aim_mm": [
+            95.0
+          ],
           "rate_monitor_errors": [
             -0.01,
             0.0,
@@ -2914,6 +4399,34 @@
             710,
             720,
             730
+          ],
+          "rate_um_h": 1.0,
+          "scattered": "gas+plume",
+          "scenarios": [
+            [
+              "B-p",
+              {
+                "eta": 1.0,
+                "S_eff_m3_s": 2.0,
+                "feed_limit_sccm": 10.0
+              }
+            ],
+            [
+              "B-L",
+              {
+                "eta": 0.3,
+                "S_eff_m3_s": 4.0,
+                "feed_limit_sccm": 35.0
+              }
+            ]
+          ],
+          "admit": 0.95,
+          "rate_band": 0.03,
+          "element_limit": "1473 K element",
+          "pyrometer_biases_K": [
+            -2.0,
+            0.0,
+            2.0
           ]
         },
         "rows": [
@@ -3029,7 +4542,7 @@
       },
       {
         "run": "aim_BL_a97.5_d0.8",
-        "manifest_sha256": "d668047de167105de12aad7991c5646085ee45e7f8697143df8602cc4365f4ae",
+        "manifest_sha256": "5f343b5867e6984c07d0f0198f9bffc28919002c18e3350826e67564a0935ad6",
         "settings": {
           "heater_design_limit_K": 1460.0,
           "heater_control": "single",
@@ -3052,6 +4565,34 @@
           ],
           "T_C": [
             720
+          ],
+          "rate_um_h": 1.0,
+          "scattered": "gas+plume",
+          "scenarios": [
+            [
+              "B-p",
+              {
+                "eta": 1.0,
+                "S_eff_m3_s": 2.0,
+                "feed_limit_sccm": 10.0
+              }
+            ],
+            [
+              "B-L",
+              {
+                "eta": 0.3,
+                "S_eff_m3_s": 4.0,
+                "feed_limit_sccm": 35.0
+              }
+            ]
+          ],
+          "admit": 0.95,
+          "rate_band": 0.03,
+          "element_limit": "1473 K element",
+          "pyrometer_biases_K": [
+            -2.0,
+            0.0,
+            2.0
           ]
         },
         "rows": [
@@ -3095,13 +4636,17 @@
       },
       {
         "run": "aim_BL_a100_d0.8",
-        "manifest_sha256": "264112aff5c601af1e8a536e48c8ecbf00190c9f57b644088b0b57ccd592afa8",
+        "manifest_sha256": "fe638c96508689cea1e5e12bc9e770f3b55b6d9df5774f386b6bfbeb271294d9",
         "settings": {
           "heater_design_limit_K": 1460.0,
-          "heater_control": null,
+          "heater_control": "single",
           "pointing_residual_deg": 0.8,
-          "aim_maps": "results/aim_operating/aim_maps_B-L.npz",
-          "aim_mm": 100.0,
+          "aim_maps": [
+            "results/aim_operating/aim_maps_B-L.npz"
+          ],
+          "aim_mm": [
+            100.0
+          ],
           "rate_monitor_errors": [
             -0.01,
             0.0,
@@ -3116,6 +4661,34 @@
             710,
             720,
             730
+          ],
+          "rate_um_h": 1.0,
+          "scattered": "gas+plume",
+          "scenarios": [
+            [
+              "B-p",
+              {
+                "eta": 1.0,
+                "S_eff_m3_s": 2.0,
+                "feed_limit_sccm": 10.0
+              }
+            ],
+            [
+              "B-L",
+              {
+                "eta": 0.3,
+                "S_eff_m3_s": 4.0,
+                "feed_limit_sccm": 35.0
+              }
+            ]
+          ],
+          "admit": 0.95,
+          "rate_band": 0.03,
+          "element_limit": "1473 K element",
+          "pyrometer_biases_K": [
+            -2.0,
+            0.0,
+            2.0
           ]
         },
         "rows": [
@@ -3231,13 +4804,17 @@
       },
       {
         "run": "aim_BL_a105_d0.8",
-        "manifest_sha256": "a2a6d05cae13b33fa166cb96aedb3a6aa9051013a26c95a2516e550a13c58bbc",
+        "manifest_sha256": "4d0404ac26d2685978f305a67bdb74a4e23b359e11e01ee8e8952bcab80dabf2",
         "settings": {
           "heater_design_limit_K": 1460.0,
-          "heater_control": null,
+          "heater_control": "single",
           "pointing_residual_deg": 0.8,
-          "aim_maps": "results/aim_operating/aim_maps_B-L.npz",
-          "aim_mm": 105.0,
+          "aim_maps": [
+            "results/aim_operating/aim_maps_B-L.npz"
+          ],
+          "aim_mm": [
+            105.0
+          ],
           "rate_monitor_errors": [
             -0.01,
             0.0,
@@ -3252,6 +4829,34 @@
             710,
             720,
             730
+          ],
+          "rate_um_h": 1.0,
+          "scattered": "gas+plume",
+          "scenarios": [
+            [
+              "B-p",
+              {
+                "eta": 1.0,
+                "S_eff_m3_s": 2.0,
+                "feed_limit_sccm": 10.0
+              }
+            ],
+            [
+              "B-L",
+              {
+                "eta": 0.3,
+                "S_eff_m3_s": 4.0,
+                "feed_limit_sccm": 35.0
+              }
+            ]
+          ],
+          "admit": 0.95,
+          "rate_band": 0.03,
+          "element_limit": "1473 K element",
+          "pyrometer_biases_K": [
+            -2.0,
+            0.0,
+            2.0
           ]
         },
         "rows": [
@@ -3367,13 +4972,17 @@
       },
       {
         "run": "aim_Bp_a92.5_d0.2",
-        "manifest_sha256": "9a2cb80a68dfe709862210a7a6bb56b6dc3885dee5343d0ea180db265cd38fce",
+        "manifest_sha256": "f1cf966f0b55be571893f4f3db0ff5c8a4d7b4dc428ac7039d8d08d4e16c6b9c",
         "settings": {
           "heater_design_limit_K": 1450.0,
-          "heater_control": null,
+          "heater_control": "single",
           "pointing_residual_deg": 0.2,
-          "aim_maps": "results/aim_operating/aim_maps_B-p.npz",
-          "aim_mm": 92.5,
+          "aim_maps": [
+            "results/aim_operating/aim_maps_B-p.npz"
+          ],
+          "aim_mm": [
+            92.5
+          ],
           "rate_monitor_errors": [
             -0.01,
             0.0,
@@ -3388,6 +4997,34 @@
             710,
             720,
             730
+          ],
+          "rate_um_h": 1.0,
+          "scattered": "gas+plume",
+          "scenarios": [
+            [
+              "B-p",
+              {
+                "eta": 1.0,
+                "S_eff_m3_s": 2.0,
+                "feed_limit_sccm": 10.0
+              }
+            ],
+            [
+              "B-L",
+              {
+                "eta": 0.3,
+                "S_eff_m3_s": 4.0,
+                "feed_limit_sccm": 35.0
+              }
+            ]
+          ],
+          "admit": 0.95,
+          "rate_band": 0.03,
+          "element_limit": "1473 K element",
+          "pyrometer_biases_K": [
+            -2.0,
+            0.0,
+            2.0
           ]
         },
         "rows": [
@@ -3503,13 +5140,17 @@
       },
       {
         "run": "aim_Bp_a97.5_d0.2",
-        "manifest_sha256": "84f2db1895d2c87acc79225ac87beb6a6a9f0791d12f3e1c0964a7c8cc8ccd43",
+        "manifest_sha256": "1af67c5fe80231bfea4d5792dfce954980d9c3291fd47b3c7c5abf9e59eb2c8f",
         "settings": {
           "heater_design_limit_K": 1450.0,
-          "heater_control": null,
+          "heater_control": "single",
           "pointing_residual_deg": 0.2,
-          "aim_maps": "results/aim_operating/aim_maps_B-p.npz",
-          "aim_mm": 97.5,
+          "aim_maps": [
+            "results/aim_operating/aim_maps_B-p.npz"
+          ],
+          "aim_mm": [
+            97.5
+          ],
           "rate_monitor_errors": [
             -0.01,
             0.0,
@@ -3524,6 +5165,34 @@
             710,
             720,
             730
+          ],
+          "rate_um_h": 1.0,
+          "scattered": "gas+plume",
+          "scenarios": [
+            [
+              "B-p",
+              {
+                "eta": 1.0,
+                "S_eff_m3_s": 2.0,
+                "feed_limit_sccm": 10.0
+              }
+            ],
+            [
+              "B-L",
+              {
+                "eta": 0.3,
+                "S_eff_m3_s": 4.0,
+                "feed_limit_sccm": 35.0
+              }
+            ]
+          ],
+          "admit": 0.95,
+          "rate_band": 0.03,
+          "element_limit": "1473 K element",
+          "pyrometer_biases_K": [
+            -2.0,
+            0.0,
+            2.0
           ]
         },
         "rows": [
@@ -3639,13 +5308,17 @@
       },
       {
         "run": "aim_Bp_a102.5_d0.2",
-        "manifest_sha256": "da13e36aaa7eadecb453bd72c01fc65a1154fa35eedeff8e992e29939e8ec091",
+        "manifest_sha256": "7e1fb412388765781b2f18017e051a894642bd7772ad30f72d68ede1eceebed5",
         "settings": {
           "heater_design_limit_K": 1450.0,
-          "heater_control": null,
+          "heater_control": "single",
           "pointing_residual_deg": 0.2,
-          "aim_maps": "results/aim_operating/aim_maps_B-p.npz",
-          "aim_mm": 102.5,
+          "aim_maps": [
+            "results/aim_operating/aim_maps_B-p.npz"
+          ],
+          "aim_mm": [
+            102.5
+          ],
           "rate_monitor_errors": [
             -0.01,
             0.0,
@@ -3660,6 +5333,34 @@
             710,
             720,
             730
+          ],
+          "rate_um_h": 1.0,
+          "scattered": "gas+plume",
+          "scenarios": [
+            [
+              "B-p",
+              {
+                "eta": 1.0,
+                "S_eff_m3_s": 2.0,
+                "feed_limit_sccm": 10.0
+              }
+            ],
+            [
+              "B-L",
+              {
+                "eta": 0.3,
+                "S_eff_m3_s": 4.0,
+                "feed_limit_sccm": 35.0
+              }
+            ]
+          ],
+          "admit": 0.95,
+          "rate_band": 0.03,
+          "element_limit": "1473 K element",
+          "pyrometer_biases_K": [
+            -2.0,
+            0.0,
+            2.0
           ]
         },
         "rows": [
@@ -3775,13 +5476,17 @@
       },
       {
         "run": "aim_Bp_a92.5_d0.8",
-        "manifest_sha256": "ce9b491e407c08f39cc638d52f76aa14b37923ff6f067d86a97c683f44062412",
+        "manifest_sha256": "a69b6672a7971d34ff35da8b3daee180b53d6cbe649a500c90c3aa038e445697",
         "settings": {
           "heater_design_limit_K": 1450.0,
-          "heater_control": null,
+          "heater_control": "single",
           "pointing_residual_deg": 0.8,
-          "aim_maps": "results/aim_operating/aim_maps_B-p.npz",
-          "aim_mm": 92.5,
+          "aim_maps": [
+            "results/aim_operating/aim_maps_B-p.npz"
+          ],
+          "aim_mm": [
+            92.5
+          ],
           "rate_monitor_errors": [
             -0.01,
             0.0,
@@ -3796,6 +5501,34 @@
             710,
             720,
             730
+          ],
+          "rate_um_h": 1.0,
+          "scattered": "gas+plume",
+          "scenarios": [
+            [
+              "B-p",
+              {
+                "eta": 1.0,
+                "S_eff_m3_s": 2.0,
+                "feed_limit_sccm": 10.0
+              }
+            ],
+            [
+              "B-L",
+              {
+                "eta": 0.3,
+                "S_eff_m3_s": 4.0,
+                "feed_limit_sccm": 35.0
+              }
+            ]
+          ],
+          "admit": 0.95,
+          "rate_band": 0.03,
+          "element_limit": "1473 K element",
+          "pyrometer_biases_K": [
+            -2.0,
+            0.0,
+            2.0
           ]
         },
         "rows": [
@@ -3911,13 +5644,17 @@
       },
       {
         "run": "aim_Bp_a97.5_d0.8",
-        "manifest_sha256": "aab593a2a34a446e354a5e56a5a4470dbe9fef789c8f5442066ef1edad3ef171",
+        "manifest_sha256": "a68d37c3b613da655ab7b4bda1848a3a2c4032adfbfad9ec179de5b531cb497e",
         "settings": {
           "heater_design_limit_K": 1450.0,
-          "heater_control": null,
+          "heater_control": "single",
           "pointing_residual_deg": 0.8,
-          "aim_maps": "results/aim_operating/aim_maps_B-p.npz",
-          "aim_mm": 97.5,
+          "aim_maps": [
+            "results/aim_operating/aim_maps_B-p.npz"
+          ],
+          "aim_mm": [
+            97.5
+          ],
           "rate_monitor_errors": [
             -0.01,
             0.0,
@@ -3932,6 +5669,34 @@
             710,
             720,
             730
+          ],
+          "rate_um_h": 1.0,
+          "scattered": "gas+plume",
+          "scenarios": [
+            [
+              "B-p",
+              {
+                "eta": 1.0,
+                "S_eff_m3_s": 2.0,
+                "feed_limit_sccm": 10.0
+              }
+            ],
+            [
+              "B-L",
+              {
+                "eta": 0.3,
+                "S_eff_m3_s": 4.0,
+                "feed_limit_sccm": 35.0
+              }
+            ]
+          ],
+          "admit": 0.95,
+          "rate_band": 0.03,
+          "element_limit": "1473 K element",
+          "pyrometer_biases_K": [
+            -2.0,
+            0.0,
+            2.0
           ]
         },
         "rows": [
@@ -4047,13 +5812,17 @@
       },
       {
         "run": "aim_Bp_a102.5_d0.8",
-        "manifest_sha256": "c023b1de82622420492028ba3e76e4d86a36d67448bf7f8bf8a5f161bb498e0f",
+        "manifest_sha256": "f2b8286c20f734b741aa78212dd19dcf29c934605075b28d5a9dcdb7005e9374",
         "settings": {
           "heater_design_limit_K": 1450.0,
-          "heater_control": null,
+          "heater_control": "single",
           "pointing_residual_deg": 0.8,
-          "aim_maps": "results/aim_operating/aim_maps_B-p.npz",
-          "aim_mm": 102.5,
+          "aim_maps": [
+            "results/aim_operating/aim_maps_B-p.npz"
+          ],
+          "aim_mm": [
+            102.5
+          ],
           "rate_monitor_errors": [
             -0.01,
             0.0,
@@ -4068,6 +5837,34 @@
             710,
             720,
             730
+          ],
+          "rate_um_h": 1.0,
+          "scattered": "gas+plume",
+          "scenarios": [
+            [
+              "B-p",
+              {
+                "eta": 1.0,
+                "S_eff_m3_s": 2.0,
+                "feed_limit_sccm": 10.0
+              }
+            ],
+            [
+              "B-L",
+              {
+                "eta": 0.3,
+                "S_eff_m3_s": 4.0,
+                "feed_limit_sccm": 35.0
+              }
+            ]
+          ],
+          "admit": 0.95,
+          "rate_band": 0.03,
+          "element_limit": "1473 K element",
+          "pyrometer_biases_K": [
+            -2.0,
+            0.0,
+            2.0
           ]
         },
         "rows": [
@@ -4183,7 +5980,7 @@
       },
       {
         "run": "ms_h1460_d0.2",
-        "manifest_sha256": "0128536449f16b2c0bf00d68218cee51d31ff3489e269590134c565bee2d649c",
+        "manifest_sha256": "407ad5c4b9eabd92ec05f8d9e8c207fa0565e81756b90c4e7e1705c209d402f7",
         "settings": {
           "heater_design_limit_K": 1460.0,
           "heater_control": "multispot",
@@ -4206,6 +6003,34 @@
           ],
           "T_C": [
             720
+          ],
+          "rate_um_h": 1.0,
+          "scattered": "gas+plume",
+          "scenarios": [
+            [
+              "B-p",
+              {
+                "eta": 1.0,
+                "S_eff_m3_s": 2.0,
+                "feed_limit_sccm": 10.0
+              }
+            ],
+            [
+              "B-L",
+              {
+                "eta": 0.3,
+                "S_eff_m3_s": 4.0,
+                "feed_limit_sccm": 35.0
+              }
+            ]
+          ],
+          "admit": 0.95,
+          "rate_band": 0.03,
+          "element_limit": "1473 K element",
+          "pyrometer_biases_K": [
+            -2.0,
+            0.0,
+            2.0
           ]
         },
         "rows": [
@@ -4249,7 +6074,7 @@
       },
       {
         "run": "ms_h1450_d0.2",
-        "manifest_sha256": "81a5a78a0ec10a49c1e62a9c42d3781656bac76a6adddcb79cccf59226bdcc35",
+        "manifest_sha256": "14c40287480153c3dc560f3b7a12f8f677ead9949f221c48ad14b356f6d42225",
         "settings": {
           "heater_design_limit_K": 1450.0,
           "heater_control": "multispot",
@@ -4272,6 +6097,34 @@
           ],
           "T_C": [
             720
+          ],
+          "rate_um_h": 1.0,
+          "scattered": "gas+plume",
+          "scenarios": [
+            [
+              "B-p",
+              {
+                "eta": 1.0,
+                "S_eff_m3_s": 2.0,
+                "feed_limit_sccm": 10.0
+              }
+            ],
+            [
+              "B-L",
+              {
+                "eta": 0.3,
+                "S_eff_m3_s": 4.0,
+                "feed_limit_sccm": 35.0
+              }
+            ]
+          ],
+          "admit": 0.95,
+          "rate_band": 0.03,
+          "element_limit": "1473 K element",
+          "pyrometer_biases_K": [
+            -2.0,
+            0.0,
+            2.0
           ]
         },
         "rows": [
@@ -4315,7 +6168,7 @@
       },
       {
         "run": "ms_h1425_d0.2",
-        "manifest_sha256": "7af60f17fc45e8855a036296b23e0c3d327d469c7fbcaffaba1a9c6b3bf7cf46",
+        "manifest_sha256": "ac993633e0b36279c356a79d96f79b12822d3ac28b1282925f49c2d962fcd47e",
         "settings": {
           "heater_design_limit_K": 1425.0,
           "heater_control": "multispot",
@@ -4338,6 +6191,34 @@
           ],
           "T_C": [
             720
+          ],
+          "rate_um_h": 1.0,
+          "scattered": "gas+plume",
+          "scenarios": [
+            [
+              "B-p",
+              {
+                "eta": 1.0,
+                "S_eff_m3_s": 2.0,
+                "feed_limit_sccm": 10.0
+              }
+            ],
+            [
+              "B-L",
+              {
+                "eta": 0.3,
+                "S_eff_m3_s": 4.0,
+                "feed_limit_sccm": 35.0
+              }
+            ]
+          ],
+          "admit": 0.95,
+          "rate_band": 0.03,
+          "element_limit": "1473 K element",
+          "pyrometer_biases_K": [
+            -2.0,
+            0.0,
+            2.0
           ]
         },
         "rows": [
@@ -4381,7 +6262,7 @@
       },
       {
         "run": "ms_h1450_d0.8",
-        "manifest_sha256": "96ea4f6ddcb0bfb201c7efde01b4713984c7e8beebd678934eed18bf1c60bd0c",
+        "manifest_sha256": "e51789c96af48a11e86f34e7e03e5c51c01a29037c6909fe576eae90edbc4f65",
         "settings": {
           "heater_design_limit_K": 1450.0,
           "heater_control": "multispot",
@@ -4404,6 +6285,34 @@
           ],
           "T_C": [
             720
+          ],
+          "rate_um_h": 1.0,
+          "scattered": "gas+plume",
+          "scenarios": [
+            [
+              "B-p",
+              {
+                "eta": 1.0,
+                "S_eff_m3_s": 2.0,
+                "feed_limit_sccm": 10.0
+              }
+            ],
+            [
+              "B-L",
+              {
+                "eta": 0.3,
+                "S_eff_m3_s": 4.0,
+                "feed_limit_sccm": 35.0
+              }
+            ]
+          ],
+          "admit": 0.95,
+          "rate_band": 0.03,
+          "element_limit": "1473 K element",
+          "pyrometer_biases_K": [
+            -2.0,
+            0.0,
+            2.0
           ]
         },
         "rows": [
@@ -4447,7 +6356,7 @@
       },
       {
         "run": "ms_h1460_d0.2_cold",
-        "manifest_sha256": "5f0216c862e88d39981835e4a528ca7dc4515c6043cceb72174be01057252e1d",
+        "manifest_sha256": "06a863669492b4b38240fc0a10181d0abc1c642a8d244207bb9df7df0b8f8ef5",
         "settings": {
           "heater_design_limit_K": 1460.0,
           "heater_control": "multispot",
@@ -4472,6 +6381,34 @@
             690,
             700,
             710
+          ],
+          "rate_um_h": 1.0,
+          "scattered": "gas+plume",
+          "scenarios": [
+            [
+              "B-p",
+              {
+                "eta": 1.0,
+                "S_eff_m3_s": 2.0,
+                "feed_limit_sccm": 10.0
+              }
+            ],
+            [
+              "B-L",
+              {
+                "eta": 0.3,
+                "S_eff_m3_s": 4.0,
+                "feed_limit_sccm": 35.0
+              }
+            ]
+          ],
+          "admit": 0.95,
+          "rate_band": 0.03,
+          "element_limit": "1473 K element",
+          "pyrometer_biases_K": [
+            -2.0,
+            0.0,
+            2.0
           ]
         },
         "rows": [
@@ -5568,6 +7505,34 @@
           ],
           "T_C": [
             720
+          ],
+          "rate_um_h": 1.0,
+          "scattered": "gas+plume",
+          "scenarios": [
+            [
+              "B-p",
+              {
+                "eta": 1.0,
+                "S_eff_m3_s": 2.0,
+                "feed_limit_sccm": 10.0
+              }
+            ],
+            [
+              "B-L",
+              {
+                "eta": 0.3,
+                "S_eff_m3_s": 4.0,
+                "feed_limit_sccm": 35.0
+              }
+            ]
+          ],
+          "admit": 0.95,
+          "rate_band": 0.03,
+          "element_limit": "1473 K element",
+          "pyrometer_biases_K": [
+            -2.0,
+            0.0,
+            2.0
           ]
         }
       },
@@ -5604,6 +7569,34 @@
             690,
             700,
             710
+          ],
+          "rate_um_h": 1.0,
+          "scattered": "gas+plume",
+          "scenarios": [
+            [
+              "B-p",
+              {
+                "eta": 1.0,
+                "S_eff_m3_s": 2.0,
+                "feed_limit_sccm": 10.0
+              }
+            ],
+            [
+              "B-L",
+              {
+                "eta": 0.3,
+                "S_eff_m3_s": 4.0,
+                "feed_limit_sccm": 35.0
+              }
+            ]
+          ],
+          "admit": 0.95,
+          "rate_band": 0.03,
+          "element_limit": "1473 K element",
+          "pyrometer_biases_K": [
+            -2.0,
+            0.0,
+            2.0
           ]
         }
       },
@@ -5640,6 +7633,34 @@
             690,
             700,
             710
+          ],
+          "rate_um_h": 1.0,
+          "scattered": "gas+plume",
+          "scenarios": [
+            [
+              "B-p",
+              {
+                "eta": 1.0,
+                "S_eff_m3_s": 2.0,
+                "feed_limit_sccm": 10.0
+              }
+            ],
+            [
+              "B-L",
+              {
+                "eta": 0.3,
+                "S_eff_m3_s": 4.0,
+                "feed_limit_sccm": 35.0
+              }
+            ]
+          ],
+          "admit": 0.95,
+          "rate_band": 0.03,
+          "element_limit": "1473 K element",
+          "pyrometer_biases_K": [
+            -2.0,
+            0.0,
+            2.0
           ]
         }
       },
@@ -5676,6 +7697,34 @@
             690,
             700,
             710
+          ],
+          "rate_um_h": 1.0,
+          "scattered": "gas+plume",
+          "scenarios": [
+            [
+              "B-p",
+              {
+                "eta": 1.0,
+                "S_eff_m3_s": 2.0,
+                "feed_limit_sccm": 10.0
+              }
+            ],
+            [
+              "B-L",
+              {
+                "eta": 0.3,
+                "S_eff_m3_s": 4.0,
+                "feed_limit_sccm": 35.0
+              }
+            ]
+          ],
+          "admit": 0.95,
+          "rate_band": 0.03,
+          "element_limit": "1473 K element",
+          "pyrometer_biases_K": [
+            -2.0,
+            0.0,
+            2.0
           ]
         }
       }

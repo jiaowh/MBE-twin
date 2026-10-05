@@ -279,6 +279,7 @@ def test_realizable_controllers_converge_to_the_steady_realizable_state(truth):
     from mbe_twin.control import ControllerModel
     d = load_definition(Path(__file__).resolve().parents[1] / f"cases/twin/chamber_B-L_720C_{truth}.json")
     d["sensors"]["pyrometer"]["noise_K"] = 0.0
+    d["sensors"]["ion_gauge"]["noise_rel"] = 0.0
     ch = Chamber(d)
     rec = {"schema_version": "0.1", "initial": {"wafer_C": 720.0, "ga_cell_K": "operating_point"},
            "steps": [{"duration_s": 300.0, "heater": {"mode": "pyrometer", "target_C": "operating_point"},
@@ -302,3 +303,27 @@ def test_realizable_controllers_converge_to_the_steady_realizable_state(truth):
     ts = tw.timeseries()
     assert ts["ga_centre_nm_min"][-1] == pytest.approx(cm.ga_target(reading, ch.pressure_eq(feed)), rel=2e-3)
     assert set(tw._last["regime"]) == {"Ga-adlayer"}
+
+
+def test_controllers_see_the_gauge_not_the_true_pressure():
+    # audit follow-up 2026-10-05, finding 1: a gauge reading twice the pressure changes the steered Ga commands (the
+    # controller's attenuation model is evaluated at the reading) while the gas itself evolves from the true feed
+    from pathlib import Path
+    from mbe_twin.chamber import load_definition
+    runs = {}
+    for sens in (1.0, 2.0):
+        d = load_definition(Path(__file__).resolve().parents[1] / "cases/twin/chamber_B-L_720C_fill120.json")
+        d["sensors"]["pyrometer"]["noise_K"] = 0.0
+        d["sensors"]["ion_gauge"].update({"noise_rel": 0.0, "sensitivity": sens})
+        rec = {"schema_version": "0.1", "initial": {"wafer_C": 720.0, "ga_cell_K": "operating_point"},
+               "steps": [{"duration_s": 200.0, "heater": {"mode": "pyrometer", "target_C": "operating_point"},
+                          "ga_cell": {"target_K": "steered"}, "n2_sccm": "operating_point", "plasma": True,
+                          "rotation_rpm": 10.0},
+                         {"duration_s": 60.0, "bfm": True, "shutters": {"ga": True, "n": False}},
+                         {"duration_s": 100.0, "shutters": {"ga": True, "n": True}}]}
+        runs[sens] = Twin(Chamber(d), rec, dt_max=5.0).run().timeseries()
+    a, b = runs[1.0], runs[2.0]
+    assert np.array_equal(a["pressure_Pa"], b["pressure_Pa"])                  # same physical gas
+    assert np.allclose(b["gauge_Pa"][1:], 2.0 * a["gauge_Pa"][1:])
+    assert np.max(np.abs(a["ga_target_nm_min"][-5:] - b["ga_target_nm_min"][-5:])) > 1e-6
+    assert np.max(np.abs(a["ga_cell_K"][-5:] - b["ga_cell_K"][-5:])) > 1e-6

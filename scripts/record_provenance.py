@@ -98,7 +98,9 @@ IMPACT = {
     "scripts/realizable_controller.py": "Later changes (2026-10-05) add options whose defaults reproduce the recorded "
                                         "runs: --rate-um-h (default 1 um/h), --pointing-residual, --aim-maps/--aim-mm, "
                                         "--heater-control (default single), --dump-t, plus per-state factor bookkeeping; "
-                                        "--pointing-residual 0.8 reproduced the 1460 K record (95.2 %, 1.53 %).",
+                                        "--pointing-residual 0.8 reproduced the 1460 K record (95.2 %, 1.53 %). The follow-up audit "
+                                        "change (2026-10-05) only adds aim-map and optional-module hashes to the "
+                                        "manifest.",
     "scripts/scattered_plume_tables.py": "Later change (2026-10-03 audit) covers the grid pressures through the first one whose "
                                          "feed reaches the 35 sccm limit and adds --extend (reuses a record's covered entries); "
                                          "the covered entries of the earlier records are computed exactly as before.",
@@ -111,7 +113,7 @@ IMPACT = {
                  "contents (checked array by array)."}],
 }
 PINS = {   # reviewed 2026-10-02
-    "scripts/realizable_controller.py": "c62a9828a3f6",  # reviewed 2026-10-05
+    "scripts/realizable_controller.py": "6bad564f8936",  # reviewed 2026-10-05
     "scripts/nitrogen_aim_pressure.py": "3ed2958db5f2",  # reviewed 2026-10-03
     "scripts/nitrogen_rate_limits.py": "29392adf050d",  # reviewed 2026-10-03
     "scripts/heater_robustness.py": "7f545f5d98da",  # reviewed 2026-10-03
@@ -156,6 +158,8 @@ INPUT_HASHES = {
     "scattered_plume_tables_sha256": lambda v: {f"data/runs/studies/scattered_plume_tables_{k}.json": h for k, h in v.items()},
     # Ga DSMC summaries a study reloads (paths relative to data/runs/sparta_ga; audit 2026-10-05, finding 3)
     "ga_records_sha256": lambda v: {f"data/runs/sparta_ga/{k}": h for k, h in v.items()},
+    # aim maps a realizable-controller run read (paths relative to the repository root; audit follow-up 2026-10-05)
+    "aim_maps_sha256": lambda v: dict(v),
 }
 PLUME_PREFIX = "data/runs/studies/scattered_plume_tables_"
 UNTRACED = "untraced"
@@ -232,7 +236,13 @@ def main():
     for rec in sorted(STUDIES.glob("*.json")):
         m = json.loads(rec.read_text(encoding="utf-8"))
         mismatches = []
-        for path, recorded in recorded_hashes(m).items():
+        # a summary record keeps each constituent run's dependencies separately (inputs.constituents); each is checked
+        # as its own set, labelled record [run], so differing versions across runs are not merged
+        sets = [(rec.name, recorded_hashes(m))]
+        for run, deps in (m.get("inputs", {}).get("constituents") or {}).items():
+            sets.append((f"{rec.name} [{run}]", recorded_hashes({"source_sha256": deps.get("source_sha256", {}),
+                                                                 "inputs": deps})))
+        for label, path, recorded in ((lb, p_, h) for lb, hs in sets for p_, h in hs.items()):
             f = ROOT / path
             current = sha_lf(f.read_bytes()) if f.exists() else "missing"
             if current == recorded:
@@ -248,9 +258,9 @@ def main():
             changed = "; ".join(f"`{h[:7]}` {s}" for h, s, _ in reversed(later)) or "-"
             note = applicable_note(path, current, rec.name, recorded)
             if note is None:
-                unreviewed.append(f"{rec.name}: {path}")
+                unreviewed.append(f"{label}: {path}")
                 note = "**not reviewed**"
-            mismatches.append(f"| {rec.name} | `{path}` | {version} | {changed} | {note} |")
+            mismatches.append(f"| {label} | `{path}` | {version} | {changed} | {note} |")
         if mismatches:
             lines.extend(mismatches)
         else:

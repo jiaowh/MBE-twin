@@ -450,12 +450,15 @@ def main():
                 "rate_um_h": RATE_UM_H, "T_C": t_c, "element_limit": LIMIT_NAME, "pyrometer_biases_K": BIASES_K,
                 "rate_monitor_errors": E_RATE, "bfm_errors": E_BFM, "rate_band": RATE_BAND, "admit": ADMIT,
                 "controllers": CONTROLLERS, "heater_design_limit_K": args.heater_design_limit,
-                "pointing_residual_deg": args.pointing_residual, "heater_control": args.heater_control, "aim_maps": args.aim_maps, "aim_mm": args.aim_mm, "lip_m": 0.002, "pointing_ensemble_deg": 0.8,
+                "pointing_residual_deg": args.pointing_residual, "heater_control": args.heater_control, "aim_maps": args.aim_maps, "aim_mm": args.aim_mm,
+                "aim_maps_sha256": {f: lc.file_sha256(Path(f)) for f in (args.aim_maps or ())}, "lip_m": 0.002, "pointing_ensemble_deg": 0.8,
                 "ga_records_sha256": {lc.ga_record(env["layouts"][n]["ga_port_deg"], f, d):
                                       lc.file_sha256(lc.GA_RECORDS / lc.ga_record(env["layouts"][n]["ga_port_deg"], f, d))
                                       for n, _ in SCENARIOS for f, d in itertools.product((40, 70, 120), lc.GA_D)}},
         outputs={"rows": rows, "summary": summary},
-        sources=[Path(__file__), ROOT / "scripts/operating_optimum.py", ROOT / "scripts/heater_robustness.py",
+        sources=([ROOT / "scripts/multispot_heater.py"] if args.heater_control == "multispot" else [])
+                + ([ROOT / "scripts/nitrogen_aim_operating.py"] if args.aim_maps else [])
+                + [Path(__file__), ROOT / "scripts/operating_optimum.py", ROOT / "scripts/heater_robustness.py",
                  ROOT / "scripts/layout_comparison.py", ROOT / "scripts/heater_zones.py", ROOT / "src/mbe_twin/growth.py",
                  ROOT / "src/mbe_twin/heater.py", ROOT / "src/mbe_twin/vapour.py", ROOT / "data/parameters/gan_growth.json",
                  record] + lc.scatter_sources(scatter),

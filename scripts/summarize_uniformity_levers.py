@@ -4,7 +4,9 @@ Each lever is a scripts/realizable_controller.py run (rate monitor + BFM control
 (--pointing-residual), aim offset at the operating point (--aim-maps / --aim-mm), heater design limit and
 multi-spot heater control (--heater-control multispot). For every run listed in RUNS the record keeps its
 settings, the per-layout joint fraction and worst-case thickness at each temperature, and the SHA-256 of
-its manifest (the manifests stay in results/, which git ignores; their source hashes are copied in).
+its manifest. The manifests stay in results/, which git ignores, so each run's own dependency hashes
+(source_sha256, aim_maps_sha256, ga_records_sha256, scattered-table hashes) are kept per run under
+inputs.constituents, where scripts/record_provenance.py checks them run by run.
 Worst-case drivers (scripts/worst_case_drivers.py) are added for the dumps listed in DRIVERS.
 
 Usage: python scripts/summarize_uniformity_levers.py
@@ -30,18 +32,21 @@ DRIVERS = ["drivers_h1460/states_B-p_720C.npz", "drivers_cur/states_B-L_730C.npz
 CONTROLLER = "rate monitor + BFM"
 CONTROLLERS = ("rate monitor + BFM", "rate monitor + BFM + fill")
 SETTINGS = ("heater_design_limit_K", "heater_control", "pointing_residual_deg", "aim_maps", "aim_mm",
-            "rate_monitor_errors", "bfm_errors", "T_C")
+            "rate_monitor_errors", "bfm_errors", "T_C", "rate_um_h", "scattered", "scenarios", "admit", "rate_band",
+            "element_limit", "pyrometer_biases_K")
+DEPENDENCIES = ("aim_maps_sha256", "ga_records_sha256", "scattered_tables_sha256", "scattered_plume_tables_sha256")
 
 
 def main():
-    runs, sources = [], {}
+    runs, constituents = [], {}
     for name in RUNS:
         f = RES / name / "manifest.json"
         if not f.exists():
             print(f"missing {name}")
             continue
         m = json.loads(f.read_text(encoding="utf-8"))
-        sources.update(m["source_sha256"])
+        constituents[name] = {"source_sha256": m["source_sha256"],
+                              **{k: m["inputs"][k] for k in DEPENDENCIES if m["inputs"].get(k)}}
         rows = [{"layout": r["layout"], "T_C": r["T_C"], "controller": c,
                  "joint_fraction": r["controllers"][c]["joint_fraction"], "worst_pct": r["controllers"][c]["worst_pct"],
                  "admissible": r["controllers"][c]["admissible"],
@@ -59,7 +64,7 @@ def main():
             key = f"{row['layout']} / {row['controller']}"
             if row["admissible"] and (key not in best or row["worst_pct"] < best[key]["worst_pct"]):
                 best[key] = {**row, "run": r["run"], "settings": r["settings"]}
-    man = build_manifest("uniformity_levers", label="representative_chamber", inputs={"runs": RUNS, "controllers": CONTROLLERS},
+    man = build_manifest("uniformity_levers", label="representative_chamber", inputs={"runs": RUNS, "controllers": CONTROLLERS, "constituents": constituents},
                          outputs={"runs": runs, "drivers": drivers, "best_admissible": best},
                          sources=[Path(__file__), ROOT / "scripts/realizable_controller.py",
                                   ROOT / "scripts/worst_case_drivers.py", ROOT / "scripts/multispot_heater.py",
