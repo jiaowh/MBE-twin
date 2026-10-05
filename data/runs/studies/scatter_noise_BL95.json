@@ -1,11 +1,11 @@
 {
   "schema_version": "0.1",
   "run_id": "scatter_noise",
-  "created_utc": "2026-10-05T19:45:02+00:00",
+  "created_utc": "2026-10-05T23:12:28+00:00",
   "label": "representative_chamber",
   "validation_status": "not_validated",
   "package_version": "0.1.0",
-  "git_commit": "22a46edb1e76c6de12124e6536bd2c2a5069351a-dirty",
+  "git_commit": "602cedd30dfd9615d5a53e455981ab003be3e7aa-dirty",
   "python": "3.12.13",
   "numpy": "2.4.4",
   "platform": "Windows-11-10.0.26300-SP0",
@@ -15,7 +15,7 @@
     "scripts/average_scattered_seeds.py": "c8ac52d116e4a2befe4628fb021d85887a67dd36e77736f87bf9395f77035f00"
   },
   "solver": null,
-  "inputs_sha256": "c19652cec892695bc21c982cfce99ddfa4873400e5f4700afef7aa7e866367fe",
+  "inputs_sha256": "5dd529022736997436edb8d1bf862288da0a1e9205625f58407ba2efcbc4c0aa",
   "inputs": {
     "controller": "rate monitor + BFM",
     "runs": [
@@ -24,112 +24,112 @@
         "dir": "results/ctl_BL95_s1",
         "run_id": "realizable_controller",
         "scatter_flat": false,
-        "manifest_sha256": "700822221867b2889ac682d05b05756ffe69803c6ca4eb1392a9bcafa606b865"
+        "manifest_sha256": "6845e1531d362e777fab10b0947c710ee4c127f01a305de8d8940f33c1d6a3ab"
       },
       {
         "kind": "single",
         "dir": "results/ctl_BL95_s2",
         "run_id": "realizable_controller",
         "scatter_flat": false,
-        "manifest_sha256": "549f0070050062ff36b3cafec202dd3b8c62bb8d3eeafe900ebbc9073b47301d"
+        "manifest_sha256": "7b8f8178296e6163031e0a5cd55dad35185e1134e7a5829ceabacf1a03420546"
       },
       {
         "kind": "single",
         "dir": "results/ctl_BL95_s3",
         "run_id": "realizable_controller",
         "scatter_flat": false,
-        "manifest_sha256": "b7515fe0d24ffff97390b476069df51b5b589b7b9fa0457b5aee6f1d67565629"
+        "manifest_sha256": "07a42dd6af92b218a63b80eec15af2e3eb64ba2a923c5bfc16c291b68231a55a"
       },
       {
         "kind": "single",
         "dir": "results/ctl_BL95_s4",
         "run_id": "realizable_controller",
         "scatter_flat": false,
-        "manifest_sha256": "9e23c487dfd9a596078c83ee83be8d6c140aa5186cd1fa224535e8abdea65fc9"
+        "manifest_sha256": "0311fbb0c8a1eac36145a4a1ede7a45372514e23452de46cec8bbd3fef9db374"
       },
       {
         "kind": "single",
         "dir": "results/ctl_BL95_s5",
         "run_id": "realizable_controller",
         "scatter_flat": false,
-        "manifest_sha256": "c29278e68b06c4504a77fbe4e33f2c31568f0ce365e69b943061d932a7fa9848"
+        "manifest_sha256": "87ecf4d8e1e717fb5d848991638f4a6d81a854e7370714ba9f8d37ae88518b8b"
       },
       {
         "kind": "single",
         "dir": "results/ctl_BL95_s6",
         "run_id": "realizable_controller",
         "scatter_flat": false,
-        "manifest_sha256": "9b232565ebddb900985b6611f49a3a8d13f2762c3bb28ce179a1a68aef893a1e"
+        "manifest_sha256": "9e1c800872a591daea359f70c2ad013a81c1373d1c6adc7dda8ac31f22378de8"
       },
       {
         "kind": "single",
         "dir": "results/ctl_BL95_s7",
         "run_id": "realizable_controller",
         "scatter_flat": false,
-        "manifest_sha256": "bd85efee94e9986913950ea6a4891f62d90ee4667307b5559914dd6c9cca40c3"
+        "manifest_sha256": "4b93c2a22020148ca3d33325abe2765881ecd31511526f91681fbb5bbc1eff29"
       },
       {
         "kind": "single",
         "dir": "results/ctl_BL95_s8",
         "run_id": "realizable_controller",
         "scatter_flat": false,
-        "manifest_sha256": "6f4324d59c804a2e5efd8bd5bf978c26f0a458e6608d5583676108f9c11dffbd"
+        "manifest_sha256": "c753df2d1e823d82c25641f7f8f972e43d063207e98e853f304c2bdd67fac9a4"
       },
       {
         "kind": "single",
         "dir": "results/ctl_BL95_s9",
         "run_id": "realizable_controller",
         "scatter_flat": false,
-        "manifest_sha256": "bc3ee4c779607adc6a5fb4c523115e2803476ef29c93e151c4ee73cbea88f4c0"
+        "manifest_sha256": "fae566ab4f465b8bdfd6ea1476f100b89c75f63f0444db65136f190f3fdfc80b"
       },
       {
         "kind": "single",
         "dir": "results/ctl_BL95_s10",
         "run_id": "realizable_controller",
         "scatter_flat": false,
-        "manifest_sha256": "09ec7e16531a027f0511774bcaba8d23d6ac33aba54c58f57d35dc4dd4653930"
+        "manifest_sha256": "3b7aa15a2b9d4adbb73f60e4d2f584435255ac32e2cdf13912d6b6644f323ae3"
       },
       {
         "kind": "avg",
         "dir": "results/ctl_BL95_avg",
         "run_id": "realizable_controller",
         "scatter_flat": false,
-        "manifest_sha256": "46ce3c82a1df7f4b624173568ad5ebea57c845e760cd62f9b097327becb12567"
+        "manifest_sha256": "971229497bd350818a9e0175113c05ab27145a2ae398af5ac44c9fa4da84ffad"
       },
       {
         "kind": "flat",
         "dir": "results/ctl_BL95_flat",
         "run_id": "realizable_controller",
         "scatter_flat": true,
-        "manifest_sha256": "b8858072bb2ff57663ad9a9cf7ef9c80097c0ed796106548cc109152479b1a21"
+        "manifest_sha256": "4fd41ad9576d2cdaf95f3a456913cfa07b0250c3bb9a76f4c1c78e79c7787b85"
       },
       {
         "kind": "aim",
         "dir": "results/ctl_BLscan_90",
         "run_id": "realizable_controller",
         "scatter_flat": false,
-        "manifest_sha256": "940a00b44b46f9b2165dc7c8c966ed5d988c2b54d5094e4b20915e9b458b20d7"
+        "manifest_sha256": "a179dce3a621c20e289c3418f1e1eec751e30a647d8aa20ed9ab01319a68e508"
       },
       {
         "kind": "aim",
         "dir": "results/ctl_BLscan_92.5",
         "run_id": "realizable_controller",
         "scatter_flat": false,
-        "manifest_sha256": "80dbbb46102a1dfd6f7defc547b8ea26530965c175bfbc81893075975a77f2cd"
+        "manifest_sha256": "d713ca3734ec21997b4239b0b9c54f2dc755f682943a4fc402a80f5f4b5f0800"
       },
       {
         "kind": "aim",
         "dir": "results/ctl_BLscan_97.5",
         "run_id": "realizable_controller",
         "scatter_flat": false,
-        "manifest_sha256": "357ddb3581de0ce418f52482bd49a46238d76d53f186b99847c2cd5e565c7db6"
+        "manifest_sha256": "968a6c289a07bbebac19a229d98aa7bbb04bc17ca9122a5f6ed112d03cebf193"
       },
       {
         "kind": "aim",
         "dir": "results/ctl_BLscan_100",
         "run_id": "realizable_controller",
         "scatter_flat": false,
-        "manifest_sha256": "064efee26e6cb58fea2cea8e85c3ce4314b37d210870f46c0e4b59cfcc682983"
+        "manifest_sha256": "71a84b452a485d4880c58415c4608828e71fc6abfcfda52aafc89b9251c5692a"
       }
     ],
     "constituents": {
@@ -137,7 +137,7 @@
         "source_sha256": {
           "scripts/multispot_heater.py": "4af4f9f2d2650e6b1cf322eaebad31568bba93c9eafddaae75a3e6ba4e51fc90",
           "scripts/aim_tables.py": "e2bb22a0250e000788b1ea3bc1f1ce87231dadaf9e81e4e243d8e8b8e1f6baea",
-          "data/runs/studies/scattered_tables_B-L_95mm.json": "2cfb7f531b964e4a9a5df799b7e2fd4d20bf150962676c952ea75291e857b3fa",
+          "data/runs/studies/scattered_tables_B-L_95mm.json": "4bae1e69dc8f54e68a8024afd1c93d6b616ae8000978704eb0a3bec6a2097d45",
           "results/scattered_plume_tables_B-L_95mm/manifest.json": "8ac5f538ed09a3badf94e1e330bf64e44159a8763bbf450e54480fab7f41c70f",
           "scripts/realizable_controller.py": "818334150b74ae02563392f08350db1e7d957c41923b86391e96bce0e89c2b44",
           "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
@@ -166,7 +166,7 @@
           "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
         },
         "n_scatter_sha256": {
-          "data/runs/studies/scattered_tables_B-L_95mm.json": "2cfb7f531b964e4a9a5df799b7e2fd4d20bf150962676c952ea75291e857b3fa",
+          "data/runs/studies/scattered_tables_B-L_95mm.json": "4bae1e69dc8f54e68a8024afd1c93d6b616ae8000978704eb0a3bec6a2097d45",
           "results/scattered_plume_tables_B-L_95mm/manifest.json": "8ac5f538ed09a3badf94e1e330bf64e44159a8763bbf450e54480fab7f41c70f"
         }
       },
@@ -174,7 +174,7 @@
         "source_sha256": {
           "scripts/multispot_heater.py": "4af4f9f2d2650e6b1cf322eaebad31568bba93c9eafddaae75a3e6ba4e51fc90",
           "scripts/aim_tables.py": "e2bb22a0250e000788b1ea3bc1f1ce87231dadaf9e81e4e243d8e8b8e1f6baea",
-          "data/runs/studies/scattered_tables_B-L_95mm.json": "2cfb7f531b964e4a9a5df799b7e2fd4d20bf150962676c952ea75291e857b3fa",
+          "data/runs/studies/scattered_tables_B-L_95mm.json": "4bae1e69dc8f54e68a8024afd1c93d6b616ae8000978704eb0a3bec6a2097d45",
           "results/scattered_plume_tables_B-L_95mm_rep/manifest.json": "a110749fdf75d7100716fad6cb01fef9dde8ce53a730fb9b33f76666dcb25209",
           "scripts/realizable_controller.py": "818334150b74ae02563392f08350db1e7d957c41923b86391e96bce0e89c2b44",
           "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
@@ -203,7 +203,7 @@
           "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
         },
         "n_scatter_sha256": {
-          "data/runs/studies/scattered_tables_B-L_95mm.json": "2cfb7f531b964e4a9a5df799b7e2fd4d20bf150962676c952ea75291e857b3fa",
+          "data/runs/studies/scattered_tables_B-L_95mm.json": "4bae1e69dc8f54e68a8024afd1c93d6b616ae8000978704eb0a3bec6a2097d45",
           "results/scattered_plume_tables_B-L_95mm_rep/manifest.json": "a110749fdf75d7100716fad6cb01fef9dde8ce53a730fb9b33f76666dcb25209"
         }
       },
@@ -211,7 +211,7 @@
         "source_sha256": {
           "scripts/multispot_heater.py": "4af4f9f2d2650e6b1cf322eaebad31568bba93c9eafddaae75a3e6ba4e51fc90",
           "scripts/aim_tables.py": "e2bb22a0250e000788b1ea3bc1f1ce87231dadaf9e81e4e243d8e8b8e1f6baea",
-          "data/runs/studies/scattered_tables_B-L_95mm.json": "2cfb7f531b964e4a9a5df799b7e2fd4d20bf150962676c952ea75291e857b3fa",
+          "data/runs/studies/scattered_tables_B-L_95mm.json": "4bae1e69dc8f54e68a8024afd1c93d6b616ae8000978704eb0a3bec6a2097d45",
           "results/scattered_plume_tables_B-L_95mm_s3/manifest.json": "45cd12f8593c9c4b3c1068bef2077433ea46e817791a0ecd6867f107ec989a2d",
           "scripts/realizable_controller.py": "818334150b74ae02563392f08350db1e7d957c41923b86391e96bce0e89c2b44",
           "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
@@ -240,7 +240,7 @@
           "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
         },
         "n_scatter_sha256": {
-          "data/runs/studies/scattered_tables_B-L_95mm.json": "2cfb7f531b964e4a9a5df799b7e2fd4d20bf150962676c952ea75291e857b3fa",
+          "data/runs/studies/scattered_tables_B-L_95mm.json": "4bae1e69dc8f54e68a8024afd1c93d6b616ae8000978704eb0a3bec6a2097d45",
           "results/scattered_plume_tables_B-L_95mm_s3/manifest.json": "45cd12f8593c9c4b3c1068bef2077433ea46e817791a0ecd6867f107ec989a2d"
         }
       },
@@ -248,7 +248,7 @@
         "source_sha256": {
           "scripts/multispot_heater.py": "4af4f9f2d2650e6b1cf322eaebad31568bba93c9eafddaae75a3e6ba4e51fc90",
           "scripts/aim_tables.py": "e2bb22a0250e000788b1ea3bc1f1ce87231dadaf9e81e4e243d8e8b8e1f6baea",
-          "data/runs/studies/scattered_tables_B-L_95mm.json": "2cfb7f531b964e4a9a5df799b7e2fd4d20bf150962676c952ea75291e857b3fa",
+          "data/runs/studies/scattered_tables_B-L_95mm.json": "4bae1e69dc8f54e68a8024afd1c93d6b616ae8000978704eb0a3bec6a2097d45",
           "results/scattered_plume_tables_B-L_95mm_s4/manifest.json": "ea234e93a9db9fafe772601e8cc875b7842603894509a37b7e11c36c6b2f799a",
           "scripts/realizable_controller.py": "818334150b74ae02563392f08350db1e7d957c41923b86391e96bce0e89c2b44",
           "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
@@ -277,7 +277,7 @@
           "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
         },
         "n_scatter_sha256": {
-          "data/runs/studies/scattered_tables_B-L_95mm.json": "2cfb7f531b964e4a9a5df799b7e2fd4d20bf150962676c952ea75291e857b3fa",
+          "data/runs/studies/scattered_tables_B-L_95mm.json": "4bae1e69dc8f54e68a8024afd1c93d6b616ae8000978704eb0a3bec6a2097d45",
           "results/scattered_plume_tables_B-L_95mm_s4/manifest.json": "ea234e93a9db9fafe772601e8cc875b7842603894509a37b7e11c36c6b2f799a"
         }
       },
@@ -285,7 +285,7 @@
         "source_sha256": {
           "scripts/multispot_heater.py": "4af4f9f2d2650e6b1cf322eaebad31568bba93c9eafddaae75a3e6ba4e51fc90",
           "scripts/aim_tables.py": "e2bb22a0250e000788b1ea3bc1f1ce87231dadaf9e81e4e243d8e8b8e1f6baea",
-          "data/runs/studies/scattered_tables_B-L_95mm.json": "2cfb7f531b964e4a9a5df799b7e2fd4d20bf150962676c952ea75291e857b3fa",
+          "data/runs/studies/scattered_tables_B-L_95mm.json": "4bae1e69dc8f54e68a8024afd1c93d6b616ae8000978704eb0a3bec6a2097d45",
           "results/scattered_plume_tables_B-L_95mm_s5/manifest.json": "05f5f276420169b108f56d31a84fb9de8f30d1e0c9c8253c32a255630e954a93",
           "scripts/realizable_controller.py": "818334150b74ae02563392f08350db1e7d957c41923b86391e96bce0e89c2b44",
           "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
@@ -314,7 +314,7 @@
           "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
         },
         "n_scatter_sha256": {
-          "data/runs/studies/scattered_tables_B-L_95mm.json": "2cfb7f531b964e4a9a5df799b7e2fd4d20bf150962676c952ea75291e857b3fa",
+          "data/runs/studies/scattered_tables_B-L_95mm.json": "4bae1e69dc8f54e68a8024afd1c93d6b616ae8000978704eb0a3bec6a2097d45",
           "results/scattered_plume_tables_B-L_95mm_s5/manifest.json": "05f5f276420169b108f56d31a84fb9de8f30d1e0c9c8253c32a255630e954a93"
         }
       },
@@ -322,7 +322,7 @@
         "source_sha256": {
           "scripts/multispot_heater.py": "4af4f9f2d2650e6b1cf322eaebad31568bba93c9eafddaae75a3e6ba4e51fc90",
           "scripts/aim_tables.py": "e2bb22a0250e000788b1ea3bc1f1ce87231dadaf9e81e4e243d8e8b8e1f6baea",
-          "data/runs/studies/scattered_tables_B-L_95mm.json": "2cfb7f531b964e4a9a5df799b7e2fd4d20bf150962676c952ea75291e857b3fa",
+          "data/runs/studies/scattered_tables_B-L_95mm.json": "4bae1e69dc8f54e68a8024afd1c93d6b616ae8000978704eb0a3bec6a2097d45",
           "results/scattered_plume_tables_B-L_95mm_s6/manifest.json": "bc3a5028fbb9b14f9e70f11c05b952fab8f934e51baa5a951d0e875c3289b4ed",
           "scripts/realizable_controller.py": "818334150b74ae02563392f08350db1e7d957c41923b86391e96bce0e89c2b44",
           "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
@@ -351,7 +351,7 @@
           "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
         },
         "n_scatter_sha256": {
-          "data/runs/studies/scattered_tables_B-L_95mm.json": "2cfb7f531b964e4a9a5df799b7e2fd4d20bf150962676c952ea75291e857b3fa",
+          "data/runs/studies/scattered_tables_B-L_95mm.json": "4bae1e69dc8f54e68a8024afd1c93d6b616ae8000978704eb0a3bec6a2097d45",
           "results/scattered_plume_tables_B-L_95mm_s6/manifest.json": "bc3a5028fbb9b14f9e70f11c05b952fab8f934e51baa5a951d0e875c3289b4ed"
         }
       },
@@ -359,7 +359,7 @@
         "source_sha256": {
           "scripts/multispot_heater.py": "4af4f9f2d2650e6b1cf322eaebad31568bba93c9eafddaae75a3e6ba4e51fc90",
           "scripts/aim_tables.py": "e2bb22a0250e000788b1ea3bc1f1ce87231dadaf9e81e4e243d8e8b8e1f6baea",
-          "data/runs/studies/scattered_tables_B-L_95mm.json": "2cfb7f531b964e4a9a5df799b7e2fd4d20bf150962676c952ea75291e857b3fa",
+          "data/runs/studies/scattered_tables_B-L_95mm.json": "4bae1e69dc8f54e68a8024afd1c93d6b616ae8000978704eb0a3bec6a2097d45",
           "results/scattered_plume_tables_B-L_95mm_s7/manifest.json": "abd049f41a30e4dbc5dd6c491d6325f66ffc1cd057381dd7396c601367f0c04a",
           "scripts/realizable_controller.py": "818334150b74ae02563392f08350db1e7d957c41923b86391e96bce0e89c2b44",
           "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
@@ -388,7 +388,7 @@
           "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
         },
         "n_scatter_sha256": {
-          "data/runs/studies/scattered_tables_B-L_95mm.json": "2cfb7f531b964e4a9a5df799b7e2fd4d20bf150962676c952ea75291e857b3fa",
+          "data/runs/studies/scattered_tables_B-L_95mm.json": "4bae1e69dc8f54e68a8024afd1c93d6b616ae8000978704eb0a3bec6a2097d45",
           "results/scattered_plume_tables_B-L_95mm_s7/manifest.json": "abd049f41a30e4dbc5dd6c491d6325f66ffc1cd057381dd7396c601367f0c04a"
         }
       },
@@ -396,7 +396,7 @@
         "source_sha256": {
           "scripts/multispot_heater.py": "4af4f9f2d2650e6b1cf322eaebad31568bba93c9eafddaae75a3e6ba4e51fc90",
           "scripts/aim_tables.py": "e2bb22a0250e000788b1ea3bc1f1ce87231dadaf9e81e4e243d8e8b8e1f6baea",
-          "data/runs/studies/scattered_tables_B-L_95mm.json": "2cfb7f531b964e4a9a5df799b7e2fd4d20bf150962676c952ea75291e857b3fa",
+          "data/runs/studies/scattered_tables_B-L_95mm.json": "4bae1e69dc8f54e68a8024afd1c93d6b616ae8000978704eb0a3bec6a2097d45",
           "results/scattered_plume_tables_B-L_95mm_s8/manifest.json": "ab84d7e93deb1f2e76b87a4f19b87a13f8fb53bb1c6f088de1499ffc8dd37f36",
           "scripts/realizable_controller.py": "818334150b74ae02563392f08350db1e7d957c41923b86391e96bce0e89c2b44",
           "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
@@ -425,7 +425,7 @@
           "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
         },
         "n_scatter_sha256": {
-          "data/runs/studies/scattered_tables_B-L_95mm.json": "2cfb7f531b964e4a9a5df799b7e2fd4d20bf150962676c952ea75291e857b3fa",
+          "data/runs/studies/scattered_tables_B-L_95mm.json": "4bae1e69dc8f54e68a8024afd1c93d6b616ae8000978704eb0a3bec6a2097d45",
           "results/scattered_plume_tables_B-L_95mm_s8/manifest.json": "ab84d7e93deb1f2e76b87a4f19b87a13f8fb53bb1c6f088de1499ffc8dd37f36"
         }
       },
@@ -433,7 +433,7 @@
         "source_sha256": {
           "scripts/multispot_heater.py": "4af4f9f2d2650e6b1cf322eaebad31568bba93c9eafddaae75a3e6ba4e51fc90",
           "scripts/aim_tables.py": "e2bb22a0250e000788b1ea3bc1f1ce87231dadaf9e81e4e243d8e8b8e1f6baea",
-          "data/runs/studies/scattered_tables_B-L_95mm.json": "2cfb7f531b964e4a9a5df799b7e2fd4d20bf150962676c952ea75291e857b3fa",
+          "data/runs/studies/scattered_tables_B-L_95mm.json": "4bae1e69dc8f54e68a8024afd1c93d6b616ae8000978704eb0a3bec6a2097d45",
           "results/scattered_plume_tables_B-L_95mm_s9/manifest.json": "b27f8b6af29e846e21b6260f58e045f705a0302a54609d984c9a70e2e0504e56",
           "scripts/realizable_controller.py": "818334150b74ae02563392f08350db1e7d957c41923b86391e96bce0e89c2b44",
           "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
@@ -462,7 +462,7 @@
           "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
         },
         "n_scatter_sha256": {
-          "data/runs/studies/scattered_tables_B-L_95mm.json": "2cfb7f531b964e4a9a5df799b7e2fd4d20bf150962676c952ea75291e857b3fa",
+          "data/runs/studies/scattered_tables_B-L_95mm.json": "4bae1e69dc8f54e68a8024afd1c93d6b616ae8000978704eb0a3bec6a2097d45",
           "results/scattered_plume_tables_B-L_95mm_s9/manifest.json": "b27f8b6af29e846e21b6260f58e045f705a0302a54609d984c9a70e2e0504e56"
         }
       },
@@ -470,7 +470,7 @@
         "source_sha256": {
           "scripts/multispot_heater.py": "4af4f9f2d2650e6b1cf322eaebad31568bba93c9eafddaae75a3e6ba4e51fc90",
           "scripts/aim_tables.py": "e2bb22a0250e000788b1ea3bc1f1ce87231dadaf9e81e4e243d8e8b8e1f6baea",
-          "data/runs/studies/scattered_tables_B-L_95mm.json": "2cfb7f531b964e4a9a5df799b7e2fd4d20bf150962676c952ea75291e857b3fa",
+          "data/runs/studies/scattered_tables_B-L_95mm.json": "4bae1e69dc8f54e68a8024afd1c93d6b616ae8000978704eb0a3bec6a2097d45",
           "results/scattered_plume_tables_B-L_95mm_s10/manifest.json": "2c66aeabb8c08148b721bfd18a5b98263faac2eab253b6e3d0886e01e63f1d6c",
           "scripts/realizable_controller.py": "818334150b74ae02563392f08350db1e7d957c41923b86391e96bce0e89c2b44",
           "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
@@ -499,7 +499,7 @@
           "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
         },
         "n_scatter_sha256": {
-          "data/runs/studies/scattered_tables_B-L_95mm.json": "2cfb7f531b964e4a9a5df799b7e2fd4d20bf150962676c952ea75291e857b3fa",
+          "data/runs/studies/scattered_tables_B-L_95mm.json": "4bae1e69dc8f54e68a8024afd1c93d6b616ae8000978704eb0a3bec6a2097d45",
           "results/scattered_plume_tables_B-L_95mm_s10/manifest.json": "2c66aeabb8c08148b721bfd18a5b98263faac2eab253b6e3d0886e01e63f1d6c"
         }
       },
@@ -507,8 +507,8 @@
         "source_sha256": {
           "scripts/multispot_heater.py": "4af4f9f2d2650e6b1cf322eaebad31568bba93c9eafddaae75a3e6ba4e51fc90",
           "scripts/aim_tables.py": "e2bb22a0250e000788b1ea3bc1f1ce87231dadaf9e81e4e243d8e8b8e1f6baea",
-          "data/runs/studies/scattered_tables_B-L_95mm.json": "2cfb7f531b964e4a9a5df799b7e2fd4d20bf150962676c952ea75291e857b3fa",
-          "data/runs/studies/scattered_plume_tables_B-L_95mm.json": "f8332431701dcde467d620acf88ed076456d8ae755e2b3759067cd2a60b49a45",
+          "data/runs/studies/scattered_tables_B-L_95mm.json": "4bae1e69dc8f54e68a8024afd1c93d6b616ae8000978704eb0a3bec6a2097d45",
+          "data/runs/studies/scattered_plume_tables_B-L_95mm.json": "b342a1d5b93c6314060c4d42c016649aef7d5796a1e17878847d1e7b152d62be",
           "scripts/realizable_controller.py": "818334150b74ae02563392f08350db1e7d957c41923b86391e96bce0e89c2b44",
           "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
           "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
@@ -536,16 +536,16 @@
           "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
         },
         "n_scatter_sha256": {
-          "data/runs/studies/scattered_tables_B-L_95mm.json": "2cfb7f531b964e4a9a5df799b7e2fd4d20bf150962676c952ea75291e857b3fa",
-          "data/runs/studies/scattered_plume_tables_B-L_95mm.json": "f8332431701dcde467d620acf88ed076456d8ae755e2b3759067cd2a60b49a45"
+          "data/runs/studies/scattered_tables_B-L_95mm.json": "4bae1e69dc8f54e68a8024afd1c93d6b616ae8000978704eb0a3bec6a2097d45",
+          "data/runs/studies/scattered_plume_tables_B-L_95mm.json": "b342a1d5b93c6314060c4d42c016649aef7d5796a1e17878847d1e7b152d62be"
         }
       },
       "results/ctl_BL95_flat": {
         "source_sha256": {
           "scripts/multispot_heater.py": "4af4f9f2d2650e6b1cf322eaebad31568bba93c9eafddaae75a3e6ba4e51fc90",
           "scripts/aim_tables.py": "e2bb22a0250e000788b1ea3bc1f1ce87231dadaf9e81e4e243d8e8b8e1f6baea",
-          "data/runs/studies/scattered_tables_B-L_95mm.json": "2cfb7f531b964e4a9a5df799b7e2fd4d20bf150962676c952ea75291e857b3fa",
-          "data/runs/studies/scattered_plume_tables_B-L_95mm.json": "f8332431701dcde467d620acf88ed076456d8ae755e2b3759067cd2a60b49a45",
+          "data/runs/studies/scattered_tables_B-L_95mm.json": "4bae1e69dc8f54e68a8024afd1c93d6b616ae8000978704eb0a3bec6a2097d45",
+          "data/runs/studies/scattered_plume_tables_B-L_95mm.json": "b342a1d5b93c6314060c4d42c016649aef7d5796a1e17878847d1e7b152d62be",
           "scripts/realizable_controller.py": "818334150b74ae02563392f08350db1e7d957c41923b86391e96bce0e89c2b44",
           "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
           "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
@@ -573,16 +573,16 @@
           "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
         },
         "n_scatter_sha256": {
-          "data/runs/studies/scattered_tables_B-L_95mm.json": "2cfb7f531b964e4a9a5df799b7e2fd4d20bf150962676c952ea75291e857b3fa",
-          "data/runs/studies/scattered_plume_tables_B-L_95mm.json": "f8332431701dcde467d620acf88ed076456d8ae755e2b3759067cd2a60b49a45"
+          "data/runs/studies/scattered_tables_B-L_95mm.json": "4bae1e69dc8f54e68a8024afd1c93d6b616ae8000978704eb0a3bec6a2097d45",
+          "data/runs/studies/scattered_plume_tables_B-L_95mm.json": "b342a1d5b93c6314060c4d42c016649aef7d5796a1e17878847d1e7b152d62be"
         }
       },
       "results/ctl_BLscan_90": {
         "source_sha256": {
           "scripts/multispot_heater.py": "4af4f9f2d2650e6b1cf322eaebad31568bba93c9eafddaae75a3e6ba4e51fc90",
           "scripts/aim_tables.py": "e2bb22a0250e000788b1ea3bc1f1ce87231dadaf9e81e4e243d8e8b8e1f6baea",
-          "data/runs/studies/scattered_tables_B-L_95mm.json": "2cfb7f531b964e4a9a5df799b7e2fd4d20bf150962676c952ea75291e857b3fa",
-          "data/runs/studies/scattered_plume_tables_B-L_95mm.json": "f8332431701dcde467d620acf88ed076456d8ae755e2b3759067cd2a60b49a45",
+          "data/runs/studies/scattered_tables_B-L_95mm.json": "4bae1e69dc8f54e68a8024afd1c93d6b616ae8000978704eb0a3bec6a2097d45",
+          "data/runs/studies/scattered_plume_tables_B-L_95mm.json": "b342a1d5b93c6314060c4d42c016649aef7d5796a1e17878847d1e7b152d62be",
           "scripts/realizable_controller.py": "818334150b74ae02563392f08350db1e7d957c41923b86391e96bce0e89c2b44",
           "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
           "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
@@ -610,16 +610,16 @@
           "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
         },
         "n_scatter_sha256": {
-          "data/runs/studies/scattered_tables_B-L_95mm.json": "2cfb7f531b964e4a9a5df799b7e2fd4d20bf150962676c952ea75291e857b3fa",
-          "data/runs/studies/scattered_plume_tables_B-L_95mm.json": "f8332431701dcde467d620acf88ed076456d8ae755e2b3759067cd2a60b49a45"
+          "data/runs/studies/scattered_tables_B-L_95mm.json": "4bae1e69dc8f54e68a8024afd1c93d6b616ae8000978704eb0a3bec6a2097d45",
+          "data/runs/studies/scattered_plume_tables_B-L_95mm.json": "b342a1d5b93c6314060c4d42c016649aef7d5796a1e17878847d1e7b152d62be"
         }
       },
       "results/ctl_BLscan_92.5": {
         "source_sha256": {
           "scripts/multispot_heater.py": "4af4f9f2d2650e6b1cf322eaebad31568bba93c9eafddaae75a3e6ba4e51fc90",
           "scripts/aim_tables.py": "e2bb22a0250e000788b1ea3bc1f1ce87231dadaf9e81e4e243d8e8b8e1f6baea",
-          "data/runs/studies/scattered_tables_B-L_95mm.json": "2cfb7f531b964e4a9a5df799b7e2fd4d20bf150962676c952ea75291e857b3fa",
-          "data/runs/studies/scattered_plume_tables_B-L_95mm.json": "f8332431701dcde467d620acf88ed076456d8ae755e2b3759067cd2a60b49a45",
+          "data/runs/studies/scattered_tables_B-L_95mm.json": "4bae1e69dc8f54e68a8024afd1c93d6b616ae8000978704eb0a3bec6a2097d45",
+          "data/runs/studies/scattered_plume_tables_B-L_95mm.json": "b342a1d5b93c6314060c4d42c016649aef7d5796a1e17878847d1e7b152d62be",
           "scripts/realizable_controller.py": "818334150b74ae02563392f08350db1e7d957c41923b86391e96bce0e89c2b44",
           "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
           "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
@@ -647,16 +647,16 @@
           "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
         },
         "n_scatter_sha256": {
-          "data/runs/studies/scattered_tables_B-L_95mm.json": "2cfb7f531b964e4a9a5df799b7e2fd4d20bf150962676c952ea75291e857b3fa",
-          "data/runs/studies/scattered_plume_tables_B-L_95mm.json": "f8332431701dcde467d620acf88ed076456d8ae755e2b3759067cd2a60b49a45"
+          "data/runs/studies/scattered_tables_B-L_95mm.json": "4bae1e69dc8f54e68a8024afd1c93d6b616ae8000978704eb0a3bec6a2097d45",
+          "data/runs/studies/scattered_plume_tables_B-L_95mm.json": "b342a1d5b93c6314060c4d42c016649aef7d5796a1e17878847d1e7b152d62be"
         }
       },
       "results/ctl_BLscan_97.5": {
         "source_sha256": {
           "scripts/multispot_heater.py": "4af4f9f2d2650e6b1cf322eaebad31568bba93c9eafddaae75a3e6ba4e51fc90",
           "scripts/aim_tables.py": "e2bb22a0250e000788b1ea3bc1f1ce87231dadaf9e81e4e243d8e8b8e1f6baea",
-          "data/runs/studies/scattered_tables_B-L_95mm.json": "2cfb7f531b964e4a9a5df799b7e2fd4d20bf150962676c952ea75291e857b3fa",
-          "data/runs/studies/scattered_plume_tables_B-L_95mm.json": "f8332431701dcde467d620acf88ed076456d8ae755e2b3759067cd2a60b49a45",
+          "data/runs/studies/scattered_tables_B-L_95mm.json": "4bae1e69dc8f54e68a8024afd1c93d6b616ae8000978704eb0a3bec6a2097d45",
+          "data/runs/studies/scattered_plume_tables_B-L_95mm.json": "b342a1d5b93c6314060c4d42c016649aef7d5796a1e17878847d1e7b152d62be",
           "scripts/realizable_controller.py": "818334150b74ae02563392f08350db1e7d957c41923b86391e96bce0e89c2b44",
           "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
           "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
@@ -684,16 +684,16 @@
           "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
         },
         "n_scatter_sha256": {
-          "data/runs/studies/scattered_tables_B-L_95mm.json": "2cfb7f531b964e4a9a5df799b7e2fd4d20bf150962676c952ea75291e857b3fa",
-          "data/runs/studies/scattered_plume_tables_B-L_95mm.json": "f8332431701dcde467d620acf88ed076456d8ae755e2b3759067cd2a60b49a45"
+          "data/runs/studies/scattered_tables_B-L_95mm.json": "4bae1e69dc8f54e68a8024afd1c93d6b616ae8000978704eb0a3bec6a2097d45",
+          "data/runs/studies/scattered_plume_tables_B-L_95mm.json": "b342a1d5b93c6314060c4d42c016649aef7d5796a1e17878847d1e7b152d62be"
         }
       },
       "results/ctl_BLscan_100": {
         "source_sha256": {
           "scripts/multispot_heater.py": "4af4f9f2d2650e6b1cf322eaebad31568bba93c9eafddaae75a3e6ba4e51fc90",
           "scripts/aim_tables.py": "e2bb22a0250e000788b1ea3bc1f1ce87231dadaf9e81e4e243d8e8b8e1f6baea",
-          "data/runs/studies/scattered_tables_B-L_95mm.json": "2cfb7f531b964e4a9a5df799b7e2fd4d20bf150962676c952ea75291e857b3fa",
-          "data/runs/studies/scattered_plume_tables_B-L_95mm.json": "f8332431701dcde467d620acf88ed076456d8ae755e2b3759067cd2a60b49a45",
+          "data/runs/studies/scattered_tables_B-L_95mm.json": "4bae1e69dc8f54e68a8024afd1c93d6b616ae8000978704eb0a3bec6a2097d45",
+          "data/runs/studies/scattered_plume_tables_B-L_95mm.json": "b342a1d5b93c6314060c4d42c016649aef7d5796a1e17878847d1e7b152d62be",
           "scripts/realizable_controller.py": "818334150b74ae02563392f08350db1e7d957c41923b86391e96bce0e89c2b44",
           "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
           "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
@@ -721,8 +721,8 @@
           "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
         },
         "n_scatter_sha256": {
-          "data/runs/studies/scattered_tables_B-L_95mm.json": "2cfb7f531b964e4a9a5df799b7e2fd4d20bf150962676c952ea75291e857b3fa",
-          "data/runs/studies/scattered_plume_tables_B-L_95mm.json": "f8332431701dcde467d620acf88ed076456d8ae755e2b3759067cd2a60b49a45"
+          "data/runs/studies/scattered_tables_B-L_95mm.json": "4bae1e69dc8f54e68a8024afd1c93d6b616ae8000978704eb0a3bec6a2097d45",
+          "data/runs/studies/scattered_plume_tables_B-L_95mm.json": "b342a1d5b93c6314060c4d42c016649aef7d5796a1e17878847d1e7b152d62be"
         }
       }
     },

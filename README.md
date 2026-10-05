@@ -121,11 +121,11 @@ The earlier operating-point studies let the gallium controller know every uncert
 
   With both, the best model results at 1 µm/h are:
   - **B-L, aimed 5 mm further out (+95 mm): ±0.53 % at 710 °C** (±0.58 % at 720 °C).
-  - **B-p: ±0.52 % at 710 °C, only if the gallium charge's fill level is tracked** and the calibrated beam shape for that fill is used. Without fill tracking, only 94.5 % of the modelled cases pass at 710 °C, below the 95 % requirement, and B-p's best point is ±0.57 % at 720 °C.
-  - **The two layouts are now level on uniformity.** Earlier figures (B-p ±0.49 %, B-L ±0.65 %) used one random sample of the scattered-atom calculation each. That calculation is a Monte Carlo simulation, and one sample's statistical noise moves a worst case by about ±0.1 point. Averaging several independent samples (4 for B-p, 10 for B-L) removes most of it. The difference between the layouts is now smaller than what remains.
+  - **B-p: ±0.57 % at 710 °C, only if the gallium charge's fill level is tracked** and the calibrated beam shape for that fill is used. Without fill tracking, the share of modelled cases that pass at 710 °C sits right at the 95 % requirement, and B-p's best point is ±0.62 % at 720 °C.
+  - **The two layouts are now level on uniformity, with B-L no worse.** Earlier figures (B-p ±0.49 %, B-L ±0.65 %) used one random sample of the scattered-atom calculation each. That calculation is a Monte Carlo simulation, and one sample's statistical noise moves a worst case by about ±0.1 point for B-L and more for B-p. Averaging ten independent samples per layout removes most of it. The difference between the layouts is now smaller than what remains.
   - **Re-aim checked:** a rehearsal of the commissioning re-aim on synthetic data shows the 0.2° correction is reachable if the source mount can be set and holds its setting to about 0.05° (0.3 mm at the flange), with three calibration wafers thickness-mapped to 0.1–0.3 %.
   - **B-L's aim is settled at +95 mm.** Rechecked with its own transport, pointing and scattered-atom tables, the best aim lies between 95 and 97.5 mm; 2.5 mm off costs about 0.1 point.
-  - **Caveats:** 710 °C uses the decomposition law 10 °C below the range it was fitted to (720–805 °C). The published data put decomposition near zero there, so this is a small effect on thickness. At 720 °C, inside that range, the values are ±0.57 % (B-p) and ±0.58 % (B-L).
+  - **Caveats:** 710 °C uses the decomposition law 10 °C below the range it was fitted to (720–805 °C). The published data put decomposition near zero there, so this is a small effect on thickness. At 720 °C, inside that range, the values are ±0.62 % (B-p) and ±0.58 % (B-L).
 - Measuring the beam maps at commissioning adds only 1–2 points on top of that. The rest of the gap is the instruments' accuracy and wafer-to-wafer heater variation. The beam-flux monitor's accuracy matters most for staying in the growth window.
 
 ## Current design direction
@@ -137,8 +137,8 @@ The working rate is **1 µm/h**. The temperature is chosen for the best worst-ca
 | Configuration | B-p (standard plate) | B-L (large plate) |
 |---|---|---|
 | One centre pyrometer, no re-aim | 720 °C, ±1.53 % (about 4 % heater headroom) | 730 °C, ±1.67 % |
-| Re-aim to 0.2° + three-point heater control | 720 °C, ±0.57 % | 720 °C, ±0.58 % (aim +95 mm) |
-| Same, at 710 °C (decomposition law extrapolated 10 °C) | ±0.52 %, **needs gallium fill tracking** | ±0.53 % (aim +95 mm) |
+| Re-aim to 0.2° + three-point heater control | 720 °C, ±0.62 % | 720 °C, ±0.58 % (aim +95 mm) |
+| Same, at 710 °C (decomposition law extrapolated 10 °C) | ±0.57 %, **needs gallium fill tracking** | ±0.53 % (aim +95 mm) |
 
 B-p's figures assume a source that converts nearly all of its nitrogen feed into active nitrogen, with 2 m³/s of pumping. B-L's assume about 30 % conversion with 4 m³/s of pumping, which is more plausible from the literature. So the two columns are not equally achievable. With re-aim and three-point heater control the two are equally uniform, so what decides between them is nitrogen output, pumping and whether B-L's larger plate can be built. The figures in the first row come from single Monte Carlo samples of the scattered-atom tables and are uncertain by about ±0.1 point.
 

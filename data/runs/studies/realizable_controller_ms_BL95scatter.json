@@ -1,19 +1,19 @@
 {
   "schema_version": "0.1",
   "run_id": "realizable_controller",
-  "created_utc": "2026-10-05T19:41:05+00:00",
+  "created_utc": "2026-10-05T23:06:11+00:00",
   "label": "representative_chamber",
   "validation_status": "not_validated",
   "package_version": "0.1.0",
-  "git_commit": "22a46edb1e76c6de12124e6536bd2c2a5069351a-dirty",
+  "git_commit": "602cedd30dfd9615d5a53e455981ab003be3e7aa-dirty",
   "python": "3.12.13",
   "numpy": "2.4.4",
   "platform": "Windows-11-10.0.26300-SP0",
   "source_sha256": {
     "scripts/multispot_heater.py": "4af4f9f2d2650e6b1cf322eaebad31568bba93c9eafddaae75a3e6ba4e51fc90",
     "scripts/aim_tables.py": "e2bb22a0250e000788b1ea3bc1f1ce87231dadaf9e81e4e243d8e8b8e1f6baea",
-    "data/runs/studies/scattered_tables_B-L_95mm.json": "2cfb7f531b964e4a9a5df799b7e2fd4d20bf150962676c952ea75291e857b3fa",
-    "data/runs/studies/scattered_plume_tables_B-L_95mm.json": "f8332431701dcde467d620acf88ed076456d8ae755e2b3759067cd2a60b49a45",
+    "data/runs/studies/scattered_tables_B-L_95mm.json": "4bae1e69dc8f54e68a8024afd1c93d6b616ae8000978704eb0a3bec6a2097d45",
+    "data/runs/studies/scattered_plume_tables_B-L_95mm.json": "b342a1d5b93c6314060c4d42c016649aef7d5796a1e17878847d1e7b152d62be",
     "scripts/realizable_controller.py": "818334150b74ae02563392f08350db1e7d957c41923b86391e96bce0e89c2b44",
     "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
     "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
@@ -30,7 +30,7 @@
     "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
   },
   "solver": null,
-  "inputs_sha256": "32b874020e3674878d6170a45502f0c6e52251be093fc463fdf69741f199804e",
+  "inputs_sha256": "1da05e0e2863ca18a2d1a9b90d4d057b4bed1a7fec1ffe818a8438e82ae91fd8",
   "inputs": {
     "record": "data\\runs\\studies\\layout_comparison_bc_sc_plume.json",
     "scattered": "gas+plume",
@@ -96,8 +96,8 @@
     ],
     "lip_m": 0.002,
     "n_scatter_sha256": {
-      "data/runs/studies/scattered_tables_B-L_95mm.json": "2cfb7f531b964e4a9a5df799b7e2fd4d20bf150962676c952ea75291e857b3fa",
-      "data/runs/studies/scattered_plume_tables_B-L_95mm.json": "f8332431701dcde467d620acf88ed076456d8ae755e2b3759067cd2a60b49a45"
+      "data/runs/studies/scattered_tables_B-L_95mm.json": "4bae1e69dc8f54e68a8024afd1c93d6b616ae8000978704eb0a3bec6a2097d45",
+      "data/runs/studies/scattered_plume_tables_B-L_95mm.json": "b342a1d5b93c6314060c4d42c016649aef7d5796a1e17878847d1e7b152d62be"
     },
     "scatter_flat": false,
     "scatter_from_aim_mm": null,

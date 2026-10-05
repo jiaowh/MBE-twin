@@ -1,11 +1,11 @@
 {
   "schema_version": "0.1",
   "run_id": "scatter_noise",
-  "created_utc": "2026-10-05T19:45:03+00:00",
+  "created_utc": "2026-10-05T23:12:28+00:00",
   "label": "representative_chamber",
   "validation_status": "not_validated",
   "package_version": "0.1.0",
-  "git_commit": "22a46edb1e76c6de12124e6536bd2c2a5069351a-dirty",
+  "git_commit": "602cedd30dfd9615d5a53e455981ab003be3e7aa-dirty",
   "python": "3.12.13",
   "numpy": "2.4.4",
   "platform": "Windows-11-10.0.26300-SP0",
@@ -15,7 +15,7 @@
     "scripts/average_scattered_seeds.py": "c8ac52d116e4a2befe4628fb021d85887a67dd36e77736f87bf9395f77035f00"
   },
   "solver": null,
-  "inputs_sha256": "58f59a93b52563b720719d3ac9d35f17b1b2beca53e68fab27fe37b0337c7205",
+  "inputs_sha256": "f99024a8710a0ba017f17049046a837d95fda589e738ebc2fe7c656df3eb7e07",
   "inputs": {
     "controller": "rate monitor + BFM",
     "runs": [
@@ -24,42 +24,84 @@
         "dir": "results/ctl_Bp_s1",
         "run_id": "realizable_controller",
         "scatter_flat": false,
-        "manifest_sha256": "b098e76efa77d0449845513c3d213484d04a1692f9b7443cc0a0a16a0b96124c"
+        "manifest_sha256": "c8ed57e8fde58fd102fe94a2a4e01d08dff7f275f035af75edb37c7520c68fb5"
       },
       {
         "kind": "single",
         "dir": "results/ctl_Bp_s2",
         "run_id": "realizable_controller",
         "scatter_flat": false,
-        "manifest_sha256": "64ceb7323e1d38d7db2dc96a6af8d493baefe37e750a51975f4dd61e53b22068"
+        "manifest_sha256": "4f041d9ce7fb3391b1ba8874d776d181fedc6344e20272a79a477451941b51c0"
       },
       {
         "kind": "single",
         "dir": "results/ctl_Bp_s3",
         "run_id": "realizable_controller",
         "scatter_flat": false,
-        "manifest_sha256": "7adc0f9cdce1d3a18f3d321e4dbd0bc6b6ec7173247f33fc0c934777eaafe963"
+        "manifest_sha256": "4f0e09fff7b4a95034f8fdb47c10b9743ba12799a67e56f02e7719d7474e9d2c"
       },
       {
         "kind": "single",
         "dir": "results/ctl_Bp_s4",
         "run_id": "realizable_controller",
         "scatter_flat": false,
-        "manifest_sha256": "b8adea108fb64ae410f465e9dfe06ad1b5c96d6478ebe6773a0fbe6df4a6b4ee"
+        "manifest_sha256": "8bb0216b7812c349a3b49f5bce24a3219149544a23590fed57044fc8704c9384"
+      },
+      {
+        "kind": "single",
+        "dir": "results/ctl_Bp_s5",
+        "run_id": "realizable_controller",
+        "scatter_flat": false,
+        "manifest_sha256": "70377a7506bc6c1f6276a22a41f48e4fbf91db3a2a3a0f7af7fec0112c639e0e"
+      },
+      {
+        "kind": "single",
+        "dir": "results/ctl_Bp_s6",
+        "run_id": "realizable_controller",
+        "scatter_flat": false,
+        "manifest_sha256": "97fbed4e4554644e2c49542c3682ea9b0d13348845b43403326e74aa1fb1647f"
+      },
+      {
+        "kind": "single",
+        "dir": "results/ctl_Bp_s7",
+        "run_id": "realizable_controller",
+        "scatter_flat": false,
+        "manifest_sha256": "048c6c6746ff6b7a4dd0af6237275d3d8e015b1f181f0b585015aa2c55d46719"
+      },
+      {
+        "kind": "single",
+        "dir": "results/ctl_Bp_s8",
+        "run_id": "realizable_controller",
+        "scatter_flat": false,
+        "manifest_sha256": "bdfab7248945fd0660ba6edad7e36251773c7f1f958135529e4e6b979d9346ec"
+      },
+      {
+        "kind": "single",
+        "dir": "results/ctl_Bp_s9",
+        "run_id": "realizable_controller",
+        "scatter_flat": false,
+        "manifest_sha256": "bb9647fcef08ad1ea2bec4554048b2ce1d8af91f5ff61bb9be19815d5290e64f"
+      },
+      {
+        "kind": "single",
+        "dir": "results/ctl_Bp_s10",
+        "run_id": "realizable_controller",
+        "scatter_flat": false,
+        "manifest_sha256": "6bfa5f5e184b56fad85f1ceddbedc54d5d3684f2a4446da2b33802ab74824455"
       },
       {
         "kind": "avg",
         "dir": "results/ctl_Bp_avg",
         "run_id": "realizable_controller",
         "scatter_flat": false,
-        "manifest_sha256": "770f15f3d36857c3e42066abcad6994d017731e8eca15b8f1c3504e59bdf8d13"
+        "manifest_sha256": "552835a73f3ac211100917eda5b83454c73880e7e28ee881082abfb1d60768f7"
       },
       {
         "kind": "flat",
         "dir": "results/ctl_Bp_flat",
         "run_id": "realizable_controller",
         "scatter_flat": true,
-        "manifest_sha256": "2c32c2e3af6afb3111c836fa08a7a9105bb40b48132cc745b77741da0e5b3e50"
+        "manifest_sha256": "976f6c197e43bbf25ecda092c8afafcf05023241d84e50f71cccb547dfd1335c"
       }
     ],
     "constituents": {
@@ -207,12 +249,12 @@
           "results/scattered_plume_tables_B-p_97.5mm_s4/manifest.json": "d44ee8496747309e81cb030a824ec6aeade8b729d7a27a88ad9b6fe1cf06bdea"
         }
       },
-      "results/ctl_Bp_avg": {
+      "results/ctl_Bp_s5": {
         "source_sha256": {
           "scripts/multispot_heater.py": "4af4f9f2d2650e6b1cf322eaebad31568bba93c9eafddaae75a3e6ba4e51fc90",
           "scripts/aim_tables.py": "e2bb22a0250e000788b1ea3bc1f1ce87231dadaf9e81e4e243d8e8b8e1f6baea",
           "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
-          "data/runs/studies/scattered_plume_tables_B-p_97.5mm.json": "c40ba32d516855825edf5419e2d85bf7932ab267d41253aa878ef8baa3cd8272",
+          "results/scattered_plume_tables_B-p_97.5mm_s5/manifest.json": "14a055a89e344d2a86acd3792bc1a7879ee2697079fb9171434c9afa63ae1e64",
           "scripts/realizable_controller.py": "818334150b74ae02563392f08350db1e7d957c41923b86391e96bce0e89c2b44",
           "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
           "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
@@ -240,7 +282,223 @@
         },
         "n_scatter_sha256": {
           "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
-          "data/runs/studies/scattered_plume_tables_B-p_97.5mm.json": "c40ba32d516855825edf5419e2d85bf7932ab267d41253aa878ef8baa3cd8272"
+          "results/scattered_plume_tables_B-p_97.5mm_s5/manifest.json": "14a055a89e344d2a86acd3792bc1a7879ee2697079fb9171434c9afa63ae1e64"
+        }
+      },
+      "results/ctl_Bp_s6": {
+        "source_sha256": {
+          "scripts/multispot_heater.py": "4af4f9f2d2650e6b1cf322eaebad31568bba93c9eafddaae75a3e6ba4e51fc90",
+          "scripts/aim_tables.py": "e2bb22a0250e000788b1ea3bc1f1ce87231dadaf9e81e4e243d8e8b8e1f6baea",
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "results/scattered_plume_tables_B-p_97.5mm_s6/manifest.json": "f96f1006d5f6144659a87c4c07b1fb52c973c6a948010e42fae3b546b035bf7d",
+          "scripts/realizable_controller.py": "818334150b74ae02563392f08350db1e7d957c41923b86391e96bce0e89c2b44",
+          "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
+          "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
+          "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+          "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+          "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+          "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+          "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
+          "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+          "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+          "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+          "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+          "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+        },
+        "aim_maps_sha256": {
+          "results/aim_tables/n_tables_B-p_97.5mm.npz": "da3bb9163ab0d11c2cf90bc8ae8b777e36ddd08983579c9a67f246a0b7dab3fc"
+        },
+        "ga_records_sha256": {
+          "ga_dsmchold/fill040_d5.68_dsmchold.json": "4f48b7c9a7241658f8476c2cd278a3bf8c4d35533e91c94c369463bb5fb3862c",
+          "ga_dsmchold/fill040_d8_dsmchold.json": "c3fc71dcd4aaf83e8bd3f29479447bff874c67a4987d031265af7178c1cba23d",
+          "ga_dsmchold/fill070_d5.68_dsmchold.json": "2ae3126864ad66fdbe4afcb17f26e852852c19e983bde4b05477a9145e03a91e",
+          "ga_dsmchold/fill070_d8_dsmchold.json": "821ffa1cc2ac583d6f323b2e9b2f32498f0682ee96afccf7a6ffad8c5bf78238",
+          "ga_dsmchold/fill120_d5.68_dsmchold.json": "3658e44ba4ee3c62ceff867594454eb935d08b505250c2235a99eee89cb2d3f4",
+          "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
+        },
+        "n_scatter_sha256": {
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "results/scattered_plume_tables_B-p_97.5mm_s6/manifest.json": "f96f1006d5f6144659a87c4c07b1fb52c973c6a948010e42fae3b546b035bf7d"
+        }
+      },
+      "results/ctl_Bp_s7": {
+        "source_sha256": {
+          "scripts/multispot_heater.py": "4af4f9f2d2650e6b1cf322eaebad31568bba93c9eafddaae75a3e6ba4e51fc90",
+          "scripts/aim_tables.py": "e2bb22a0250e000788b1ea3bc1f1ce87231dadaf9e81e4e243d8e8b8e1f6baea",
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "results/scattered_plume_tables_B-p_97.5mm_s7/manifest.json": "3e7bd1c9608b26d1038e64afd6b6c94df905450cfa8d634e7667c69972f4e075",
+          "scripts/realizable_controller.py": "818334150b74ae02563392f08350db1e7d957c41923b86391e96bce0e89c2b44",
+          "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
+          "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
+          "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+          "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+          "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+          "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+          "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
+          "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+          "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+          "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+          "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+          "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+        },
+        "aim_maps_sha256": {
+          "results/aim_tables/n_tables_B-p_97.5mm.npz": "da3bb9163ab0d11c2cf90bc8ae8b777e36ddd08983579c9a67f246a0b7dab3fc"
+        },
+        "ga_records_sha256": {
+          "ga_dsmchold/fill040_d5.68_dsmchold.json": "4f48b7c9a7241658f8476c2cd278a3bf8c4d35533e91c94c369463bb5fb3862c",
+          "ga_dsmchold/fill040_d8_dsmchold.json": "c3fc71dcd4aaf83e8bd3f29479447bff874c67a4987d031265af7178c1cba23d",
+          "ga_dsmchold/fill070_d5.68_dsmchold.json": "2ae3126864ad66fdbe4afcb17f26e852852c19e983bde4b05477a9145e03a91e",
+          "ga_dsmchold/fill070_d8_dsmchold.json": "821ffa1cc2ac583d6f323b2e9b2f32498f0682ee96afccf7a6ffad8c5bf78238",
+          "ga_dsmchold/fill120_d5.68_dsmchold.json": "3658e44ba4ee3c62ceff867594454eb935d08b505250c2235a99eee89cb2d3f4",
+          "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
+        },
+        "n_scatter_sha256": {
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "results/scattered_plume_tables_B-p_97.5mm_s7/manifest.json": "3e7bd1c9608b26d1038e64afd6b6c94df905450cfa8d634e7667c69972f4e075"
+        }
+      },
+      "results/ctl_Bp_s8": {
+        "source_sha256": {
+          "scripts/multispot_heater.py": "4af4f9f2d2650e6b1cf322eaebad31568bba93c9eafddaae75a3e6ba4e51fc90",
+          "scripts/aim_tables.py": "e2bb22a0250e000788b1ea3bc1f1ce87231dadaf9e81e4e243d8e8b8e1f6baea",
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "results/scattered_plume_tables_B-p_97.5mm_s8/manifest.json": "9a5c41d3811972ee7869a33440e48638dd7089d9db6ce5d29c8307132addadd7",
+          "scripts/realizable_controller.py": "818334150b74ae02563392f08350db1e7d957c41923b86391e96bce0e89c2b44",
+          "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
+          "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
+          "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+          "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+          "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+          "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+          "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
+          "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+          "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+          "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+          "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+          "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+        },
+        "aim_maps_sha256": {
+          "results/aim_tables/n_tables_B-p_97.5mm.npz": "da3bb9163ab0d11c2cf90bc8ae8b777e36ddd08983579c9a67f246a0b7dab3fc"
+        },
+        "ga_records_sha256": {
+          "ga_dsmchold/fill040_d5.68_dsmchold.json": "4f48b7c9a7241658f8476c2cd278a3bf8c4d35533e91c94c369463bb5fb3862c",
+          "ga_dsmchold/fill040_d8_dsmchold.json": "c3fc71dcd4aaf83e8bd3f29479447bff874c67a4987d031265af7178c1cba23d",
+          "ga_dsmchold/fill070_d5.68_dsmchold.json": "2ae3126864ad66fdbe4afcb17f26e852852c19e983bde4b05477a9145e03a91e",
+          "ga_dsmchold/fill070_d8_dsmchold.json": "821ffa1cc2ac583d6f323b2e9b2f32498f0682ee96afccf7a6ffad8c5bf78238",
+          "ga_dsmchold/fill120_d5.68_dsmchold.json": "3658e44ba4ee3c62ceff867594454eb935d08b505250c2235a99eee89cb2d3f4",
+          "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
+        },
+        "n_scatter_sha256": {
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "results/scattered_plume_tables_B-p_97.5mm_s8/manifest.json": "9a5c41d3811972ee7869a33440e48638dd7089d9db6ce5d29c8307132addadd7"
+        }
+      },
+      "results/ctl_Bp_s9": {
+        "source_sha256": {
+          "scripts/multispot_heater.py": "4af4f9f2d2650e6b1cf322eaebad31568bba93c9eafddaae75a3e6ba4e51fc90",
+          "scripts/aim_tables.py": "e2bb22a0250e000788b1ea3bc1f1ce87231dadaf9e81e4e243d8e8b8e1f6baea",
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "results/scattered_plume_tables_B-p_97.5mm_s9/manifest.json": "6b59c727f9583d70e761033ee73cbd5bfe2eb0b4cdfb134b57e6e3d22bcc5727",
+          "scripts/realizable_controller.py": "818334150b74ae02563392f08350db1e7d957c41923b86391e96bce0e89c2b44",
+          "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
+          "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
+          "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+          "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+          "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+          "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+          "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
+          "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+          "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+          "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+          "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+          "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+        },
+        "aim_maps_sha256": {
+          "results/aim_tables/n_tables_B-p_97.5mm.npz": "da3bb9163ab0d11c2cf90bc8ae8b777e36ddd08983579c9a67f246a0b7dab3fc"
+        },
+        "ga_records_sha256": {
+          "ga_dsmchold/fill040_d5.68_dsmchold.json": "4f48b7c9a7241658f8476c2cd278a3bf8c4d35533e91c94c369463bb5fb3862c",
+          "ga_dsmchold/fill040_d8_dsmchold.json": "c3fc71dcd4aaf83e8bd3f29479447bff874c67a4987d031265af7178c1cba23d",
+          "ga_dsmchold/fill070_d5.68_dsmchold.json": "2ae3126864ad66fdbe4afcb17f26e852852c19e983bde4b05477a9145e03a91e",
+          "ga_dsmchold/fill070_d8_dsmchold.json": "821ffa1cc2ac583d6f323b2e9b2f32498f0682ee96afccf7a6ffad8c5bf78238",
+          "ga_dsmchold/fill120_d5.68_dsmchold.json": "3658e44ba4ee3c62ceff867594454eb935d08b505250c2235a99eee89cb2d3f4",
+          "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
+        },
+        "n_scatter_sha256": {
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "results/scattered_plume_tables_B-p_97.5mm_s9/manifest.json": "6b59c727f9583d70e761033ee73cbd5bfe2eb0b4cdfb134b57e6e3d22bcc5727"
+        }
+      },
+      "results/ctl_Bp_s10": {
+        "source_sha256": {
+          "scripts/multispot_heater.py": "4af4f9f2d2650e6b1cf322eaebad31568bba93c9eafddaae75a3e6ba4e51fc90",
+          "scripts/aim_tables.py": "e2bb22a0250e000788b1ea3bc1f1ce87231dadaf9e81e4e243d8e8b8e1f6baea",
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "results/scattered_plume_tables_B-p_97.5mm_s10/manifest.json": "f65bb83d1ada932b9b898f6366d4da0a0cd820554f0892c1c042108368dd56b4",
+          "scripts/realizable_controller.py": "818334150b74ae02563392f08350db1e7d957c41923b86391e96bce0e89c2b44",
+          "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
+          "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
+          "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+          "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+          "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+          "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+          "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
+          "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+          "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+          "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+          "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+          "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+        },
+        "aim_maps_sha256": {
+          "results/aim_tables/n_tables_B-p_97.5mm.npz": "da3bb9163ab0d11c2cf90bc8ae8b777e36ddd08983579c9a67f246a0b7dab3fc"
+        },
+        "ga_records_sha256": {
+          "ga_dsmchold/fill040_d5.68_dsmchold.json": "4f48b7c9a7241658f8476c2cd278a3bf8c4d35533e91c94c369463bb5fb3862c",
+          "ga_dsmchold/fill040_d8_dsmchold.json": "c3fc71dcd4aaf83e8bd3f29479447bff874c67a4987d031265af7178c1cba23d",
+          "ga_dsmchold/fill070_d5.68_dsmchold.json": "2ae3126864ad66fdbe4afcb17f26e852852c19e983bde4b05477a9145e03a91e",
+          "ga_dsmchold/fill070_d8_dsmchold.json": "821ffa1cc2ac583d6f323b2e9b2f32498f0682ee96afccf7a6ffad8c5bf78238",
+          "ga_dsmchold/fill120_d5.68_dsmchold.json": "3658e44ba4ee3c62ceff867594454eb935d08b505250c2235a99eee89cb2d3f4",
+          "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
+        },
+        "n_scatter_sha256": {
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "results/scattered_plume_tables_B-p_97.5mm_s10/manifest.json": "f65bb83d1ada932b9b898f6366d4da0a0cd820554f0892c1c042108368dd56b4"
+        }
+      },
+      "results/ctl_Bp_avg": {
+        "source_sha256": {
+          "scripts/multispot_heater.py": "4af4f9f2d2650e6b1cf322eaebad31568bba93c9eafddaae75a3e6ba4e51fc90",
+          "scripts/aim_tables.py": "e2bb22a0250e000788b1ea3bc1f1ce87231dadaf9e81e4e243d8e8b8e1f6baea",
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "data/runs/studies/scattered_plume_tables_B-p_97.5mm.json": "987a71c26afbf0edb2da0cc0e669e9fd5e90284a655c8f4e8c5b12d2b9506b78",
+          "scripts/realizable_controller.py": "818334150b74ae02563392f08350db1e7d957c41923b86391e96bce0e89c2b44",
+          "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
+          "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
+          "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+          "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+          "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+          "src/mbe_twin/heater.py": "b24c80baae47050f5a258847d68f4ee5ccaad77d507b28b79cfdf343d44cf252",
+          "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
+          "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
+          "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
+          "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+          "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+          "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+        },
+        "aim_maps_sha256": {
+          "results/aim_tables/n_tables_B-p_97.5mm.npz": "da3bb9163ab0d11c2cf90bc8ae8b777e36ddd08983579c9a67f246a0b7dab3fc"
+        },
+        "ga_records_sha256": {
+          "ga_dsmchold/fill040_d5.68_dsmchold.json": "4f48b7c9a7241658f8476c2cd278a3bf8c4d35533e91c94c369463bb5fb3862c",
+          "ga_dsmchold/fill040_d8_dsmchold.json": "c3fc71dcd4aaf83e8bd3f29479447bff874c67a4987d031265af7178c1cba23d",
+          "ga_dsmchold/fill070_d5.68_dsmchold.json": "2ae3126864ad66fdbe4afcb17f26e852852c19e983bde4b05477a9145e03a91e",
+          "ga_dsmchold/fill070_d8_dsmchold.json": "821ffa1cc2ac583d6f323b2e9b2f32498f0682ee96afccf7a6ffad8c5bf78238",
+          "ga_dsmchold/fill120_d5.68_dsmchold.json": "3658e44ba4ee3c62ceff867594454eb935d08b505250c2235a99eee89cb2d3f4",
+          "ga_dsmchold/fill120_d8_dsmchold_it2.json": "ddaf1ec6fb2973a0d8e09db677ea4ab060490dd6bee2bebe8c82aa1b86be266e"
+        },
+        "n_scatter_sha256": {
+          "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+          "data/runs/studies/scattered_plume_tables_B-p_97.5mm.json": "987a71c26afbf0edb2da0cc0e669e9fd5e90284a655c8f4e8c5b12d2b9506b78"
         }
       },
       "results/ctl_Bp_flat": {
@@ -248,7 +506,7 @@
           "scripts/multispot_heater.py": "4af4f9f2d2650e6b1cf322eaebad31568bba93c9eafddaae75a3e6ba4e51fc90",
           "scripts/aim_tables.py": "e2bb22a0250e000788b1ea3bc1f1ce87231dadaf9e81e4e243d8e8b8e1f6baea",
           "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
-          "data/runs/studies/scattered_plume_tables_B-p_97.5mm.json": "c40ba32d516855825edf5419e2d85bf7932ab267d41253aa878ef8baa3cd8272",
+          "data/runs/studies/scattered_plume_tables_B-p_97.5mm.json": "987a71c26afbf0edb2da0cc0e669e9fd5e90284a655c8f4e8c5b12d2b9506b78",
           "scripts/realizable_controller.py": "818334150b74ae02563392f08350db1e7d957c41923b86391e96bce0e89c2b44",
           "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
           "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
@@ -276,7 +534,7 @@
         },
         "n_scatter_sha256": {
           "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
-          "data/runs/studies/scattered_plume_tables_B-p_97.5mm.json": "c40ba32d516855825edf5419e2d85bf7932ab267d41253aa878ef8baa3cd8272"
+          "data/runs/studies/scattered_plume_tables_B-p_97.5mm.json": "987a71c26afbf0edb2da0cc0e669e9fd5e90284a655c8f4e8c5b12d2b9506b78"
         }
       }
     },
@@ -396,13 +654,97 @@
           "scatter_flat": false
         },
         {
+          "kind": "single",
+          "run": "results/ctl_Bp_s5",
+          "n_tables": [
+            "results/aim_tables/n_tables_B-p_97.5mm.npz"
+          ],
+          "worst_pct": 0.6241357853077627,
+          "joint_fraction": 0.9441467256007723,
+          "n_scatter": [
+            "data/runs/studies/scattered_tables.json",
+            "results/scattered_plume_tables_B-p_97.5mm_s5/manifest.json"
+          ],
+          "scatter_flat": false
+        },
+        {
+          "kind": "single",
+          "run": "results/ctl_Bp_s6",
+          "n_tables": [
+            "results/aim_tables/n_tables_B-p_97.5mm.npz"
+          ],
+          "worst_pct": 0.7714744368877622,
+          "joint_fraction": 0.9596657013666616,
+          "n_scatter": [
+            "data/runs/studies/scattered_tables.json",
+            "results/scattered_plume_tables_B-p_97.5mm_s6/manifest.json"
+          ],
+          "scatter_flat": false
+        },
+        {
+          "kind": "single",
+          "run": "results/ctl_Bp_s7",
+          "n_tables": [
+            "results/aim_tables/n_tables_B-p_97.5mm.npz"
+          ],
+          "worst_pct": 0.5714726584603974,
+          "joint_fraction": 0.9469145963521821,
+          "n_scatter": [
+            "data/runs/studies/scattered_tables.json",
+            "results/scattered_plume_tables_B-p_97.5mm_s7/manifest.json"
+          ],
+          "scatter_flat": false
+        },
+        {
+          "kind": "single",
+          "run": "results/ctl_Bp_s8",
+          "n_tables": [
+            "results/aim_tables/n_tables_B-p_97.5mm.npz"
+          ],
+          "worst_pct": 0.6554039952910463,
+          "joint_fraction": 0.9542620535487476,
+          "n_scatter": [
+            "data/runs/studies/scattered_tables.json",
+            "results/scattered_plume_tables_B-p_97.5mm_s8/manifest.json"
+          ],
+          "scatter_flat": false
+        },
+        {
+          "kind": "single",
+          "run": "results/ctl_Bp_s9",
+          "n_tables": [
+            "results/aim_tables/n_tables_B-p_97.5mm.npz"
+          ],
+          "worst_pct": 0.5572224449904951,
+          "joint_fraction": 0.9405883249504648,
+          "n_scatter": [
+            "data/runs/studies/scattered_tables.json",
+            "results/scattered_plume_tables_B-p_97.5mm_s9/manifest.json"
+          ],
+          "scatter_flat": false
+        },
+        {
+          "kind": "single",
+          "run": "results/ctl_Bp_s10",
+          "n_tables": [
+            "results/aim_tables/n_tables_B-p_97.5mm.npz"
+          ],
+          "worst_pct": 1.334729340815606,
+          "joint_fraction": 0.9694264085759284,
+          "n_scatter": [
+            "data/runs/studies/scattered_tables.json",
+            "results/scattered_plume_tables_B-p_97.5mm_s10/manifest.json"
+          ],
+          "scatter_flat": false
+        },
+        {
           "kind": "avg",
           "run": "results/ctl_Bp_avg",
           "n_tables": [
             "results/aim_tables/n_tables_B-p_97.5mm.npz"
           ],
-          "worst_pct": 0.5237226775380462,
-          "joint_fraction": 0.9452095717116293,
+          "worst_pct": 0.5660694044993324,
+          "joint_fraction": 0.9500045724737083,
           "n_scatter": [
             "data/runs/studies/scattered_tables.json",
             "data/runs/studies/scattered_plume_tables_B-p_97.5mm.json"
@@ -415,8 +757,8 @@
           "n_tables": [
             "results/aim_tables/n_tables_B-p_97.5mm.npz"
           ],
-          "worst_pct": 0.7170210242208453,
-          "joint_fraction": 0.9554508967128995,
+          "worst_pct": 0.7171445418404785,
+          "joint_fraction": 0.95546410608139,
           "n_scatter": [
             "data/runs/studies/scattered_tables.json",
             "data/runs/studies/scattered_plume_tables_B-p_97.5mm.json"
@@ -482,13 +824,97 @@
           "scatter_flat": false
         },
         {
+          "kind": "single",
+          "run": "results/ctl_Bp_s5",
+          "n_tables": [
+            "results/aim_tables/n_tables_B-p_97.5mm.npz"
+          ],
+          "worst_pct": 0.66114118304029,
+          "joint_fraction": 0.9995620586292739,
+          "n_scatter": [
+            "data/runs/studies/scattered_tables.json",
+            "results/scattered_plume_tables_B-p_97.5mm_s5/manifest.json"
+          ],
+          "scatter_flat": false
+        },
+        {
+          "kind": "single",
+          "run": "results/ctl_Bp_s6",
+          "n_tables": [
+            "results/aim_tables/n_tables_B-p_97.5mm.npz"
+          ],
+          "worst_pct": 0.8349715638987384,
+          "joint_fraction": 0.9997541025250216,
+          "n_scatter": [
+            "data/runs/studies/scattered_tables.json",
+            "results/scattered_plume_tables_B-p_97.5mm_s6/manifest.json"
+          ],
+          "scatter_flat": false
+        },
+        {
+          "kind": "single",
+          "run": "results/ctl_Bp_s7",
+          "n_tables": [
+            "results/aim_tables/n_tables_B-p_97.5mm.npz"
+          ],
+          "worst_pct": 0.6096163714558136,
+          "joint_fraction": 0.9996067672610882,
+          "n_scatter": [
+            "data/runs/studies/scattered_tables.json",
+            "results/scattered_plume_tables_B-p_97.5mm_s7/manifest.json"
+          ],
+          "scatter_flat": false
+        },
+        {
+          "kind": "single",
+          "run": "results/ctl_Bp_s8",
+          "n_tables": [
+            "results/aim_tables/n_tables_B-p_97.5mm.npz"
+          ],
+          "worst_pct": 0.7150272690538951,
+          "joint_fraction": 0.9996900878931058,
+          "n_scatter": [
+            "data/runs/studies/scattered_tables.json",
+            "results/scattered_plume_tables_B-p_97.5mm_s8/manifest.json"
+          ],
+          "scatter_flat": false
+        },
+        {
+          "kind": "single",
+          "run": "results/ctl_Bp_s9",
+          "n_tables": [
+            "results/aim_tables/n_tables_B-p_97.5mm.npz"
+          ],
+          "worst_pct": 0.6014887599076476,
+          "joint_fraction": 0.9994685769445715,
+          "n_scatter": [
+            "data/runs/studies/scattered_tables.json",
+            "results/scattered_plume_tables_B-p_97.5mm_s9/manifest.json"
+          ],
+          "scatter_flat": false
+        },
+        {
+          "kind": "single",
+          "run": "results/ctl_Bp_s10",
+          "n_tables": [
+            "results/aim_tables/n_tables_B-p_97.5mm.npz"
+          ],
+          "worst_pct": 1.3909819450496466,
+          "joint_fraction": 0.9998526647360667,
+          "n_scatter": [
+            "data/runs/studies/scattered_tables.json",
+            "results/scattered_plume_tables_B-p_97.5mm_s10/manifest.json"
+          ],
+          "scatter_flat": false
+        },
+        {
           "kind": "avg",
           "run": "results/ctl_Bp_avg",
           "n_tables": [
             "results/aim_tables/n_tables_B-p_97.5mm.npz"
           ],
-          "worst_pct": 0.5658814708655936,
-          "joint_fraction": 0.999566123050348,
+          "worst_pct": 0.6219658516639487,
+          "joint_fraction": 0.999640298734949,
           "n_scatter": [
             "data/runs/studies/scattered_tables.json",
             "data/runs/studies/scattered_plume_tables_B-p_97.5mm.json"
@@ -501,7 +927,7 @@
           "n_tables": [
             "results/aim_tables/n_tables_B-p_97.5mm.npz"
           ],
-          "worst_pct": 0.7769841107147121,
+          "worst_pct": 0.7771281775350075,
           "joint_fraction": 0.9997053294721333,
           "n_scatter": [
             "data/runs/studies/scattered_tables.json",
@@ -564,6 +990,90 @@
           "n_scatter": [
             "data/runs/studies/scattered_tables.json",
             "results/scattered_plume_tables_B-p_97.5mm_s4/manifest.json"
+          ],
+          "scatter_flat": false
+        },
+        {
+          "kind": "single",
+          "run": "results/ctl_Bp_s5",
+          "n_tables": [
+            "results/aim_tables/n_tables_B-p_97.5mm.npz"
+          ],
+          "worst_pct": 0.8380959380636568,
+          "joint_fraction": 0.973194126911548,
+          "n_scatter": [
+            "data/runs/studies/scattered_tables.json",
+            "results/scattered_plume_tables_B-p_97.5mm_s5/manifest.json"
+          ],
+          "scatter_flat": false
+        },
+        {
+          "kind": "single",
+          "run": "results/ctl_Bp_s6",
+          "n_tables": [
+            "results/aim_tables/n_tables_B-p_97.5mm.npz"
+          ],
+          "worst_pct": 0.8380959380636568,
+          "joint_fraction": 0.973194126911548,
+          "n_scatter": [
+            "data/runs/studies/scattered_tables.json",
+            "results/scattered_plume_tables_B-p_97.5mm_s6/manifest.json"
+          ],
+          "scatter_flat": false
+        },
+        {
+          "kind": "single",
+          "run": "results/ctl_Bp_s7",
+          "n_tables": [
+            "results/aim_tables/n_tables_B-p_97.5mm.npz"
+          ],
+          "worst_pct": 0.8380959380636568,
+          "joint_fraction": 0.973194126911548,
+          "n_scatter": [
+            "data/runs/studies/scattered_tables.json",
+            "results/scattered_plume_tables_B-p_97.5mm_s7/manifest.json"
+          ],
+          "scatter_flat": false
+        },
+        {
+          "kind": "single",
+          "run": "results/ctl_Bp_s8",
+          "n_tables": [
+            "results/aim_tables/n_tables_B-p_97.5mm.npz"
+          ],
+          "worst_pct": 0.8380959380636568,
+          "joint_fraction": 0.973194126911548,
+          "n_scatter": [
+            "data/runs/studies/scattered_tables.json",
+            "results/scattered_plume_tables_B-p_97.5mm_s8/manifest.json"
+          ],
+          "scatter_flat": false
+        },
+        {
+          "kind": "single",
+          "run": "results/ctl_Bp_s9",
+          "n_tables": [
+            "results/aim_tables/n_tables_B-p_97.5mm.npz"
+          ],
+          "worst_pct": 0.8380959380636568,
+          "joint_fraction": 0.973194126911548,
+          "n_scatter": [
+            "data/runs/studies/scattered_tables.json",
+            "results/scattered_plume_tables_B-p_97.5mm_s9/manifest.json"
+          ],
+          "scatter_flat": false
+        },
+        {
+          "kind": "single",
+          "run": "results/ctl_Bp_s10",
+          "n_tables": [
+            "results/aim_tables/n_tables_B-p_97.5mm.npz"
+          ],
+          "worst_pct": 0.8380959380636568,
+          "joint_fraction": 0.973194126911548,
+          "n_scatter": [
+            "data/runs/studies/scattered_tables.json",
+            "results/scattered_plume_tables_B-p_97.5mm_s10/manifest.json"
           ],
           "scatter_flat": false
         },
@@ -654,6 +1164,90 @@
           "scatter_flat": false
         },
         {
+          "kind": "single",
+          "run": "results/ctl_Bp_s5",
+          "n_tables": [
+            "results/aim_tables/n_tables_B-p_97.5mm.npz"
+          ],
+          "worst_pct": 0.8980634251661096,
+          "joint_fraction": 0.9999776456840929,
+          "n_scatter": [
+            "data/runs/studies/scattered_tables.json",
+            "results/scattered_plume_tables_B-p_97.5mm_s5/manifest.json"
+          ],
+          "scatter_flat": false
+        },
+        {
+          "kind": "single",
+          "run": "results/ctl_Bp_s6",
+          "n_tables": [
+            "results/aim_tables/n_tables_B-p_97.5mm.npz"
+          ],
+          "worst_pct": 0.8980634251661096,
+          "joint_fraction": 0.9999776456840929,
+          "n_scatter": [
+            "data/runs/studies/scattered_tables.json",
+            "results/scattered_plume_tables_B-p_97.5mm_s6/manifest.json"
+          ],
+          "scatter_flat": false
+        },
+        {
+          "kind": "single",
+          "run": "results/ctl_Bp_s7",
+          "n_tables": [
+            "results/aim_tables/n_tables_B-p_97.5mm.npz"
+          ],
+          "worst_pct": 0.8980634251661096,
+          "joint_fraction": 0.9999776456840929,
+          "n_scatter": [
+            "data/runs/studies/scattered_tables.json",
+            "results/scattered_plume_tables_B-p_97.5mm_s7/manifest.json"
+          ],
+          "scatter_flat": false
+        },
+        {
+          "kind": "single",
+          "run": "results/ctl_Bp_s8",
+          "n_tables": [
+            "results/aim_tables/n_tables_B-p_97.5mm.npz"
+          ],
+          "worst_pct": 0.8980634251661096,
+          "joint_fraction": 0.9999776456840929,
+          "n_scatter": [
+            "data/runs/studies/scattered_tables.json",
+            "results/scattered_plume_tables_B-p_97.5mm_s8/manifest.json"
+          ],
+          "scatter_flat": false
+        },
+        {
+          "kind": "single",
+          "run": "results/ctl_Bp_s9",
+          "n_tables": [
+            "results/aim_tables/n_tables_B-p_97.5mm.npz"
+          ],
+          "worst_pct": 0.8980634251661096,
+          "joint_fraction": 0.9999776456840929,
+          "n_scatter": [
+            "data/runs/studies/scattered_tables.json",
+            "results/scattered_plume_tables_B-p_97.5mm_s9/manifest.json"
+          ],
+          "scatter_flat": false
+        },
+        {
+          "kind": "single",
+          "run": "results/ctl_Bp_s10",
+          "n_tables": [
+            "results/aim_tables/n_tables_B-p_97.5mm.npz"
+          ],
+          "worst_pct": 0.8980634251661096,
+          "joint_fraction": 0.9999776456840929,
+          "n_scatter": [
+            "data/runs/studies/scattered_tables.json",
+            "results/scattered_plume_tables_B-p_97.5mm_s10/manifest.json"
+          ],
+          "scatter_flat": false
+        },
+        {
           "kind": "avg",
           "run": "results/ctl_Bp_avg",
           "n_tables": [
@@ -685,35 +1279,35 @@
     },
     "summary": {
       "B-p 710 C": {
-        "single_n": 4,
-        "single_mean": 0.6931053287787019,
-        "single_sd": 0.07769358623409575,
-        "single_min": 0.580264279505565,
-        "single_max": 0.7567964047113956,
+        "single_n": 10,
+        "single_mean": 0.7286859976867878,
+        "single_sd": 0.22674238515282225,
+        "single_min": 0.5572224449904951,
+        "single_max": 1.334729340815606,
         "avg": [
-          0.5237226775380462
+          0.5660694044993324
         ],
         "flat": [
-          0.7170210242208453
+          0.7171445418404785
         ],
         "aim": {}
       },
       "B-p 720 C": {
-        "single_n": 4,
-        "single_mean": 0.740008476044871,
-        "single_sd": 0.08323534811408796,
-        "single_min": 0.6226056902105174,
-        "single_max": 0.8123580450911381,
+        "single_n": 10,
+        "single_mean": 0.7773260996585516,
+        "single_sd": 0.23158312352506913,
+        "single_min": 0.6014887599076476,
+        "single_max": 1.3909819450496466,
         "avg": [
-          0.5658814708655936
+          0.6219658516639487
         ],
         "flat": [
-          0.7769841107147121
+          0.7771281775350075
         ],
         "aim": {}
       },
       "B-L 710 C": {
-        "single_n": 4,
+        "single_n": 10,
         "single_mean": 0.8380959380636568,
         "single_sd": 0.0,
         "single_min": 0.8380959380636568,
@@ -727,7 +1321,7 @@
         "aim": {}
       },
       "B-L 720 C": {
-        "single_n": 4,
+        "single_n": 10,
         "single_mean": 0.8980634251661096,
         "single_sd": 0.0,
         "single_min": 0.8980634251661096,
