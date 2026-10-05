@@ -100,10 +100,19 @@ IMPACT = {
                                         "--heater-control (default single), --dump-t, plus per-state factor bookkeeping; "
                                         "--pointing-residual 0.8 reproduced the 1460 K record (95.2 %, 1.53 %). The follow-up audit "
                                         "change (2026-10-05) only adds aim-map and optional-module hashes to the "
-                                        "manifest. A later option, --n-tables (default off), substitutes an aim's own pointing and attenuation tables.",
+                                        "manifest. A later option, --n-tables (default off), substitutes an aim's own pointing and attenuation tables. "
+                                        "Later options (2026-10-06) --n-scatter, --scatter-flat and --scatter-from-aim (default off) "
+                                        "substitute an aim's own seed-averaged scattered-atom factors; the manifest gains their "
+                                        "inputs. Rerunning the realizable_controller_ms_BL95tables.json command reproduced its rows and "
+                                        "summary exactly (2026-10-06).",
     "scripts/scattered_plume_tables.py": "Later change (2026-10-03 audit) covers the grid pressures through the first one whose "
                                          "feed reaches the 35 sccm limit and adds --extend (reuses a record's covered entries); "
-                                         "the covered entries of the earlier records are computed exactly as before.",
+                                         "the covered entries of the earlier records are computed exactly as before. Later change "
+                                         "(2026-10-06) adds --aim-mm (default: the envelope aim; recorded only when given); a "
+                                         "default run reproduced the previous version's factors and inputs bit for bit (small sample).",
+    "scripts/scattered_tables.py": "Later change (2026-10-06) adds --seed (default 20261003, the earlier fixed seed) and --aim-mm "
+                                   "(default: the envelope aim; recorded only when given); a default run reproduced the previous "
+                                   "version's factors and inputs bit for bit (small sample).",
     "src/mbe_twin/sparta.py": "Later change (2026-10-03) lets wsl_path return a POSIX path unchanged when run inside WSL; on "
                               "Windows (where every record ran) the path is the earlier one.",
     "data/runs/studies/layout_comparison_bc.json": [
@@ -113,13 +122,14 @@ IMPACT = {
                  "contents (checked array by array)."}],
 }
 PINS = {   # reviewed 2026-10-02
-    "scripts/realizable_controller.py": "76eca57f2871",  # reviewed 2026-10-05
+    "scripts/realizable_controller.py": "818334150b74",  # reviewed 2026-10-06
+    "scripts/scattered_tables.py": "e0fabec136a1",  # reviewed 2026-10-06
     "scripts/nitrogen_aim_pressure.py": "3ed2958db5f2",  # reviewed 2026-10-03
     "scripts/nitrogen_rate_limits.py": "29392adf050d",  # reviewed 2026-10-03
     "scripts/heater_robustness.py": "7f545f5d98da",  # reviewed 2026-10-03
     "scripts/operating_optimum.py": "4d5b02c42380",  # reviewed 2026-10-03
     "scripts/operating_cold_limit.py": "07b9707d9806",  # reviewed 2026-10-03
-    "src/mbe_twin/sparta.py": "a293265e2ca3", "scripts/scattered_plume_tables.py": "e6e482fe953c",  # reviewed 2026-10-03
+    "src/mbe_twin/sparta.py": "a293265e2ca3", "scripts/scattered_plume_tables.py": "d72a59c68c2b",  # reviewed 2026-10-06
     "src/mbe_twin/aperture.py": "08ff8b237847", "scripts/nitrogen_aim_tolerance.py": "30922a1a37e6",
     "src/mbe_twin/heater.py": "b24c80baae47", "scripts/heater_zones.py": "2cf7e07a02dc",
     "scripts/growth_window.py": "e43c637528a9", "src/mbe_twin/beam.py": "90a90503e0a5",
@@ -160,6 +170,8 @@ INPUT_HASHES = {
     "ga_records_sha256": lambda v: {f"data/runs/sparta_ga/{k}": h for k, h in v.items()},
     # aim maps a realizable-controller run read (paths relative to the repository root; audit follow-up 2026-10-05)
     "aim_maps_sha256": lambda v: dict(v),
+    # factor tables given to realizable_controller.py --n-scatter (paths relative to the repository root; 2026-10-06)
+    "n_scatter_sha256": lambda v: dict(v),
 }
 PLUME_PREFIX = "data/runs/studies/scattered_plume_tables_"
 UNTRACED = "untraced"

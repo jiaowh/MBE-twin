@@ -50,6 +50,7 @@ reaches the temperature under the element limit.
 
 Usage: python scripts/realizable_controller.py [--scattered gas+plume] [--t-min 690] [--t-max 790]
                                                [--rate-error 0.01] [--bfm-error 0.02] [--out DIR]
+                                               [--n-tables FILE ... [--n-scatter GAS_RECORD PLUME_RECORD ...]]
 """
 
 import argparse
@@ -122,6 +123,38 @@ def hk(t):
     return vapour_pressure("Ga", t) / np.sqrt(t)
 
 
+def aim_scatter_factor(records, name, aim_mm, variant, speed, rho, envelope_aim=None):
+    """Scattered-arrival factor (P_GRID x rho) of layout `name` at the aim of --n-tables, from the records of
+    scattered_tables.py / scattered_plume_tables.py (or their seed averages), combined as lc.scatter_factors
+    does. A record without aim_offset_mm (run without --aim-mm) is at the envelope aim."""
+    gas = plume = None
+    for f in records:
+        m = json.loads(Path(f).read_text(encoding="utf-8"))
+        if name not in m["inputs"]["layouts"]:
+            continue
+        aim = m["inputs"].get("aim_offset_mm", {}).get(name, envelope_aim)
+        if aim is None or abs(aim - aim_mm) > 1e-9:
+            raise SystemExit(f"realizable_controller: {f} is for aim {aim} mm, not the --n-tables aim {aim_mm:g} mm")
+        if not np.allclose(m["outputs"]["p_grid_Pa"], lc.P_GRID) or not np.allclose(m["outputs"]["rho_m"], rho):
+            raise SystemExit(f"realizable_controller: {f} is on a different pressure grid or radii")
+        if "speeds_m3_s" in m["inputs"]:
+            plume = m
+        else:
+            gas = m
+    if gas is None or (variant == "gas+plume" and plume is None):
+        raise SystemExit(f"realizable_controller: --n-scatter lacks the {'gas and plume' if variant == 'gas+plume' else 'gas'}"
+                         f" tables of layout {name}")
+    f_gas = np.asarray(gas["outputs"]["factors"]["N"][name]["gas" if variant == "gas+plume" else variant])
+    if variant != "gas+plume" or f"{speed:g}" not in plume["outputs"]["factors"][name]:
+        return f_gas
+    v = plume["outputs"]["factors"][name][f"{speed:g}"]
+    to_p = lc.SCCM_PA_M3_S * (plume["inputs"]["gas_temperature_K"] / lc.T_STD)
+    need = np.searchsorted(lc.P_GRID, plume["inputs"]["feed_max_sccm"] * to_p / speed * (1 - 1e-9))
+    if not all(v["covered"][: need + 1]):
+        raise SystemExit(f"realizable_controller: plume tables of {name} (S = {speed:g}) do not bracket the feed limit")
+    return np.array([np.asarray(f) if c else g for f, c, g in zip(v["factors"], v["covered"], f_gas)])
+
+
 def ga_reference(port, fill, dlab):
     """(cell K, absolute vacuum centre flux m^-2 s^-1) of a Ga record (annulus fit at r = 0)."""
     js = json.loads((lc.GA_RECORDS / lc.ga_record(port, fill, dlab)).read_text(encoding="utf-8"))
@@ -189,6 +222,17 @@ def main():
     ap.add_argument("--n-tables", nargs="*", default=None,
                     help="tables of scripts/aim_tables.py (one per layout): that aim's own pointing ensemble and "
                          "attenuation; the gas-scattered / plume factors stay those of the comparison's aim")
+    ap.add_argument("--n-scatter", nargs="*", default=None,
+                    help="records of scattered_tables.py and scattered_plume_tables.py run with --aim-mm at the --n-tables "
+                         "aim (or seed averages of them, scripts/average_scattered_seeds.py): they replace the "
+                         "comparison aim's gas-scattered / plume factors for those layouts")
+    ap.add_argument("--scatter-from-aim", type=float, default=None,
+                    help="with --n-scatter: the aim (mm) the factor records were made at, when it differs from the "
+                         "--n-tables aim (an aim scan with one set of averaged factors; the factor's aim dependence is "
+                         "then neglected and recorded)")
+    ap.add_argument("--scatter-flat", action="store_true",
+                    help="with --n-scatter: replace each pressure's factor profile by its area-weighted mean (the "
+                         "zero-noise limit if the scattered arrival has no radial shape; a bracket on table noise)")
     ap.add_argument("--heater-control", default="single", choices=("single", "multispot"),
                     help="single: one centre pyrometer, fixed zone ratios; multispot: three spots and three zone groups "
                          "(scripts/multispot_heater.py)")
@@ -201,6 +245,8 @@ def main():
     ap.add_argument("--heater-design-limit", type=float, default=1473.15,
                     help="element temperature the zone fractions are optimized under (K); the cap stays 1473.15 K")
     args = ap.parse_args()
+    if (args.scatter_flat or args.scatter_from_aim is not None) and not args.n_scatter:
+        raise SystemExit("realizable_controller: --scatter-flat and --scatter-from-aim need --n-scatter")
     RATE_UM_H = args.rate_um_h
     E_RATE = (-args.rate_error, 0.0, args.rate_error)
     E_BFM = (-args.bfm_error, 0.0, args.bfm_error)
@@ -234,6 +280,16 @@ def main():
             nf = next(c for c in rec["inputs"]["map_caches"] if c["file"].startswith(prefix))
             z_old = np.load(oo.MAPS / nf["file"])
             fac = inp["att_n"] / z_old["att"]                          # scattered-arrival factor of the old aim
+            if args.n_scatter:
+                if args.scattered == "none":
+                    raise SystemExit("realizable_controller: --n-scatter needs a scattered variant")
+                fac = aim_scatter_factor(args.n_scatter, name,
+                                         float(zt["aim_mm"]) if args.scatter_from_aim is None else args.scatter_from_aim,
+                                         args.scattered, scen["S_eff_m3_s"], rho,
+                                         lay_n["aim_offset_mm"])
+                if args.scatter_flat:
+                    w_r = lc.area_weights(rho)
+                    fac = np.sum(w_r * fac, -1, keepdims=True) / np.sum(w_r) * np.ones_like(fac)
             st = [tuple(x) for x in json.loads(str(zt["states"]))]
             keep = [0] + [i for i, x in enumerate(st) if x[1] == 0.8]
             inp["n_vac"] = (zt["maps"][keep] * zt["lip"][lip2])[:, None, :]
@@ -468,7 +524,9 @@ def main():
                 "controllers": CONTROLLERS, "heater_design_limit_K": args.heater_design_limit,
                 "pointing_residual_deg": args.pointing_residual, "heater_control": args.heater_control, "aim_maps": args.aim_maps, "aim_mm": args.aim_mm,
                 "aim_maps_sha256": {f: lc.file_sha256(Path(f)) for f in tuple(args.aim_maps or ()) + tuple(args.n_tables or ())},
-                "n_tables": args.n_tables, "lip_m": 0.002, "pointing_ensemble_deg": 0.8,
+                "n_tables": args.n_tables, "lip_m": 0.002,
+                "n_scatter_sha256": {f: lc.file_sha256(Path(f)) for f in args.n_scatter or ()},
+                "scatter_flat": args.scatter_flat, "scatter_from_aim_mm": args.scatter_from_aim, "pointing_ensemble_deg": 0.8,
                 "ga_records_sha256": {lc.ga_record(env["layouts"][n]["ga_port_deg"], f, d):
                                       lc.file_sha256(lc.GA_RECORDS / lc.ga_record(env["layouts"][n]["ga_port_deg"], f, d))
                                       for n, _ in SCENARIOS for f, d in itertools.product((40, 70, 120), lc.GA_D)}},
@@ -476,6 +534,7 @@ def main():
         sources=([ROOT / "scripts/multispot_heater.py"] if args.heater_control == "multispot" else [])
                 + ([ROOT / "scripts/nitrogen_aim_operating.py"] if args.aim_maps else [])
                 + ([ROOT / "scripts/aim_tables.py"] if args.n_tables else [])
+                + [Path(f) for f in args.n_scatter or ()]
                 + [Path(__file__), ROOT / "scripts/operating_optimum.py", ROOT / "scripts/heater_robustness.py",
                  ROOT / "scripts/layout_comparison.py", ROOT / "scripts/heater_zones.py", ROOT / "src/mbe_twin/growth.py",
                  ROOT / "src/mbe_twin/heater.py", ROOT / "src/mbe_twin/vapour.py", ROOT / "data/parameters/gan_growth.json",

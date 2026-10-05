@@ -1,12 +1,14 @@
 # Source layouts at physically achievable operating points
 
-Status: 2026-10-05 (eighth revision: section 13 checks the section 12 assumptions; seventh revision: section 12 ranks the worst-case drivers and adds three levers against them; sixth revision: section 11 replaces the Ga steering with a realizable controller and adds a heater power margin; fifth revision: section 10 adds the gas-scattered atoms and the nitrogen plume; sections 1-8 are the direct-beam model and stay as recorded; fourth revision after the [project audit](PROJECT_AUDIT_2026-10-01.md), its [follow-up](PROJECT_AUDIT_FOLLOWUP_2026-10-01.md) and the [2026-10-02 audit](PROJECT_AUDIT_2026-10-02.md)), `representative_chamber`. These are model comparisons on a typical 200 mm RIBER/Veeco-class geometry, not predictions for the proposed machine. No nitrogen map, heater result or growth model here is validated against a measurement.
+Status: 2026-10-06 (ninth revision: section 14 regenerates the scattered-atom tables at the frozen aims and averages seeds; eighth revision: section 13 checks the section 12 assumptions; seventh revision: section 12 ranks the worst-case drivers and adds three levers against them; sixth revision: section 11 replaces the Ga steering with a realizable controller and adds a heater power margin; fifth revision: section 10 adds the gas-scattered atoms and the nitrogen plume; sections 1-8 are the direct-beam model and stay as recorded; fourth revision after the [project audit](PROJECT_AUDIT_2026-10-01.md), its [follow-up](PROJECT_AUDIT_FOLLOWUP_2026-10-01.md) and the [2026-10-02 audit](PROJECT_AUDIT_2026-10-02.md)), `representative_chamber`. These are model comparisons on a typical 200 mm RIBER/Veeco-class geometry, not predictions for the proposed machine. No nitrogen map, heater result or growth model here is validated against a measurement.
 
 **The question:** under what physically achievable conditions does a layout meet the project's requirements?
 
 **The short answer:** no layout can be called a pass, because neither a uniformity target nor a minimum growth rate is agreed (section 8). The model can, however, say which conditions each layout needs, and where its results are inside the model's validity. Two conditions dominate:
 - **Nitrogen supply sets the reachable growth rate.** That rate depends on a source conversion fraction nobody has published. The literature implies it lies between 6 and 57 % at high flow.
 - **The aperture plate must stay free-molecular at the flow that rate needs.** With the published-type plate, it stops being free-molecular above about 6 sccm.
+
+**Update 2026-10-06 (section 14).** The scattered-atom tables were regenerated at B-L's +95 mm aim and averaged over independent seeds; B-p's were averaged too. The factor hardly depends on the aim, but one table's Monte Carlo noise moves the worst case by about +/-0.1 point. With averaged tables, **B-L at +95 mm gives 0.53 % at 710 C (0.58 % at 720 C) and B-p 0.52 % (0.57 %)**: the layouts are tied on uniformity. The aim scan confirms +95 mm (optimum 95-97.5 mm), so the aim can be frozen.
 
 **Update 2026-10-05 (section 13).** A commissioning rehearsal shows the 0.2 deg re-aim is reachable with a mount repeatable to about 0.05 deg and three wafers mapped to 0.1-0.3 %. B-L at +95 mm with its own pointing and attenuation tables gives 0.64 % at 710 C, confirming section 12. The 710 C decomposition extrapolation is a small effect on thickness.
 
@@ -48,6 +50,7 @@ Records (all in `data/runs/studies/`):
   - the comparison with them: layout_comparison_bc_sc.json, _sc_plume.json and _sc_gamma0.1.json;
   - the downstream studies on them: nitrogen_rate_limits_sc*.json, operating_cold_limit_*.json, operating_optimum_sc_plume.json, heater_robustness_sc_plume.json, nitrogen_aim_*_sc_plume.json;
   - [commissioning_rehearsal.json](../data/runs/studies/commissioning_rehearsal.json).
+- Seed-averaged tables at the frozen aims (section 14): scattered_tables_B-L_95mm.json, scattered_plume_tables_B-L_95mm.json, scattered_plume_tables_B-p_97.5mm.json; realizable_controller_ms_BL95scatter.json, scatter_noise_BL95.json, scatter_noise_Bp.json.
 
 Inputs are in the [design envelope](../data/design/design_envelope.json); commands are in [REPRODUCE.md](REPRODUCE.md); hardware requests are in [HARDWARE_REQUESTS.md](HARDWARE_REQUESTS.md).
 
@@ -653,13 +656,87 @@ Setup:
 **B-L at +95 mm with its own tables** (scripts/aim_tables.py, record aim_tables_B-L_95mm.json).
 - **What is recomputed:** the pointing ensemble (49 maps) and the attenuation and lip tables at 95 mm. These replace the 90 mm tilt responses and attenuation that `--aim-maps` reused.
 - **What is not:** the gas-scattered and plume factors are still those of the 90 mm aim. That is the remaining approximation.
-- **Results:** with multi-spot heater control, a 0.2 deg re-aim, rate monitor + BFM and the 1460 K design (record realizable_controller_ms_BL95tables.json): **0.64 % at 710 C** (96.8 % of states) and **0.70 % at 720 C** (100 %). The approximate --aim-maps run gave 0.65 / 0.72 %, so the B-L result stands. The scattered-atom factors at 95 mm still need regenerating before the aim is frozen (several hours of Monte Carlo).
+- **Results:** with multi-spot heater control, a 0.2 deg re-aim, rate monitor + BFM and the 1460 K design (record realizable_controller_ms_BL95tables.json): **0.64 % at 710 C** (96.8 % of states) and **0.70 % at 720 C** (100 %). The approximate --aim-maps run gave 0.65 / 0.72 %, so the B-L result stands. The scattered-atom factors at 95 mm were regenerated and seed-averaged in section 14 (0.53 % at 710 C).
 
 **Decomposition below 720 C.**
 - **Grounds for a small effect:** Grandjean et al. (APL 74, 1854, 1999) report GaN decomposition in vacuum as nearly zero below 750 C, with an activation energy of 3.6 eV from laser reflectivity. The law used here (G02) has 3.1 eV, from QMS.
 - **Size at 710 C:** the law gives about 0.20 nm/min against 16.7 nm/min of growth. Using 3.6 eV instead of 3.1 eV, anchored at 720 C, changes that by about 6 %.
 - **Effect on uniformity:** the decomposition term's radial variation over a 6 K wafer range is about 0.27 % of the rate. A 6 % change in it moves the worst case by well under 0.1 pt (an estimate, not a rerun).
 - **Conclusion:** the 710 C extrapolation is a small effect on thickness. What 710 C does to crystal quality is not modelled.
+
+## 14. Scattered-atom tables at the frozen aims, and their Monte Carlo noise (2026-10-06)
+
+Section 13 left one approximation: B-L at +95 mm used the gas-scattered and plume factors of the 90 mm aim. Those tables were regenerated at 95 mm. Doing so showed that the tables' Monte Carlo noise is a larger effect than their aim dependence, so the tables were rerun with several seeds and averaged.
+
+**Method.**
+- `scattered_tables.py` and `scattered_plume_tables.py` take `--aim-mm` and `--seed`. Their default runs reproduce the earlier versions bit for bit (checked on a small sample).
+- Each run has 8e6 atoms in 8 batches, the settings of the section 10 tables. Independent seeds are averaged with equal weights by `scripts/average_scattered_seeds.py`:
+  - B-L at +95 mm, gas (gamma 1 and 0.1): 4 seeds, record [scattered_tables_B-L_95mm.json](../data/runs/studies/scattered_tables_B-L_95mm.json);
+  - B-L at +95 mm, with the plume: 4 seeds at S = 2 and 4 m^3/s and 6 more at S = 4 only (the B-L scenario), so 10 at S = 4; record [scattered_plume_tables_B-L_95mm.json](../data/runs/studies/scattered_plume_tables_B-L_95mm.json);
+  - B-p at its envelope aim of +97.5 mm, with the plume: 4 seeds at S = 2 (the B-p scenario); record [scattered_plume_tables_B-p_97.5mm.json](../data/runs/studies/scattered_plume_tables_B-p_97.5mm.json).
+- `realizable_controller.py --n-scatter` replaces the comparison aim's factors with these tables, for a layout run with `--n-tables`:
+  - passing the old 90 mm (B-L) or 97.5 mm (B-p) tables explicitly reproduces the implicit path exactly;
+  - `--scatter-flat` replaces each pressure's factor profile by its area-weighted mean, the limit with no radial shape at all;
+  - `--scatter-from-aim` applies one set of tables at another aim (used for the aim scan below).
+- Controller settings throughout are those of section 13: multi-spot heater, 0.2 deg re-aim, 1460 K heater design, rate monitor + BFM.
+- Records:
+  - [realizable_controller_ms_BL95scatter.json](../data/runs/studies/realizable_controller_ms_BL95scatter.json): the B-L result;
+  - [scatter_noise_BL95.json](../data/runs/studies/scatter_noise_BL95.json) and [scatter_noise_Bp.json](../data/runs/studies/scatter_noise_Bp.json): single-seed, averaged and flat runs, and the B-L aim scan, with each constituent run's dependency hashes.
+
+**The factor hardly depends on the aim.**
+- At B-L's operating pressure (19 sccm, 8.8e-3 Pa, S = 4), scattered atoms and the plume add 13.1 % to the N arrival at both aims. The means differ by 0.03 %.
+- Between the aims, the factor's radial shape differs by up to 0.2-0.6 %. Two seeds at the same aim differ by just as much (0.3-0.7 %).
+- One 8e6-atom table carries 0.1-0.4 points of random half-range per pressure. The 4-seed average leaves 0.07-0.10 points, and the averaged shape is nearly flat for B-L.
+
+**But the worst case is sensitive to table noise.** The worst case is a maximum over states, so random shape in the factor both scatters it and, on average, raises it. B-L at +95 mm, rate monitor + BFM:
+
+| B-L +95 mm | 710 C | 720 C |
+|---|---|---|
+| Section 13 (90 mm factors, one seed) | 0.64 % | 0.70 % |
+| 10 single-seed tables: mean +/- sd [range] | 0.60 +/- 0.12 % [0.48, 0.81] | 0.64 +/- 0.13 % [0.52, 0.85] |
+| **10-seed average** | **0.53 %** (96.7 % of states) | **0.58 %** (100 %) |
+| No radial shape (--scatter-flat) | 0.54 % | 0.60 % |
+
+- One seed's table moves the B-L worst case by about +/-0.12 points (standard deviation). The averaged table brings that to roughly +/-0.04.
+- The averaged result and the shape-free limit agree to 0.02 points. B-L's converged worst case is therefore about **0.53 % at 710 C and 0.58 % at 720 C**.
+- The 0.1-point drop from section 13 comes from removing the noise, not from the change of aim.
+
+**B-L's aim, re-scanned with the averaged tables** (the 95 mm tables applied at each aim; record scatter_noise_BL95.json):
+
+| Aim | 90 mm | 92.5 mm | **95 mm** | 97.5 mm | 100 mm |
+|---|---|---|---|---|---|
+| Worst case at 710 C | 0.79 % | 0.64 % | **0.53 %** | 0.52 % | 0.64 % |
+| Worst case at 720 C | 0.83 % | 0.68 % | **0.58 %** | 0.56 % | 0.69 % |
+| Joint fraction at 710 C | 97.2 % | 97.0 % | 96.7 % | 96.2 % | 95.7 % |
+
+- The optimum lies between 95 and 97.5 mm. Those two aims differ by 0.01 points, inside the remaining noise, and 95 mm keeps more margin above the 95 % gate.
+- **The +95 mm aim can be frozen.** An aim error of 2.5 mm costs about 0.1 point.
+
+**B-p is affected the same way** (+97.5 mm, rate monitor + BFM; record scatter_noise_Bp.json):
+
+| B-p +97.5 mm | 710 C | 720 C |
+|---|---|---|
+| Section 12 (archived table, one seed) | 0.49 % (needs fill tracking) | 0.54 % |
+| 4 new single-seed tables: mean +/- sd [range] | 0.69 +/- 0.08 % [0.58, 0.76] | 0.74 +/- 0.08 % [0.62, 0.81] |
+| **4-seed average** | **0.52 %**: 94.5 % of states without fill tracking, 96.3 % with | **0.57 %** (100 %) |
+| No radial shape (--scatter-flat) | 0.72 % | 0.78 % |
+
+- The archived table's 0.49 % was a favourable draw. Its shape at the operating pressure lies within the new seeds' spread, and the physics code is unchanged (same scattering.py).
+- For B-p, removing the factor's shape makes the worst case worse. The plume genuinely reshapes B-p's N arrival (section 10: 0.4-0.6 points), so the flat limit is not a bracket for B-p.
+- Whether B-p is admissible at 710 C also depends on the seed: per seed, 93.2-95.9 % of states pass without fill tracking.
+
+**What changes.**
+- **B-p and B-L are tied on uniformity.**
+  - At 710 C they reach 0.52 and 0.53 %; at 720 C, 0.57 and 0.58 %.
+  - The 0.16-point lead B-p had in section 12 was mostly table noise. The remaining difference is well inside the averaged tables' noise (about 0.04 points).
+- **What still separates them is not uniformity:**
+  - B-p needs fill tracking at 710 C, and its figures assume nearly full nitrogen conversion (eta = 1) at 2 m^3/s;
+  - B-L assumes about 30 % conversion at 4 m^3/s, which the literature makes more plausible.
+- **Every earlier scattered-variant worst case carries this noise.**
+  - Sections 10-13 used single-seed tables. Their worst cases are uncertain by about +/-0.1 point and likely read high by a few hundredths to a tenth.
+  - Comparisons across temperature, controllers and heater designs used the same table, so the noise largely cancels in them.
+  - Absolute values, and comparisons between layouts or aims, do not get that cancellation.
+- **Practice from here:** quote worst cases from seed-averaged tables. These exist for B-L at 95 mm and B-p at 97.5 mm. The section 10 tables for the other layouts and aims remain single-seed.
 
 ## Appendix: superseded records
 

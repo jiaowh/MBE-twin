@@ -18,7 +18,10 @@ The comparison (layout_comparison.py --scattered gas+plume) uses these factors f
 the gas-only factors for S = 0.5 (flagged).
 
 Usage: python scripts/scattered_plume_tables.py [--layouts B B-p B-L] [--speeds 2 4] [--n-particles 8000000]
-                                                [--batches 8] [--extend RECORD] [--out results/scattered_plume_tables]
+                                                [--batches 8] [--seed S] [--aim-mm A] [--extend RECORD]
+                                                [--out results/scattered_plume_tables]
+--aim-mm A replaces the envelope's N aim offset (mm) of the one layout given (tables at another aim, read by
+realizable_controller.py --n-scatter).
 --extend RECORD keeps that record's covered entries (same layouts, speeds and settings) and computes
 only the grid points the coverage rule adds (2026-10-03 audit: the first records stopped below 35 sccm).
 """
@@ -83,9 +86,14 @@ def main():
     ap.add_argument("--n-particles", type=int, default=8_000_000)
     ap.add_argument("--batches", type=int, default=8)
     ap.add_argument("--seed", type=int, default=20261004)
+    ap.add_argument("--aim-mm", type=float, default=None, help="N aim offset (mm) replacing the envelope's (one layout)")
     ap.add_argument("--extend", help="earlier record whose covered entries are kept")
     ap.add_argument("--out", default="results/scattered_plume_tables")
     args = ap.parse_args()
+    if args.aim_mm is not None and len(args.layouts) != 1:
+        raise SystemExit("scattered_plume_tables: --aim-mm needs exactly one layout")
+    env = json.loads(ENVELOPE.read_text(encoding="utf-8"))
+    aims = {name: env["layouts"][name]["n"]["aim_offset_mm"] if args.aim_mm is None else args.aim_mm for name in args.layouts}
     old = None
     if args.extend:
         old = json.loads(Path(args.extend).read_text(encoding="utf-8"))
@@ -95,7 +103,9 @@ def main():
                 raise SystemExit(f"scattered_plume_tables: --extend record has {key} {oi[key]}, not {val}")
         if not set(args.layouts) <= set(oi["layouts"]) or not set(args.speeds) <= set(oi["speeds_m3_s"]):
             raise SystemExit("scattered_plume_tables: --extend record lacks a requested layout or speed")
-    env = json.loads(ENVELOPE.read_text(encoding="utf-8"))
+        old_aims = oi.get("aim_offset_mm") or {name: env["layouts"][name]["n"]["aim_offset_mm"] for name in oi["layouts"]}
+        if any(old_aims[name] != aims[name] for name in args.layouts):
+            raise SystemExit(f"scattered_plume_tables: --extend record has aims {old_aims}, not {aims}")
     usable = env["wafer_and_mask"]["usable_radius_m"]["value"]
     rho = np.linspace(0.0, usable, 39)
     edges = usable * np.sqrt(np.arange(st.N_BINS + 1) / st.N_BINS)
@@ -110,7 +120,7 @@ def main():
         n = env["layouts"][name]["n"]
         n_cos = tube_cos_n(n["L_over_r"])
         radius = n.get("plate_radius_m", 0.020)
-        src, axis = st.geometry(n["polar_deg"], n["aim_offset_mm"] / 1e3, throw)
+        src, axis = st.geometry(n["polar_deg"], aims[name] / 1e3, throw)
         source = Source(tuple(src), tuple(axis), n_cos, radius=radius)
         tables[name], diag[name] = {}, {}
         for speed in args.speeds:
@@ -151,7 +161,8 @@ def main():
                 "feed_max_sccm": FEED_MAX_SCCM, "plume_temperature_K": PLUME_T, "chamber": vars(st.CHAMBER),
                 "species": st.SPECIES, "p_grid_Pa": lc.P_GRID, "rho_m": rho, "gas_temperature_K": t_gas, "seed": args.seed,
                 "coverage_rule": "through the first grid pressure whose feed reaches feed_max_sccm",
-                "extends": None if old is None else {"run_id": old["run_id"], "seed": old["inputs"]["seed"]}},
+                "extends": None if old is None else {"run_id": old["run_id"], "seed": old["inputs"]["seed"]}}
+               | ({} if args.aim_mm is None else {"aim_offset_mm": aims}),
         outputs={"rho_m": rho, "p_grid_Pa": lc.P_GRID, "factors": tables, "diagnostics": diag},
         sources=[Path(__file__), ROOT / "scripts/scattered_tables.py", ROOT / "src/mbe_twin/scattering.py",
                  ROOT / "src/mbe_twin/crucible.py", ROOT / "src/mbe_twin/vacuum.py", ENVELOPE],

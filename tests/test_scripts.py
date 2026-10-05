@@ -234,3 +234,40 @@ def test_provenance_checks_summary_constituents_and_aim_maps():
             "aim_maps_sha256": {"results/aim_operating/aim_maps_B-L.npz": "b" * 64}}
     hashes = rp.recorded_hashes({"source_sha256": deps["source_sha256"], "inputs": deps})
     assert hashes == {"scripts/realizable_controller.py": "a" * 64, "results/aim_operating/aim_maps_B-L.npz": "b" * 64}
+
+
+def test_aim_scatter_factor_combines_gas_and_plume_as_the_comparison(tmp_path):
+    """--n-scatter: gas factor of the variant, plume where covered, checks on the aim (B-L 95 mm tables)."""
+    import json
+
+    import numpy as np
+    rc = _load("realizable_controller")
+    lc = rc.lc
+    rho = np.linspace(0.0, 0.094, 39)
+    n_p = len(lc.P_GRID)
+    gas = {v: (1.0 + k + 0.01 * np.arange(n_p))[:, None] * np.ones(len(rho)) for k, v in enumerate(("gas", "gas-gamma0.1"))}
+    plume = [None if i > 3 else np.full(len(rho), 5.0 + i) for i in range(n_p)]
+    common = {"p_grid_Pa": lc.P_GRID, "rho_m": rho.tolist()}
+    fg, fp = tmp_path / "g.json", tmp_path / "p.json"
+    fg.write_text(json.dumps({"inputs": {"layouts": ["B-L"], "aim_offset_mm": {"B-L": 95.0}},
+                              "outputs": {**common, "factors": {"N": {"B-L": {k: v.tolist() for k, v in gas.items()}}}}}))
+    fp.write_text(json.dumps({"inputs": {"layouts": ["B-L"], "aim_offset_mm": {"B-L": 95.0}, "speeds_m3_s": [4.0],
+                                         "gas_temperature_K": 300.0, "feed_max_sccm": 1e-6},
+                              "outputs": {**common, "factors": {"B-L": {"4": {
+                                  "factors": [None if x is None else x.tolist() for x in plume],
+                                  "covered": [x is not None for x in plume]}}}}}))
+    f = rc.aim_scatter_factor([fg, fp], "B-L", 95.0, "gas+plume", 4.0, rho)
+    assert np.allclose(f[:4], np.array(plume[:4])) and np.allclose(f[4:], gas["gas"][4:])
+    assert np.allclose(rc.aim_scatter_factor([fg, fp], "B-L", 95.0, "gas+plume", 2.0, rho), gas["gas"])
+    assert np.allclose(rc.aim_scatter_factor([fg], "B-L", 95.0, "gas-gamma0.1", 4.0, rho), gas["gas-gamma0.1"])
+    with pytest.raises(SystemExit, match="aim"):
+        rc.aim_scatter_factor([fg, fp], "B-L", 90.0, "gas+plume", 4.0, rho)
+    with pytest.raises(SystemExit, match="lacks"):
+        rc.aim_scatter_factor([fg], "B-L", 95.0, "gas+plume", 4.0, rho)
+    # a record run without --aim-mm is at the envelope aim
+    rec = json.loads(fg.read_text())
+    del rec["inputs"]["aim_offset_mm"]
+    fg.write_text(json.dumps(rec))
+    assert np.allclose(rc.aim_scatter_factor([fg], "B-L", 95.0, "gas", 4.0, rho, envelope_aim=95.0), gas["gas"])
+    with pytest.raises(SystemExit, match="aim"):
+        rc.aim_scatter_factor([fg], "B-L", 95.0, "gas", 4.0, rho, envelope_aim=90.0)
