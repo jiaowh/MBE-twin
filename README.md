@@ -122,7 +122,8 @@ The earlier operating-point studies let the gallium controller know every uncert
   With both, the best model results at 1 µm/h are:
   - **B-L, aimed 5 mm further out (+95 mm): ±0.65 % at 710 °C.**
   - **B-p: ±0.49 % at 710 °C, only if the gallium charge's fill level is tracked** and the calibrated beam shape for that fill is used. Without fill tracking, only 94.1 % of the modelled cases pass at 710 °C, below the 95 % requirement, and B-p's best point is ±0.54 % at 720 °C.
-  - **Caveats:** 710 °C uses the decomposition law 10 °C below the range it was fitted to (720–805 °C). At 720 °C, inside that range, the values are ±0.54 % (B-p) and ±0.72 % (B-L).
+  - **Re-aim checked:** a rehearsal of the commissioning re-aim on synthetic data shows the 0.2° correction is reachable if the source mount can be set and holds its setting to about 0.05° (0.3 mm at the flange), with three calibration wafers thickness-mapped to 0.1–0.3 %. Rechecking B-L's +95 mm aim with its own tables gives ±0.64 % at 710 °C, confirming the figure.
+  - **Caveats:** 710 °C uses the decomposition law 10 °C below the range it was fitted to (720–805 °C). The published data put decomposition near zero there, so this is a small effect on thickness. At 720 °C, inside that range, the values are ±0.54 % (B-p) and ±0.72 % (B-L).
 - Measuring the beam maps at commissioning adds only 1–2 points on top of that. The rest of the gap is the instruments' accuracy and wafer-to-wafer heater variation. The beam-flux monitor's accuracy matters most for staying in the growth window.
 
 ## Current design direction

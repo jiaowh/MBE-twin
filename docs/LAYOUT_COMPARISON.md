@@ -1,12 +1,14 @@
 # Source layouts at physically achievable operating points
 
-Status: 2026-10-05 (seventh revision: section 12 ranks the worst-case drivers and adds three levers against them; sixth revision: section 11 replaces the Ga steering with a realizable controller and adds a heater power margin; fifth revision: section 10 adds the gas-scattered atoms and the nitrogen plume; sections 1-8 are the direct-beam model and stay as recorded; fourth revision after the [project audit](PROJECT_AUDIT_2026-10-01.md), its [follow-up](PROJECT_AUDIT_FOLLOWUP_2026-10-01.md) and the [2026-10-02 audit](PROJECT_AUDIT_2026-10-02.md)), `representative_chamber`. These are model comparisons on a typical 200 mm RIBER/Veeco-class geometry, not predictions for the proposed machine. No nitrogen map, heater result or growth model here is validated against a measurement.
+Status: 2026-10-05 (eighth revision: section 13 checks the section 12 assumptions; seventh revision: section 12 ranks the worst-case drivers and adds three levers against them; sixth revision: section 11 replaces the Ga steering with a realizable controller and adds a heater power margin; fifth revision: section 10 adds the gas-scattered atoms and the nitrogen plume; sections 1-8 are the direct-beam model and stay as recorded; fourth revision after the [project audit](PROJECT_AUDIT_2026-10-01.md), its [follow-up](PROJECT_AUDIT_FOLLOWUP_2026-10-01.md) and the [2026-10-02 audit](PROJECT_AUDIT_2026-10-02.md)), `representative_chamber`. These are model comparisons on a typical 200 mm RIBER/Veeco-class geometry, not predictions for the proposed machine. No nitrogen map, heater result or growth model here is validated against a measurement.
 
 **The question:** under what physically achievable conditions does a layout meet the project's requirements?
 
 **The short answer:** no layout can be called a pass, because neither a uniformity target nor a minimum growth rate is agreed (section 8). The model can, however, say which conditions each layout needs, and where its results are inside the model's validity. Two conditions dominate:
 - **Nitrogen supply sets the reachable growth rate.** That rate depends on a source conversion fraction nobody has published. The literature implies it lies between 6 and 57 % at high flow.
 - **The aperture plate must stay free-molecular at the flow that rate needs.** With the published-type plate, it stops being free-molecular above about 6 sccm.
+
+**Update 2026-10-05 (section 13).** A commissioning rehearsal shows the 0.2 deg re-aim is reachable with a mount repeatable to about 0.05 deg and three wafers mapped to 0.1-0.3 %. B-L at +95 mm with its own pointing and attenuation tables gives 0.64 % at 710 C, confirming section 12. The 710 C decomposition extrapolation is a small effect on thickness.
 
 **Update 2026-10-05 (section 12, uniformity first).** N pointing sets most of the worst case, then the heater. Three levers together reduce the worst case at 1 um/h to **0.49 % (B-p) / 0.65 % (B-L) at 710 C**:
 1. Re-aim the N source at commissioning to 0.2 deg.
@@ -622,6 +624,42 @@ The heater design limit hardly matters with multi-spot control. At 720 C: B-p 0.
   - Commissioned maps and instrument errors are priors.
 
 Compared with section 11, the worst case falls by a factor of three for B-p (1.53 -> 0.49 %) and 2.6 for B-L (1.67 -> 0.65 %).
+
+## 13. Checks of the section 12 assumptions (2026-10-05)
+
+**Commissioning re-aim rehearsal** (scripts/commissioning_reaim.py, record [commissioning_reaim.json](../data/runs/studies/commissioning_reaim.json), `synthetic`).
+
+Setup:
+- **Hidden tilt:** drawn uniformly within +/-0.8 deg, about the flange pivot or about the plate centre. Its map is superposed from the comparison's 0 and 90 deg responses; the check against the 30 and 60 deg maps agrees to 0.04-0.07 % in shape.
+- **Calibration wafers:** each is an N-limited growth. Its radial thickness profile is sampled at 5 mm pitch with relative map noise. Each wafer gets a random combined heater state, which the fit does not know.
+- **Estimate:** the misalignment in the mount's two flange axes is estimated by Bayesian weighted least squares, with a +/-0.8 deg tolerance prior. A sideways tilt hardly changes a radial profile, so an unweighted fit amplifies noise along that axis. The prior leaves that invisible, and nearly harmless, component alone.
+- **Correction:** the mount is moved by the opposite of the estimate, with its own repeatability error.
+- **Metric:** the half-range of the corrected N profile in excess of the nominal one, at the 95th percentile of 2000 trials. It is compared with the excess a 0.2 deg residual causes in its worst direction.
+
+| Three calibration wafers, one round | B-p (97.5 mm) | B-L (90 mm) | B-L (95 mm, own tables) |
+|---|---|---|---|
+| No correction | 0.50-0.53 pt | 0.46-0.49 pt | 0.36 pt |
+| Map 0.1 %, mount 0.05 deg | **0.110 pt** | **0.139 pt** | **0.096 pt** |
+| Map 0.3 %, mount 0.05 deg | 0.126 pt | 0.157 pt | 0.113 pt |
+| Map 0.3 %, mount 0.10 deg | 0.158 pt | 0.188 pt | 0.142 pt |
+| Reference: 0.2 deg residual, worst direction | 0.126 pt | 0.137 pt | 0.083 pt |
+
+- **The 0.2 deg residual of section 12 is achievable** with a mount repeatable to about 0.05 deg (0.3 mm at the 0.3 m flange pivot) and three mapped wafers. B-p reaches it at 0.1-0.3 % map noise; B-L at 90 mm needs about 0.1 %.
+- **A second measure-and-correct round does not help.** The floor is set by the mount's repeatability and the unknown wafer-to-wafer heating, not by map noise.
+- **A mount good only to 0.1 deg leaves 25-40 % more.** It corresponds to about a 0.25 deg residual.
+- **Plate-centred tilts can only partly be removed through the flange axes,** but they are about 2.5 times less harmful to start with.
+- **At B-L's 95 mm aim the map is less sensitive to pointing.** A 0.2 deg residual costs 0.083 pt against 0.137 pt at 90 mm, and the corrected residual is the smallest of the three cases.
+
+**B-L at +95 mm with its own tables** (scripts/aim_tables.py, record aim_tables_B-L_95mm.json).
+- **What is recomputed:** the pointing ensemble (49 maps) and the attenuation and lip tables at 95 mm. These replace the 90 mm tilt responses and attenuation that `--aim-maps` reused.
+- **What is not:** the gas-scattered and plume factors are still those of the 90 mm aim. That is the remaining approximation.
+- **Results:** with multi-spot heater control, a 0.2 deg re-aim, rate monitor + BFM and the 1460 K design (record realizable_controller_ms_BL95tables.json): **0.64 % at 710 C** (96.8 % of states) and **0.70 % at 720 C** (100 %). The approximate --aim-maps run gave 0.65 / 0.72 %, so the B-L result stands. The scattered-atom factors at 95 mm still need regenerating before the aim is frozen (several hours of Monte Carlo).
+
+**Decomposition below 720 C.**
+- **Grounds for a small effect:** Grandjean et al. (APL 74, 1854, 1999) report GaN decomposition in vacuum as nearly zero below 750 C, with an activation energy of 3.6 eV from laser reflectivity. The law used here (G02) has 3.1 eV, from QMS.
+- **Size at 710 C:** the law gives about 0.20 nm/min against 16.7 nm/min of growth. Using 3.6 eV instead of 3.1 eV, anchored at 720 C, changes that by about 6 %.
+- **Effect on uniformity:** the decomposition term's radial variation over a 6 K wafer range is about 0.27 % of the rate. A 6 % change in it moves the worst case by well under 0.1 pt (an estimate, not a rerun).
+- **Conclusion:** the 710 C extrapolation is a small effect on thickness. What 710 C does to crystal quality is not modelled.
 
 ## Appendix: superseded records
 

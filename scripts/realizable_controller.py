@@ -186,6 +186,9 @@ def main():
                     help="npz files of scripts/nitrogen_aim_operating.py (one per layout): nominal N maps at other aims")
     ap.add_argument("--aim-mm", type=float, nargs="*", default=None, help="aim offset (mm) per --aim-maps file; the "
                     "pointing states keep their map differences from the current aim's ensemble")
+    ap.add_argument("--n-tables", nargs="*", default=None,
+                    help="tables of scripts/aim_tables.py (one per layout): that aim's own pointing ensemble and "
+                         "attenuation; the gas-scattered / plume factors stay those of the comparison's aim")
     ap.add_argument("--heater-control", default="single", choices=("single", "multispot"),
                     help="single: one centre pyrometer, fixed zone ratios; multispot: three spots and three zone groups "
                          "(scripts/multispot_heater.py)")
@@ -222,6 +225,19 @@ def main():
     for (name, scen), t0 in itertools.product(SCENARIOS, t_c):
         inp = oo.load_inputs(rec, env, name, rho, scatter, scen["S_eff_m3_s"])
         inp = {**inp, "n_vac": inp["n_vac"][:, [lip2]], "g_vac": inp["g_vac"][:, [lip2]]}
+        for f_tab in args.n_tables or ():
+            zt = np.load(f_tab)
+            if str(zt["layout"]) != name:
+                continue
+            lay_n = env["layouts"][name]["n"]
+            prefix = f"N_{lay_n['L_over_r']:g}_{lay_n['polar_deg']:g}_{lay_n['aim_offset_mm']:g}_"
+            nf = next(c for c in rec["inputs"]["map_caches"] if c["file"].startswith(prefix))
+            z_old = np.load(oo.MAPS / nf["file"])
+            fac = inp["att_n"] / z_old["att"]                          # scattered-arrival factor of the old aim
+            st = [tuple(x) for x in json.loads(str(zt["states"]))]
+            keep = [0] + [i for i, x in enumerate(st) if x[1] == 0.8]
+            inp["n_vac"] = (zt["maps"][keep] * zt["lip"][lip2])[:, None, :]
+            inp["att_n"] = zt["att"] * fac
         for f_aim, a_mm in zip(args.aim_maps or (), args.aim_mm or ()):
             za = np.load(f_aim)
             if str(za["layout"]) == name:
@@ -451,13 +467,15 @@ def main():
                 "rate_monitor_errors": E_RATE, "bfm_errors": E_BFM, "rate_band": RATE_BAND, "admit": ADMIT,
                 "controllers": CONTROLLERS, "heater_design_limit_K": args.heater_design_limit,
                 "pointing_residual_deg": args.pointing_residual, "heater_control": args.heater_control, "aim_maps": args.aim_maps, "aim_mm": args.aim_mm,
-                "aim_maps_sha256": {f: lc.file_sha256(Path(f)) for f in (args.aim_maps or ())}, "lip_m": 0.002, "pointing_ensemble_deg": 0.8,
+                "aim_maps_sha256": {f: lc.file_sha256(Path(f)) for f in tuple(args.aim_maps or ()) + tuple(args.n_tables or ())},
+                "n_tables": args.n_tables, "lip_m": 0.002, "pointing_ensemble_deg": 0.8,
                 "ga_records_sha256": {lc.ga_record(env["layouts"][n]["ga_port_deg"], f, d):
                                       lc.file_sha256(lc.GA_RECORDS / lc.ga_record(env["layouts"][n]["ga_port_deg"], f, d))
                                       for n, _ in SCENARIOS for f, d in itertools.product((40, 70, 120), lc.GA_D)}},
         outputs={"rows": rows, "summary": summary},
         sources=([ROOT / "scripts/multispot_heater.py"] if args.heater_control == "multispot" else [])
                 + ([ROOT / "scripts/nitrogen_aim_operating.py"] if args.aim_maps else [])
+                + ([ROOT / "scripts/aim_tables.py"] if args.n_tables else [])
                 + [Path(__file__), ROOT / "scripts/operating_optimum.py", ROOT / "scripts/heater_robustness.py",
                  ROOT / "scripts/layout_comparison.py", ROOT / "scripts/heater_zones.py", ROOT / "src/mbe_twin/growth.py",
                  ROOT / "src/mbe_twin/heater.py", ROOT / "src/mbe_twin/vapour.py", ROOT / "data/parameters/gan_growth.json",

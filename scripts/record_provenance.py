@@ -100,7 +100,7 @@ IMPACT = {
                                         "--heater-control (default single), --dump-t, plus per-state factor bookkeeping; "
                                         "--pointing-residual 0.8 reproduced the 1460 K record (95.2 %, 1.53 %). The follow-up audit "
                                         "change (2026-10-05) only adds aim-map and optional-module hashes to the "
-                                        "manifest.",
+                                        "manifest. A later option, --n-tables (default off), substitutes an aim's own pointing and attenuation tables.",
     "scripts/scattered_plume_tables.py": "Later change (2026-10-03 audit) covers the grid pressures through the first one whose "
                                          "feed reaches the 35 sccm limit and adds --extend (reuses a record's covered entries); "
                                          "the covered entries of the earlier records are computed exactly as before.",
@@ -113,7 +113,7 @@ IMPACT = {
                  "contents (checked array by array)."}],
 }
 PINS = {   # reviewed 2026-10-02
-    "scripts/realizable_controller.py": "6bad564f8936",  # reviewed 2026-10-05
+    "scripts/realizable_controller.py": "76eca57f2871",  # reviewed 2026-10-05
     "scripts/nitrogen_aim_pressure.py": "3ed2958db5f2",  # reviewed 2026-10-03
     "scripts/nitrogen_rate_limits.py": "29392adf050d",  # reviewed 2026-10-03
     "scripts/heater_robustness.py": "7f545f5d98da",  # reviewed 2026-10-03

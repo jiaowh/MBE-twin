@@ -134,6 +134,10 @@ Records: `data/runs/studies/realizable_controller_sc_plume*.json`, `heater_margi
 
 Worst-case drivers: `realizable_controller.py ... --dump-t T` then `python scripts/worst_case_drivers.py <out>/states_<layout>_<T>C.npz`. Residual-pointing sweep: `cases/reaim_sweep_2026-10-05.sh`. Aim maps: `python scripts/nitrogen_aim_operating.py --layout B-L --aims 75 80 85 90 95 100 105` (and `--aims 92.5 97.5 --out results/aim_operating_fine`; B-p 87.5-107.5), then `cases/aim_sweep_2026-10-05.sh`. Multi-spot heater: `cases/multispot_sweep_2026-10-05.sh` (about 20 min per temperature), and the 690-710 C run `realizable_controller.py --t-min 690 --t-max 710 --heater-control multispot --heater-design-limit 1460 --pointing-residual 0.2 --aim-maps results/aim_operating/aim_maps_B-L.npz --aim-mm 95 --out results/ms_h1460_d0.2_cold`. Summary record: `python scripts/summarize_uniformity_levers.py` -> `data/runs/studies/uniformity_levers.json`.
 
+## Checks of the uniformity levers (2026-10-05)
+
+`python scripts/commissioning_reaim.py --trials 2000` (about 30 min; record commissioning_reaim.json); `python scripts/aim_tables.py --layout B-L --aim-mm 95` (about 5 min), then `python scripts/commissioning_reaim.py --layout B-L --trials 1000 --n-tables results/aim_tables/n_tables_B-L_95mm.npz --out results/commissioning_reaim_BL95` and `python scripts/realizable_controller.py --t-min 710 --t-max 720 --heater-control multispot --heater-design-limit 1460 --pointing-residual 0.2 --n-tables results/aim_tables/n_tables_B-L_95mm.npz --out results/ms_BL95tables_d0.2` (record realizable_controller_ms_BL95tables.json).
+
 ## Run times
 
 On the development laptop (4 WSL cores, serial SPARTA, four jobs in parallel):
