@@ -95,6 +95,9 @@ IMPACT = {
     "scripts/operating_cold_limit.py": "Later change (2026-10-03) adds --scattered, --pyrometer-bias (default 2 K, the earlier controllers) and --t-max (default 760 C, the earlier range); with the defaults operating_cold_limit.json reproduces bit for bit (checked 2026-10-03)." + SRC_ONLY,
     "scripts/nitrogen_aim_pressure.py": "Later change (2026-10-03) adds --scattered and --factor-layout to the --combine evaluation (evaluate takes an optional factor); without them nitrogen_aim_pressure.json and nitrogen_aim_bigplate.json reproduce bit for bit (checked 2026-10-03)." + SRC_ONLY,
     "scripts/nitrogen_rate_limits.py": "Later change (2026-10-03) applies the scattered-arrival factors when the comparison record was run with --scattered; for the default record (scattered none) the attenuation is the earlier one and nitrogen_rate_limits.json reproduces bit for bit (checked 2026-10-03)." + SRC_ONLY,
+    "scripts/realizable_controller.py": "Later change (2026-10-05) adds the --rate-um-h option (default 1 um/h, the "
+                                        "constant the records used) and moves a global declaration; the computation is "
+                                        "unchanged.",
     "scripts/scattered_plume_tables.py": "Later change (2026-10-03 audit) covers the grid pressures through the first one whose "
                                          "feed reaches the 35 sccm limit and adds --extend (reuses a record's covered entries); "
                                          "the covered entries of the earlier records are computed exactly as before.",
@@ -107,6 +110,7 @@ IMPACT = {
                  "contents (checked array by array)."}],
 }
 PINS = {   # reviewed 2026-10-02
+    "scripts/realizable_controller.py": "399727cf94cf",  # reviewed 2026-10-05
     "scripts/nitrogen_aim_pressure.py": "3ed2958db5f2",  # reviewed 2026-10-03
     "scripts/nitrogen_rate_limits.py": "29392adf050d",  # reviewed 2026-10-03
     "scripts/heater_robustness.py": "7f545f5d98da",  # reviewed 2026-10-03

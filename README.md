@@ -114,14 +114,14 @@ The earlier operating-point studies let the gallium controller know every uncert
 
 - With settings fixed at calibration, or with only a growth-rate monitor, no temperature keeps 95 % of the cases in the growth window.
 - A **gallium beam-flux measurement** before growth is what makes the difference. Together with an in-situ growth-rate monitor it reaches 95 % at 730 °C with the current heater design.
-- **Giving the heater about 14 % spare power** (laying out its zones for an element temperature about 50 K below the rating) brings that back to **720 °C**, at a worst-case thickness spread of about ±1.7–1.9 %.
+- A little **spare heater power** (zones laid out for an element about 13 K below its rating, about 4 % headroom) lets the standard-plate layout B-p run at **720 °C with a worst-case thickness spread of ±1.53 %**, the most uniform admissible point. More spare power makes the controller more robust but widens the wafer's temperature range, which costs uniformity.
 - Knowing the crucible fill or measuring the beam maps at commissioning adds only 1–2 points; the remaining gap is the instruments' accuracy and wafer-to-wafer heater variation. The beam-flux monitor's accuracy matters most.
 
 ## Current design direction
 
 The provisional choice is **layout B-p**: the nitrogen source sits on the same port ring as the metal cells, with its beam aimed about 97.5 mm from the wafer centre toward the source side. Its aim was selected for growth pressure. **B-L** uses a larger outlet plate designed in this study and an aim offset of about 90 mm. It is a promising alternative if the supplier can build and operate that plate.
 
-The current working operating point is **1 µm/h at about 720 °C**, with gallium supply adjusted from a wafer-centre temperature reading. Since the 5 October update it is conditional on a gallium beam-flux monitor, an in-situ growth-rate monitor and a heater with spare power (otherwise 730 °C). This is a modelling choice, conditional on nitrogen output, pumping, heater performance and acceptable crystal quality. The temperature is based on the published growth laws' scales and must be calibrated on the real machine.
+The current working operating point is **1 µm/h at about 720 °C**, with gallium supply adjusted from a wafer-centre temperature reading. Since the 5 October update it is chosen for the best worst-case uniformity, which is the project's priority, and it depends on a gallium beam-flux monitor and an in-situ growth-rate monitor. Layout B-p runs at 720 °C with about 4 % heater headroom (±1.53 %). The large-plate layout B-L runs at 730 °C with the current heater (±1.67 %). This is a modelling choice, conditional on nitrogen output, pumping, heater performance and acceptable crystal quality. The temperature is based on the published growth laws' scales and must be calibrated on the real machine.
 
 At that operating point, the studies including scattered atoms and the nitrogen plume give worst-case thickness **half-range/mean of about 1.5–1.8%** across the qualifying scenarios. Other scattering and wall assumptions extend that range to about 2.1%. These are model results over a selected set of conditions, not demonstrated wafer uniformity or a probability of production success.
 

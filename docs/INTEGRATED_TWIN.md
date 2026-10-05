@@ -154,7 +154,7 @@ What the runs show:
   - The rate monitor pulls the centre N back to its calibration after a pointing error within about four windows. The mean rate then settles within 1 %, because one centre monitor cannot see the tilted map's centre-to-mean change.
   - A 1 % rate-monitor error passes straight into the rate.
 - **Zones designed to 1425 K (14 % headroom) remove the clamp.** A reading 2 K low now gets the power it asks for (wafer mean 994.4 K). The nominal spread rises from 0.57 to 0.64 %.
-- The steady ensemble over all states with these controllers is in [LAYOUT_COMPARISON.md](LAYOUT_COMPARISON.md) section 11. With rate monitor + BFM, 720 C is admissible only with the heater margin; otherwise the limit is 730 C.
+- The steady ensemble over all states with these controllers is in [LAYOUT_COMPARISON.md](LAYOUT_COMPARISON.md) section 11. With rate monitor + BFM, the most uniform admissible points are B-p at 720 C with 3.7 % heater headroom (1.53 %) and B-L at 730 C with the current heater (1.67 %).
 
 ## 5. Disabled couplings and limits
 

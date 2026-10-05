@@ -9,9 +9,11 @@ Status: 2026-10-05 (sixth revision: section 11 replaces the Ga steering with a r
 - **The aperture plate must stay free-molecular at the flow that rate needs.** With the published-type plate, it stops being free-molecular above about 6 sccm.
 
 **Update 2026-10-05 (section 11).** The Ga steering of sections 8 and 10 knew every uncertain state's maps (audit 2026-10-05). With a controller that knows only a frozen calibration and real instruments:
-- 1 um/h at 720 C needs a Ga beam-flux monitor, an in-situ growth-rate monitor and a heater designed with about 14 % power headroom. Worst case 1.69 % (B-p) / 1.85 % (B-L).
-- Without the heater margin, the cold limit is 730 C.
-- Without the beam-flux monitor, no temperature qualifies.
+- Every admissible 1 um/h point needs a Ga beam-flux monitor and an in-situ growth-rate monitor. Without the beam-flux monitor, no temperature qualifies.
+- Chosen for the best worst-case uniformity (the project's priority, 2026-10-05):
+  - **B-p:** 720 C, with the heater zones designed for an element 13 K below its rating (3.7 % power headroom); worst case 1.53 %.
+  - **B-L:** 730 C with the current heater; worst case 1.67 %.
+- More heater headroom lowers B-L's cold limit to 720 C but widens the spread.
 - The joint 95 % rule now applies everywhere. It removes one recorded point (B-L at 1.25 um/h, 740 C).
 
 **Update 2026-10-03 (section 10).** Atoms scattered by the chamber gas are now followed instead of dropped, and the nitrogen plate's own plume is added:
@@ -516,17 +518,33 @@ In the last two columns the pairs are B-p / B-L. With the margin heater, rate mo
 |---|---:|---:|---:|---:|
 | 1473 K (current) | 0 % | 2.51 K | 46 % | 24 K |
 | 1450 K | 6.6 % | 2.66 K | 32 % | 8 K |
+| 1460 K | 3.7 % | 2.60 K | 33 % | 15 K |
 | **1425 K** | **14.2 %** | **2.82 K** | **0 %** | 0 |
 | 1400 K | 22.6 % | 2.98 K | 0 % | 0 |
 
 The integrated twin confirms both effects in time ([INTEGRATED_TWIN.md](INTEGRATED_TWIN.md), section 4). With the BFM step and the rate monitor, the 120 mm charge grows like the calibrated machine (100 % of the wafer in the window, against 38 % with frozen settings). With the 1425 K design, a pyrometer reading 2 K low is no longer clamped.
 
-**Revised working point (2026-10-05).** 1 um/h at 720 C stands only with all three of the following:
-1. A heater with about 14 % power headroom at the operating point (zones designed to about 1425 K, element rated 1473 K).
-2. A Ga beam-flux measurement before growth (+/-2 % or better).
-3. An in-situ growth-rate monitor that re-sets the N feed (+/-1 % or better).
+**Uniformity-first choice of temperature and heater margin** (the project set uniformity as its priority on 2026-10-05). Rate monitor + BFM, 1 um/h. Each entry is the share of states that pass and the worst case (record realizable_controller_sc_plume_heater1460.json and the design-limit probes of 2026-10-05):
 
-Its worst case is 1.69 % for B-p and 1.85 % for B-L. Without the heater margin, the same instruments need 730 C (1.67-1.68 %). Without the BFM there is no admissible 1 um/h point.
+| Zone design limit (headroom) | B-p 720 C | B-p 730 C | B-L 720 C | B-L 730 C |
+|---|---|---|---|---|
+| 1473 K (0 %) | 88.9 % | **96.0 %, 1.68 %** | 90.8 % | **95.8 %, 1.67 %** |
+| 1465 K (2.2 %) | 93.2 % | 97.2 %, 1.67 % | 94.0 % | 96.4 %, 1.76 % |
+| **1460 K (3.7 %)** | **95.2 %, 1.53 %** | 97.5 %, 1.67 % | 94.99 % | 96.5 %, 1.82 % |
+| 1450 K (6.6 %) | 96.8 %, 1.60 % | 97.5 %, 1.81 % | 95.7 %, 1.76 % | 96.4 %, 1.97 % |
+| 1425 K (14.2 %) | 97.0 %, 1.69 % | 97.4 %, 1.95 % | 95.7 %, 1.85 % | 96.3 %, 2.11 % |
+
+More headroom widens the wafer's temperature range, and a warmer wafer turns that range into thickness through decomposition. The most uniform admissible point is therefore the coldest temperature with the least headroom that still passes. 1.25 um/h is no better: B-L reaches 1.74 % at 740 C, and B-p is outside plate validity.
+
+**Revised working point (2026-10-05, uniformity first).**
+- **B-p:** 1 um/h at **720 C**, with the heater zones designed for an element about 13 K below its 1473 K rating (3.7 % power headroom). Worst case **1.53 %**, the same as the known-maps bound. It passes the 95 % rule narrowly (95.2 %): a 1450 K design gives more margin (96.8 %) at 1.60 %.
+- **B-L:** 1 um/h at **730 C** with the current heater (worst 1.67 %). Its 720 C option needs 6.6 % headroom and gives 1.76 %.
+- **Both need:**
+  - a Ga beam-flux measurement before growth (+/-2 % or better);
+  - an in-situ growth-rate monitor that re-sets the N feed (+/-1 % or better).
+
+  Without the BFM there is no admissible 1 um/h point.
+- **Why B-p wins:** B-p is the more uniform layout at this point. It needs the high conversion (eta about 1, 2 m^3/s, 10 sccm scenario); at realistic conversion, B-L is the layout that reaches 1 um/h.
 
 The flux-monitor and rate-monitor error magnitudes are priors until the instruments are selected. The commissioned maps are an optimistic limit (exact map calibration). The grid of states is not a probability distribution.
 

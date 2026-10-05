@@ -174,6 +174,7 @@ def feed_for_centre(y, n_centre_vac, att_n, per_feed, to_p, cap, n_grid=400):
 
 
 def main():
+    global E_RATE, E_BFM, RATE_UM_H
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--scattered", default="gas+plume", choices=lc.SCATTER_VARIANTS)
     ap.add_argument("--t-min", type=int, default=690)
@@ -185,7 +186,6 @@ def main():
     ap.add_argument("--heater-design-limit", type=float, default=1473.15,
                     help="element temperature the zone fractions are optimized under (K); the cap stays 1473.15 K")
     args = ap.parse_args()
-    global E_RATE, E_BFM, RATE_UM_H
     RATE_UM_H = args.rate_um_h
     E_RATE = (-args.rate_error, 0.0, args.rate_error)
     E_BFM = (-args.bfm_error, 0.0, args.bfm_error)
