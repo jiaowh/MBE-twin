@@ -12,6 +12,15 @@ Cases (T, p from R07; 666 C pressure interpolated as in scripts/crucible_knudsen
   0.35    573 C, 0.08 Pa           3.5   666 C, 1.05 Pa           11    723 C, 4 Pa
 Collisions: hard-sphere Bi (VSS omega 0.5, alpha 1) with diameter diameter_m.
 
+Bi2 option (x_dimer > 0; physics-data note 2026-09-30, section 1): the vapour at total pressure
+p is a Bi + Bi2 mixture with dimer mole fraction x_dimer; each species evaporates by
+Hertz-Knudsen at its partial pressure (SPARTA emit/surf with mixture fractions). Bi2 has
+twice the mass, diameter dimer_diameter_scale * diameter_m (default 2^(1/3), equal-volume
+scaling; an assumption), 2 rotational degrees of freedom with relaxation number 5 (assumed)
+and no vibration (SPARTA default "vibrate none"; Bi2 constants are not sourced). Species are
+dumped separately; the arriving atom flux counts each Bi2 as two atoms. With x_dimer = 0 the
+SPARTA input is identical to the monatomic benchmark.
+
 Runs are defined by named benchmark configurations (BENCHMARKS), optionally modified with
 --set key=value. Every run gets a fresh directory holding config.json, written before
 SPARTA starts; post-processing (also with --reuse) reads only that file, and checks that the
@@ -63,6 +72,8 @@ DEFAULTS = {
     "dump_every": 20,
     "slab_D": [5.0, 5.5],   # sampling slab above the orifice, in units of D (>= 4.5 D)
     "seed": 12345,
+    "x_dimer": 0.0,               # Bi2 mole fraction of the vapour at the stated total pressure
+    "dimer_diameter_scale": 2 ** (1 / 3),
 }
 # Configurations behind the results in REFERENCE_CHAMBER.md. The 11 A/s case needs finer
 # cells (lambda_sat = 1.2 mm) and, with them, more particles and a longer equilibration.
@@ -119,10 +130,14 @@ def write_inputs(work, cfg):
     half_width, zlo, top, nx, nz = box_geometry(slab, cell, coarse)
     write_surf(crucible_surface(D / 2, DEPTH, half_width, taper_half_angle=TAPER, n_segments=64),
                work / "surf.crucible", comment="R07 conical crucible, L/D = 4 (SI units)")
-    (work / "bi.species").write_text(
-        f"Bi 208.9804 {BI_MASS:.6e} 0 0 0 0 0 1.0 0.0\n", encoding="ascii", newline="\n")
-    (work / "bi.vss").write_text(f"Bi {cfg['diameter_m']:.6e} 0.5 {t:.2f} 1.0\n",
-                                 encoding="ascii", newline="\n")
+    x2 = cfg.get("x_dimer", 0.0)
+    species = f"Bi 208.9804 {BI_MASS:.6e} 0 0 0 0 0 1.0 0.0\n"
+    vss = f"Bi {cfg['diameter_m']:.6e} 0.5 {t:.2f} 1.0\n"
+    if x2 > 0:
+        species += f"Bi2 417.9608 {2 * BI_MASS:.6e} 2 5.0 0 0 0 1.0 0.0\n"
+        vss += f"Bi2 {cfg['dimer_diameter_scale'] * cfg['diameter_m']:.6e} 0.5 {t:.2f} 1.0\n"
+    (work / "bi.species").write_text(species, encoding="ascii", newline="\n")
+    (work / "bi.vss").write_text(vss, encoding="ascii", newline="\n")
     grid = f"create_grid {nx} {nx} {nz}"
     if coarse > 1:
         grid += f" levels 2 region 2 fine {coarse} {coarse} {coarse} inside any"
@@ -133,8 +148,10 @@ def write_inputs(work, cfg):
         f"region fine cylinder z 0 0 {D} {zlo} {D}",
         grid,
         f"global fnum {cfg['fnum']:.6e}",
-        "species bi.species Bi",
-        f"mixture melt Bi nrho {p / (K_B * t):.6e} temp {t} vstream 0 0 0",
+        "species bi.species Bi" + (" Bi2" if x2 > 0 else ""),
+        f"mixture melt Bi{' Bi2' if x2 > 0 else ''} nrho {p / (K_B * t):.6e} temp {t} vstream 0 0 0",
+        *([f"mixture melt Bi frac {1 - x2:.6f}", f"mixture melt Bi2 frac {x2:.6f}",
+           "mixture mono Bi", "mixture dimer Bi2"] if x2 > 0 else []),
         "read_surf surf.crucible type",
         "group melt surf type 1", "group wall surf type 2", "group lip surf type 3",
         "surf_collide absorb vanish",
@@ -147,8 +164,10 @@ def write_inputs(work, cfg):
         "stats 1000", "stats_style step cpu np nattempt ncoll nscoll",
         f"run {cfg['steps_eq']}",
         f"region slab block INF INF INF INF {slab[0]} {slab[1]}",
-        f"dump slab particle melt {cfg['dump_every']} dump.slab.* id x y z vx vy vz",
+        f"dump slab particle {'mono' if x2 > 0 else 'melt'} {cfg['dump_every']} dump.slab.* id x y z vx vy vz",
         "dump_modify slab region slab",
+        *([f"dump slabd particle dimer {cfg['dump_every']} dump.dimer.* id x y z vx vy vz",
+           "dump_modify slabd region slab"] if x2 > 0 else []),
         f"run {cfg['steps_sample']}",
     ]
     (work / "in.case").write_text("\n".join(lines) + "\n", encoding="ascii", newline="\n")
@@ -191,6 +210,16 @@ def postprocess(work, cfg, n_blocks):
     # Stream the snapshots (memory of one snapshot). Snapshot weights v_z / thickness are
     # rates (1/s); each sample is fnum real atoms.
     acc = accumulate_snapshots(work, steps, lambda p, v: propagate_slab(p, v, slab, PLANE, edges)[0], n_blocks)
+    dimer_share = None
+    if cfg.get("x_dimer", 0.0) > 0:
+        # atom flux: each Bi2 sample carries two atoms; same snapshots, so blocks and halves align
+        acc2 = accumulate_snapshots(work, steps, lambda p, v: propagate_slab(p, v, slab, PLANE, edges)[0],
+                                    n_blocks, prefix="dump.dimer.")
+        mono_centre = centre_of(acc["total"])
+        for key in ("total", "blocks", "halves"):
+            acc[key] = acc[key] + 2.0 * acc2[key]
+        acc["samples"] += acc2["samples"]
+        dimer_share = 1.0 - mono_centre / centre_of(acc["total"])
     flux = acc["total"] / n_snap * cfg["fnum"]
     curve = CASES[cfg["case"]][3]
     ref = None
@@ -220,6 +249,7 @@ def postprocess(work, cfg, n_blocks):
                    **({"rms": [first["rms"], second["rms"]]} if ref is not None else {})},
         "np_sampling": {"first": float(npart[0]), "last": float(npart[-1]),
                         "rel_range": float(np.ptp(npart) / npart.mean())},
+        "dimer_atom_share_centre": dimer_share,
     }
 
 
@@ -261,7 +291,10 @@ def main():
     t, p = cfg["T_K"], cfg["p_Pa"]
     ev = simulate(Crucible(D / 2, DEPTH, taper_half_angle=TAPER), 150_000, rng=21)
     melt_area = np.pi * (D / 2 - DEPTH * np.tan(TAPER)) ** 2
-    emitted = melt_area * p / (K_B * t) * np.sqrt(8 * K_B * t / (np.pi * BI_MASS)) / 4
+    x2 = cfg.get("x_dimer", 0.0)
+    # atoms leaving the melt: Hertz-Knudsen per species; a dimer carries 2 atoms at 1/sqrt(2) the speed
+    emitted = (melt_area * p / (K_B * t) * np.sqrt(8 * K_B * t / (np.pi * BI_MASS)) / 4
+               * (1 - x2 + np.sqrt(2.0) * x2))
     pts = np.stack([X_MID / 1000, np.zeros_like(X_MID), np.full_like(X_MID, PLANE)], 1)
     fm = next_event_flux(ev, pts, (0.0, 0.0, -1.0)) * emitted
     fm_m = profile_metrics(fm, ref)
@@ -293,6 +326,8 @@ def main():
                         "rms_vs_r07_free_molecular": fm_m["rms"],
                         "rate_error_vs_r07": whole["rate"] / rate_r07 - 1.0})
     h = unc["halves"]
+    if unc["dimer_atom_share_centre"] is not None:
+        print(f"  atoms arriving as Bi2 (centre): {100 * unc['dimer_atom_share_centre']:.1f} %")
     print(f"  steady state: halves rate {h['rate'][0]:.3g} / {h['rate'][1]:.3g}, profile max diff "
           f"{h['profile_max_abs_diff']:.3f}; Np range {100 * unc['np_sampling']['rel_range']:.2f} %")
 
@@ -300,12 +335,15 @@ def main():
         f"sparta_r07_{work.name}", label="representative_chamber", validation_status="not_validated",
         inputs=cfg, outputs=summary, sources=SOURCES,
         solver={"name": "SPARTA", "build": "serial (WSL)", "commit": cfg.get("sparta_commit")},
-        warnings=["Bi treated as monatomic hard spheres (Bi2 in the vapour neglected)",
+        warnings=[("Bi + Bi2 mixture, x_dimer = {:.3f}; Bi2 diameter, rotational relaxation and no vibration "
+                   "are assumptions".format(x2)) if x2 > 0 else
+                  "Bi treated as monatomic hard spheres (Bi2 in the vapour neglected)",
                   "Collisions above the sampling slab neglected (ballistic propagation)",
                   "Sensor size neglected; profiles averaged over +/- x and azimuth",
                   "Uncertainties are statistical (batch means) only; discretization is "
                   "assessed by separate runs"],
-        disabled_physics=["Bi2 dimers", "surface diffusion/condensation on the lip"])
+        disabled_physics=(["Bi2 vibration", "Bi2 dissociation/recombination"] if x2 > 0 else ["Bi2 dimers"])
+        + ["surface diffusion/condensation on the lip"])
     print(f"Wrote {write_manifest(manifest, work / 'summary.json')}")
     if args.record:
         print(f"Recorded {write_manifest(manifest, RECORD_DIR / f'{args.record}.json')}")

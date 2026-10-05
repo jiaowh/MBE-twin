@@ -1,7 +1,8 @@
 """Draw the README figures (docs/figures/*.png) from the recorded run summaries.
 
 Schematics (chamber, level melt) are illustrations, not to scale. Data figures read only
-data/runs/ records, so they change only when those records change.
+data/runs/ records and, for the growth window, the sourced constants in data/parameters/, so
+they change only when those records change.
 
 Usage: python scripts/make_readme_figures.py
 """
@@ -187,8 +188,15 @@ def ga_angle():
         ax.errorbar(angs, vals, yerr=errs, fmt="o-", c=col, capsize=3, label=f"{f} mm, with collisions")
         ax.plot(angs, fms, ":", c=col, lw=1)
     ax.plot([], [], "k:", lw=1, label="dotted: no collisions")
-    ax.axhspan(0, 1.5, color=GREY, alpha=0.12)
-    ax.text(62.3, 0.4, "values below ~1.5 %\nnot yet converged", fontsize=8, color=GREY, ha="right")
+    for f, a, dx in [(70, 54, 0.35), (120, 58, 0.35)]:  # spread of the one-setting checks
+        checks = sorted((RUNS / "sparta_ga/ga_checks").glob(f"fill{f:03d}_d8_{a}deg_*.json"))
+        vals = [load(p.relative_to(RUNS))["metrics_dsmc"]["range_over_mean_pct"] for p in checks]
+        vals.append(load(f"sparta_ga/ga_angle/fill{f:03d}_d8_{a}deg.json")["metrics_dsmc"]
+                    ["range_over_mean_pct"])
+        ax.plot([a + dx] * 2, [min(vals), max(vals)], c=GREY, lw=4, alpha=0.7, solid_capstyle="butt")
+    ax.plot([], [], c=GREY, lw=4, alpha=0.7, label="spread of repeat checks")
+    ax.axhspan(0, 2.0, color=GREY, alpha=0.12)
+    ax.text(62.3, 0.4, "values below ~2 %\nnot yet converged", fontsize=8, color=GREY, ha="right")
     ax.set_xlabel("port angle from the wafer axis (degrees)")
     ax.set_ylabel("unevenness, range/mean (%)")
     ax.set_title("The best port angle depends on how full the cup is (atom size 8 Å)", fontsize=10)
@@ -199,9 +207,127 @@ def ga_angle():
     plt.close(fig)
 
 
+def growth_window():
+    """Growth window and temperature sensitivity from the sourced kinetics (data/parameters)."""
+    import sys
+    sys.path.insert(0, str(ROOT / "src"))
+    from mbe_twin.growth import load_parameters
+    p = load_parameters()
+    j_n = 1000.0 / 60.0  # 1 um/h
+    t_c = np.linspace(680.0, 800.0, 121)
+    t_k = t_c + 273.15
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 3.8))
+    ax1.axhspan(0.5, 1.0, color=GREY, alpha=0.15)
+    ax1.text(682, 0.8, "too little gallium: rough growth", fontsize=8, color="black")
+    labels = {"G01_adsorption": "droplets start (G01)", "Heying_growth": "droplets start (Heying)",
+              "Ref14_growth": "droplets start (Ref. 14)"}
+    for (sc, lab), col, ls in zip(labels.items(), [BLUE, ORANGE, GREEN], ["-", "--", "-."]):
+        upper = 1.0 + p.critical_excess(sc, t_k) / j_n
+        ax1.plot(t_c, upper, c=col, ls=ls, lw=2, label=lab)
+    ax1.set_yscale("log")
+    ax1.set_ylim(0.5, 20)
+    ax1.set_yticks([0.5, 1, 2, 5, 10, 20])
+    ax1.set_yticklabels(["0.5", "1", "2", "5", "10", "20"])
+    ax1.text(745, 1.25, "usable window:\nsmooth growth", fontsize=8)
+    ax1.set_xlabel("growth temperature (°C, as measured in the source labs)")
+    ax1.set_ylabel("gallium-to-nitrogen supply ratio")
+    ax1.set_title("The usable window widens with temperature", fontsize=10)
+    ax1.legend(frameon=False, fontsize=8, loc="upper left", title="above a line: gallium droplets",
+               title_fontsize=8, alignment="left")
+    d = p.decomposition
+    change = 100 * (d(t_k + 10.0) - d(t_k)) / (j_n - d(t_k))
+    ax2.plot(t_c, change, c=RED, lw=2)
+    ax2.set_xlabel("growth temperature (°C, as measured in the source labs)")
+    ax2.set_ylabel("thickness change, % of the layer")
+    ax2.set_title("Effect of a 10 °C hotter wafer edge on thickness", fontsize=10)
+    ax2.set_ylim(0, None)
+    fig.savefig(OUT / "growth_window.png")
+    plt.close(fig)
+
+
+def n_aim():
+    """Nitrogen map uniformity against aim offset, from data/runs/studies/nitrogen_aim_study*.json."""
+    first = load("studies/nitrogen_aim_study.json")["rows"]
+    ext = {r["L_over_r"]: r for r in load("studies/nitrogen_aim_study_ext.json")["rows"]}
+    fig, ax = plt.subplots(figsize=(7.5, 4.2))
+    names = {0.0: "thin plate", 2.92: "holes 3x deeper than wide", 5.83: "6x", 11.66: "12x"}
+    for r, col, mk in zip(first, [GREY, BLUE, ORANGE, GREEN], ["s", "o", "^", "D"]):
+        a = r["L_over_r"]
+        k45 = r["angles_deg"].index(45.0)
+        v45 = [row[k45] for row in r["range_over_mean_pct"]]
+        ax.plot(r["offsets_mm"], v45, ls=":", c=col, marker=mk, ms=4, lw=1.5)
+        if a in ext:
+            e = ext[a]
+            k65 = e["angles_deg"].index(65.0)
+            ax.plot(e["offsets_mm"], [row[k65] for row in e["range_over_mean_pct"]], ls="-", c=col, marker=mk,
+                    ms=4, lw=2, label=names[a])
+        else:
+            ax.plot([], [], ls=":", c=col, marker=mk, label=names[a])
+    ax.plot([], [], "k:", lw=1.5, label="dotted: port at 45°")
+    ax.plot([], [], "k-", lw=2, label="solid: port at 65°")
+    ax.axvline(0, c=GREY, lw=0.8)
+    ax.text(2, 150, "aimed at\nwafer centre", fontsize=8, color="black")
+    ax.axvspan(100, 150, color=GREY, alpha=0.1)
+    ax.text(125, 0.13, "aim point beyond\nthe wafer edge", fontsize=8, ha="center")
+    ax.set_yscale("log")
+    ax.set_ylim(0.1, 300)
+    ax.set_yticks([0.1, 0.3, 1, 3, 10, 30, 100, 300])
+    ax.set_yticklabels(["0.1", "0.3", "1", "3", "10", "30", "100", "300"])
+    ax.set_xlabel("aim point, mm from the wafer centre towards the source")
+    ax.set_ylabel("nitrogen unevenness, range/mean (%)")
+    ax.set_title("Aiming the nitrogen source off-centre evens out its jet (model, straight holes)", fontsize=10)
+    ax.legend(frameon=False, fontsize=8, loc="lower left", ncol=2)
+    fig.savefig(OUT / "n_aim.png")
+    plt.close(fig)
+
+
+def layouts():
+    """Growth rate the nitrogen supply can reach, and uniformity at the reachable rates, for the leading layouts."""
+    o = load("studies/layout_comparison_bc.json")
+    ev_path = RUNS / "studies/nitrogen_output_evidence.json"
+    eta_lit = json.loads(ev_path.read_text(encoding="utf-8"))["outputs"].get("eta_high_flow_joint") if ev_path.exists() else None
+    colours = {"B": GREY, "B-p": BLUE, "B-L": GREEN}
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(11, 4.2))
+    if eta_lit:
+        ax1.axvspan(eta_lit[0], eta_lit[1], color=ORANGE, alpha=0.15, lw=0)
+        ax1.text(np.sqrt(eta_lit[0] * eta_lit[1]), 0.04, "published\nhigh-flow\nrange", ha="center", fontsize=7, color=ORANGE)
+    for name in ("B-p", "B-L"):
+        for (speed, feed), ls in (((2.0, 10.0), "--"), ((4.0, 35.0), "-")):
+            pts = [r for r in o["operating_surface"] if r["layout"] == name and r["S_eff_m3_s"] == speed
+                   and r["feed_limit_sccm"] == feed and r["target_um_h"] == 1.0]
+            eta = np.array([r["eta"] for r in pts])
+            rate = np.array([max(r["rate_nm_min"] * 0.06, 0.0) for r in pts])
+            valid = np.array([r["kn_min"] >= 10.0 for r in pts])
+            ax1.plot(eta, np.where(valid, rate, np.nan), ls, c=colours[name], lw=2,
+                     label=f"{name}: {speed:g} m$^3$/s, up to {feed:g} sccm")
+            ax1.plot(eta, np.where(~valid, rate, np.nan), ":", c=colours[name], lw=1)
+    ax1.set_xscale("log")
+    ax1.axhline(1.0, c=GREY, ls=":", lw=1)
+    ax1.set_xlabel("fraction of the feed's N atoms leaving as active N")
+    ax1.set_ylabel("growth rate reached (µm/h)")
+    ax1.set_title("Rate (dotted: plate holes outside the model's range)", fontsize=9)
+    ax1.legend(frameon=False, fontsize=7, loc="upper left")
+    rows = [r for r in o["rows"] if r["evaluated"] and r["eta"] == 1.0 and r["S_eff_m3_s"] == 2.0 and r["feed_limit_sccm"] == 10.0
+            and r["T0_C"] == 740.0 and r["target"] != "max"]
+    for k, name in enumerate(colours):
+        rr = sorted((r for r in rows if r["layout"] == name), key=lambda r: float(r["target"]))
+        x = np.array([float(r["target"]) for r in rr]) * (1 + 0.035 * (k - 1))
+        top = [r["grid_0.8deg"]["valid_thickness_pct_max"] for r in rr]
+        ax2.vlines(x, [r["nominal"]["thickness_pct"] for r in rr], top, colors=colours[name], lw=5, alpha=0.45)
+        ax2.plot(x, [r["nominal"]["thickness_pct"] for r in rr], "o", c=colours[name], ms=5,
+                 label=f"{name}: as designed (dot) to worst within 0.8° (bar top)")
+    ax2.set_xlabel("growth rate (µm/h)")
+    ax2.set_ylabel("thickness half-range / mean (%), r <= 94 mm")
+    ax2.set_title("Uniformity at reachable rates (all feed atoms active, 2 m$^3$/s)", fontsize=9)
+    ax2.legend(frameon=False, fontsize=7, loc="upper right")
+    fig.suptitle("Nitrogen supply and uniformity, 740 °C, 1200 °C element limit (representative chamber)", fontsize=10)
+    fig.savefig(OUT / "layouts.png")
+    plt.close(fig)
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
-    for f in (chamber, level_melt, r07, ga_fill, ga_angle):
+    for f in (chamber, level_melt, r07, ga_fill, ga_angle, growth_window, n_aim, layouts):
         f()
         print("wrote", f.__name__)
 

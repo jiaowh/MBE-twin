@@ -127,7 +127,7 @@ The sub-percent optimum of the first study belongs to a fill that cannot exist a
   - Numerical effects (seed, halved timestep, finer cells) change the 3.5 A/s bias by at most 0.005 and the rates by at most 1.3 %.
   - The 0.35 A/s case keeps a resolved residual of about 0.02 (model slightly narrower than R07), half the free-molecular error.
   - **Diameter** (3.5 A/s, noise-corrected RMS): 0.029 at 7 A, 0.009 at 8 A, 0.010 at 8.5 A, 0.015 at 9 A, 0.021 at 10 A, 0.033 at 11 A. Bias is -0.025, -0.005, -0.006, -0.005, +0.008 and +0.021. A linear fit of bias crosses zero at 9.1 A. Allowing |bias| up to the combined tolerance of digitization (0.009), statistics (0.006) and numerics (0.005), 0.012 in quadrature, gives **d = 8.0-10.3 A**. The RMS minimum lies at 8-8.5 A. This is a sensitivity interval, not a confidence interval. It replaces "8 +/- 0.5 A", which had no stated construction. The working value stays 8 A.
-  - **Centre rates** (not fitted) are low in every run: 8-9 % at 0.35 A/s, 15 % at 3.5 A/s and 7-8 % at 11 A/s. Numerics move them by at most 1.3 %, so the deficit is systematic. Possible causes (R07's partly interpolated pressures, Bi2 in the vapour, the evaporation coefficient) are not quantified, so the absolute rate is uncertain by about 15 %.
+  - **Centre rates** (not fitted) are low in every run: 8-9 % at 0.35 A/s, 15 % at 3.5 A/s and 7-8 % at 11 A/s. Numerics move them by at most 1.3 %, so the deficit is systematic. Possible causes (R07's partly interpolated pressures, Bi2 in the vapour, the evaporation coefficient) are not quantified, so the absolute rate is uncertain by about 15 %. **Update 2026-10-01:** Bi2 in the vapour closes most of it. With the compiled dimer fractions, the rates are -6.5 to +4.7 % at d = 8 A and the zero-bias diameter moves to 8.0 A (6.6-9.4 A); see the [physics-data note](PHYSICS_DATA_SEARCH_2026-09-30.md), section 1. Update 2026-09-30: Kubaschewski's correlations (R21) put Bi2 at 29-34 mol % here, which at R07's stated pressures raises the arriving atom flux by 12-13 %. That would bring the centre rates to 96-104 %, but R07's pressures are 1.4-1.7x the compilations, so this is a lead, not a fix. See [PHYSICS_DATA_SEARCH_2026-09-30.md](PHYSICS_DATA_SEARCH_2026-09-30.md).
 - **What the R07 comparison supports.** Across the tested Bi rate series (0.35-11 A/s, one crucible, L/D = 4), the collisional model reproduces the profile shape to 0.004-0.023 RMS (noise-corrected). The free-molecular model is off by 0.04-0.20 at the same rates. That is 2-20x better, and within about 2x the digitization error except at 0.35 A/s. The comparison does not establish absolute flux better than about 15 %, transfer to Ga, or transfer to other fills and tilts.
 - **Limits.** One material (Bi), one crucible (L/D = 4), and profiles only to 45 mm. d is an effective hard-sphere parameter for Bi vapour, not a molecular property, and does not transfer to Ga or Al.
 
@@ -171,36 +171,147 @@ Range/mean at 46 deg, 1 um/h (free-molecular temperature schedule):
 
   The bootstrap scatter is 0.16-0.49 points.
   - Collisions move the 120 mm optimum from 62 deg or beyond (free-molecular) to about 58 deg. At 70 mm the optimum stays near 54 deg.
-  - **Minima are about 1 % and not converged.** Numerical checks at two optima (d = 8 A, `cases/sparta_ga/ga_checks.json`, one setting changed per check):
-    - 70 mm / 54 deg: base 0.69, second seed 0.87, half timestep 1.35, finer cells 0.86 %.
-    - 120 mm / 58 deg: base 0.92, second seed 1.47 %.
-    The half-timestep shift (0.66 points) exceeds either run's scatter. That is not conclusive evidence of timestep bias, but it rules out claiming convergence. The remaining checks (doubled particles; timestep and cells at 120 mm) were interrupted by session restarts and are rerunning. Report the optima as "about 1 %, uncertainty unresolved"; sub-percent values are not established.
+  - **Minima are about 1 % (70 mm) and about 1.5-2 % (120 mm), not converged.** Numerical checks at two optima (d = 8 A, `cases/sparta_ga/ga_checks.json`, one setting changed per check; +/- is the bootstrap scatter; all 8 checks completed 2026-09-30):
+
+    | Check | 70 mm / 54 deg | 120 mm / 58 deg |
+    |---|---|---|
+    | Base | 0.69 +/- 0.26 | 0.92 +/- 0.28 |
+    | Second seed | 0.87 +/- 0.30 | 1.47 +/- 0.40 |
+    | Half timestep | 1.35 +/- 0.31 | 1.83 +/- 0.38 |
+    | Cells D/24 | 0.86 +/- 0.23 | 1.29 +/- 0.39 |
+    | 2x particles | 1.04 +/- 0.18 | 1.93 +/- 0.32 |
+
+    - At 70 mm the checks span 0.69-1.35 %. Only the half-timestep value lies clearly above the base.
+    - At 120 mm every check exceeds the base, and the half-timestep and 2x-particle values do so by about 1 point (about 2.3 sigma each). The base looks like a low draw, or both settings are under-resolved; one-setting checks cannot distinguish these.
+    - Report the optima as about 1 % (70 mm) and about 1.5-2 % (120 mm). Sub-percent values are not established.
+    - Neither check moves the optimum angle. That would need a finer angle scan at converged settings.
+    - Delivered/target centre flux in these runs: 1.08-1.09 at 70 mm / 54 deg and 1.00-1.03 at 120 mm / 58 deg (free-molecular schedule).
   - **A fixed port cannot follow the optimum.** A fresh 40 mm fill spills above 48.2 deg, while the depleted charge prefers 54-58 deg.
-- **Delivered flux.** Under the free-molecular temperature schedule, DSMC delivers 0.96-1.09 of the target centre flux, depending on d, fill and angle. Every comparison above is therefore at approximately, not exactly, constant flux. The temperature rise needed to hold the rate is known only for the free-molecular schedule: 953.6 to 962.1 C from 40 to 120 mm at 46 deg, and up to 979.5 C at 62 deg. A DSMC-held version is running: `sparta_ga.py --mode dsmc-hold` corrects the temperature from a previous run's delivered flux, and `scripts/ga_flux_hold.py` repeats the correction until delivered/target is within +/-1.5 %. Only states meeting that tolerance will be called flux-held.
+- **Delivered flux.** Under the free-molecular temperature schedule, DSMC delivers 0.96-1.09 of the target centre flux, depending on d, fill and angle. Every comparison above is therefore at approximately, not exactly, constant flux. The temperature rise needed to hold the rate is known only for the free-molecular schedule: 953.6 to 962.1 C from 40 to 120 mm at 46 deg, and up to 979.5 C at 62 deg. **Centre-flux hold (complete, 2026-10-01).** `sparta_ga.py --mode dsmc-hold` corrects the melt temperature from the previous run's delivered centre flux, and `scripts/ga_flux_hold.py` iterated until delivered/target was within +/-1.5 % (it exits non-zero otherwise). What is held is the Ga arrival at the wafer centre (r < 10 mm), expressed as the Ga flux of 1 um/h GaN at Ga/N = 1. It is not a growth rate, which also needs the N supply and incorporation/desorption. All 12 states (fills 40 / 70 / 120 mm at 46 deg and at the angle optima, d = 5.68 and 8 A) were held after one correction, one after two (records `data/runs/sparta_ga/ga_dsmchold/`, table by `scripts/summarize_flux_hold.py`).
+
+  | State | d = 8 A: T, range/mean | d = 5.68 A: T, range/mean | Wafer-mean / target |
+  |---|---|---|---|
+  | 40 mm, 46 deg | 950.2 C, 1.95 +/- 0.19 % | 951.7 C, 2.19 +/- 0.20 % | 0.99-1.00 |
+  | 70 mm, 46 deg | 954.5 C, 4.50 +/- 0.25 % | 955.7 C, 5.17 +/- 0.31 % | 0.98 |
+  | 120 mm, 46 deg | 963.3 C, 8.29 +/- 0.42 % | 963.2 C, 8.31 +/- 0.52 % | 0.965-0.97 |
+  | 40 mm, 48 deg | 951.2 C, 0.72 +/- 0.18 % | 953.4 C, 1.08 +/- 0.26 % | 0.99-1.00 |
+  | 70 mm, 54 deg | 960.5 C, 1.25 +/- 0.30 % | 962.3 C, 0.34 +/- 0.23 % | 1.00-1.01 |
+  | 120 mm, 58 deg | 972.8 C, 1.88 +/- 0.38 % | 974.0 C, 1.81 +/- 0.45 % | 0.99-1.00 |
+
+  - **Temperature rise to hold the centre flux over a campaign (40 to 120 mm):** +13.1 K (8 A) and +11.5 K (5.68 A) at 46 deg, against +8.5 K from the free-molecular schedule. Along the angle optima (48 to 58 deg) it is +21.6 K and +20.6 K.
+  - **The uniformity results stand at held flux.** At 46 deg range/mean grows from about 2 % to about 8.3 % as the charge is consumed. At the angle optima: about 0.7-1.1 % fresh, 0.3-1.3 % half and 1.8-1.9 % depleted, confirming "about 1 %" and "1.5-2 %".
+  - **The wafer mean sits up to 3.5 % below the held centre flux** for a depleted charge at 46 deg (edge-low profile); at the optima the two agree within 1 %.
+  - **Run-to-run variability at deep fill is about 1 point.** The 120 mm / 46 deg / 8 A state gave 6.86 % at its first correction and 8.29 % at its second, 0.9 K apart, which is larger than the bootstrap scatter (0.4). This is consistent with the earlier seed check (7.17 against 7.74 %).
+  - The growth window recomputed with these held maps (`growth_window.py --held`) is unchanged in substance ([growth note](GROWTH_EVIDENCE.md)).
 - **What this supports.** A representative-chamber sensitivity study with a verified collisional model, a validated uniformity estimator with stated scatter, recorded one-state numerical sensitivities, and a bracketed physical unknown (d). It is not a thickness prediction. In Ga-rich PAMBE, thickness follows the active-N map ([nitrogen boundary](NITROGEN_BOUNDARY.md)); the Ga map sets the Ga/N-ratio margin across the wafer.
+
+## Beam scattering by the background N2 (estimate, 2026-10-01)
+
+`scripts/background_scattering.py`. During plasma growth the chamber holds N2 at p = Q / S. The beam models so far assume a collisionless chamber. This estimate uses cos^n point sources, hard-sphere cross-sections, and a fast-beam mean free path through 300 K N2. Scattered atoms are treated as lost from the direct beam, and their redeposition is not modelled. Flow and effective pumping speed are bracketed; no growth-pressure measurement is sourced.
+
+| Chamber state | p (Pa) | Ga direct-beam loss | Ga range/mean change | N change |
+|---|---|---|---|---|
+| 0.5 sccm, 2 m^3/s | 4e-4 | 3-5 % | -0.1 to -0.3 points | +0.1 |
+| 2 sccm, 2 m^3/s | 1.7e-3 | 12-17 % | -0.2 to -1.1 points | +0.5 |
+| 2 sccm, 0.5 m^3/s | 6.8e-3 | 41-53 % | -2.6 to +0.8 points | +1.9 |
+| 10 sccm, 0.5 m^3/s | 3.4e-2 | above 90 % | several points to tens of points | +11 |
+
+- **At growth pressures of about 1e-3 Pa and above, background scattering is a first-order effect.** It changes the Ga map by up to about 1 point, comparable to the angle optima, and moves the optimum port angle (the 58 deg case improves from 2.2 to 1.1 %).
+- **The delivered flux drops by 10-20 %.** Flux calibrations with the N2 off overstate the growth-time flux by that much.
+- **The estimate is rough.** A total scattering cross-section is larger than the hard-sphere one used here, which would make the effect larger. Cryopanel-cooled gas is denser at the same pressure. Some scattered atoms redeposit diffusely.
+- **For the twin**, the beam transport needs an attenuation term (next actions). The chamber's effective N2 pumping speed and growth pressure become required inputs; the vacuum package is not yet started.
+
+## Heater zones and wafer temperature (2026-10-01)
+
+`src/mbe_twin/heater.py` (tests in `tests/test_heater.py`), study `scripts/heater_zones.py` (record `results/heater_zones/manifest.json`). This is a reduced, axisymmetric (rotation-averaged) model of a representative 200 mm holder, not a reconstruction of any machine.
+
+- **Model.**
+  - Heater: a gray disk (radius 115 mm) with power-driven zones and an adiabatic back.
+  - Wafer: Si, 725 um, emissivity 0.7 (R28).
+  - Holder ledge: carries the wafer rim over an overlap (base 3 mm).
+  - Radiation in the gap: diffuse-gray ring radiosity, open at the rim.
+  - Fronts radiate to 300 K surroundings, and the model includes lateral conduction in the wafer and ledge.
+- **Verification.**
+  - The isothermal limit matches the V03 ring-radiosity reference within 0.004-0.03 K, converging with ring count.
+  - The global energy balance closes to 1e-11 W.
+  - Heater emissivity has no effect in power-driven mode, as expected for an adiabatic heater: its radiosity is fixed by its power and irradiation.
+- **Optimization.** Zone powers are chosen to minimize the wafer temperature range at a 740 C mean, by sequential linear programming; for 1-3 zones this reproduces a direct minimization. The 6- and 12-zone layouts stand for a heater with a designed radial power density (element pitch), not for independently controlled zones.
+
+Wafer temperature range (K) at the optimum, 740 C mean. In brackets: the worst range after a +/-5 % error in one zone's power.
+
+| Case | 1 zone | 2 zones | 3 zones | 6 zones | 12 zones |
+|---|---|---|---|---|---|
+| Base (gap 10 mm, 3 mm overlap, contact 200 W/m^2K, k_Si 30) | 86 | 35 [43] | 17 [26] | 11 [18] | 6.3 [12] |
+| 1 mm overlap | 62 | 16 [24] | 6.6 [16] | 4.8 [11] | 1.7 [8.3] |
+| 5 mm overlap | 104 | 50 | 23 | 15 | 9.8 |
+| Contact 1000 / 50 W/m^2K | 87 / 86 | 33 / 36 | 12 / 21 | 6.5 / 15 | 0.4 / 14 |
+| Gap 5 / 20 mm | 43 / 124 | 26 / 40 | 14 / 20 | 9.5 / 16 | 1.9 / 13 |
+| k_Si 20 / 40 W/mK | 97 / 79 | 46 / 29 | 23 / 13 | 15 / 8.2 | 9.0 / 4.8 |
+| Heater radius 130 mm | 66 | 22 | 10 | 3.9 | 3.5 |
+| Ledge emissivity 0.15 / 0.6 | 78 / 101 | 35 / 37 | 18 / 15 | 11 / 10 | 7.5 / 5.4 |
+| Platen (emissivity 0.9, 3 mm, k 30 / 100 / 150 W/mK) | 120 / 101 / 93 | 42 / 40 / 40 | 23 / 30 / 32 | 22 / 28 / 31 | 20 / 27 / 30 |
+
+- **Zones help, but the radial power-density design helps more.** Uniform-density zones leave steps in the wafer profile. Going from 3 zones to a designed profile (12-zone proxy) roughly halves the range.
+- **The wafer edge support is as important as the heater.**
+  - Overlap and wafer-ledge contact move the achievable range by a factor 3-10 at every zone count.
+  - This agrees with R05's qualitative finding that ring and ledge geometry control the edge. R05's recommendation concerns a backing ring above the wafer, which this model does not include.
+- **A smaller gap and an overhanging heater help** in this model.
+  - R05 instead found that a larger heater gap improved uniformity. Its mechanism was heater power reflected by a shiny platen through semi-transparent GaAs, and the model has neither a platen nor a transparent wafer.
+  - This is an unresolved qualitative disagreement. The 200 mm holder design (platen or no platen) decides which mechanism applies.
+- **A platen (diffuser plate) makes the best achievable range worse in this model.** With a platen of the heater's radius, 5 mm above the heater and 10 mm below the wafer, the 3-zone optimum rises from 17 to 23-32 K and the designed-density optimum from 6 to 20-30 K; a more conductive platen is worse. The platen spreads heat sideways and removes the edge boost the wafer needs against its edge losses. It does make zone-power errors matter less in relative terms (a 5 % error adds 2-6 K instead of 6-10 K). A platen larger than the heater, or one with an edge ring, is not modelled.
+- **Control precision matters.** A 5 % error in one zone's power adds 6-10 K to the range at every zone count. Holding a few-kelvin range needs zone powers held to about 1-2 %, or feedback from wafer temperature at more than one radius. This bears directly on the design-freeze sensor decision.
+- **Sensors** (`scripts/heater_sensors.py`, record `results/heater_sensors/manifest.json`).
+  - Set-up: a 3-zone heater optimized for the nominal holder, then run on 12 perturbed holders (contact, overlap, Si conductivity, ledge and wafer emissivity, gap). A controller holds the chosen wafer-temperature readings at their nominal values. Worst case over the perturbations:
+
+    | Sensing | Worst wafer range | Worst mean offset from 740 C |
+    |---|---|---|
+    | None (zone powers held) | 37 K | 19 K |
+    | 1 sensor (centre or 60 mm), zones scaled together | 37 K | 5-9 K |
+    | 3 sensors, one per zone (0/70/97 or 30/77/90 mm) | 25-26 K | 1.8-2.0 K |
+    | 5 sensors (0/40/70/90/98 mm) | 23.5 K | 0.4 K |
+
+  - The wafer's own emissivity uncertainty (0.7 +/- 10 %, R28) alone moves the open-loop mean by 17-19 K. So power control or heater thermocouples cannot set the wafer temperature to better than about 20 K; the wafer must be measured.
+  - One sensor corrects the mean but not the shape. At least one sensor per zone brings the range close to the best a 3-zone heater can do on the perturbed holder (heater_zones re-optimized: 20.5-23 K for the worst cases).
+  - A 1 K bias on the outermost sensor changes the range by under 1 K.
+  - Supporting evidence (R16 supplement, read 2026-10-01): with the heater thermocouple held fixed, the substrate temperature fell from 784 to 665 C when the shutter opened, then rose to 880 C as a 9 nm metal film grew. That is a 3-inch transparent SiC substrate with metal films, an extreme case, and not a radial benchmark. It shows qualitatively that optical changes during growth move the wafer temperature far beyond what heater control sees. The pyrometer and band-edge readings still differed by 34 C at the end.
+  - Sensors are ideal point readings; spot size, emissivity drift of a growing GaN-on-Si stack and viewport access are not modelled.
+- **Thickness effect** (growth model, [growth note](GROWTH_EVIDENCE.md)): about 0.03 / 0.11-0.16 / 0.45-0.64 % thickness range/mean per K of wafer range at 700 / 740 / 780 C. For example, 6 K at 740 C is about 1 %, and 17 K is about 2-3 %.
+- **Limits.**
+  - Representative dimensions; heater emissivity, ledge properties, contact and Si conductivity are bracketed, not sourced.
+  - No platen, side shields, cell or plasma heat loads, spectral or semi-transparent optics (GaN-on-Si stack), transients or bow.
+  - No published 200 mm heater benchmark exists, so none of these numbers is validated.
 
 ## Next actions
 
-Revised 2026-09-30 after the third review round. Order of work: recover the incomplete checks, reconcile the notes, then verify flux-held cases. New geometry studies wait until those are done.
+Revised 2026-10-01 (overnight). Prediction accuracy stays the first outcome; wafer-uniformity improvement follows once the relevant predictions are qualified. The provisional design guidance and its open gates are in [docs/SOURCE_DESIGN_PROVISIONAL.md](../../docs/SOURCE_DESIGN_PROVISIONAL.md).
 
-1. Done: run isolation and recorded configurations; named R07 benchmarks; frozen batch files; versioned summaries; manifests with source hashes ([REPRODUCE](../../docs/REPRODUCE.md)).
-2. Done: numerical uncertainty of the R07 benchmarks (seeds, timestep, cells, time blocks, high-statistics repeat); d = 8.0-10.3 A, an effective-parameter sensitivity interval. The 7-15 % absolute-rate deficit remains open.
-3. Done: level-melt SPARTA geometry and transport to the inclined, rotating wafer, verified collisionless against `crucible.py`; uniformity estimator validated against dense references and applied to all Ga records.
-4. In progress: numerical checks at the angle optima (4 of 8 complete; the rest were interrupted by session restarts and are rerunning through the memory-guarded batch runner).
-5. Queued: DSMC-held delivered flux (`ga_dsmchold.json`, then `ga_flux_hold.py` iterating to +/-1.5 %) for the 46 deg fill series and the angle optima. Afterwards, restate the temperature rise needed to hold the rate and the angle comparison at held flux.
-6. Then: a representative aperture-plate geometry (R13 patent Figs. 7-8 are the current lead; see [validation reference search](VALIDATION_REFERENCE_SEARCH_2026-09-30.md)), and a defensible Ga collision cross-section. None was found; the bracket stays explicitly unsourced until a justified gas-phase potential is available.
-7. Later: crucible-shape study to reduce fill drift (after 4-6).
-8. Thermal: diffuse-gray radiation verified in Elmer (V03). R03 data recorded in `data/benchmarks/r03_wu2025.json`: radial temperature differences from the Fig. 14 panel labels (test 2.4-6.0 K over 863-1163 K; R03 simulation 2.5-6.6 K), materials, emissivities and final dimensions. Each profile runs across one off-axis 6-inch GaAs substrate on a 4x6-inch platen, so a reproduction is 3-D. R03's own model misplaces the profile maxima, and the measured differences (2-6 K) are close to its +/-2 K error. A full R03 reconstruction stays deferred. R05 (backing-ring and platen temperature maps) and R16 (thermal transients) are the candidates to examine first.
-9. Nitrogen: boundary and measurement access planned ([nitrogen boundary](NITROGEN_BOUNDARY.md)); aperture-plate sensitivity done (hole aspect dominates); hole Knudsen number 0.2-250 depending on open area, so the plate drawing decides between the free-molecular model and DSMC.
-10. Still wanted: full texts of R04 and R05, the RIBER MBE 49 technical PDF, and a representative aperture-plate drawing.
+Done:
+1. Run isolation, recorded configurations, frozen batch files, versioned summaries and manifests with source hashes ([REPRODUCE](../../docs/REPRODUCE.md)).
+2. R07 numerical uncertainty; monatomic d = 8.0-10.3 A. Two-species (Bi + Bi2) runs (`cases/sparta_r07/r07_bi2.json`, 2026-10-01): at the Kubaschewski fraction the zero-bias diameter moves to 8.0 A (6.6-9.4 A). The 11 A/s centre rate goes from -7 % to +5 %; the 3.5 A/s rate improves by 7-9 points but stays 3-9 % low. Complete: 0.35 A/s rate +3.0 % at 8 A (+0.5 % at 9 A); x = 0.5 at 3.5 A/s gives -2 % with the zero crossing below 8 A. The dimer fraction and d trade off ([physics-data note](PHYSICS_DATA_SEARCH_2026-09-30.md), section 1).
+3. Level-melt SPARTA geometry, uniformity estimator, and numerical checks at the angle optima (about 1 % at 70 mm and 1.5-2 % at 120 mm, not converged).
+4. Completion reporting and the flux/growth distinction (review 3).
+5. Nitrogen: published plates (R13, R30) with flow-regime check, aim-offset / port-angle optima, pointing tolerance and output-profile robustness ([nitrogen boundary](NITROGEN_BOUNDARY.md)).
+6. First GaN growth model and growth window ([growth note](GROWTH_EVIDENCE.md)).
+7. Axisymmetric 200 mm heater model, zone study and sensor study (section above).
+
+8. Centre-flux hold complete (2026-10-01 08:14): all 12 states held within 1.5 %; temperature rise and held-flux uniformity in the Ga section above; growth window recomputed with the held maps.
+
+Next:
+9. Decided (2026-10-01): with Bi2 represented, the Bi enhancement over its dispersion value is 1.5-1.9x, so the Ga scenario range is about 6-8 A (widest 6-9 A). The existing 5.68 and 8 A Ga runs bracket it; no rerun. Optional: a 4 A run for the dispersion-only floor. Scenarios, not bounds.
+10. Nitrogen: check that a steep (60-65 deg), off-centre N port clears the Ga cell and shutters; obtain plate thickness, pattern and hole tilt; a hole-scale DSMC only if the chosen flow range is transitional (above about 3 sccm, or few holes).
+11. Heater: a larger-than-heater platen or edge-ring variant (the same-size platen, 2026-10-01, is worse); a side-shield variant; check R05's heater-gap mechanism (reflected power through a transparent wafer) against a Si wafer; spectral emissivity of the GaN-on-Si stack.
+12. Beam transport: add background-gas attenuation exp(-s/lambda) to the direct-beam kernel (after the flux-hold batch, which imports beam.py), and re-evaluate the Ga angle optima and the N aim at the expected growth pressure. Requires the effective N2 pumping speed.
+13. Growth: independent validation data. R20's growth map is conditional on one N flux and one shared template, so it cannot serve as independent wafer validation. Commissioning N-limited and Ga-limited thickness maps are the real test.
+14. Later: crucible shapes (R24 reservoir; R25 is a line-of-sight model with walls hidden from the substrate, so a code-to-code check must reproduce that assumption) and the adjustable-source study below.
+15. Still wanted: full text of R04, the RIBER MBE 49 technical PDF, and a representative aperture-plate drawing. R03 reconstruction stays deferred (weak discrimination). R16 (supplement read) is qualitative support for wafer-temperature sensing, not a transient benchmark; the 2020 journal article would be needed for one.
 
 ### Exploratory (non-essential)
 
-Not on the critical path. Run only when the laptop is otherwise idle, and after items 4-5.
+Not on the critical path. Run only when the laptop is otherwise idle, and after items 8-9.
 
 - **Adjustable Ga source over a campaign** (added 2026-09-30). The collisional optimum port angle moves from about 48 deg (40 mm recess) to about 54 deg (70 mm) and 58 deg (120 mm). The spill limit only constrains the full cup, so a source that steepens as the charge depletes never violates it. The angle study above relocates the cell on the 350 mm sphere, always aimed at the wafer centre. A realistic mechanism (a bellows/gimbal pivot at the port flange) mainly shifts the aim point and changes the polar angle little, so that study does not describe it. Compare over a 40 -> 120 mm campaign, against the fixed 46 deg port:
   - (a) a cell pivoting about its flange by +/-5-10 deg, with the aim point allowed to move;
   - (b) two Ga cells at different angles with a fill-dependent flux split (no moving parts);
-  - (c) a fixed port with a shaped crucible (overlaps item 7).
+  - (c) a fixed port with a shaped crucible (overlaps item 13).
 
   Method: free-molecular screening with `crucible.py` first; DSMC (d bracket) only for the promising cases. Engineering caveats to record with any result: vacuum-compatible tilt with heater, thermocouple and shroud feedthroughs; shutter alignment; Ga creep or spitting at the lip when a hot cell is tilted (adjust between runs, not during growth); flux recalibration after each move. No production system re-aiming cells for uniformity is known to us; multiple same-species cells and large-volume depletion-tolerant crucibles are the usual industrial answers.

@@ -140,8 +140,11 @@ def propagate_slab(positions, velocities, slab, plane_z, radii_edges):
 
 
 def wsl_path(path):
-    """/mnt/<drive>/... path for a Windows path, for use inside WSL."""
-    p = PureWindowsPath(Path(path).resolve())
+    """/mnt/<drive>/... path for a Windows path, for use inside WSL (a POSIX path, when run inside WSL, as is)."""
+    resolved = Path(path).resolve()
+    p = PureWindowsPath(resolved)
+    if not p.drive:
+        return resolved.as_posix()
     return "/mnt/" + p.drive[0].lower() + "/" + "/".join(p.parts[1:])
 
 
@@ -237,9 +240,10 @@ def read_dumps(work_dir, expected_steps, prefix="dump.slab."):
     return np.concatenate(pos), np.concatenate(vel), np.concatenate(snap)
 
 
-def accumulate_snapshots(work_dir, expected_steps, fn, n_blocks):
+def accumulate_snapshots(work_dir, expected_steps, fn, n_blocks, prefix="dump.slab."):
     """Stream the snapshots and sum fn(positions, velocities) (a fixed-shape array) over
-    contiguous time blocks and over the two halves of the sampling run.
+    contiguous time blocks and over the two halves of the sampling run. `prefix` selects the
+    dump series (one per species in mixture runs).
 
     Returns sums and snapshot counts for the whole run, each block and each half; the
     per-snapshot mean of a group is its sum divided by its count. Block boundaries match
@@ -251,7 +255,7 @@ def accumulate_snapshots(work_dir, expected_steps, fn, n_blocks):
     half = n_snap // 2
     blocks = halves = None
     n_samples = 0
-    for i, p, v in iter_dumps(work_dir, steps):
+    for i, p, v in iter_dumps(work_dir, steps, prefix):
         y = np.asarray(fn(p, v), float)
         if blocks is None:
             blocks = np.zeros((n_blocks,) + y.shape)

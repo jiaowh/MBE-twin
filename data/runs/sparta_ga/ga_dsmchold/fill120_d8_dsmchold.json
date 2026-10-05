@@ -1,0 +1,330 @@
+{
+  "schema_version": "0.1",
+  "run_id": "sparta_ga_fill120_d8_dsmchold",
+  "created_utc": "2026-09-30T20:34:14+00:00",
+  "label": "representative_chamber",
+  "validation_status": "not_validated",
+  "package_version": "0.1.0",
+  "git_commit": "b6ed5a31775da92a68ffcb7b0cd26105e743c6ec-dirty",
+  "python": "3.12.10",
+  "numpy": "2.5.1",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "source_sha256": {
+    "scripts/sparta_ga.py": "1b3be770e6130677efe1275a820bd0e8f46297130345899d44254bd419a6256f",
+    "src/mbe_twin/profile_fit.py": "d8feb410c319fc0f51180d0e00f3c8f6a1b3260d772a66d9c531eed393f80768",
+    "src/mbe_twin/sparta_source.py": "92134265c221982b42c2bf636b960109eb5521ce9dde1a422fdb5d6b8a2820ae",
+    "src/mbe_twin/sparta.py": "0c117982b9fc586bbdfc6b3171f8bdd8a13630a49a007a1774def0e14688b2e8",
+    "src/mbe_twin/crucible.py": "981dab446a3caf8230a0ba691141ac8500a259d98518f810e4d8c7eda68256d2",
+    "src/mbe_twin/beam.py": "07227ace861e3711a47d2b727e5e793f093ebea766143b1e10ca8ca4eecf2256",
+    "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7"
+  },
+  "solver": {
+    "name": "SPARTA",
+    "build": "serial (WSL)",
+    "commit": "e071055fca6ccd250d4b894dadb7ff64d6e6fcac"
+  },
+  "inputs_sha256": "a0107b548f9389085fcd6a95e5e45d11ff23404d5ccc7b9ab3ac009c1b3caefa",
+  "inputs": {
+    "fill_m": 0.12,
+    "rate_um_h": 1.0,
+    "mode": "dsmc-hold",
+    "polar_deg": 46.0,
+    "diameter_m": 8e-10,
+    "coarse": 3,
+    "particles": 600000.0,
+    "dt_factor": 0.3,
+    "steps_eq": 8000,
+    "steps_sample": 24000,
+    "dump_every": 20,
+    "slab_D": [
+      3.0,
+      3.5
+    ],
+    "seed": 12345,
+    "cells_per_bore": 16.0,
+    "T_K": 1237.3183013564903,
+    "T_basis": {
+      "method": "DSMC-corrected",
+      "corrected_from": "fill120_d8",
+      "previous_T_K": 1235.2648177193005,
+      "previous_delivered_over_target": 0.9582044328802192
+    },
+    "derived": {
+      "crucible": {
+        "lip_radius_m": 0.03575,
+        "melt_depth_m": 0.12,
+        "slope": 0.0,
+        "melt_normal": [
+          0.7193398003386512,
+          0.0,
+          0.6946583704589973
+        ]
+      },
+      "species": "Ga",
+      "mass_kg": 1.1577776538056212e-25,
+      "T_K": 1237.3183013564903,
+      "p_Pa": 0.25257552091165547,
+      "diameter_m": 8e-10,
+      "cell_m": 0.00446875,
+      "coarse": 3,
+      "particles": 600000.0,
+      "dt_factor": 0.3,
+      "steps_eq": 8000,
+      "steps_sample": 24000,
+      "dump_every": 20,
+      "slab_D": [
+        3.0,
+        3.5
+      ],
+      "half_angle_deg": 25.0,
+      "seed": 12345,
+      "fnum": 11872894496.230196,
+      "dt_s": 2.1870941479889942e-06,
+      "slab_m": [
+        0.21449999999999997,
+        0.25025
+      ],
+      "lambda_sat_m": 0.023786394504097384,
+      "gas_volume_m3": 0.0004818161145040647
+    },
+    "sparta_commit": "e071055fca6ccd250d4b894dadb7ff64d6e6fcac",
+    "source_sha256_at_start": {
+      "scripts/sparta_ga.py": "1b3be770e6130677efe1275a820bd0e8f46297130345899d44254bd419a6256f",
+      "src/mbe_twin/profile_fit.py": "d8feb410c319fc0f51180d0e00f3c8f6a1b3260d772a66d9c531eed393f80768",
+      "src/mbe_twin/sparta_source.py": "92134265c221982b42c2bf636b960109eb5521ce9dde1a422fdb5d6b8a2820ae",
+      "src/mbe_twin/sparta.py": "0c117982b9fc586bbdfc6b3171f8bdd8a13630a49a007a1774def0e14688b2e8",
+      "src/mbe_twin/crucible.py": "981dab446a3caf8230a0ba691141ac8500a259d98518f810e4d8c7eda68256d2",
+      "src/mbe_twin/beam.py": "07227ace861e3711a47d2b727e5e793f093ebea766143b1e10ca8ca4eecf2256",
+      "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7"
+    }
+  },
+  "outputs": {
+    "config": {
+      "fill_m": 0.12,
+      "rate_um_h": 1.0,
+      "mode": "dsmc-hold",
+      "polar_deg": 46.0,
+      "diameter_m": 8e-10,
+      "coarse": 3,
+      "particles": 600000.0,
+      "dt_factor": 0.3,
+      "steps_eq": 8000,
+      "steps_sample": 24000,
+      "dump_every": 20,
+      "slab_D": [
+        3.0,
+        3.5
+      ],
+      "seed": 12345,
+      "cells_per_bore": 16.0,
+      "T_K": 1237.3183013564903,
+      "T_basis": {
+        "method": "DSMC-corrected",
+        "corrected_from": "fill120_d8",
+        "previous_T_K": 1235.2648177193005,
+        "previous_delivered_over_target": 0.9582044328802192
+      },
+      "derived": {
+        "crucible": {
+          "lip_radius_m": 0.03575,
+          "melt_depth_m": 0.12,
+          "slope": 0.0,
+          "melt_normal": [
+            0.7193398003386512,
+            0.0,
+            0.6946583704589973
+          ]
+        },
+        "species": "Ga",
+        "mass_kg": 1.1577776538056212e-25,
+        "T_K": 1237.3183013564903,
+        "p_Pa": 0.25257552091165547,
+        "diameter_m": 8e-10,
+        "cell_m": 0.00446875,
+        "coarse": 3,
+        "particles": 600000.0,
+        "dt_factor": 0.3,
+        "steps_eq": 8000,
+        "steps_sample": 24000,
+        "dump_every": 20,
+        "slab_D": [
+          3.0,
+          3.5
+        ],
+        "half_angle_deg": 25.0,
+        "seed": 12345,
+        "fnum": 11872894496.230196,
+        "dt_s": 2.1870941479889942e-06,
+        "slab_m": [
+          0.21449999999999997,
+          0.25025
+        ],
+        "lambda_sat_m": 0.023786394504097384,
+        "gas_volume_m3": 0.0004818161145040647
+      },
+      "sparta_commit": "e071055fca6ccd250d4b894dadb7ff64d6e6fcac",
+      "source_sha256_at_start": {
+        "scripts/sparta_ga.py": "1b3be770e6130677efe1275a820bd0e8f46297130345899d44254bd419a6256f",
+        "src/mbe_twin/profile_fit.py": "d8feb410c319fc0f51180d0e00f3c8f6a1b3260d772a66d9c531eed393f80768",
+        "src/mbe_twin/sparta_source.py": "92134265c221982b42c2bf636b960109eb5521ce9dde1a422fdb5d6b8a2820ae",
+        "src/mbe_twin/sparta.py": "0c117982b9fc586bbdfc6b3171f8bdd8a13630a49a007a1774def0e14688b2e8",
+        "src/mbe_twin/crucible.py": "981dab446a3caf8230a0ba691141ac8500a259d98518f810e4d8c7eda68256d2",
+        "src/mbe_twin/beam.py": "07227ace861e3711a47d2b727e5e793f093ebea766143b1e10ca8ca4eecf2256",
+        "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7"
+      }
+    },
+    "r_mm": [
+      2.5,
+      7.5,
+      12.5,
+      17.5,
+      22.5,
+      27.5,
+      32.5,
+      37.50000000000001,
+      42.49999999999999,
+      47.5,
+      52.50000000000001,
+      57.49999999999999,
+      62.5,
+      67.5,
+      72.50000000000001,
+      77.5,
+      82.5,
+      87.5,
+      92.5,
+      97.5
+    ],
+    "dsmc_flux": [
+      1.2307470020451785e+19,
+      1.2397367961398616e+19,
+      1.2284272538474652e+19,
+      1.224157700998527e+19,
+      1.2521179145934346e+19,
+      1.2353650933097368e+19,
+      1.2412133181001169e+19,
+      1.2292675818164343e+19,
+      1.2315873650818259e+19,
+      1.225310206607292e+19,
+      1.2311369654169506e+19,
+      1.2209497513623947e+19,
+      1.2103652125549455e+19,
+      1.2061850247527733e+19,
+      1.1991166259281144e+19,
+      1.1951994097302309e+19,
+      1.173138814424586e+19,
+      1.1751574259681266e+19,
+      1.163214731204095e+19,
+      1.1574292758420537e+19
+    ],
+    "dsmc_flux_stderr": [
+      1.3862425402373046e+17,
+      8.255136903463189e+16,
+      7.802339040624286e+16,
+      7.064312796304259e+16,
+      6.71032409374584e+16,
+      7.650586509717362e+16,
+      5.851256179818957e+16,
+      4.036340801821694e+16,
+      3.75053383279095e+16,
+      3.1766420590721684e+16,
+      4.86429836776072e+16,
+      2.7330567351373372e+16,
+      3.8386741216298344e+16,
+      3.5970204003891176e+16,
+      4.277241120837505e+16,
+      2.014538842905831e+16,
+      3.7433103442674376e+16,
+      2.197061136612342e+16,
+      2.3664211749995856e+16,
+      2.5496128701328864e+16
+    ],
+    "free_molecular_flux": [
+      1.2673753467790508e+19,
+      1.2673952671065115e+19,
+      1.2674649394213317e+19,
+      1.267584765851532e+19,
+      1.2677512837386738e+19,
+      1.2679595529969641e+19,
+      1.26820333750636e+19,
+      1.268150095082983e+19,
+      1.2662050265780322e+19,
+      1.2618505178952444e+19,
+      1.2555801140537821e+19,
+      1.2471800661369911e+19,
+      1.237374395461707e+19,
+      1.2265917285052264e+19,
+      1.215132846498884e+19,
+      1.2029826745206841e+19,
+      1.190539284148361e+19,
+      1.1774685846913108e+19,
+      1.1639311181196274e+19,
+      1.1501143755328188e+19
+    ],
+    "target_centre_flux": 1.2163409054616918e+19,
+    "flux_basis": "target = Ga arrival flux equal to the Ga content of the target GaN rate at Ga/N = 1; the hold modes match it at the wafer centre (r < 10 mm). A Ga flux, not a growth rate: thickness needs the N supply and incorporation/desorption.",
+    "centre_flux_over_target": {
+      "dsmc": 1.0173869365566321,
+      "free_molecular": 1.0419696331297659
+    },
+    "wafer_mean_flux_over_target": {
+      "dsmc": 0.98640546957697,
+      "free_molecular": 1.0003402799153487
+    },
+    "metrics_dsmc": {
+      "range_over_mean_pct": 6.861776888234145,
+      "std_pct": 2.258158701525796,
+      "centre_to_edge": 0.9333794205831683,
+      "mean": 1.200276094646017e+19,
+      "fit": [
+        1.2362586512811293e+19,
+        -5.35644393955741e+16,
+        -1.4365834639553405e+18,
+        2.5018795481712605e+17,
+        4.1635727195959066e+17
+      ],
+      "order": 4,
+      "max_abs_residual_pct": 1.3757938030872445,
+      "order_sensitivity": {
+        "order3": 6.875057270857255,
+        "order5": 6.61421566256222
+      },
+      "binned_range_over_mean_pct": 7.892000228182898
+    },
+    "metrics_dsmc_stderr": {
+      "range_over_mean_pct": 0.4507645687162513,
+      "std_pct": 0.07522142575740372,
+      "mean": 8193807886113560.0,
+      "bootstrap": {
+        "range_over_mean_pct": 0.4194618886826281,
+        "std_pct": 0.06478815423510013
+      }
+    },
+    "metrics_free_molecular": {
+      "range_over_mean_pct": 10.305197500123672,
+      "std_pct": 3.3804339064092166,
+      "centre_to_edge": 0.9018530897946995,
+      "mean": 1.2167546074823918e+19
+    },
+    "transmission_free_molecular": 0.296045,
+    "steady_state": {
+      "halves_range_over_mean_pct": [
+        6.385645788157138,
+        7.396022703836578
+      ],
+      "np_rel_range": 0.004983759495698098
+    }
+  },
+  "disabled_physics": [
+    "Ga2 and other dimers",
+    "wall sticking/condensation (hot lip assumed)",
+    "desorption/re-evaporation at the wafer",
+    "chamber background gas"
+  ],
+  "warnings": [
+    "Ga collision diameter not sourced: the run value is a scenario, not a bound (ref/notes/PHYSICS_DATA_SEARCH_2026-09-30.md section 2)",
+    "Melt temperature: see config T_basis (free-molecular mass balance, or corrected from a previous DSMC run's delivered flux)",
+    "Collisions beyond the sampling slab (3.5 D) neglected",
+    "Representative geometry (R14 bore, 350 mm, 46 deg), not the proposed machine"
+  ]
+}

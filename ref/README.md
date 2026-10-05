@@ -2,6 +2,8 @@
 
 New search, 2026-09-30: [references for predictive validation](notes/VALIDATION_REFERENCE_SEARCH_2026-09-30.md), including sources R16-R20, access limits and follow-ups. These are reference acquisitions, not completed validation cases.
 
+Second search, 2026-09-30: [physics data for the open Stage A questions](notes/PHYSICS_DATA_SEARCH_2026-09-30.md), sources R21-R31 and the R05 full text: Bi2 and the R07 rate deficit, a Ga collision-diameter bracket, Ga2, nitrogen plate holes, depletion-resistant crucibles, emissivities and heater-uniformity mechanisms.
+
 Compiled 2026-09-13. This is an acquired evidence collection for the GaN/AlN chamber plan. Literature and comparator specifications do not validate this custom chamber.
 
 Read the annotated reviews: [growth/materials](notes/GROWTH_EVIDENCE.md), [hardware](notes/HARDWARE_EVIDENCE.md), and [solver/fidelity](notes/SOLVER_AND_FIDELITY.md) and [representative chamber](notes/REFERENCE_CHAMBER.md). The [combined manifest](sources.json) preserves the detailed source records; [integrity report](integrity_report.json) records file checks. Original-source copyright and license terms remain applicable.
@@ -67,6 +69,17 @@ Details: [methods/sources.json](methods/sources.json).
 
 | ID | Source | Local copy or access status |
 |---|---|---|
+| R21 | [Handbook on Lead-bismuth Eutectic Alloy and Lead Properties, Materials Compatibility, Thermal-hydraulics and Technologies, 2015 edition (section 2.8, saturation vapour pressure)](https://www.oecd-nea.org/jcms/pl_14972/handbook-on-lead-bismuth-eutectic-alloy-and-lead-properties-materials-compatibility-thermal-hydraulics-and-technologies-2015-edition) (2015) | [PDF](reference/R21_NEA_2015_LBE_handbook_s2.8_vapour_pressure.pdf) |
+| R22 | [C6 coefficients and dipole polarizabilities for all atoms and many ions in rows 1-6 of the periodic table](https://doi.org/10.1021/acs.jctc.6b00361) (2016) | [PDF](reference/R22_Gould_Bucko_2016_C6_polarizabilities.pdf) |
+| R23 | [Dissociation energies of the Ga2, In2, and GaIn molecules](https://pubs.aip.org/aip/jcp/article-abstract/109/11/4384/1018967/Dissociation-energies-of-the-Ga2-In2-and-GaIn) (1998) | [PDF](reference/R23_Balducci_1998_Ga2_In2_GaIn_dissociation.pdf) |
+| R24 | [Unibody crucible and effusion source employing such a crucible (US 5,827,371; parent US 5,820,681)](https://patents.google.com/patent/US5827371A/en) (1998) | [PDF](reference/R24_US5827371_unibody_crucible.pdf), [PDF](reference/R24_US5820681_unibody_crucible.pdf) |
+| R25 | [Effusion cell and method of use in molecular beam epitaxy (US 6,053,981)](https://patents.google.com/patent/US6053981A/en) (2000) | [PDF](reference/R25_US6053981_effusion_cell_VG.pdf) |
+| R26 | [Control of ion content and nitrogen species using a mixed chemistry plasma for GaN grown at extremely high growth rates >9 um/h by plasma-assisted molecular beam epitaxy](https://pubs.aip.org/aip/jap/article-abstract/118/15/155302/140376) (2015) | [PDF](reference/R26_Gunning_2015_high_rate_PAMBE.pdf) |
+| R27 | [Mid-infrared optical properties of pyrolytic boron nitride in the 390-1050 C temperature range using spectral emissivity measurements](https://ui.adsabs.harvard.edu/abs/2017JQSRT.194....1G/abstract) (2017) | [PDF](reference/R27_Gonzalez_de_Arrieta_2017_PBN_emissivity.pdf) |
+| R28 | [Emissivity of silicon at elevated temperatures](https://pubs.aip.org/aip/jap/article/74/10/6353/177953/Emissivity-of-silicon-at-elevated-temperatures) (1993) | [PDF](reference/R28_Timans_1993_Si_emissivity.pdf) |
+| R29 | [NIST Chemistry WebBook, SRD 69: thermophysical properties of fluid systems (Ne, Ar, Kr, Xe viscosity)](https://webbook.nist.gov/chemistry/fluid/) (2026) | URL only / local source unavailable; see detailed manifest |
+| R30 | [Observation and mitigation of RF-plasma-induced damage to III-nitrides grown by molecular beam epitaxy](https://pubs.aip.org/aip/jap/article/126/1/015705/155766/Observation-and-mitigation-of-RF-plasma-induced) (2019) | [PDF](reference/R30_Clinton_2019_RF_plasma_damage.pdf) |
+| R31 | [Emissivity measurements and modeling of silicon-related materials: an overview](https://web.njit.edu/~sirenko/PapersNJIT/Ravi_IJTh_2001.pdf) (2001) | [PDF](reference/R31_Ravindra_2001_Si_emissivity_overview.pdf) |
 | R16 | [Growth-induced temperature changes during transition metal nitride epitaxy on transparent SiC substrates](https://doi.org/10.1116/6.0000063) (2020) | [PDF](reference/R16_Katzer_2019_NAMBE_abstract.pdf) |
 | R17 | [Optical in-situ temperature management for high-quality ZnO molecular beam epitaxy](https://doi.org/10.1016/j.jcrysgro.2020.126009) (2021) | URL only / local source unavailable; see detailed manifest |
 | R18 | [Characterisation of an RF atomic nitrogen plasma source](https://doi.org/10.1016/S0022-0248(98)01361-X) (1999) | URL only / local source unavailable; see detailed manifest |
@@ -76,7 +89,7 @@ Details: [methods/sources.json](methods/sources.json).
 | R02 | [MBE Nitride Components & Systems brochure (GEN20, GEN200, UNI-Bulb RF nitrogen source, SUMO cells, valved Mg source)](https://www.semiconductor-today.com/images/adverts/veeco_brochure_nitrides.pdf) (2006) | [PDF](reference/R02_Veeco_nitride_MBE_brochure_2006.pdf) |
 | R03 | [Simulation and experiment of a dual-temperature zone MBE heater](https://www.sciencedirect.com/science/article/abs/pii/S0020740325008926) (2025) | [PDF](reference/R03_Wu_2025_dual_zone_MBE_heater.pdf) |
 | R04 | [Design and optimization of a multi-temperature zone heater for enhanced substrate temperature uniformity in large-sized molecular beam epitaxy systems](https://www.sciencedirect.com/science/article/abs/pii/S1359431125014565) (2025) | URL only / local source unavailable; see detailed manifest |
-| R05 | [Design elements affecting wafer temperature uniformity in multi-wafer production MBE systems](https://www.sciencedirect.com/science/article/abs/pii/S0022024808009913) (2009) | URL only / local source unavailable; see detailed manifest |
+| R05 | [Design elements affecting wafer temperature uniformity in multi-wafer production MBE systems](https://www.sciencedirect.com/science/article/abs/pii/S0022024808009913) (2009) | [PDF](reference/R05_Rogers_2009_wafer_temperature_uniformity.pdf) |
 | R06 | [Thermal imaging of wafer temperature in MBE using a digital camera](https://www.sciencedirect.com/science/article/abs/pii/S0022024806015727) (2007) | URL only / local source unavailable; see detailed manifest |
 | R07 | [A detailed study of the molecular beam flux distribution of MBE effusion sources](https://www.sciencedirect.com/science/article/abs/pii/0042207X91901323) (1991) | [PDF](reference/R07_Gericke_1991_effusion_flux_distribution.pdf) |
 | R08 | [Molecular beam epitaxy beam flux modeling](https://pubs.aip.org/avs/jvb/article-pdf/3/2/531/12021852/531_1_online.pdf) (1985) | URL only / local source unavailable; see detailed manifest |

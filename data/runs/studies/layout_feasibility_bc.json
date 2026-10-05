@@ -1,0 +1,3577 @@
+{
+  "schema_version": "0.1",
+  "run_id": "layout_feasibility",
+  "created_utc": "2026-10-02T02:02:08+00:00",
+  "label": "representative_chamber",
+  "validation_status": "not_validated",
+  "package_version": "0.1.0",
+  "git_commit": "d0f136d72c01bdc369d55eb286ce81b34c9ecd5d-dirty",
+  "python": "3.12.13",
+  "numpy": "2.4.4",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "source_sha256": {
+    "scripts/layout_feasibility.py": "51c27c9311c3174603f906f97824357e38e37f72b65adb3a723b22bf7fc2318b",
+    "src/mbe_twin/layout.py": "489e036db4879cad618d995082f958db33c6e2d83e2392c70b8e9ffa075b9917",
+    "src/mbe_twin/beam.py": "90a90503e0a530d61bed26d42ca161b2d0e4d0d2f6d0f794ccf7fc4c9083ed93",
+    "data/design/design_envelope.json": "e1d2e14d6e2277cab563a3231116889ed4f053186e600e3ae68e050ec1c79906"
+  },
+  "solver": null,
+  "inputs_sha256": "7804897d42be5e62eb351c8d27a59ffcab4f186bf47cad3a6e9f6aa078d4331a",
+  "inputs": {
+    "envelope": {
+      "schema_version": "design-envelope-0.1",
+      "revision_date": "2026-10-01",
+      "label": "representative_chamber",
+      "purpose": "Inputs for the layout feasibility check (scripts/layout_feasibility.py) and the layout comparison under uncertainty (scripts/layout_comparison.py). One baseline layout and a small set of alternatives on the representative 200 mm chamber. Every input says whether it is known (from the proposal or a cited source), assumed (a working value chosen here, to be replaced) or missing (a vendor or project input that no repository source provides; the value given is a placeholder or a bracket).",
+      "status_meanings": {
+        "known": "stated in the proposal (MBE_Phase1_Proposal_v1.2.pptx, ref/proposal/SLIDE_TEXT.md) or a cited reference",
+        "assumed": "chosen here for the representative chamber; not a requirement and not a measurement",
+        "missing": "a vendor or project input that must be obtained before design freeze; the value is a placeholder or bracket"
+      },
+      "operating_point": {
+        "net_growth_rate_um_h": {
+          "value": 1.0,
+          "status": "assumed",
+          "note": "Working rate of every earlier study; the project has no rate requirement yet (data/intake/machine_requirements.json: mean_thickness_or_growth_rate_constraint null). All layouts are compared at this equal wafer-mean net rate."
+        },
+        "growth_temperature_C": {
+          "value": [
+            700,
+            740
+          ],
+          "status": "missing",
+          "note": "The proposed machine's growth temperature on its own calibrated scale is not set. 700 C (narrow Ga window, temperature-insensitive thickness) and 740 C (wide window, 0.11-0.16 %/K) bracket the two regimes. Temperatures are the source labs' scales (growth.py)."
+        },
+        "growth_regime": {
+          "value": "Ga-rich (adlayer), plasma-assisted",
+          "status": "known",
+          "source": "proposal slide 11 (RF nitrogen); ref/notes/GROWTH_EVIDENCE.md"
+        },
+        "droplet_onset_law": {
+          "value": [
+            "Ref14_growth",
+            "Heying_growth",
+            "G01_adsorption"
+          ],
+          "status": "missing",
+          "note": "Literature disagrees by up to 3-4x at 700 C (data/parameters/gan_growth.json); the machine's own onset is a commissioning measurement. Treated as an uncertainty, with the centre Ga/N set from the onset at the centre (calibration)."
+        }
+      },
+      "wafer_and_mask": {
+        "wafer_diameter_m": {
+          "value": 0.2,
+          "status": "known",
+          "source": "user decision 2026-09-28"
+        },
+        "usable_radius_m": {
+          "value": 0.094,
+          "status": "assumed",
+          "note": "Uniformity is evaluated on r <= 94 mm for every layout: the 3 mm holder overlap of the baseline holder (opening 97 mm) minus a 3 mm edge exclusion. The mask is the same for all layouts, so no improvement comes from changing it. Edge exclusion is missing in the intake ledger (edge_exclusion_m null)."
+        },
+        "holder_lip_height_m": {
+          "value": 0.002,
+          "bracket": [
+            0.001,
+            0.003
+          ],
+          "status": "assumed",
+          "note": "Face-down wafer resting on the holder ledge; the ledge stands this far proud of the growth face and shadows grazing beams. Same as the heater model's ledge thickness."
+        },
+        "holder_opening_radius_m": {
+          "value": {
+            "3 mm overlap": 0.097,
+            "1 mm overlap": 0.099
+          },
+          "status": "assumed",
+          "note": "Holder design choice; the 1 mm overlap is the heater model's better edge support."
+        }
+      },
+      "chamber": {
+        "source_throw_m": {
+          "value": 0.35,
+          "status": "assumed",
+          "source": "R14 8-inch layout study; H02 gives a typical 10.5 inch (267 mm) for a plasma source"
+        },
+        "effusion_cell_positions": {
+          "value": 10,
+          "occupancy": {
+            "Ga": 3,
+            "Al": 3,
+            "Si": 1,
+            "Mg": 1,
+            "spare": 2
+          },
+          "status": "known",
+          "source": "proposal slide 8 (HARDWARE_EVIDENCE.md)"
+        },
+        "nitrogen_source_ports": {
+          "value": 1,
+          "status": "assumed",
+          "note": "One RF plasma source; the proposal states one 600 W 13.56 MHz source."
+        },
+        "cell_cone_polar_deg": {
+          "value": 46.0,
+          "status": "assumed",
+          "note": "Common effusion-cell cone at the R14 / Ga-study optimum angle; cells spaced evenly in azimuth."
+        },
+        "holder_assembly": {
+          "radius_m": 0.13,
+          "depth_m": 0.3,
+          "status": "assumed",
+          "note": "Heater, holder and manipulator behind the wafer as one solid cylinder; a chamber drawing is missing (HARDWARE_EVIDENCE P0)."
+        },
+        "chamber_drawing": {
+          "value": null,
+          "status": "missing",
+          "note": "Port and flange schedule, cryoshroud, RHEED and pyrometer lines of sight (P0 request)."
+        }
+      },
+      "source_bodies": {
+        "note": "In-vacuum bodies as solid cylinders from the lip back to the mounting flange; shutter blades are disks on rotary arms beside the cell. Dimensions are typical of the stated flange classes, not drawings.",
+        "Ga": {
+          "lip_radius_m": 0.03575,
+          "body_radius_m": 0.06,
+          "body_length_m": 0.3,
+          "flange": "CF150",
+          "flange_radius_m": 0.1015,
+          "shutter_radius_m": 0.046,
+          "shutter_standoff_m": 0.025,
+          "shutter_arm_m": 0.066,
+          "status": {
+            "lip_radius_m": "assumed (R14 71.5 mm bore)",
+            "flange": "known for the 1000 cc ABI class (H03: ABI 1000 on CF150)",
+            "other": "assumed"
+          }
+        },
+        "Al": {
+          "lip_radius_m": 0.02,
+          "body_radius_m": 0.045,
+          "body_length_m": 0.3,
+          "flange": "CF100",
+          "flange_radius_m": 0.076,
+          "shutter_radius_m": 0.03,
+          "shutter_standoff_m": 0.025,
+          "shutter_arm_m": 0.04,
+          "status": {
+            "flange": "assumed (H03 ABI 500 class on CF100; Al cell model missing, H04)",
+            "other": "assumed"
+          }
+        },
+        "Si_Mg_spare": {
+          "lip_radius_m": 0.012,
+          "body_radius_m": 0.032,
+          "body_length_m": 0.3,
+          "flange": "CF63",
+          "flange_radius_m": 0.057,
+          "shutter_radius_m": 0.022,
+          "shutter_standoff_m": 0.025,
+          "shutter_arm_m": 0.03,
+          "status": "assumed"
+        },
+        "N_plasma": {
+          "lip_radius_m": 0.02,
+          "body_radius_m": 0.045,
+          "body_length_m": 0.3,
+          "flange": "CF100",
+          "flange_radius_m": 0.076,
+          "shutter_radius_m": 0.03,
+          "shutter_standoff_m": 0.025,
+          "shutter_arm_m": 0.04,
+          "status": {
+            "lip_radius_m": "assumed (20 mm active plate radius of the nitrogen studies)",
+            "other": "missing (source model not selected; HARDWARE_EVIDENCE H02)"
+          }
+        }
+      },
+      "nitrogen_plate": {
+        "hole_aspect_L_over_r": {
+          "leading": 2.92,
+          "reference": 0.0,
+          "alternative": 5.83,
+          "status": "missing",
+          "note": "Shallow finite holes (R30's 0.343 mm holes in a 0.5 mm plate) are the leading candidate. L/r 0 is the ideal reference, not a manufacturable specification. L/r 5.8 (1 mm plate) is kept only as the alternative a source might require. The vendor plate drawing is missing."
+        },
+        "active_radius_m": {
+          "value": 0.02,
+          "status": "assumed"
+        },
+        "output_profile": {
+          "value": "uniform",
+          "status": "assumed",
+          "note": "+/-50 % radial profiles moved the optima by at most 0.24 points (nitrogen_aim_robustness)."
+        },
+        "active_N_output_capability_atoms_s": {
+          "value": null,
+          "status": "missing",
+          "note": "Total active-N output versus power and flow is not modelled and no vendor value is in hand. It is bounded by the feed: at most 8.956e17 N atoms/s per sccm of N2 (nitrogen_source)."
+        }
+      },
+      "nitrogen_source": {
+        "active_n_fraction_of_feed_atoms": {
+          "scenarios": [
+            1.0,
+            0.3,
+            0.1
+          ],
+          "status": "missing",
+          "note": "Fraction of the N atoms in the N2 feed that leave the plate as growth-active N. No repository source gives it for any RF source (R10-R12, R18 are abstract-only or unread on this point). 1.0 is the atom-content bound (every molecule dissociated and emitted), not an achievable efficiency; the lower values bracket a partly dissociating source. Set at commissioning from the Ga-rich growth rate versus flow and power. scripts/nitrogen_output_evidence.py infers a range from published growth rates (data/parameters/nitrogen_output_evidence.json)."
+        },
+        "feed_limit_sccm": {
+          "value": 10.0,
+          "scenarios": [
+            10.0,
+            35.0
+          ],
+          "status": "missing",
+          "source": "H02 (SVTA RF-6.02 sheet) lists 0.1-10 sccm; R26 ran a Veeco UNI-Bulb in its bright mode up to 34 sccm with a 4000-hole plate. The selected source's flow range and MFC are not specified"
+        },
+        "plate": {
+          "value": {
+            "holes": 2000,
+            "hole_diameter_m": 0.000343,
+            "thickness_m": 0.0005
+          },
+          "status": "assumed",
+          "source": "R30 (Veeco UNI-Bulb, about 2000 x #80 drill) in a 0.5 mm plate: L/r 2.92, the leading plate of the layouts. Thickness not published.",
+          "note": "Used for the hole Knudsen check at the operating feed; Kn >= 10 is the free-molecular validity criterion of scripts/nitrogen_plate_scenarios.py."
+        }
+      },
+      "acceptance": {
+        "thickness_uniformity_target_pct": {
+          "value": null,
+          "status": "missing",
+          "note": "No agreed target (data/intake/machine_requirements.json). Results report the share of states within 1 / 2 / 3 / 5 % half-range/mean as tradeoffs, not as pass/fail."
+        },
+        "minimum_growth_rate_um_h": {
+          "value": null,
+          "status": "missing",
+          "note": "No agreed minimum. Results report the rate each operating scenario can reach."
+        }
+      },
+      "pointing_and_adjustment": {
+        "pointing_tolerance_deg": {
+          "value": 0.8,
+          "extended": 1.6,
+          "status": "assumed",
+          "note": "Axis tilt in any direction (a cone of half-angle tolerance)."
+        },
+        "tilt_pivot_behind_plate_m": {
+          "value": {
+            "plate": 0.0,
+            "flange": 0.3
+          },
+          "status": "assumed",
+          "note": "A tilt adapter or flange machining error pivots the source about its mounting flange, which also moves the plate sideways. 0 m reproduces the plate-centred tilt of nitrogen_aim_tolerance.py."
+        },
+        "tilt_adjuster_range_deg": {
+          "value": 2.0,
+          "status": "missing",
+          "note": "Range of a tilting adapter, if one is fitted. A port whose axis is machined to the aim needs only trim."
+        }
+      },
+      "heater": {
+        "rating_C": {
+          "value": 1200,
+          "status": "known",
+          "source": "proposal slide 11; object of the rating (element, holder or wafer) is not stated (PLAN_REVIEW item 8)"
+        },
+        "element_temperature_limit_K": {
+          "interpretations": {
+            "A: 1200 C is the element limit": 1473.15,
+            "B: element limit with 100 K life margin in active N": 1373.15
+          },
+          "status": "missing",
+          "note": "If 1200 C were the wafer rating the element would run hotter; the selected unit's element limit, zone power capacity and lifetime in active N must come from the vendor (H05 lists 1000 C standard, 1200 C on request)."
+        },
+        "total_power_limit_W": {
+          "value": null,
+          "status": "missing"
+        },
+        "zone_power_density_limit_W_m2": {
+          "value": null,
+          "status": "missing",
+          "note": "Not applied separately: at these temperatures the element temperature limit binds first (reported)."
+        },
+        "options": {
+          "3 zones": {
+            "zone_edges_mm": [
+              0,
+              60,
+              95,
+              115
+            ],
+            "holder_opening_m": 0.097,
+            "status": "assumed"
+          },
+          "designed density": {
+            "zone_edges_mm": "12 equal rings to 115 mm (a designed element pitch, not 12 controllers)",
+            "holder_opening_m": 0.099,
+            "status": "assumed"
+          }
+        },
+        "uncertain_properties": {
+          "wafer_emissivity": [
+            0.63,
+            0.77
+          ],
+          "wafer_ledge_contact_W_m2K": [
+            50,
+            1000
+          ],
+          "zone_power_error_fraction": 0.02,
+          "status": "assumed",
+          "control": "one wafer-temperature reading holds the wafer mean (all zones scaled together); the zone ratios stay at their nominal optimum"
+        }
+      },
+      "vacuum": {
+        "nitrogen_flow_sccm": {
+          "bracket": [
+            0.5,
+            2.0,
+            10.0
+          ],
+          "status": "missing"
+        },
+        "effective_N2_speed_m3_s": {
+          "bracket": [
+            0.5,
+            2.0,
+            4.0
+          ],
+          "status": "missing",
+          "note": "Proposal turbo >= 2000 L/s nameplate (known); the effective speed at the chamber is not. 4 m^3/s: R26 kept the growth pressure below 1e-4 Torr with more than 30 sccm using one CTI-8 and two CTI-10 cryo pumps, which implies at least about 4 m^3/s for N2."
+        },
+        "pressure_cases": {
+          "vacuum (regression)": [
+            0.0,
+            2.0
+          ],
+          "0.5 sccm / 2 m3/s": [
+            0.5,
+            2.0
+          ],
+          "2 sccm / 2 m3/s": [
+            2.0,
+            2.0
+          ],
+          "2 sccm / 0.5 m3/s": [
+            2.0,
+            0.5
+          ],
+          "10 sccm / 0.5 m3/s": [
+            10.0,
+            0.5
+          ]
+        },
+        "gas_temperature_K": {
+          "value": 300.0,
+          "status": "assumed"
+        },
+        "collision_diameters_m": {
+          "Ga": [
+            6e-10,
+            8e-10
+          ],
+          "N": 3e-10,
+          "N2": 3.7e-10,
+          "status": "assumed (Ga: scenario range after the Bi2 result; N atom not sourced)"
+        },
+        "beam_temperatures_K": {
+          "Ga": 1235.0,
+          "N": 600.0,
+          "status": "assumed"
+        }
+      },
+      "ga_source": {
+        "port_options_deg": {
+          "46": {
+            "admissible_fills_mm": [
+              40,
+              70,
+              120
+            ],
+            "min_level_recess_mm": 37.0
+          },
+          "54": {
+            "admissible_fills_mm": [
+              70,
+              120
+            ],
+            "min_level_recess_mm": 49.2
+          }
+        },
+        "collision_diameter_A": {
+          "values": [
+            5.68,
+            8.0
+          ],
+          "status": "assumed"
+        },
+        "status": "assumed (R14 bore; DSMC records data/runs/sparta_ga)",
+        "note": "A level melt in the 71.5 mm bore spills above R tan(angle): 37.0 mm at 46 deg, 49.2 mm at 54 deg. A 54 deg port gives up the fill range between 37 and 49 mm of recess."
+      },
+      "layouts": {
+        "A (baseline)": {
+          "description": "All sources on the 46 deg cone aimed at the wafer centre; shallow-hole plate; 3-zone heater on a 3 mm overlap.",
+          "ga_port_deg": 46,
+          "n": {
+            "L_over_r": 2.92,
+            "polar_deg": 46.0,
+            "aim_offset_mm": 0.0
+          },
+          "heater": "3 zones"
+        },
+        "B": {
+          "description": "As A, but the nitrogen axis aimed off-centre from the same 46 deg cone (an off-axis port or tilted mount); designed-density heater on a 1 mm overlap.",
+          "ga_port_deg": 46,
+          "n": {
+            "L_over_r": 2.92,
+            "polar_deg": 46.0,
+            "aim_offset_mm": 105.0
+          },
+          "heater": "designed density"
+        },
+        "C": {
+          "description": "Nitrogen on a steep 65 deg port aimed near the wafer edge; designed-density heater.",
+          "ga_port_deg": 46,
+          "n": {
+            "L_over_r": 2.92,
+            "polar_deg": 65.0,
+            "aim_offset_mm": 75.0
+          },
+          "heater": "designed density"
+        },
+        "C-Ga54": {
+          "description": "C with the Ga cells on a 54 deg port (fills 70-120 mm only).",
+          "ga_port_deg": 54,
+          "n": {
+            "L_over_r": 2.92,
+            "polar_deg": 65.0,
+            "aim_offset_mm": 75.0
+          },
+          "heater": "designed density"
+        },
+        "R0 (ideal reference)": {
+          "description": "Thin plate (L/r 0) at its 45 deg / +55 mm optimum; designed-density heater. Not a manufacturable plate specification.",
+          "ga_port_deg": 46,
+          "n": {
+            "L_over_r": 0.0,
+            "polar_deg": 45.0,
+            "aim_offset_mm": 55.0
+          },
+          "heater": "designed density"
+        },
+        "B-p": {
+          "description": "B re-aimed at the pressure its own feed creates at 1 um/h (eta = 1, 2 m^3/s): +97.5 mm from the same 46 deg cone (scripts/nitrogen_aim_pressure.py).",
+          "ga_port_deg": 46,
+          "n": {
+            "L_over_r": 2.92,
+            "polar_deg": 46.0,
+            "aim_offset_mm": 97.5
+          },
+          "heater": "designed density"
+        },
+        "C-p": {
+          "description": "C re-aimed at the pressure its own feed creates at 1 um/h (eta = 1, 2 m^3/s): +67.5 mm from the 65 deg port (scripts/nitrogen_aim_pressure.py).",
+          "ga_port_deg": 46,
+          "n": {
+            "L_over_r": 2.92,
+            "polar_deg": 65.0,
+            "aim_offset_mm": 67.5
+          },
+          "heater": "designed density"
+        },
+        "B-L": {
+          "description": "Large high-conductance plate (8000 x 0.5 mm holes in 0.5 mm over a 30 mm active radius, L/r 2.0; free-molecular to 35 sccm, scripts/nitrogen_plate_design.py) on the 46 deg cone, aimed +90 mm: the aim found at the pressure of 1 um/h with eta 0.3, 4 m^3/s and a 35 sccm feed limit (scripts/nitrogen_aim_pressure.py, record nitrogen_aim_bigplate.json). Plate not a published design; its discharge behaviour at low flow is unknown.",
+          "ga_port_deg": 46,
+          "n": {
+            "L_over_r": 2.0,
+            "polar_deg": 46.0,
+            "aim_offset_mm": 90.0,
+            "plate_radius_m": 0.03,
+            "plate": {
+              "holes": 8000,
+              "hole_diameter_m": 0.0005,
+              "thickness_m": 0.0005
+            }
+          },
+          "heater": "designed density"
+        },
+        "D (deep-hole alternative)": {
+          "description": "L/r 5.8 (1 mm plate) at 65 deg / +110 mm, if the source hardware requires a thicker plate; designed-density heater.",
+          "ga_port_deg": 46,
+          "n": {
+            "L_over_r": 5.83,
+            "polar_deg": 65.0,
+            "aim_offset_mm": 110.0
+          },
+          "heater": "designed density"
+        }
+      }
+    },
+    "margin_m": 0.005,
+    "cell_order": [
+      "Ga1",
+      "Al1",
+      "Si",
+      "Ga2",
+      "Al2",
+      "Mg",
+      "Ga3",
+      "Al3",
+      "spare1",
+      "spare2"
+    ],
+    "layouts": [
+      "B",
+      "C",
+      "B-p",
+      "C-p",
+      "B-L"
+    ]
+  },
+  "outputs": {
+    "rows": [
+      {
+        "layout": "B",
+        "feasible_at_margin": true,
+        "min_clearance_m": 0.006090182704601159,
+        "min_clearance_sampled_m": 0.008885738651283172,
+        "clearance_is": "certified lower bound (sampled value: upper estimate)",
+        "closest_pairs": [
+          [
+            0.006090182704601159,
+            "Ga1",
+            "Al1"
+          ],
+          [
+            0.0060907736563545764,
+            "Ga3",
+            "Al3"
+          ],
+          [
+            0.006093917752768677,
+            "Ga2",
+            "Al2"
+          ],
+          [
+            0.011653723085592704,
+            "spare1",
+            "spare2"
+          ],
+          [
+            0.011931318586516646,
+            "Al2",
+            "Mg"
+          ]
+        ],
+        "holder_clearance_m": {
+          "N": 0.22263247944395753,
+          "Ga1": 0.20763247944395752,
+          "Al1": 0.22198578840488434,
+          "Si": 0.22814578741272856,
+          "Ga2": 0.20763247944395752,
+          "Al2": 0.22199007611277669,
+          "Mg": 0.22816016726655913,
+          "Ga3": 0.20763247944395752,
+          "Al3": 0.2219991575323231,
+          "spare1": 0.22814681073810122,
+          "spare2": 0.22814910143172415
+        },
+        "shutter_sides": {
+          "N": 1,
+          "Ga1": 1,
+          "Al1": 1,
+          "Si": 1,
+          "Ga2": 1,
+          "Al2": 1,
+          "Mg": 1,
+          "Ga3": 1,
+          "Al3": 1,
+          "spare1": 1,
+          "spare2": 1
+        },
+        "port_azimuths_deg": {
+          "N": 0.0,
+          "Ga1": 38.72950819672131,
+          "Al1": 77.45901639344262,
+          "Si": 105.86065573770492,
+          "Ga2": 139.79508196721312,
+          "Al2": 178.52459016393442,
+          "Mg": 206.9262295081967,
+          "Ga3": 240.86065573770492,
+          "Al3": 279.59016393442624,
+          "spare1": 307.99180327868856,
+          "spare2": 331.59836065573774
+        },
+        "port_polar_deg": {
+          "N": 46.0,
+          "Ga1": 46,
+          "Al1": 46.0,
+          "Si": 46.0,
+          "Ga2": 46,
+          "Al2": 46.0,
+          "Mg": 46.0,
+          "Ga3": 46,
+          "Al3": 46.0,
+          "spare1": 46.0,
+          "spare2": 46.0
+        },
+        "flange_centre_radial_and_depth_m": {
+          "N": [
+            0.406808911455729,
+            0.4999622894190527
+          ],
+          "Ga1": [
+            0.4675708702201232,
+            0.4515279407983482
+          ],
+          "Al1": [
+            0.4675708702201232,
+            0.4515279407983482
+          ],
+          "Si": [
+            0.4675708702201233,
+            0.4515279407983482
+          ],
+          "Ga2": [
+            0.4675708702201232,
+            0.4515279407983482
+          ],
+          "Al2": [
+            0.4675708702201232,
+            0.4515279407983482
+          ],
+          "Mg": [
+            0.4675708702201233,
+            0.4515279407983482
+          ],
+          "Ga3": [
+            0.4675708702201233,
+            0.4515279407983482
+          ],
+          "Al3": [
+            0.4675708702201233,
+            0.4515279407983482
+          ],
+          "spare1": [
+            0.4675708702201232,
+            0.4515279407983482
+          ],
+          "spare2": [
+            0.4675708702201232,
+            0.4515279407983482
+          ]
+        },
+        "holder_opening_m": 0.099,
+        "shadowing": {
+          "N": {
+            "cos^1": {
+              "culprits_pct": {
+                "N shutter": 0.21392692524158097
+              },
+              "lip_loss_usable_pct": 0.0,
+              "lip_loss_opening_pct": 0.0,
+              "other_solids_loss_usable_pct": 0.21392692524158097,
+              "ratio_with_lip": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.11673232764097717
+              ],
+              "ratio_all": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.999194845358091,
+                0.998379263038104,
+                0.9978607307475842,
+                0.9976644476175427,
+                0.115527531830001
+              ]
+            },
+            "cos^4": {
+              "culprits_pct": {
+                "N shutter": 0.19898130977960005
+              },
+              "lip_loss_usable_pct": 0.0,
+              "lip_loss_opening_pct": 0.0,
+              "other_solids_loss_usable_pct": 0.19898130977960005,
+              "ratio_with_lip": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.11406791941408378
+              ],
+              "ratio_all": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.9992492763526553,
+                0.9984887768707146,
+                0.998010186902204,
+                0.9978396947663439,
+                0.11293135370742877
+              ]
+            }
+          },
+          "Ga1": {
+            "cos^1": {
+              "culprits_pct": {},
+              "lip_loss_usable_pct": 0.0,
+              "lip_loss_opening_pct": 0.0,
+              "other_solids_loss_usable_pct": 0.0,
+              "ratio_with_lip": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.1247088867226827
+              ],
+              "ratio_all": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.1247088867226827
+              ]
+            }
+          },
+          "Ga2": {
+            "cos^1": {
+              "culprits_pct": {},
+              "lip_loss_usable_pct": 0.0,
+              "lip_loss_opening_pct": 0.0,
+              "other_solids_loss_usable_pct": 0.0,
+              "ratio_with_lip": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.11928147270623962
+              ],
+              "ratio_all": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.11928147270623962
+              ]
+            }
+          },
+          "Ga3": {
+            "cos^1": {
+              "culprits_pct": {},
+              "lip_loss_usable_pct": 0.0,
+              "lip_loss_opening_pct": 0.0,
+              "other_solids_loss_usable_pct": 0.0,
+              "ratio_with_lip": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.10263829758743169
+              ],
+              "ratio_all": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.10263829758743169
+              ]
+            }
+          }
+        },
+        "lip_shadow_inner_edge_mm": {
+          "3 mm overlap 1 mm lip": {
+            "N": 95.96446968620943,
+            "Ga": 95.96446968620943
+          },
+          "3 mm overlap 2 mm lip": {
+            "N": 94.92893937241887,
+            "Ga": 94.92893937241887
+          },
+          "3 mm overlap 3 mm lip": {
+            "N": 93.8934090586283,
+            "Ga": 93.8934090586283
+          },
+          "1 mm overlap 1 mm lip": {
+            "N": 97.96446968620944,
+            "Ga": 97.96446968620944
+          },
+          "1 mm overlap 2 mm lip": {
+            "N": 96.92893937241887,
+            "Ga": 96.92893937241887
+          },
+          "1 mm overlap 3 mm lip": {
+            "N": 95.8934090586283,
+            "Ga": 95.8934090586283
+          }
+        },
+        "nitrogen_adjustment": {
+          "tilt_from_centre_pointing_port_deg": 14.88215860274337,
+          "aim_shift_per_0.8deg_mm_plate": [
+            3.965584918456829,
+            4.671495314221258
+          ],
+          "aim_shift_per_0.8deg_mm_flange": [
+            8.154647353211326,
+            9.606249187188636
+          ]
+        },
+        "rho_m": [
+          0.0,
+          0.003,
+          0.006,
+          0.009000000000000001,
+          0.012,
+          0.015,
+          0.018000000000000002,
+          0.021,
+          0.024,
+          0.027,
+          0.03,
+          0.033,
+          0.036000000000000004,
+          0.039,
+          0.042,
+          0.045,
+          0.048,
+          0.051000000000000004,
+          0.054,
+          0.057,
+          0.06,
+          0.063,
+          0.066,
+          0.069,
+          0.07200000000000001,
+          0.075,
+          0.078,
+          0.081,
+          0.084,
+          0.08700000000000001,
+          0.09,
+          0.093,
+          0.096,
+          0.099
+        ]
+      },
+      {
+        "layout": "C",
+        "feasible_at_margin": true,
+        "min_clearance_m": 0.010656648770999191,
+        "min_clearance_sampled_m": 0.020648706833005882,
+        "clearance_is": "certified lower bound (sampled value: upper estimate)",
+        "closest_pairs": [
+          [
+            0.010656648770999191,
+            "Ga3",
+            "Al3"
+          ],
+          [
+            0.010680999709411157,
+            "Ga2",
+            "Al2"
+          ],
+          [
+            0.010750061832887093,
+            "Ga1",
+            "Al1"
+          ],
+          [
+            0.020521907998987204,
+            "spare1",
+            "spare2"
+          ],
+          [
+            0.021997871592184793,
+            "Al3",
+            "spare1"
+          ]
+        ],
+        "holder_clearance_m": {
+          "N": 0.1898569586366236,
+          "Ga1": 0.20763247944395752,
+          "Al1": 0.221984556446017,
+          "Si": 0.22814796467318718,
+          "Ga2": 0.20763247944395752,
+          "Al2": 0.22198400643785776,
+          "Mg": 0.22815176972431006,
+          "Ga3": 0.20763247944395752,
+          "Al3": 0.22198373309426117,
+          "spare1": 0.22817058633727247,
+          "spare2": 0.22816192232878224
+        },
+        "shutter_sides": {
+          "N": -1,
+          "Ga1": 1,
+          "Al1": 1,
+          "Si": 1,
+          "Ga2": 1,
+          "Al2": 1,
+          "Mg": 1,
+          "Ga3": 1,
+          "Al3": 1,
+          "spare1": 1,
+          "spare2": 1
+        },
+        "port_azimuths_deg": {
+          "N": 0.0,
+          "Ga1": 18.690744920993225,
+          "Al1": 61.35440180586907,
+          "Si": 92.64108352144468,
+          "Ga2": 130.02257336343115,
+          "Al2": 172.68623024830697,
+          "Mg": 203.9729119638826,
+          "Ga3": 241.35440180586903,
+          "Al3": 284.01805869074485,
+          "spare1": 315.3047404063205,
+          "spare2": 341.30925507900673
+        },
+        "port_polar_deg": {
+          "N": 65.0,
+          "Ga1": 46,
+          "Al1": 46.0,
+          "Si": 46.0,
+          "Ga2": 46,
+          "Al2": 46.0,
+          "Mg": 46.0,
+          "Ga3": 46,
+          "Al3": 46.0,
+          "spare1": 46.0,
+          "spare2": 46.0
+        },
+        "flange_centre_radial_and_depth_m": {
+          "N": [
+            0.5732390348400513,
+            0.30427485354394224
+          ],
+          "Ga1": [
+            0.4675708702201232,
+            0.4515279407983482
+          ],
+          "Al1": [
+            0.4675708702201233,
+            0.4515279407983482
+          ],
+          "Si": [
+            0.4675708702201233,
+            0.4515279407983481
+          ],
+          "Ga2": [
+            0.4675708702201233,
+            0.4515279407983482
+          ],
+          "Al2": [
+            0.4675708702201233,
+            0.4515279407983482
+          ],
+          "Mg": [
+            0.4675708702201232,
+            0.4515279407983482
+          ],
+          "Ga3": [
+            0.4675708702201232,
+            0.4515279407983482
+          ],
+          "Al3": [
+            0.4675708702201233,
+            0.4515279407983482
+          ],
+          "spare1": [
+            0.4675708702201233,
+            0.4515279407983482
+          ],
+          "spare2": [
+            0.4675708702201233,
+            0.4515279407983482
+          ]
+        },
+        "holder_opening_m": 0.099,
+        "shadowing": {
+          "N": {
+            "cos^1": {
+              "culprits_pct": {},
+              "lip_loss_usable_pct": 0.0,
+              "lip_loss_opening_pct": 8.187076538203076,
+              "other_solids_loss_usable_pct": 0.0,
+              "ratio_with_lip": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.9181292346179692,
+                0.11775603506058661
+              ],
+              "ratio_all": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.9181292346179692,
+                0.11775603506058661
+              ]
+            },
+            "cos^4": {
+              "culprits_pct": {},
+              "lip_loss_usable_pct": 0.0,
+              "lip_loss_opening_pct": 8.714411968541501,
+              "other_solids_loss_usable_pct": 0.0,
+              "ratio_with_lip": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.912855880314585,
+                0.11687519846973182
+              ],
+              "ratio_all": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.912855880314585,
+                0.11687519846973182
+              ]
+            }
+          },
+          "Ga1": {
+            "cos^1": {
+              "culprits_pct": {},
+              "lip_loss_usable_pct": 0.0,
+              "lip_loss_opening_pct": 0.0,
+              "other_solids_loss_usable_pct": 0.0,
+              "ratio_with_lip": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.12293355821905867
+              ],
+              "ratio_all": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.12293355821905867
+              ]
+            }
+          },
+          "Ga2": {
+            "cos^1": {
+              "culprits_pct": {},
+              "lip_loss_usable_pct": 0.0,
+              "lip_loss_opening_pct": 0.0,
+              "other_solids_loss_usable_pct": 0.0,
+              "ratio_with_lip": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.13150571529935354
+              ],
+              "ratio_all": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.13150571529935354
+              ]
+            }
+          },
+          "Ga3": {
+            "cos^1": {
+              "culprits_pct": {},
+              "lip_loss_usable_pct": 0.0,
+              "lip_loss_opening_pct": 0.0,
+              "other_solids_loss_usable_pct": 0.0,
+              "ratio_with_lip": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.10511566955730292
+              ],
+              "ratio_all": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.10511566955730292
+              ]
+            }
+          }
+        },
+        "lip_shadow_inner_edge_mm": {
+          "3 mm overlap 1 mm lip": {
+            "N": 94.85549307949044,
+            "Ga": 95.96446968620943
+          },
+          "3 mm overlap 2 mm lip": {
+            "N": 92.71098615898087,
+            "Ga": 94.92893937241887
+          },
+          "3 mm overlap 3 mm lip": {
+            "N": 90.56647923847133,
+            "Ga": 93.8934090586283
+          },
+          "1 mm overlap 1 mm lip": {
+            "N": 96.85549307949044,
+            "Ga": 97.96446968620944
+          },
+          "1 mm overlap 2 mm lip": {
+            "N": 94.71098615898089,
+            "Ga": 96.92893937241887
+          },
+          "1 mm overlap 3 mm lip": {
+            "N": 92.56647923847133,
+            "Ga": 95.8934090586283
+          }
+        },
+        "nitrogen_adjustment": {
+          "tilt_from_centre_pointing_port_deg": 6.412435400990799,
+          "aim_shift_per_0.8deg_mm_plate": [
+            3.96288753360537,
+            7.781385843342453
+          ],
+          "aim_shift_per_0.8deg_mm_flange": [
+            8.151949968359865,
+            16.006880725610905
+          ]
+        },
+        "rho_m": [
+          0.0,
+          0.003,
+          0.006,
+          0.009000000000000001,
+          0.012,
+          0.015,
+          0.018000000000000002,
+          0.021,
+          0.024,
+          0.027,
+          0.03,
+          0.033,
+          0.036000000000000004,
+          0.039,
+          0.042,
+          0.045,
+          0.048,
+          0.051000000000000004,
+          0.054,
+          0.057,
+          0.06,
+          0.063,
+          0.066,
+          0.069,
+          0.07200000000000001,
+          0.075,
+          0.078,
+          0.081,
+          0.084,
+          0.08700000000000001,
+          0.09,
+          0.093,
+          0.096,
+          0.099
+        ]
+      },
+      {
+        "layout": "B-p",
+        "feasible_at_margin": true,
+        "min_clearance_m": 0.006090182704601159,
+        "min_clearance_sampled_m": 0.008885738651283172,
+        "clearance_is": "certified lower bound (sampled value: upper estimate)",
+        "closest_pairs": [
+          [
+            0.006090182704601159,
+            "Ga1",
+            "Al1"
+          ],
+          [
+            0.0060907736563545764,
+            "Ga3",
+            "Al3"
+          ],
+          [
+            0.006093917752768677,
+            "Ga2",
+            "Al2"
+          ],
+          [
+            0.011653723085592704,
+            "spare1",
+            "spare2"
+          ],
+          [
+            0.011931318586516646,
+            "Al2",
+            "Mg"
+          ]
+        ],
+        "holder_clearance_m": {
+          "N": 0.22263247944395753,
+          "Ga1": 0.20763247944395752,
+          "Al1": 0.22198578840488434,
+          "Si": 0.22814578741272856,
+          "Ga2": 0.20763247944395752,
+          "Al2": 0.22199007611277669,
+          "Mg": 0.22816016726655913,
+          "Ga3": 0.20763247944395752,
+          "Al3": 0.2219991575323231,
+          "spare1": 0.22814681073810122,
+          "spare2": 0.22814910143172415
+        },
+        "shutter_sides": {
+          "N": 1,
+          "Ga1": 1,
+          "Al1": 1,
+          "Si": 1,
+          "Ga2": 1,
+          "Al2": 1,
+          "Mg": 1,
+          "Ga3": 1,
+          "Al3": 1,
+          "spare1": 1,
+          "spare2": 1
+        },
+        "port_azimuths_deg": {
+          "N": 0.0,
+          "Ga1": 38.72950819672131,
+          "Al1": 77.45901639344262,
+          "Si": 105.86065573770492,
+          "Ga2": 139.79508196721312,
+          "Al2": 178.52459016393442,
+          "Mg": 206.9262295081967,
+          "Ga3": 240.86065573770492,
+          "Al3": 279.59016393442624,
+          "spare1": 307.99180327868856,
+          "spare2": 331.59836065573774
+        },
+        "port_polar_deg": {
+          "N": 46.0,
+          "Ga1": 46,
+          "Al1": 46.0,
+          "Si": 46.0,
+          "Ga2": 46,
+          "Al2": 46.0,
+          "Mg": 46.0,
+          "Ga3": 46,
+          "Al3": 46.0,
+          "spare1": 46.0,
+          "spare2": 46.0
+        },
+        "flange_centre_radial_and_depth_m": {
+          "N": [
+            0.4124974100389175,
+            0.49644121850013156
+          ],
+          "Ga1": [
+            0.4675708702201232,
+            0.4515279407983482
+          ],
+          "Al1": [
+            0.4675708702201232,
+            0.4515279407983482
+          ],
+          "Si": [
+            0.4675708702201233,
+            0.4515279407983482
+          ],
+          "Ga2": [
+            0.4675708702201232,
+            0.4515279407983482
+          ],
+          "Al2": [
+            0.4675708702201232,
+            0.4515279407983482
+          ],
+          "Mg": [
+            0.4675708702201233,
+            0.4515279407983482
+          ],
+          "Ga3": [
+            0.4675708702201233,
+            0.4515279407983482
+          ],
+          "Al3": [
+            0.4675708702201233,
+            0.4515279407983482
+          ],
+          "spare1": [
+            0.4675708702201232,
+            0.4515279407983482
+          ],
+          "spare2": [
+            0.4675708702201232,
+            0.4515279407983482
+          ]
+        },
+        "holder_opening_m": 0.099,
+        "shadowing": {
+          "N": {
+            "cos^1": {
+              "culprits_pct": {},
+              "lip_loss_usable_pct": 0.0,
+              "lip_loss_opening_pct": 0.0,
+              "other_solids_loss_usable_pct": 0.0,
+              "ratio_with_lip": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.11332746957348187
+              ],
+              "ratio_all": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.9992284551840591,
+                0.11332746957348187
+              ]
+            },
+            "cos^4": {
+              "culprits_pct": {},
+              "lip_loss_usable_pct": 0.0,
+              "lip_loss_opening_pct": 0.0,
+              "other_solids_loss_usable_pct": 0.0,
+              "ratio_with_lip": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.11057123218356142
+              ],
+              "ratio_all": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.9992795850341571,
+                0.11057123218356142
+              ]
+            }
+          },
+          "Ga1": {
+            "cos^1": {
+              "culprits_pct": {},
+              "lip_loss_usable_pct": 0.0,
+              "lip_loss_opening_pct": 0.0,
+              "other_solids_loss_usable_pct": 0.0,
+              "ratio_with_lip": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.1247088867226827
+              ],
+              "ratio_all": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.1247088867226827
+              ]
+            }
+          },
+          "Ga2": {
+            "cos^1": {
+              "culprits_pct": {},
+              "lip_loss_usable_pct": 0.0,
+              "lip_loss_opening_pct": 0.0,
+              "other_solids_loss_usable_pct": 0.0,
+              "ratio_with_lip": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.11928147270623962
+              ],
+              "ratio_all": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.11928147270623962
+              ]
+            }
+          },
+          "Ga3": {
+            "cos^1": {
+              "culprits_pct": {},
+              "lip_loss_usable_pct": 0.0,
+              "lip_loss_opening_pct": 0.0,
+              "other_solids_loss_usable_pct": 0.0,
+              "ratio_with_lip": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.10263829758743169
+              ],
+              "ratio_all": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.10263829758743169
+              ]
+            }
+          }
+        },
+        "lip_shadow_inner_edge_mm": {
+          "3 mm overlap 1 mm lip": {
+            "N": 95.96446968620943,
+            "Ga": 95.96446968620943
+          },
+          "3 mm overlap 2 mm lip": {
+            "N": 94.92893937241887,
+            "Ga": 94.92893937241887
+          },
+          "3 mm overlap 3 mm lip": {
+            "N": 93.8934090586283,
+            "Ga": 93.8934090586283
+          },
+          "1 mm overlap 1 mm lip": {
+            "N": 97.96446968620944,
+            "Ga": 97.96446968620944
+          },
+          "1 mm overlap 2 mm lip": {
+            "N": 96.92893937241887,
+            "Ga": 96.92893937241887
+          },
+          "1 mm overlap 3 mm lip": {
+            "N": 95.8934090586283,
+            "Ga": 95.8934090586283
+          }
+        },
+        "nitrogen_adjustment": {
+          "tilt_from_centre_pointing_port_deg": 13.60442401668781,
+          "aim_shift_per_0.8deg_mm_plate": [
+            4.020707346509977,
+            4.804354399889549
+          ],
+          "aim_shift_per_0.8deg_mm_flange": [
+            8.209769781264473,
+            9.809876763334891
+          ]
+        },
+        "rho_m": [
+          0.0,
+          0.003,
+          0.006,
+          0.009000000000000001,
+          0.012,
+          0.015,
+          0.018000000000000002,
+          0.021,
+          0.024,
+          0.027,
+          0.03,
+          0.033,
+          0.036000000000000004,
+          0.039,
+          0.042,
+          0.045,
+          0.048,
+          0.051000000000000004,
+          0.054,
+          0.057,
+          0.06,
+          0.063,
+          0.066,
+          0.069,
+          0.07200000000000001,
+          0.075,
+          0.078,
+          0.081,
+          0.084,
+          0.08700000000000001,
+          0.09,
+          0.093,
+          0.096,
+          0.099
+        ]
+      },
+      {
+        "layout": "C-p",
+        "feasible_at_margin": true,
+        "min_clearance_m": 0.010656648770999191,
+        "min_clearance_sampled_m": 0.020648706833005882,
+        "clearance_is": "certified lower bound (sampled value: upper estimate)",
+        "closest_pairs": [
+          [
+            0.010656648770999191,
+            "Ga3",
+            "Al3"
+          ],
+          [
+            0.010680999709411157,
+            "Ga2",
+            "Al2"
+          ],
+          [
+            0.010750061832887093,
+            "Ga1",
+            "Al1"
+          ],
+          [
+            0.020521907998987204,
+            "spare1",
+            "spare2"
+          ],
+          [
+            0.021997871592184793,
+            "Al3",
+            "spare1"
+          ]
+        ],
+        "holder_clearance_m": {
+          "N": 0.1898569586366236,
+          "Ga1": 0.20763247944395752,
+          "Al1": 0.221984556446017,
+          "Si": 0.22814796467318718,
+          "Ga2": 0.20763247944395752,
+          "Al2": 0.22198400643785776,
+          "Mg": 0.22815176972431006,
+          "Ga3": 0.20763247944395752,
+          "Al3": 0.22198373309426117,
+          "spare1": 0.22817058633727247,
+          "spare2": 0.22816192232878224
+        },
+        "shutter_sides": {
+          "N": -1,
+          "Ga1": 1,
+          "Al1": 1,
+          "Si": 1,
+          "Ga2": 1,
+          "Al2": 1,
+          "Mg": 1,
+          "Ga3": 1,
+          "Al3": 1,
+          "spare1": 1,
+          "spare2": 1
+        },
+        "port_azimuths_deg": {
+          "N": 0.0,
+          "Ga1": 18.690744920993225,
+          "Al1": 61.35440180586907,
+          "Si": 92.64108352144468,
+          "Ga2": 130.02257336343115,
+          "Al2": 172.68623024830697,
+          "Mg": 203.9729119638826,
+          "Ga3": 241.35440180586903,
+          "Al3": 284.01805869074485,
+          "spare1": 315.3047404063205,
+          "spare2": 341.30925507900673
+        },
+        "port_polar_deg": {
+          "N": 65.0,
+          "Ga1": 46,
+          "Al1": 46.0,
+          "Si": 46.0,
+          "Ga2": 46,
+          "Al2": 46.0,
+          "Mg": 46.0,
+          "Ga3": 46,
+          "Al3": 46.0,
+          "spare1": 46.0,
+          "spare2": 46.0
+        },
+        "flange_centre_radial_and_depth_m": {
+          "N": [
+            0.5753217279982057,
+            0.3008123094591559
+          ],
+          "Ga1": [
+            0.4675708702201232,
+            0.4515279407983482
+          ],
+          "Al1": [
+            0.4675708702201233,
+            0.4515279407983482
+          ],
+          "Si": [
+            0.4675708702201233,
+            0.4515279407983481
+          ],
+          "Ga2": [
+            0.4675708702201233,
+            0.4515279407983482
+          ],
+          "Al2": [
+            0.4675708702201233,
+            0.4515279407983482
+          ],
+          "Mg": [
+            0.4675708702201232,
+            0.4515279407983482
+          ],
+          "Ga3": [
+            0.4675708702201232,
+            0.4515279407983482
+          ],
+          "Al3": [
+            0.4675708702201233,
+            0.4515279407983482
+          ],
+          "spare1": [
+            0.4675708702201233,
+            0.4515279407983482
+          ],
+          "spare2": [
+            0.4675708702201233,
+            0.4515279407983482
+          ]
+        },
+        "holder_opening_m": 0.099,
+        "shadowing": {
+          "N": {
+            "cos^1": {
+              "culprits_pct": {},
+              "lip_loss_usable_pct": 0.0,
+              "lip_loss_opening_pct": 8.19155241037446,
+              "other_solids_loss_usable_pct": 0.0,
+              "ratio_with_lip": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.9180844758962554,
+                0.11714097588697217
+              ],
+              "ratio_all": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.9180844758962554,
+                0.11714097588697217
+              ]
+            },
+            "cos^4": {
+              "culprits_pct": {},
+              "lip_loss_usable_pct": 0.0,
+              "lip_loss_opening_pct": 8.703998573090432,
+              "other_solids_loss_usable_pct": 0.0,
+              "ratio_with_lip": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.9129600142690957,
+                0.11636699408782038
+              ],
+              "ratio_all": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.9129600142690957,
+                0.11636699408782038
+              ]
+            }
+          },
+          "Ga1": {
+            "cos^1": {
+              "culprits_pct": {},
+              "lip_loss_usable_pct": 0.0,
+              "lip_loss_opening_pct": 0.0,
+              "other_solids_loss_usable_pct": 0.0,
+              "ratio_with_lip": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.12293355821905867
+              ],
+              "ratio_all": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.12293355821905867
+              ]
+            }
+          },
+          "Ga2": {
+            "cos^1": {
+              "culprits_pct": {},
+              "lip_loss_usable_pct": 0.0,
+              "lip_loss_opening_pct": 0.0,
+              "other_solids_loss_usable_pct": 0.0,
+              "ratio_with_lip": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.13150571529935354
+              ],
+              "ratio_all": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.13150571529935354
+              ]
+            }
+          },
+          "Ga3": {
+            "cos^1": {
+              "culprits_pct": {},
+              "lip_loss_usable_pct": 0.0,
+              "lip_loss_opening_pct": 0.0,
+              "other_solids_loss_usable_pct": 0.0,
+              "ratio_with_lip": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.10511566955730292
+              ],
+              "ratio_all": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.10511566955730292
+              ]
+            }
+          }
+        },
+        "lip_shadow_inner_edge_mm": {
+          "3 mm overlap 1 mm lip": {
+            "N": 94.85549307949044,
+            "Ga": 95.96446968620943
+          },
+          "3 mm overlap 2 mm lip": {
+            "N": 92.71098615898087,
+            "Ga": 94.92893937241887
+          },
+          "3 mm overlap 3 mm lip": {
+            "N": 90.56647923847133,
+            "Ga": 93.8934090586283
+          },
+          "1 mm overlap 1 mm lip": {
+            "N": 96.85549307949044,
+            "Ga": 97.96446968620944
+          },
+          "1 mm overlap 2 mm lip": {
+            "N": 94.71098615898089,
+            "Ga": 96.92893937241887
+          },
+          "1 mm overlap 3 mm lip": {
+            "N": 92.56647923847133,
+            "Ga": 95.8934090586283
+          }
+        },
+        "nitrogen_adjustment": {
+          "tilt_from_centre_pointing_port_deg": 5.64072297397287,
+          "aim_shift_per_0.8deg_mm_plate": [
+            4.0526327209270425,
+            8.14371832743671
+          ],
+          "aim_shift_per_0.8deg_mm_flange": [
+            8.241695155681539,
+            16.56159057836276
+          ]
+        },
+        "rho_m": [
+          0.0,
+          0.003,
+          0.006,
+          0.009000000000000001,
+          0.012,
+          0.015,
+          0.018000000000000002,
+          0.021,
+          0.024,
+          0.027,
+          0.03,
+          0.033,
+          0.036000000000000004,
+          0.039,
+          0.042,
+          0.045,
+          0.048,
+          0.051000000000000004,
+          0.054,
+          0.057,
+          0.06,
+          0.063,
+          0.066,
+          0.069,
+          0.07200000000000001,
+          0.075,
+          0.078,
+          0.081,
+          0.084,
+          0.08700000000000001,
+          0.09,
+          0.093,
+          0.096,
+          0.099
+        ]
+      },
+      {
+        "layout": "B-L",
+        "feasible_at_margin": true,
+        "min_clearance_m": 0.006090182704601159,
+        "min_clearance_sampled_m": 0.008885738651283172,
+        "clearance_is": "certified lower bound (sampled value: upper estimate)",
+        "closest_pairs": [
+          [
+            0.006090182704601159,
+            "Ga1",
+            "Al1"
+          ],
+          [
+            0.0060907736563545764,
+            "Ga3",
+            "Al3"
+          ],
+          [
+            0.006093917752768677,
+            "Ga2",
+            "Al2"
+          ],
+          [
+            0.011653723085592704,
+            "spare1",
+            "spare2"
+          ],
+          [
+            0.011931318586516646,
+            "Al2",
+            "Mg"
+          ]
+        ],
+        "holder_clearance_m": {
+          "N": 0.22263247944395753,
+          "Ga1": 0.20763247944395752,
+          "Al1": 0.22198578840488434,
+          "Si": 0.22814578741272856,
+          "Ga2": 0.20763247944395752,
+          "Al2": 0.22199007611277669,
+          "Mg": 0.22816016726655913,
+          "Ga3": 0.20763247944395752,
+          "Al3": 0.2219991575323231,
+          "spare1": 0.22814681073810122,
+          "spare2": 0.22814910143172415
+        },
+        "shutter_sides": {
+          "N": 1,
+          "Ga1": 1,
+          "Al1": 1,
+          "Si": 1,
+          "Ga2": 1,
+          "Al2": 1,
+          "Mg": 1,
+          "Ga3": 1,
+          "Al3": 1,
+          "spare1": 1,
+          "spare2": 1
+        },
+        "port_azimuths_deg": {
+          "N": 0.0,
+          "Ga1": 38.72950819672131,
+          "Al1": 77.45901639344262,
+          "Si": 105.86065573770492,
+          "Ga2": 139.79508196721312,
+          "Al2": 178.52459016393442,
+          "Mg": 206.9262295081967,
+          "Ga3": 240.86065573770492,
+          "Al3": 279.59016393442624,
+          "spare1": 307.99180327868856,
+          "spare2": 331.59836065573774
+        },
+        "port_polar_deg": {
+          "N": 46.0,
+          "Ga1": 46,
+          "Al1": 46.0,
+          "Si": 46.0,
+          "Ga2": 46,
+          "Al2": 46.0,
+          "Mg": 46.0,
+          "Ga3": 46,
+          "Al3": 46.0,
+          "spare1": 46.0,
+          "spare2": 46.0
+        },
+        "flange_centre_radial_and_depth_m": {
+          "N": [
+            0.4179527421949665,
+            0.49289620114213717
+          ],
+          "Ga1": [
+            0.4675708702201232,
+            0.4515279407983482
+          ],
+          "Al1": [
+            0.4675708702201232,
+            0.4515279407983482
+          ],
+          "Si": [
+            0.4675708702201233,
+            0.4515279407983482
+          ],
+          "Ga2": [
+            0.4675708702201232,
+            0.4515279407983482
+          ],
+          "Al2": [
+            0.4675708702201232,
+            0.4515279407983482
+          ],
+          "Mg": [
+            0.4675708702201233,
+            0.4515279407983482
+          ],
+          "Ga3": [
+            0.4675708702201233,
+            0.4515279407983482
+          ],
+          "Al3": [
+            0.4675708702201233,
+            0.4515279407983482
+          ],
+          "spare1": [
+            0.4675708702201232,
+            0.4515279407983482
+          ],
+          "spare2": [
+            0.4675708702201232,
+            0.4515279407983482
+          ]
+        },
+        "holder_opening_m": 0.099,
+        "shadowing": {
+          "N": {
+            "cos^1": {
+              "culprits_pct": {},
+              "lip_loss_usable_pct": 0.0,
+              "lip_loss_opening_pct": 0.0,
+              "other_solids_loss_usable_pct": 0.0,
+              "ratio_with_lip": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.12506608448854747
+              ],
+              "ratio_all": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.12506608448854747
+              ]
+            },
+            "cos^4": {
+              "culprits_pct": {},
+              "lip_loss_usable_pct": 0.0,
+              "lip_loss_opening_pct": 0.0,
+              "other_solids_loss_usable_pct": 0.0,
+              "ratio_with_lip": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.12383716062325983
+              ],
+              "ratio_all": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.12383716062325983
+              ]
+            }
+          },
+          "Ga1": {
+            "cos^1": {
+              "culprits_pct": {},
+              "lip_loss_usable_pct": 0.0,
+              "lip_loss_opening_pct": 0.0,
+              "other_solids_loss_usable_pct": 0.0,
+              "ratio_with_lip": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.1247088867226827
+              ],
+              "ratio_all": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.1247088867226827
+              ]
+            }
+          },
+          "Ga2": {
+            "cos^1": {
+              "culprits_pct": {},
+              "lip_loss_usable_pct": 0.0,
+              "lip_loss_opening_pct": 0.0,
+              "other_solids_loss_usable_pct": 0.0,
+              "ratio_with_lip": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.11928147270623962
+              ],
+              "ratio_all": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.11928147270623962
+              ]
+            }
+          },
+          "Ga3": {
+            "cos^1": {
+              "culprits_pct": {},
+              "lip_loss_usable_pct": 0.0,
+              "lip_loss_opening_pct": 0.0,
+              "other_solids_loss_usable_pct": 0.0,
+              "ratio_with_lip": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.10263829758743169
+              ],
+              "ratio_all": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.10263829758743169
+              ]
+            }
+          }
+        },
+        "lip_shadow_inner_edge_mm": {
+          "3 mm overlap 1 mm lip": {
+            "N": 95.96446968620943,
+            "Ga": 95.96446968620943
+          },
+          "3 mm overlap 2 mm lip": {
+            "N": 94.92893937241887,
+            "Ga": 94.92893937241887
+          },
+          "3 mm overlap 3 mm lip": {
+            "N": 93.8934090586283,
+            "Ga": 93.8934090586283
+          },
+          "1 mm overlap 1 mm lip": {
+            "N": 97.96446968620944,
+            "Ga": 97.96446968620944
+          },
+          "1 mm overlap 2 mm lip": {
+            "N": 96.92893937241887,
+            "Ga": 96.92893937241887
+          },
+          "1 mm overlap 3 mm lip": {
+            "N": 95.8934090586283,
+            "Ga": 95.8934090586283
+          }
+        },
+        "nitrogen_adjustment": {
+          "tilt_from_centre_pointing_port_deg": 12.361848702362831,
+          "aim_shift_per_0.8deg_mm_plate": [
+            4.077774723077426,
+            4.943850741308042
+          ],
+          "aim_shift_per_0.8deg_mm_flange": [
+            8.266837157831922,
+            10.022625521641432
+          ]
+        },
+        "rho_m": [
+          0.0,
+          0.003,
+          0.006,
+          0.009000000000000001,
+          0.012,
+          0.015,
+          0.018000000000000002,
+          0.021,
+          0.024,
+          0.027,
+          0.03,
+          0.033,
+          0.036000000000000004,
+          0.039,
+          0.042,
+          0.045,
+          0.048,
+          0.051000000000000004,
+          0.054,
+          0.057,
+          0.06,
+          0.063,
+          0.066,
+          0.069,
+          0.07200000000000001,
+          0.075,
+          0.078,
+          0.081,
+          0.084,
+          0.08700000000000001,
+          0.09,
+          0.093,
+          0.096,
+          0.099
+        ]
+      }
+    ]
+  },
+  "disabled_physics": [],
+  "warnings": [
+    "Simplified solids with assumed dimensions; no chamber drawing, cryoshroud, RHEED or pyrometer lines of sight",
+    "Clearances are certified lower bounds for the modelled solids (capsule bodies, disk flanges and blades) over the continuous shutter motion; real cell, shutter and flange drawings may differ",
+    "Shadowing with flat cos^n emitters; the beam models of the comparison are not used here"
+  ]
+}

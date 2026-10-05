@@ -1,0 +1,1029 @@
+{
+  "schema_version": "0.1",
+  "run_id": "nitrogen_aim_pressure",
+  "created_utc": "2026-10-03T05:46:56+00:00",
+  "label": "representative_chamber",
+  "validation_status": "not_validated",
+  "package_version": "0.1.0",
+  "git_commit": "3b9ea389c10ead029a70eaf51142f34edaf688fd-dirty",
+  "python": "3.12.13",
+  "numpy": "2.4.4",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "source_sha256": {
+    "scripts/nitrogen_aim_pressure.py": "3ed2958db5f21a064894ce635d1f7a21d5106a0b52aec4e36597a4bc4a655c0f",
+    "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+    "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+    "src/mbe_twin/aperture.py": "08ff8b237847ca4a16a60b866748fa348a757f18a69abe7c8dbdaf652a466e6b",
+    "src/mbe_twin/beam.py": "90a90503e0a530d61bed26d42ca161b2d0e4d0d2f6d0f794ccf7fc4c9083ed93",
+    "src/mbe_twin/crucible.py": "981dab446a3caf8230a0ba691141ac8500a259d98518f810e4d8c7eda68256d2",
+    "src/mbe_twin/layout.py": "489e036db4879cad618d995082f958db33c6e2d83e2392c70b8e9ffa075b9917",
+    "src/mbe_twin/vacuum.py": "21b1538e8ea911537a4d42f584dd08efca470db7db594259be2d16b4c806db7b",
+    "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+    "data/design/design_envelope.json": "e1d2e14d6e2277cab563a3231116889ed4f053186e600e3ae68e050ec1c79906",
+    "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+    "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
+    "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
+    "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
+  },
+  "solver": null,
+  "inputs_sha256": "14ddab30936d160f770cfed512f7843d6618b4d92689c43c0419b63a6eadf52c",
+  "inputs": {
+    "p_scan_Pa": [
+      0.0,
+      0.0025,
+      0.005,
+      0.0075,
+      0.01,
+      0.015,
+      0.025
+    ],
+    "angles_deg": [
+      46.0,
+      65.0
+    ],
+    "offsets_mm": [
+      45.0,
+      52.5,
+      60.0,
+      67.5,
+      75.0,
+      82.5,
+      90.0,
+      97.5,
+      105.0,
+      112.5,
+      120.0,
+      127.5,
+      135.0,
+      142.5,
+      150.0
+    ],
+    "L_over_r": 2.0,
+    "plate_radius_m": 0.03,
+    "eta": 0.3,
+    "S_eff_m3_s": 4.0,
+    "feed_max_sccm": 35.0,
+    "targets_um_h": [
+      1.0,
+      0.5
+    ],
+    "n_particles": 20000,
+    "n_seed": 80,
+    "usable_radius_m": 0.094,
+    "lip_height_m": 0.002,
+    "T0_C": 740.0,
+    "heater_limit": "1473 K element",
+    "scattered": "gas+plume",
+    "factor_layout": "B-L"
+  },
+  "outputs": {
+    "summary": {
+      "vacuum": {
+        "best": {
+          "angle_deg": 46.0,
+          "offset_mm": 105.0,
+          "thickness_pct": 0.38605356108710953,
+          "q_atoms_s": 4.4793374224090143e+18
+        },
+        "per_angle": {
+          "46": {
+            "offset_mm": 105.0,
+            "thickness_pct": 0.38605356108710953,
+            "q_atoms_s": 4.4793374224090143e+18
+          },
+          "65": {
+            "offset_mm": 45.0,
+            "thickness_pct": 0.43783979346935803,
+            "q_atoms_s": 6.322825442855092e+18
+          }
+        }
+      },
+      "1 um/h self-consistent": {
+        "best": {
+          "angle_deg": 46.0,
+          "offset_mm": 97.5,
+          "thickness_pct": 0.5964872131631147,
+          "q_atoms_s": 5.200835959391905e+18,
+          "pressure_Pa": 0.008975661208123095,
+          "feed_sccm": 19.35713286157472,
+          "target_reached": true
+        },
+        "per_angle": {
+          "46": {
+            "offset_mm": 97.5,
+            "thickness_pct": 0.5964872131631147,
+            "q_atoms_s": 5.200835959391905e+18,
+            "pressure_Pa": 0.008975661208123095,
+            "feed_sccm": 19.35713286157472,
+            "target_reached": true
+          },
+          "65": {
+            "offset_mm": 45.0,
+            "thickness_pct": 2.162543160455438,
+            "q_atoms_s": 8.091548144893428e+18,
+            "pressure_Pa": 0.013964484818373707,
+            "feed_sccm": 30.11615319527286,
+            "target_reached": true
+          }
+        }
+      },
+      "0.5 um/h self-consistent": {
+        "best": {
+          "angle_deg": 46.0,
+          "offset_mm": 97.5,
+          "thickness_pct": 0.4709387782654198,
+          "q_atoms_s": 2.471321897967011e+18,
+          "pressure_Pa": 0.004265035133882821,
+          "feed_sccm": 9.198080211754986,
+          "target_reached": true
+        },
+        "per_angle": {
+          "46": {
+            "offset_mm": 97.5,
+            "thickness_pct": 0.4709387782654198,
+            "q_atoms_s": 2.471321897967011e+18,
+            "pressure_Pa": 0.004265035133882821,
+            "feed_sccm": 9.198080211754986,
+            "target_reached": true
+          },
+          "65": {
+            "offset_mm": 45.0,
+            "thickness_pct": 1.2049246279064272,
+            "q_atoms_s": 3.6810985671016074e+18,
+            "pressure_Pa": 0.006352881319462833,
+            "feed_sccm": 13.700780912203488,
+            "target_reached": true
+          }
+        }
+      },
+      "feed-limit pressure": {
+        "best": {
+          "angle_deg": 46.0,
+          "offset_mm": 82.5,
+          "thickness_pct": 0.8008577575559988,
+          "pressure_Pa": 0.016229063701263043
+        },
+        "per_angle": {
+          "46": {
+            "offset_mm": 82.5,
+            "thickness_pct": 0.8008577575559988,
+            "pressure_Pa": 0.016229063701263043
+          },
+          "65": {
+            "offset_mm": 45.0,
+            "thickness_pct": 2.425553428714473,
+            "pressure_Pa": 0.016229063701263043
+          }
+        }
+      }
+    },
+    "aims": [
+      {
+        "angle_deg": 46.0,
+        "offset_mm": 45.0,
+        "cases": {
+          "vacuum": {
+            "thickness_pct": 4.467322685505497,
+            "q_atoms_s": 4.093781765743974e+18
+          },
+          "1 um/h self-consistent": {
+            "thickness_pct": 4.026476882788082,
+            "q_atoms_s": 4.784875595068121e+18,
+            "pressure_Pa": 0.008257792131819009,
+            "feed_sccm": 17.808958664150897,
+            "target_reached": true
+          },
+          "0.5 um/h self-consistent": {
+            "thickness_pct": 4.264945128748921,
+            "q_atoms_s": 2.2867878428485297e+18,
+            "pressure_Pa": 0.003946564185551226,
+            "feed_sccm": 8.511257891208032,
+            "target_reached": true
+          },
+          "feed-limit pressure": {
+            "thickness_pct": 3.2099506991841436,
+            "pressure_Pa": 0.016229063701263043
+          }
+        }
+      },
+      {
+        "angle_deg": 46.0,
+        "offset_mm": 52.5,
+        "cases": {
+          "vacuum": {
+            "thickness_pct": 3.8524250420563964,
+            "q_atoms_s": 4.114985808846106e+18
+          },
+          "1 um/h self-consistent": {
+            "thickness_pct": 3.394006647678549,
+            "q_atoms_s": 4.812709482949853e+18,
+            "pressure_Pa": 0.00830582816865654,
+            "feed_sccm": 17.91255436876217,
+            "target_reached": true
+          },
+          "0.5 um/h self-consistent": {
+            "thickness_pct": 3.620892281225653,
+            "q_atoms_s": 2.2993564494478628e+18,
+            "pressure_Pa": 0.003968255228217179,
+            "feed_sccm": 8.558037330076663,
+            "target_reached": true
+          },
+          "feed-limit pressure": {
+            "thickness_pct": 2.5708437809174844,
+            "pressure_Pa": 0.016229063701263043
+          }
+        }
+      },
+      {
+        "angle_deg": 46.0,
+        "offset_mm": 60.0,
+        "cases": {
+          "vacuum": {
+            "thickness_pct": 3.2294339079663703,
+            "q_atoms_s": 4.1430675498516726e+18
+          },
+          "1 um/h self-consistent": {
+            "thickness_pct": 2.7513893398207148,
+            "q_atoms_s": 4.850041259612976e+18,
+            "pressure_Pa": 0.008370255768804243,
+            "feed_sccm": 18.051500524047405,
+            "target_reached": true
+          },
+          "0.5 um/h self-consistent": {
+            "thickness_pct": 2.9673737572566554,
+            "q_atoms_s": 2.3161023474341146e+18,
+            "pressure_Pa": 0.003997155487353204,
+            "feed_sccm": 8.620364343413986,
+            "target_reached": true
+          },
+          "feed-limit pressure": {
+            "thickness_pct": 1.9419117377857449,
+            "pressure_Pa": 0.016229063701263043
+          }
+        }
+      },
+      {
+        "angle_deg": 46.0,
+        "offset_mm": 67.5,
+        "cases": {
+          "vacuum": {
+            "thickness_pct": 2.607140971858101,
+            "q_atoms_s": 4.1779595966265395e+18
+          },
+          "1 um/h self-consistent": {
+            "thickness_pct": 2.1102062002316364,
+            "q_atoms_s": 4.896837920746249e+18,
+            "pressure_Pa": 0.008451017973050486,
+            "feed_sccm": 18.225674290362615,
+            "target_reached": true
+          },
+          "0.5 um/h self-consistent": {
+            "thickness_pct": 2.3149897152810066,
+            "q_atoms_s": 2.3369975300957353e+18,
+            "pressure_Pa": 0.004033216628661433,
+            "feed_sccm": 8.698134692278277,
+            "target_reached": true
+          },
+          "feed-limit pressure": {
+            "thickness_pct": 1.4636045657302965,
+            "pressure_Pa": 0.016229063701263043
+          }
+        }
+      },
+      {
+        "angle_deg": 46.0,
+        "offset_mm": 75.0,
+        "cases": {
+          "vacuum": {
+            "thickness_pct": 2.001493297835843,
+            "q_atoms_s": 4.2203660586701727e+18
+          },
+          "1 um/h self-consistent": {
+            "thickness_pct": 1.485804171876315,
+            "q_atoms_s": 4.954142525979884e+18,
+            "pressure_Pa": 0.0085499149054395,
+            "feed_sccm": 18.43895785972504,
+            "target_reached": true
+          },
+          "0.5 um/h self-consistent": {
+            "thickness_pct": 1.679330885811069,
+            "q_atoms_s": 2.362483830990806e+18,
+            "pressure_Pa": 0.004077201173467033,
+            "feed_sccm": 8.792992849010767,
+            "target_reached": true
+          },
+          "feed-limit pressure": {
+            "thickness_pct": 1.1171089217971077,
+            "pressure_Pa": 0.016229063701263043
+          }
+        }
+      },
+      {
+        "angle_deg": 46.0,
+        "offset_mm": 82.5,
+        "cases": {
+          "vacuum": {
+            "thickness_pct": 1.428202179042934,
+            "q_atoms_s": 4.2713737548364923e+18
+          },
+          "1 um/h self-consistent": {
+            "thickness_pct": 0.9779064540580839,
+            "q_atoms_s": 5.023589249611169e+18,
+            "pressure_Pa": 0.00866976684235801,
+            "feed_sccm": 18.69743350991436,
+            "target_reached": true
+          },
+          "0.5 um/h self-consistent": {
+            "thickness_pct": 1.0774152290962893,
+            "q_atoms_s": 2.393248902808518e+18,
+            "pressure_Pa": 0.004130295880517097,
+            "feed_sccm": 8.907498206864998,
+            "target_reached": true
+          },
+          "feed-limit pressure": {
+            "thickness_pct": 0.8008577575559988,
+            "pressure_Pa": 0.016229063701263043
+          }
+        }
+      },
+      {
+        "angle_deg": 46.0,
+        "offset_mm": 90.0,
+        "cases": {
+          "vacuum": {
+            "thickness_pct": 0.9073859738024657,
+            "q_atoms_s": 4.3311620254913495e+18
+          },
+          "1 um/h self-consistent": {
+            "thickness_pct": 0.6427177633302795,
+            "q_atoms_s": 5.105558199756382e+18,
+            "pressure_Pa": 0.008811229778669312,
+            "feed_sccm": 19.002515975670544,
+            "target_reached": true
+          },
+          "0.5 um/h self-consistent": {
+            "thickness_pct": 0.5396686488644045,
+            "q_atoms_s": 2.4294282067300874e+18,
+            "pressure_Pa": 0.004192734530242111,
+            "feed_sccm": 9.042154942496975,
+            "target_reached": true
+          },
+          "feed-limit pressure": {
+            "thickness_pct": 1.0422853044541682,
+            "pressure_Pa": 0.016229063701263043
+          }
+        }
+      },
+      {
+        "angle_deg": 46.0,
+        "offset_mm": 97.5,
+        "cases": {
+          "vacuum": {
+            "thickness_pct": 0.5198759227679766,
+            "q_atoms_s": 4.400161153309463e+18
+          },
+          "1 um/h self-consistent": {
+            "thickness_pct": 0.5964872131631147,
+            "q_atoms_s": 5.200835959391905e+18,
+            "pressure_Pa": 0.008975661208123095,
+            "feed_sccm": 19.35713286157472,
+            "target_reached": true
+          },
+          "0.5 um/h self-consistent": {
+            "thickness_pct": 0.4709387782654198,
+            "q_atoms_s": 2.471321897967011e+18,
+            "pressure_Pa": 0.004265035133882821,
+            "feed_sccm": 9.198080211754986,
+            "target_reached": true
+          },
+          "feed-limit pressure": {
+            "thickness_pct": 1.4933538162999405,
+            "pressure_Pa": 0.016229063701263043
+          }
+        }
+      },
+      {
+        "angle_deg": 46.0,
+        "offset_mm": 105.0,
+        "cases": {
+          "vacuum": {
+            "thickness_pct": 0.38605356108710953,
+            "q_atoms_s": 4.4793374224090143e+18
+          },
+          "1 um/h self-consistent": {
+            "thickness_pct": 0.9888488230271468,
+            "q_atoms_s": 5.311053103443649e+18,
+            "pressure_Pa": 0.009165875195270462,
+            "feed_sccm": 19.767353048808303,
+            "target_reached": true
+          },
+          "0.5 um/h self-consistent": {
+            "thickness_pct": 0.8300683072862598,
+            "q_atoms_s": 2.5195760240589896e+18,
+            "pressure_Pa": 0.004348312647551275,
+            "feed_sccm": 9.377678556554695,
+            "target_reached": true
+          },
+          "feed-limit pressure": {
+            "thickness_pct": 1.8746883918914887,
+            "pressure_Pa": 0.016229063701263043
+          }
+        }
+      },
+      {
+        "angle_deg": 46.0,
+        "offset_mm": 112.5,
+        "cases": {
+          "vacuum": {
+            "thickness_pct": 0.77320201116634,
+            "q_atoms_s": 4.5682988613534346e+18
+          },
+          "1 um/h self-consistent": {
+            "thickness_pct": 1.4143948775757462,
+            "q_atoms_s": 5.435888901343054e+18,
+            "pressure_Pa": 0.009381318219687983,
+            "feed_sccm": 20.23198280154175,
+            "target_reached": true
+          },
+          "0.5 um/h self-consistent": {
+            "thickness_pct": 1.2356679480920616,
+            "q_atoms_s": 2.573993978996775e+18,
+            "pressure_Pa": 0.004442227766384898,
+            "feed_sccm": 9.580218223641037,
+            "target_reached": true
+          },
+          "feed-limit pressure": {
+            "thickness_pct": 2.2822230784075725,
+            "pressure_Pa": 0.016229063701263043
+          }
+        }
+      },
+      {
+        "angle_deg": 46.0,
+        "offset_mm": 120.0,
+        "cases": {
+          "vacuum": {
+            "thickness_pct": 1.0780960744405055,
+            "q_atoms_s": 4.668882596335616e+18
+          },
+          "1 um/h self-consistent": {
+            "thickness_pct": 1.762054524872692,
+            "q_atoms_s": 5.57838813816729e+18,
+            "pressure_Pa": 0.00962724500571566,
+            "feed_sccm": 20.762354588196263,
+            "target_reached": true
+          },
+          "0.5 um/h self-consistent": {
+            "thickness_pct": 1.5828780153308704,
+            "q_atoms_s": 2.635792153586406e+18,
+            "pressure_Pa": 0.004548879751321146,
+            "feed_sccm": 9.810226531050551,
+            "target_reached": true
+          },
+          "feed-limit pressure": {
+            "thickness_pct": 2.622337293124158,
+            "pressure_Pa": 0.016229063701263043
+          }
+        }
+      },
+      {
+        "angle_deg": 46.0,
+        "offset_mm": 127.5,
+        "cases": {
+          "vacuum": {
+            "thickness_pct": 1.4799668035117615,
+            "q_atoms_s": 4.780594333285142e+18
+          },
+          "1 um/h self-consistent": {
+            "thickness_pct": 2.1946217231397664,
+            "q_atoms_s": 5.738222078253891e+18,
+            "pressure_Pa": 0.009903088217648945,
+            "feed_sccm": 21.35724487856548,
+            "target_reached": true
+          },
+          "0.5 um/h self-consistent": {
+            "thickness_pct": 1.9939859897754795,
+            "q_atoms_s": 2.704734042585691e+18,
+            "pressure_Pa": 0.004667860438952365,
+            "feed_sccm": 10.066823223487498,
+            "target_reached": true
+          },
+          "feed-limit pressure": {
+            "thickness_pct": 3.047127592960469,
+            "pressure_Pa": 0.016229063701263043
+          }
+        }
+      },
+      {
+        "angle_deg": 46.0,
+        "offset_mm": 135.0,
+        "cases": {
+          "vacuum": {
+            "thickness_pct": 1.832648790266951,
+            "q_atoms_s": 4.905656930606075e+18
+          },
+          "1 um/h self-consistent": {
+            "thickness_pct": 2.599470248043272,
+            "q_atoms_s": 5.918393946730664e+18,
+            "pressure_Pa": 0.01021403085519968,
+            "feed_sccm": 22.027831457964314,
+            "target_reached": true
+          },
+          "0.5 um/h self-consistent": {
+            "thickness_pct": 2.3627229840397685,
+            "q_atoms_s": 2.7823152373460065e+18,
+            "pressure_Pa": 0.004801750937658157,
+            "feed_sccm": 10.355574783094603,
+            "target_reached": true
+          },
+          "feed-limit pressure": {
+            "thickness_pct": 3.426659165811245,
+            "pressure_Pa": 0.016229063701263043
+          }
+        }
+      },
+      {
+        "angle_deg": 46.0,
+        "offset_mm": 142.5,
+        "cases": {
+          "vacuum": {
+            "thickness_pct": 2.2451124498797483,
+            "q_atoms_s": 5.043801982090055e+18
+          },
+          "1 um/h self-consistent": {
+            "thickness_pct": 3.0732741420463645,
+            "q_atoms_s": 6.119354163599976e+18,
+            "pressure_Pa": 0.01056085025827518,
+            "feed_sccm": 22.7757907568546,
+            "target_reached": true
+          },
+          "0.5 um/h self-consistent": {
+            "thickness_pct": 2.7939210513822084,
+            "q_atoms_s": 2.8684800361563336e+18,
+            "pressure_Pa": 0.004950455116799007,
+            "feed_sccm": 10.676273892158095,
+            "target_reached": true
+          },
+          "feed-limit pressure": {
+            "thickness_pct": 3.8578517331315267,
+            "pressure_Pa": 0.016229063701263043
+          }
+        }
+      },
+      {
+        "angle_deg": 46.0,
+        "offset_mm": 150.0,
+        "cases": {
+          "vacuum": {
+            "thickness_pct": 2.644066449425825,
+            "q_atoms_s": 5.198427644044695e+18
+          },
+          "1 um/h self-consistent": {
+            "thickness_pct": 3.5416171330700545,
+            "q_atoms_s": 6.34734818770532e+18,
+            "pressure_Pa": 0.010954324910008955,
+            "feed_sccm": 23.624367918432338,
+            "target_reached": true
+          },
+          "0.5 um/h self-consistent": {
+            "thickness_pct": 3.2209053699168226,
+            "q_atoms_s": 2.9650684689036943e+18,
+            "pressure_Pa": 0.005117148520654272,
+            "feed_sccm": 11.035769007978006,
+            "target_reached": true
+          },
+          "feed-limit pressure": {
+            "thickness_pct": 4.278643363181764,
+            "pressure_Pa": 0.016229063701263043
+          }
+        }
+      },
+      {
+        "angle_deg": 65.0,
+        "offset_mm": 45.0,
+        "cases": {
+          "vacuum": {
+            "thickness_pct": 0.43783979346935803,
+            "q_atoms_s": 6.322825442855092e+18
+          },
+          "1 um/h self-consistent": {
+            "thickness_pct": 2.162543160455438,
+            "q_atoms_s": 8.091548144893428e+18,
+            "pressure_Pa": 0.013964484818373707,
+            "feed_sccm": 30.11615319527286,
+            "target_reached": true
+          },
+          "0.5 um/h self-consistent": {
+            "thickness_pct": 1.2049246279064272,
+            "q_atoms_s": 3.6810985671016074e+18,
+            "pressure_Pa": 0.006352881319462833,
+            "feed_sccm": 13.700780912203488,
+            "target_reached": true
+          },
+          "feed-limit pressure": {
+            "thickness_pct": 2.425553428714473,
+            "pressure_Pa": 0.016229063701263043
+          }
+        }
+      },
+      {
+        "angle_deg": 65.0,
+        "offset_mm": 52.5,
+        "cases": {
+          "vacuum": {
+            "thickness_pct": 0.602581921481573,
+            "q_atoms_s": 6.334905717234649e+18
+          },
+          "1 um/h self-consistent": {
+            "thickness_pct": 2.4691862141038303,
+            "q_atoms_s": 8.108975029018235e+18,
+            "pressure_Pa": 0.013994560331048747,
+            "feed_sccm": 30.18101478944754,
+            "target_reached": true
+          },
+          "0.5 um/h self-consistent": {
+            "thickness_pct": 1.4082506626760078,
+            "q_atoms_s": 3.688542414315618e+18,
+            "pressure_Pa": 0.006365727994728055,
+            "feed_sccm": 13.728486369681466,
+            "target_reached": true
+          },
+          "feed-limit pressure": {
+            "thickness_pct": 2.73324023338763,
+            "pressure_Pa": 0.016229063701263043
+          }
+        }
+      },
+      {
+        "angle_deg": 65.0,
+        "offset_mm": 60.0,
+        "cases": {
+          "vacuum": {
+            "thickness_pct": 0.8062501419626785,
+            "q_atoms_s": 6.352425517004564e+18
+          },
+          "1 um/h self-consistent": {
+            "thickness_pct": 2.785455962340848,
+            "q_atoms_s": 8.135366780491754e+18,
+            "pressure_Pa": 0.014040107512648949,
+            "feed_sccm": 30.27924296732345,
+            "target_reached": true
+          },
+          "0.5 um/h self-consistent": {
+            "thickness_pct": 1.6672560464811048,
+            "q_atoms_s": 3.6995366470520556e+18,
+            "pressure_Pa": 0.006384701965269717,
+            "feed_sccm": 13.769406103634232,
+            "target_reached": true
+          },
+          "feed-limit pressure": {
+            "thickness_pct": 3.0438802109322904,
+            "pressure_Pa": 0.016229063701263043
+          }
+        }
+      },
+      {
+        "angle_deg": 65.0,
+        "offset_mm": 67.5,
+        "cases": {
+          "vacuum": {
+            "thickness_pct": 1.0839781778367377,
+            "q_atoms_s": 6.375975459379698e+18
+          },
+          "1 um/h self-consistent": {
+            "thickness_pct": 3.1727500898347882,
+            "q_atoms_s": 8.171842559076082e+18,
+            "pressure_Pa": 0.01410305782168229,
+            "feed_sccm": 30.415003160069226,
+            "target_reached": true
+          },
+          "0.5 um/h self-consistent": {
+            "thickness_pct": 1.9886594854881776,
+            "q_atoms_s": 3.7144911154339277e+18,
+            "pressure_Pa": 0.006410510555040921,
+            "feed_sccm": 13.825065546385808,
+            "target_reached": true
+          },
+          "feed-limit pressure": {
+            "thickness_pct": 3.4315594779500853,
+            "pressure_Pa": 0.016229063701263043
+          }
+        }
+      },
+      {
+        "angle_deg": 65.0,
+        "offset_mm": 75.0,
+        "cases": {
+          "vacuum": {
+            "thickness_pct": 1.439143303663528,
+            "q_atoms_s": 6.404890661439121e+18
+          },
+          "1 um/h self-consistent": {
+            "thickness_pct": 3.581734639822756,
+            "q_atoms_s": 8.217267736286544e+18,
+            "pressure_Pa": 0.014181453103545351,
+            "feed_sccm": 30.584072363056798,
+            "target_reached": true
+          },
+          "0.5 um/h self-consistent": {
+            "thickness_pct": 2.375917041456655,
+            "q_atoms_s": 3.732965853386048e+18,
+            "pressure_Pa": 0.006442394465639492,
+            "feed_sccm": 13.893827176230365,
+            "target_reached": true
+          },
+          "feed-limit pressure": {
+            "thickness_pct": 3.8247633700602672,
+            "pressure_Pa": 0.016229063701263043
+          }
+        }
+      },
+      {
+        "angle_deg": 65.0,
+        "offset_mm": 82.5,
+        "cases": {
+          "vacuum": {
+            "thickness_pct": 1.8339770602712837,
+            "q_atoms_s": 6.441435706051322e+18
+          },
+          "1 um/h self-consistent": {
+            "thickness_pct": 4.029776125013849,
+            "q_atoms_s": 8.275590392905886e+18,
+            "pressure_Pa": 0.014282107000468903,
+            "feed_sccm": 30.80114504557083,
+            "target_reached": true
+          },
+          "0.5 um/h self-consistent": {
+            "thickness_pct": 2.7983721707339453,
+            "q_atoms_s": 3.756473138709957e+18,
+            "pressure_Pa": 0.006482963603108456,
+            "feed_sccm": 13.981319581063506,
+            "target_reached": true
+          },
+          "feed-limit pressure": {
+            "thickness_pct": 4.251746720535714,
+            "pressure_Pa": 0.016229063701263043
+          }
+        }
+      },
+      {
+        "angle_deg": 65.0,
+        "offset_mm": 90.0,
+        "cases": {
+          "vacuum": {
+            "thickness_pct": 2.2200148378142797,
+            "q_atoms_s": 6.484732775214655e+18
+          },
+          "1 um/h self-consistent": {
+            "thickness_pct": 4.45929941203229,
+            "q_atoms_s": 8.345498273564163e+18,
+            "pressure_Pa": 0.01440275480737261,
+            "feed_sccm": 31.061337088646066,
+            "target_reached": true
+          },
+          "0.5 um/h self-consistent": {
+            "thickness_pct": 3.213665525307266,
+            "q_atoms_s": 3.784462994875823e+18,
+            "pressure_Pa": 0.006531268811765388,
+            "feed_sccm": 14.085495788275082,
+            "target_reached": true
+          },
+          "feed-limit pressure": {
+            "thickness_pct": 4.654900369581726,
+            "pressure_Pa": 0.016229063701263043
+          }
+        }
+      },
+      {
+        "angle_deg": 65.0,
+        "offset_mm": 97.5,
+        "cases": {
+          "vacuum": {
+            "thickness_pct": 2.620562450884697,
+            "q_atoms_s": 6.536725623669999e+18
+          },
+          "1 um/h self-consistent": {
+            "thickness_pct": 4.910531679347846,
+            "q_atoms_s": 8.430414149693017e+18,
+            "pressure_Pa": 0.014549303581699393,
+            "feed_sccm": 31.377387798400704,
+            "target_reached": true
+          },
+          "0.5 um/h self-consistent": {
+            "thickness_pct": 3.6458066104075604,
+            "q_atoms_s": 3.8182360481641487e+18,
+            "pressure_Pa": 0.006589554727077231,
+            "feed_sccm": 14.211196634205937,
+            "target_reached": true
+          },
+          "feed-limit pressure": {
+            "thickness_pct": 5.073414261331252,
+            "pressure_Pa": 0.016229063701263043
+          }
+        }
+      },
+      {
+        "angle_deg": 65.0,
+        "offset_mm": 105.0,
+        "cases": {
+          "vacuum": {
+            "thickness_pct": 2.992154478087422,
+            "q_atoms_s": 6.597586290639661e+18
+          },
+          "1 um/h self-consistent": {
+            "thickness_pct": 5.3379005461677975,
+            "q_atoms_s": 8.530899607667771e+18,
+            "pressure_Pa": 0.014722722515533627,
+            "feed_sccm": 31.75138735844469,
+            "target_reached": true
+          },
+          "0.5 um/h self-consistent": {
+            "thickness_pct": 4.049958363341165,
+            "q_atoms_s": 3.857948115143107e+18,
+            "pressure_Pa": 0.00665809025903027,
+            "feed_sccm": 14.359002056780602,
+            "target_reached": true
+          },
+          "feed-limit pressure": {
+            "thickness_pct": 5.461179656582221,
+            "pressure_Pa": 0.016229063701263043
+          }
+        }
+      },
+      {
+        "angle_deg": 65.0,
+        "offset_mm": 112.5,
+        "cases": {
+          "vacuum": {
+            "thickness_pct": 3.3644341093781267,
+            "q_atoms_s": 6.667812124285413e+18
+          },
+          "1 um/h self-consistent": {
+            "thickness_pct": 5.774978971280595,
+            "q_atoms_s": 8.64794209427962e+18,
+            "pressure_Pa": 0.014924715755656327,
+            "feed_sccm": 32.18701097385661,
+            "target_reached": true
+          },
+          "0.5 um/h self-consistent": {
+            "thickness_pct": 4.454431465509523,
+            "q_atoms_s": 3.9039448694252017e+18,
+            "pressure_Pa": 0.006737471975033797,
+            "feed_sccm": 14.530198628022553,
+            "target_reached": true
+          },
+          "feed-limit pressure": {
+            "thickness_pct": 5.851299732493192,
+            "pressure_Pa": 0.016229063701263043
+          }
+        }
+      },
+      {
+        "angle_deg": 65.0,
+        "offset_mm": 120.0,
+        "cases": {
+          "vacuum": {
+            "thickness_pct": 3.7222570793248435,
+            "q_atoms_s": 6.7502653324448e+18
+          },
+          "1 um/h self-consistent": {
+            "thickness_pct": 6.173473513559755,
+            "q_atoms_s": 8.775077554010226e+18,
+            "pressure_Pa": 0.015144127562333331,
+            "feed_sccm": 32.66019990052879,
+            "target_reached": true
+          },
+          "0.5 um/h self-consistent": {
+            "thickness_pct": 4.848664156770223,
+            "q_atoms_s": 3.9581885439766205e+18,
+            "pressure_Pa": 0.006831086318815971,
+            "feed_sccm": 14.732089636197049,
+            "target_reached": true
+          },
+          "feed-limit pressure": {
+            "thickness_pct": 6.2266920747240775,
+            "pressure_Pa": 0.016229063701263043
+          }
+        }
+      },
+      {
+        "angle_deg": 65.0,
+        "offset_mm": 127.5,
+        "cases": {
+          "vacuum": {
+            "thickness_pct": 4.066058602380602,
+            "q_atoms_s": 6.844553155698452e+18
+          },
+          "1 um/h self-consistent": {
+            "thickness_pct": 6.543757095263563,
+            "q_atoms_s": 8.915324106276077e+18,
+            "pressure_Pa": 0.015386166640007448,
+            "feed_sccm": 33.18218735923442,
+            "target_reached": true
+          },
+          "0.5 um/h self-consistent": {
+            "thickness_pct": 5.228191682245201,
+            "q_atoms_s": 4.0205087556187817e+18,
+            "pressure_Pa": 0.0069386392411703935,
+            "feed_sccm": 14.964040927515958,
+            "target_reached": true
+          },
+          "feed-limit pressure": {
+            "thickness_pct": 6.586244420404069,
+            "pressure_Pa": 0.016229063701263043
+          }
+        }
+      },
+      {
+        "angle_deg": 65.0,
+        "offset_mm": 135.0,
+        "cases": {
+          "vacuum": {
+            "thickness_pct": 4.3817272496681925,
+            "q_atoms_s": 6.952366422347208e+18
+          },
+          "1 um/h self-consistent": {
+            "thickness_pct": 6.89443604614068,
+            "q_atoms_s": 9.076581463879051e+18,
+            "pressure_Pa": 0.015664466401903932,
+            "feed_sccm": 33.78237550598616,
+            "target_reached": true
+          },
+          "0.5 um/h self-consistent": {
+            "thickness_pct": 5.582238423620562,
+            "q_atoms_s": 4.092081045868457e+18,
+            "pressure_Pa": 0.007062159504871549,
+            "feed_sccm": 15.230427781934674,
+            "target_reached": true
+          },
+          "feed-limit pressure": {
+            "thickness_pct": 6.923677006765834,
+            "pressure_Pa": 0.016229063701263043
+          }
+        }
+      },
+      {
+        "angle_deg": 65.0,
+        "offset_mm": 142.5,
+        "cases": {
+          "vacuum": {
+            "thickness_pct": 4.704098347772584,
+            "q_atoms_s": 7.075392828403734e+18
+          },
+          "1 um/h self-consistent": {
+            "thickness_pct": 7.252684540214989,
+            "q_atoms_s": 9.261906176415336e+18,
+            "pressure_Pa": 0.015984301875702076,
+            "feed_sccm": 34.47214059588865,
+            "target_reached": true
+          },
+          "0.5 um/h self-consistent": {
+            "thickness_pct": 5.946549775956819,
+            "q_atoms_s": 4.1741943787792246e+18,
+            "pressure_Pa": 0.007203871618583947,
+            "feed_sccm": 15.536047629834336,
+            "target_reached": true
+          },
+          "feed-limit pressure": {
+            "thickness_pct": 7.265736484796429,
+            "pressure_Pa": 0.016229063701263043
+          }
+        }
+      },
+      {
+        "angle_deg": 65.0,
+        "offset_mm": 150.0,
+        "cases": {
+          "vacuum": {
+            "thickness_pct": 5.012285855336539,
+            "q_atoms_s": 7.214678011114951e+18
+          },
+          "1 um/h self-consistent": {
+            "thickness_pct": 7.592676983314945,
+            "q_atoms_s": 9.403730391294556e+18,
+            "pressure_Pa": 0.016229063701263043,
+            "feed_sccm": 35.0,
+            "target_reached": false
+          },
+          "0.5 um/h self-consistent": {
+            "thickness_pct": 6.298011039873712,
+            "q_atoms_s": 4.2676628109175506e+18,
+            "pressure_Pa": 0.007365180490288133,
+            "feed_sccm": 15.883930330498522,
+            "target_reached": true
+          },
+          "feed-limit pressure": {
+            "thickness_pct": 7.5907545025546534,
+            "pressure_Pa": 0.016229063701263043
+          }
+        }
+      }
+    ]
+  },
+  "disabled_physics": [],
+  "warnings": [
+    "Nominal pose only; pointing robustness of new optima is evaluated by layout_comparison.py",
+    "Scattered arrival (gas+plume) from layout B-L's factors, applied to every aim",
+    "Free-molecular plate; uniform output; Monte Carlo scatter about 0.3-0.5 points at single aims"
+  ]
+}

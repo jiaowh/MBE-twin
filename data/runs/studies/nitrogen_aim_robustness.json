@@ -1,0 +1,133 @@
+{
+  "schema_version": "0.1",
+  "run_id": "nitrogen_aim_robustness",
+  "created_utc": "2026-09-30T17:39:55+00:00",
+  "label": "representative_chamber",
+  "validation_status": "not_validated",
+  "package_version": "0.1.0",
+  "git_commit": "0ce3f024707a9661d425936f7111c6c8bb924c7a-dirty",
+  "python": "3.12.10",
+  "numpy": "2.5.1",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "source_sha256": {
+    "scripts/nitrogen_aim_robustness.py": "b99b43d4d4f8319acb99defd5133f2dc8938fbca5cf93777bcd6e065d9522348",
+    "src/mbe_twin/aperture.py": "ee071253a3af21188ff59251536038f9125f130105974420e2aa0ee156a1f725",
+    "src/mbe_twin/beam.py": "07227ace861e3711a47d2b727e5e793f093ebea766143b1e10ca8ca4eecf2256",
+    "src/mbe_twin/crucible.py": "981dab446a3caf8230a0ba691141ac8500a259d98518f810e4d8c7eda68256d2"
+  },
+  "solver": null,
+  "inputs_sha256": "60078ed44705f8e4f51688fe08e9a74ef2dfa819d17f9ca115cd4b3c3ccb6779",
+  "inputs": {
+    "particles": 20000,
+    "optima_from": [
+      "results\\nitrogen_aim_study\\manifest.json",
+      "results\\nitrogen_aim_study_ext\\manifest.json"
+    ],
+    "profiles": [
+      "uniform",
+      "centre-peaked",
+      "edge-peaked"
+    ],
+    "throw_m": 0.35
+  },
+  "outputs": {
+    "rows": [
+      {
+        "L_over_r": 0.0,
+        "optimum": {
+          "offset_mm": 55.0,
+          "angle_deg": 45.0,
+          "range_over_mean_pct": 0.2503167745860744,
+          "within_10mm_pct": [
+            0.2503167745860744,
+            0.35857045460429665
+          ],
+          "throw_450mm_offset_pct": 0.13942495317540332,
+          "throw_450mm_centred_pct": 0.36804514186287385
+        },
+        "range_over_mean_pct": {
+          "uniform": 0.2503167745860744,
+          "centre-peaked": 0.2489480393509291,
+          "edge-peaked": 0.2510290419738162,
+          "plate 12.5 mm": 0.24983784580055682,
+          "plate 12.5 mm re-aimed": 0.24983784580055682
+        },
+        "reaimed_offset_mm": 55.0
+      },
+      {
+        "L_over_r": 2.92,
+        "optimum": {
+          "offset_mm": 75.0,
+          "angle_deg": 65.0,
+          "range_over_mean_pct": 0.2991486276992721,
+          "within_10mm_pct": [
+            0.2991486276992721,
+            2.1118359041242982
+          ],
+          "throw_450mm_offset_pct": 2.3273586762969862,
+          "throw_450mm_centred_pct": 8.09427652058713
+        },
+        "range_over_mean_pct": {
+          "uniform": 0.6289862046085554,
+          "centre-peaked": 0.6293056284463817,
+          "edge-peaked": 0.6345324581593546,
+          "plate 12.5 mm": 0.6064992846585932,
+          "plate 12.5 mm re-aimed": 0.6064992846585932
+        },
+        "reaimed_offset_mm": 75.0
+      },
+      {
+        "L_over_r": 5.83,
+        "optimum": {
+          "offset_mm": 105.0,
+          "angle_deg": 65.0,
+          "range_over_mean_pct": 0.9321745868530206,
+          "within_10mm_pct": [
+            0.9321745868530206,
+            4.41033085917312
+          ],
+          "throw_450mm_offset_pct": 4.510124656063216,
+          "throw_450mm_centred_pct": 25.659304022814826
+        },
+        "range_over_mean_pct": {
+          "uniform": 0.4090766274506868,
+          "centre-peaked": 0.24689352839013742,
+          "edge-peaked": 0.4935257209704289,
+          "plate 12.5 mm": 0.5035104175499896,
+          "plate 12.5 mm re-aimed": 0.5035104175499896
+        },
+        "reaimed_offset_mm": 105.0
+      },
+      {
+        "L_over_r": 11.66,
+        "optimum": {
+          "offset_mm": 100.0,
+          "angle_deg": 65.0,
+          "range_over_mean_pct": 0.9251553762973176,
+          "within_10mm_pct": [
+            0.9251553762973176,
+            10.397323311091917
+          ],
+          "throw_450mm_offset_pct": 14.435881869178266,
+          "throw_450mm_centred_pct": 60.45494873737589
+        },
+        "range_over_mean_pct": {
+          "uniform": 1.3867184867828402,
+          "centre-peaked": 1.1533141733238372,
+          "edge-peaked": 1.5150678417094139,
+          "plate 12.5 mm": 2.4038956570387096,
+          "plate 12.5 mm re-aimed": 2.4038956570387096
+        },
+        "reaimed_offset_mm": 100.0
+      }
+    ]
+  },
+  "disabled_physics": [
+    "plasma chemistry",
+    "wall recombination",
+    "transitional hole flow"
+  ],
+  "warnings": [
+    "Free-molecular straight holes; output profiles are brackets, not measured"
+  ]
+}

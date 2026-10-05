@@ -1,0 +1,54 @@
+{
+  "description": "Kinetic parameters for the first GaN growth-regime model (src/mbe_twin/growth.py): Ga-polar (0001) GaN, plasma-assisted MBE. Literature values with their sources and conditions; none is fitted to this machine. Temperatures in the sources are each lab's substrate-temperature readings, not the proposed machine's wafer temperature (ref/notes/GROWTH_EVIDENCE.md, correction 5).",
+  "surface": "Ga-polar (0001) GaN",
+  "units": {
+    "flux": "nm/min of GaN growth equivalent",
+    "ml_per_s_per_nm_per_min": 0.064,
+    "ml_definition": "one GaN(0001) monolayer (surface site density 1.14e15 cm^-2; c/2 = 0.259 nm)",
+    "ml_source": "R20 (Koblmuller 2007) experimental section; G02 (Fernandez-Garrido 2008) p. 2"
+  },
+  "decomposition": {
+    "prefactor": 1.6e15,
+    "prefactor_uncertainty": 0.1e15,
+    "energy_ev": 3.1,
+    "energy_uncertainty_ev": 0.1,
+    "unit": "nm/min",
+    "status": "fitted to external literature",
+    "source": "G02, Eq. (3) and Fig. 3: GaN decomposition in vacuum from QMS and RHEED",
+    "validity": "720-805 C substrate reading; literature activation energies 3.1-3.6 eV (G02 refs 7, 8, 10, 11)",
+    "under_ga_rich_growth": "equal to the vacuum rate (G02 Figs. 4-5, slightly Ga-rich)",
+    "under_n_rich_growth": "reduced by active-N excess, no law given (G02 Fig. 4); bracketed between 0 and the vacuum rate"
+  },
+  "droplet_onset": {
+    "description": "Critical Ga flux F_crit = prefactor * exp(-energy / kT) in ML/s at the onset of Ga droplet accumulation. The sources disagree by up to two orders of magnitude in prefactor and 2.3 eV in energy; they are kept as scenarios, not averaged.",
+    "scenarios": {
+      "G01_adsorption": {
+        "prefactor": 2e25, "energy_ev": 5.1, "energy_uncertainty_ev": 0.05, "unit": "ML/s",
+        "kind": "Ga flux without N (adsorption phase diagram, 2->3 transition)",
+        "source": "G01 (Adelmann 2003), Table I, 'This work' 2->3"
+      },
+      "Heying_growth": {
+        "prefactor": 1e24, "energy_ev": 4.8, "unit": "ML/s",
+        "kind": "excess Ga flux during growth at N flux 0.28 ML/s",
+        "source": "G01 Table I, Ref. 17 2->3 (as tabulated by G01)"
+      },
+      "Ref14_growth": {
+        "prefactor": 1e14, "energy_ev": 2.8, "unit": "ML/s",
+        "kind": "excess Ga flux during growth at N flux 1.1 ML/s",
+        "source": "G01 Table I, Ref. 14 2->3 (as tabulated by G01)"
+      }
+    },
+    "cross_check": "R20: at 700 C and N flux 4.8 nm/min the desorbing Ga equals the excess (Phi_Ga - Phi_N) up to an excess of about 5 nm/min, the droplet onset (R20 Fig. 1 discussion)"
+  },
+  "adlayer": {
+    "bilayer_ml": 2.5,
+    "bilayer_uncertainty_ml": 0.2,
+    "source": "G01 abstract and Sec. III (region 2: 2.5 +/- 0.2 ML laterally contracted Ga bilayer)",
+    "steady_state_time_s": [10, 20],
+    "steady_state_time_source": "R20: steady-state growth and desorption within the first 10-20 s of a growth pulse"
+  },
+  "growth_modes": {
+    "note": "R20's growth-mode map (3D / layer-by-layer / step-flow versus Ga flux and temperature) holds for N flux 4.8 nm/min on one template; boundary fluxes at 750 / 780 C are about 3 / 2 nm/min (3D -> layer-by-layer) and 7.5 / 11 nm/min (-> step-flow). Recorded for regime checks, not used as model parameters.",
+    "source": "R20, Results (Figs. 2-3)"
+  }
+}

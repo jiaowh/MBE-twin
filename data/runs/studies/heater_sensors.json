@@ -1,0 +1,1227 @@
+{
+  "schema_version": "0.1",
+  "run_id": "heater_sensors",
+  "created_utc": "2026-09-30T17:31:47+00:00",
+  "label": "representative_chamber",
+  "validation_status": "not_validated",
+  "package_version": "0.1.0",
+  "git_commit": "360fbea5e5f25a1c84204e25bf4f95bf23afb052-dirty",
+  "python": "3.12.10",
+  "numpy": "2.5.1",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "source_sha256": {
+    "scripts/heater_sensors.py": "9bc117be9b7801843e565bd8009c104c288982abb49f219c404c3b29092a63e4",
+    "scripts/heater_zones.py": "0ea21f446036a67c15940df93bd12a1d9a97e9cc5e203ce2041dfd40cbb1bad3",
+    "src/mbe_twin/heater.py": "33043239e29ed89724ef361ba2585a18ceb95254782477ecc762cb0ec9d6efe6",
+    "src/mbe_twin/radiation.py": "932b10bf144f51607dff90652c87bbb5f53b9a1f82609d7b54fb636e133119b6"
+  },
+  "solver": null,
+  "inputs_sha256": "154a3e8f315c1836307f4a3bd886c21f823b75f4b4467bf4f7b513c8ec5e7353",
+  "inputs": {
+    "layout": [
+      0.0,
+      0.5217391304347826,
+      0.8260869565217391,
+      1.0
+    ],
+    "target_K": 1013.15,
+    "sensor_sets": {
+      "open loop": [],
+      "1: centre": [
+        0.0
+      ],
+      "1: mid-radius (60 mm)": [
+        60.0
+      ],
+      "3: 0 / 70 / 97 mm": [
+        0.0,
+        70.0,
+        97.0
+      ],
+      "3: 30 / 77 / 90 mm": [
+        30.0,
+        77.0,
+        90.0
+      ],
+      "5: 0 / 40 / 70 / 90 / 98 mm": [
+        0.0,
+        40.0,
+        70.0,
+        90.0,
+        98.0
+      ]
+    },
+    "perturbations": [
+      "contact 50",
+      "contact 1000",
+      "overlap 1 mm",
+      "overlap 5 mm",
+      "k_Si 20",
+      "k_Si 40",
+      "ledge eps 0.15",
+      "ledge eps 0.6",
+      "gap 8 mm",
+      "gap 12 mm",
+      "wafer eps 0.63",
+      "wafer eps 0.77"
+    ],
+    "nominal_zone_power_W": [
+      499.76213734140003,
+      610.7825689643822,
+      1360.7298925777304
+    ]
+  },
+  "outputs": {
+    "rows": [
+      {
+        "perturbation": "contact 50",
+        "sensors": "open loop",
+        "radii_mm": [],
+        "zone_power_W": [
+          499.76213734140003,
+          610.7825689643822,
+          1360.7298925777304
+        ],
+        "range_K": 25.407804894437163,
+        "mean_offset_K": -1.8201217678131343
+      },
+      {
+        "perturbation": "contact 50",
+        "sensors": "1: centre",
+        "radii_mm": [
+          0.0
+        ],
+        "zone_power_W": [
+          499.9071875696647,
+          610.9598415995596,
+          1361.1248288219504
+        ],
+        "range_K": 25.413686791539362,
+        "mean_offset_K": -1.747498282663969,
+        "range_with_edge_bias_K": 25.334094799184072
+      },
+      {
+        "perturbation": "contact 50",
+        "sensors": "1: mid-radius (60 mm)",
+        "radii_mm": [
+          60.0
+        ],
+        "zone_power_W": [
+          500.4641676635235,
+          611.6405528963353,
+          1362.641349195655
+        ],
+        "range_K": 25.436268611685705,
+        "mean_offset_K": -1.4687761143751459,
+        "range_with_edge_bias_K": 25.35460504616094
+      },
+      {
+        "perturbation": "contact 50",
+        "sensors": "3: 0 / 70 / 97 mm",
+        "radii_mm": [
+          0.0,
+          70.0,
+          97.0
+        ],
+        "zone_power_W": [
+          499.15746082970367,
+          584.5327800980546,
+          1470.2247223916281
+        ],
+        "range_K": 21.02108463884383,
+        "mean_offset_K": 0.6224993993715771,
+        "range_with_edge_bias_K": 21.164665450888833
+      },
+      {
+        "perturbation": "contact 50",
+        "sensors": "3: 30 / 77 / 90 mm",
+        "radii_mm": [
+          30.0,
+          77.0,
+          90.0
+        ],
+        "zone_power_W": [
+          499.7434459281542,
+          595.5207498105476,
+          1421.2786601576827
+        ],
+        "range_K": 21.51147882432224,
+        "mean_offset_K": -0.51399438392707,
+        "range_with_edge_bias_K": 22.739030099170122
+      },
+      {
+        "perturbation": "contact 50",
+        "sensors": "5: 0 / 40 / 70 / 90 / 98 mm",
+        "radii_mm": [
+          0.0,
+          40.0,
+          70.0,
+          90.0,
+          98.0
+        ],
+        "zone_power_W": [
+          499.9558570240123,
+          583.2086021312938,
+          1462.6459882431611
+        ],
+        "range_K": 20.997917351881597,
+        "mean_offset_K": 0.14400731539819844,
+        "range_with_edge_bias_K": 21.121355451935187
+      },
+      {
+        "perturbation": "contact 1000",
+        "sensors": "open loop",
+        "radii_mm": [],
+        "zone_power_W": [
+          499.76213734140003,
+          610.7825689643822,
+          1360.7298925777304
+        ],
+        "range_K": 23.231828751736316,
+        "mean_offset_K": 3.23056496059462
+      },
+      {
+        "perturbation": "contact 1000",
+        "sensors": "1: centre",
+        "radii_mm": [
+          0.0
+        ],
+        "zone_power_W": [
+          499.5051368854955,
+          610.468476745397,
+          1360.0301432837648
+        ],
+        "range_K": 23.226286934678114,
+        "mean_offset_K": 3.101542954500019,
+        "range_with_edge_bias_K": 23.183922086112716
+      },
+      {
+        "perturbation": "contact 1000",
+        "sensors": "1: mid-radius (60 mm)",
+        "radii_mm": [
+          60.0
+        ],
+        "zone_power_W": [
+          498.5192672264535,
+          609.263599548783,
+          1357.345861672556
+        ],
+        "range_K": 23.205010409108354,
+        "mean_offset_K": 2.6061470790951944,
+        "range_with_edge_bias_K": 23.161492392644163
+      },
+      {
+        "perturbation": "contact 1000",
+        "sensors": "3: 0 / 70 / 97 mm",
+        "radii_mm": [
+          0.0,
+          70.0,
+          97.0
+        ],
+        "zone_power_W": [
+          500.5473605240148,
+          644.9782311166939,
+          1218.1576580829276
+        ],
+        "range_K": 16.218939026832004,
+        "mean_offset_K": -0.8112280228380087,
+        "range_with_edge_bias_K": 16.20135044950655
+      },
+      {
+        "perturbation": "contact 1000",
+        "sensors": "3: 30 / 77 / 90 mm",
+        "radii_mm": [
+          30.0,
+          77.0,
+          90.0
+        ],
+        "zone_power_W": [
+          499.7898982772452,
+          633.4887937563093,
+          1270.6466123184152
+        ],
+        "range_K": 16.491144086701183,
+        "mean_offset_K": 0.7663029218043675,
+        "range_with_edge_bias_K": 15.388712357934537
+      },
+      {
+        "perturbation": "contact 1000",
+        "sensors": "5: 0 / 40 / 70 / 90 / 98 mm",
+        "radii_mm": [
+          0.0,
+          40.0,
+          70.0,
+          90.0,
+          98.0
+        ],
+        "zone_power_W": [
+          499.0464722973694,
+          651.6121286073892,
+          1219.2469457254183
+        ],
+        "range_K": 14.831511517371837,
+        "mean_offset_K": -0.0897835516793748,
+        "range_with_edge_bias_K": 14.59389289220087
+      },
+      {
+        "perturbation": "overlap 1 mm",
+        "sensors": "open loop",
+        "radii_mm": [],
+        "zone_power_W": [
+          499.76213734140003,
+          610.7825689643822,
+          1360.7298925777304
+        ],
+        "range_K": 32.76606499643253,
+        "mean_offset_K": 4.6983697278334375
+      },
+      {
+        "perturbation": "overlap 1 mm",
+        "sensors": "1: centre",
+        "radii_mm": [
+          0.0
+        ],
+        "zone_power_W": [
+          500.3029815951085,
+          611.4435598998841,
+          1362.2024790108785
+        ],
+        "range_K": 32.78393296198385,
+        "mean_offset_K": 4.971099316444224,
+        "range_with_edge_bias_K": 32.718959881515275
+      },
+      {
+        "perturbation": "overlap 1 mm",
+        "sensors": "1: mid-radius (60 mm)",
+        "radii_mm": [
+          60.0
+        ],
+        "zone_power_W": [
+          500.41602901486885,
+          611.5817204132502,
+          1362.5102794460315
+        ],
+        "range_K": 32.78766607178659,
+        "mean_offset_K": 5.0280776134665075,
+        "range_with_edge_bias_K": 32.720818427263225
+      },
+      {
+        "perturbation": "overlap 1 mm",
+        "sensors": "3: 0 / 70 / 97 mm",
+        "radii_mm": [
+          0.0,
+          70.0,
+          97.0
+        ],
+        "zone_power_W": [
+          501.59761347373126,
+          694.4695846068354,
+          1049.54397858104
+        ],
+        "range_K": 16.127153141108806,
+        "mean_offset_K": -2.001575248224981,
+        "range_with_edge_bias_K": 16.168857010834927
+      },
+      {
+        "perturbation": "overlap 1 mm",
+        "sensors": "3: 30 / 77 / 90 mm",
+        "radii_mm": [
+          30.0,
+          77.0,
+          90.0
+        ],
+        "zone_power_W": [
+          499.73605508069465,
+          667.0352069752593,
+          1180.0030585925626
+        ],
+        "range_K": 17.475706169167665,
+        "mean_offset_K": 1.7665061207186454,
+        "range_with_edge_bias_K": 15.823099054963677
+      },
+      {
+        "perturbation": "overlap 1 mm",
+        "sensors": "5: 0 / 40 / 70 / 90 / 98 mm",
+        "radii_mm": [
+          0.0,
+          40.0,
+          70.0,
+          90.0,
+          98.0
+        ],
+        "zone_power_W": [
+          498.42357425872297,
+          707.1231361240922,
+          1055.5396576536853
+        ],
+        "range_K": 13.060997995489856,
+        "mean_offset_K": -0.36744650735261075,
+        "range_with_edge_bias_K": 12.867323853597327
+      },
+      {
+        "perturbation": "overlap 5 mm",
+        "sensors": "open loop",
+        "radii_mm": [],
+        "zone_power_W": [
+          499.76213734140003,
+          610.7825689643822,
+          1360.7298925777304
+        ],
+        "range_K": 36.980944937293884,
+        "mean_offset_K": -3.7465409462629395
+      },
+      {
+        "perturbation": "overlap 5 mm",
+        "sensors": "1: centre",
+        "radii_mm": [
+          0.0
+        ],
+        "zone_power_W": [
+          498.86944482321735,
+          609.6915678884475,
+          1358.2993094990811
+        ],
+        "range_K": 36.92041390921372,
+        "mean_offset_K": -4.189589879495202,
+        "range_with_edge_bias_K": 36.78756721169066
+      },
+      {
+        "perturbation": "overlap 5 mm",
+        "sensors": "1: mid-radius (60 mm)",
+        "radii_mm": [
+          60.0
+        ],
+        "zone_power_W": [
+          498.043269089109,
+          608.6818600702859,
+          1356.049835331422
+        ],
+        "range_K": 36.86436980702274,
+        "mean_offset_K": -4.600153547007949,
+        "range_with_edge_bias_K": 36.72848246010915
+      },
+      {
+        "perturbation": "overlap 5 mm",
+        "sensors": "3: 0 / 70 / 97 mm",
+        "radii_mm": [
+          0.0,
+          70.0,
+          97.0
+        ],
+        "zone_power_W": [
+          497.51185714102223,
+          512.0366431283719,
+          1705.1758392018044
+        ],
+        "range_K": 26.476918812702024,
+        "mean_offset_K": 1.9329105909273494,
+        "range_with_edge_bias_K": 25.55269093945401
+      },
+      {
+        "perturbation": "overlap 5 mm",
+        "sensors": "3: 30 / 77 / 90 mm",
+        "radii_mm": [
+          30.0,
+          77.0,
+          90.0
+        ],
+        "zone_power_W": [
+          499.9661594481489,
+          538.975850280038,
+          1569.359832019692
+        ],
+        "range_K": 24.644369311037735,
+        "mean_offset_K": -1.608037917852016,
+        "range_with_edge_bias_K": 25.911815576572394
+      },
+      {
+        "perturbation": "overlap 5 mm",
+        "sensors": "5: 0 / 40 / 70 / 90 / 98 mm",
+        "radii_mm": [
+          0.0,
+          40.0,
+          70.0,
+          90.0,
+          98.0
+        ],
+        "zone_power_W": [
+          499.72743520544566,
+          520.9617399466714,
+          1643.55703095409
+        ],
+        "range_K": 23.521053270489688,
+        "mean_offset_K": 0.08071949801183109,
+        "range_with_edge_bias_K": 23.66271584279582
+      },
+      {
+        "perturbation": "k_Si 20",
+        "sensors": "open loop",
+        "radii_mm": [],
+        "zone_power_W": [
+          499.76213734140003,
+          610.7825689643822,
+          1360.7298925777304
+        ],
+        "range_K": 23.352833504387263,
+        "mean_offset_K": 0.028301091719185933
+      },
+      {
+        "perturbation": "k_Si 20",
+        "sensors": "1: centre",
+        "radii_mm": [
+          0.0
+        ],
+        "zone_power_W": [
+          498.940020856816,
+          609.7778221439979,
+          1358.4914707522885
+        ],
+        "range_K": 23.31071257989572,
+        "mean_offset_K": -0.38333190748346624,
+        "range_with_edge_bias_K": 23.210226937509447
+      },
+      {
+        "perturbation": "k_Si 20",
+        "sensors": "1: mid-radius (60 mm)",
+        "radii_mm": [
+          60.0
+        ],
+        "zone_power_W": [
+          501.39350845445006,
+          612.7763435321468,
+          1365.171716544676
+        ],
+        "range_K": 23.43639698250979,
+        "mean_offset_K": 0.8436366985168888,
+        "range_with_edge_bias_K": 23.333067278111116
+      },
+      {
+        "perturbation": "k_Si 20",
+        "sensors": "3: 0 / 70 / 97 mm",
+        "radii_mm": [
+          0.0,
+          70.0,
+          97.0
+        ],
+        "zone_power_W": [
+          498.03407023562085,
+          616.5041129990491,
+          1369.2269702703522
+        ],
+        "range_K": 23.53394393135011,
+        "mean_offset_K": 1.0212394024986224,
+        "range_with_edge_bias_K": 23.746855877639746
+      },
+      {
+        "perturbation": "k_Si 20",
+        "sensors": "3: 30 / 77 / 90 mm",
+        "radii_mm": [
+          30.0,
+          77.0,
+          90.0
+        ],
+        "zone_power_W": [
+          497.4634723140497,
+          635.4981095337739,
+          1299.383737356932
+        ],
+        "range_K": 24.795246922148408,
+        "mean_offset_K": -0.5029908112155681,
+        "range_with_edge_bias_K": 25.841330988876734
+      },
+      {
+        "perturbation": "k_Si 20",
+        "sensors": "5: 0 / 40 / 70 / 90 / 98 mm",
+        "radii_mm": [
+          0.0,
+          40.0,
+          70.0,
+          90.0,
+          98.0
+        ],
+        "zone_power_W": [
+          498.68554141826525,
+          610.4854733955228,
+          1367.317578748401
+        ],
+        "range_K": 23.28699925339606,
+        "mean_offset_K": 0.18550013804667742,
+        "range_with_edge_bias_K": 23.486192162358634
+      },
+      {
+        "perturbation": "k_Si 40",
+        "sensors": "open loop",
+        "radii_mm": [],
+        "zone_power_W": [
+          499.76213734140003,
+          610.7825689643822,
+          1360.7298925777304
+        ],
+        "range_K": 15.194922976699445,
+        "mean_offset_K": -0.00933286175518333
+      },
+      {
+        "perturbation": "k_Si 40",
+        "sensors": "1: centre",
+        "radii_mm": [
+          0.0
+        ],
+        "zone_power_W": [
+          500.5517222626329,
+          611.7475574470466,
+          1362.8797389241658
+        ],
+        "range_K": 15.2075170199181,
+        "mean_offset_K": 0.3855094705446618,
+        "range_with_edge_bias_K": 15.176174237155465
+      },
+      {
+        "perturbation": "k_Si 40",
+        "sensors": "1: mid-radius (60 mm)",
+        "radii_mm": [
+          60.0
+        ],
+        "zone_power_W": [
+          498.4359444755181,
+          609.1617669366923,
+          1357.118994230111
+        ],
+        "range_K": 15.173735399034172,
+        "mean_offset_K": -0.6735585627249066,
+        "range_with_edge_bias_K": 15.141538647968218
+      },
+      {
+        "perturbation": "k_Si 40",
+        "sensors": "3: 0 / 70 / 97 mm",
+        "radii_mm": [
+          0.0,
+          70.0,
+          97.0
+        ],
+        "zone_power_W": [
+          501.4204935769254,
+          604.4674767101133,
+          1360.4234754399358
+        ],
+        "range_K": 16.47985896720479,
+        "mean_offset_K": -0.6220259108032451,
+        "range_with_edge_bias_K": 16.428988944343814
+      },
+      {
+        "perturbation": "k_Si 40",
+        "sensors": "3: 30 / 77 / 90 mm",
+        "radii_mm": [
+          30.0,
+          77.0,
+          90.0
+        ],
+        "zone_power_W": [
+          502.120780361264,
+          589.5298401613993,
+          1409.1692452585426
+        ],
+        "range_K": 16.954744318004032,
+        "mean_offset_K": 0.2884814672917173,
+        "range_with_edge_bias_K": 16.519423267960747
+      },
+      {
+        "perturbation": "k_Si 40",
+        "sensors": "5: 0 / 40 / 70 / 90 / 98 mm",
+        "radii_mm": [
+          0.0,
+          40.0,
+          70.0,
+          90.0,
+          98.0
+        ],
+        "zone_power_W": [
+          501.05251473035815,
+          607.5585500417554,
+          1362.407255868207
+        ],
+        "range_K": 15.907077502714174,
+        "mean_offset_K": -0.13825985176629274,
+        "range_with_edge_bias_K": 15.695233664950479
+      },
+      {
+        "perturbation": "ledge eps 0.15",
+        "sensors": "open loop",
+        "radii_mm": [],
+        "zone_power_W": [
+          499.76213734140003,
+          610.7825689643822,
+          1360.7298925777304
+        ],
+        "range_K": 21.620787782848538,
+        "mean_offset_K": 6.728712010359573
+      },
+      {
+        "perturbation": "ledge eps 0.15",
+        "sensors": "1: centre",
+        "radii_mm": [
+          0.0
+        ],
+        "zone_power_W": [
+          496.2721238523117,
+          606.5172610402457,
+          1351.227440660574
+        ],
+        "range_K": 21.54097877777724,
+        "mean_offset_K": 4.96436982873297,
+        "range_with_edge_bias_K": 21.496254298740837
+      },
+      {
+        "perturbation": "ledge eps 0.15",
+        "sensors": "1: mid-radius (60 mm)",
+        "radii_mm": [
+          60.0
+        ],
+        "zone_power_W": [
+          489.96726932119344,
+          598.811804864736,
+          1334.0608660287185
+        ],
+        "range_K": 21.396047804995305,
+        "mean_offset_K": 1.7534442603315483,
+        "range_with_edge_bias_K": 21.350403734657675
+      },
+      {
+        "perturbation": "ledge eps 0.15",
+        "sensors": "3: 0 / 70 / 97 mm",
+        "radii_mm": [
+          0.0,
+          70.0,
+          97.0
+        ],
+        "zone_power_W": [
+          499.34806456821684,
+          597.2438765253985,
+          1286.7608668092023
+        ],
+        "range_K": 17.8094130409861,
+        "mean_offset_K": 0.2029838536278703,
+        "range_with_edge_bias_K": 18.0122525650047
+      },
+      {
+        "perturbation": "ledge eps 0.15",
+        "sensors": "3: 30 / 77 / 90 mm",
+        "radii_mm": [
+          30.0,
+          77.0,
+          90.0
+        ],
+        "zone_power_W": [
+          499.6263613150731,
+          599.1965716380723,
+          1275.2075309157087
+        ],
+        "range_K": 17.99053801097955,
+        "mean_offset_K": -0.19640374371886082,
+        "range_with_edge_bias_K": 19.32773221371872
+      },
+      {
+        "perturbation": "ledge eps 0.15",
+        "sensors": "5: 0 / 40 / 70 / 90 / 98 mm",
+        "radii_mm": [
+          0.0,
+          40.0,
+          70.0,
+          90.0,
+          98.0
+        ],
+        "zone_power_W": [
+          499.62286561245173,
+          596.6636129157167,
+          1284.7391347819496
+        ],
+        "range_K": 17.80384113297498,
+        "mean_offset_K": 0.04184047384069345,
+        "range_with_edge_bias_K": 17.982865174029598
+      },
+      {
+        "perturbation": "ledge eps 0.6",
+        "sensors": "open loop",
+        "radii_mm": [],
+        "zone_power_W": [
+          499.76213734140003,
+          610.7825689643822,
+          1360.7298925777304
+        ],
+        "range_K": 32.536829140390864,
+        "mean_offset_K": -12.33569376711796
+      },
+      {
+        "perturbation": "ledge eps 0.6",
+        "sensors": "1: centre",
+        "radii_mm": [
+          0.0
+        ],
+        "zone_power_W": [
+          505.9059584413447,
+          618.2912186885176,
+          1377.458012618632
+        ],
+        "range_K": 32.81989858416762,
+        "mean_offset_K": -9.313833141016175,
+        "range_with_edge_bias_K": 32.72870574329909
+      },
+      {
+        "perturbation": "ledge eps 0.6",
+        "sensors": "1: mid-radius (60 mm)",
+        "radii_mm": [
+          60.0
+        ],
+        "zone_power_W": [
+          517.7005688095444,
+          632.7059609876161,
+          1409.5718477816847
+        ],
+        "range_K": 33.35984423432171,
+        "mean_offset_K": -3.5882414107641125,
+        "range_with_edge_bias_K": 33.264970830675225
+      },
+      {
+        "perturbation": "ledge eps 0.6",
+        "sensors": "3: 0 / 70 / 97 mm",
+        "radii_mm": [
+          0.0,
+          70.0,
+          97.0
+        ],
+        "zone_power_W": [
+          500.4613778522288,
+          631.9715291694154,
+          1531.4568499342822
+        ],
+        "range_K": 16.392929756529725,
+        "mean_offset_K": -0.2676909612921463,
+        "range_with_edge_bias_K": 17.231027509732485
+      },
+      {
+        "perturbation": "ledge eps 0.6",
+        "sensors": "3: 30 / 77 / 90 mm",
+        "radii_mm": [
+          30.0,
+          77.0,
+          90.0
+        ],
+        "zone_power_W": [
+          500.04359424196497,
+          630.6047655434944,
+          1547.0343003954877
+        ],
+        "range_K": 16.22159039550604,
+        "mean_offset_K": 0.27703067034065043,
+        "range_with_edge_bias_K": 16.2269269505814
+      },
+      {
+        "perturbation": "ledge eps 0.6",
+        "sensors": "5: 0 / 40 / 70 / 90 / 98 mm",
+        "radii_mm": [
+          0.0,
+          40.0,
+          70.0,
+          90.0,
+          98.0
+        ],
+        "zone_power_W": [
+          500.1023075257519,
+          632.7729998938745,
+          1534.6742727202559
+        ],
+        "range_K": 16.089727613920104,
+        "mean_offset_K": -0.05443821050675979,
+        "range_with_edge_bias_K": 16.368672745676008
+      },
+      {
+        "perturbation": "gap 8 mm",
+        "sensors": "open loop",
+        "radii_mm": [],
+        "zone_power_W": [
+          499.76213734140003,
+          610.7825689643822,
+          1360.7298925777304
+        ],
+        "range_K": 30.720892863430095,
+        "mean_offset_K": 11.195130146039787
+      },
+      {
+        "perturbation": "gap 8 mm",
+        "sensors": "1: centre",
+        "radii_mm": [
+          0.0
+        ],
+        "zone_power_W": [
+          490.0603481966877,
+          598.925560890739,
+          1334.314297008757
+        ],
+        "range_K": 30.44910826101102,
+        "mean_offset_K": 6.260693980658061,
+        "range_with_edge_bias_K": 30.39481134104426
+      },
+      {
+        "perturbation": "gap 8 mm",
+        "sensors": "1: mid-radius (60 mm)",
+        "radii_mm": [
+          60.0
+        ],
+        "zone_power_W": [
+          487.3828140728558,
+          595.6532218149065,
+          1327.0240274015457
+        ],
+        "range_K": 30.373569460062413,
+        "mean_offset_K": 4.886095200545697,
+        "range_with_edge_bias_K": 30.31774844712845
+      },
+      {
+        "perturbation": "gap 8 mm",
+        "sensors": "3: 0 / 70 / 97 mm",
+        "radii_mm": [
+          0.0,
+          70.0,
+          97.0
+        ],
+        "zone_power_W": [
+          491.7807049485224,
+          632.2295921816122,
+          1140.8830061892343
+        ],
+        "range_K": 16.44984034239087,
+        "mean_offset_K": -0.049498448219651436,
+        "range_with_edge_bias_K": 17.454925864022357
+      },
+      {
+        "perturbation": "gap 8 mm",
+        "sensors": "3: 30 / 77 / 90 mm",
+        "radii_mm": [
+          30.0,
+          77.0,
+          90.0
+        ],
+        "zone_power_W": [
+          490.74968037459536,
+          632.1465787812443,
+          1149.4426264578685
+        ],
+        "range_K": 16.324074325006904,
+        "mean_offset_K": 0.27303756215405883,
+        "range_with_edge_bias_K": 16.48233705064615
+      },
+      {
+        "perturbation": "gap 8 mm",
+        "sensors": "5: 0 / 40 / 70 / 90 / 98 mm",
+        "radii_mm": [
+          0.0,
+          40.0,
+          70.0,
+          90.0,
+          98.0
+        ],
+        "zone_power_W": [
+          491.0565534847463,
+          632.5037138373218,
+          1143.7031552676428
+        ],
+        "range_K": 16.04309667996324,
+        "mean_offset_K": 0.033265045737721266,
+        "range_with_edge_bias_K": 16.430398481317866
+      },
+      {
+        "perturbation": "gap 12 mm",
+        "sensors": "open loop",
+        "radii_mm": [],
+        "zone_power_W": [
+          499.76213734140003,
+          610.7825689643822,
+          1360.7298925777304
+        ],
+        "range_K": 30.60960496053724,
+        "mean_offset_K": -11.601518218450678
+      },
+      {
+        "perturbation": "gap 12 mm",
+        "sensors": "1: centre",
+        "radii_mm": [
+          0.0
+        ],
+        "zone_power_W": [
+          512.2373101191566,
+          626.0290582602842,
+          1394.696732490953
+        ],
+        "range_K": 31.157052060294177,
+        "mean_offset_K": -5.480318640911719,
+        "range_with_edge_bias_K": 31.06916111122075
+      },
+      {
+        "perturbation": "gap 12 mm",
+        "sensors": "1: mid-radius (60 mm)",
+        "radii_mm": [
+          60.0
+        ],
+        "zone_power_W": [
+          515.822866854895,
+          630.4111340331148,
+          1404.4593252672034
+        ],
+        "range_K": 31.313636854751735,
+        "mean_offset_K": -3.741547522564929,
+        "range_with_edge_bias_K": 31.2232202136272
+      },
+      {
+        "perturbation": "gap 12 mm",
+        "sensors": "3: 0 / 70 / 97 mm",
+        "radii_mm": [
+          0.0,
+          70.0,
+          97.0
+        ],
+        "zone_power_W": [
+          509.10331666715615,
+          587.4833233017057,
+          1588.3929308744612
+        ],
+        "range_K": 17.41872824659572,
+        "mean_offset_K": 0.024610607682461705,
+        "range_with_edge_bias_K": 17.65453994818165
+      },
+      {
+        "perturbation": "gap 12 mm",
+        "sensors": "3: 30 / 77 / 90 mm",
+        "radii_mm": [
+          30.0,
+          77.0,
+          90.0
+        ],
+        "zone_power_W": [
+          510.3413522323751,
+          587.5193041730262,
+          1580.0870594822663
+        ],
+        "range_K": 17.76274028900673,
+        "mean_offset_K": -0.2372851382542649,
+        "range_with_edge_bias_K": 19.0859330666824
+      },
+      {
+        "perturbation": "gap 12 mm",
+        "sensors": "5: 0 / 40 / 70 / 90 / 98 mm",
+        "radii_mm": [
+          0.0,
+          40.0,
+          70.0,
+          90.0,
+          98.0
+        ],
+        "zone_power_W": [
+          509.854314908473,
+          587.8466372108494,
+          1584.5017064522574
+        ],
+        "range_K": 17.37638935272207,
+        "mean_offset_K": -0.02464651979141763,
+        "range_with_edge_bias_K": 17.8075834708377
+      },
+      {
+        "perturbation": "wafer eps 0.63",
+        "sensors": "open loop",
+        "radii_mm": [],
+        "zone_power_W": [
+          499.76213734140003,
+          610.7825689643822,
+          1360.7298925777304
+        ],
+        "range_K": 26.48953885378728,
+        "mean_offset_K": 19.255493076855487
+      },
+      {
+        "perturbation": "wafer eps 0.63",
+        "sensors": "1: centre",
+        "radii_mm": [
+          0.0
+        ],
+        "zone_power_W": [
+          455.60484949053046,
+          556.8158922258649,
+          1240.5004132628712
+        ],
+        "range_K": 24.602658899061908,
+        "mean_offset_K": -4.069324412121432,
+        "range_with_edge_bias_K": 24.525258138672143
+      },
+      {
+        "perturbation": "wafer eps 0.63",
+        "sensors": "1: mid-radius (60 mm)",
+        "radii_mm": [
+          60.0
+        ],
+        "zone_power_W": [
+          458.40128159388183,
+          560.2335420564534,
+          1248.1144129464742
+        ],
+        "range_K": 24.72364281010016,
+        "mean_offset_K": -2.543418489489909,
+        "range_with_edge_bias_K": 24.643905569165668
+      },
+      {
+        "perturbation": "wafer eps 0.63",
+        "sensors": "3: 0 / 70 / 97 mm",
+        "radii_mm": [
+          0.0,
+          70.0,
+          97.0
+        ],
+        "zone_power_W": [
+          453.71856413856005,
+          544.9888621107134,
+          1332.8340738579807
+        ],
+        "range_K": 16.53373968440326,
+        "mean_offset_K": -0.3545415943609669,
+        "range_with_edge_bias_K": 16.864297904851355
+      },
+      {
+        "perturbation": "wafer eps 0.63",
+        "sensors": "3: 30 / 77 / 90 mm",
+        "radii_mm": [
+          30.0,
+          77.0,
+          90.0
+        ],
+        "zone_power_W": [
+          454.2286054742157,
+          538.142173773561,
+          1355.5893964807442
+        ],
+        "range_K": 16.837756796378017,
+        "mean_offset_K": 0.1425590232487366,
+        "range_with_edge_bias_K": 16.41711209716607
+      },
+      {
+        "perturbation": "wafer eps 0.63",
+        "sensors": "5: 0 / 40 / 70 / 90 / 98 mm",
+        "radii_mm": [
+          0.0,
+          40.0,
+          70.0,
+          90.0,
+          98.0
+        ],
+        "zone_power_W": [
+          453.6498419951113,
+          546.5569970839457,
+          1333.6781441315381
+        ],
+        "range_K": 16.261316055100906,
+        "mean_offset_K": -0.0797330071475244,
+        "range_with_edge_bias_K": 16.23134961320511
+      },
+      {
+        "perturbation": "wafer eps 0.77",
+        "sensors": "open loop",
+        "radii_mm": [],
+        "zone_power_W": [
+          499.76213734140003,
+          610.7825689643822,
+          1360.7298925777304
+        ],
+        "range_K": 22.825227479386626,
+        "mean_offset_K": -17.486680170529894
+      },
+      {
+        "perturbation": "wafer eps 0.77",
+        "sensors": "1: centre",
+        "radii_mm": [
+          0.0
+        ],
+        "zone_power_W": [
+          544.3101765992794,
+          665.2268011845323,
+          1482.0232922666173
+        ],
+        "range_K": 23.764955270938117,
+        "mean_offset_K": 3.70443810809104,
+        "range_with_edge_bias_K": 23.72078069877989
+      },
+      {
+        "perturbation": "wafer eps 0.77",
+        "sensors": "1: mid-radius (60 mm)",
+        "radii_mm": [
+          60.0
+        ],
+        "zone_power_W": [
+          541.6838163255287,
+          662.0170040527188,
+          1474.872356519098
+        ],
+        "range_K": 23.71069399484486,
+        "mean_offset_K": 2.4916313715035585,
+        "range_with_edge_bias_K": 23.66542644682727
+      },
+      {
+        "perturbation": "wafer eps 0.77",
+        "sensors": "3: 0 / 70 / 97 mm",
+        "radii_mm": [
+          0.0,
+          70.0,
+          97.0
+        ],
+        "zone_power_W": [
+          545.8979305647397,
+          676.8636354057902,
+          1388.125549471403
+        ],
+        "range_K": 18.531105228269553,
+        "mean_offset_K": 0.3444989017214084,
+        "range_with_edge_bias_K": 18.740788779649733
+      },
+      {
+        "perturbation": "wafer eps 0.77",
+        "sensors": "3: 30 / 77 / 90 mm",
+        "radii_mm": [
+          30.0,
+          77.0,
+          90.0
+        ],
+        "zone_power_W": [
+          545.4075302861933,
+          683.1021321959525,
+          1366.0124235988287
+        ],
+        "range_K": 18.87655144663836,
+        "mean_offset_K": -0.1388615982925785,
+        "range_with_edge_bias_K": 20.024726053453037
+      },
+      {
+        "perturbation": "wafer eps 0.77",
+        "sensors": "5: 0 / 40 / 70 / 90 / 98 mm",
+        "radii_mm": [
+          0.0,
+          40.0,
+          70.0,
+          90.0,
+          98.0
+        ],
+        "zone_power_W": [
+          545.9125406907938,
+          675.1639354420424,
+          1387.2338643298465
+        ],
+        "range_K": 18.4781248307753,
+        "mean_offset_K": 0.07718040709823981,
+        "range_with_edge_bias_K": 18.666743243491396
+      }
+    ],
+    "nominal_range_K": 16.575500453849486
+  },
+  "disabled_physics": [
+    "sensor optics",
+    "transients and control dynamics"
+  ],
+  "warnings": [
+    "Ideal point sensors of true wafer temperature; spot size, emissivity drift and access not modelled",
+    "Reduced axisymmetric heater model with bracketed parameters; not validated"
+  ]
+}

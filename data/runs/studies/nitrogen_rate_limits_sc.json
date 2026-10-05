@@ -1,0 +1,1128 @@
+{
+  "schema_version": "0.1",
+  "run_id": "nitrogen_rate_limits",
+  "created_utc": "2026-10-02T21:14:57+00:00",
+  "label": "representative_chamber",
+  "validation_status": "not_validated",
+  "package_version": "0.1.0",
+  "git_commit": "eb6abd80b63e34e9f2c7709ec3bc452ceb66e0ff-dirty",
+  "python": "3.12.13",
+  "numpy": "2.4.4",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "source_sha256": {
+    "scripts/nitrogen_rate_limits.py": "ceb524ac574befe25ca7221c71d8f0804a54d712e029e86e7919b3ea6995bd01",
+    "scripts/layout_comparison.py": "5e0008b444f1c2969eae551fd167acd4d6f2a37f76a6cbbd70019680e28ed644",
+    "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
+    "data/runs/studies/nitrogen_output_evidence.json": "e77e9017f808de7356c47a9029c35ae02856c92911ac2787baf2987133f53e3e",
+    "src/mbe_twin/vacuum.py": "21b1538e8ea911537a4d42f584dd08efca470db7db594259be2d16b4c806db7b",
+    "src/mbe_twin/growth.py": "3f524aea624c9c28a766aad914eb10ece7918628812e1f30d922fb4ad61931ff",
+    "data/runs/studies/layout_comparison_bc_sc.json": "ae80fd332107b61e8381c134963b7648c5d5a84277c7d89c5e692534c618f499",
+    "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6"
+  },
+  "solver": null,
+  "inputs_sha256": "72c1e42d4e32e3e136f1df4b28cbac2a62a42e0b0b1dda6d011182dd5941de2f",
+  "inputs": {
+    "record": "data/runs/studies/layout_comparison_bc_sc.json",
+    "scattered": "gas",
+    "map_caches": [
+      {
+        "file": "N_2.92_46_105_48ad0d313e25.npz",
+        "key": "48ad0d313e252bc4c6bdb3fc028e4a6453810636c35613995a4682b8aa51be06",
+        "reused": true
+      },
+      {
+        "file": "Ga_46_40_99_78d7f398e534.npz",
+        "key": "78d7f398e534a82469b2e099c512ec7aee3c2a763ec646e2de0a4058e863b7e3",
+        "reused": true
+      },
+      {
+        "file": "Ga_46_70_99_698387f4cf95.npz",
+        "key": "698387f4cf958f7118f65a240a7671092e9931c0876e529358ec8eeda7d45308",
+        "reused": true
+      },
+      {
+        "file": "Ga_46_120_99_35b2afb936dd.npz",
+        "key": "35b2afb936dd48bdddf6ad61911a21a4e8227e11d809a6196559579e86e34d3e",
+        "reused": true
+      },
+      {
+        "file": "N_2.92_46_97.5_f28d6c1c17cb.npz",
+        "key": "f28d6c1c17cb52eac051e609cfe57f6f558fc1ffc1bf7b0d507465dacefa5aa3",
+        "reused": true
+      },
+      {
+        "file": "N_2_46_90_354fc2775e48.npz",
+        "key": "354fc2775e480933eac8bb7fb28066e6b4bc7b62366bfe4e0e4d02c4d5507d9a",
+        "reused": true
+      }
+    ],
+    "targets_um_h": [
+      1.0,
+      0.5,
+      0.25
+    ],
+    "n_feeds": 500,
+    "kn_valid": 10.0,
+    "plates": {
+      "B": {
+        "holes": 2000,
+        "hole_diameter_m": 0.000343,
+        "thickness_m": 0.0005,
+        "transmission": 0.426595
+      },
+      "B-p": {
+        "holes": 2000,
+        "hole_diameter_m": 0.000343,
+        "thickness_m": 0.0005,
+        "transmission": 0.426595
+      },
+      "B-L": {
+        "holes": 8000,
+        "hole_diameter_m": 0.0005,
+        "thickness_m": 0.0005,
+        "transmission": 0.51175
+      }
+    }
+  },
+  "outputs": {
+    "feed_at_kn_valid_sccm": {
+      "B": 5.944272827561998,
+      "B-p": 5.944272827561998,
+      "B-L": 41.57925469015635
+    },
+    "rows": [
+      {
+        "layout": "B",
+        "T0_C": 700.0,
+        "S_eff_m3_s": 0.5,
+        "ceiling": "feed limit 10 sccm",
+        "feed_ceiling_sccm": 10.0,
+        "max_rate_eta1_um_h": 1.378570013504948,
+        "best_feed_sccm": 10.0,
+        "best_pressure_Pa": 0.03709500274574409,
+        "eta_min": {
+          "1": 0.7270680325051617,
+          "0.5": 0.36659050158831996,
+          "0.25": 0.18635173612989905
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.07579459210725739,
+          "0.566": 0.7759091496492008
+        }
+      },
+      {
+        "layout": "B",
+        "T0_C": 700.0,
+        "S_eff_m3_s": 0.5,
+        "ceiling": "feed limit 35 sccm",
+        "feed_ceiling_sccm": 35.0,
+        "max_rate_eta1_um_h": 2.8900193999075796,
+        "best_feed_sccm": 35.0,
+        "best_pressure_Pa": 0.12983250961010434,
+        "eta_min": {
+          "1": 0.347931533593962,
+          "0.5": 0.175428418959815,
+          "0.25": 0.08917686164274155
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.16762642607297246,
+          "0.566": 1.6306467755716312
+        }
+      },
+      {
+        "layout": "B",
+        "T0_C": 700.0,
+        "S_eff_m3_s": 0.5,
+        "ceiling": "plate free-molecular",
+        "feed_ceiling_sccm": 5.944272827561998,
+        "max_rate_eta1_um_h": 0.9792713040866828,
+        "best_feed_sccm": 5.944272827561998,
+        "best_pressure_Pa": 0.022050281685986436,
+        "eta_min": {
+          "1": 1.020985765370035,
+          "0.5": 0.5147849542386238,
+          "0.25": 0.2616845486729181
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.05153421454126031,
+          "0.566": 0.5501022956503588
+        }
+      },
+      {
+        "layout": "B",
+        "T0_C": 700.0,
+        "S_eff_m3_s": 2.0,
+        "ceiling": "feed limit 10 sccm",
+        "feed_ceiling_sccm": 10.0,
+        "max_rate_eta1_um_h": 1.9876089204386638,
+        "best_feed_sccm": 10.0,
+        "best_pressure_Pa": 0.009273750686436023,
+        "eta_min": {
+          "1": 0.5052277430595754,
+          "0.5": 0.25473777344657184,
+          "0.25": 0.12949278864006994
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.11279825249003302,
+          "0.566": 1.120325889031993
+        }
+      },
+      {
+        "layout": "B",
+        "T0_C": 700.0,
+        "S_eff_m3_s": 2.0,
+        "ceiling": "feed limit 35 sccm",
+        "feed_ceiling_sccm": 35.0,
+        "max_rate_eta1_um_h": 5.104842501764674,
+        "best_feed_sccm": 35.0,
+        "best_pressure_Pa": 0.032458127402526085,
+        "eta_min": {
+          "1": 0.19722581330470682,
+          "0.5": 0.09944201449267201,
+          "0.25": 0.05055011508665461
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.3021934642966327,
+          "0.566": 2.883148286340176
+        }
+      },
+      {
+        "layout": "B",
+        "T0_C": 700.0,
+        "S_eff_m3_s": 2.0,
+        "ceiling": "plate free-molecular",
+        "feed_ceiling_sccm": 5.944272827561998,
+        "max_rate_eta1_um_h": 1.2503059957961937,
+        "best_feed_sccm": 5.944272827561998,
+        "best_pressure_Pa": 0.005512570421496609,
+        "eta_min": {
+          "1": 0.8011526999090988,
+          "0.5": 0.40394427615881767,
+          "0.25": 0.20534006428367713
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.06800159547503792,
+          "0.566": 0.7033747446112747
+        }
+      },
+      {
+        "layout": "B",
+        "T0_C": 700.0,
+        "S_eff_m3_s": 4.0,
+        "ceiling": "feed limit 10 sccm",
+        "feed_ceiling_sccm": 10.0,
+        "max_rate_eta1_um_h": 2.1399505732598754,
+        "best_feed_sccm": 10.0,
+        "best_pressure_Pa": 0.004636875343218012,
+        "eta_min": {
+          "1": 0.4694028639248705,
+          "0.5": 0.23667473144198586,
+          "0.25": 0.12031066520054351
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.12205414520717979,
+          "0.566": 1.2064764037848663
+        }
+      },
+      {
+        "layout": "B",
+        "T0_C": 700.0,
+        "S_eff_m3_s": 4.0,
+        "ceiling": "feed limit 35 sccm",
+        "feed_ceiling_sccm": 35.0,
+        "max_rate_eta1_um_h": 6.283508491539743,
+        "best_feed_sccm": 35.0,
+        "best_pressure_Pa": 0.016229063701263043,
+        "eta_min": {
+          "1": 0.1602798786323097,
+          "0.5": 0.08081373196932065,
+          "0.25": 0.041080658637826124
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.3738062225191735,
+          "0.566": 3.549694039654261
+        }
+      },
+      {
+        "layout": "B",
+        "T0_C": 700.0,
+        "S_eff_m3_s": 4.0,
+        "ceiling": "plate free-molecular",
+        "feed_ceiling_sccm": 5.944272827561998,
+        "max_rate_eta1_um_h": 1.3092805314506921,
+        "best_feed_sccm": 5.944272827561998,
+        "best_pressure_Pa": 0.0027562852107483045,
+        "eta_min": {
+          "1": 0.76529820013067,
+          "0.5": 0.3858662993116109,
+          "0.25": 0.19615034890208133
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.07158473879108303,
+          "0.566": 0.7367253516833238
+        }
+      },
+      {
+        "layout": "B",
+        "T0_C": 740.0,
+        "S_eff_m3_s": 0.5,
+        "ceiling": "feed limit 10 sccm",
+        "feed_ceiling_sccm": 10.0,
+        "max_rate_eta1_um_h": 1.3505680932402016,
+        "best_feed_sccm": 10.0,
+        "best_pressure_Pa": 0.03709500274574409,
+        "eta_min": {
+          "1": 0.747256158661094,
+          "0.5": 0.38677862774425215,
+          "0.25": 0.20653986228583118
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.047792671842510945,
+          "0.566": 0.7479072293844542
+        }
+      },
+      {
+        "layout": "B",
+        "T0_C": 740.0,
+        "S_eff_m3_s": 0.5,
+        "ceiling": "feed limit 35 sccm",
+        "feed_ceiling_sccm": 35.0,
+        "max_rate_eta1_um_h": 2.8620174796428333,
+        "best_feed_sccm": 35.0,
+        "best_pressure_Pa": 0.12983250961010434,
+        "eta_min": {
+          "1": 0.35759237051677367,
+          "0.5": 0.18508925588262662,
+          "0.25": 0.09883769856555313
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.13962450580822602,
+          "0.566": 1.6026448553068846
+        }
+      },
+      {
+        "layout": "B",
+        "T0_C": 740.0,
+        "S_eff_m3_s": 0.5,
+        "ceiling": "plate free-molecular",
+        "feed_ceiling_sccm": 5.944272827561998,
+        "max_rate_eta1_um_h": 0.9512693838219364,
+        "best_feed_sccm": 5.944272827561998,
+        "best_pressure_Pa": 0.022050281685986436,
+        "eta_min": {
+          "1": 1.0493349548725384,
+          "0.5": 0.5431341437411272,
+          "0.25": 0.29003373817542155
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.02353229427651387,
+          "0.566": 0.5221003753856124
+        }
+      },
+      {
+        "layout": "B",
+        "T0_C": 740.0,
+        "S_eff_m3_s": 2.0,
+        "ceiling": "feed limit 10 sccm",
+        "feed_ceiling_sccm": 10.0,
+        "max_rate_eta1_um_h": 1.9596070001739174,
+        "best_feed_sccm": 10.0,
+        "best_pressure_Pa": 0.009273750686436023,
+        "eta_min": {
+          "1": 0.5192561433720198,
+          "0.5": 0.26876617375901596,
+          "0.25": 0.14352118895251417
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.08479633222528657,
+          "0.566": 1.0923239687672464
+        }
+      },
+      {
+        "layout": "B",
+        "T0_C": 740.0,
+        "S_eff_m3_s": 2.0,
+        "ceiling": "feed limit 35 sccm",
+        "feed_ceiling_sccm": 35.0,
+        "max_rate_eta1_um_h": 5.076840581499928,
+        "best_feed_sccm": 35.0,
+        "best_pressure_Pa": 0.032458127402526085,
+        "eta_min": {
+          "1": 0.20270208157974398,
+          "0.5": 0.1049182827677092,
+          "0.25": 0.05602638336169181
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.2741915440318863,
+          "0.566": 2.8551463660754295
+        }
+      },
+      {
+        "layout": "B",
+        "T0_C": 740.0,
+        "S_eff_m3_s": 2.0,
+        "ceiling": "plate free-molecular",
+        "feed_ceiling_sccm": 5.944272827561998,
+        "max_rate_eta1_um_h": 1.2223040755314472,
+        "best_feed_sccm": 5.944272827561998,
+        "best_pressure_Pa": 0.005512570421496609,
+        "eta_min": {
+          "1": 0.8233978971297808,
+          "0.5": 0.42618947337949964,
+          "0.25": 0.2275852615043591
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.03999967521029149,
+          "0.566": 0.6753728243465282
+        }
+      },
+      {
+        "layout": "B",
+        "T0_C": 740.0,
+        "S_eff_m3_s": 4.0,
+        "ceiling": "feed limit 10 sccm",
+        "feed_ceiling_sccm": 10.0,
+        "max_rate_eta1_um_h": 2.1119486529951286,
+        "best_feed_sccm": 10.0,
+        "best_pressure_Pa": 0.004636875343218012,
+        "eta_min": {
+          "1": 0.4824365331431689,
+          "0.5": 0.2497084006602841,
+          "0.25": 0.13334433441884166
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.09405222494243334,
+          "0.566": 1.1784744835201197
+        }
+      },
+      {
+        "layout": "B",
+        "T0_C": 740.0,
+        "S_eff_m3_s": 4.0,
+        "ceiling": "feed limit 35 sccm",
+        "feed_ceiling_sccm": 35.0,
+        "max_rate_eta1_um_h": 6.255506571274997,
+        "best_feed_sccm": 35.0,
+        "best_pressure_Pa": 0.016229063701263043,
+        "eta_min": {
+          "1": 0.16473028803751696,
+          "0.5": 0.08526414137452797,
+          "0.25": 0.045531068043033446
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.34580430225442704,
+          "0.566": 3.521692119389514
+        }
+      },
+      {
+        "layout": "B",
+        "T0_C": 740.0,
+        "S_eff_m3_s": 4.0,
+        "ceiling": "plate free-molecular",
+        "feed_ceiling_sccm": 5.944272827561998,
+        "max_rate_eta1_um_h": 1.2812786111859458,
+        "best_feed_sccm": 5.944272827561998,
+        "best_pressure_Pa": 0.0027562852107483045,
+        "eta_min": {
+          "1": 0.7865478437959432,
+          "0.5": 0.40711594297688397,
+          "0.25": 0.21739999256735432
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.04358281852633659,
+          "0.566": 0.7087234314185774
+        }
+      },
+      {
+        "layout": "B-p",
+        "T0_C": 700.0,
+        "S_eff_m3_s": 0.5,
+        "ceiling": "feed limit 10 sccm",
+        "feed_ceiling_sccm": 10.0,
+        "max_rate_eta1_um_h": 1.4117467563758006,
+        "best_feed_sccm": 10.0,
+        "best_pressure_Pa": 0.03709500274574409,
+        "eta_min": {
+          "1": 0.7100835853300033,
+          "0.5": 0.35802687792343624,
+          "0.25": 0.18199852422015267
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.0778103269179947,
+          "0.566": 0.7946708830505185
+        }
+      },
+      {
+        "layout": "B-p",
+        "T0_C": 700.0,
+        "S_eff_m3_s": 0.5,
+        "ceiling": "feed limit 35 sccm",
+        "feed_ceiling_sccm": 35.0,
+        "max_rate_eta1_um_h": 2.936607547072564,
+        "best_feed_sccm": 35.0,
+        "best_pressure_Pa": 0.12983250961010434,
+        "eta_min": {
+          "1": 0.3424276255467641,
+          "0.5": 0.17265332732944003,
+          "0.25": 0.08776617822077803
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.1704570038175622,
+          "0.566": 1.6569927734344505
+        }
+      },
+      {
+        "layout": "B-p",
+        "T0_C": 700.0,
+        "S_eff_m3_s": 0.5,
+        "ceiling": "plate free-molecular",
+        "feed_ceiling_sccm": 5.944272827561998,
+        "max_rate_eta1_um_h": 1.0036126566091133,
+        "best_feed_sccm": 5.944272827561998,
+        "best_pressure_Pa": 0.022050281685986436,
+        "eta_min": {
+          "1": 0.9964305044689836,
+          "0.5": 0.5024040971414792,
+          "0.25": 0.2553908934777269
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.0530131334276287,
+          "0.566": 0.5638675398285193
+        }
+      },
+      {
+        "layout": "B-p",
+        "T0_C": 700.0,
+        "S_eff_m3_s": 2.0,
+        "ceiling": "feed limit 10 sccm",
+        "feed_ceiling_sccm": 10.0,
+        "max_rate_eta1_um_h": 2.039377531838094,
+        "best_feed_sccm": 10.0,
+        "best_pressure_Pa": 0.009273750686436023,
+        "eta_min": {
+          "1": 0.4924558821302023,
+          "0.5": 0.24829815198751404,
+          "0.25": 0.12621928691616985
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.11594358211167718,
+          "0.566": 1.1496014839694888
+        }
+      },
+      {
+        "layout": "B-p",
+        "T0_C": 700.0,
+        "S_eff_m3_s": 2.0,
+        "ceiling": "feed limit 35 sccm",
+        "feed_ceiling_sccm": 35.0,
+        "max_rate_eta1_um_h": 5.233090947607627,
+        "best_feed_sccm": 35.0,
+        "best_pressure_Pa": 0.032458127402526085,
+        "eta_min": {
+          "1": 0.19240017817284477,
+          "0.5": 0.09700891067792139,
+          "0.25": 0.04931327693045971
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.30998551482175274,
+          "0.566": 2.9556738853540785
+        }
+      },
+      {
+        "layout": "B-p",
+        "T0_C": 700.0,
+        "S_eff_m3_s": 2.0,
+        "ceiling": "plate free-molecular",
+        "feed_ceiling_sccm": 5.944272827561998,
+        "max_rate_eta1_um_h": 1.2827805017792462,
+        "best_feed_sccm": 5.944272827561998,
+        "best_pressure_Pa": 0.005512570421496609,
+        "eta_min": {
+          "1": 0.7810041253470997,
+          "0.5": 0.3937852872819131,
+          "0.25": 0.20017586824931968
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.06997466415228429,
+          "0.566": 0.7217393570135612
+        }
+      },
+      {
+        "layout": "B-p",
+        "T0_C": 700.0,
+        "S_eff_m3_s": 4.0,
+        "ceiling": "feed limit 10 sccm",
+        "feed_ceiling_sccm": 10.0,
+        "max_rate_eta1_um_h": 2.195911851623587,
+        "best_feed_sccm": 10.0,
+        "best_pressure_Pa": 0.004636875343218012,
+        "eta_min": {
+          "1": 0.457486472403785,
+          "0.5": 0.23066644095259958,
+          "0.25": 0.11725642522700684
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.12545421064730466,
+          "0.566": 1.2381229879460651
+        }
+      },
+      {
+        "layout": "B-p",
+        "T0_C": 700.0,
+        "S_eff_m3_s": 4.0,
+        "ceiling": "feed limit 35 sccm",
+        "feed_ceiling_sccm": 35.0,
+        "max_rate_eta1_um_h": 6.448426013755164,
+        "best_feed_sccm": 35.0,
+        "best_pressure_Pa": 0.016229063701263043,
+        "eta_min": {
+          "1": 0.1561861277671262,
+          "0.5": 0.07874964701997367,
+          "0.25": 0.04003140664639739
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.3838261931873076,
+          "0.566": 3.6429563166974352
+        }
+      },
+      {
+        "layout": "B-p",
+        "T0_C": 700.0,
+        "S_eff_m3_s": 4.0,
+        "ceiling": "plate free-molecular",
+        "feed_ceiling_sccm": 5.944272827561998,
+        "max_rate_eta1_um_h": 1.3423541919263762,
+        "best_feed_sccm": 5.944272827561998,
+        "best_pressure_Pa": 0.0027562852107483045,
+        "eta_min": {
+          "1": 0.7465607178310628,
+          "0.5": 0.37641878858686106,
+          "0.25": 0.1913478239647602
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.07359421057675111,
+          "0.566": 0.7554287911037028
+        }
+      },
+      {
+        "layout": "B-p",
+        "T0_C": 740.0,
+        "S_eff_m3_s": 0.5,
+        "ceiling": "feed limit 10 sccm",
+        "feed_ceiling_sccm": 10.0,
+        "max_rate_eta1_um_h": 1.383744836111054,
+        "best_feed_sccm": 10.0,
+        "best_pressure_Pa": 0.03709500274574409,
+        "eta_min": {
+          "1": 0.7298001130289394,
+          "0.5": 0.3777434056223721,
+          "0.25": 0.20171505191908848
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.04980840665324826,
+          "0.566": 0.7666689627857721
+        }
+      },
+      {
+        "layout": "B-p",
+        "T0_C": 740.0,
+        "S_eff_m3_s": 0.5,
+        "ceiling": "feed limit 35 sccm",
+        "feed_ceiling_sccm": 35.0,
+        "max_rate_eta1_um_h": 2.9086056268078173,
+        "best_feed_sccm": 35.0,
+        "best_pressure_Pa": 0.12983250961010434,
+        "eta_min": {
+          "1": 0.35193563827013363,
+          "0.5": 0.18216134005280962,
+          "0.25": 0.09727419094414759
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.14245508355281575,
+          "0.566": 1.628990853169704
+        }
+      },
+      {
+        "layout": "B-p",
+        "T0_C": 740.0,
+        "S_eff_m3_s": 0.5,
+        "ceiling": "plate free-molecular",
+        "feed_ceiling_sccm": 5.944272827561998,
+        "max_rate_eta1_um_h": 0.9756107363443668,
+        "best_feed_sccm": 5.944272827561998,
+        "best_pressure_Pa": 0.022050281685986436,
+        "eta_min": {
+          "1": 1.0240978806023115,
+          "0.5": 0.530071473274807,
+          "0.25": 0.2830582696110548
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.02501121316288226,
+          "0.566": 0.5358656195637729
+        }
+      },
+      {
+        "layout": "B-p",
+        "T0_C": 740.0,
+        "S_eff_m3_s": 2.0,
+        "ceiling": "feed limit 10 sccm",
+        "feed_ceiling_sccm": 10.0,
+        "max_rate_eta1_um_h": 2.0113756115733477,
+        "best_feed_sccm": 10.0,
+        "best_pressure_Pa": 0.009273750686436023,
+        "eta_min": {
+          "1": 0.5061296527131565,
+          "0.5": 0.26197192257046814,
+          "0.25": 0.13989305749912398
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.08794166184693074,
+          "0.566": 1.1215995637047422
+        }
+      },
+      {
+        "layout": "B-p",
+        "T0_C": 740.0,
+        "S_eff_m3_s": 2.0,
+        "ceiling": "feed limit 35 sccm",
+        "feed_ceiling_sccm": 35.0,
+        "max_rate_eta1_um_h": 5.20508902734288,
+        "best_feed_sccm": 35.0,
+        "best_pressure_Pa": 0.032458127402526085,
+        "eta_min": {
+          "1": 0.19774245550553657,
+          "0.5": 0.10235118801061326,
+          "0.25": 0.054655554263151586
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.28198359455700633,
+          "0.566": 2.9276719650893317
+        }
+      },
+      {
+        "layout": "B-p",
+        "T0_C": 740.0,
+        "S_eff_m3_s": 2.0,
+        "ceiling": "plate free-molecular",
+        "feed_ceiling_sccm": 5.944272827561998,
+        "max_rate_eta1_um_h": 1.2547785815144996,
+        "best_feed_sccm": 5.944272827561998,
+        "best_pressure_Pa": 0.005512570421496609,
+        "eta_min": {
+          "1": 0.802689867404118,
+          "0.5": 0.41547102933893126,
+          "0.25": 0.22186161030633791
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.04197274388753786,
+          "0.566": 0.6937374367488148
+        }
+      },
+      {
+        "layout": "B-p",
+        "T0_C": 740.0,
+        "S_eff_m3_s": 4.0,
+        "ceiling": "feed limit 10 sccm",
+        "feed_ceiling_sccm": 10.0,
+        "max_rate_eta1_um_h": 2.1679099313588406,
+        "best_feed_sccm": 10.0,
+        "best_pressure_Pa": 0.004636875343218012,
+        "eta_min": {
+          "1": 0.4701892652740718,
+          "0.5": 0.2433692338228863,
+          "0.25": 0.1299592180972936
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.09745229038255822,
+          "0.566": 1.2101210676813188
+        }
+      },
+      {
+        "layout": "B-p",
+        "T0_C": 740.0,
+        "S_eff_m3_s": 4.0,
+        "ceiling": "feed limit 35 sccm",
+        "feed_ceiling_sccm": 35.0,
+        "max_rate_eta1_um_h": 6.420424093490418,
+        "best_feed_sccm": 35.0,
+        "best_pressure_Pa": 0.016229063701263043,
+        "eta_min": {
+          "1": 0.1605228680860549,
+          "0.5": 0.08308638733890235,
+          "0.25": 0.04436814696532607
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.35582427292256114,
+          "0.566": 3.614954396432689
+        }
+      },
+      {
+        "layout": "B-p",
+        "T0_C": 740.0,
+        "S_eff_m3_s": 4.0,
+        "ceiling": "plate free-molecular",
+        "feed_ceiling_sccm": 5.944272827561998,
+        "max_rate_eta1_um_h": 1.3143522716616298,
+        "best_feed_sccm": 5.944272827561998,
+        "best_pressure_Pa": 0.0027562852107483045,
+        "eta_min": {
+          "1": 0.767290087409734,
+          "0.5": 0.3971481581655323,
+          "0.25": 0.21207719354343135
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.04559229031200467,
+          "0.566": 0.7274268708389564
+        }
+      },
+      {
+        "layout": "B-L",
+        "T0_C": 700.0,
+        "S_eff_m3_s": 0.5,
+        "ceiling": "feed limit 10 sccm",
+        "feed_ceiling_sccm": 10.0,
+        "max_rate_eta1_um_h": 1.3288929399036338,
+        "best_feed_sccm": 10.0,
+        "best_pressure_Pa": 0.03709500274574409,
+        "eta_min": {
+          "1": 0.7540751883752795,
+          "0.5": 0.3802076135699696,
+          "0.25": 0.19327382616731453
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.07277633902124683,
+          "0.566": 0.7478163373229996
+        }
+      },
+      {
+        "layout": "B-L",
+        "T0_C": 700.0,
+        "S_eff_m3_s": 0.5,
+        "ceiling": "feed limit 35 sccm",
+        "feed_ceiling_sccm": 35.0,
+        "max_rate_eta1_um_h": 2.9327363813180103,
+        "best_feed_sccm": 35.0,
+        "best_pressure_Pa": 0.12983250961010434,
+        "eta_min": {
+          "1": 0.3428783215788914,
+          "0.5": 0.17288057000425847,
+          "0.25": 0.08788169421694197
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.17022180159774322,
+          "0.566": 1.6548035959096414
+        }
+      },
+      {
+        "layout": "B-L",
+        "T0_C": 700.0,
+        "S_eff_m3_s": 0.5,
+        "ceiling": "plate free-molecular",
+        "feed_ceiling_sccm": 40.43671354552183,
+        "max_rate_eta1_um_h": 3.221405690457382,
+        "best_feed_sccm": 40.43671354552183,
+        "best_pressure_Pa": 0.14999999999999997,
+        "eta_min": {
+          "1": 0.3122337450676394,
+          "0.5": 0.15742945652934193,
+          "0.25": 0.08002731226019322
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.1877606171918122,
+          "0.566": 1.8180485726784015
+        }
+      },
+      {
+        "layout": "B-L",
+        "T0_C": 700.0,
+        "S_eff_m3_s": 2.0,
+        "ceiling": "feed limit 10 sccm",
+        "feed_ceiling_sccm": 10.0,
+        "max_rate_eta1_um_h": 1.8550518906583444,
+        "best_feed_sccm": 10.0,
+        "best_pressure_Pa": 0.009273750686436023,
+        "eta_min": {
+          "1": 0.5411656980900451,
+          "0.5": 0.27285782875320475,
+          "0.25": 0.13870389408478462
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.10474442332493787,
+          "0.566": 1.0453637487492637
+        }
+      },
+      {
+        "layout": "B-L",
+        "T0_C": 700.0,
+        "S_eff_m3_s": 2.0,
+        "ceiling": "feed limit 35 sccm",
+        "feed_ceiling_sccm": 35.0,
+        "max_rate_eta1_um_h": 4.897262440489189,
+        "best_feed_sccm": 35.0,
+        "best_pressure_Pa": 0.032458127402526085,
+        "eta_min": {
+          "1": 0.20557116680366563,
+          "0.5": 0.10364977386090339,
+          "0.25": 0.05268907738952227
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.28958142588295244,
+          "0.566": 2.7657599765763075
+        }
+      },
+      {
+        "layout": "B-L",
+        "T0_C": 700.0,
+        "S_eff_m3_s": 2.0,
+        "ceiling": "plate free-molecular",
+        "feed_ceiling_sccm": 41.57925469015635,
+        "max_rate_eta1_um_h": 5.470387004281035,
+        "best_feed_sccm": 41.57925469015635,
+        "best_pressure_Pa": 0.038559564172433565,
+        "eta_min": {
+          "1": 0.18406710274585789,
+          "0.5": 0.09280734196085537,
+          "0.25": 0.04717746156835413
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.32440302180094205,
+          "0.566": 3.0898668460621606
+        }
+      },
+      {
+        "layout": "B-L",
+        "T0_C": 700.0,
+        "S_eff_m3_s": 4.0,
+        "ceiling": "feed limit 10 sccm",
+        "feed_ceiling_sccm": 10.0,
+        "max_rate_eta1_um_h": 1.9856331842638748,
+        "best_feed_sccm": 10.0,
+        "best_pressure_Pa": 0.004636875343218012,
+        "eta_min": {
+          "1": 0.5057283150642068,
+          "0.5": 0.2549901637787758,
+          "0.25": 0.12962108813606027
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.11267821176753477,
+          "0.566": 1.1192085932345412
+        }
+      },
+      {
+        "layout": "B-L",
+        "T0_C": 700.0,
+        "S_eff_m3_s": 4.0,
+        "ceiling": "feed limit 35 sccm",
+        "feed_ceiling_sccm": 35.0,
+        "max_rate_eta1_um_h": 5.918109302394865,
+        "best_feed_sccm": 35.0,
+        "best_pressure_Pa": 0.016229063701263043,
+        "eta_min": {
+          "1": 0.17016180982109305,
+          "0.5": 0.08579623972540416,
+          "0.25": 0.043613454677559726
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.3516054938870202,
+          "0.566": 3.3430576558934915
+        }
+      },
+      {
+        "layout": "B-L",
+        "T0_C": 700.0,
+        "S_eff_m3_s": 4.0,
+        "ceiling": "plate free-molecular",
+        "feed_ceiling_sccm": 41.57925469015635,
+        "max_rate_eta1_um_h": 6.758172412161402,
+        "best_feed_sccm": 41.57925469015635,
+        "best_pressure_Pa": 0.019279782086216782,
+        "eta_min": {
+          "1": 0.1490366401280399,
+          "0.5": 0.07514484782301058,
+          "0.25": 0.038198951670495904
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.40264559930557675,
+          "0.566": 3.818120568701865
+        }
+      },
+      {
+        "layout": "B-L",
+        "T0_C": 740.0,
+        "S_eff_m3_s": 0.5,
+        "ceiling": "feed limit 10 sccm",
+        "feed_ceiling_sccm": 10.0,
+        "max_rate_eta1_um_h": 1.3008910196388874,
+        "best_feed_sccm": 10.0,
+        "best_pressure_Pa": 0.03709500274574409,
+        "eta_min": {
+          "1": 0.7750132084138246,
+          "0.5": 0.40114563360851446,
+          "0.25": 0.21421184620585937
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.04477441875650039,
+          "0.566": 0.7198144170582531
+        }
+      },
+      {
+        "layout": "B-L",
+        "T0_C": 740.0,
+        "S_eff_m3_s": 0.5,
+        "ceiling": "feed limit 35 sccm",
+        "feed_ceiling_sccm": 35.0,
+        "max_rate_eta1_um_h": 2.904734461053264,
+        "best_feed_sccm": 35.0,
+        "best_pressure_Pa": 0.12983250961010434,
+        "eta_min": {
+          "1": 0.3523988485484495,
+          "0.5": 0.18240109697381657,
+          "0.25": 0.09740222118650006
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.1422198813329968,
+          "0.566": 1.6268016756448949
+        }
+      },
+      {
+        "layout": "B-L",
+        "T0_C": 740.0,
+        "S_eff_m3_s": 0.5,
+        "ceiling": "plate free-molecular",
+        "feed_ceiling_sccm": 40.43671354552183,
+        "max_rate_eta1_um_h": 3.193403770192635,
+        "best_feed_sccm": 40.43671354552183,
+        "best_pressure_Pa": 0.14999999999999997,
+        "eta_min": {
+          "1": 0.32090337975621974,
+          "0.5": 0.16609909121792232,
+          "0.25": 0.08869694694877363
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.15975869692706574,
+          "0.566": 1.790046652413655
+        }
+      },
+      {
+        "layout": "B-L",
+        "T0_C": 740.0,
+        "S_eff_m3_s": 2.0,
+        "ceiling": "feed limit 10 sccm",
+        "feed_ceiling_sccm": 10.0,
+        "max_rate_eta1_um_h": 1.827049970393598,
+        "best_feed_sccm": 10.0,
+        "best_pressure_Pa": 0.009273750686436023,
+        "eta_min": {
+          "1": 0.5561919692171936,
+          "0.5": 0.28788409988035324,
+          "0.25": 0.15373016521193303
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.07674250306019144,
+          "0.566": 1.0173618284845172
+        }
+      },
+      {
+        "layout": "B-L",
+        "T0_C": 740.0,
+        "S_eff_m3_s": 2.0,
+        "ceiling": "feed limit 35 sccm",
+        "feed_ceiling_sccm": 35.0,
+        "max_rate_eta1_um_h": 4.869260520224443,
+        "best_feed_sccm": 35.0,
+        "best_pressure_Pa": 0.032458127402526085,
+        "eta_min": {
+          "1": 0.21127915624057583,
+          "0.5": 0.10935776329781362,
+          "0.25": 0.0583970668264325
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.26157950561820603,
+          "0.566": 2.7377580563115607
+        }
+      },
+      {
+        "layout": "B-L",
+        "T0_C": 740.0,
+        "S_eff_m3_s": 2.0,
+        "ceiling": "plate free-molecular",
+        "feed_ceiling_sccm": 41.57925469015635,
+        "max_rate_eta1_um_h": 5.442385084016288,
+        "best_feed_sccm": 41.57925469015635,
+        "best_pressure_Pa": 0.038559564172433565,
+        "eta_min": {
+          "1": 0.18917799983562075,
+          "0.5": 0.09791823905061828,
+          "0.25": 0.05228835865811706
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.2964011015361956,
+          "0.566": 3.061864925797414
+        }
+      },
+      {
+        "layout": "B-L",
+        "T0_C": 740.0,
+        "S_eff_m3_s": 4.0,
+        "ceiling": "feed limit 10 sccm",
+        "feed_ceiling_sccm": 10.0,
+        "max_rate_eta1_um_h": 1.9576312639991282,
+        "best_feed_sccm": 10.0,
+        "best_pressure_Pa": 0.004636875343218012,
+        "eta_min": {
+          "1": 0.519770614503456,
+          "0.5": 0.269032463218025,
+          "0.25": 0.14366338757530941
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.08467629150278833,
+          "0.566": 1.091206672969795
+        }
+      },
+      {
+        "layout": "B-L",
+        "T0_C": 740.0,
+        "S_eff_m3_s": 4.0,
+        "ceiling": "feed limit 35 sccm",
+        "feed_ceiling_sccm": 35.0,
+        "max_rate_eta1_um_h": 5.890107382130119,
+        "best_feed_sccm": 35.0,
+        "best_pressure_Pa": 0.016229063701263043,
+        "eta_min": {
+          "1": 0.17488660575491172,
+          "0.5": 0.09052103565922288,
+          "0.25": 0.04833825061137844
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.3236035736222738,
+          "0.566": 3.315055735628745
+        }
+      },
+      {
+        "layout": "B-L",
+        "T0_C": 740.0,
+        "S_eff_m3_s": 4.0,
+        "ceiling": "plate free-molecular",
+        "feed_ceiling_sccm": 41.57925469015635,
+        "max_rate_eta1_um_h": 6.730170491896655,
+        "best_feed_sccm": 41.57925469015635,
+        "best_pressure_Pa": 0.019279782086216782,
+        "eta_min": {
+          "1": 0.15317486428072916,
+          "0.5": 0.07928307197569982,
+          "0.25": 0.04233717582318517
+        },
+        "rate_at_evidence_eta_um_h": {
+          "0.061": 0.37464367904083035,
+          "0.566": 3.7901186484371188
+        }
+      }
+    ]
+  },
+  "disabled_physics": [],
+  "warnings": [
+    "eta is a missing source input; eta_min above 1 means the rate is unreachable at any conversion",
+    "Nominal state only; gas-scattered arrival added (gas), as the comparison record",
+    "Pressure from the N2 feed alone (atoms recombine on the walls); other gas loads not included"
+  ]
+}

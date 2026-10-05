@@ -1,7 +1,7 @@
 {
-  "checked_date": "2026-09-30",
-  "source_count": 54,
-  "usable_pdf_count": 30,
+  "checked_date": "2026-10-01",
+  "source_count": 65,
+  "usable_pdf_count": 42,
   "usable_html_count": 8,
   "artifacts": [
     {
@@ -355,6 +355,138 @@
       "usable_source": true
     },
     {
+      "id": "R21",
+      "path": "ref/reference/R21_NEA_2015_LBE_handbook_s2.8_vapour_pressure.pdf",
+      "bytes": 1178285,
+      "sha256": "17fbaf74483849b2d463d8328af5b927fc7ddc6193bf5c2c25c9342cc5eb72af",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 12,
+      "first_page_text_characters": 291,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "R22",
+      "path": "ref/reference/R22_Gould_Bucko_2016_C6_polarizabilities.pdf",
+      "bytes": 462534,
+      "sha256": "01afbfde6e0d506382c23ba2d8b1e0d353e62c5bcad25048ca654bd939dd86c3",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 28,
+      "first_page_text_characters": 1484,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "R23",
+      "path": "ref/reference/R23_Balducci_1998_Ga2_In2_GaIn_dissociation.pdf",
+      "bytes": 138083,
+      "sha256": "6a8984d85586b6ced994faeab30299a6c6969bae824be28f9cc3c72f1b650f9c",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 7,
+      "first_page_text_characters": 903,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "R24",
+      "path": "ref/reference/R24_US5827371_unibody_crucible.pdf",
+      "bytes": 1482882,
+      "sha256": "b45e4eea13ccb66df094b0259b07d9e5d9c1b87de6c27c5e08d8f8d30bea4d09",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 16,
+      "first_page_text_characters": 2486,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "R24",
+      "path": "ref/reference/R24_US5820681_unibody_crucible.pdf",
+      "bytes": 1023029,
+      "sha256": "bd5eed38826f7bc13afb6377a6dfd4e8767c3fbc35deb2705b3aa2a4eb3d550f",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 11,
+      "first_page_text_characters": 2253,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "R25",
+      "path": "ref/reference/R25_US6053981_effusion_cell_VG.pdf",
+      "bytes": 1144827,
+      "sha256": "cbf6475045d1c5d2ef7a21401a0446a2627ec61a226c2a763584948bb7e4d7c9",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 16,
+      "first_page_text_characters": 2216,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "R26",
+      "path": "ref/reference/R26_Gunning_2015_high_rate_PAMBE.pdf",
+      "bytes": 981838,
+      "sha256": "4934646cfba7a04c4736bc278f7a721aa6ee0565fb24b4f872c5963392c242d1",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 9,
+      "first_page_text_characters": 496,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "R27",
+      "path": "ref/reference/R27_Gonzalez_de_Arrieta_2017_PBN_emissivity.pdf",
+      "bytes": 510959,
+      "sha256": "d162c8350c4214d8b3822f464d42334ae5cc2498669667fa7784ef56edf03dc3",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 6,
+      "first_page_text_characters": 4934,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "R28",
+      "path": "ref/reference/R28_Timans_1993_Si_emissivity.pdf",
+      "bytes": 1921137,
+      "sha256": "fbaaeda702c7bb0e9570486920ee61649a5dcef54464ac347691e033214527ba",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 13,
+      "first_page_text_characters": 1423,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "R30",
+      "path": "ref/reference/R30_Clinton_2019_RF_plasma_damage.pdf",
+      "bytes": 2688586,
+      "sha256": "6ef953a6dad15b9b864e302ca2218f6daaa200d263c61643ba4499060e422959",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 46,
+      "first_page_text_characters": 2339,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "R31",
+      "path": "ref/reference/R31_Ravindra_2001_Si_emissivity_overview.pdf",
+      "bytes": 670394,
+      "sha256": "659f8c5f47564fc4b97896c6917af3bec4640d2aa382f43893cff42c094f7685",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 19,
+      "first_page_text_characters": 2019,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
       "id": "R16",
       "path": "ref/reference/R16_Katzer_2019_NAMBE_abstract.pdf",
       "bytes": 184406,
@@ -399,6 +531,18 @@
       "usable_source": true,
       "pdf_pages": 21,
       "first_page_text_characters": 5320,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "R05",
+      "path": "ref/reference/R05_Rogers_2009_wafer_temperature_uniformity.pdf",
+      "bytes": 420225,
+      "sha256": "846596316fd127349dff9a7e0ccc10f5b41b9c2f9ecd437e9ce9dff42b6bfe3f",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 4,
+      "first_page_text_characters": 4799,
       "parser_warning_count": 0,
       "parser_warning_examples": []
     },

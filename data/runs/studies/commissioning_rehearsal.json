@@ -1,0 +1,5314 @@
+{
+  "schema_version": "0.1",
+  "run_id": "commissioning_rehearsal",
+  "created_utc": "2026-10-03T04:21:49+00:00",
+  "label": "synthetic",
+  "validation_status": "not_validated",
+  "package_version": "0.1.0",
+  "git_commit": "eb6abd80b63e34e9f2c7709ec3bc452ceb66e0ff-dirty",
+  "python": "3.12.13",
+  "numpy": "2.4.4",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "source_sha256": {
+    "scripts/commissioning_rehearsal.py": "cfb5197ceaea2c80bc9b1a56290435381f4a50bab2e7ed2a247d218ec1fad7d7",
+    "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
+    "src/mbe_twin/vacuum.py": "21b1538e8ea911537a4d42f584dd08efca470db7db594259be2d16b4c806db7b",
+    "data/runs/studies/layout_comparison_bc.json": "e57fc0415cd372b2a240151d6f98adffaa032c4a67289a1d292f6e4dc6b44e47",
+    "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6"
+  },
+  "solver": null,
+  "inputs_sha256": "df2072f147dedac466df11c3d5b869a92cede9cb4804ac98aaa73e05b0021332",
+  "inputs": {
+    "record": "data/runs/studies/layout_comparison_bc.json",
+    "record_run_id": "layout_comparison",
+    "machines": [
+      {
+        "layout": "B-L",
+        "eta": 0.3,
+        "S": 4.0,
+        "flows": [
+          5.0,
+          10.0,
+          15.0,
+          20.0,
+          25.0
+        ],
+        "holdout": 35.0,
+        "holdout_inside": 17.5,
+        "working": 26.1
+      },
+      {
+        "layout": "B-p",
+        "eta": 1.0,
+        "S": 2.0,
+        "flows": [
+          2.0,
+          4.0,
+          6.0,
+          8.0
+        ],
+        "holdout": 10.0,
+        "holdout_inside": 5.0,
+        "working": 9.0
+      }
+    ],
+    "models": [
+      "none",
+      "gas",
+      "gas-gamma0.1"
+    ],
+    "throttle_fractions": [
+      1.0,
+      0.7,
+      0.5,
+      0.35,
+      0.25
+    ],
+    "eta_trends_exponent": {
+      "constant": 0.0,
+      "falling": 0.25
+    },
+    "designs": [
+      "flow_const",
+      "flow_linear",
+      "flow_quadratic",
+      "throttle",
+      "flow_quadratic+throttle"
+    ],
+    "noise": {
+      "gauge_random": 0.03,
+      "rate_random": 0.02
+    },
+    "gauge_factor_errors": [
+      0.0,
+      0.1
+    ],
+    "draws": 2000,
+    "seed": 20261003,
+    "scattered_tables_sha256": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6"
+  },
+  "outputs": {
+    "rows": [
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.0,
+        "design": "flow_const",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.105477119470228,
+              1.123613731311118,
+              1.1417622539683179
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.18334896033713918,
+              -0.1691159187205064,
+              -0.15549396211631578
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.041856411884194485,
+              -0.026460731792809666,
+              -0.011646772482876858
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.0515,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9836595986992118,
+              0.9991276683184356,
+              1.0141809594097004
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.016410805010344705,
+              -0.0004935850129714758,
+              0.014435848728738243
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.01614736476069273,
+              -0.0007131846272446785,
+              0.014083355065195742
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.5375,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.6272165686373014,
+              0.6371948426536795,
+              0.6468378389680756
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.04213703340558013,
+              0.05874508637274256,
+              0.07433226645265822
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.00903822106523785,
+              0.006681321612419855,
+              0.021646090277704054
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.0,
+        "design": "flow_linear",
+        "models": {
+          "none": {
+            "rejected_fraction": 0.053,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.2020654748369883,
+              1.2367778161716663,
+              1.271880903228721
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.061468522367314156,
+              -0.023563837926593556,
+              0.01663733889211767
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.01567582530683616,
+              0.0011041088473131566,
+              0.01730961535674713
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.0445,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9709670123648049,
+              0.9987598176511212,
+              1.0281211762891136
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.04538176434231396,
+              -0.0017304027157609148,
+              0.04459269432501695
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.017142455841803468,
+              -0.0005192274716526724,
+              0.015449111030843631
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.049,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.5973824897777638,
+              0.6144820721820582,
+              0.6325887912839641
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.0557884243629636,
+              -0.010426779000650754,
+              0.03762900862944478
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.016755430874973953,
+              -0.00021885276106320406,
+              0.015586707715947784
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.0,
+        "design": "flow_quadratic",
+        "models": {
+          "none": {
+            "rejected_fraction": 0.048,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.1956760457109394,
+              1.2424814812437914,
+              1.2908473837118601
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.11748698387913598,
+              -0.007251654482574699,
+              0.10820999624689354
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.022484118847740923,
+              -0.0008536287392228448,
+              0.020257203528636344
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.0445,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9625710552080728,
+              0.9998706975041137,
+              1.0389059028832377
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.12755283363969008,
+              9.94210849458721e-06,
+              0.13521890435293077
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.02277727469488533,
+              -0.0005305430457389626,
+              0.021084326299192976
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.046,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.5934944519529495,
+              0.6163882810852594,
+              0.6408147646603172
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.13235974193542557,
+              0.002558201065233412,
+              0.14234432470263914
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.023894290798374924,
+              -0.0016517983246966406,
+              0.02016781619317186
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.0,
+        "design": "throttle",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.512897996094298,
+              1.5488263069740134,
+              1.5848889634614356
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.11573349310570125,
+              0.14490887447304523,
+              0.17595045331589798
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.30961164059425167,
+              0.3414380088381841,
+              0.3749570762451532
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.1115,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9830494882488918,
+              0.9988973978409166,
+              1.0147773102292947
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.016742427933939957,
+              -0.0008471515395383489,
+              0.016015922525608493
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.016665517622314486,
+              -0.0009484416672837503,
+              0.01543589141699997
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.5520183913527965,
+              0.5606596842970877,
+              0.5692691803714452
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.08299199218196882,
+              -0.06851900676702766,
+              -0.05365716317967029
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.1278952596748203,
+              -0.11427949780781088,
+              -0.1004905654100113
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.0,
+        "design": "flow_quadratic+throttle",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.4547143189874359,
+              1.4839789335235851,
+              1.5124480392976793
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.44402366784466946,
+              0.5305486645268909,
+              0.6179483738274317
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.02617314159131675,
+              -0.004731995799165778,
+              0.016067732021296483
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.088,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9846849196589272,
+              0.998739539137998,
+              1.0136873845538434
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.07617343812581162,
+              0.0003047908880642325,
+              0.0778512984940509
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.022475552403762162,
+              -0.0007798985412411086,
+              0.020638998286780827
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.5587332023955212,
+              0.566736590124447,
+              0.5750019116289738
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.32789846697114605,
+              -0.25200730596530907,
+              -0.17440281961294768
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.019997462282906404,
+              0.0022315472062280906,
+              0.02392573384221449
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.1,
+        "design": "flow_const",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.1297010668775784,
+              1.147637197992275,
+              1.1660408290194015
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.2101930410311206,
+              -0.19611013932858523,
+              -0.1826824646053519
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.04719183341794605,
+              -0.03237170735170669,
+              -0.017420703986485236
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.0655,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9945426125936403,
+              1.009414829691762,
+              1.0245955761373777
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.029114631829069836,
+              -0.01400899606260908,
+              0.0010238423400943599
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.018679516337024905,
+              -0.0038715422786975706,
+              0.01105649606602009
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.411,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.6314805786218162,
+              0.6408587226028405,
+              0.6505136492606739
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.03824525067708488,
+              0.05414107810523716,
+              0.07003454625575345
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.009234071241039043,
+              0.0057651454441566274,
+              0.020881583978541115
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.1,
+        "design": "flow_linear",
+        "models": {
+          "none": {
+            "rejected_fraction": 0.059,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.2515220296919123,
+              1.2877013429390454,
+              1.322202808364889
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.06421716364105565,
+              -0.026728678079518398,
+              0.010392423356812269
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.014237785375704541,
+              0.001970037376353484,
+              0.017212869394828342
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.0515,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9877747643189323,
+              1.0164263143811423,
+              1.0432624805741213
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.045722985527713055,
+              -0.002266038020526273,
+              0.04091737490480203
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.018154014025375594,
+              -0.002264958950621343,
+              0.012870102207242518
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.053,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.6031973774804344,
+              0.6209512326149133,
+              0.6376355363434404
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.05203785880041591,
+              -0.0063679054847177174,
+              0.039587767036260484
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.01652066702994396,
+              -0.0005798107597314583,
+              0.014475400907565406
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.1,
+        "design": "flow_quadratic",
+        "models": {
+          "none": {
+            "rejected_fraction": 0.048,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.2448684887833605,
+              1.2938962654593955,
+              1.3427378298360184
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.11907897054152,
+              -0.007912506863795243,
+              0.09964016142666228
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.022318573437704124,
+              -0.00044130724895752316,
+              0.020778498128052835
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.047,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9771197187921523,
+              1.0149471239345842,
+              1.052777679998413
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.13732021123191426,
+              -0.007895683115690832,
+              0.11882061752634421
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.023643857639752883,
+              -0.0011247151191781102,
+              0.02049068861107451
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.049,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.5985233045765005,
+              0.6218819465011938,
+              0.6450057038397887
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.1329978361999846,
+              0.0030926270557007918,
+              0.13565561640307375
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.023845827909867202,
+              -0.001227149327546584,
+              0.020511852469967902
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.1,
+        "design": "throttle",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.6041668676051617,
+              1.6463825012643252,
+              1.6836148441948782
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.11915583423001659,
+              0.15326770308341608,
+              0.1834226105150494
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.3512212486065741,
+              0.38846980310550794,
+              0.4208826016073385
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.172,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.0120095299133203,
+              1.0285852581232695,
+              1.0444159941497124
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.01319101812017741,
+              0.004668822471082468,
+              0.021387617646596257
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.002274417970163844,
+              0.01480960362974848,
+              0.03094742496586677
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.561331829603802,
+              0.5701975075681589,
+              0.5787626043656577
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.07681173153305006,
+              -0.062197110872994454,
+              -0.047685456647089446
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.11891705981815165,
+              -0.1052281916473633,
+              -0.09162440803891075
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.1,
+        "design": "flow_quadratic+throttle",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.5345362878125546,
+              1.5678792776021377,
+              1.5978709341697785
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.47697486692734165,
+              0.5654999175338583,
+              0.6486030952976408
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.025162291586049712,
+              -0.003355285515806661,
+              0.017445141889519858
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.153,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.011727655433385,
+              1.0265838300791315,
+              1.0411290912852469
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.050940831964726076,
+              0.025510972139480503,
+              0.10081003078601943
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.02407312039133485,
+              -0.0014324635742260505,
+              0.020009231356199052
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.5677866844127568,
+              0.5759812766756843,
+              0.5839408666512483
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.3112292486982585,
+              -0.23340828976688566,
+              -0.15646355083085275
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.02014531807797899,
+              0.0024816031446653897,
+              0.024271655099354195
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.0,
+        "design": "flow_const",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.308839211054608,
+              1.3306697183899365,
+              1.3520962904154536
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.04109974433346593,
+              0.05840041794150119,
+              0.07533169740732097
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.02688565626184234,
+              0.043045610218698016,
+              0.05828979516864404
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.1368520392441819,
+              1.1563625604417702,
+              1.1740240191735425
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.22410229306227414,
+              0.24443792149108234,
+              0.2634634028598391
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.029255949717594952,
+              0.04633698243264017,
+              0.06228641565055615
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.7186078212078447,
+              0.7310164267355912,
+              0.7421831810552673
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.2852027756448184,
+              0.30690362733654797,
+              0.32696975058675765
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.027587699476051164,
+              0.04487843560872595,
+              0.06098860074402894
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.0,
+        "design": "flow_linear",
+        "models": {
+          "none": {
+            "rejected_fraction": 0.9365,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.1519468998317834,
+              1.186681142877176,
+              1.2233951128481204
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.2003106825516568,
+              -0.15748071401049352,
+              -0.11179308435714963
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.010786493666960429,
+              0.026898045460096554,
+              0.0420407941260455
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.978,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9212575467971108,
+              0.9494319521728669,
+              0.978437454413031
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.23987379259010178,
+              -0.19135857716993565,
+              -0.13917832022751922
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.016531280441706885,
+              0.03269686360344626,
+              0.04784542194212111
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.9925,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.5648917471015475,
+              0.5823383213571622,
+              0.6001438440327772
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.27207469228684833,
+              -0.2218097141364226,
+              -0.1676856608851111
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.019669386042890313,
+              0.03579847828792171,
+              0.05099229974222781
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.0,
+        "design": "flow_quadratic",
+        "models": {
+          "none": {
+            "rejected_fraction": 0.1745,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.212879750483292,
+              1.2610311236032905,
+              1.3099352626755913
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.009171388046464847,
+              0.13914743605826274,
+              0.2725600777403026
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.03287249664127907,
+              -0.010104319816777785,
+              0.011717618080955072
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.2055,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9785305580394689,
+              1.0168822605605659,
+              1.0563500466959503
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.043502500630379304,
+              0.19381433664427294,
+              0.3490266151850151
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.03398227761259309,
+              -0.01047501277946955,
+              0.011687281245317989
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.2575,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.60377981409616,
+              0.6276637387712982,
+              0.6517403423762141
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.06083807363502173,
+              0.21768918407584925,
+              0.3809241848780142
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.035648516723252796,
+              -0.011807377311040035,
+              0.010465332832792393
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.0,
+        "design": "throttle",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.5118573220144473,
+              1.5480757596200387,
+              1.5837640991653799
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.199597119900331,
+              0.23074051497370174,
+              0.2639349630543702
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.18393616547785166,
+              0.2129684400533094,
+              0.24266634111223298
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.1025,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9815873429904816,
+              0.9984861909196314,
+              1.015532721777078
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.05585000201008443,
+              0.07467220250619722,
+              0.09301816737500092
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.11221851178269156,
+              -0.09650260475670125,
+              -0.08101502130104088
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.5513416925212903,
+              0.5603748656008074,
+              0.5696831684112944
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.014423577782284692,
+              0.0018222313563823755,
+              0.01847284706687669
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.21188597213498747,
+              -0.1989375938536575,
+              -0.18566275949301755
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.0,
+        "design": "flow_quadratic+throttle",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.4605000374355437,
+              1.4910085913769162,
+              1.5190512931384734
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.6166254383643696,
+              0.7162473015711056,
+              0.8254146778665331
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.045206381725850855,
+              -0.021909510392967624,
+              -9.297916394439165e-05
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.216,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9852040731622569,
+              1.0007854862603622,
+              1.016295232658037
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.04101792190727745,
+              0.1376888204019041,
+              0.23457666754334305
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.03229414151419261,
+              -0.009184302089591201,
+              0.012863903659481665
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.558929512379112,
+              0.5673677577406142,
+              0.5759322362172431
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.2335509529342909,
+              -0.1370445595560728,
+              -0.038095235839672545
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.026441462216417196,
+              -0.002910210796318702,
+              0.019240838011480688
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.1,
+        "design": "flow_const",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.3424191798326406,
+              1.3644064746158522,
+              1.3865428821598036
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.011362045591180193,
+              0.028208170007266054,
+              0.045758826997598125
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.02533913370935148,
+              0.04092685650909833,
+              0.05685479280958201
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.1508143311477994,
+              1.1692361127074777,
+              1.1877420637048453
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.20967369432270044,
+              0.2287528904637488,
+              0.24883733309675932
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.027933618736704892,
+              0.04385658352298771,
+              0.060378014717614344
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.7238457109929989,
+              0.7352460001223919,
+              0.7472917299180217
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.2810249001344162,
+              0.30135278696413326,
+              0.3223836472569772
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.027889865203989263,
+              0.044014613238457234,
+              0.0610035360129494
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.1,
+        "design": "flow_linear",
+        "models": {
+          "none": {
+            "rejected_fraction": 0.918,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.1992822418706444,
+              1.2354982637059384,
+              1.2723503418377546
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.19675037515511973,
+              -0.15384307801009023,
+              -0.11083969045967985
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.010299173433188358,
+              0.025567594776799485,
+              0.04167260111000948
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.965,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9370886976818072,
+              0.9653947434783574,
+              0.9938446681800968
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.2407954394617922,
+              -0.18968510748108564,
+              -0.1404340667404855
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.01449882060549379,
+              0.02995206300899933,
+              0.0457089937006218
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.9855,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.5704397560820318,
+              0.5878310929926506,
+              0.6051821202787924
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.2705507456863232,
+              -0.2174010563291655,
+              -0.16591590975940496
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.019214080222105568,
+              0.03464297861437471,
+              0.05061372939080372
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.1,
+        "design": "flow_quadratic",
+        "models": {
+          "none": {
+            "rejected_fraction": 0.148,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.2594405447551575,
+              1.312032345261957,
+              1.3620650063699755
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.004472403077503037,
+              0.13048735057993377,
+              0.25922926025208753
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.03214429973037454,
+              -0.010844170063395386,
+              0.012627414958162619
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.21,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9911459039395185,
+              1.0313013692975006,
+              1.0700791165688894
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.01772272566070221,
+              0.17842681828545848,
+              0.3338465244871337
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.03392689244336548,
+              -0.012248829716798859,
+              0.011509736694015229
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.2325,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.6079461913030233,
+              0.632746391310972,
+              0.6567517322010069
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.04673689062947425,
+              0.2148335063391804,
+              0.379504562566533
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.03470208817244961,
+              -0.012777765783575035,
+              0.011263111046454366
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.1,
+        "design": "throttle",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.605192532070257,
+              1.644838786955725,
+              1.6875406438580367
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.20661947145941942,
+              0.23963190649629285,
+              0.2763050443499362
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.22337953843077432,
+              0.2548299213062727,
+              0.28905855291392546
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.1805,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.0115761946159927,
+              1.0285587530954472,
+              1.0459824060631322
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.06242946310926203,
+              0.08123858845325527,
+              0.10091701736379229
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.09673936711972743,
+              -0.08168605258883715,
+              -0.06557435214659395
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.561544474921888,
+              0.5703191928445632,
+              0.5792114986582885
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.006377614309939239,
+              0.00938407633140248,
+              0.02539382859633868
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.2027292573392838,
+              -0.19011190136384998,
+              -0.1775071358211777
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.1,
+        "design": "flow_quadratic+throttle",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.5429727039677752,
+              1.5747785237216227,
+              1.6097572412771572
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.6494389888862819,
+              0.756713211663729,
+              0.864886833653759
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.04418732501563047,
+              -0.023198490245230075,
+              5.628812667638277e-05
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.2445,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.0134671805927473,
+              1.0284995073281573,
+              1.0448333664680731
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.07295791873878155,
+              0.168859357548221,
+              0.26363834263971964
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.033511320746481436,
+              -0.01194830119599577,
+              0.011588628228792482
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.568476139627355,
+              0.5768084871015815,
+              0.5854838878306835
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.20780272538474007,
+              -0.11134621348564605,
+              -0.019149085544684405
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.026217691962860595,
+              -0.0045898700453056995,
+              0.019215486992762675
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.0,
+        "design": "flow_const",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.7240620607399346,
+              1.752279373577063,
+              1.7796690371292176
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.2337514747873354,
+              -0.22030275601732607,
+              -0.20711521515925893
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.0537709365561133,
+              -0.039117503062329695,
+              -0.02449868400246911
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.5075,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.5409088801170765,
+              1.5646009431105656,
+              1.5875761756060403
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.07257584833375959,
+              -0.05806998185951873,
+              -0.04393799078859361
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.02461030647750289,
+              -0.00930315464651893,
+              0.004861285072221921
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.049,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9843201318720132,
+              0.999419461006383,
+              1.0139906826657454
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.01574868759281703,
+              -0.00033656728163056204,
+              0.01387089584159354
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.015779298285779057,
+              -0.0003344494859302549,
+              0.013800483156807961
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.0,
+        "design": "flow_linear",
+        "models": {
+          "none": {
+            "rejected_fraction": 0.048,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.9517627295208997,
+              2.006179522588937,
+              2.06223445199206
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.061939609338328025,
+              -0.025307095559272463,
+              0.011415061933329446
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.013965460768509751,
+              0.002833711288591334,
+              0.018108401731926623
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.041,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.5787806088952652,
+              1.6232826865577372,
+              1.6677570286701886
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.038168582843675226,
+              0.004597531579573433,
+              0.04623275919836413
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.016303636625108076,
+              1.3801998421603123e-05,
+              0.01494390724268667
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.0425,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9717929310019219,
+              0.9995086625793931,
+              1.0269455036594326
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.04509635561698784,
+              -0.0005619139224168901,
+              0.04263239837993696
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.016418314424738973,
+              -0.00020458826897223892,
+              0.01477000749043691
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.0,
+        "design": "flow_quadratic",
+        "models": {
+          "none": {
+            "rejected_fraction": 0.042,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.9406919751471812,
+              2.0156112787119698,
+              2.090245332741876
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.11222634930522961,
+              -0.007022773888382905,
+              0.09854466197099629
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.02062454493163342,
+              9.834672512398779e-05,
+              0.021598167979728793
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.0415,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.5619956387368497,
+              1.6216393193791219,
+              1.6826344452269173
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.12047116641076708,
+              0.0013014818330326916,
+              0.12432568436846084
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.021153331989951053,
+              0.00039791956273649287,
+              0.02275451301466574
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.0425,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9629502489288035,
+              0.9997192517158049,
+              1.0374638450156908
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.12486297901102876,
+              0.0031675282579537445,
+              0.1303168141080928
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.022342997514891817,
+              -0.0007676300857969998,
+              0.021590037852556903
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.0,
+        "design": "throttle",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              2.5404254462783213,
+              2.603230210310692,
+              2.668198298175602
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.12815498077672358,
+              0.15820094430051646,
+              0.19016794703385417
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.39252896848723723,
+              0.4272202208937854,
+              0.4642882042818773
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.726419175655072,
+              1.755085128519837,
+              1.7855076975030963
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.0384147503125119,
+              0.056547106816834836,
+              0.07532898225068503
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.09251215859814246,
+              0.1110264959443159,
+              0.13031323077038198
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.0655,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9845168185311978,
+              0.9991559566877006,
+              1.0147199585024402
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.015497887603120169,
+              -0.0006766538734109262,
+              0.014946668589601418
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.015288610156845567,
+              -0.0007573703003652676,
+              0.01483262704174565
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.0,
+        "design": "flow_quadratic+throttle",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              2.4178639532005697,
+              2.46796275133391,
+              2.5174550809230523
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.5086380748139744,
+              0.5912109455474578,
+              0.6751125909437731
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.023173800719933864,
+              -0.0019153777047362652,
+              0.019301243837888643
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.7092982624230448,
+              1.7337674482655778,
+              1.7613584278287384
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.13312372717901452,
+              0.207536236944724,
+              0.28378897422713545
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.02350252653831446,
+              -0.0021007702152198715,
+              0.01989768298809182
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.056,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.985854386361526,
+              0.9990496485053573,
+              1.0139900091130702
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.07444728221670575,
+              0.00020746751292444188,
+              0.07315129071809971
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.022569903692899317,
+              -0.0009115134714449136,
+              0.021196210852573984
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.1,
+        "design": "flow_const",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.7592399978066315,
+              1.7886730952206245,
+              1.8172563358576412
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.2595606671042452,
+              -0.24619611008553405,
+              -0.23332807502882386
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.06058793346524576,
+              -0.04552567955892978,
+              -0.03122717322846021
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.6935,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.5554102375732597,
+              1.580654359953801,
+              1.603633239670804
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.08542340004961953,
+              -0.07094543085595029,
+              -0.057120751783033
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.02823266069052478,
+              -0.01292068487341258,
+              0.0014668027448030635
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.0555,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9893946317708595,
+              1.0052151947000691,
+              1.0198272708874392
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.02056001260516427,
+              -0.005082562713042582,
+              0.00946563931834533
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.01727974865446777,
+              -0.0015558542138391362,
+              0.01297040512989016
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.1,
+        "design": "flow_linear",
+        "models": {
+          "none": {
+            "rejected_fraction": 0.056,
+            "eta_working_recovered_over_true_5_50_95": [
+              2.029833309675244,
+              2.085641063376535,
+              2.1464269122393804
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.06649617227827491,
+              -0.03113922895779947,
+              0.005156944633541316
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.013112872928539071,
+              0.0035281514475120623,
+              0.019675093125617802
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.0555,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.6057594365851713,
+              1.6504745022339207,
+              1.6985523185398965
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.03885200929140545,
+              0.001917520169711695,
+              0.04520141894662586
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.017935773136713934,
+              -0.0016903856896166025,
+              0.013837646263998868
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.055,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9813881433289823,
+              1.0091486940173815,
+              1.0384408333851884
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.0408064706271118,
+              0.002122815151854307,
+              0.047947241093407575
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.016978701559125238,
+              -0.0005529796322911174,
+              0.01501696205872387
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.1,
+        "design": "flow_quadratic",
+        "models": {
+          "none": {
+            "rejected_fraction": 0.052,
+            "eta_working_recovered_over_true_5_50_95": [
+              2.0214099535776735,
+              2.098246870809011,
+              2.1783455904610154
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.11134685334967497,
+              -0.008710136750048614,
+              0.09515497197205859
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.020416050813582196,
+              0.0004504577132435905,
+              0.022912210193838368
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.05,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.5873101931400722,
+              1.6463887734701004,
+              1.7086729314822784
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.12784418937572078,
+              -0.008433284032414057,
+              0.11395982537386756
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.022023545239987775,
+              -0.0002919031256207183,
+              0.022230531396067146
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.0505,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9721126294084711,
+              1.0087075336467093,
+              1.0473192871010875
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.12554237512460395,
+              0.0010113344898127208,
+              0.13085468375173162
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.02234826020484352,
+              -0.00025127294063065353,
+              0.022530520696671195
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.1,
+        "design": "throttle",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              2.680525434913169,
+              2.7539413611595065,
+              2.827353562705941
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.12615424305007403,
+              0.16014331834749473,
+              0.19524591068548242
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.4292035401249009,
+              0.46919004878629356,
+              0.5095746749432833
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.7739994840900368,
+              1.8038361607548548,
+              1.834431463726005
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.04210547672144836,
+              0.06032097534663727,
+              0.07941115100280062
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.10753027633899462,
+              0.1266229426695762,
+              0.14601786249533033
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.0915,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9994969742623875,
+              1.015213827069032,
+              1.0315285981464681
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.010638348132284347,
+              0.004950535352059693,
+              0.021340577079086594
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.007225701922674616,
+              0.008425737994602,
+              0.02467495900819029
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.1,
+        "design": "flow_quadratic+throttle",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              2.5396882905237104,
+              2.5949354482072913,
+              2.651893512253898
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.528839467056037,
+              0.6096734214225737,
+              0.6961503786741815
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.021593124438783723,
+              -0.0007131061768985147,
+              0.020998242924302024
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.7522574591058608,
+              1.7785154730837562,
+              1.8060347481994605
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.15387023012467482,
+              0.22659119434457398,
+              0.30092441586775964
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.024169381511831293,
+              -0.0029502197971505995,
+              0.019186086340806714
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.0815,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.0000272121893066,
+              1.0143361662159789,
+              1.0291272816002213
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.05891757299682862,
+              0.016787278126153216,
+              0.08892812223013628
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.022220108502931192,
+              -0.0006249958329773153,
+              0.021855188224423467
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.0,
+        "design": "flow_const",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              2.0603887913433545,
+              2.0931405601852937,
+              2.1273055031305583
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.013685587058197368,
+              0.0024416735633719933,
+              0.018934510534375414
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.02335786681506665,
+              0.038659750149378946,
+              0.054903579146157254
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.7974655980817473,
+              1.8259569417954755,
+              1.8555661989518613
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.16384026126069964,
+              0.18265586526608268,
+              0.20214718773916796
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.02930046762187475,
+              0.04568646633371565,
+              0.06264797149644673
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.137413441917632,
+              1.1557320831103466,
+              1.1747025400263211
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.22392565582990454,
+              0.24360954150858172,
+              0.26440441094491857
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.02904757067132955,
+              0.04578072618815199,
+              0.06312273426030746
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.0,
+        "design": "flow_linear",
+        "models": {
+          "none": {
+            "rejected_fraction": 0.8835,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.8737943508733919,
+              1.9296277523730998,
+              1.9858785237876688
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.18438473052136164,
+              -0.14410523423430122,
+              -0.1002549084857303
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.00895576770819988,
+              0.024981441398585047,
+              0.041591396195770555
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.9435,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.5029369616133446,
+              1.5469111563150424,
+              1.5919717368506419
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.21238401768360007,
+              -0.16661896508926266,
+              -0.1157986160875991
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.01386250950925183,
+              0.02956065092689475,
+              0.046075295459048864
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.974,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9220554897468114,
+              0.9494460367481075,
+              0.9775900121964278
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.23979626829878542,
+              -0.192390826175023,
+              -0.1396442708966426
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.01651184048556361,
+              0.0322233109533554,
+              0.04863556481281515
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.0,
+        "design": "flow_quadratic",
+        "models": {
+          "none": {
+            "rejected_fraction": 0.132,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.964987353791194,
+              2.041346974402326,
+              2.1235872679771055
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.008387943077524596,
+              0.11940979737567414,
+              0.25268324263350683
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.03105508507676551,
+              -0.008891193606562764,
+              0.013446617876281583
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.158,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.583693307569586,
+              1.6461199019417685,
+              1.7120419168364331
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.018821590777685162,
+              0.16998591034593757,
+              0.3196701537859288
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.03204576283647684,
+              -0.009280806686542908,
+              0.013402591529032825
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.194,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9774088129313376,
+              1.0159683331047122,
+              1.0566730440578247
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.033721264446269196,
+              0.191800283941568,
+              0.3472392295464393
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.03344022836865922,
+              -0.010660161009694857,
+              0.012071070093356695
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.0,
+        "design": "throttle",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              2.539383678305995,
+              2.6036763188926564,
+              2.6673436581305494
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.21149003945543252,
+              0.2466887608042564,
+              0.2802346465646429
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.2582244788032309,
+              0.2921145596622843,
+              0.324179845022028
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.727512789406652,
+              1.7554993779749435,
+              1.784953733823929
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.11771411528014747,
+              0.13724130667585888,
+              0.15661991713050022
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.010932252356092364,
+              0.0057264380182724395,
+              0.022802252224412567
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.0685,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9838502271304157,
+              0.9991342316431633,
+              1.014855221956849
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.05891928187546837,
+              0.07554681069381897,
+              0.09215892902988265
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.10946371027617911,
+              -0.09562892383265048,
+              -0.0816939255899956
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.0,
+        "design": "flow_quadratic+throttle",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              2.430021593682276,
+              2.4805295111056926,
+              2.531318753670517
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.6755524575644545,
+              0.7786058443194955,
+              0.8768559313456497
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.04307874342643286,
+              -0.021188588781792694,
+              0.0013751201176219743
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.7136351480618746,
+              1.739298988850047,
+              1.765683616244678
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.2694218399897371,
+              0.36389666908864793,
+              0.45659407425326265
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.03615704243803614,
+              -0.013775039780475118,
+              0.009180292890813397
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.168,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9868530652580845,
+              1.001452935860548,
+              1.0158783703968324
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.0441952342935217,
+              0.14117106504617372,
+              0.2331458488005934
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.031995472145637575,
+              -0.00959027194073403,
+              0.013512143102857298
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.1,
+        "design": "flow_const",
+        "models": {
+          "none": {
+            "rejected_fraction": 0.999,
+            "eta_working_recovered_over_true_5_50_95": [
+              2.1128388688588444,
+              2.145720471181883,
+              2.17932019970498
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.04219630626794895,
+              -0.026483761552150598,
+              -0.009916739330292587
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.021379963914137677,
+              0.03615839423068257,
+              0.052080368062605485
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.8184547284002717,
+              1.8467445921147556,
+              1.8755285544717444
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.15072158519156786,
+              0.16842898501208836,
+              0.18655465450777664
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.028422714418630823,
+              0.04370283578165346,
+              0.05993470300227836
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.1452578882274786,
+              1.1632083964893432,
+              1.181638847824179
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.22027195679681713,
+              0.23907990166476556,
+              0.2584309722718434
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.029681003929743523,
+              0.045467757558126154,
+              0.06189157645469827
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.1,
+        "design": "flow_linear",
+        "models": {
+          "none": {
+            "rejected_fraction": 0.884,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.9508190768892164,
+              2.009489482380236,
+              2.0663109575542005
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.1812438134732849,
+              -0.14061740061372774,
+              -0.10157151632625852
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.009434907420282046,
+              0.02448530120419845,
+              0.040336401848455446
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.927,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.527936519919756,
+              1.5735323005251045,
+              1.6181483599374609
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.2111887220950277,
+              -0.16494097100135258,
+              -0.11946462291730295
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.012467661812924791,
+              0.027370000426665708,
+              0.0433119160006389
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.971,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9304055771873002,
+              0.9588222023552513,
+              0.9860517850779751
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.23612958752921206,
+              -0.18786535419493122,
+              -0.13974750538874012
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.01677310960810524,
+              0.031625325950980554,
+              0.04749718148343267
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.1,
+        "design": "flow_quadratic",
+        "models": {
+          "none": {
+            "rejected_fraction": 0.114,
+            "eta_working_recovered_over_true_5_50_95": [
+              2.0448567174825985,
+              2.1254496979345356,
+              2.2078090871608755
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.006412570548136392,
+              0.11468575020809091,
+              0.24428336673163445
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.03141079750273761,
+              -0.008892551949703453,
+              0.013069241104383955
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.163,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.6087285947342291,
+              1.6708066414186817,
+              1.7376429355484115
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.014725398846591676,
+              0.15688344911755736,
+              0.3119133833579665
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.033380470180497765,
+              -0.010249651246464153,
+              0.011740689991006114
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.179,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9868784466874831,
+              1.0252291220985377,
+              1.0656604152525364
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.0402027546406181,
+              0.19035019522024788,
+              0.35302048626482446
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.034063892561660265,
+              -0.0107757103722117,
+              0.011292774994564297
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.1,
+        "design": "throttle",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              2.6822753658574374,
+              2.751035133099517,
+              2.8242433639240128
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.21258349997029558,
+              0.24797485037548572,
+              0.2851296727266663
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.29489533049910216,
+              0.3288801927048106,
+              0.36414907898082843
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.7725530706231538,
+              1.8035444039161805,
+              1.8325790843577419
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.12146963576261377,
+              0.14100629192505654,
+              0.16088288016590077
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.002016864142817598,
+              0.019235640796666287,
+              0.03645354687537482
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.086,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9995364869194514,
+              1.015163645987273,
+              1.0303780167085157
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.06457745926624019,
+              0.08132656735278232,
+              0.09800309267915057
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.10141329908109901,
+              -0.087619893590618,
+              -0.07373699675470857
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-L",
+        "eta_true_working": 0.3,
+        "S_true": 4.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.1,
+        "design": "flow_quadratic+throttle",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              2.553176468917827,
+              2.6078049021796206,
+              2.6647772187766483
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.6962249410617014,
+              0.800024314021036,
+              0.9003899366116801
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.042989402654224365,
+              -0.021179852227838525,
+              0.0013854078539584083
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.7566784284605015,
+              1.7837327378047885,
+              1.8102091672131793
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.29481966403616827,
+              0.3873059564005329,
+              0.4779525768298181
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.03783567176506618,
+              -0.015595514976796288,
+              0.007035042661013846
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.153,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.0016468712556992,
+              1.0164527659161862,
+              1.0306829913643536
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.06959763416422789,
+              0.1599584845164712,
+              0.251797741053713
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.0328026593081274,
+              -0.010126951268990492,
+              0.01253148252245383
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.0,
+        "design": "flow_const",
+        "models": {
+          "none": {
+            "rejected_fraction": 0.896,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.0584959337110298,
+              1.0770998162400691,
+              1.0957083820187978
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.09303388885135502,
+              -0.07731905641801529,
+              -0.06151665127617514
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.019425105765665352,
+              -0.0026637368264080252,
+              0.013805798099926058
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.054,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.982300353675848,
+              0.9993515830334495,
+              1.016241071496506
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.01722862569438392,
+              -0.0007389238337253135,
+              0.016278194088650486
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.017196634759625608,
+              -0.0006751583515621773,
+              0.016038371548845194
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.125,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.678800736401366,
+              0.6902926666136391,
+              0.7019875465266671
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.012536839154409707,
+              0.029347962335196653,
+              0.04659729743970737
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.015428190975478867,
+              0.0010718209945000945,
+              0.017953912555807815
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.0,
+        "design": "flow_linear",
+        "models": {
+          "none": {
+            "rejected_fraction": 0.052,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.1154783631456073,
+              1.152078043691488,
+              1.1910560334388516
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.03402275210106108,
+              0.0030897310445239246,
+              0.04087206069886083
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.016112260652362712,
+              0.00022672942344426072,
+              0.01695930820919046
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.052,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9667672918830813,
+              0.9997124086300042,
+              1.0338132514140908
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.03890122998274724,
+              0.0001704300223897004,
+              0.0402886209399415
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.016995147605872278,
+              -0.0004289230453256021,
+              0.016316046509138635
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.053,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.6549142957530328,
+              0.6773249651858337,
+              0.7007055941562592
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.034602345046999286,
+              0.005225730444331611,
+              0.04644723171485899
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.01495441817871428,
+              0.001562784873838985,
+              0.018274411936357437
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.0,
+        "design": "flow_quadratic",
+        "models": {
+          "none": {
+            "rejected_fraction": 0.0415,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.0917689794506447,
+              1.1550907214053519,
+              1.2222550598850372
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.07786489802116281,
+              0.0073299608154250295,
+              0.09794389472307716
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.02859185421874378,
+              -0.0008711884215397703,
+              0.025900977222898667
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.041,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9452954793467099,
+              1.0001502617856866,
+              1.059805358875964
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.08748780216335375,
+              0.0012645716267867257,
+              0.09701312230337027
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.02851612993305292,
+              -0.000914207294031022,
+              0.025608289744737025
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.045,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.6427119366742351,
+              0.6804503749170556,
+              0.7211436873289018
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.07705691968743227,
+              0.014156968153660632,
+              0.11213938223192296
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.02838395321830666,
+              -0.0007689786983263169,
+              0.025820273799082007
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.0,
+        "design": "throttle",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.3106432826364967,
+              1.3352606356947672,
+              1.3620906586904988
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.12108487435246613,
+              0.14399872363830435,
+              0.16860093857845887
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.21277911623405787,
+              0.23622593873962094,
+              0.2618098641909381
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.0905,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9833184580767487,
+              0.9991274198830972,
+              1.0152818998077922
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.017192112728101124,
+              -0.000856218885924187,
+              0.015702419752280233
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.016716806586724864,
+              -0.0009255058789625625,
+              0.01537838940242684
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.6142869764874013,
+              0.6237134681517448,
+              0.6333736469572587
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.08413562201744176,
+              -0.06980215842407916,
+              -0.05521287683606764
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.1091667368360161,
+              -0.09535973035560064,
+              -0.08134248660915677
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.0,
+        "design": "flow_quadratic+throttle",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.2957327227896385,
+              1.3188612717105834,
+              1.343437937443855
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.19257764885747536,
+              0.22915616504943426,
+              0.26837061903151316
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.054238146439193294,
+              -0.030508201372210497,
+              -0.005637933317878158
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.077,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9840664780017891,
+              0.9992414656257775,
+              1.014560756938157
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.031376966176503686,
+              -0.000517348339199919,
+              0.030906628997804327
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.024781661218037286,
+              -0.000882200500012198,
+              0.02383181223899445
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.6174838634973682,
+              0.6267925847592475,
+              0.6363431330486407
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.14218218930497048,
+              -0.11410897235774747,
+              -0.08433982392262052
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.008461891506162084,
+              0.01521685764489078,
+              0.040170128548143565
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.1,
+        "design": "flow_const",
+        "models": {
+          "none": {
+            "rejected_fraction": 0.9765,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.0746443343721845,
+              1.0929420104292586,
+              1.1117997698920463
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.10683764343467214,
+              -0.09238702306762231,
+              -0.07694895412677338
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.019376205219176296,
+              -0.0036873346385070116,
+              0.013132350172490603
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.0585,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.990819955666554,
+              1.007155584632725,
+              1.0242806542895113
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.025049077105895972,
+              -0.009446079322238954,
+              0.006785163613633659
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.015643547447132273,
+              0.00037798834036162354,
+              0.0168656791272315
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.105,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.682304227615214,
+              0.693581615215276,
+              0.7050175341202916
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.008835947903138842,
+              0.025287634225690137,
+              0.041920070601945275
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.015703160384306043,
+              0.0004501665150185019,
+              0.016890597320435973
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.1,
+        "design": "flow_linear",
+        "models": {
+          "none": {
+            "rejected_fraction": 0.056,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.1458409990201477,
+              1.1843087841318627,
+              1.2248678154239732
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.03581714345239316,
+              0.001346198378063268,
+              0.04033316256929058
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.015562299937496698,
+              0.0005972353566162658,
+              0.016895193453138096
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.0585,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9803256334676276,
+              1.0137886851234112,
+              1.0489178510622175
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.040576239718681,
+              -0.002017615528147332,
+              0.03949929252362403
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.015451689629349164,
+              0.0006091556206488935,
+              0.017060496482716844
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.0585,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.6606586581074538,
+              0.6829571403603334,
+              0.7068516906629346
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.034441770074813145,
+              0.005375638652080572,
+              0.047542364576043994
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.015160152460750885,
+              0.0008015012465316662,
+              0.017239879440810738
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.1,
+        "design": "flow_quadratic",
+        "models": {
+          "none": {
+            "rejected_fraction": 0.058,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.1224782714735402,
+              1.1870734224567614,
+              1.2503097158544738
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.07781702233962567,
+              0.005336987489309886,
+              0.0891902987225603
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.027678881882724746,
+              -0.00033285434306684625,
+              0.02684809150052453
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.0555,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9602912581390401,
+              1.016892021125616,
+              1.071913354624963
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.0844381277689746,
+              0.0035169924580575884,
+              0.09276215209874769
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.028081796352919304,
+              -0.0005849561279566151,
+              0.02662454282738843
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.058,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.6475158511412544,
+              0.6855307766370902,
+              0.7230507933555226
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.0780135642482188,
+              0.01209577541732465,
+              0.10409264784276254
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.028138039435124475,
+              -0.000583761431630192,
+              0.026551060973472082
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.1,
+        "design": "throttle",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.3733980320085746,
+              1.4021601700431543,
+              1.430134607702993
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.13913686440254963,
+              0.16413705215261187,
+              0.18998614950987852
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.25178340223866813,
+              0.27794409726457203,
+              0.3047363337262631
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.197,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.0091520730198182,
+              1.0261201584061455,
+              1.0429983236720213
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.007820336264711791,
+              0.009293145160112148,
+              0.026278433381738103
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.002176378448406757,
+              0.019247118776381522,
+              0.035723501993795634
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.9985,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.6234537413374651,
+              0.6333724238080851,
+              0.6434192099782549
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.07853424628351352,
+              -0.06360580986723235,
+              -0.04882806501191988
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.10078635931193175,
+              -0.08621289493477657,
+              -0.0719559118831719
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.1,
+        "design": "flow_quadratic+throttle",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.3551791748739983,
+              1.381227103036268,
+              1.4066317762933132
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.2216864183614235,
+              0.2601879729659684,
+              0.29993362532185014
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.058440108446697954,
+              -0.03371064769919224,
+              -0.009627780260522521
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.169,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.0094847691465005,
+              1.0254885400142455,
+              1.0419976473615227
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.013998440981261167,
+              0.017507637134938747,
+              0.04901170304348278
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.026680177102134123,
+              -0.002286356470947548,
+              0.02167917832462517
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.9985,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.6266404406943181,
+              0.6362063668906379,
+              0.6458571185149578
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.1332987082096363,
+              -0.10390519896593975,
+              -0.07446872743378778
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.009947763544233356,
+              0.014370597223831272,
+              0.03833152625814144
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.0,
+        "design": "flow_const",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.2506029774594851,
+              1.273575668474272,
+              1.2959205541578662
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.09948709952371339,
+              0.1200857961614531,
+              0.13916464566483686
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.00017255653438824053,
+              0.018048038179028558,
+              0.035459022010941366
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.1441811788457699,
+              1.1659335902945736,
+              1.1859043339083195
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.17432157830754116,
+              0.19693868029271988,
+              0.217378963136757
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.01234514495373174,
+              0.006421371104753382,
+              0.024003122893483518
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.7871652390201088,
+              0.8021404265724071,
+              0.8160411717116192
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.20472431786823295,
+              0.2278628639143404,
+              0.24953496463974292
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.01469968661083696,
+              0.004200282287836088,
+              0.02171935572285071
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.0,
+        "design": "flow_linear",
+        "models": {
+          "none": {
+            "rejected_fraction": 0.7455,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.0484679294608685,
+              1.0900042226853768,
+              1.128814367154919
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.12898880605159363,
+              -0.08565687270631211,
+              -0.04460106211458602
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.015776668250193714,
+              0.033781130380431734,
+              0.050582398890947
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.8285,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.8999742293337882,
+              0.9367118296175259,
+              0.9708625827646504
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.15131851522222306,
+              -0.10596138154344831,
+              -0.06290573529887739
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.019345320929457822,
+              0.037332634030146306,
+              0.054452573542280114
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.886,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.6078725700370552,
+              0.6329603382558799,
+              0.656459997159244
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.15270750624650126,
+              -0.10666951309377265,
+              -0.062481628400243926
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.022366914067974385,
+              0.040437960979713194,
+              0.05753849714231063
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.0,
+        "design": "flow_quadratic",
+        "models": {
+          "none": {
+            "rejected_fraction": 0.1025,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.1156950748771497,
+              1.1831768758831052,
+              1.251711048406748
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.03201882982671249,
+              0.06675815996395684,
+              0.16435240522999664
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.027530564876552033,
+              -0.0010647740048004284,
+              0.02492149950526424
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.1085,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9681073961313231,
+              1.028622335346899,
+              1.0900141730664328
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.032233623613257815,
+              0.07143500613561338,
+              0.17602359847984195
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.027194799942755886,
+              -0.0008126437244488915,
+              0.025097375523675674
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.1305,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.6586984509881483,
+              0.7009180371258523,
+              0.7426242691366108
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.016953154713265594,
+              0.08918402233045575,
+              0.19618594780799
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.02692846713969384,
+              -0.0005195276486784639,
+              0.025469529994072822
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.0,
+        "design": "throttle",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.3093559787209967,
+              1.335567666315178,
+              1.3617502567168893
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.15021244070727674,
+              0.1742679379683737,
+              0.2007029526781693
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.04637021293305105,
+              0.06756764481011834,
+              0.08983142448476392
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.0885,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9828027029307437,
+              0.9989081225878201,
+              1.0147908266412242
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.008380411366781438,
+              0.025516099192912645,
+              0.04243171237236619
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.15182362638166105,
+              -0.13760703469437302,
+              -0.12375137889860766
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.6138167122302146,
+              0.6236166668396679,
+              0.6332664211288469
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.06063349179884335,
+              -0.045294088838675306,
+              -0.030197924999581256
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.2315837213542557,
+              -0.21922348780926737,
+              -0.20697055954485136
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.0,
+        "design": "flow_quadratic+throttle",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.2995016204741197,
+              1.3232734079003226,
+              1.347956628191566
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.2235340798258531,
+              0.2665598112582681,
+              0.30909223456050816
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.05119861443967301,
+              -0.026592278976623474,
+              -0.003686766297522165
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.1255,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9852028634277031,
+              1.0006243802301977,
+              1.0159596978621457
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.010627159902036698,
+              0.02462243136810094,
+              0.058701407139793854
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.01916440849735958,
+              0.005421278206025337,
+              0.027774373666993746
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.6175780113890652,
+              0.6272180940389344,
+              0.6366538314573184
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.12850586631531408,
+              -0.09583004203768397,
+              -0.06254082977396114
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.001694926730063739,
+              0.02249805816983874,
+              0.04533634571375358
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.1,
+        "design": "flow_const",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.2724330528091727,
+              1.2944105225995803,
+              1.3169257359594813
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.08549263328799112,
+              0.10440187626076636,
+              0.12262976166479729
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.002244516872598301,
+              0.019264194840935556,
+              0.03580394717347659
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.1553198122178094,
+              1.1758428948921114,
+              1.1957291203560871
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.16625124281748932,
+              0.1872015172599909,
+              0.20698352093496952
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.009400364740589473,
+              0.008195403083592456,
+              0.025071138318956455
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.7917658050871194,
+              0.8061106502802227,
+              0.8197524811739504
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.20166924917872425,
+              0.22341168739975703,
+              0.24387643142247034
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.01381577653313934,
+              0.0038349067010855498,
+              0.020901251016015997
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.1,
+        "design": "flow_linear",
+        "models": {
+          "none": {
+            "rejected_fraction": 0.7235,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.080462138367223,
+              1.1210036105388559,
+              1.1632898479317362
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.12486298475983966,
+              -0.08434843186633889,
+              -0.04205417492940391
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.01574074172558242,
+              0.03255501667911209,
+              0.04966435722370174
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.842,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9150854334474006,
+              0.9502092604088369,
+              0.9870222476010652
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.14831407726089568,
+              -0.10604795150907947,
+              -0.061892543641138886
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.02009129861145692,
+              0.037207607456614444,
+              0.054370228582293956
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.866,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.6145056821639776,
+              0.6383271817064872,
+              0.6633092819659409
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.1486775142778214,
+              -0.10544642458170267,
+              -0.05983951794831533
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.02154630719288343,
+              0.03871336313071305,
+              0.0560291353834563
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.1,
+        "design": "flow_quadratic",
+        "models": {
+          "none": {
+            "rejected_fraction": 0.1005,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.143062175853264,
+              1.2141896097448042,
+              1.2865319857471333
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.038421704534832055,
+              0.06336827901536557,
+              0.16260702892083664
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.027289542241755442,
+              -0.0014685285214502408,
+              0.025248012264019692
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.109,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9814516052746173,
+              1.044423263141451,
+              1.1077449091788383
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.0340020801905465,
+              0.07402078613510943,
+              0.17882055587546342
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.027158375932618883,
+              -0.0014340857136599938,
+              0.025235182224929736
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.1435,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.6617287521459091,
+              0.705085691976876,
+              0.7482255623436588
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.023299001434960647,
+              0.0863687978533435,
+              0.19551266637033926
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.026962582922540845,
+              -0.001309016465705859,
+              0.025352556428283275
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.1,
+        "design": "throttle",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.3731768265753976,
+              1.4011381747205816,
+              1.430248223244957
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.1692074364381785,
+              0.19521545246634397,
+              0.2216626443802449
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.07990896617804576,
+              0.10304428501349527,
+              0.1260746919419435
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.178,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.0089230455082534,
+              1.025666350116285,
+              1.042268273308518
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.01801040069093789,
+              0.035775830627577165,
+              0.05281537301892033
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.13506441485134119,
+              -0.12035069474694698,
+              -0.10616465962760513
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.999,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.622957987342496,
+              0.6333006537049507,
+              0.6427004609058513
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.05430906939109996,
+              -0.038766009043559146,
+              -0.024470657735060117
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.22407828364760313,
+              -0.21127193455129578,
+              -0.19941763944107332
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.1,
+        "design": "flow_quadratic+throttle",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.3591637534570449,
+              1.385297073403208,
+              1.41243609995987
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.25578138421035757,
+              0.2993110028972057,
+              0.34286593200329496
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.05580134690022347,
+              -0.03200117376678374,
+              -0.008477595891261592
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.2035,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.010597173133528,
+              1.0269590609450243,
+              1.042968429075661
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.008657314053031329,
+              0.044015352496049154,
+              0.078861940289183
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.02148846202962933,
+              0.002024288166095234,
+              0.025954020291508936
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.6267613220690122,
+              0.6367763583921873,
+              0.6460202517097491
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.11787305771678463,
+              -0.08418594977151017,
+              -0.052065351445349586
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.0039382737970344184,
+              0.019607230502458828,
+              0.04349026945351502
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.0,
+        "design": "flow_const",
+        "models": {
+          "none": {
+            "rejected_fraction": 0.988,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.5313729677921295,
+              1.5572234542067709,
+              1.5825923767321914
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.12007668677444899,
+              -0.1053117350640273,
+              -0.09048583322155478
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.021602199470020688,
+              -0.005732791672365178,
+              0.010291641627852089
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.125,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.4235718333291816,
+              1.4466951227153608,
+              1.4694192450589378
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.04506480092101077,
+              -0.0297064960125637,
+              -0.014253137314940495
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.018378599310003053,
+              -0.002363233782769647,
+              0.013226776108591475
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.042,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9837553299071005,
+              0.9996699836575442,
+              1.0152741774667993
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.016173252368237863,
+              -0.00012055118496656636,
+              0.015361076204316704
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.01614375640496297,
+              -0.00011860259909635129,
+              0.0153426601489834
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.0,
+        "design": "flow_linear",
+        "models": {
+          "none": {
+            "rejected_fraction": 0.0485,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.644729853955799,
+              1.6997989196602497,
+              1.754337507512891
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.04119274414956002,
+              -0.0033067880745543676,
+              0.03278476229302881
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.016676605959454215,
+              -0.0008127392238604925,
+              0.014915173687930283
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.0485,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.426772156827583,
+              1.4763150356681454,
+              1.5236344219857922
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.04498305705407381,
+              -0.004774280645973128,
+              0.032893690847119204
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.017743792056065872,
+              -0.0019571881221241427,
+              0.013600804945137952
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.051,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9666169986350297,
+              1.0003863665918897,
+              1.0324242996077602
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.040529930588692344,
+              0.0008527413467289691,
+              0.038909916784973235
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.01585294988155015,
+              -4.0374659920350275e-06,
+              0.01566635449560931
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.0,
+        "design": "flow_quadratic",
+        "models": {
+          "none": {
+            "rejected_fraction": 0.0475,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.6059537493976859,
+              1.6996955651167336,
+              1.7935905277196638
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.0892840731817936,
+              -0.0047162935324301936,
+              0.08392649433541725
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.02633499117032884,
+              -0.0004424711741212173,
+              0.024881978369755905
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.048,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.388280577499345,
+              1.4720329451492669,
+              1.5558467160555505
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.09917710093860659,
+              -0.011160320245755417,
+              0.08273762309442739
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.026575660127912494,
+              -0.0004417026240980948,
+              0.02487910308142749
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.0455,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9445282598741299,
+              1.001380112213163,
+              1.058861465184233
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.08940025613370728,
+              0.0010973127182855036,
+              0.09718448605998069
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.02650399652192543,
+              -0.0002814373126575065,
+              0.02508871963554807
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.0,
+        "design": "throttle",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              2.0261782725250908,
+              2.065694649150747,
+              2.1077264463821526
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.1623434923423067,
+              0.18763867680515156,
+              0.2135491546579462
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.2930797631134952,
+              0.3193294834834962,
+              0.34697166088819364
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.999,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.5607306323692962,
+              1.5847752663042138,
+              1.6097200102688634
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.04587463078667971,
+              0.06280377102869106,
+              0.0809363654980052
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.07583681217483497,
+              0.09274551526106878,
+              0.11018371225937573
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.059,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9846310053210822,
+              0.9993346373717883,
+              1.0144116896444288
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.01577797974676638,
+              -0.0005526906998367109,
+              0.014532298744358683
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.015692914964779092,
+              -0.0006129013652335646,
+              0.014277023471165162
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.0,
+        "design": "flow_quadratic+throttle",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.9917833445893067,
+              2.028590311003195,
+              2.0658139654203613
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.25785749076635245,
+              0.29457850266230534,
+              0.3330626880535071
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.06382877935582973,
+              -0.04063962023543288,
+              -0.018133187511914037
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.5528212997266577,
+              1.5760358964857857,
+              1.6000545662492207
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.07003763127430522,
+              0.10077646958936826,
+              0.13051453264922222
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.0385250760412037,
+              -0.01551310694947311,
+              0.00730416940997681
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.0575,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9851035710419811,
+              0.999392424594754,
+              1.0137619154008968
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.029483816827435116,
+              -0.0007061716244024518,
+              0.026952063818968884
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.02353247793051607,
+              -0.0002334504469865828,
+              0.02259842940536296
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.1,
+        "design": "flow_const",
+        "models": {
+          "none": {
+            "rejected_fraction": 0.9975,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.5526063710893308,
+              1.5794025420697764,
+              1.6064803784388009
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.1356154574087272,
+              -0.12015112629149516,
+              -0.10498920147537508
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.023710188796153202,
+              -0.0073801505237820475,
+              0.009292683304940836
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.199,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.4333149033488222,
+              1.457272192262883,
+              1.4816949714117997
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.05462183003027492,
+              -0.038712811807238234,
+              -0.022716390890103324
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.018234994381996113,
+              -0.0018888033424818707,
+              0.01449242709647802
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.048,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9875401350069926,
+              1.0038267118188167,
+              1.0206112626598347
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.020979009885742195,
+              -0.0046660494115013385,
+              0.011879873269166485
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.017795077345898143,
+              -0.0014668589511490082,
+              0.015248376165299424
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.1,
+        "design": "flow_linear",
+        "models": {
+          "none": {
+            "rejected_fraction": 0.0485,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.6885870891124635,
+              1.7447217646335234,
+              1.8045836181183461
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.04168278963912081,
+              -0.005956203256222592,
+              0.032945131924785924
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.01703736027087256,
+              -0.0009858318350309814,
+              0.015650661088808693
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.049,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.4466392926996903,
+              1.4954520707686059,
+              1.5478649998583254
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.04518420135521773,
+              -0.007592152911282624,
+              0.03352430969005146
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.01747720506896051,
+              -0.0013518467537458334,
+              0.015282236288159754
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.049,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9754573000381817,
+              1.0080299485897917,
+              1.043566045371636
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.03862330667720921,
+              0.0003709364755383193,
+              0.0426791600717348
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.01739129217117035,
+              -0.0012888038051835915,
+              0.015410535076448717
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.1,
+        "design": "flow_quadratic",
+        "models": {
+          "none": {
+            "rejected_fraction": 0.056,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.655253617816011,
+              1.7452081583707968,
+              1.8392659518598609
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.0857248992489387,
+              -0.007465537056016158,
+              0.076498375200465
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.027238928308436838,
+              7.677533604188991e-05,
+              0.025028719460373945
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.0575,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.4163670418717795,
+              1.4948151452462066,
+              1.5772274082937776
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.0920808186732105,
+              -0.00973565338351623,
+              0.07936184982111359
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.027815471236738998,
+              -0.00016032387182257635,
+              0.02484272073121605
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.052,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9543640297469667,
+              1.0075586130211658,
+              1.0637392480007588
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.08607210817854627,
+              -0.0012878633180464782,
+              0.08980383157637077
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.027885333159694874,
+              -0.0001893613926838289,
+              0.02477737295835771
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.1,
+        "design": "throttle",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              2.118581572872303,
+              2.1621315706219164,
+              2.2077446973959387
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.17712499507256685,
+              0.204861961153044,
+              0.23198426914554882
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.3304297007946058,
+              0.3597047152296239,
+              0.3884253813597963
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.600016125016396,
+              1.626189747947883,
+              1.6516368394180727
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.054890727893001326,
+              0.07254847542845921,
+              0.09040334008471756
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.09565836534794518,
+              0.11377965614191932,
+              0.13135045843330184
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.0725,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9989889073002105,
+              1.0145491558265571,
+              1.0291622189532135
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.009645370297351862,
+              0.005700245497161749,
+              0.020902198739218
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.006375383714442517,
+              0.009104878393911386,
+              0.02410863786762839
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "constant",
+        "gauge_factor_error": 0.1,
+        "design": "flow_quadratic+throttle",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              2.0782668259362835,
+              2.1171791882542266,
+              2.1574754919818493
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.27925318570236723,
+              0.32108425491921355,
+              0.3591211410803013
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.0680355474234694,
+              -0.044201772464170175,
+              -0.02130900219724851
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.5922801104438253,
+              1.6161041578974205,
+              1.6396840584549621
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.0869441996527753,
+              0.1187770274017953,
+              0.14924960001595303
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.041135219174247374,
+              -0.017730357456375856,
+              0.005056990300933289
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.0645,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9993972233264679,
+              1.0139443543292712,
+              1.0278249462104423
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.01974237273670229,
+              0.00953021105616425,
+              0.03839251872821325
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.025877590075932683,
+              -0.002302393113819523,
+              0.020453700852193352
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.0,
+        "design": "flow_const",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.816434256610436,
+              1.8471591269032572,
+              1.878753078265018
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.07156491832336982,
+              0.08957210384388392,
+              0.10825812318374452
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.0020799863741149394,
+              0.01825342281419029,
+              0.03522529063881582
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.6649206715531526,
+              1.6927834811977314,
+              1.7218685010282886
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.14629223095527244,
+              0.16555331635960258,
+              0.18571615047334666
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.009043900108533042,
+              0.007817858561433022,
+              0.024888517678315233
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.1455549038120962,
+              1.1651534692712873,
+              1.1853090408230633
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.17631769685304216,
+              0.1961963597849622,
+              0.21669665089363727
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.010924753948360465,
+              0.0058998457543724125,
+              0.023058528209935557
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.0,
+        "design": "flow_linear",
+        "models": {
+          "none": {
+            "rejected_fraction": 0.6645,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.5536619154759859,
+              1.6106775737079948,
+              1.6706583900514258
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.12808123509560576,
+              -0.08810581854665928,
+              -0.04582649818420105
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.013948439508352239,
+              0.03050612352599391,
+              0.047579331847888415
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.7535,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.3352764098394354,
+              1.3852998006767219,
+              1.4379443254434423
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.14851211941013698,
+              -0.10695460840837057,
+              -0.06274107445509322
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.01703691416322304,
+              0.03373223888883392,
+              0.05106343962010625
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.836,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9021841938802672,
+              0.9363292639183947,
+              0.9722568098326622
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.14940161307039707,
+              -0.10690446484215871,
+              -0.06166517365560461
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.02008439028514868,
+              0.036748047752709345,
+              0.054064738800684284
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.0,
+        "design": "flow_quadratic",
+        "models": {
+          "none": {
+            "rejected_fraction": 0.0775,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.639885745421603,
+              1.738030866749196,
+              1.833961365719682
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.04516211392016617,
+              0.05130999178095896,
+              0.14193131720353694
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.026870043739930898,
+              -0.0016819915568570543,
+              0.024708140255448513
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.0795,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.4229820592599651,
+              1.5101017419100022,
+              1.5964313214075843
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.046256619182482035,
+              0.05468790967822024,
+              0.14987234406902417
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.02652268921524742,
+              -0.001395742839793046,
+              0.02485512562481524
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.0985,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9696545602529347,
+              1.0288004169622438,
+              1.0876863961703052
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.031608042129059585,
+              0.07189047056617426,
+              0.16876662017097446
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.026259164884258175,
+              -0.001132481003445096,
+              0.0251064890493853
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.0,
+        "design": "throttle",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              2.026957833622498,
+              2.0671905911816415,
+              2.110081328884753
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.19423043863703982,
+              0.2194595134627343,
+              0.24698168684775343
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.11694769747079098,
+              0.1393828815720639,
+              0.16363171740347524
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.559417486667238,
+              1.5855441826670806,
+              1.612348897602451
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.0735938687752613,
+              0.09174290257424611,
+              0.11054074754978606
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.07171925789246038,
+              -0.05607444546272017,
+              -0.040218885702803714
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.0585,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9839562936835986,
+              0.9995114474696849,
+              1.0151026516221413
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.010378306808099046,
+              0.02642392516362768,
+              0.04265543164403827
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.15026958361533982,
+              -0.13699428511107425,
+              -0.1233826818051003
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.0,
+        "design": "flow_quadratic+throttle",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.999542060812424,
+              2.0372980799015235,
+              2.076872802364028
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.2948895478703373,
+              0.33693478080152484,
+              0.3780385771909626
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.0616895778106714,
+              -0.03944708385780188,
+              -0.015787999751836906
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.5551862737824027,
+              1.580354787620882,
+              1.605392974947405
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.0985812338278036,
+              0.13338739950158784,
+              0.16656742544139383
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.03410414989601263,
+              -0.011793828970633802,
+              0.011869884866933264
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.102,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9860349421608132,
+              1.001168233787408,
+              1.015844764350205
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.007015159357830159,
+              0.02529094379097452,
+              0.057055428223026006
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.017770016221520885,
+              0.004297382075254652,
+              0.028005776360798675
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.1,
+        "design": "flow_const",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.846502731912694,
+              1.8784194011679203,
+              1.9111602032915591
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.05590889689468935,
+              0.07409289566616772,
+              0.09306746969064625
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.0025505390937816006,
+              0.01942819248537242,
+              0.03690901959823468
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.678299155939809,
+              1.7072707507556737,
+              1.736801277289516
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.13625625946140896,
+              0.15602984476848203,
+              0.1762661181472408
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.007651219168847722,
+              0.009605228996038218,
+              0.02700620754636086
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.1509274971455894,
+              1.170957073599627,
+              1.1912237082993502
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.17124905313201833,
+              0.19204582375477275,
+              0.21264628702425598
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.011894146919704168,
+              0.005705880335770019,
+              0.02318466658863757
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.1,
+        "design": "flow_linear",
+        "models": {
+          "none": {
+            "rejected_fraction": 0.6475,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.598373764402373,
+              1.6592691411765859,
+              1.7161236798136614
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.1269275470769113,
+              -0.08576741318999043,
+              -0.04628883706155206
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.01306546189257377,
+              0.029962681905888133,
+              0.046527516227037734
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.7875,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.35422833992029,
+              1.4072618802960772,
+              1.4571437939607095
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.14886753980853432,
+              -0.10504242310588813,
+              -0.06378433362846021
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.01722337980654919,
+              0.03427190796703683,
+              0.05108353208270353
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.8225,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.909662870150927,
+              0.9456266620364622,
+              0.9795231123718857
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.14868975279664107,
+              -0.10374457063247322,
+              -0.06145089067206826
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.01865071663464668,
+              0.035775822677925895,
+              0.05248907282058974
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.1,
+        "design": "flow_quadratic",
+        "models": {
+          "none": {
+            "rejected_fraction": 0.0785,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.6822121423749543,
+              1.7835313422435526,
+              1.8871591222263433
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.04777274235692206,
+              0.0481058136563961,
+              0.14683832761723636
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.027813532354050558,
+              -0.0014887361005848643,
+              0.023362061828264922
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 0.0825,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.4446987451685591,
+              1.5347692438476477,
+              1.6264654115381174
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.042839954279120705,
+              0.05740417669619513,
+              0.16194013193041212
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.027631841918046445,
+              -0.0016072825727095341,
+              0.02340157554944616
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.1175,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.973890987788097,
+              1.0357477694515465,
+              1.0984732080048012
+            ],
+            "holdout_rate_error_5_50_95": [
+              -0.03270282860628953,
+              0.06930425454391076,
+              0.1766995569411139
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.027471024600628724,
+              -0.0014774758036729674,
+              0.023532225378896883
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.1,
+        "design": "throttle",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              2.1167570786607963,
+              2.1625646133502174,
+              2.2063732974176893
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.20899809799775376,
+              0.2365383898640192,
+              0.26468548465838754
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              0.14824344902180037,
+              0.17361250630139624,
+              0.19819315306995133
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.600088001887311,
+              1.6259851594940924,
+              1.6518153692918727
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.0828135973967134,
+              0.10100664704852491,
+              0.11908772749851972
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.05413153307373867,
+              -0.03860097331045553,
+              -0.02355839329643288
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.076,
+            "eta_working_recovered_over_true_5_50_95": [
+              0.9990786138261838,
+              1.0139155631255137,
+              1.0292222387442322
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.017111611212115196,
+              0.03226757546366987,
+              0.047705549286388545
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.141982007563699,
+              -0.1291649512998897,
+              -0.11617190411440817
+            ]
+          }
+        }
+      },
+      {
+        "layout": "B-p",
+        "eta_true_working": 1.0,
+        "S_true": 2.0,
+        "truth": "gas-gamma0.1",
+        "eta_trend": "falling",
+        "gauge_factor_error": 0.1,
+        "design": "flow_quadratic+throttle",
+        "models": {
+          "none": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              2.085199681188004,
+              2.1271565895187727,
+              2.1660009853776603
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.32057902992980547,
+              0.36392188189432284,
+              0.4085038409757851
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.06593949169735336,
+              -0.04363017568994204,
+              -0.020175341875414456
+            ]
+          },
+          "gas": {
+            "rejected_fraction": 1.0,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.5939881888400955,
+              1.6198955157698443,
+              1.644482864274612
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.11682182745730399,
+              0.15128964189129912,
+              0.18598273828774975
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.036327725279632614,
+              -0.014102894383984266,
+              0.00878030920505369
+            ]
+          },
+          "gas-gamma0.1": {
+            "rejected_fraction": 0.115,
+            "eta_working_recovered_over_true_5_50_95": [
+              1.0005062620921363,
+              1.0151434603114817,
+              1.0300149568967147
+            ],
+            "holdout_rate_error_5_50_95": [
+              0.0036587718104856394,
+              0.0352419231152431,
+              0.06804115473892328
+            ],
+            "holdout_inside_rate_error_5_50_95": [
+              -0.020125270477826022,
+              0.0023099934811822154,
+              0.025153318125563727
+            ]
+          }
+        }
+      }
+    ],
+    "working_map_half_range_points": {
+      "B-L": {
+        "none": 0.3517484541897361,
+        "gas": 0.48706731788984636,
+        "gas-gamma0.1": 0.3448008631130747
+      },
+      "B-p": {
+        "none": 0.5526202397617681,
+        "gas": 0.1891956535165624,
+        "gas-gamma0.1": 0.4954902450659197
+      }
+    }
+  },
+  "disabled_physics": [],
+  "warnings": [
+    "Synthetic: the true machine is the twin itself; tests the measurement plan, not the twin",
+    "Centre growth rate only (C6, C6b); decomposition taken as measured separately",
+    "Noise levels assumed (3 % gauge, 2 % rate); the real run-to-run scatter comes from C9",
+    "Throttle series assumes eta does not change with chamber pressure at fixed flow and power",
+    "True eta trend is assumed (constant or (Q_w/Q)^0.25), not measured"
+  ]
+}

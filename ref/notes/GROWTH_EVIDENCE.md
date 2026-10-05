@@ -71,6 +71,50 @@ Atomistic calculations and kinetic Monte Carlo can supply selected mechanisms or
 
 Accept any reduction only after declaring its observable, operating range, discrepancy budget and independent comparison. If it fails, refine the model, run the expensive case offline or mark that operating point unsupported. Do not replace missing evidence with smaller uncertainty bars to fit an RTX 5050 laptop budget.
 
+## First growth model (2026-10-01)
+
+`src/mbe_twin/growth.py` (tests in `tests/test_growth.py`; parameters with sources in `data/parameters/gan_growth.json`). It is a steady-state model per wafer point for Ga-polar (0001) GaN, taking delivered Ga flux, delivered active-N flux and temperature. It follows corrections 2, 3 and 5 above:
+
+- **Inventories.** Incident Ga, incorporated Ga, desorbed Ga, Ga into droplets and decomposition are tracked separately. The Ga balance closes exactly in every regime and through shutter segments (tested).
+- **Incorporation and loss.** Incorporation is min(Ga, N). The loss is the G02 vacuum decomposition rate, 1.6e15 nm/min exp(-3.1 eV/kT), which G02 shows also applies under slightly Ga-rich growth. Under N-rich growth G02 shows a reduced but unquantified loss, bracketed between none and the vacuum rate. There is no "nitrogen on means no loss" rule.
+- **Regimes.** N-rich (excess < 0), Ga adlayer, and droplets (excess above the critical flux F_crit(T)). Excess Ga desorbs up to F_crit (R20).
+- **Droplet onset.** The three sources tabulated in G01 disagree (5.1 eV / 2e25, 4.8 eV / 1e24 and 2.8 eV / 1e14 ML/s), so they are kept as scenarios. Cross-checks: G01's own law gives 0.85 ML/s at 740 C against its measured 0.72 ML/s. At 700 C only the Ref. 14 law reproduces R20's onset near an excess of 5 nm/min (4.9); the other two give 1.3-2.1 nm/min. Temperatures are each lab's substrate reading, so this spread partly reflects temperature scales.
+- **Decomposition check.** The law gives 0.3 nm/min at 720 C ("nearly zero" in G02) and 5.1 nm/min at 805 C (G02: above 3.5 nm/min).
+- **Operational active N.** A flux calibrated from a Ga-rich growth rate at temperature T_cal is net of decomposition at T_cal; `active_n_from_ga_rich_rate` adds it back.
+- **Not modelled.** Transients (R20: steady state within 10-20 s; segments under 60 s are flagged), droplet consumption, adlayer coverage kinetics, polarity, morphology and AlN.
+
+Two sensitivities link wafer temperature to the outcome. At 750 C, decomposition changes thickness by about 0.2 % per K at 1 um/h. The droplet onset changes by 14-25 % per 5 K (2.8-5.1 eV). Temperature uniformity therefore sets both the thickness contribution of decomposition and the width of the Ga-rich window across the wafer.
+
+**Growth window on the 200 mm wafer** (`scripts/growth_window.py`, record `results/growth_window/manifest.json`; representative_chamber, not validated).
+
+*Inputs.* Ga maps from the recorded DSMC runs (d = 8 A; fills 40 / 70 / 120 mm at 46 deg and at the angle optima). N maps from the best free-molecular aim per hole aspect ([nitrogen boundary](NITROGEN_BOUNDARY.md)), plus a flat reference. Centre active N of 16.7 nm/min (1 um/h). Wafer temperature T0 + dT (r/R)^2. The window is the range of centre Ga/N flux ratio for which every radius stays in the Ga-adlayer regime, [max(n/g), min((n + F_crit/J_N)/g)].
+
+- **Thickness does not depend on the Ga map inside the window.** It follows the N map and the temperature through decomposition.
+
+  Thickness range/mean for a flat N map, by temperature and edge-to-centre difference:
+
+  | T0 | dT = +/-5 K | dT = +/-10 K |
+  |---|---|---|
+  | 700 C | 0.15-0.18 % | 0.27-0.39 % |
+  | 740 C | 0.6-0.7 % | 1.1-1.6 % |
+  | 780 C | 2.4-2.9 % | 4.5-6.4 % |
+
+  The thickness half-range/mean (the primary outcome metric) is half of these. The growth temperature therefore sets how tight the heater specification must be.
+- **The Ga map sets the window.** Window width in centre Ga/N at 700 C, for the three droplet scenarios (G01 / Heying / Ref14; F_crit/J_N = 0.07 / 0.13 / 0.30):
+
+  | Ga map | Flat N map |
+  |---|---|
+  | 40 mm fill, 46 deg | 0.048 / 0.105 / 0.271 |
+  | 120 mm fill, 46 deg | 0.000 / 0.048 / 0.214 |
+  | 40 mm, 48 deg (optimum) | 0.064 / 0.121 / 0.287 |
+  | 120 mm, 58 deg (optimum) | 0.063 / 0.120 / 0.286 |
+
+  At 700 C the Ga spread of a depleted charge at a fixed 46 deg port consumes most or all of the window, depending on the droplet law. At the angle optima it hardly narrows it. At 740 C the window is about 1 wide in centre Ga/N for all cases (F_crit/J_N 0.8-1.2); at 780 C it is several.
+- **With centre-flux-held Ga maps** (`--held`, record `data/runs/studies/growth_window_held.json`, 2026-10-01) the 700 C widths change by at most 0.011. The depleted charge at 46 deg keeps 0.000 / 0.043 / 0.208 for the three droplet laws, the 58 deg optimum 0.053 / 0.109 / 0.272. Conclusions unchanged.
+- **Trade-off.** A higher growth temperature widens the Ga window and makes Ga uniformity matter less. It also makes thickness far more sensitive to wafer-temperature nonuniformity (about 0.5 %/K range/mean at 780 C against 0.03 %/K at 700 C). Which regime the proposed machine runs in, on its own temperature scale, decides whether the Ga layout or the heater is the binding constraint.
+- **Beaming N plates at their best aim** add 0.3-1 % to thickness range/mean (740 C, dT = 0). Pointing errors add more (nitrogen boundary note).
+- **Limits.** Steady state. The temperatures are the source labs' scales, and the droplet law's spread is partly a temperature-scale spread. No heater model: dT is a stand-in. The N maps are free-molecular optima. The centre active N is assumed.
+
 ## Remaining evidence gaps
 
 - Actual source/wafer geometry, source charge and aperture revisions, calibration records, thermometry optical stack, wafer/holder contact and emissivity, and chamber material states remain machine-specific inputs.
