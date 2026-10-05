@@ -1,281 +1,168 @@
 # GaN/AlN MBE digital twin
 
-A laptop-scale computer model of a 200 mm molecular beam epitaxy (MBE) machine. Its purpose is to find design and operating changes that make grown layers more uniform across the wafer, before those changes are tried on the real machine.
+This project models a 200 mm molecular beam epitaxy (MBE) growth chamber to help design a machine that grows more uniform semiconductor layers. It studies how source positions, nitrogen supply, wafer heating and operating conditions affect the thickness of GaN grown on a silicon wafer.
 
-This page explains the project in plain language. The technical details (code, solvers, commands, status by subsystem) are in the [developer guide](docs/DEVELOPER.md). The command behind every quoted number is in [docs/REPRODUCE.md](docs/REPRODUCE.md).
+The long-term scope includes GaN and AlN. The working growth model currently covers **GaN only**.
 
-**Contents**
-1. [The machine and the problem](#1-the-machine-and-the-problem)
-2. [What the twin is](#2-what-the-twin-is)
-3. [The gallium beam](#3-the-gallium-beam)
-4. [Gallium on the 200 mm wafer](#4-gallium-on-the-200-mm-wafer)
-5. [Nitrogen](#5-nitrogen)
-6. [How the layer grows](#6-how-the-layer-grows)
-7. [Wafer temperature](#7-wafer-temperature)
-8. [Choosing a layout](#8-choosing-a-layout)
-9. [How results are made trustworthy](#9-how-results-are-made-trustworthy)
-10. [Where things stand](#10-where-things-stand)
-11. [Glossary](#11-glossary)
+**Current state:** this is a research codebase with working physics models and design studies for a representative chamber. The proposed machine has not been built, and its drawings and measurements are not yet available. Several models have passed numerical checks, and the metal-source model has been compared with a published experiment. The nitrogen, heater and growth models still need experimental validation. A complete twin calibrated to the proposed machine is not yet implemented.
 
-## 1. The machine and the problem
+This overview reflects the recorded studies through **3 October 2026**. Detailed results and their reproduction commands are linked below.
 
-**What MBE does.** MBE grows extremely thin crystal layers atom by atom. Here the layers are gallium nitride (GaN) and aluminium nitride (AlN), the materials in LEDs and fast power transistors.
+## What the project is trying to achieve
 
-**How it works.**
-- A sealed chamber is pumped down to a near-perfect vacuum.
-- Small ovens called **effusion cells** heat liquid gallium or aluminium until it evaporates.
-- The vapour flies in straight lines across the chamber, like light from a lamp, and lands on a hot silicon wafer.
-- There it meets nitrogen from a **plasma source** and forms the crystal.
-- The wafer spins so that every point on it sees the sources from all sides.
+MBE grows thin crystal layers by directing beams of material onto a heated wafer in a vacuum chamber. Heated cells supply gallium and aluminium; a plasma source supplies reactive nitrogen. The wafer rotates to spread the incoming material more evenly.
 
-![Side view of the chamber: the wafer at the top facing down, with the gallium cell and nitrogen source aimed at it from below](docs/figures/chamber.png)
+On a 200 mm wafer, source geometry and temperature differences can produce uneven growth. This project asks which changes would improve thickness uniformity while maintaining a useful growth rate and acceptable material quality. The model can compare design options before hardware is built, and later help interpret measurements from the machine.
 
-*Schematic of the representative chamber, not to scale. The gallium cell sits 350 mm from the wafer centre, tilted 46° from the wafer's axis.*
+![Representative chamber with sources below a downward-facing wafer](docs/figures/chamber.png)
 
-**The problem: nonuniformity.** The sources sit off to the side, so the edge of a 200 mm wafer doesn't receive exactly the same supply as the centre, and the heater doesn't warm it perfectly evenly. The grown layer ends up slightly thicker in some places than others, and its properties vary too. We measure this with **range/mean**: the difference between the thickest and thinnest points, divided by the average. For example, 2 % means the thickest spot is 2 % thicker than the thinnest, relative to the average.
+*Representative geometry, not a drawing of the proposed machine. The baseline gallium source is 350 mm from the wafer centre, at 46° to the wafer axis.*
 
-**The goal.** Reduce nonuniformity across the 200 mm wafer while keeping the required growth rate and material quality. Success will first be judged on thickness uniformity against an agreed baseline, and will count only once it is measured on the real machine. The [project outcome criteria](PHASE1_CHAMBER_PLAN.md#11-project-success-and-design-decisions) and [measurement protocol](docs/DATA_AND_VALIDATION_PLAN.md#demonstrating-wafer-uniformity-improvement) define how improvements will be assessed. The numerical targets will be set from baseline data.
+Success means a measured improvement on real wafers against an agreed baseline. A numerical uniformity target and minimum acceptable growth rate have not yet been agreed. Material quality will need its own measurements; the current model does not predict it.
 
-## 2. What the twin is
+## How the model works
 
-A **digital twin** here is a set of physics simulations that together predict how evenly material arrives on, and grows on, the wafer. We can then change things on the laptop (where a source points, the heater design, oven temperatures) and see what improves the wafer. That is much cheaper than testing each change on the real machine.
+The studies connect four main calculations:
 
-```mermaid
-flowchart LR
-    A[Gallium & aluminium ovens<br/>how the vapour spreads] --> D[Supply map<br/>on the wafer]
-    B[Nitrogen plasma source<br/>how the gas spreads] --> D
-    C[Heater<br/>wafer temperature map] --> E[Growth at the surface<br/>thickness & quality map]
-    D --> E
-    E --> F[Compare design options<br/>port angles, crucibles, heaters]
-    F --> G[Test the best one<br/>on the real machine]
+1. **Material leaving the sources.** Calculate how the metal crucible and nitrogen outlet holes shape their beams.
+2. **Material reaching the wafer.** Account for source position, wafer rotation, obstructions and scattering by gas in the chamber.
+3. **Wafer temperature.** Calculate heat transfer between the heater, wafer and holder.
+4. **GaN growth.** Combine the gallium supply, nitrogen supply and temperature at each point to estimate growth rate, thickness and whether gallium droplets form.
+
+Layout studies combine these calculations with pumping capacity, heater limits and mechanical clearances. They also vary uncertain inputs to see whether a design still works when conditions differ from the nominal case.
+
+The repository uses Python models, **SPARTA** for particle simulations with gas collisions, and **Elmer** for heat-transfer verification cases. The main heater design studies use a separate, simplified Python model. The workflow is intended to run on a laptop; larger particle simulations run in batches.
+
+## What is implemented
+
+| Area | Available now | Main limitation |
+|---|---|---|
+| Metal sources | Direct-beam transport, crucible emission, gas collisions, tilted liquid surfaces, fill-level changes and source-temperature adjustment | Gallium collision properties remain uncertain; experimental comparison uses a bismuth source |
+| Nitrogen source | Outlet-plate geometry, beam maps, off-centre aiming, pointing errors and a particle simulation of flow through one hole | No measured active-nitrogen map; total reactive output is an uncertain input |
+| Chamber gas | Pressure from nitrogen flow and effective pumping speed; direct-beam loss and scattered atoms returning to the wafer; gas plume near the nitrogen source | Simplified chamber and fixed gas fields; wall behaviour is uncertain |
+| Heater and wafer | Radial radiation and conduction, heater zones, holder contact, power limits, temperature sensing and control studies | Simplified geometry; no measured heater validation |
+| GaN growth | Steady-state growth rate, decomposition and gallium balance; nitrogen-limited growth and droplet onset | No transient growth, AlN chemistry, morphology or crystal-quality prediction |
+| Layout comparison | Source and shutter clearances; coupled supply, pressure, temperature and thickness calculations across many operating cases | Assumed hardware dimensions and properties; no mechanical approval for the real machine |
+| Commissioning preparation | Measurement plan and rehearsals using synthetic data | No calibration or validation data from the proposed machine |
+
+## What the studies have found
+
+### Nitrogen and temperature determine thickness in gallium-rich growth
+
+In the model's gallium-rich operating range, enough gallium is available everywhere and growth is mainly limited by reactive nitrogen. Thickness then follows the nitrogen map, with a temperature-dependent loss from GaN decomposition.
+
+Gallium uniformity still matters: too little gallium leaves this operating range, while too much produces droplets. A flatter gallium beam alone therefore does not guarantee a flatter grown layer. The nitrogen, gallium and temperature maps have to be assessed together.
+
+### The gallium beam changes as the crucible empties
+
+The model follows evaporation from the liquid surface through the crucible and onto the rotating wafer. It includes the fact that liquid gallium stays level when its cell is tilted.
+
+At the baseline 46° port angle, the predicted gallium supply variation grows from about **2% to 8–10% range/mean** as the liquid recedes from 40 mm to 120 mm below the crucible mouth. Steeper source angles can reduce this to roughly 1–2%, but the best angle changes with fill level. A fresh charge would spill at angles preferred by a nearly empty crucible, so one fixed angle cannot be optimal throughout a campaign.
+
+![Gallium arrival profiles and uniformity as the crucible empties](docs/figures/ga_fill.png)
+
+The source must also run hotter as it empties to maintain the same gallium supply. The collision simulations require about a 12–13 °C increase across the studied fill range at 46°. These are gallium-arrival results; they do not directly predict layer thickness.
+
+The source model has been compared with the published R07 bismuth experiment. It reproduces normalized deposition profiles to roughly 1–2%. Including paired bismuth atoms brings calculated absolute rates to approximately −6.5% to +5% of the measured rates. That supports the modelling method, but does not establish the collision properties of gallium.
+
+### Nitrogen plate geometry and aim are major design choices
+
+Long, narrow outlet holes produce a concentrated nitrogen beam. Aiming that beam at the wafer centre can give poor uniformity. Aiming near the wafer edge lets rotation distribute it more evenly, but makes alignment important. Shallow holes are generally less sensitive to pointing errors.
+
+![Nitrogen uniformity as the source aim changes for several hole depths](docs/figures/n_aim.png)
+
+The plate must also pass enough gas. At high flow, collisions inside its holes can invalidate the simplest beam model. The repository includes a single-hole collision study, but it does not simulate the entire plasma source, reactive species or interactions between neighbouring holes.
+
+The fraction of nitrogen feed that leaves the source in a reactive form is still unknown for the proposed hardware. Estimates from published growth rates depend on assumed geometry and are not supplier specifications.
+
+### Heater design needs both an even temperature profile and enough power
+
+The heater studies show that zone count alone is not enough. Radial power distribution, wafer contact with the holder and heat loss at the edge all matter. Measuring temperature at several radii helps control the profile; one centre reading mainly controls the overall temperature.
+
+Heater limits also matter. A design that produces an even wafer in an unconstrained calculation may require an element temperature above its rating. The layout studies include that limit and variations in wafer heat emission and holder contact.
+
+A cooler wafer reduces the thickness loss from decomposition, but narrows the allowable gallium supply range. The model therefore favours adjusting gallium supply using the wafer-temperature reading. The growth window must first be measured on the machine's own temperature scale.
+
+### Scattered atoms cannot all be treated as lost
+
+Gas in the chamber scatters atoms travelling toward the wafer. The latest studies follow those atoms after collisions, including through the denser gas near the nitrogen source. Many still reach the wafer, especially gallium atoms.
+
+Including them changes the required nitrogen flow and the predicted thickness profile. It also makes the result depend on whether chamber walls absorb reactive nitrogen or return it to the gas. That behaviour needs measurement during commissioning.
+
+## Current design direction
+
+The provisional choice is **layout B-p**: the nitrogen source sits on the same port ring as the metal cells, with its beam aimed about 97.5 mm from the wafer centre toward the source side. Its aim was selected for growth pressure. **B-L** uses a larger outlet plate designed in this study and an aim offset of about 90 mm. It is a promising alternative if the supplier can build and operate that plate.
+
+The current working operating point is **1 µm/h at about 720 °C**, with gallium supply adjusted from a wafer-centre temperature reading. This is a modelling choice, conditional on nitrogen output, pumping, heater performance and acceptable crystal quality. The temperature is based on the published growth laws' scales and must be calibrated on the real machine.
+
+At that operating point, the studies including scattered atoms and the nitrogen plume give worst-case thickness **half-range/mean of about 1.5–1.8%** across the qualifying scenarios. Other scattering and wall assumptions extend that range to about 2.1%. These are model results over a selected set of conditions, not demonstrated wafer uniformity or a probability of production success.
+
+The main decisions remain:
+
+- **Nitrogen source and plate:** the larger B-L plate makes 1 µm/h achievable at more plausible reactive-nitrogen output, given strong pumping. Its manufacturability and stable plasma operating range need confirmation.
+- **Pumping:** effective nitrogen pumping speed determines growth pressure. The present model does not establish whether weak pumping can support the intended rate.
+- **Temperature measurement and gallium calibration:** the studies indicate a shared error allowance equivalent to roughly 3 °C for positioning gallium supply within the growth window. Sensor repeatability of about 1–2 °C is only one part of that allowance.
+- **Mechanical fit:** simplified models give about 6 mm minimum guaranteed clearance for the B family over the full shutter motion. Actual source, shutter, holder and chamber drawings are needed to check the design.
+- **Acceptance criteria:** uniformity, minimum growth rate and material-quality requirements must be agreed before a layout can be accepted.
+
+The [layout comparison](docs/LAYOUT_COMPARISON.md) contains the assumptions, scenario tables and failure conditions. Its section 10 includes scattering and the nitrogen plume; earlier sections retain the older direct-beam results for comparison.
+
+### Reading the uniformity numbers
+
+Two metrics appear in the studies:
+
+- **Range/mean:** `(maximum − minimum) / mean × 100%`, used in many source-beam studies.
+- **Half-range/mean:** half of that value, used for the main thickness comparisons and sometimes written as “±X%”.
+
+For example, 4% range/mean is 2% half-range/mean. The latter is not a statistical confidence interval. Comparisons must also use the same wafer area and edge exclusion; the detailed study records specify these. Percentages of tested cases are shares of a chosen grid of conditions, not manufacturing yield estimates.
+
+## What needs to happen next
+
+1. **Obtain the hardware information.** Priorities are reactive-nitrogen output versus flow and power, the outlet-plate drawing, effective pumping speed, heater ratings and source/mount dimensions. The [hardware request list](docs/HARDWARE_REQUESTS.md) explains what each answer resolves.
+2. **Agree the performance requirements.** Set the baseline, thickness target, minimum useful growth rate and material-quality requirements. Confirm whether the proposed temperature is suitable for the intended layers.
+3. **Replace assumed geometry and properties.** Recheck clearances, source maps, gas transport and heating with the actual hardware data.
+4. **Calibrate during commissioning.** Measure nitrogen-limited and gallium-limited growth, temperature profiles, pressure, source alignment and droplet onset. The synthetic rehearsals suggest varying pump throttling at fixed nitrogen flow to distinguish gas scattering from changes in source output.
+5. **Validate on separate runs and demonstrate improvement.** Reserve complete wafers and operating conditions that were not used for fitting. Compare a baseline and candidate design using the [measurement protocol](docs/DATA_AND_VALIDATION_PLAN.md).
+
+The [commissioning plan](docs/COMMISSIONING_PLAN.md) includes the measurement sequence and the synthetic rehearsals already completed for nitrogen, temperature and gallium calibration. Those rehearsals test the proposed procedure; they are not experimental validation.
+
+Further scans of steeper nitrogen ports, additional gallium collision sizes, adjustable cells and heater variants are on hold until they are likely to change a design decision.
+
+## Running the code
+
+Use **Python 3.11 or newer**. From the repository root, create a virtual environment and install the package with its test dependencies. For PowerShell:
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -e ".[test]"
+.\.venv\Scripts\python.exe -m pytest -q
 ```
 
-**Why a "representative" chamber.** The real machine isn't built yet, and no manufacturer publishes full drawings. So we model a typical 200 mm GaN machine of the RIBER / Veeco class, with dimensions taken from published sources. That lets us compare design ideas now. Exact predictions for the real machine need its own drawings and measurements.
+To run the introductory direct-beam geometry scan:
 
-**How each part earns trust.** Every piece of physics goes through the same ladder before its results are used:
-
-```mermaid
-flowchart LR
-    V1[1. Exact test<br/>matches a textbook answer] --> V2[2. Published experiment<br/>reproduces a real measurement] --> V3[3. Representative chamber<br/>design comparisons] --> V4[4. Real machine<br/>calibrated with its own data]
+```powershell
+.\.venv\Scripts\python.exe scripts/stage_a_beam_scan.py
 ```
 
-## 3. The gallium beam
+This scan compares source geometries and writes results under `results/stage_a_beam_scan/`. It does not run the full coupled layout study.
 
-**The crucible.** The oven holds liquid metal in a deep cup (the **crucible**). The vapour leaves the liquid surface, bounces off the hot cup walls, and comes out of the mouth as a spray, the **beam**. The cup walls shape that spray: a deep, nearly empty cup gives a narrower spray than a full one.
+SPARTA studies additionally require the pinned SPARTA build in WSL. Elmer verification cases require the configured Elmer installation. Tests requiring an unavailable external solver are skipped. See the [developer guide](docs/DEVELOPER.md) for solver setup, optional tools and batch resource limits, and [reproduction guide](docs/REPRODUCE.md) for the command behind each recorded study.
 
-**The liquid stays level.** The cell is tilted toward the wafer, but liquid gallium stays level, like water in a tilted glass. That creates a limit. At the usual 46° tilt, a cup filled closer than about 37 mm to its mouth spills. As the charge is used up over a campaign, the level drops deeper into the cup.
+## Repository guide
 
-![Three tilted cups: one too full and spilling, one freshly filled 40 mm below the mouth, one nearly empty at 120 mm](docs/figures/level_melt.png)
-
-*The "recess" is how far the liquid sits below the cup's mouth, measured along the cup's axis. The twin studies 40 mm (fresh), 70 mm and 120 mm (nearly empty).*
-
-**When atoms collide.** At low oven temperatures the vapour is so thin that atoms never meet each other; they only hit walls. The simple model (**free-molecular**) assumes exactly that, and follows millions of virtual atoms bouncing through the cup. At real GaN growth speeds, though, the gallium vapour inside the cup is dense enough that atoms do collide, and that reshapes the spray. For that we use **SPARTA**, a free research program that simulates gas collisions (method: DSMC, see the [glossary](#11-glossary)).
-
-**Checking against a real experiment.** In 1991 Gericke and colleagues (reference R07) measured the spray from a bismuth cell at three evaporation speeds. Faster evaporation means denser vapour, more collisions and a wider spray. The collision model follows all three measured shapes within about 1–2 %. The no-collision model misses by up to 20 %.
-
-![Measured and simulated deposit profiles at three evaporation speeds; the collision model follows the measurement while the no-collision model does not](docs/figures/r07_validation.png)
-
-*Deposit across a flat plate in front of the cell, relative to the centre. Black: measurement. Blue: collision model with its statistical error. Orange: no-collision model.*
-
-What this test settles and what it leaves open:
-- **One tuned number.** Collisions depend on how "big" an atom is in a collision. For bismuth the test pins that size to about 7–9 Å once paired atoms are included (8–10 Å without them).
-- **A puzzle, now mostly solved.** With single atoms only, the model's absolute deposition rate was 7–15 % lower than measured in every case. This was not simulation noise. The spray *shape*, which is what uniformity depends on, was reproduced either way.
-- **A likely explanation.** Bismuth vapour is not all single atoms. Published data put about 30 % of it as paired atoms (Bi₂). A pair carries two atoms, so at the same vapour pressure more bismuth arrives, about 12–13 % more. That is the size of the gap. The pressures the 1991 paper states are themselves 1.4–1.7 times the handbook values, so the check needs care. Paired atoms have now been added to the collision model. With the published share of pairs, the gap closes: the model reads between 6.5 % low and 5 % high at the three speeds, instead of 7–15 % low, and the spray shapes still match. The fitted atom size moves from about 9 Å to about 8 Å. How many atoms are paired and how big an atom is trade off against each other, and the 1991 data cannot separate the two.
-
-## 4. Gallium on the 200 mm wafer
-
-With the beam model tested, we apply it to a gallium cell in the representative chamber at a real GaN growth speed (1 µm per hour). The model follows atoms from the liquid surface, through the cup, across the chamber and onto the spinning wafer.
-
-**Unevenness grows as the cup empties.** At the standard 46° port, unevenness grows from about 2 % with a fresh charge to 8–10 % when the cup is nearly empty. The deeper the liquid, the narrower the spray, so the wafer edge gets less.
-
-![Left: Ga arrival across the wafer radius for three fill levels. Right: range/mean rises from about 2 % to 8–10 % as the melt recedes](docs/figures/ga_fill.png)
-
-*Right panel: each line uses a different assumed gallium atom size. The dashed line is the no-collision model.*
-
-**The biggest unknown: the gallium atom's size.** No published source gives the collision size of a gallium atom, so we try a range (2.5, 5.68 and 8 Å). It hardly matters for a fresh charge. For a nearly empty cup, bigger atoms mean more collisions, which widen the spray again. There the answer ranges from about 8 % to 10 %, or about 7.7–8.6 % within the now-plausible sizes of about 6–8 Å (see below).
-
-A new estimate narrows that range from physics rather than guesswork. Atoms attract each other at a distance with a strength that has been calculated for every element. Scaling from noble gases, whose collision sizes are well measured, gives about 4 Å for gallium if that attraction were all there is. The same method says bismuth should be about 4 Å, but the 1991 experiment needs 8–10 Å. Metal atoms bond as well as attract, which makes them "look" bigger. Carrying bismuth's extra factor over to gallium gives about 9.6 Å. These are reasoned estimates, not measured limits: 4, 6 and 9.6 Å are plausible values to try, and 2.5 Å is not ruled out. The paired-atom test showed that part of bismuth's extra size came from its pairs. With that removed, the same reasoning gives about 6–8 Å for gallium, which the existing runs at 5.68 and 8 Å already cover, so they do not need to be redone. Gallium vapour, unlike bismuth, is almost entirely single atoms (paired atoms under 0.1 %, checked against a 1998 measurement), so the model's single-atom picture holds.
-
-**Choosing the port angle.** Tilting the cell more steeply compensates for the narrowing spray. The best angle depends on the fill: about 48° for a fresh 40 mm charge, about 54° at 70 mm and about 58° at 120 mm. At its best angle each fill reaches roughly 1–2 %.
-
-![Range/mean against port angle for three fill levels, with the spill limit for a fresh charge above 48.2°](docs/figures/ga_angle.png)
-
-*Solid lines: collision model (atom size 8 Å) with statistical error. Dotted: no collisions. Red shading: angles where a fresh charge would spill. Grey bars at 54° and 58°: the spread of repeat runs with finer settings. Grey band: values not yet pinned down by those repeats.*
-
-What the angle study means:
-- **No fixed angle is best for a whole campaign.** A fresh charge would spill beyond 48.2°, while an emptying cup prefers 54–58°. Choosing a port angle is a real design trade-off.
-- **The best values are only known roughly.** We repeated the two best cases with a different random seed, a halved time step, a finer grid and twice the simulated atoms. The results moved between 0.7 and 1.4 % at 70 mm, and between 0.9 and 1.9 % at 120 mm. So the best achievable is about 1 % for a half-empty cup and about 1.5–2 % for a nearly empty one. Pinning it down further would need much longer runs.
-
-**Keeping the gallium supply constant.** As the cup empties, less vapour escapes, so the oven must run hotter to keep the same gallium supply. The no-collision model puts the increase at about 8.5 °C between 40 and 120 mm. With collisions, the supply actually delivered at those temperatures is 4 % below to 9 % above the target. So the twin now adjusts the temperature from the collision simulation itself, repeating until the supply at the wafer centre is within ±1.5 % of the target. All twelve cases reached that, most after a single adjustment. Keeping the supply constant from a fresh to a nearly empty cup needs about 12–13 °C more at the 46° port, more than the 8.5 °C the simple model suggests, and about 21 °C if the port angle follows the best angle. The unevenness results above hold at constant supply: about 2 % fresh to 8.3 % nearly empty at 46°, and about 1 % to 2 % at the best angles.
-
-What is held constant is the gallium arriving at the centre of the wafer, not the growth rate. The growth rate also depends on the nitrogen supply and on how much gallium actually sticks, which the twin does not model yet. The runs also record the average gallium supply over the whole wafer, since the edge receives less than the centre.
-
-**The chamber is not empty during growth.** The nitrogen source lets gas into the chamber, and at typical growth pressures 10–20 % of the gallium beam hits a gas molecule on its way to the wafer. Atoms that collide leave the beam, and because the paths to the near and far side of the wafer differ in length, the loss is not even. The beam model now includes this loss (with no gas it gives exactly the old answer). Where the knocked-off atoms end up is not modelled. Section 8 shows how much it matters for whole layouts: little up to about 2 × 10⁻³ Pa, a lot at ten times that.
-
-**What these results are, and are not.** They compare design options on a representative chamber, with a known uncertainty and one clearly bracketed unknown (the atom size). They are not a thickness prediction for a specific machine. In the usual gallium-rich GaN recipe, thickness follows the nitrogen supply (next section).
-
-## 5. Nitrogen
-
-In the usual gallium-rich recipe, a thin excess film of gallium sits on the surface, and the crystal grows as fast as nitrogen arrives. So the **thickness map follows the nitrogen map**. What matters for the gallium cell is the **gallium-to-nitrogen ratio** across the wafer, which must stay gallium-rich everywhere.
-
-**The nitrogen source.** The plasma source releases its gas through a plate with many small holes. Our model of that plate shows:
-- **Hole shape sets the spread.** How the nitrogen spreads over the wafer depends mostly on the holes' shape (how deep compared with how wide). The plate's overall size barely matters.
-- **Real plates look much less even than the gallium beam.** Two published plates give real hole counts and sizes (about 700 to 4000 holes, 0.2–0.34 mm wide), but not the plate thickness, so we tried 0.5–2 mm. The model assumes the gas in the holes is thin enough that molecules hit only the walls, not each other. At low gas flow (0.5 sccm) that holds for every plate except the 700-hole plate at 2 mm thick, which is borderline. At a typical 3 sccm it holds only for the thinner many-hole plates: the gas is too dense in the 700-hole plate, and partly too dense in 2 mm plates, so the model is less reliable for those. Straight holes that are several times longer than they are wide send the nitrogen out in a narrow jet. Aimed at the wafer centre from 350 mm, the model then gives nitrogen maps with range/mean of 20 % to over 100 %, against 1–10 % for gallium.
-- **Aiming off-centre evens it out, at a price.** If the source is pointed not at the wafer centre but near its edge, the spinning wafer sweeps the narrow jet over a ring. In the model, with port angles up to 65°, this brings a thin plate and holes up to about 12 times longer than their radius (the 0.34 mm holes in plates up to 2 mm thick) to about 1 % range/mean or below, even if the plate emits unevenly across its face. The deepest published case, the 0.2 mm holes in a 2 mm plate (about 20 times longer than their radius), only reaches 3.5 %. It improves as the port gets steeper, but steeper ports have not been simulated. The catch is that the narrower the jet, the more precisely the source must point. Because the source looks at the wafer at a slant, a pointing error of 0.8° moves the aim point 5–8 mm, not the 5 mm a head-on view would suggest. Within ±0.8° the worst case is about 0.3 % for a thin plate, 1.6–1.8 % for the shallowest holes, 3–3.7 % for medium holes and 7.5–9 % for 2 mm plates (8 % for the deepest R13 case at its best angle). Within ±1.6°, it is up to 3 % for the shallowest holes and 12–17 % for the 2 mm plates. Shallow holes are the practical choice: a perfectly thin plate is the ideal, but no real plate is infinitely thin, and it also sends more of its nitrogen past the wafer. The source mounting needs a way to measure and adjust its aim.
-
-![Nitrogen unevenness against where the source is aimed, for a thin plate and three hole depths: very uneven when aimed at the wafer centre, a narrow best region near the wafer edge](docs/figures/n_aim.png)
-
-*Model results for four plates. The points are 15 mm apart, so the best spots lie between them; finer steps reach about 1 % or below for these four plates (not for the deeper R13 2 mm plate, see text). The deeper the holes, the narrower the dip, and the more precisely the source has to point.*
-
-- **Still the least certain input.** None of this is tested against a measured nitrogen map, and the real plate's thickness, hole pattern and hole angles are unknown. A thickness map grown with nitrogen as the limiting supply on the real machine will be the direct test.
-
-## 6. How the layer grows
-
-The first growth model combines the gallium map, the nitrogen map and the wafer temperature at each point on the wafer. It uses only constants measured in published experiments (R20, G01, G02) and keeps exact account of every gallium atom: built into the crystal, evaporated again, or left on the surface as droplets.
-
-![Left: the usable range of gallium-to-nitrogen supply ratio between rough growth (below 1) and droplets (above each line) widens with temperature. Right: the thickness change from a 10 °C hotter wafer edge rises steeply with temperature](docs/figures/growth_window.png)
-
-*Left: the usable window lies between rough growth (ratio below 1) and gallium droplets (above the line). The three lines are three published measurements of where droplets start. Right: how much a wafer edge 10 °C hotter than the centre changes the layer thickness there.*
-
-What it shows:
-- **Inside the window, the gallium map does not affect thickness.** The layer grows as fast as nitrogen arrives, minus a small loss from the crystal slowly evaporating at growth temperature. So thickness follows the nitrogen map and the temperature map.
-- **The gallium map decides whether the whole wafer stays in the window.** At a cooler growth temperature (about 700 °C) the window is narrow. A nearly empty gallium cup at the standard 46° port can push part of the wafer out of it, while the best angles keep it in.
-- **Temperature is a trade-off.** A hotter wafer widens the window, but the evaporation loss rises steeply with temperature. A 10 °C difference between wafer centre and edge then changes thickness by about 0.3 % at 700 °C, 1–1.6 % at 740 °C and 4.5–6.4 % at 780 °C (range/mean). So the chosen growth temperature sets how even the heater must be.
-- **Uncertain edges of the window.** Three published measurements of where droplets start disagree by up to a factor of four, partly because each lab measures temperature differently. The real machine's own measurements will settle it.
-
-**Putting the pieces together.** Chaining the gallium, nitrogen, heater and growth models gives a predicted thickness map for a whole machine layout. Changing one part at a time shows which change does the work:
-- With a deep-holed nitrogen plate aimed at the wafer centre, the layer varies by about ±27 %. Aiming it off-centre brings this to about ±0.5–1.5 %; nothing else helps until that is fixed.
-- With a thin nitrogen plate, a simple layout already gives about ±0.5 % at 700 °C and ±1.4 % at 740 °C. A better heater brings 740 °C down to about ±0.5 %, and all improvements together to about ±0.2 %.
-- Improvements can interact. With the centre-aimed deep-holed plate, a more even heater made the layer slightly *less* even, because the cooler edge had been partly making up for the nitrogen shortfall there.
-
-These are predictions for a representative chamber, not measurements. Section 8 adds pointing errors, heater imperfections and the other uncertainties all at once. A provisional summary of what the results suggest for the machine design, and what they cannot yet say, is in [docs/SOURCE_DESIGN_PROVISIONAL.md](docs/SOURCE_DESIGN_PROVISIONAL.md).
-
-## 7. Wafer temperature
-
-The wafer heater is modelled with **Elmer**, a free heat-flow simulator. It passes two exact tests: heat conduction, and heat radiation between two hot plates (within 0.25 °C).
-
-The first published heater experiment we examined (R03) turned out to be a weak test. Its wafers sit off-centre on a large plate, and its measured temperature differences (2–6 °C) are close to its own ±2 °C measurement error. Its data are saved, and better heater experiments are still being looked for.
-
-**A first 200 mm heater model.** A simplified model of a heater under a spinning wafer, whose rim rests on a holder ledge, is checked against an exact radiation answer (within 0.03 °C). Its dimensions are typical values, not a real machine's. It shows:
-- **One heating zone is far from enough.** The wafer edge runs about 90 °C colder than the centre. Two zones bring this to about 35 °C and three to about 17 °C.
-- **How the heat is spread matters more than the number of zones.** A heater whose heating density varies smoothly with radius gets to about 2–10 °C.
-- **The wafer's edge support matters as much as the heater.** How far the wafer overlaps its holder, and how well they touch, changes the result several-fold.
-- **A plate that spreads the heat does not help.** Putting a heat-spreading plate between heater and wafer made the wafer less even in the model, because the wafer edge needs extra heat to make up for what it loses, and the plate smooths that away.
-- **Control precision matters.** A 5 % error in one zone's power adds 6–10 °C. So either the zone powers must be held very precisely, or the wafer temperature must be measured at more than one radius.
-- **The wafer has to be measured.** The silicon wafer's own heat emission is only known to ±10 %, and that alone shifts an unmeasured wafer by about 18 °C. In the model, one temperature sensor fixes the average but not the centre-to-edge shape; one sensor per heater zone gets close to the best shape the zones allow.
-
-- **The heater element has a temperature limit.** The best smooth-density design pushes the outer heating ring to about 1380 °C to keep the wafer edge warm. The proposal's heater is rated 1200 °C, though it does not say whether that applies to the element or the wafer. Held to 1200 °C at the element, the best design's spread grows from about 2 °C to 3 °C, and it needs some spare temperature: a wafer that emits 10 % more heat than expected loses more from its growing face, and would need the element about 22 °C above the limit; when several imperfections combine, about 27 °C (section 8).
-
-At 740 °C, every 1 °C of temperature spread adds roughly 0.1–0.16 % to the thickness spread (section 6). So these numbers feed directly into the heater and sensor choices for the real machine.
-
-## 8. Choosing a layout
-
-The studies above each looked at one part. To choose a machine layout, the twin now compares **complete layouts**: where every source sits, how the nitrogen source is aimed, which source plate it has, and which heater. It checks first that the parts fit. Then it works out what the nitrogen supply, the pumps and the heater can actually deliver, and how each layout performs there when many things are slightly off at once.
-
-**Do the parts fit?** Each source is modelled as a solid body with its mounting flange, plus a shutter blade that swings aside. The twin checks every pair of parts at every angle of each shutter's swing, including both shutters moving at the same time. It does not just look at a few positions along the swing: between two positions, no point of a blade can move further than a known distance, so the twin can bound the gap all the way through. The gap it reports is guaranteed for the shapes it models. With typical dimensions (the real drawings don't exist yet), the tightest guaranteed gap is about 6 mm, between a gallium and an aluminium oven on the shared ring. That is enough, but only just, so the real drawings will decide. Two practical points:
-- To aim the nitrogen source off-centre, its port has to be built pointing at the aim point. An adjustable mount can only trim the aim by a degree or two.
-- How the source tilts matters. If it pivots at its mounting flange, about 30 cm behind the plate, a small tilt also shifts the plate sideways. That doubles how far the aim point moves: 8–17 mm per 0.8°, rather than 4–8 mm.
-
-**How fast can a 200 mm wafer grow?** The growth rate is set by the active nitrogen reaching the wafer, and three things limit it:
-- **The gas itself.** One standard cubic centimetre per minute (sccm) of nitrogen gas contains about 9 × 10¹⁷ nitrogen atoms per second. Only some fraction of them leaves the source as active atoms, and no manufacturer publishes that fraction. The twin worked it out from published growth experiments instead. They suggest anywhere from about 6 % to 57 % at high gas flows; the spread comes from details those papers leave out.
-- **The pumps.** More gas means a higher chamber pressure, and the leftover gas knocks atoms out of both beams on their way to the wafer. Most of those atoms still land on the wafer, slightly later and slightly off course (next paragraphs), so pumping limits the rate less than it first seemed. With weak pumping, though, the chamber pressure needed for 1 µm/h is beyond what the model can vouch for.
-- **The source's holes.** At high flow, the gas behind the source plate becomes dense enough that the holes no longer spray atoms in the simple way the model assumes. For the kind of plate published so far, that happens above about 6 sccm. A plate with more and larger holes over a larger area, designed in this study, stays within the model's range up to about 40 sccm.
-
-![Growth rate the nitrogen supply can reach, and thickness spread at each rate, for the leading layouts](docs/figures/layouts.png)
-
-*Left: growth rate reached against the fraction of the gas's atoms that leave the source active. Blue: the standard-type plate. Green: the larger plate designed here. Dashed: good pumping and up to 10 sccm; solid: strong pumping and up to 35 sccm. Dotted parts are where the source's holes are outside the model's range. The orange band is what published experiments suggest. Right: thickness spread at three growth rates; dot = everything as designed, bar top = worst combination with the source aimed within 0.8°. Representative chamber, 740 °C.*
-
-**Aim for the real pressure.** The best aim depends on the chamber pressure, because gas scatters the longest paths most. Re-aiming the nitrogen source 7.5 mm closer to the wafer centre, for the pressure its own gas creates, roughly halves the thickness spread. It needs no other change to the machine.
-
-**Scattered atoms mostly still arrive.** Until now the twin treated every atom knocked out of a beam by the background gas as lost. At the leading operating points that is half or more of the gallium. The twin now follows those atoms, one at a time, through the chamber gas until they land (a simple stand-in chamber; tested against exact answers):
-- **Gallium is barely deflected,** because it is much heavier than the nitrogen gas. About 90 % of the vacuum amount still reaches the wafer, against 30–50 % if scattered atoms are dropped, and the gallium atom size now hardly matters.
-- **More nitrogen arrives.** Scattered nitrogen adds 13–21 %, and more if the chamber walls hand the atoms back instead of absorbing them.
-- **The gas cloud just in front of the nitrogen source** is several times denser than the rest of the chamber. It costs each nitrogen atom about one collision in ten, and slightly changes the beam of the standard plate but not of the large one.
-
-With all of this in the full layout comparison:
-- **Slightly less active nitrogen is needed for 1 µm/h.** With the large plate, 18 % of the gas atoms instead of 23 %.
-- **The gallium supply stays in its range far more often** when it is held fixed: 90 % of combinations instead of 45 % at the large plate's operating point.
-- **The thickness spread rises a little,** by 0.1–0.5 percentage points, because the scattered atoms partly undo the effect the aims were tuned against. Re-tuning the aims gains almost nothing, so they stay.
-- **The working operating point does not move.**
-
-Whether the walls absorb or return nitrogen atoms is a new unknown that commissioning has to measure ([docs/LAYOUT_COMPARISON.md](docs/LAYOUT_COMPARISON.md), section 10). A rehearsal on the twin shows how: grow at a fixed gas flow while partly closing the pump valve, so that the chamber pressure rises while the source keeps working exactly as before (see below).
-
-**Many things off at once.** At each reachable growth rate the twin evaluates about 18,000 combinations of:
-- the nitrogen source tilted up to 0.8° (or 1.6°) in any direction, about either pivot point;
-- the gallium cup fresh to nearly empty, with both plausible atom sizes;
-- heater imperfections (wafer emission ±10 %, poor or good edge contact, one zone 2 % off), one at a time;
-- the holder's rim height (1–3 mm);
-- the three published droplet limits.
-
-Each combination gets its own gas flow and chamber pressure. Only combinations where the model is in its valid range count.
-
-What the comparison shows (layouts are defined in [docs/LAYOUT_COMPARISON.md](docs/LAYOUT_COMPARISON.md)):
-- **The working choice is layout B-p:** the nitrogen source on the same ring as the ovens, aimed for the real pressure. At 1 µm/h it gives about ±0.4 % thickness as designed and ±1.75 % in the worst combination. It beats the original aim in about three quarters of the combinations.
-- **The source plate matters as much as the aim.** By the model's strict rule, the standard-type plate keeps 1 µm/h in range only if most of the gas becomes active nitrogen, which is more than published experiments suggest. The larger plate (layout B-L) reaches 1 µm/h at realistic conversion, if the pumps are strong; it is as even as B-p, but nobody has built that plate yet.
-- **A direct simulation of the gas inside one source hole** shows that for this layout the beam pattern does not change measurably until the gas behind the plate is about three times denser than the strict rule allows. The result holds when the simulation's grid, time step and gas supply are changed. So the standard plate may also reach 1 µm/h with strong pumping, at slightly worse evenness. Ten times denser, the pattern does change a little, and by how much depends on details of how the gas is fed. For the steep-port layouts it changes a lot.
-- **The steep-port layouts (C) drop out.** With the standard plate they never reach 1 µm/h inside the model's range, and at slower rates they are no more even than B-p.
-- **Gallium needs to follow the temperature.** If the gallium oven is simply held fixed, wafers that run a little cold collect gallium droplets. Steering the gallium supply from one temperature reading at the wafer centre keeps about 97 % of combinations in the smooth-growth window at 740 °C, with heater faults and a slightly mis-aimed nitrogen source acting together and the reading itself off by up to 2 °C. At 700 °C it keeps about 85 %, because there the window is too narrow for a single gallium setting to follow every change in the nitrogen pattern.
-- **The gallium has to be placed in its window to within about 3 °C equivalent.** If the temperature reading is off by 4 °C, the working temperature has to rise by 10 °C. From 5 °C off, no growth temperature keeps 95 % of combinations in the window. That 3 °C is shared between three things: how well the window's edge is measured on the machine, how well the gallium-to-nitrogen ratio is known, and how reproducible the reading is. The reading itself therefore has to repeat to about 1–2 °C, including while a GaN layer grows on the silicon and changes how the wafer glows. It does not need to be right in absolute terms, because the window is measured against the instrument's own reading.
-- **Whether a layout "passes" is not yet decided.** The project has not agreed a uniformity target or a minimum growth rate. At 1 µm/h, a ±2 % target would be met in about 85–87 % of the combinations for B-p and B-L, and a ±1 % target in about two thirds.
-
-[docs/LAYOUT_COMPARISON.md](docs/LAYOUT_COMPARISON.md) lists, for each layout, the conditions under which it fails, the hardware information that would settle each one, and the decisions the project still has to make. [docs/HARDWARE_REQUESTS.md](docs/HARDWARE_REQUESTS.md) is the list of questions for the hardware team and suppliers.
-
-## 9. How results are made trustworthy
-
-- **Statistical error bars.** Collision simulations are statistical, like an opinion poll, so every result carries an error estimate from splitting the run into independent pieces. Important cases are rerun with another random seed, smaller time steps and finer grids.
-- **A checked unevenness formula.** Turning a noisy simulated spray into one range/mean number needs a smoothing formula. Ours was tested against exact answers: it is off by at most 0.2 points, and its random scatter is 0.3–0.5 points.
-- **Every result can be rerun.** Each run gets its own folder and records its full settings before it starts. Saved results carry a fingerprint of the exact code that produced them, and batch files spell out every setting. A generated table next to the saved results shows which version of the code made each one, what has changed since, and whether that change could alter its numbers.
-- **Automatic tests.** About 230 automatic tests check the code; all pass. Every number is traced to a published source, and unknown or unexplained results are labelled rather than hidden.
-- **The laptop stays safe.** Simulation output is read one snapshot at a time. A new job starts only when enough memory is free, both in Windows and in the Linux environment where the collision simulator runs. When the laptop is shared with other work, jobs also wait for a free processor core, and an overnight queue stops starting new jobs at a set hour.
-
-## 10. Where things stand
-
-| Part | Status |
+| Location | Contents |
 |---|---|
-| Gallium beam model | Tested against a real experiment: shape within 1–2 %; with paired bismuth atoms included, rate within −6.5 to +5 % |
-| Gallium on the 200 mm wafer | Fill and port-angle study done at constant gallium supply, with numerical checks at the best angles |
-| Nitrogen source | Two published plates modelled, plus a larger plate designed here; aims re-optimized for the chamber pressure; the gas flow through one hole simulated directly; atoms scattered by the chamber gas and the gas cloud in front of the source followed to the wafer; active-nitrogen output estimated from published growth rates (6–57 % of the gas at high flow, not yet known for any real source) |
-| Wafer heater | First 200 mm model: zone count, edge support, control precision and the element temperature limit compared; not yet checked against any measured heater |
-| Surface growth chemistry | First model from published constants: growth window and thickness from the gallium, nitrogen and temperature maps; not yet tested against a wafer |
-| Complete layouts | Parts fit with typical sizes (about 6 mm guaranteed between ovens). Layouts compared at growth rates the gas supply, pumps and heater can deliver, each combination at its own pressure. B-p is the working choice; 1 µm/h depends on the source's conversion and on the plate (section 8) |
-| The real machine | Needs its drawings and first measurements, which will turn the representative twin into its own twin |
+| [`src/mbe_twin/`](src/mbe_twin/) | Physics models, geometry, uniformity metrics and solver interfaces |
+| [`scripts/`](scripts/) | Study runners, comparisons, plotting and provenance checks |
+| [`tests/`](tests/) | Numerical checks, conservation tests, regressions and solver checks |
+| [`cases/`](cases/) | Fixed batch settings and external-solver verification cases |
+| [`data/`](data/) | Model parameters, benchmarks, hardware assumptions and compact recorded results |
+| `results/` | Generated study output and large solver files; ignored by Git |
+| [`docs/`](docs/) | Design comparisons, setup, reproduction instructions, reviews and validation plans |
+| [`ref/`](ref/README.md) | Reference library, evidence notes and archived plans |
 
-**Next.**
-1. With the hardware team and suppliers: the questions in [docs/HARDWARE_REQUESTS.md](docs/HARDWARE_REQUESTS.md). The source's active output versus gas flow, the plates the supplier can make, and the effective pumping speed decide whether 1 µm/h is reachable at all.
-2. The project's goals are as even, as fast and as cold as possible. They conflict less than expected: colder and faster both make the layer more even. The only real conflict is speed against temperature, because a colder wafer leaves less room for the gallium supply to stay in the smooth-growth range at a high rate. The best balance, now the working operating point, is **1 µm/h at about 720 °C**, with the gallium supply steered from the wafer temperature reading. It gives a worst-case spread of about ±1.5–1.8 % (with the scattered atoms followed). Going faster needs a slightly hotter wafer (1.25 µm/h at about 720–740 °C, 1.5 µm/h at 730 °C); going slower gains only 10 °C. The model cannot judge crystal quality, which may also set a lowest temperature in practice ([docs/LAYOUT_COMPARISON.md](docs/LAYOUT_COMPARISON.md), section 8).
-3. Commissioning: [docs/COMMISSIONING_PLAN.md](docs/COMMISSIONING_PLAN.md) sets out the order of measurements, what each one pins down, and the runs kept back for testing. Rehearsals on the twin itself show three things:
-   - **Growth rates at several gas flows cannot test the nitrogen model on their own,** because the source's efficiency may change with flow and hide the difference. Growing at one flow while partly closing the pump valve does test it, including whether the walls return nitrogen atoms.
-   - **The literature's temperature laws cannot set the wafer temperature to a few degrees.** Their activation energies and the labs' temperature scales are too uncertain: 15–60 °C at the working point. The growth window's gallium edge must therefore be measured on the machine, against its own temperature reading, to about 5 %.
-   - **The gallium-to-nitrogen ratio needs to be known to about half a percent,** or measured directly at the working point, to stay inside the 3 °C budget (above).
-4. Then: the real drawings in the clearance check, and a rehearsal of the temperature and gallium calibrations. A full gas simulation of the whole nitrogen plate is only needed if the standard plate is chosen at high flow.
+Run records retain settings, source-code hashes and solver information so results can be traced to the code that produced them. The [provenance report](data/runs/studies/PROVENANCE.md) records differences between saved studies and later code changes. Numerical tests and repeat runs check implementation and simulation error; agreement with machine measurements is a separate requirement.
 
-Searches for steeper nitrogen ports, more gallium atom sizes, adjustable gallium ovens and further heater variants are on hold until the comparison shows that they could change a decision.
+For the broader scope and development plan, read the [Phase-1 plan](PHASE1_CHAMBER_PLAN.md). The [physics architecture](mbe_twin.md) describes the intended equations and model interfaces, including capabilities that are still planned. The original [project proposal](MBE_Phase1_Proposal_v1.2.pptx) is preserved; subsequent engineering reviews are in the Markdown documents.
 
-The sources and calculations from the latest search are in the [physics-data note](ref/notes/PHYSICS_DATA_SEARCH_2026-09-30.md).
-
-**Side idea (optional, not on the main path).** Could an adjustable gallium oven keep the layer even as the cup empties? The best angle steepens from about 48° to 58° as the cup empties, and a full cup only spills at steep angles, so "start shallow, tilt steeper later" never spills. On hold until the layout comparison (section 8) shows it could change a decision; the options would be:
-- an oven that can tilt at its mounting;
-- two gallium ovens at different angles, with their output share changing over time;
-- a better-shaped cup.
-
-Tilting a hot oven of liquid gallium has real engineering risks (sealing, spitting droplets, recalibration), and the comparison will list them. Details are in the [reference-chamber note](ref/notes/REFERENCE_CHAMBER.md#exploratory-non-essential).
-
-## 11. Glossary
-
-| Term | Meaning |
-|---|---|
-| Å (ångström) | 0.1 nanometre, about the size of an atom |
-| Beam | The spray of vapour leaving a source |
-| Crucible | The cup inside an effusion cell that holds the liquid metal |
-| DSMC | Direct Simulation Monte Carlo: simulates a gas by following many sample atoms and letting them collide at random with the right probabilities |
-| Effusion cell | The oven that evaporates the metal |
-| Free-molecular | Gas so thin that atoms never collide with each other, only with walls |
-| Growth window | The range of gallium-to-nitrogen supply in which the layer grows smoothly: below it growth is rough, above it gallium droplets form |
-| Gallium-rich growth | A recipe with slightly more gallium than nitrogen, so thickness follows the nitrogen supply |
-| MBE | Molecular beam epitaxy: growing crystals from beams of atoms in vacuum |
-| Range/mean | (thickest − thinnest) ÷ average: our measure of unevenness |
-| Recess | How far the liquid surface sits below the crucible's mouth |
-| Representative chamber | A typical machine built from published dimensions, standing in until the real machine's drawings exist |
-| R03, R07, … | Reference numbers of published sources in the [reference library](ref/) |
-
-Figures are drawn by `scripts/make_readme_figures.py` from the saved run records.
+README figures are generated by [`scripts/make_readme_figures.py`](scripts/make_readme_figures.py) from saved study records.
