@@ -104,6 +104,20 @@ The batch runner treats a job as complete only when its directory holds `summary
 | Beam, crucible, metrics, manifest, estimator, scripts, SPARTA and Elmer checks | `python -m pytest -q` | Closed-form solutions, deterministic ring transmission, point-source slab propagation, stored dense profile, SPARTA collisionless pipeline, Elmer V02 conduction and V03 radiation |
 | Elmer diffuse-gray radiation (V03) | `python -m pytest -q tests/test_elmer.py` | Exact black-disk result and independent ring radiosity (`mbe_twin.radiation`); Elmer is 0.22-0.25 K (0.02 %) low, independent of mesh |
 
+## Integrated twin
+
+Chamber definitions (`cases/twin/`, committed) are built from the gas+plume comparison's map caches in `results/layout_comparison_bc` (rebuild them with `scripts/layout_comparison.py --scattered gas+plume` if absent):
+
+```bash
+PYTHONPATH=src python scripts/twin_chamber.py                              # nominal truth
+PYTHONPATH=src python scripts/twin_chamber.py --truth-fill 120             # also --truth-fill 40
+PYTHONPATH=src python scripts/twin_chamber.py --truth-tilt flange 0.8 0    # also direction 180
+PYTHONPATH=src python scripts/twin_run.py --chamber cases/twin/chamber_B-L_720C.json   # one per definition
+PYTHONPATH=src python scripts/twin_run.py --pyrometer-bias 2                # and -2
+```
+
+Each run takes 12-20 s. The records are `data/runs/studies/twin_gan_1um_720C_B-L_720C*.json`; the figure is `make_readme_figures.py` (`twin`).
+
 ## Run times
 
 On the development laptop (4 WSL cores, serial SPARTA, four jobs in parallel):

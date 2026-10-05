@@ -4,9 +4,9 @@ This project models a 200 mm molecular beam epitaxy (MBE) growth chamber to help
 
 The long-term scope includes GaN and AlN. The working growth model currently covers **GaN only**.
 
-**Current state:** this is a research codebase with working physics models and design studies for a representative chamber. The proposed machine has not been built, and its drawings and measurements are not yet available. Several models have passed numerical checks, and the metal-source model has been compared with a published experiment. The nitrogen, heater and growth models still need experimental validation. A complete twin calibrated to the proposed machine is not yet implemented.
+**Current state:** this is a research codebase with working physics models and design studies for a representative chamber. The proposed machine has not been built, and its drawings and measurements are not yet available. Several models have passed numerical checks, and the metal-source model has been compared with a published experiment. The nitrogen, heater and growth models still need experimental validation. A first integrated twin now runs complete growth recipes on the representative chamber; a twin calibrated to the proposed machine is not yet possible without its drawings and measurements.
 
-This overview reflects the recorded studies through **3 October 2026**. Detailed results and their reproduction commands are linked below.
+This overview reflects the recorded studies through **5 October 2026**. Detailed results and their reproduction commands are linked below.
 
 ## What the project is trying to achieve
 
@@ -43,6 +43,7 @@ The repository uses Python models, **SPARTA** for particle simulations with gas 
 | Heater and wafer | Radial radiation and conduction, heater zones, holder contact, power limits, temperature sensing and control studies | Simplified geometry; no measured heater validation |
 | GaN growth | Steady-state growth rate, decomposition and gallium balance; nitrogen-limited growth and droplet onset | No transient growth, AlN chemistry, morphology or crystal-quality prediction |
 | Layout comparison | Source and shutter clearances; coupled supply, pressure, temperature and thickness calculations across many operating cases | Assumed hardware dimensions and properties; no mechanical approval for the real machine |
+| Integrated twin | A whole recipe (heat-up, plasma, shutters, growth, cool-down) run through the heater, sources, gas, growing surface and instruments together; controllers see only instrument readings | First version: radial, rotation-averaged maps; several hardware properties assumed; source and surface transients not yet included |
 | Commissioning preparation | Measurement plan and rehearsals using synthetic data | No calibration or validation data from the proposed machine |
 
 ## What the studies have found
@@ -89,6 +90,22 @@ Gas in the chamber scatters atoms travelling toward the wafer. The latest studie
 
 Including them changes the required nitrogen flow and the predicted thickness profile. It also makes the result depend on whether chamber walls absorb reactive nitrogen or return it to the gas. That behaviour needs measurement during commissioning.
 
+### Running a whole recipe shows what fixed settings cannot absorb
+
+The studies above look at one steady moment of growth. The integrated twin instead runs a complete recipe in time: the wafer heats up, the plasma ignites, the shutters open for an hour of growth and close again, and the wafer cools. The heater controller sees only what a pyrometer would read, and the gallium cell and nitrogen flow are set once, as a calibration on the machine would set them. Every gallium and nitrogen atom is accounted for through each shutter event, and a 2.4-hour recipe takes about 15 seconds on the laptop.
+
+![One recipe through the twin, and the final layer when the machine differs from its calibration](docs/figures/twin.png)
+
+*Left: temperatures and layer thickness through the recipe. Right: the same recipe and settings when the real machine differs from the state it was calibrated in. Representative chamber, layout B-L, 720 °C, 1 µm/h.*
+
+Run as calibrated, the twin reproduces the steady studies: 1 µm/h, about ±0.6 % thickness, the whole wafer inside the growth window. When the machine drifts from its calibration, three things show up:
+
+- **The gallium charge matters most.** As the crucible empties to a deep fill, the same cell temperature delivers about 16 % less gallium; only 38 % of the wafer then stays in the growth window and the thickness spread rises to ±2.5 %. The 720 °C operating point needs the gallium flux to be measured or re-scheduled as the charge is used. The earlier steady studies had quietly assumed that the controller knew this (pointed out by the 5 October audit).
+- **A small nitrogen pointing error shifts the growth rate** by about ±3.5 % at fixed nitrogen flow, so the rate has to be measured and the flow re-set, as commissioning would do.
+- **The heater has no spare power at 720 °C.** Its zone settings were optimized right up to the element's temperature limit. If the wafer needs more heat (a temperature reading that is low, a change in wafer emission), the controller cannot supply it. The heater needs a power margin at the operating point.
+
+The [integrated twin document](docs/INTEGRATED_TWIN.md) describes the model, its checks and what it does not yet include.
+
 ## Current design direction
 
 The provisional choice is **layout B-p**: the nitrogen source sits on the same port ring as the metal cells, with its beam aimed about 97.5 mm from the wafer centre toward the source side. Its aim was selected for growth pressure. **B-L** uses a larger outlet plate designed in this study and an aim offset of about 90 mm. It is a promising alternative if the supplier can build and operate that plate.
@@ -125,6 +142,8 @@ For example, 4% range/mean is 2% half-range/mean. The latter is not a statistica
 5. **Validate on separate runs and demonstrate improvement.** Reserve complete wafers and operating conditions that were not used for fitting. Compare a baseline and candidate design using the [measurement protocol](docs/DATA_AND_VALIDATION_PLAN.md).
 
 The [commissioning plan](docs/COMMISSIONING_PLAN.md) includes the measurement sequence and the synthetic rehearsals already completed for nitrogen, temperature and gallium calibration. Those rehearsals test the proposed procedure; they are not experimental validation.
+
+The integrated twin's next step is to give its controllers the measurements a real machine would have (a gallium beam-flux reading, a growth-rate monitor) and rerun the full set of uncertain machine states with settings fixed in advance.
 
 Further scans of steeper nitrogen ports, additional gallium collision sizes, adjustable cells and heater variants are on hold until they are likely to change a design decision.
 

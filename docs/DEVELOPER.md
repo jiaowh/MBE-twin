@@ -18,7 +18,7 @@ The project goal is to reduce wafer nonuniformity, first in grown-layer thicknes
 | Growth chemistry | First steady-state GaN regime model from literature constants (G01, G02, R20), closed Ga balance; growth window and thickness on the wafer ([growth note](../ref/notes/GROWTH_EVIDENCE.md)). No transients, AlN or morphology; not validated |
 | Vacuum | Growth pressure from N2 flow and effective speed, and background-gas attenuation of the direct beam (`vacuum.py`, `beam.py mean_free_path`; exact regression at zero pressure). Gas-scattered arrival and the nitrogen plate's plume: `scattering.py` (test-particle Monte Carlo through fixed gas fields; hard spheres, isotropic in the centre-of-mass frame; exact per-azimuth plume density; tests/test_scattering.py). Factor tables on the comparison's pressure grid (`scripts/scattered_tables.py`, `merge_scattered_tables.py`, `scattered_plume_tables.py`) enter `layout_comparison.py --scattered` and the studies that read it (the plume tables must cover the grid pressures bracketing their 35 sccm feed limit, checked by `scatter_factors`; studies list the tables they read via `scatter_sources`); cos^n surrogate sources, spherical stand-in chamber, N wall recombination bracketed (gamma 1 / 0.1). Pump curves and gas loads not implemented |
 | Layout feasibility and comparison | Design envelope with known / assumed / missing inputs. Certified clearance bounds over the continuous shutter motion (B family 6.1 mm, C family 10.7 mm). Layouts B, C, B-p, C-p (re-aimed at the operating pressure) and B-L (a large high-conductance plate designed here) compared with a per-state N2 feed / pressure / attenuation balance, plate-validity and supply filters, absolute Ga hold and heater limits in every state, over 18 522 states per scenario ([layout comparison](LAYOUT_COMPARISON.md)). 1 um/h inside the model's validity needs eta >= 0.8-0.9 with the published-type plate, >= 0.22 with B-L at 4 m^3/s; published growth rates imply eta 0.06-0.57 at high flow. B-p: 0.43 / 1.75 % nominal / +/-0.8 deg worst at 1 um/h. No target agreed |
-| Integrated chamber twin | Not implemented |
+| Integrated chamber twin | First slice (2026-10-05): a recipe runs through the transient heater (implicit Euler on the steady model's terms), the Ga cell, the MFC and well-mixed pressure, arrival with the comparison's scattered-arrival tables, a persistent surface state (thickness, droplets, Ga/N ledgers) and observation operators. Controllers see readings only. Verified (V07, V09, V13, V14, ledgers, time-step convergence, steady operating point reproduced to 1e-9). The settings are calibrated on the nominal state and frozen, and the maps can come from any perturbed truth state. A 146 min recipe runs in 12-20 s. Settings frozen at 720 C do not hold for a 120 mm Ga charge (38 % of the area in the window), and the heater has no power margin at 720 C ([integrated twin](INTEGRATED_TWIN.md)). Not validated |
 
 How to reproduce each result: [REPRODUCE.md](REPRODUCE.md).
 
@@ -28,6 +28,7 @@ Start with [PHASE1_CHAMBER_PLAN.md](../PHASE1_CHAMBER_PLAN.md): scope, accuracy 
 
 - [Representative chamber](../ref/notes/REFERENCE_CHAMBER.md): the evidence note behind every Stage A result; test case per subsystem; next actions.
 - [Nitrogen boundary](../ref/notes/NITROGEN_BOUNDARY.md): active-N boundary model, measurement access, Ga/N ratio.
+- [Integrated twin](INTEGRATED_TWIN.md): recipe-driven coupled run, chamber-definition contract, calibration/truth split, verification and first results.
 - [Layout comparison](LAYOUT_COMPARISON.md): candidate layouts at equal growth rate with uncertainty ranges and failure conditions; inputs in the [design envelope](../data/design/design_envelope.json).
 - [Proposal and plan review](PLAN_REVIEW.md): engineering gaps, unsupported assumptions and proposed slide wording.
 - [Physics architecture](../mbe_twin.md): equations, data contracts, observation models and verification cases.
@@ -49,6 +50,15 @@ Python 3.11+ with numpy 2.0+; the tests also need pytest and scipy, and the digi
 - `metrics.py`: area-weighted uniformity metrics.
 - `manifest.py`: run manifest.
 - `vapour.py`: sourced Ga/Al vapour-pressure equations (Alcock 1984).
+
+**Integrated twin** ([INTEGRATED_TWIN.md](INTEGRATED_TWIN.md))
+- `src/mbe_twin/twin.py`: the time integrator (recipe steps, controllers, coupling, sampling, checkpoints, results).
+- `chamber.py`: chamber-definition contract and runtime operators (Ga Hertz-Knudsen scaling, N output, pressure, heater feedforward table).
+- `recipe.py`: recipe schema (inheritance, explicit units, `operating_point` references).
+- `surface.py`: persistent surface state around `growth.steady_state` (signed growth, droplet consumption, atom ledgers).
+- `sensors.py`: observation operators (pyrometer, ion gauge, regime indicator, thickness map).
+- `thermal_transient.py`: implicit-Euler transient of `HeaterModel` (heater.py itself is unchanged).
+- `scripts/twin_chamber.py` builds a definition from the comparison caches (`--truth-tilt/--truth-fill/--truth-d`), and `scripts/twin_run.py` writes the bundle in `results/twin/` and the record in `data/runs/studies/twin_*.json`.
 
 **Collisional (DSMC) sources**
 - `sparta.py` and `scripts/sparta_r07.py`: SPARTA (DSMC) crucible runs, calibrated on R07's 3.5 A/s profile and tested on its 0.35 and 11 A/s profiles.
