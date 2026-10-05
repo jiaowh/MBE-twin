@@ -1,0 +1,5689 @@
+{
+  "schema_version": "0.1",
+  "run_id": "uniformity_levers",
+  "created_utc": "2026-10-05T06:27:22+00:00",
+  "label": "representative_chamber",
+  "validation_status": "not_validated",
+  "package_version": "0.1.0",
+  "git_commit": "2d3593bc643b56456ad77d84d2e10e5b78636172-dirty",
+  "python": "3.12.13",
+  "numpy": "2.4.4",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "source_sha256": {
+    "scripts/summarize_uniformity_levers.py": "1587cab3df6e4d7a451296c86b637c0fa4fc76f0a661c8ff75873e6be0212e39",
+    "scripts/realizable_controller.py": "c62a9828a3f695f24b1b60ac5fba94ed504168a042fd0c1da7df11670b4f1bf7",
+    "scripts/worst_case_drivers.py": "16b46b6c09620208957dc7c876fb2efa0cf5196d5e70341d41e602174af6033c",
+    "scripts/multispot_heater.py": "4af4f9f2d2650e6b1cf322eaebad31568bba93c9eafddaae75a3e6ba4e51fc90",
+    "scripts/nitrogen_aim_operating.py": "71245a9cdf9547f65c0b64edeb7f4a263ac209ec46c397f6ad6970415dcd8036"
+  },
+  "solver": null,
+  "inputs_sha256": "7d14d2e73e4a467cf32d7fa6314342bf0665c915f8b36eb814202cc2754da62f",
+  "inputs": {
+    "runs": [
+      "reaim_check08",
+      "reaim_d0.4_h1473",
+      "reaim_d0.4_h1460",
+      "reaim_d0.4_h1450",
+      "reaim_d0.2_h1473",
+      "reaim_d0.2_h1460",
+      "reaim_d0.2_h1450",
+      "reaim_d0.1_h1473",
+      "reaim_d0.1_h1460",
+      "reaim_d0.1_h1450",
+      "aim_BL_a90_d0.2",
+      "aim_BL_a92.5_d0.2",
+      "aim_BL_a95_d0.2",
+      "aim_BL_a97.5_d0.2",
+      "aim_BL_a100_d0.2",
+      "aim_BL_a105_d0.2",
+      "aim_BL_a90_d0.8",
+      "aim_BL_a92.5_d0.8",
+      "aim_BL_a95_d0.8",
+      "aim_BL_a97.5_d0.8",
+      "aim_BL_a100_d0.8",
+      "aim_BL_a105_d0.8",
+      "aim_Bp_a92.5_d0.2",
+      "aim_Bp_a97.5_d0.2",
+      "aim_Bp_a102.5_d0.2",
+      "aim_Bp_a92.5_d0.8",
+      "aim_Bp_a97.5_d0.8",
+      "aim_Bp_a102.5_d0.8",
+      "ms_h1460_d0.2",
+      "ms_h1450_d0.2",
+      "ms_h1425_d0.2",
+      "ms_h1450_d0.8",
+      "ms_h1460_d0.2_cold"
+    ],
+    "controllers": [
+      "rate monitor + BFM",
+      "rate monitor + BFM + fill"
+    ]
+  },
+  "outputs": {
+    "runs": [
+      {
+        "run": "reaim_check08",
+        "manifest_sha256": "548c096c33ba65c7bd99a21a6f32d293a95a32d141cf32942998f92c8450c9f2",
+        "settings": {
+          "heater_design_limit_K": 1460.0,
+          "heater_control": null,
+          "pointing_residual_deg": 0.8,
+          "aim_maps": null,
+          "aim_mm": null,
+          "rate_monitor_errors": [
+            -0.01,
+            0.0,
+            0.01
+          ],
+          "bfm_errors": [
+            -0.02,
+            0.0,
+            0.02
+          ],
+          "T_C": [
+            720
+          ]
+        },
+        "rows": [
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9516872427983539,
+            "worst_pct": 1.5263386994015835,
+            "admissible": true,
+            "bound_worst_pct": 1.5278089251720746
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9615454961133973,
+            "worst_pct": 1.5263386994015835,
+            "admissible": true,
+            "bound_worst_pct": 1.5278089251720746
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9498643499466545,
+            "worst_pct": 1.6492511428883896,
+            "admissible": false,
+            "bound_worst_pct": 1.6337806392761787
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9586709343087944,
+            "worst_pct": 1.6492511428883896,
+            "admissible": true,
+            "bound_worst_pct": 1.6337806392761787
+          }
+        ]
+      },
+      {
+        "run": "reaim_d0.4_h1473",
+        "manifest_sha256": "706bbddd5810dcc8cf0362748b7587ff5f7905a40b44da597c089c5c3a3f51be",
+        "settings": {
+          "heater_design_limit_K": 1473.15,
+          "heater_control": null,
+          "pointing_residual_deg": 0.4,
+          "aim_maps": null,
+          "aim_mm": null,
+          "rate_monitor_errors": [
+            -0.01,
+            0.0,
+            0.01
+          ],
+          "bfm_errors": [
+            -0.02,
+            0.0,
+            0.02
+          ],
+          "T_C": [
+            700,
+            710,
+            720,
+            730,
+            740
+          ]
+        },
+        "rows": [
+          {
+            "layout": "B-p",
+            "T_C": 700,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.5546715439719555,
+            "worst_pct": 0.8261634338383643,
+            "admissible": false,
+            "bound_worst_pct": 0.8251733493775896
+          },
+          {
+            "layout": "B-p",
+            "T_C": 700,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.5802834933699131,
+            "worst_pct": 0.8261634338383643,
+            "admissible": false,
+            "bound_worst_pct": 0.8251733493775896
+          },
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.7577960676726109,
+            "worst_pct": 0.9010850927559214,
+            "admissible": false,
+            "bound_worst_pct": 0.9000371475430596
+          },
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.7789147995732358,
+            "worst_pct": 0.9010850927559214,
+            "admissible": false,
+            "bound_worst_pct": 0.9000371475430596
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.8919463496418228,
+            "worst_pct": 1.0052149646618769,
+            "admissible": false,
+            "bound_worst_pct": 1.0042385603273765
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9034781283340955,
+            "worst_pct": 1.0052149646618769,
+            "admissible": false,
+            "bound_worst_pct": 1.0042385603273765
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9620301783264746,
+            "worst_pct": 1.1485724677238962,
+            "admissible": true,
+            "bound_worst_pct": 1.1479859941585604
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9700076207895137,
+            "worst_pct": 1.1485724677238962,
+            "admissible": true,
+            "bound_worst_pct": 1.1479859941585604
+          },
+          {
+            "layout": "B-p",
+            "T_C": 740,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9760920591373267,
+            "worst_pct": 1.345795163023828,
+            "admissible": true,
+            "bound_worst_pct": 1.3462695383843943
+          },
+          {
+            "layout": "B-p",
+            "T_C": 740,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9776649900929736,
+            "worst_pct": 1.345795163023828,
+            "admissible": true,
+            "bound_worst_pct": 1.3462695383843943
+          },
+          {
+            "layout": "B-L",
+            "T_C": 700,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.6282578875171467,
+            "worst_pct": 1.0002992156725319,
+            "admissible": false,
+            "bound_worst_pct": 0.996652981215501
+          },
+          {
+            "layout": "B-L",
+            "T_C": 700,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.6641213229690596,
+            "worst_pct": 1.0002992156725319,
+            "admissible": false,
+            "bound_worst_pct": 0.996652981215501
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.8034750800182899,
+            "worst_pct": 1.0596213943453612,
+            "admissible": false,
+            "bound_worst_pct": 1.0568335949555916
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.8250327693949093,
+            "worst_pct": 1.0596213943453612,
+            "admissible": false,
+            "bound_worst_pct": 1.0568335949555916
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9099893308946807,
+            "worst_pct": 1.142505380901217,
+            "admissible": false,
+            "bound_worst_pct": 1.14096217722199
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9220271300106692,
+            "worst_pct": 1.142505380901217,
+            "admissible": false,
+            "bound_worst_pct": 1.14096217722199
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9595305593659503,
+            "worst_pct": 1.2589419913987594,
+            "admissible": true,
+            "bound_worst_pct": 1.2581428732774464
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9661789361377838,
+            "worst_pct": 1.2589419913987594,
+            "admissible": true,
+            "bound_worst_pct": 1.2581428732774464
+          },
+          {
+            "layout": "B-L",
+            "T_C": 740,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9679439109891784,
+            "worst_pct": 1.4190961397926578,
+            "admissible": true,
+            "bound_worst_pct": 1.4189551932272084
+          },
+          {
+            "layout": "B-L",
+            "T_C": 740,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.969166285627191,
+            "worst_pct": 1.4190961397926578,
+            "admissible": true,
+            "bound_worst_pct": 1.4189551932272084
+          }
+        ]
+      },
+      {
+        "run": "reaim_d0.4_h1460",
+        "manifest_sha256": "f19382ef96fcf2edcc90423948349c5a2c922b62b829175fbd69dae7f3b60c53",
+        "settings": {
+          "heater_design_limit_K": 1460.0,
+          "heater_control": null,
+          "pointing_residual_deg": 0.4,
+          "aim_maps": null,
+          "aim_mm": null,
+          "rate_monitor_errors": [
+            -0.01,
+            0.0,
+            0.01
+          ],
+          "bfm_errors": [
+            -0.02,
+            0.0,
+            0.02
+          ],
+          "T_C": [
+            700,
+            710,
+            720,
+            730,
+            740
+          ]
+        },
+        "rows": [
+          {
+            "layout": "B-p",
+            "T_C": 700,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.6045267489711934,
+            "worst_pct": 0.8242044860943816,
+            "admissible": false,
+            "bound_worst_pct": 0.823217294000738
+          },
+          {
+            "layout": "B-p",
+            "T_C": 700,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.6266910531931108,
+            "worst_pct": 0.8242044860943816,
+            "admissible": false,
+            "bound_worst_pct": 0.823217294000738
+          },
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.8407376924249352,
+            "worst_pct": 0.8983267512068449,
+            "admissible": false,
+            "bound_worst_pct": 0.8972796499899048
+          },
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.8621704008535285,
+            "worst_pct": 0.8983267512068449,
+            "admissible": false,
+            "bound_worst_pct": 0.8972796499899048
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9545526596555403,
+            "worst_pct": 1.0010155518183195,
+            "admissible": true,
+            "bound_worst_pct": 1.0000351328185069
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9652156683432404,
+            "worst_pct": 1.0010155518183195,
+            "admissible": true,
+            "bound_worst_pct": 1.0000351328185069
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.975711019661637,
+            "worst_pct": 1.1428601708880406,
+            "admissible": true,
+            "bound_worst_pct": 1.1422562978372781
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9790428288370675,
+            "worst_pct": 1.1428601708880406,
+            "admissible": true,
+            "bound_worst_pct": 1.1422562978372781
+          },
+          {
+            "layout": "B-p",
+            "T_C": 740,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9768114616674287,
+            "worst_pct": 1.3393355173103063,
+            "admissible": true,
+            "bound_worst_pct": 1.3398090740923254
+          },
+          {
+            "layout": "B-p",
+            "T_C": 740,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9784179240969364,
+            "worst_pct": 1.3393355173103063,
+            "admissible": true,
+            "bound_worst_pct": 1.3398090740923254
+          },
+          {
+            "layout": "B-L",
+            "T_C": 700,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.6882517908855358,
+            "worst_pct": 1.0499808294994368,
+            "admissible": false,
+            "bound_worst_pct": 1.0469090963946535
+          },
+          {
+            "layout": "B-L",
+            "T_C": 700,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.7180826093583296,
+            "worst_pct": 1.0499808294994368,
+            "admissible": false,
+            "bound_worst_pct": 1.0469090963946535
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.8752720621856425,
+            "worst_pct": 1.1298990473726003,
+            "admissible": false,
+            "bound_worst_pct": 1.1280952071982144
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.8973174820911446,
+            "worst_pct": 1.1298990473726003,
+            "admissible": false,
+            "bound_worst_pct": 1.1280952071982144
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9512574302697759,
+            "worst_pct": 1.2428650011338775,
+            "admissible": true,
+            "bound_worst_pct": 1.241840286037011
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9603292181069959,
+            "worst_pct": 1.2428650011338775,
+            "admissible": true,
+            "bound_worst_pct": 1.241840286037011
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9650144795000762,
+            "worst_pct": 1.3976179770946835,
+            "admissible": true,
+            "bound_worst_pct": 1.3972821295891547
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9680780368846212,
+            "worst_pct": 1.3976179770946835,
+            "admissible": true,
+            "bound_worst_pct": 1.3972821295891547
+          },
+          {
+            "layout": "B-L",
+            "T_C": 740,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9685779606767261,
+            "worst_pct": 1.6329749919810332,
+            "admissible": true,
+            "bound_worst_pct": 1.632998067635174
+          },
+          {
+            "layout": "B-L",
+            "T_C": 740,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9699771376314587,
+            "worst_pct": 1.6329749919810332,
+            "admissible": true,
+            "bound_worst_pct": 1.632998067635174
+          }
+        ]
+      },
+      {
+        "run": "reaim_d0.4_h1450",
+        "manifest_sha256": "caebebcbdd58e16cc63944b9fb1d2f23abb5020060ffa16f695d9d1390c130da",
+        "settings": {
+          "heater_design_limit_K": 1450.0,
+          "heater_control": null,
+          "pointing_residual_deg": 0.4,
+          "aim_maps": null,
+          "aim_mm": null,
+          "rate_monitor_errors": [
+            -0.01,
+            0.0,
+            0.01
+          ],
+          "bfm_errors": [
+            -0.02,
+            0.0,
+            0.02
+          ],
+          "T_C": [
+            700,
+            710,
+            720,
+            730,
+            740
+          ]
+        },
+        "rows": [
+          {
+            "layout": "B-p",
+            "T_C": 700,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.6610303307422649,
+            "worst_pct": 0.8227335288575471,
+            "admissible": false,
+            "bound_worst_pct": 0.8217485321815944
+          },
+          {
+            "layout": "B-p",
+            "T_C": 700,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.682456942539247,
+            "worst_pct": 0.8227335288575471,
+            "admissible": false,
+            "bound_worst_pct": 0.8217485321815944
+          },
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.8929949702789209,
+            "worst_pct": 0.8960589297049127,
+            "admissible": false,
+            "bound_worst_pct": 0.8950132194780841
+          },
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9155677488187777,
+            "worst_pct": 0.8960589297049127,
+            "admissible": false,
+            "bound_worst_pct": 0.8950132194780841
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9703673220545649,
+            "worst_pct": 1.003248104097525,
+            "admissible": true,
+            "bound_worst_pct": 0.996918797751707
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9773967383020881,
+            "worst_pct": 1.003248104097525,
+            "admissible": true,
+            "bound_worst_pct": 0.996918797751707
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9754732510288066,
+            "worst_pct": 1.2085361656460785,
+            "admissible": true,
+            "bound_worst_pct": 1.1958342771945705
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9787136107300717,
+            "worst_pct": 1.2085361656460785,
+            "admissible": true,
+            "bound_worst_pct": 1.1958342771945705
+          },
+          {
+            "layout": "B-p",
+            "T_C": 740,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9766194177716812,
+            "worst_pct": 1.5735638109937686,
+            "admissible": true,
+            "bound_worst_pct": 1.5507506289303694
+          },
+          {
+            "layout": "B-p",
+            "T_C": 740,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9782228318853833,
+            "worst_pct": 1.5735638109937686,
+            "admissible": true,
+            "bound_worst_pct": 1.5507506289303694
+          },
+          {
+            "layout": "B-L",
+            "T_C": 700,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.7452522481329066,
+            "worst_pct": 1.0991107558256665,
+            "admissible": false,
+            "bound_worst_pct": 1.0967723755078573
+          },
+          {
+            "layout": "B-L",
+            "T_C": 700,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.7738698369151044,
+            "worst_pct": 1.0991107558256665,
+            "admissible": false,
+            "bound_worst_pct": 1.0967723755078573
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9163145861911294,
+            "worst_pct": 1.2005014891530168,
+            "admissible": false,
+            "bound_worst_pct": 1.199154893158987
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9357811309251638,
+            "worst_pct": 1.2005014891530168,
+            "admissible": false,
+            "bound_worst_pct": 1.199154893158987
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9583234263069654,
+            "worst_pct": 1.3410555237836632,
+            "admissible": true,
+            "bound_worst_pct": 1.3404309858401966
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9641121780216431,
+            "worst_pct": 1.3410555237836632,
+            "admissible": true,
+            "bound_worst_pct": 1.3404309858401966
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9644109129705838,
+            "worst_pct": 1.5369719168419211,
+            "admissible": true,
+            "bound_worst_pct": 1.536100556132201
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9675232434080171,
+            "worst_pct": 1.5369719168419211,
+            "admissible": true,
+            "bound_worst_pct": 1.536100556132201
+          },
+          {
+            "layout": "B-L",
+            "T_C": 740,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9680810852004268,
+            "worst_pct": 1.9554185900388092,
+            "admissible": true,
+            "bound_worst_pct": 1.9493579510076666
+          },
+          {
+            "layout": "B-L",
+            "T_C": 740,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9695046486816035,
+            "worst_pct": 1.9554185900388092,
+            "admissible": true,
+            "bound_worst_pct": 1.9493579510076666
+          }
+        ]
+      },
+      {
+        "run": "reaim_d0.2_h1473",
+        "manifest_sha256": "9f8a3cf5baa423d5274bf5e1343054dc04de797f713b37064366c926c7f63224",
+        "settings": {
+          "heater_design_limit_K": 1473.15,
+          "heater_control": null,
+          "pointing_residual_deg": 0.2,
+          "aim_maps": null,
+          "aim_mm": null,
+          "rate_monitor_errors": [
+            -0.01,
+            0.0,
+            0.01
+          ],
+          "bfm_errors": [
+            -0.02,
+            0.0,
+            0.02
+          ],
+          "T_C": [
+            700,
+            710,
+            720,
+            730,
+            740
+          ]
+        },
+        "rows": [
+          {
+            "layout": "B-p",
+            "T_C": 700,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.5563115378753238,
+            "worst_pct": 0.5738507582379797,
+            "admissible": false,
+            "bound_worst_pct": 0.5721901728856267
+          },
+          {
+            "layout": "B-p",
+            "T_C": 700,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.5818564243255602,
+            "worst_pct": 0.5738507582379797,
+            "admissible": false,
+            "bound_worst_pct": 0.5721901728856267
+          },
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.7591373266270386,
+            "worst_pct": 0.6480997625576824,
+            "admissible": false,
+            "bound_worst_pct": 0.64651063208483
+          },
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.7799329370522786,
+            "worst_pct": 0.6480997625576824,
+            "admissible": false,
+            "bound_worst_pct": 0.64651063208483
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.8928699893308947,
+            "worst_pct": 0.752594819971361,
+            "admissible": false,
+            "bound_worst_pct": 0.7513864444188131
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9045968602347203,
+            "worst_pct": 0.752594819971361,
+            "admissible": false,
+            "bound_worst_pct": 0.7513864444188131
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.962609358329523,
+            "worst_pct": 0.8992592869090478,
+            "admissible": true,
+            "bound_worst_pct": 0.897830296048127
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9706752019509222,
+            "worst_pct": 0.8992592869090478,
+            "admissible": true,
+            "bound_worst_pct": 0.897830296048127
+          },
+          {
+            "layout": "B-p",
+            "T_C": 740,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9761682670324645,
+            "worst_pct": 1.1027368178150638,
+            "admissible": true,
+            "bound_worst_pct": 1.1015222479398616
+          },
+          {
+            "layout": "B-p",
+            "T_C": 740,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9778356957780826,
+            "worst_pct": 1.1027368178150638,
+            "admissible": true,
+            "bound_worst_pct": 1.1015222479398616
+          },
+          {
+            "layout": "B-L",
+            "T_C": 700,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.6304770614235635,
+            "worst_pct": 0.8456303614680303,
+            "admissible": false,
+            "bound_worst_pct": 0.8385667992543483
+          },
+          {
+            "layout": "B-L",
+            "T_C": 700,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.665849718030788,
+            "worst_pct": 0.8456303614680303,
+            "admissible": false,
+            "bound_worst_pct": 0.8385667992543483
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.8040420667581162,
+            "worst_pct": 0.903314095242015,
+            "admissible": false,
+            "bound_worst_pct": 0.8981150599865518
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.8262399024538942,
+            "worst_pct": 0.903314095242015,
+            "admissible": false,
+            "bound_worst_pct": 0.8981150599865518
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9104892546867855,
+            "worst_pct": 0.9845213723048297,
+            "admissible": false,
+            "bound_worst_pct": 0.9805415139916461
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9226245999085505,
+            "worst_pct": 0.9845213723048297,
+            "admissible": false,
+            "bound_worst_pct": 0.9805415139916461
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9597957628410303,
+            "worst_pct": 1.097311042331074,
+            "admissible": true,
+            "bound_worst_pct": 1.0945391349202642
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9664807194025301,
+            "worst_pct": 1.097311042331074,
+            "admissible": true,
+            "bound_worst_pct": 1.0945391349202642
+          },
+          {
+            "layout": "B-L",
+            "T_C": 740,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9680292638317329,
+            "worst_pct": 1.2520157304745316,
+            "admissible": true,
+            "bound_worst_pct": 1.2505663320829186
+          },
+          {
+            "layout": "B-L",
+            "T_C": 740,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9692272519433013,
+            "worst_pct": 1.2520157304745316,
+            "admissible": true,
+            "bound_worst_pct": 1.2505663320829186
+          }
+        ]
+      },
+      {
+        "run": "reaim_d0.2_h1460",
+        "manifest_sha256": "83d53481a0cc6f92f5760b80446df2ac516d04fbec8a451a47372abc2dfea36c",
+        "settings": {
+          "heater_design_limit_K": 1460.0,
+          "heater_control": null,
+          "pointing_residual_deg": 0.2,
+          "aim_maps": null,
+          "aim_mm": null,
+          "rate_monitor_errors": [
+            -0.01,
+            0.0,
+            0.01
+          ],
+          "bfm_errors": [
+            -0.02,
+            0.0,
+            0.02
+          ],
+          "T_C": [
+            700,
+            710,
+            720,
+            730,
+            740
+          ]
+        },
+        "rows": [
+          {
+            "layout": "B-p",
+            "T_C": 700,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.6062124676116446,
+            "worst_pct": 0.5718843115354179,
+            "admissible": false,
+            "bound_worst_pct": 0.5713321218873407
+          },
+          {
+            "layout": "B-p",
+            "T_C": 700,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.6279804907788447,
+            "worst_pct": 0.5718843115354179,
+            "admissible": false,
+            "bound_worst_pct": 0.5713321218873407
+          },
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.8421704008535285,
+            "worst_pct": 0.6463523683712378,
+            "admissible": false,
+            "bound_worst_pct": 0.6455073525171926
+          },
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.8641396128638927,
+            "worst_pct": 0.6463523683712378,
+            "admissible": false,
+            "bound_worst_pct": 0.6455073525171926
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.955381801554641,
+            "worst_pct": 0.7508624364335789,
+            "admissible": true,
+            "bound_worst_pct": 0.7496548399624032
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.966468526139308,
+            "worst_pct": 0.7508624364335789,
+            "admissible": true,
+            "bound_worst_pct": 0.7496548399624032
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9759426916628563,
+            "worst_pct": 0.8969682759909672,
+            "admissible": true,
+            "bound_worst_pct": 0.8955320038360205
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9792653558908703,
+            "worst_pct": 0.8969682759909672,
+            "admissible": true,
+            "bound_worst_pct": 0.8955320038360205
+          },
+          {
+            "layout": "B-p",
+            "T_C": 740,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9769882639841487,
+            "worst_pct": 1.1003245850708583,
+            "admissible": true,
+            "bound_worst_pct": 1.099117458958762
+          },
+          {
+            "layout": "B-p",
+            "T_C": 740,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9786404511507392,
+            "worst_pct": 1.1003245850708583,
+            "admissible": true,
+            "bound_worst_pct": 1.099117458958762
+          },
+          {
+            "layout": "B-L",
+            "T_C": 700,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.690227099527511,
+            "worst_pct": 0.8939500559934854,
+            "admissible": false,
+            "bound_worst_pct": 0.888310512450662
+          },
+          {
+            "layout": "B-L",
+            "T_C": 700,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.7195397043133669,
+            "worst_pct": 0.8939500559934854,
+            "admissible": false,
+            "bound_worst_pct": 0.888310512450662
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.8758481938728853,
+            "worst_pct": 0.9723863089154086,
+            "admissible": false,
+            "bound_worst_pct": 0.9681015671082812
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.8987410455723213,
+            "worst_pct": 0.9723863089154086,
+            "admissible": false,
+            "bound_worst_pct": 0.9681015671082812
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9516963877457705,
+            "worst_pct": 1.0819620287473717,
+            "admissible": true,
+            "bound_worst_pct": 1.0788217696118738
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9607254991617131,
+            "worst_pct": 1.0819620287473717,
+            "admissible": true,
+            "bound_worst_pct": 1.0788217696118738
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9652187166590459,
+            "worst_pct": 1.2315762621077289,
+            "admissible": true,
+            "bound_worst_pct": 1.229720173604207
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9683158055174516,
+            "worst_pct": 1.2315762621077289,
+            "admissible": true,
+            "bound_worst_pct": 1.229720173604207
+          },
+          {
+            "layout": "B-L",
+            "T_C": 740,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9686907483615302,
+            "worst_pct": 1.4780393955787552,
+            "admissible": true,
+            "bound_worst_pct": 1.4765603095502793
+          },
+          {
+            "layout": "B-L",
+            "T_C": 740,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9701204084743179,
+            "worst_pct": 1.4780393955787552,
+            "admissible": true,
+            "bound_worst_pct": 1.4765603095502793
+          }
+        ]
+      },
+      {
+        "run": "reaim_d0.2_h1450",
+        "manifest_sha256": "b5ca8b6684c18ea6170289114c5bdc63d215759796270e87a7633371944ced67",
+        "settings": {
+          "heater_design_limit_K": 1450.0,
+          "heater_control": null,
+          "pointing_residual_deg": 0.2,
+          "aim_maps": null,
+          "aim_mm": null,
+          "rate_monitor_errors": [
+            -0.01,
+            0.0,
+            0.01
+          ],
+          "bfm_errors": [
+            -0.02,
+            0.0,
+            0.02
+          ],
+          "T_C": [
+            700,
+            710,
+            720,
+            730,
+            740
+          ]
+        },
+        "rows": [
+          {
+            "layout": "B-p",
+            "T_C": 700,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.6627892089620485,
+            "worst_pct": 0.5712703982840485,
+            "admissible": false,
+            "bound_worst_pct": 0.5707895602019163
+          },
+          {
+            "layout": "B-p",
+            "T_C": 700,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.6849108367626886,
+            "worst_pct": 0.5712703982840485,
+            "admissible": false,
+            "bound_worst_pct": 0.5707895602019163
+          },
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.8945618046029569,
+            "worst_pct": 0.6453974420410847,
+            "admissible": false,
+            "bound_worst_pct": 0.644555339668628
+          },
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9176649900929736,
+            "worst_pct": 0.6453974420410847,
+            "admissible": false,
+            "bound_worst_pct": 0.644555339668628
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9709769852156683,
+            "worst_pct": 0.7495865579336544,
+            "admissible": true,
+            "bound_worst_pct": 0.7483795964481814
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9783508611492151,
+            "worst_pct": 0.7495865579336544,
+            "admissible": true,
+            "bound_worst_pct": 0.7483795964481814
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9755738454503886,
+            "worst_pct": 0.906696693371304,
+            "admissible": true,
+            "bound_worst_pct": 0.8960351893033507
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9789544276787076,
+            "worst_pct": 0.906696693371304,
+            "admissible": true,
+            "bound_worst_pct": 0.8960351893033507
+          },
+          {
+            "layout": "B-p",
+            "T_C": 740,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9768084133516233,
+            "worst_pct": 1.2602590577700568,
+            "admissible": true,
+            "bound_worst_pct": 1.2423728045547406
+          },
+          {
+            "layout": "B-p",
+            "T_C": 740,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.978445358939186,
+            "worst_pct": 1.2602590577700568,
+            "admissible": true,
+            "bound_worst_pct": 1.2423728045547406
+          },
+          {
+            "layout": "B-L",
+            "T_C": 700,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.7473677793019357,
+            "worst_pct": 0.9421441210739443,
+            "admissible": false,
+            "bound_worst_pct": 0.9374318062200969
+          },
+          {
+            "layout": "B-L",
+            "T_C": 700,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.7754823959762231,
+            "worst_pct": 0.9421441210739443,
+            "admissible": false,
+            "bound_worst_pct": 0.9374318062200969
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9169090077732053,
+            "worst_pct": 1.0410543804923775,
+            "admissible": false,
+            "bound_worst_pct": 1.0373963143726779
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9372412741960067,
+            "worst_pct": 1.0410543804923775,
+            "admissible": false,
+            "bound_worst_pct": 1.0373963143726779
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9585276634659351,
+            "worst_pct": 1.1771164944233334,
+            "admissible": true,
+            "bound_worst_pct": 1.1746927402549583
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9644322511812223,
+            "worst_pct": 1.1771164944233334,
+            "admissible": true,
+            "bound_worst_pct": 1.1746927402549583
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9646151501295535,
+            "worst_pct": 1.365061737641813,
+            "admissible": true,
+            "bound_worst_pct": 1.363926767395938
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9677793019356805,
+            "worst_pct": 1.365061737641813,
+            "admissible": true,
+            "bound_worst_pct": 1.363926767395938
+          },
+          {
+            "layout": "B-L",
+            "T_C": 740,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9681420515165371,
+            "worst_pct": 1.8227930223863935,
+            "admissible": true,
+            "bound_worst_pct": 1.8220793040502377
+          },
+          {
+            "layout": "B-L",
+            "T_C": 740,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.969608291418991,
+            "worst_pct": 1.8227930223863935,
+            "admissible": true,
+            "bound_worst_pct": 1.8220793040502377
+          }
+        ]
+      },
+      {
+        "run": "reaim_d0.1_h1473",
+        "manifest_sha256": "a5d12a4b7824f7c35037a5d8956a708de0cf16cce47b9dc1ff6535e6b98d700d",
+        "settings": {
+          "heater_design_limit_K": 1473.15,
+          "heater_control": null,
+          "pointing_residual_deg": 0.1,
+          "aim_maps": null,
+          "aim_mm": null,
+          "rate_monitor_errors": [
+            -0.01,
+            0.0,
+            0.01
+          ],
+          "bfm_errors": [
+            -0.02,
+            0.0,
+            0.02
+          ],
+          "T_C": [
+            700,
+            710,
+            720,
+            730,
+            740
+          ]
+        },
+        "rows": [
+          {
+            "layout": "B-p",
+            "T_C": 700,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.5597988111568358,
+            "worst_pct": 0.4638996676482174,
+            "admissible": false,
+            "bound_worst_pct": 0.46331837522067326
+          },
+          {
+            "layout": "B-p",
+            "T_C": 700,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.5848651120256059,
+            "worst_pct": 0.4638996676482174,
+            "admissible": false,
+            "bound_worst_pct": 0.46331837522067326
+          },
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.7612162780064015,
+            "worst_pct": 0.5384207399966617,
+            "admissible": false,
+            "bound_worst_pct": 0.5373879427349342
+          },
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.7801493674744704,
+            "worst_pct": 0.5384207399966617,
+            "admissible": false,
+            "bound_worst_pct": 0.5373879427349342
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.8933333333333333,
+            "worst_pct": 0.6432519957548292,
+            "admissible": false,
+            "bound_worst_pct": 0.641728640882931
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9051150739216582,
+            "worst_pct": 0.6432519957548292,
+            "admissible": false,
+            "bound_worst_pct": 0.641728640882931
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9625240054869685,
+            "worst_pct": 0.789347837176017,
+            "admissible": true,
+            "bound_worst_pct": 0.7874197107862668
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9706294772138394,
+            "worst_pct": 0.789347837176017,
+            "admissible": true,
+            "bound_worst_pct": 0.7874197107862668
+          },
+          {
+            "layout": "B-p",
+            "T_C": 740,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9761438805060204,
+            "worst_pct": 0.9920311592005846,
+            "admissible": true,
+            "bound_worst_pct": 0.9900549640978756
+          },
+          {
+            "layout": "B-p",
+            "T_C": 740,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9779119036732206,
+            "worst_pct": 0.9920311592005846,
+            "admissible": true,
+            "bound_worst_pct": 0.9900549640978756
+          },
+          {
+            "layout": "B-L",
+            "T_C": 700,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.6304770614235635,
+            "worst_pct": 0.771432676841965,
+            "admissible": false,
+            "bound_worst_pct": 0.7630301549489219
+          },
+          {
+            "layout": "B-L",
+            "T_C": 700,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.6662185642432557,
+            "worst_pct": 0.771432676841965,
+            "admissible": false,
+            "bound_worst_pct": 0.7630301549489219
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.8043164151806127,
+            "worst_pct": 0.8288947156652448,
+            "admissible": false,
+            "bound_worst_pct": 0.8214179242646259
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.8269227251943301,
+            "worst_pct": 0.8288947156652448,
+            "admissible": false,
+            "bound_worst_pct": 0.8214179242646259
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9107117817405883,
+            "worst_pct": 0.9079708513518385,
+            "admissible": false,
+            "bound_worst_pct": 0.901698672288166
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9227892089620484,
+            "worst_pct": 0.9079708513518385,
+            "admissible": false,
+            "bound_worst_pct": 0.901698672288166
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9598994055784179,
+            "worst_pct": 1.0173510212686736,
+            "admissible": true,
+            "bound_worst_pct": 1.0137680637639617
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9666117969821674,
+            "worst_pct": 1.0173510212686736,
+            "admissible": true,
+            "bound_worst_pct": 1.0137680637639617
+          },
+          {
+            "layout": "B-L",
+            "T_C": 740,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9680323121475385,
+            "worst_pct": 1.1713884467630817,
+            "admissible": true,
+            "bound_worst_pct": 1.1693055533158339
+          },
+          {
+            "layout": "B-L",
+            "T_C": 740,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9691418991007469,
+            "worst_pct": 1.1713884467630817,
+            "admissible": true,
+            "bound_worst_pct": 1.1693055533158339
+          }
+        ]
+      },
+      {
+        "run": "reaim_d0.1_h1460",
+        "manifest_sha256": "58ff360f993bf1cbe22e666adf3fd3e01122385a1210a784e410fdafe1b1ef2e",
+        "settings": {
+          "heater_design_limit_K": 1460.0,
+          "heater_control": null,
+          "pointing_residual_deg": 0.1,
+          "aim_maps": null,
+          "aim_mm": null,
+          "rate_monitor_errors": [
+            -0.01,
+            0.0,
+            0.01
+          ],
+          "bfm_errors": [
+            -0.02,
+            0.0,
+            0.02
+          ],
+          "T_C": [
+            700,
+            710,
+            720,
+            730,
+            740
+          ]
+        },
+        "rows": [
+          {
+            "layout": "B-p",
+            "T_C": 700,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.6104282883706752,
+            "worst_pct": 0.4631625795107828,
+            "admissible": false,
+            "bound_worst_pct": 0.46258552518204604
+          },
+          {
+            "layout": "B-p",
+            "T_C": 700,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.631434232586496,
+            "worst_pct": 0.4631625795107828,
+            "admissible": false,
+            "bound_worst_pct": 0.46258552518204604
+          },
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.8444840725499162,
+            "worst_pct": 0.5374126981162595,
+            "admissible": false,
+            "bound_worst_pct": 0.5363835099807162
+          },
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.8644779759183051,
+            "worst_pct": 0.5374126981162595,
+            "admissible": false,
+            "bound_worst_pct": 0.5363835099807162
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9557872275567749,
+            "worst_pct": 0.6415174648263853,
+            "admissible": true,
+            "bound_worst_pct": 0.6399971054872787
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9670629477213839,
+            "worst_pct": 0.6415174648263853,
+            "admissible": true,
+            "bound_worst_pct": 0.6399971054872787
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9759030635573845,
+            "worst_pct": 0.7870540220760193,
+            "admissible": true,
+            "bound_worst_pct": 0.7851215958859791
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9792714525224814,
+            "worst_pct": 0.7870540220760193,
+            "admissible": true,
+            "bound_worst_pct": 0.7851215958859791
+          },
+          {
+            "layout": "B-p",
+            "T_C": 740,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9770217954580095,
+            "worst_pct": 0.9896436662602541,
+            "admissible": true,
+            "bound_worst_pct": 0.9876780265440529
+          },
+          {
+            "layout": "B-p",
+            "T_C": 740,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9787562871513489,
+            "worst_pct": 0.9896436662602541,
+            "admissible": true,
+            "bound_worst_pct": 0.9876780265440529
+          },
+          {
+            "layout": "B-L",
+            "T_C": 700,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.6899100746837372,
+            "worst_pct": 0.8195670432061234,
+            "admissible": false,
+            "bound_worst_pct": 0.811794881440626
+          },
+          {
+            "layout": "B-L",
+            "T_C": 700,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.7200274348422496,
+            "worst_pct": 0.8195670432061234,
+            "admissible": false,
+            "bound_worst_pct": 0.811794881440626
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.8760585276634659,
+            "worst_pct": 0.8965634526966144,
+            "admissible": false,
+            "bound_worst_pct": 0.8899097307734747
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.8994604481024234,
+            "worst_pct": 0.8965634526966144,
+            "admissible": false,
+            "bound_worst_pct": 0.8899097307734747
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9518000304831581,
+            "worst_pct": 1.0020667745928602,
+            "admissible": true,
+            "bound_worst_pct": 0.9980941626510568
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9608748666361835,
+            "worst_pct": 1.0020667745928602,
+            "admissible": true,
+            "bound_worst_pct": 0.9980941626510568
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9653345526596555,
+            "worst_pct": 1.151038790093929,
+            "admissible": true,
+            "bound_worst_pct": 1.148519491964013
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9684285932022557,
+            "worst_pct": 1.151038790093929,
+            "admissible": true,
+            "bound_worst_pct": 1.148519491964013
+          },
+          {
+            "layout": "B-L",
+            "T_C": 740,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9687639079408626,
+            "worst_pct": 1.4168978880505674,
+            "admissible": true,
+            "bound_worst_pct": 1.4142745920333477
+          },
+          {
+            "layout": "B-L",
+            "T_C": 740,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9701600365797897,
+            "worst_pct": 1.4168978880505674,
+            "admissible": true,
+            "bound_worst_pct": 1.4142745920333477
+          }
+        ]
+      },
+      {
+        "run": "reaim_d0.1_h1450",
+        "manifest_sha256": "26cb9c83f40d7249a88eb518f867431581ca64fc072eb82babbffa9f5c86e8e5",
+        "settings": {
+          "heater_design_limit_K": 1450.0,
+          "heater_control": null,
+          "pointing_residual_deg": 0.1,
+          "aim_maps": null,
+          "aim_mm": null,
+          "rate_monitor_errors": [
+            -0.01,
+            0.0,
+            0.01
+          ],
+          "bfm_errors": [
+            -0.02,
+            0.0,
+            0.02
+          ],
+          "T_C": [
+            700,
+            710,
+            720,
+            730,
+            740
+          ]
+        },
+        "rows": [
+          {
+            "layout": "B-p",
+            "T_C": 700,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.6670873342478281,
+            "worst_pct": 0.46261613989116457,
+            "admissible": false,
+            "bound_worst_pct": 0.4620422255617455
+          },
+          {
+            "layout": "B-p",
+            "T_C": 700,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.6890534979423868,
+            "worst_pct": 0.46261613989116457,
+            "admissible": false,
+            "bound_worst_pct": 0.4620422255617455
+          },
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.8965919829294315,
+            "worst_pct": 0.5364565710776174,
+            "admissible": false,
+            "bound_worst_pct": 0.5354315036035188
+          },
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9179789666209419,
+            "worst_pct": 0.5364565710776174,
+            "admissible": false,
+            "bound_worst_pct": 0.5354315036035188
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9711172077427221,
+            "worst_pct": 0.6402400074202154,
+            "admissible": true,
+            "bound_worst_pct": 0.6387219154486382
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9789208962048468,
+            "worst_pct": 0.6402400074202154,
+            "admissible": true,
+            "bound_worst_pct": 0.6387219154486382
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9755647005029721,
+            "worst_pct": 0.7873081846764326,
+            "admissible": true,
+            "bound_worst_pct": 0.7853650047681809
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.979039780521262,
+            "worst_pct": 0.7873081846764326,
+            "admissible": true,
+            "bound_worst_pct": 0.7853650047681809
+          },
+          {
+            "layout": "B-p",
+            "T_C": 740,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9768937661941777,
+            "worst_pct": 1.1495702604797786,
+            "admissible": true,
+            "bound_worst_pct": 1.1394479787835043
+          },
+          {
+            "layout": "B-p",
+            "T_C": 740,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9785550983081848,
+            "worst_pct": 1.1495702604797786,
+            "admissible": true,
+            "bound_worst_pct": 1.1394479787835043
+          },
+          {
+            "layout": "B-L",
+            "T_C": 700,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.7473647309861302,
+            "worst_pct": 0.8670881515678395,
+            "admissible": false,
+            "bound_worst_pct": 0.8599108671971721
+          },
+          {
+            "layout": "B-L",
+            "T_C": 700,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.7759152568206066,
+            "worst_pct": 0.8670881515678395,
+            "admissible": false,
+            "bound_worst_pct": 0.8599108671971721
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9171985977747295,
+            "worst_pct": 0.9628728579914703,
+            "admissible": false,
+            "bound_worst_pct": 0.9569762439161983
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9381039475689682,
+            "worst_pct": 0.9628728579914703,
+            "admissible": false,
+            "bound_worst_pct": 0.9569762439161983
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9585032769394909,
+            "worst_pct": 1.09681348357398,
+            "admissible": true,
+            "bound_worst_pct": 1.093661575839704
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9645633287608596,
+            "worst_pct": 1.09681348357398,
+            "admissible": true,
+            "bound_worst_pct": 1.093661575839704
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9647157445511355,
+            "worst_pct": 1.283942511525305,
+            "admissible": true,
+            "bound_worst_pct": 1.2822933933558711
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9678768480414571,
+            "worst_pct": 1.283942511525305,
+            "admissible": true,
+            "bound_worst_pct": 1.2822933933558711
+          },
+          {
+            "layout": "B-L",
+            "T_C": 740,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9681694863587867,
+            "worst_pct": 1.7648248704407181,
+            "admissible": true,
+            "bound_worst_pct": 1.7634425182015177
+          },
+          {
+            "layout": "B-L",
+            "T_C": 740,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9695808565767413,
+            "worst_pct": 1.7648248704407181,
+            "admissible": true,
+            "bound_worst_pct": 1.7634425182015177
+          }
+        ]
+      },
+      {
+        "run": "aim_BL_a90_d0.2",
+        "manifest_sha256": "6a7e1c32bb0f43e673d359e59581ab4018a1ff1b764c6418660b268198ec4629",
+        "settings": {
+          "heater_design_limit_K": 1460.0,
+          "heater_control": null,
+          "pointing_residual_deg": 0.2,
+          "aim_maps": "results/aim_operating/aim_maps_B-L.npz",
+          "aim_mm": 90.0,
+          "rate_monitor_errors": [
+            -0.01,
+            0.0,
+            0.01
+          ],
+          "bfm_errors": [
+            -0.02,
+            0.0,
+            0.02
+          ],
+          "T_C": [
+            710,
+            720,
+            730
+          ]
+        },
+        "rows": [
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.8421704008535285,
+            "worst_pct": 0.6463523683712378,
+            "admissible": false,
+            "bound_worst_pct": 0.6455073525171926
+          },
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.8641396128638927,
+            "worst_pct": 0.6463523683712378,
+            "admissible": false,
+            "bound_worst_pct": 0.6455073525171926
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.955381801554641,
+            "worst_pct": 0.7508624364335789,
+            "admissible": true,
+            "bound_worst_pct": 0.7496548399624032
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.966468526139308,
+            "worst_pct": 0.7508624364335789,
+            "admissible": true,
+            "bound_worst_pct": 0.7496548399624032
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9759426916628563,
+            "worst_pct": 0.8969682759909672,
+            "admissible": true,
+            "bound_worst_pct": 0.8955320038360205
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9792653558908703,
+            "worst_pct": 0.8969682759909672,
+            "admissible": true,
+            "bound_worst_pct": 0.8955320038360205
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.8758481938728853,
+            "worst_pct": 0.9723863089154086,
+            "admissible": false,
+            "bound_worst_pct": 0.9681015671082812
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.8987410455723213,
+            "worst_pct": 0.9723863089154086,
+            "admissible": false,
+            "bound_worst_pct": 0.9681015671082812
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9516963877457705,
+            "worst_pct": 1.0819620287473717,
+            "admissible": true,
+            "bound_worst_pct": 1.0788217696118738
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9607254991617131,
+            "worst_pct": 1.0819620287473717,
+            "admissible": true,
+            "bound_worst_pct": 1.0788217696118738
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9652187166590459,
+            "worst_pct": 1.2315762621077289,
+            "admissible": true,
+            "bound_worst_pct": 1.229720173604207
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9683158055174516,
+            "worst_pct": 1.2315762621077289,
+            "admissible": true,
+            "bound_worst_pct": 1.229720173604207
+          }
+        ]
+      },
+      {
+        "run": "aim_BL_a92.5_d0.2",
+        "manifest_sha256": "9a62020c3f1d41a80345972952f7c5ef31ac9d5831d3b6ed00425f9aa778feac",
+        "settings": {
+          "heater_design_limit_K": 1460.0,
+          "heater_control": "single",
+          "pointing_residual_deg": 0.2,
+          "aim_maps": [
+            "results/aim_operating_fine/aim_maps_B-L.npz"
+          ],
+          "aim_mm": [
+            92.5
+          ],
+          "rate_monitor_errors": [
+            -0.01,
+            0.0,
+            0.01
+          ],
+          "bfm_errors": [
+            -0.02,
+            0.0,
+            0.02
+          ],
+          "T_C": [
+            720
+          ]
+        },
+        "rows": [
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.955381801554641,
+            "worst_pct": 0.7508624364335789,
+            "admissible": true,
+            "bound_worst_pct": 0.7496548399624032
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.966468526139308,
+            "worst_pct": 0.7508624364335789,
+            "admissible": true,
+            "bound_worst_pct": 0.7496548399624032
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.952488949855205,
+            "worst_pct": 0.9561216749381837,
+            "admissible": true,
+            "bound_worst_pct": 0.9507002940874538
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9617253467459229,
+            "worst_pct": 0.9561216749381837,
+            "admissible": true,
+            "bound_worst_pct": 0.9507002940874538
+          }
+        ]
+      },
+      {
+        "run": "aim_BL_a95_d0.2",
+        "manifest_sha256": "9963e1f4833062fead6d192297193c37dc960f82245f6920fd57977096f94006",
+        "settings": {
+          "heater_design_limit_K": 1460.0,
+          "heater_control": null,
+          "pointing_residual_deg": 0.2,
+          "aim_maps": "results/aim_operating/aim_maps_B-L.npz",
+          "aim_mm": 95.0,
+          "rate_monitor_errors": [
+            -0.01,
+            0.0,
+            0.01
+          ],
+          "bfm_errors": [
+            -0.02,
+            0.0,
+            0.02
+          ],
+          "T_C": [
+            710,
+            720,
+            730
+          ]
+        },
+        "rows": [
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.8421704008535285,
+            "worst_pct": 0.6463523683712378,
+            "admissible": false,
+            "bound_worst_pct": 0.6455073525171926
+          },
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.8641396128638927,
+            "worst_pct": 0.6463523683712378,
+            "admissible": false,
+            "bound_worst_pct": 0.6455073525171926
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.955381801554641,
+            "worst_pct": 0.7508624364335789,
+            "admissible": true,
+            "bound_worst_pct": 0.7496548399624032
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.966468526139308,
+            "worst_pct": 0.7508624364335789,
+            "admissible": true,
+            "bound_worst_pct": 0.7496548399624032
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9759426916628563,
+            "worst_pct": 0.8969682759909672,
+            "admissible": true,
+            "bound_worst_pct": 0.8955320038360205
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9792653558908703,
+            "worst_pct": 0.8969682759909672,
+            "admissible": true,
+            "bound_worst_pct": 0.8955320038360205
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.8663039170858101,
+            "worst_pct": 0.7583494500292898,
+            "admissible": false,
+            "bound_worst_pct": 0.7513760472448433
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.8905166895290352,
+            "worst_pct": 0.7583494500292898,
+            "admissible": false,
+            "bound_worst_pct": 0.7513760472448433
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9529736320682822,
+            "worst_pct": 0.8651066958942526,
+            "admissible": true,
+            "bound_worst_pct": 0.8596657432321849
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9630086877000458,
+            "worst_pct": 0.8651066958942526,
+            "admissible": true,
+            "bound_worst_pct": 0.8596657432321849
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9674135040390185,
+            "worst_pct": 1.0127771337732523,
+            "admissible": true,
+            "bound_worst_pct": 1.0091840632431295
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9706782502667276,
+            "worst_pct": 1.0127771337732523,
+            "admissible": true,
+            "bound_worst_pct": 1.0091840632431295
+          }
+        ]
+      },
+      {
+        "run": "aim_BL_a97.5_d0.2",
+        "manifest_sha256": "89096f313269943f996910f58e2cb4ea7b60a9959366403a6e81d61a75bbea1c",
+        "settings": {
+          "heater_design_limit_K": 1460.0,
+          "heater_control": "single",
+          "pointing_residual_deg": 0.2,
+          "aim_maps": [
+            "results/aim_operating_fine/aim_maps_B-L.npz"
+          ],
+          "aim_mm": [
+            97.5
+          ],
+          "rate_monitor_errors": [
+            -0.01,
+            0.0,
+            0.01
+          ],
+          "bfm_errors": [
+            -0.02,
+            0.0,
+            0.02
+          ],
+          "T_C": [
+            720
+          ]
+        },
+        "rows": [
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.955381801554641,
+            "worst_pct": 0.7508624364335789,
+            "admissible": true,
+            "bound_worst_pct": 0.7496548399624032
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.966468526139308,
+            "worst_pct": 0.7508624364335789,
+            "admissible": true,
+            "bound_worst_pct": 0.7496548399624032
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9532266422801402,
+            "worst_pct": 0.8797665709208533,
+            "admissible": true,
+            "bound_worst_pct": 0.8674064847630804
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9639231824417009,
+            "worst_pct": 0.8797665709208533,
+            "admissible": true,
+            "bound_worst_pct": 0.8674064847630804
+          }
+        ]
+      },
+      {
+        "run": "aim_BL_a100_d0.2",
+        "manifest_sha256": "7fb8caf7b8bd20a5d08a343ea93d5dc9f10dde7533924f14261894d09b5fd73e",
+        "settings": {
+          "heater_design_limit_K": 1460.0,
+          "heater_control": null,
+          "pointing_residual_deg": 0.2,
+          "aim_maps": "results/aim_operating/aim_maps_B-L.npz",
+          "aim_mm": 100.0,
+          "rate_monitor_errors": [
+            -0.01,
+            0.0,
+            0.01
+          ],
+          "bfm_errors": [
+            -0.02,
+            0.0,
+            0.02
+          ],
+          "T_C": [
+            710,
+            720,
+            730
+          ]
+        },
+        "rows": [
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.8421704008535285,
+            "worst_pct": 0.6463523683712378,
+            "admissible": false,
+            "bound_worst_pct": 0.6455073525171926
+          },
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.8641396128638927,
+            "worst_pct": 0.6463523683712378,
+            "admissible": false,
+            "bound_worst_pct": 0.6455073525171926
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.955381801554641,
+            "worst_pct": 0.7508624364335789,
+            "admissible": true,
+            "bound_worst_pct": 0.7496548399624032
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.966468526139308,
+            "worst_pct": 0.7508624364335789,
+            "admissible": true,
+            "bound_worst_pct": 0.7496548399624032
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9759426916628563,
+            "worst_pct": 0.8969682759909672,
+            "admissible": true,
+            "bound_worst_pct": 0.8955320038360205
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9792653558908703,
+            "worst_pct": 0.8969682759909672,
+            "admissible": true,
+            "bound_worst_pct": 0.8955320038360205
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.8578936137783875,
+            "worst_pct": 0.894677731030693,
+            "admissible": false,
+            "bound_worst_pct": 0.8814596811826124
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.8800548696844993,
+            "worst_pct": 0.894677731030693,
+            "admissible": false,
+            "bound_worst_pct": 0.8814596811826124
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9534766041761926,
+            "worst_pct": 1.000643560059572,
+            "admissible": true,
+            "bound_worst_pct": 0.9880893687120923
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9644932174973327,
+            "worst_pct": 1.000643560059572,
+            "admissible": true,
+            "bound_worst_pct": 0.9880893687120923
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9697149824721841,
+            "worst_pct": 1.1496042886199078,
+            "admissible": true,
+            "bound_worst_pct": 1.1382534085435307
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9733302850175278,
+            "worst_pct": 1.1496042886199078,
+            "admissible": true,
+            "bound_worst_pct": 1.1382534085435307
+          }
+        ]
+      },
+      {
+        "run": "aim_BL_a105_d0.2",
+        "manifest_sha256": "dad8779dbd91cd9ffda610bf7de8e1717cbef384811941432c1fbf0cc36dc90a",
+        "settings": {
+          "heater_design_limit_K": 1460.0,
+          "heater_control": null,
+          "pointing_residual_deg": 0.2,
+          "aim_maps": "results/aim_operating/aim_maps_B-L.npz",
+          "aim_mm": 105.0,
+          "rate_monitor_errors": [
+            -0.01,
+            0.0,
+            0.01
+          ],
+          "bfm_errors": [
+            -0.02,
+            0.0,
+            0.02
+          ],
+          "T_C": [
+            710,
+            720,
+            730
+          ]
+        },
+        "rows": [
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.8421704008535285,
+            "worst_pct": 0.6463523683712378,
+            "admissible": false,
+            "bound_worst_pct": 0.6455073525171926
+          },
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.8641396128638927,
+            "worst_pct": 0.6463523683712378,
+            "admissible": false,
+            "bound_worst_pct": 0.6455073525171926
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.955381801554641,
+            "worst_pct": 0.7508624364335789,
+            "admissible": true,
+            "bound_worst_pct": 0.7496548399624032
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.966468526139308,
+            "worst_pct": 0.7508624364335789,
+            "admissible": true,
+            "bound_worst_pct": 0.7496548399624032
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9759426916628563,
+            "worst_pct": 0.8969682759909672,
+            "admissible": true,
+            "bound_worst_pct": 0.8955320038360205
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9792653558908703,
+            "worst_pct": 0.8969682759909672,
+            "admissible": true,
+            "bound_worst_pct": 0.8955320038360205
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.8455723212924859,
+            "worst_pct": 1.149116503830039,
+            "admissible": false,
+            "bound_worst_pct": 1.135652282028904
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.8693247980490779,
+            "worst_pct": 1.149116503830039,
+            "admissible": false,
+            "bound_worst_pct": 1.135652282028904
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9538332571254382,
+            "worst_pct": 1.256388304057485,
+            "admissible": true,
+            "bound_worst_pct": 1.2435992931303912
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9643347050754458,
+            "worst_pct": 1.256388304057485,
+            "admissible": true,
+            "bound_worst_pct": 1.2435992931303912
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9715256820606615,
+            "worst_pct": 1.4071882281329096,
+            "admissible": true,
+            "bound_worst_pct": 1.3956222522996387
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9755372656607224,
+            "worst_pct": 1.4071882281329096,
+            "admissible": true,
+            "bound_worst_pct": 1.3956222522996387
+          }
+        ]
+      },
+      {
+        "run": "aim_BL_a90_d0.8",
+        "manifest_sha256": "7b587dc1a8e701eed96af24ce860f01bb54c291a0034651fa6b7db53a1fc1da8",
+        "settings": {
+          "heater_design_limit_K": 1460.0,
+          "heater_control": null,
+          "pointing_residual_deg": 0.8,
+          "aim_maps": "results/aim_operating/aim_maps_B-L.npz",
+          "aim_mm": 90.0,
+          "rate_monitor_errors": [
+            -0.01,
+            0.0,
+            0.01
+          ],
+          "bfm_errors": [
+            -0.02,
+            0.0,
+            0.02
+          ],
+          "T_C": [
+            710,
+            720,
+            730
+          ]
+        },
+        "rows": [
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.8357415028196922,
+            "worst_pct": 1.421692482187126,
+            "admissible": false,
+            "bound_worst_pct": 1.4225170450388271
+          },
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.8538241121780217,
+            "worst_pct": 1.421692482187126,
+            "admissible": false,
+            "bound_worst_pct": 1.4225170450388271
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9516872427983539,
+            "worst_pct": 1.5263386994015835,
+            "admissible": true,
+            "bound_worst_pct": 1.5278089251720746
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9615454961133973,
+            "worst_pct": 1.5263386994015835,
+            "admissible": true,
+            "bound_worst_pct": 1.5278089251720746
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9746288675506782,
+            "worst_pct": 1.6709412761347229,
+            "admissible": true,
+            "bound_worst_pct": 1.6736052182442338
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9779515317786923,
+            "worst_pct": 1.6709412761347229,
+            "admissible": true,
+            "bound_worst_pct": 1.6736052182442338
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.8714525224813291,
+            "worst_pct": 1.5243127100727736,
+            "admissible": false,
+            "bound_worst_pct": 1.5122136545325868
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.8931748209114464,
+            "worst_pct": 1.5243127100727736,
+            "admissible": false,
+            "bound_worst_pct": 1.5122136545325868
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9498643499466545,
+            "worst_pct": 1.6492511428883896,
+            "admissible": false,
+            "bound_worst_pct": 1.6337806392761787
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9586709343087944,
+            "worst_pct": 1.6492511428883896,
+            "admissible": true,
+            "bound_worst_pct": 1.6337806392761787
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9645206523395824,
+            "worst_pct": 1.8199612099006626,
+            "admissible": true,
+            "bound_worst_pct": 1.7994902571347422
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9675415333028502,
+            "worst_pct": 1.8199612099006626,
+            "admissible": true,
+            "bound_worst_pct": 1.7994902571347422
+          }
+        ]
+      },
+      {
+        "run": "aim_BL_a92.5_d0.8",
+        "manifest_sha256": "a23c445b3b8123719ac61177da4e9b40d1f60aa052ba7bcc685360dc170abaa0",
+        "settings": {
+          "heater_design_limit_K": 1460.0,
+          "heater_control": "single",
+          "pointing_residual_deg": 0.8,
+          "aim_maps": [
+            "results/aim_operating_fine/aim_maps_B-L.npz"
+          ],
+          "aim_mm": [
+            92.5
+          ],
+          "rate_monitor_errors": [
+            -0.01,
+            0.0,
+            0.01
+          ],
+          "bfm_errors": [
+            -0.02,
+            0.0,
+            0.02
+          ],
+          "T_C": [
+            720
+          ]
+        },
+        "rows": [
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9516872427983539,
+            "worst_pct": 1.5263386994015835,
+            "admissible": true,
+            "bound_worst_pct": 1.5278089251720746
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9615454961133973,
+            "worst_pct": 1.5263386994015835,
+            "admissible": true,
+            "bound_worst_pct": 1.5278089251720746
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9505044962658131,
+            "worst_pct": 1.4790489697464313,
+            "admissible": true,
+            "bound_worst_pct": 1.4681441692318205
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9595092211553117,
+            "worst_pct": 1.4790489697464313,
+            "admissible": true,
+            "bound_worst_pct": 1.4681441692318205
+          }
+        ]
+      },
+      {
+        "run": "aim_BL_a95_d0.8",
+        "manifest_sha256": "47c4a674c417a980cc93d5f26f3ff30bb2c37eb706c11c31f59de0974cd88c74",
+        "settings": {
+          "heater_design_limit_K": 1460.0,
+          "heater_control": null,
+          "pointing_residual_deg": 0.8,
+          "aim_maps": "results/aim_operating/aim_maps_B-L.npz",
+          "aim_mm": 95.0,
+          "rate_monitor_errors": [
+            -0.01,
+            0.0,
+            0.01
+          ],
+          "bfm_errors": [
+            -0.02,
+            0.0,
+            0.02
+          ],
+          "T_C": [
+            710,
+            720,
+            730
+          ]
+        },
+        "rows": [
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.8357415028196922,
+            "worst_pct": 1.421692482187126,
+            "admissible": false,
+            "bound_worst_pct": 1.4225170450388271
+          },
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.8538241121780217,
+            "worst_pct": 1.421692482187126,
+            "admissible": false,
+            "bound_worst_pct": 1.4225170450388271
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9516872427983539,
+            "worst_pct": 1.5263386994015835,
+            "admissible": true,
+            "bound_worst_pct": 1.5278089251720746
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9615454961133973,
+            "worst_pct": 1.5263386994015835,
+            "admissible": true,
+            "bound_worst_pct": 1.5278089251720746
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9746288675506782,
+            "worst_pct": 1.6709412761347229,
+            "admissible": true,
+            "bound_worst_pct": 1.6736052182442338
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9779515317786923,
+            "worst_pct": 1.6709412761347229,
+            "admissible": true,
+            "bound_worst_pct": 1.6736052182442338
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.8618747142203932,
+            "worst_pct": 1.230798249480268,
+            "admissible": false,
+            "bound_worst_pct": 1.2310856340624776
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.8849108367626887,
+            "worst_pct": 1.230798249480268,
+            "admissible": false,
+            "bound_worst_pct": 1.2310856340624776
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9508001828989483,
+            "worst_pct": 1.3448375677493531,
+            "admissible": true,
+            "bound_worst_pct": 1.3450379817201503
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9604176192653558,
+            "worst_pct": 1.3448375677493531,
+            "admissible": true,
+            "bound_worst_pct": 1.3450379817201503
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9668068891937205,
+            "worst_pct": 1.5016863408562686,
+            "admissible": true,
+            "bound_worst_pct": 1.4997981751953555
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9701173601585125,
+            "worst_pct": 1.5016863408562686,
+            "admissible": true,
+            "bound_worst_pct": 1.4997981751953555
+          }
+        ]
+      },
+      {
+        "run": "aim_BL_a97.5_d0.8",
+        "manifest_sha256": "d668047de167105de12aad7991c5646085ee45e7f8697143df8602cc4365f4ae",
+        "settings": {
+          "heater_design_limit_K": 1460.0,
+          "heater_control": "single",
+          "pointing_residual_deg": 0.8,
+          "aim_maps": [
+            "results/aim_operating_fine/aim_maps_B-L.npz"
+          ],
+          "aim_mm": [
+            97.5
+          ],
+          "rate_monitor_errors": [
+            -0.01,
+            0.0,
+            0.01
+          ],
+          "bfm_errors": [
+            -0.02,
+            0.0,
+            0.02
+          ],
+          "T_C": [
+            720
+          ]
+        },
+        "rows": [
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9516872427983539,
+            "worst_pct": 1.5263386994015835,
+            "admissible": true,
+            "bound_worst_pct": 1.5278089251720746
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9615454961133973,
+            "worst_pct": 1.5263386994015835,
+            "admissible": true,
+            "bound_worst_pct": 1.5278089251720746
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9510501447950007,
+            "worst_pct": 1.4386063158431044,
+            "admissible": true,
+            "bound_worst_pct": 1.4199921613862403
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.961225422953818,
+            "worst_pct": 1.4386063158431044,
+            "admissible": true,
+            "bound_worst_pct": 1.4199921613862403
+          }
+        ]
+      },
+      {
+        "run": "aim_BL_a100_d0.8",
+        "manifest_sha256": "264112aff5c601af1e8a536e48c8ecbf00190c9f57b644088b0b57ccd592afa8",
+        "settings": {
+          "heater_design_limit_K": 1460.0,
+          "heater_control": null,
+          "pointing_residual_deg": 0.8,
+          "aim_maps": "results/aim_operating/aim_maps_B-L.npz",
+          "aim_mm": 100.0,
+          "rate_monitor_errors": [
+            -0.01,
+            0.0,
+            0.01
+          ],
+          "bfm_errors": [
+            -0.02,
+            0.0,
+            0.02
+          ],
+          "T_C": [
+            710,
+            720,
+            730
+          ]
+        },
+        "rows": [
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.8357415028196922,
+            "worst_pct": 1.421692482187126,
+            "admissible": false,
+            "bound_worst_pct": 1.4225170450388271
+          },
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.8538241121780217,
+            "worst_pct": 1.421692482187126,
+            "admissible": false,
+            "bound_worst_pct": 1.4225170450388271
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9516872427983539,
+            "worst_pct": 1.5263386994015835,
+            "admissible": true,
+            "bound_worst_pct": 1.5278089251720746
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9615454961133973,
+            "worst_pct": 1.5263386994015835,
+            "admissible": true,
+            "bound_worst_pct": 1.5278089251720746
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9746288675506782,
+            "worst_pct": 1.6709412761347229,
+            "admissible": true,
+            "bound_worst_pct": 1.6736052182442338
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9779515317786923,
+            "worst_pct": 1.6709412761347229,
+            "admissible": true,
+            "bound_worst_pct": 1.6736052182442338
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.8527175735406188,
+            "worst_pct": 1.4561153817555914,
+            "admissible": false,
+            "bound_worst_pct": 1.4404497314853661
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.8748910227099528,
+            "worst_pct": 1.4561153817555914,
+            "admissible": false,
+            "bound_worst_pct": 1.4404497314853661
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9513336381649139,
+            "worst_pct": 1.5649797318614744,
+            "admissible": true,
+            "bound_worst_pct": 1.5525270869664036
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9617375400091449,
+            "worst_pct": 1.5649797318614744,
+            "admissible": true,
+            "bound_worst_pct": 1.5525270869664036
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9692821216278006,
+            "worst_pct": 1.719533572084846,
+            "admissible": true,
+            "bound_worst_pct": 1.7096999169712495
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9728059746989788,
+            "worst_pct": 1.719533572084846,
+            "admissible": true,
+            "bound_worst_pct": 1.7096999169712495
+          }
+        ]
+      },
+      {
+        "run": "aim_BL_a105_d0.8",
+        "manifest_sha256": "a2a6d05cae13b33fa166cb96aedb3a6aa9051013a26c95a2516e550a13c58bbc",
+        "settings": {
+          "heater_design_limit_K": 1460.0,
+          "heater_control": null,
+          "pointing_residual_deg": 0.8,
+          "aim_maps": "results/aim_operating/aim_maps_B-L.npz",
+          "aim_mm": 105.0,
+          "rate_monitor_errors": [
+            -0.01,
+            0.0,
+            0.01
+          ],
+          "bfm_errors": [
+            -0.02,
+            0.0,
+            0.02
+          ],
+          "T_C": [
+            710,
+            720,
+            730
+          ]
+        },
+        "rows": [
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.8357415028196922,
+            "worst_pct": 1.421692482187126,
+            "admissible": false,
+            "bound_worst_pct": 1.4225170450388271
+          },
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.8538241121780217,
+            "worst_pct": 1.421692482187126,
+            "admissible": false,
+            "bound_worst_pct": 1.4225170450388271
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9516872427983539,
+            "worst_pct": 1.5263386994015835,
+            "admissible": true,
+            "bound_worst_pct": 1.5278089251720746
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9615454961133973,
+            "worst_pct": 1.5263386994015835,
+            "admissible": true,
+            "bound_worst_pct": 1.5278089251720746
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9746288675506782,
+            "worst_pct": 1.6709412761347229,
+            "admissible": true,
+            "bound_worst_pct": 1.6736052182442338
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9779515317786923,
+            "worst_pct": 1.6709412761347229,
+            "admissible": true,
+            "bound_worst_pct": 1.6736052182442338
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.840094497789971,
+            "worst_pct": 1.7232856714352662,
+            "admissible": false,
+            "bound_worst_pct": 1.7130914415417988
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.863228166438043,
+            "worst_pct": 1.7232856714352662,
+            "admissible": false,
+            "bound_worst_pct": 1.7130914415417988
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9516963877457705,
+            "worst_pct": 1.8350029996013622,
+            "admissible": true,
+            "bound_worst_pct": 1.824877443496369
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9616704770614236,
+            "worst_pct": 1.8350029996013622,
+            "admissible": true,
+            "bound_worst_pct": 1.824877443496369
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9709312604785856,
+            "worst_pct": 1.9913520116028096,
+            "admissible": true,
+            "bound_worst_pct": 1.9811378932226236
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9747934766041761,
+            "worst_pct": 1.9913520116028096,
+            "admissible": true,
+            "bound_worst_pct": 1.9811378932226236
+          }
+        ]
+      },
+      {
+        "run": "aim_Bp_a92.5_d0.2",
+        "manifest_sha256": "9a2cb80a68dfe709862210a7a6bb56b6dc3885dee5343d0ea180db265cd38fce",
+        "settings": {
+          "heater_design_limit_K": 1450.0,
+          "heater_control": null,
+          "pointing_residual_deg": 0.2,
+          "aim_maps": "results/aim_operating/aim_maps_B-p.npz",
+          "aim_mm": 92.5,
+          "rate_monitor_errors": [
+            -0.01,
+            0.0,
+            0.01
+          ],
+          "bfm_errors": [
+            -0.02,
+            0.0,
+            0.02
+          ],
+          "T_C": [
+            710,
+            720,
+            730
+          ]
+        },
+        "rows": [
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.908029263831733,
+            "worst_pct": 1.0455760488789727,
+            "admissible": false,
+            "bound_worst_pct": 1.0413615052562084
+          },
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9319006249047401,
+            "worst_pct": 1.0455760488789727,
+            "admissible": false,
+            "bound_worst_pct": 1.0413615052562084
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9676756591982929,
+            "worst_pct": 1.1975264177007234,
+            "admissible": true,
+            "bound_worst_pct": 1.1902421730334602
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9745557079713458,
+            "worst_pct": 1.1975264177007234,
+            "admissible": true,
+            "bound_worst_pct": 1.1902421730334602
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9725102880658436,
+            "worst_pct": 1.4078227249152722,
+            "admissible": true,
+            "bound_worst_pct": 1.3962173070678072
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9762749580856577,
+            "worst_pct": 1.4078227249152722,
+            "admissible": true,
+            "bound_worst_pct": 1.3962173070678072
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9169090077732053,
+            "worst_pct": 1.0410543804923775,
+            "admissible": false,
+            "bound_worst_pct": 1.0373963143726779
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9372412741960067,
+            "worst_pct": 1.0410543804923775,
+            "admissible": false,
+            "bound_worst_pct": 1.0373963143726779
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9585276634659351,
+            "worst_pct": 1.1771164944233334,
+            "admissible": true,
+            "bound_worst_pct": 1.1746927402549583
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9644322511812223,
+            "worst_pct": 1.1771164944233334,
+            "admissible": true,
+            "bound_worst_pct": 1.1746927402549583
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9646151501295535,
+            "worst_pct": 1.365061737641813,
+            "admissible": true,
+            "bound_worst_pct": 1.363926767395938
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9677793019356805,
+            "worst_pct": 1.365061737641813,
+            "admissible": true,
+            "bound_worst_pct": 1.363926767395938
+          }
+        ]
+      },
+      {
+        "run": "aim_Bp_a97.5_d0.2",
+        "manifest_sha256": "84f2db1895d2c87acc79225ac87beb6a6a9f0791d12f3e1c0964a7c8cc8ccd43",
+        "settings": {
+          "heater_design_limit_K": 1450.0,
+          "heater_control": null,
+          "pointing_residual_deg": 0.2,
+          "aim_maps": "results/aim_operating/aim_maps_B-p.npz",
+          "aim_mm": 97.5,
+          "rate_monitor_errors": [
+            -0.01,
+            0.0,
+            0.01
+          ],
+          "bfm_errors": [
+            -0.02,
+            0.0,
+            0.02
+          ],
+          "T_C": [
+            710,
+            720,
+            730
+          ]
+        },
+        "rows": [
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.8945618046029569,
+            "worst_pct": 0.6453974420410847,
+            "admissible": false,
+            "bound_worst_pct": 0.644555339668628
+          },
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9176649900929736,
+            "worst_pct": 0.6453974420410847,
+            "admissible": false,
+            "bound_worst_pct": 0.644555339668628
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9709769852156683,
+            "worst_pct": 0.7495865579336544,
+            "admissible": true,
+            "bound_worst_pct": 0.7483795964481814
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9783508611492151,
+            "worst_pct": 0.7495865579336544,
+            "admissible": true,
+            "bound_worst_pct": 0.7483795964481814
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9755738454503886,
+            "worst_pct": 0.906696693371304,
+            "admissible": true,
+            "bound_worst_pct": 0.8960351893033507
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9789544276787076,
+            "worst_pct": 0.906696693371304,
+            "admissible": true,
+            "bound_worst_pct": 0.8960351893033507
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9169090077732053,
+            "worst_pct": 1.0410543804923775,
+            "admissible": false,
+            "bound_worst_pct": 1.0373963143726779
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9372412741960067,
+            "worst_pct": 1.0410543804923775,
+            "admissible": false,
+            "bound_worst_pct": 1.0373963143726779
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9585276634659351,
+            "worst_pct": 1.1771164944233334,
+            "admissible": true,
+            "bound_worst_pct": 1.1746927402549583
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9644322511812223,
+            "worst_pct": 1.1771164944233334,
+            "admissible": true,
+            "bound_worst_pct": 1.1746927402549583
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9646151501295535,
+            "worst_pct": 1.365061737641813,
+            "admissible": true,
+            "bound_worst_pct": 1.363926767395938
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9677793019356805,
+            "worst_pct": 1.365061737641813,
+            "admissible": true,
+            "bound_worst_pct": 1.363926767395938
+          }
+        ]
+      },
+      {
+        "run": "aim_Bp_a102.5_d0.2",
+        "manifest_sha256": "da13e36aaa7eadecb453bd72c01fc65a1154fa35eedeff8e992e29939e8ec091",
+        "settings": {
+          "heater_design_limit_K": 1450.0,
+          "heater_control": null,
+          "pointing_residual_deg": 0.2,
+          "aim_maps": "results/aim_operating/aim_maps_B-p.npz",
+          "aim_mm": 102.5,
+          "rate_monitor_errors": [
+            -0.01,
+            0.0,
+            0.01
+          ],
+          "bfm_errors": [
+            -0.02,
+            0.0,
+            0.02
+          ],
+          "T_C": [
+            710,
+            720,
+            730
+          ]
+        },
+        "rows": [
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.879387288523091,
+            "worst_pct": 1.149668375332263,
+            "admissible": false,
+            "bound_worst_pct": 1.1477528665917627
+          },
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.8992379210486207,
+            "worst_pct": 1.149668375332263,
+            "admissible": false,
+            "bound_worst_pct": 1.1477528665917627
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9726779454351471,
+            "worst_pct": 1.2529922636012287,
+            "admissible": true,
+            "bound_worst_pct": 1.2508825149375475
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.980100594421582,
+            "worst_pct": 1.2529922636012287,
+            "admissible": true,
+            "bound_worst_pct": 1.2508825149375475
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.977643651882335,
+            "worst_pct": 1.3985716729109776,
+            "admissible": true,
+            "bound_worst_pct": 1.3964664957482498
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9808809632677945,
+            "worst_pct": 1.3985716729109776,
+            "admissible": true,
+            "bound_worst_pct": 1.3964664957482498
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9169090077732053,
+            "worst_pct": 1.0410543804923775,
+            "admissible": false,
+            "bound_worst_pct": 1.0373963143726779
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9372412741960067,
+            "worst_pct": 1.0410543804923775,
+            "admissible": false,
+            "bound_worst_pct": 1.0373963143726779
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9585276634659351,
+            "worst_pct": 1.1771164944233334,
+            "admissible": true,
+            "bound_worst_pct": 1.1746927402549583
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9644322511812223,
+            "worst_pct": 1.1771164944233334,
+            "admissible": true,
+            "bound_worst_pct": 1.1746927402549583
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9646151501295535,
+            "worst_pct": 1.365061737641813,
+            "admissible": true,
+            "bound_worst_pct": 1.363926767395938
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9677793019356805,
+            "worst_pct": 1.365061737641813,
+            "admissible": true,
+            "bound_worst_pct": 1.363926767395938
+          }
+        ]
+      },
+      {
+        "run": "aim_Bp_a92.5_d0.8",
+        "manifest_sha256": "ce9b491e407c08f39cc638d52f76aa14b37923ff6f067d86a97c683f44062412",
+        "settings": {
+          "heater_design_limit_K": 1450.0,
+          "heater_control": null,
+          "pointing_residual_deg": 0.8,
+          "aim_maps": "results/aim_operating/aim_maps_B-p.npz",
+          "aim_mm": 92.5,
+          "rate_monitor_errors": [
+            -0.01,
+            0.0,
+            0.01
+          ],
+          "bfm_errors": [
+            -0.02,
+            0.0,
+            0.02
+          ],
+          "T_C": [
+            710,
+            720,
+            730
+          ]
+        },
+        "rows": [
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.900082304526749,
+            "worst_pct": 1.9316153312745004,
+            "admissible": false,
+            "bound_worst_pct": 1.9132478688664174
+          },
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9212650510592898,
+            "worst_pct": 1.9316153312745004,
+            "admissible": false,
+            "bound_worst_pct": 1.9132478688664174
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9647584209724127,
+            "worst_pct": 2.0865734573833845,
+            "admissible": true,
+            "bound_worst_pct": 2.0680589721984752
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9715561652187167,
+            "worst_pct": 2.0865734573833845,
+            "admissible": true,
+            "bound_worst_pct": 2.0680589721984752
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9712909617436366,
+            "worst_pct": 2.300432394094211,
+            "admissible": true,
+            "bound_worst_pct": 2.2813835791197477
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9745892394452065,
+            "worst_pct": 2.300432394094211,
+            "admissible": true,
+            "bound_worst_pct": 2.2813835791197477
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9127693949093126,
+            "worst_pct": 1.602543257125517,
+            "admissible": false,
+            "bound_worst_pct": 1.58845991275783
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9319890260631002,
+            "worst_pct": 1.602543257125517,
+            "admissible": false,
+            "bound_worst_pct": 1.58845991275783
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9573754000914495,
+            "worst_pct": 1.7577167475382394,
+            "admissible": true,
+            "bound_worst_pct": 1.7393103301095492
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9631489102270995,
+            "worst_pct": 1.7577167475382394,
+            "admissible": true,
+            "bound_worst_pct": 1.7393103301095492
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9639445206523396,
+            "worst_pct": 1.9718452896216325,
+            "admissible": true,
+            "bound_worst_pct": 1.9469115544906646
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9670233196159123,
+            "worst_pct": 1.9718452896216325,
+            "admissible": true,
+            "bound_worst_pct": 1.9469115544906646
+          }
+        ]
+      },
+      {
+        "run": "aim_Bp_a97.5_d0.8",
+        "manifest_sha256": "aab593a2a34a446e354a5e56a5a4470dbe9fef789c8f5442066ef1edad3ef171",
+        "settings": {
+          "heater_design_limit_K": 1450.0,
+          "heater_control": null,
+          "pointing_residual_deg": 0.8,
+          "aim_maps": "results/aim_operating/aim_maps_B-p.npz",
+          "aim_mm": 97.5,
+          "rate_monitor_errors": [
+            -0.01,
+            0.0,
+            0.01
+          ],
+          "bfm_errors": [
+            -0.02,
+            0.0,
+            0.02
+          ],
+          "T_C": [
+            710,
+            720,
+            730
+          ]
+        },
+        "rows": [
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.8876299344612102,
+            "worst_pct": 1.4395653529482406,
+            "admissible": false,
+            "bound_worst_pct": 1.4321704350214477
+          },
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9070598994055784,
+            "worst_pct": 1.4395653529482406,
+            "admissible": false,
+            "bound_worst_pct": 1.4321704350214477
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.968129858253315,
+            "worst_pct": 1.5958168721200625,
+            "admissible": true,
+            "bound_worst_pct": 1.584223944451704
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9751165980795611,
+            "worst_pct": 1.5958168721200625,
+            "admissible": true,
+            "bound_worst_pct": 1.584223944451704
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9745557079713458,
+            "worst_pct": 1.8115874442936066,
+            "admissible": true,
+            "bound_worst_pct": 1.7936545810994742
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9775948788294467,
+            "worst_pct": 1.8115874442936066,
+            "admissible": true,
+            "bound_worst_pct": 1.7936545810994742
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9127693949093126,
+            "worst_pct": 1.602543257125517,
+            "admissible": false,
+            "bound_worst_pct": 1.58845991275783
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9319890260631002,
+            "worst_pct": 1.602543257125517,
+            "admissible": false,
+            "bound_worst_pct": 1.58845991275783
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9573754000914495,
+            "worst_pct": 1.7577167475382394,
+            "admissible": true,
+            "bound_worst_pct": 1.7393103301095492
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9631489102270995,
+            "worst_pct": 1.7577167475382394,
+            "admissible": true,
+            "bound_worst_pct": 1.7393103301095492
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9639445206523396,
+            "worst_pct": 1.9718452896216325,
+            "admissible": true,
+            "bound_worst_pct": 1.9469115544906646
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9670233196159123,
+            "worst_pct": 1.9718452896216325,
+            "admissible": true,
+            "bound_worst_pct": 1.9469115544906646
+          }
+        ]
+      },
+      {
+        "run": "aim_Bp_a102.5_d0.8",
+        "manifest_sha256": "c023b1de82622420492028ba3e76e4d86a36d67448bf7f8bf8a5f161bb498e0f",
+        "settings": {
+          "heater_design_limit_K": 1450.0,
+          "heater_control": null,
+          "pointing_residual_deg": 0.8,
+          "aim_maps": "results/aim_operating/aim_maps_B-p.npz",
+          "aim_mm": 102.5,
+          "rate_monitor_errors": [
+            -0.01,
+            0.0,
+            0.01
+          ],
+          "bfm_errors": [
+            -0.02,
+            0.0,
+            0.02
+          ],
+          "T_C": [
+            710,
+            720,
+            730
+          ]
+        },
+        "rows": [
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.8695717116293248,
+            "worst_pct": 1.9571051094494083,
+            "admissible": false,
+            "bound_worst_pct": 1.9581240457150175
+          },
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.8890474013107758,
+            "worst_pct": 1.9571051094494083,
+            "admissible": false,
+            "bound_worst_pct": 1.9581240457150175
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9693674744703551,
+            "worst_pct": 2.063437349082351,
+            "admissible": true,
+            "bound_worst_pct": 2.0651657992996952
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9767718335619571,
+            "worst_pct": 2.063437349082351,
+            "admissible": true,
+            "bound_worst_pct": 2.0651657992996952
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9764974851394604,
+            "worst_pct": 2.2132193456079112,
+            "admissible": true,
+            "bound_worst_pct": 2.2162513771945593
+          },
+          {
+            "layout": "B-p",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.979564090839811,
+            "worst_pct": 2.2132193456079112,
+            "admissible": true,
+            "bound_worst_pct": 2.2162513771945593
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9127693949093126,
+            "worst_pct": 1.602543257125517,
+            "admissible": false,
+            "bound_worst_pct": 1.58845991275783
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9319890260631002,
+            "worst_pct": 1.602543257125517,
+            "admissible": false,
+            "bound_worst_pct": 1.58845991275783
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9573754000914495,
+            "worst_pct": 1.7577167475382394,
+            "admissible": true,
+            "bound_worst_pct": 1.7393103301095492
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9631489102270995,
+            "worst_pct": 1.7577167475382394,
+            "admissible": true,
+            "bound_worst_pct": 1.7393103301095492
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9639445206523396,
+            "worst_pct": 1.9718452896216325,
+            "admissible": true,
+            "bound_worst_pct": 1.9469115544906646
+          },
+          {
+            "layout": "B-L",
+            "T_C": 730,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9670233196159123,
+            "worst_pct": 1.9718452896216325,
+            "admissible": true,
+            "bound_worst_pct": 1.9469115544906646
+          }
+        ]
+      },
+      {
+        "run": "ms_h1460_d0.2",
+        "manifest_sha256": "0128536449f16b2c0bf00d68218cee51d31ff3489e269590134c565bee2d649c",
+        "settings": {
+          "heater_design_limit_K": 1460.0,
+          "heater_control": "multispot",
+          "pointing_residual_deg": 0.2,
+          "aim_maps": [
+            "results/aim_operating/aim_maps_B-L.npz"
+          ],
+          "aim_mm": [
+            95.0
+          ],
+          "rate_monitor_errors": [
+            -0.01,
+            0.0,
+            0.01
+          ],
+          "bfm_errors": [
+            -0.02,
+            0.0,
+            0.02
+          ],
+          "T_C": [
+            720
+          ]
+        },
+        "rows": [
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9994919473657471,
+            "worst_pct": 0.5368930125640479,
+            "admissible": true,
+            "bound_worst_pct": 0.5365888293034332
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9999491947365747,
+            "worst_pct": 0.5368930125640479,
+            "admissible": true,
+            "bound_worst_pct": 0.5365888293034332
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9999390336838897,
+            "worst_pct": 0.7232635093558029,
+            "admissible": true,
+            "bound_worst_pct": 0.7125873064276256
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 1.0,
+            "worst_pct": 0.7232635093558029,
+            "admissible": true,
+            "bound_worst_pct": 0.7125873064276256
+          }
+        ]
+      },
+      {
+        "run": "ms_h1450_d0.2",
+        "manifest_sha256": "81a5a78a0ec10a49c1e62a9c42d3781656bac76a6adddcb79cccf59226bdcc35",
+        "settings": {
+          "heater_design_limit_K": 1450.0,
+          "heater_control": "multispot",
+          "pointing_residual_deg": 0.2,
+          "aim_maps": [
+            "results/aim_operating/aim_maps_B-L.npz"
+          ],
+          "aim_mm": [
+            95.0
+          ],
+          "rate_monitor_errors": [
+            -0.01,
+            0.0,
+            0.01
+          ],
+          "bfm_errors": [
+            -0.02,
+            0.0,
+            0.02
+          ],
+          "T_C": [
+            720
+          ]
+        },
+        "rows": [
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 1.0,
+            "worst_pct": 0.5376490835554734,
+            "admissible": true,
+            "bound_worst_pct": 0.5373395109342737
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 1.0,
+            "worst_pct": 0.5376490835554734,
+            "admissible": true,
+            "bound_worst_pct": 0.5373395109342737
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 1.0,
+            "worst_pct": 0.7386596983474615,
+            "admissible": true,
+            "bound_worst_pct": 0.7280317098646061
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 1.0,
+            "worst_pct": 0.7386596983474615,
+            "admissible": true,
+            "bound_worst_pct": 0.7280317098646061
+          }
+        ]
+      },
+      {
+        "run": "ms_h1425_d0.2",
+        "manifest_sha256": "7af60f17fc45e8855a036296b23e0c3d327d469c7fbcaffaba1a9c6b3bf7cf46",
+        "settings": {
+          "heater_design_limit_K": 1425.0,
+          "heater_control": "multispot",
+          "pointing_residual_deg": 0.2,
+          "aim_maps": [
+            "results/aim_operating/aim_maps_B-L.npz"
+          ],
+          "aim_mm": [
+            95.0
+          ],
+          "rate_monitor_errors": [
+            -0.01,
+            0.0,
+            0.01
+          ],
+          "bfm_errors": [
+            -0.02,
+            0.0,
+            0.02
+          ],
+          "T_C": [
+            720
+          ]
+        },
+        "rows": [
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 1.0,
+            "worst_pct": 0.537662330185166,
+            "admissible": true,
+            "bound_worst_pct": 0.5373524724946
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 1.0,
+            "worst_pct": 0.537662330185166,
+            "admissible": true,
+            "bound_worst_pct": 0.5373524724946
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 1.0,
+            "worst_pct": 0.785823270843068,
+            "admissible": true,
+            "bound_worst_pct": 0.7755166939040237
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 1.0,
+            "worst_pct": 0.785823270843068,
+            "admissible": true,
+            "bound_worst_pct": 0.7755166939040237
+          }
+        ]
+      },
+      {
+        "run": "ms_h1450_d0.8",
+        "manifest_sha256": "96ea4f6ddcb0bfb201c7efde01b4713984c7e8beebd678934eed18bf1c60bd0c",
+        "settings": {
+          "heater_design_limit_K": 1450.0,
+          "heater_control": "multispot",
+          "pointing_residual_deg": 0.8,
+          "aim_maps": [
+            "results/aim_operating/aim_maps_B-L.npz"
+          ],
+          "aim_mm": [
+            95.0
+          ],
+          "rate_monitor_errors": [
+            -0.01,
+            0.0,
+            0.01
+          ],
+          "bfm_errors": [
+            -0.02,
+            0.0,
+            0.02
+          ],
+          "T_C": [
+            720
+          ]
+        },
+        "rows": [
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9999949194736575,
+            "worst_pct": 1.2996445070680036,
+            "admissible": true,
+            "bound_worst_pct": 1.2997939382678434
+          },
+          {
+            "layout": "B-p",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 1.0,
+            "worst_pct": 1.2996445070680036,
+            "admissible": true,
+            "bound_worst_pct": 1.2997939382678434
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.999913631052177,
+            "worst_pct": 1.1326005586777899,
+            "admissible": true,
+            "bound_worst_pct": 1.1325007870334183
+          },
+          {
+            "layout": "B-L",
+            "T_C": 720,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 1.0,
+            "worst_pct": 1.1326005586777899,
+            "admissible": true,
+            "bound_worst_pct": 1.1325007870334183
+          }
+        ]
+      },
+      {
+        "run": "ms_h1460_d0.2_cold",
+        "manifest_sha256": "5f0216c862e88d39981835e4a528ca7dc4515c6043cceb72174be01057252e1d",
+        "settings": {
+          "heater_design_limit_K": 1460.0,
+          "heater_control": "multispot",
+          "pointing_residual_deg": 0.2,
+          "aim_maps": [
+            "results/aim_operating/aim_maps_B-L.npz"
+          ],
+          "aim_mm": [
+            95.0
+          ],
+          "rate_monitor_errors": [
+            -0.01,
+            0.0,
+            0.01
+          ],
+          "bfm_errors": [
+            -0.02,
+            0.0,
+            0.02
+          ],
+          "T_C": [
+            690,
+            700,
+            710
+          ]
+        },
+        "rows": [
+          {
+            "layout": "B-p",
+            "T_C": 690,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.4520062998526647,
+            "worst_pct": 0.44478961532670414,
+            "admissible": false,
+            "bound_worst_pct": 0.4441586400500767
+          },
+          {
+            "layout": "B-p",
+            "T_C": 690,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.46710054361631864,
+            "worst_pct": 0.44478961532670414,
+            "admissible": false,
+            "bound_worst_pct": 0.4441586400500767
+          },
+          {
+            "layout": "B-p",
+            "T_C": 700,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.7165239038764416,
+            "worst_pct": 0.4647532308759987,
+            "admissible": false,
+            "bound_worst_pct": 0.46436791610780026
+          },
+          {
+            "layout": "B-p",
+            "T_C": 700,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.7377554234618706,
+            "worst_pct": 0.4647532308759987,
+            "admissible": false,
+            "bound_worst_pct": 0.46436791610780026
+          },
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9413453233755017,
+            "worst_pct": 0.4941445180314893,
+            "admissible": false,
+            "bound_worst_pct": 0.494124052329674
+          },
+          {
+            "layout": "B-p",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9595417365239038,
+            "worst_pct": 0.4941445180314893,
+            "admissible": true,
+            "bound_worst_pct": 0.494124052329674
+          },
+          {
+            "layout": "B-L",
+            "T_C": 690,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.5317268709038256,
+            "worst_pct": 0.5834378496488958,
+            "admissible": false,
+            "bound_worst_pct": 0.5717836829455294
+          },
+          {
+            "layout": "B-L",
+            "T_C": 690,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.5557973886094599,
+            "worst_pct": 0.5834378496488958,
+            "admissible": false,
+            "bound_worst_pct": 0.5717836829455294
+          },
+          {
+            "layout": "B-L",
+            "T_C": 700,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.7837931209673322,
+            "worst_pct": 0.6131775522907152,
+            "admissible": false,
+            "bound_worst_pct": 0.6017347402442503
+          },
+          {
+            "layout": "B-L",
+            "T_C": 700,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.8132418838591678,
+            "worst_pct": 0.6131775522907152,
+            "admissible": false,
+            "bound_worst_pct": 0.6017347402442503
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM",
+            "joint_fraction": 0.9687029416247523,
+            "worst_pct": 0.6542950183861914,
+            "admissible": true,
+            "bound_worst_pct": 0.6431393727638125
+          },
+          {
+            "layout": "B-L",
+            "T_C": 710,
+            "controller": "rate monitor + BFM + fill",
+            "joint_fraction": 0.9822770919067215,
+            "worst_pct": 0.6542950183861914,
+            "admissible": true,
+            "bound_worst_pct": 0.6431393727638125
+          }
+        ]
+      }
+    ],
+    "drivers": [
+      {
+        "file": "states_B-p_720C.npz",
+        "layout": "B-p",
+        "controller": "rate monitor + BFM",
+        "joint_fraction": 0.9516872427983539,
+        "worst_pct": 1.5263386994015835,
+        "nominal_pct_by_law": {
+          "Ref14_growth": 0.2834144716041347,
+          "Heying_growth": 0.2834144716041347,
+          "G01_adsorption": 0.2834144716041347
+        },
+        "factors": {
+          "N pointing": {
+            "worst_fixed_pct": 0.5333752505137493,
+            "adds_pct": 0.9929634488878342,
+            "worst_alone_pct": 1.2022141668707567
+          },
+          "Ga fill / diameter": {
+            "worst_fixed_pct": 1.5263386994015835,
+            "adds_pct": 0.0,
+            "worst_alone_pct": 0.2834144716041347
+          },
+          "heater error (emissivity, contact, zone)": {
+            "worst_fixed_pct": 1.2064152993600616,
+            "adds_pct": 0.31992340004152187,
+            "worst_alone_pct": 0.5071879279007633
+          },
+          "pyrometer bias": {
+            "worst_fixed_pct": 1.5016508037439233,
+            "adds_pct": 0.024687895657660164,
+            "worst_alone_pct": 0.29005020948175475
+          },
+          "rate-monitor error": {
+            "worst_fixed_pct": 1.521698051140612,
+            "adds_pct": 0.004640648260971547,
+            "worst_alone_pct": 0.28425539028896607
+          },
+          "BFM error": {
+            "worst_fixed_pct": 1.5263386994015835,
+            "adds_pct": 0.0,
+            "worst_alone_pct": 0.2834144716041347
+          }
+        },
+        "worst_states": [
+          {
+            "thickness_pct": 1.5263386994015835,
+            "pointing": "flange 0.8 deg dir 0",
+            "ga": [
+              40,
+              "8"
+            ],
+            "heater": {
+              "eps": 0.63,
+              "contact": 50.0,
+              "zone_error": -0.02,
+              "controller": "pyrometer -2 K"
+            },
+            "law": "Heying_growth",
+            "rate_error": 0.01,
+            "bfm_error": -0.02
+          },
+          {
+            "thickness_pct": 1.5263386994015835,
+            "pointing": "flange 0.8 deg dir 0",
+            "ga": [
+              120,
+              "8"
+            ],
+            "heater": {
+              "eps": 0.63,
+              "contact": 50.0,
+              "zone_error": -0.02,
+              "controller": "pyrometer -2 K"
+            },
+            "law": "Heying_growth",
+            "rate_error": 0.01,
+            "bfm_error": -0.02
+          },
+          {
+            "thickness_pct": 1.5263386994015835,
+            "pointing": "flange 0.8 deg dir 0",
+            "ga": [
+              120,
+              "8"
+            ],
+            "heater": {
+              "eps": 0.63,
+              "contact": 50.0,
+              "zone_error": -0.02,
+              "controller": "pyrometer -2 K"
+            },
+            "law": "Heying_growth",
+            "rate_error": 0.01,
+            "bfm_error": 0.02
+          },
+          {
+            "thickness_pct": 1.5263386994015835,
+            "pointing": "flange 0.8 deg dir 0",
+            "ga": [
+              120,
+              "8"
+            ],
+            "heater": {
+              "eps": 0.63,
+              "contact": 50.0,
+              "zone_error": -0.02,
+              "controller": "pyrometer -2 K"
+            },
+            "law": "Heying_growth",
+            "rate_error": 0.01,
+            "bfm_error": 0.0
+          },
+          {
+            "thickness_pct": 1.5263386994015835,
+            "pointing": "flange 0.8 deg dir 0",
+            "ga": [
+              40,
+              "8"
+            ],
+            "heater": {
+              "eps": 0.63,
+              "contact": 50.0,
+              "zone_error": -0.02,
+              "controller": "pyrometer -2 K"
+            },
+            "law": "Heying_growth",
+            "rate_error": 0.01,
+            "bfm_error": 0.0
+          }
+        ],
+        "worst_by_pointing": {
+          "nominal": 0.5333752505137493,
+          "plate 0.8 deg dir 0": 0.969087683393787,
+          "plate 0.8 deg dir 30": 0.9214325246227747,
+          "plate 0.8 deg dir 60": 0.7636685931926284,
+          "plate 0.8 deg dir 90": 0.555138959525482,
+          "plate 0.8 deg dir 120": 0.5096563313495657,
+          "plate 0.8 deg dir 150": 0.6979512887692249,
+          "plate 0.8 deg dir 180": 0.7780086784537099,
+          "plate 0.8 deg dir 210": 0.7130942056678892,
+          "plate 0.8 deg dir 240": 0.5363295795479684,
+          "plate 0.8 deg dir 270": 0.5260053287642682,
+          "plate 0.8 deg dir 300": 0.7424911304485042,
+          "plate 0.8 deg dir 330": 0.91117787086255,
+          "flange 0.8 deg dir 0": 1.5263386994015835,
+          "flange 0.8 deg dir 30": 1.4120762008304575,
+          "flange 0.8 deg dir 60": 1.0926786117966147,
+          "flange 0.8 deg dir 90": 0.5920507098227848,
+          "flange 0.8 deg dir 120": 0.8063625504043241,
+          "flange 0.8 deg dir 150": 1.2549603943043501,
+          "flange 0.8 deg dir 180": 1.486505280119268,
+          "flange 0.8 deg dir 210": 1.3062588116423335,
+          "flange 0.8 deg dir 240": 0.8867428250067171,
+          "flange 0.8 deg dir 270": 0.5357491945490074,
+          "flange 0.8 deg dir 300": 1.0448030013417962,
+          "flange 0.8 deg dir 330": 1.404149375600156
+        }
+      },
+      {
+        "file": "states_B-L_730C.npz",
+        "layout": "B-L",
+        "controller": "rate monitor + BFM",
+        "joint_fraction": 0.9584606005182137,
+        "worst_pct": 1.6669763345095556,
+        "nominal_pct_by_law": {
+          "Ref14_growth": 0.5962479629085347,
+          "Heying_growth": 0.5962479629085347,
+          "G01_adsorption": 0.5962479629085347
+        },
+        "factors": {
+          "N pointing": {
+            "worst_fixed_pct": 0.942737842926847,
+            "adds_pct": 0.7242384915827086,
+            "worst_alone_pct": 1.2104448098254423
+          },
+          "Ga fill / diameter": {
+            "worst_fixed_pct": 1.6669763345095556,
+            "adds_pct": 0.0,
+            "worst_alone_pct": 0.5962479629085347
+          },
+          "heater error (emissivity, contact, zone)": {
+            "worst_fixed_pct": 1.214765517481762,
+            "adds_pct": 0.45221081702779364,
+            "worst_alone_pct": 0.9321054803076134
+          },
+          "pyrometer bias": {
+            "worst_fixed_pct": 1.6669763345095556,
+            "adds_pct": 0.0,
+            "worst_alone_pct": 0.597486964541961
+          },
+          "rate-monitor error": {
+            "worst_fixed_pct": 1.6598225374431395,
+            "adds_pct": 0.007153797066416168,
+            "worst_alone_pct": 0.6126627310021014
+          },
+          "BFM error": {
+            "worst_fixed_pct": 1.6669763345095556,
+            "adds_pct": 0.0,
+            "worst_alone_pct": 0.5962479629085347
+          }
+        },
+        "worst_states": [
+          {
+            "thickness_pct": 1.6669763345095556,
+            "pointing": "flange 0.8 deg dir 180",
+            "ga": [
+              40,
+              "5.68"
+            ],
+            "heater": {
+              "eps": 0.77,
+              "contact": 1000.0,
+              "zone_error": -0.02,
+              "controller": "pyrometer +0 K"
+            },
+            "law": "G01_adsorption",
+            "rate_error": 0.01,
+            "bfm_error": 0.0
+          },
+          {
+            "thickness_pct": 1.6669763345095556,
+            "pointing": "flange 0.8 deg dir 180",
+            "ga": [
+              40,
+              "5.68"
+            ],
+            "heater": {
+              "eps": 0.77,
+              "contact": 1000.0,
+              "zone_error": -0.02,
+              "controller": "pyrometer +0 K"
+            },
+            "law": "G01_adsorption",
+            "rate_error": 0.01,
+            "bfm_error": -0.02
+          },
+          {
+            "thickness_pct": 1.6669763345095556,
+            "pointing": "flange 0.8 deg dir 180",
+            "ga": [
+              120,
+              "8"
+            ],
+            "heater": {
+              "eps": 0.77,
+              "contact": 1000.0,
+              "zone_error": -0.02,
+              "controller": "pyrometer +0 K"
+            },
+            "law": "G01_adsorption",
+            "rate_error": 0.01,
+            "bfm_error": 0.02
+          },
+          {
+            "thickness_pct": 1.6669763345095556,
+            "pointing": "flange 0.8 deg dir 180",
+            "ga": [
+              120,
+              "5.68"
+            ],
+            "heater": {
+              "eps": 0.77,
+              "contact": 1000.0,
+              "zone_error": -0.02,
+              "controller": "pyrometer +0 K"
+            },
+            "law": "G01_adsorption",
+            "rate_error": 0.01,
+            "bfm_error": 0.02
+          },
+          {
+            "thickness_pct": 1.6669763345095556,
+            "pointing": "flange 0.8 deg dir 180",
+            "ga": [
+              120,
+              "5.68"
+            ],
+            "heater": {
+              "eps": 0.77,
+              "contact": 1000.0,
+              "zone_error": -0.02,
+              "controller": "pyrometer +0 K"
+            },
+            "law": "G01_adsorption",
+            "rate_error": 0.01,
+            "bfm_error": 0.0
+          }
+        ],
+        "worst_by_pointing": {
+          "nominal": 0.942737842926847,
+          "plate 0.8 deg dir 0": 0.7716374888536625,
+          "plate 0.8 deg dir 30": 0.8023795671052162,
+          "plate 0.8 deg dir 60": 0.8645714524810605,
+          "plate 0.8 deg dir 90": 0.9368424192064503,
+          "plate 0.8 deg dir 120": 1.0507704417462045,
+          "plate 0.8 deg dir 150": 1.1329427663066378,
+          "plate 0.8 deg dir 180": 1.190519238012216,
+          "plate 0.8 deg dir 210": 1.171730721446018,
+          "plate 0.8 deg dir 240": 1.0651614530581646,
+          "plate 0.8 deg dir 270": 0.9388439681188939,
+          "plate 0.8 deg dir 300": 0.8461450662691106,
+          "plate 0.8 deg dir 330": 0.7913562024681582,
+          "flange 0.8 deg dir 0": 1.0884318925529632,
+          "flange 0.8 deg dir 30": 1.002934714223691,
+          "flange 0.8 deg dir 60": 0.7634743314256522,
+          "flange 0.8 deg dir 90": 0.9087139002698223,
+          "flange 0.8 deg dir 120": 1.2179524268005677,
+          "flange 0.8 deg dir 150": 1.5160833812484749,
+          "flange 0.8 deg dir 180": 1.6669763345095556,
+          "flange 0.8 deg dir 210": 1.5451178407585329,
+          "flange 0.8 deg dir 240": 1.242115846077901,
+          "flange 0.8 deg dir 270": 0.9497137124392295,
+          "flange 0.8 deg dir 300": 0.7869320466682073,
+          "flange 0.8 deg dir 330": 1.002444815449972
+        }
+      },
+      {
+        "file": "states_B-p_720C.npz",
+        "layout": "B-p",
+        "controller": "rate monitor + BFM",
+        "joint_fraction": 0.9709769852156683,
+        "worst_pct": 0.7495865579336544,
+        "nominal_pct_by_law": {
+          "Ref14_growth": 0.2853707053226591,
+          "Heying_growth": 0.2853707053226591,
+          "G01_adsorption": 0.2853707053226591
+        },
+        "factors": {
+          "N pointing": {
+            "worst_fixed_pct": 0.532096231827458,
+            "adds_pct": 0.21749032610619634,
+            "worst_alone_pct": 0.49228231293001284
+          },
+          "Ga fill / diameter": {
+            "worst_fixed_pct": 0.7495865579336544,
+            "adds_pct": 0.0,
+            "worst_alone_pct": 0.2853707053226591
+          },
+          "heater error (emissivity, contact, zone)": {
+            "worst_fixed_pct": 0.5000501719275774,
+            "adds_pct": 0.24953638600607697,
+            "worst_alone_pct": 0.5060085764830833
+          },
+          "pyrometer bias": {
+            "worst_fixed_pct": 0.7255850225121278,
+            "adds_pct": 0.02400153542152661,
+            "worst_alone_pct": 0.2921449813862922
+          },
+          "rate-monitor error": {
+            "worst_fixed_pct": 0.7470613040930524,
+            "adds_pct": 0.002525253840601982,
+            "worst_alone_pct": 0.2861918682647792
+          },
+          "BFM error": {
+            "worst_fixed_pct": 0.7495865579336544,
+            "adds_pct": 0.0,
+            "worst_alone_pct": 0.2853707053226591
+          }
+        },
+        "worst_states": [
+          {
+            "thickness_pct": 0.7495865579336544,
+            "pointing": "flange 0.8 deg dir 0",
+            "ga": [
+              40,
+              "8"
+            ],
+            "heater": {
+              "eps": 0.63,
+              "contact": 50.0,
+              "zone_error": -0.02,
+              "controller": "pyrometer -2 K"
+            },
+            "law": "Ref14_growth",
+            "rate_error": 0.01,
+            "bfm_error": 0.02
+          },
+          {
+            "thickness_pct": 0.7495865579336544,
+            "pointing": "flange 0.8 deg dir 0",
+            "ga": [
+              40,
+              "8"
+            ],
+            "heater": {
+              "eps": 0.63,
+              "contact": 50.0,
+              "zone_error": -0.02,
+              "controller": "pyrometer -2 K"
+            },
+            "law": "Ref14_growth",
+            "rate_error": 0.01,
+            "bfm_error": 0.0
+          },
+          {
+            "thickness_pct": 0.7495865579336544,
+            "pointing": "flange 0.8 deg dir 0",
+            "ga": [
+              70,
+              "5.68"
+            ],
+            "heater": {
+              "eps": 0.63,
+              "contact": 50.0,
+              "zone_error": -0.02,
+              "controller": "pyrometer -2 K"
+            },
+            "law": "G01_adsorption",
+            "rate_error": 0.01,
+            "bfm_error": 0.02
+          },
+          {
+            "thickness_pct": 0.7495865579336544,
+            "pointing": "flange 0.8 deg dir 0",
+            "ga": [
+              70,
+              "5.68"
+            ],
+            "heater": {
+              "eps": 0.63,
+              "contact": 50.0,
+              "zone_error": -0.02,
+              "controller": "pyrometer -2 K"
+            },
+            "law": "G01_adsorption",
+            "rate_error": 0.01,
+            "bfm_error": 0.0
+          },
+          {
+            "thickness_pct": 0.7495865579336544,
+            "pointing": "flange 0.8 deg dir 0",
+            "ga": [
+              70,
+              "5.68"
+            ],
+            "heater": {
+              "eps": 0.63,
+              "contact": 50.0,
+              "zone_error": -0.02,
+              "controller": "pyrometer -2 K"
+            },
+            "law": "G01_adsorption",
+            "rate_error": 0.01,
+            "bfm_error": -0.02
+          }
+        ],
+        "worst_by_pointing": {
+          "nominal": 0.532096231827458,
+          "plate 0.8 deg dir 0": 0.6355092207179922,
+          "plate 0.8 deg dir 30": 0.6257445658619697,
+          "plate 0.8 deg dir 60": 0.5889068219638945,
+          "plate 0.8 deg dir 90": 0.5369201029229653,
+          "plate 0.8 deg dir 120": 0.48106313152044344,
+          "plate 0.8 deg dir 150": 0.49728183738860576,
+          "plate 0.8 deg dir 180": 0.5188914015120435,
+          "plate 0.8 deg dir 210": 0.504765051478407,
+          "plate 0.8 deg dir 240": 0.47024814892394173,
+          "plate 0.8 deg dir 270": 0.5302547344364296,
+          "plate 0.8 deg dir 300": 0.5815379915454832,
+          "plate 0.8 deg dir 330": 0.6160108428961388,
+          "flange 0.8 deg dir 0": 0.7495865579336544,
+          "flange 0.8 deg dir 30": 0.7256503200150513,
+          "flange 0.8 deg dir 60": 0.6639082629079561,
+          "flange 0.8 deg dir 90": 0.5467479342161929,
+          "flange 0.8 deg dir 120": 0.5291218850949674,
+          "flange 0.8 deg dir 150": 0.644663504537531,
+          "flange 0.8 deg dir 180": 0.7044726236088864,
+          "flange 0.8 deg dir 210": 0.6558108395494361,
+          "flange 0.8 deg dir 240": 0.5485782885316765,
+          "flange 0.8 deg dir 270": 0.5326887927811776,
+          "flange 0.8 deg dir 300": 0.6441198253847228,
+          "flange 0.8 deg dir 330": 0.7244809726855286
+        }
+      },
+      {
+        "file": "states_B-L_720C.npz",
+        "layout": "B-L",
+        "controller": "rate monitor + BFM",
+        "joint_fraction": 0.9516963877457705,
+        "worst_pct": 1.0819620287473717,
+        "nominal_pct_by_law": {
+          "Ref14_growth": 0.5765232258113172,
+          "Heying_growth": 0.5765232258113172,
+          "G01_adsorption": 0.5765232258113172
+        },
+        "factors": {
+          "N pointing": {
+            "worst_fixed_pct": 0.9277871534528787,
+            "adds_pct": 0.15417487529449303,
+            "worst_alone_pct": 0.7046942037167825
+          },
+          "Ga fill / diameter": {
+            "worst_fixed_pct": 1.0819620287473717,
+            "adds_pct": 0.0,
+            "worst_alone_pct": 0.5765232258113172
+          },
+          "heater error (emissivity, contact, zone)": {
+            "worst_fixed_pct": 0.7205185964637927,
+            "adds_pct": 0.361443432283579,
+            "worst_alone_pct": 0.9172793181833161
+          },
+          "pyrometer bias": {
+            "worst_fixed_pct": 1.0819598274082025,
+            "adds_pct": 2.2013391691722006e-06,
+            "worst_alone_pct": 0.5790180755049761
+          },
+          "rate-monitor error": {
+            "worst_fixed_pct": 1.0754084578707372,
+            "adds_pct": 0.00655357087663444,
+            "worst_alone_pct": 0.592850837464803
+          },
+          "BFM error": {
+            "worst_fixed_pct": 1.0819620287473717,
+            "adds_pct": 0.0,
+            "worst_alone_pct": 0.5765232258113172
+          }
+        },
+        "worst_states": [
+          {
+            "thickness_pct": 1.0819620287473717,
+            "pointing": "flange 0.8 deg dir 180",
+            "ga": [
+              120,
+              "5.68"
+            ],
+            "heater": {
+              "eps": 0.77,
+              "contact": 1000.0,
+              "zone_error": -0.02,
+              "controller": "pyrometer +2 K"
+            },
+            "law": "Ref14_growth",
+            "rate_error": -0.01,
+            "bfm_error": -0.02
+          },
+          {
+            "thickness_pct": 1.0819620287473717,
+            "pointing": "flange 0.8 deg dir 180",
+            "ga": [
+              70,
+              "5.68"
+            ],
+            "heater": {
+              "eps": 0.77,
+              "contact": 1000.0,
+              "zone_error": -0.02,
+              "controller": "pyrometer +2 K"
+            },
+            "law": "G01_adsorption",
+            "rate_error": -0.01,
+            "bfm_error": 0.0
+          },
+          {
+            "thickness_pct": 1.0819620287473717,
+            "pointing": "flange 0.8 deg dir 180",
+            "ga": [
+              40,
+              "8"
+            ],
+            "heater": {
+              "eps": 0.77,
+              "contact": 1000.0,
+              "zone_error": -0.02,
+              "controller": "pyrometer +2 K"
+            },
+            "law": "G01_adsorption",
+            "rate_error": -0.01,
+            "bfm_error": 0.02
+          },
+          {
+            "thickness_pct": 1.0819620287473717,
+            "pointing": "flange 0.8 deg dir 180",
+            "ga": [
+              40,
+              "8"
+            ],
+            "heater": {
+              "eps": 0.77,
+              "contact": 1000.0,
+              "zone_error": -0.02,
+              "controller": "pyrometer +2 K"
+            },
+            "law": "G01_adsorption",
+            "rate_error": -0.01,
+            "bfm_error": 0.0
+          },
+          {
+            "thickness_pct": 1.0819620287473717,
+            "pointing": "flange 0.8 deg dir 180",
+            "ga": [
+              40,
+              "8"
+            ],
+            "heater": {
+              "eps": 0.77,
+              "contact": 1000.0,
+              "zone_error": -0.02,
+              "controller": "pyrometer +2 K"
+            },
+            "law": "G01_adsorption",
+            "rate_error": -0.01,
+            "bfm_error": -0.02
+          }
+        ],
+        "worst_by_pointing": {
+          "nominal": 0.9277871534528787,
+          "plate 0.8 deg dir 0": 0.8796825858337183,
+          "plate 0.8 deg dir 30": 0.885024586537958,
+          "plate 0.8 deg dir 60": 0.9030962849359321,
+          "plate 0.8 deg dir 90": 0.924319112322266,
+          "plate 0.8 deg dir 120": 0.9538387095600858,
+          "plate 0.8 deg dir 150": 0.9734063728761689,
+          "plate 0.8 deg dir 180": 0.9849262708763574,
+          "plate 0.8 deg dir 210": 0.978475829272382,
+          "plate 0.8 deg dir 240": 0.9554041268015,
+          "plate 0.8 deg dir 270": 0.9268129685725263,
+          "plate 0.8 deg dir 300": 0.9015107293058344,
+          "plate 0.8 deg dir 330": 0.8851453212719502,
+          "flange 0.8 deg dir 0": 0.8186595289149857,
+          "flange 0.8 deg dir 30": 0.8257720169323304,
+          "flange 0.8 deg dir 60": 0.8598070522960699,
+          "flange 0.8 deg dir 90": 0.9181346890431562,
+          "flange 0.8 deg dir 120": 0.9935808656307753,
+          "flange 0.8 deg dir 150": 1.0535173932724102,
+          "flange 0.8 deg dir 180": 1.0819620287473717,
+          "flange 0.8 deg dir 210": 1.0592298602766488,
+          "flange 0.8 deg dir 240": 0.9971595029876695,
+          "flange 0.8 deg dir 270": 0.9282758975772948,
+          "flange 0.8 deg dir 300": 0.8659990560202104,
+          "flange 0.8 deg dir 330": 0.8294519465748198
+        }
+      },
+      {
+        "file": "states_B-p_720C.npz",
+        "layout": "B-p",
+        "controller": "rate monitor + BFM",
+        "joint_fraction": 1.0,
+        "worst_pct": 0.5376490835554734,
+        "nominal_pct_by_law": {
+          "Ref14_growth": 0.3035694166878962,
+          "Heying_growth": 0.3035694166878962,
+          "G01_adsorption": 0.3035694166878962
+        },
+        "factors": {
+          "N pointing": {
+            "worst_fixed_pct": 0.31898060801253986,
+            "adds_pct": 0.2186684755429335,
+            "worst_alone_pct": 0.5104891871824778
+          },
+          "Ga fill / diameter": {
+            "worst_fixed_pct": 0.5376490835554734,
+            "adds_pct": 0.0,
+            "worst_alone_pct": 0.3035694166878962
+          },
+          "heater error (emissivity, contact, zone)": {
+            "worst_fixed_pct": 0.518922289695519,
+            "adds_pct": 0.01872679385995435,
+            "worst_alone_pct": 0.3100148951757748
+          },
+          "pyrometer bias": {
+            "worst_fixed_pct": 0.5285256550213798,
+            "adds_pct": 0.009123428534093536,
+            "worst_alone_pct": 0.3111966775598065
+          },
+          "rate-monitor error": {
+            "worst_fixed_pct": 0.5372267492490276,
+            "adds_pct": 0.00042233430644578185,
+            "worst_alone_pct": 0.30420902002917743
+          },
+          "BFM error": {
+            "worst_fixed_pct": 0.5376490835554734,
+            "adds_pct": 0.0,
+            "worst_alone_pct": 0.3035694166878962
+          }
+        },
+        "worst_states": [
+          {
+            "thickness_pct": 0.5376490835554734,
+            "pointing": "flange 0.8 deg dir 0",
+            "ga": [
+              70,
+              "8"
+            ],
+            "heater": {
+              "eps": 0.63,
+              "contact": 50.0,
+              "zone_error": -0.02,
+              "controller": "pyrometer -2 K"
+            },
+            "law": "G01_adsorption",
+            "rate_error": 0.01,
+            "bfm_error": 0.02
+          },
+          {
+            "thickness_pct": 0.5376490835554734,
+            "pointing": "flange 0.8 deg dir 0",
+            "ga": [
+              120,
+              "5.68"
+            ],
+            "heater": {
+              "eps": 0.63,
+              "contact": 50.0,
+              "zone_error": -0.02,
+              "controller": "pyrometer -2 K"
+            },
+            "law": "Heying_growth",
+            "rate_error": 0.01,
+            "bfm_error": 0.0
+          },
+          {
+            "thickness_pct": 0.5376490835554734,
+            "pointing": "flange 0.8 deg dir 0",
+            "ga": [
+              120,
+              "5.68"
+            ],
+            "heater": {
+              "eps": 0.63,
+              "contact": 50.0,
+              "zone_error": -0.02,
+              "controller": "pyrometer -2 K"
+            },
+            "law": "G01_adsorption",
+            "rate_error": 0.01,
+            "bfm_error": 0.02
+          },
+          {
+            "thickness_pct": 0.5376490835554734,
+            "pointing": "flange 0.8 deg dir 0",
+            "ga": [
+              120,
+              "5.68"
+            ],
+            "heater": {
+              "eps": 0.63,
+              "contact": 50.0,
+              "zone_error": -0.02,
+              "controller": "pyrometer -2 K"
+            },
+            "law": "Heying_growth",
+            "rate_error": 0.01,
+            "bfm_error": 0.02
+          },
+          {
+            "thickness_pct": 0.5376490835554734,
+            "pointing": "flange 0.8 deg dir 0",
+            "ga": [
+              120,
+              "5.68"
+            ],
+            "heater": {
+              "eps": 0.63,
+              "contact": 50.0,
+              "zone_error": -0.02,
+              "controller": "pyrometer -2 K"
+            },
+            "law": "Heying_growth",
+            "rate_error": 0.01,
+            "bfm_error": -0.02
+          }
+        ],
+        "worst_by_pointing": {
+          "nominal": 0.31898060801253986,
+          "plate 0.8 deg dir 0": 0.42295593685298855,
+          "plate 0.8 deg dir 30": 0.4131366093316643,
+          "plate 0.8 deg dir 60": 0.3761047704402132,
+          "plate 0.8 deg dir 90": 0.3238447263874829,
+          "plate 0.8 deg dir 120": 0.28900502562088337,
+          "plate 0.8 deg dir 150": 0.2971211208410455,
+          "plate 0.8 deg dir 180": 0.3016318202074615,
+          "plate 0.8 deg dir 210": 0.29843009239542584,
+          "plate 0.8 deg dir 240": 0.2883341819415855,
+          "plate 0.8 deg dir 270": 0.3171432438181761,
+          "plate 0.8 deg dir 300": 0.3686963836048277,
+          "plate 0.8 deg dir 330": 0.4033609671537065,
+          "flange 0.8 deg dir 0": 0.5376490835554734,
+          "flange 0.8 deg dir 30": 0.5135962891078979,
+          "flange 0.8 deg dir 60": 0.4515102774950198,
+          "flange 0.8 deg dir 90": 0.3337097342099345,
+          "flange 0.8 deg dir 120": 0.3171368037425625,
+          "flange 0.8 deg dir 150": 0.3342301974192107,
+          "flange 0.8 deg dir 180": 0.3543259837545503,
+          "flange 0.8 deg dir 210": 0.329402084053331,
+          "flange 0.8 deg dir 240": 0.31261529199733396,
+          "flange 0.8 deg dir 270": 0.3195918952501761,
+          "flange 0.8 deg dir 300": 0.43161287316366437,
+          "flange 0.8 deg dir 330": 0.5124091653586168
+        }
+      },
+      {
+        "file": "states_B-L_720C.npz",
+        "layout": "B-L",
+        "controller": "rate monitor + BFM",
+        "joint_fraction": 0.9999390336838897,
+        "worst_pct": 0.7232635093558029,
+        "nominal_pct_by_law": {
+          "Ref14_growth": 0.4285995350196594,
+          "Heying_growth": 0.4285995350196594,
+          "G01_adsorption": 0.4285995350196594
+        },
+        "factors": {
+          "N pointing": {
+            "worst_fixed_pct": 0.6142110781401132,
+            "adds_pct": 0.10905243121568964,
+            "worst_alone_pct": 0.547423463049937
+          },
+          "Ga fill / diameter": {
+            "worst_fixed_pct": 0.7232635093558029,
+            "adds_pct": 0.0,
+            "worst_alone_pct": 0.4285995350196594
+          },
+          "heater error (emissivity, contact, zone)": {
+            "worst_fixed_pct": 0.5711297859760534,
+            "adds_pct": 0.1521337233797495,
+            "worst_alone_pct": 0.5896181068702453
+          },
+          "pyrometer bias": {
+            "worst_fixed_pct": 0.7134880871153301,
+            "adds_pct": 0.009775422240472786,
+            "worst_alone_pct": 0.43254908080840054
+          },
+          "rate-monitor error": {
+            "worst_fixed_pct": 0.7087797076048998,
+            "adds_pct": 0.014483801750903025,
+            "worst_alone_pct": 0.44543292965085046
+          },
+          "BFM error": {
+            "worst_fixed_pct": 0.7232635093558029,
+            "adds_pct": 0.0,
+            "worst_alone_pct": 0.4285995350196594
+          }
+        },
+        "worst_states": [
+          {
+            "thickness_pct": 0.7232635093558029,
+            "pointing": "flange 0.8 deg dir 180",
+            "ga": [
+              120,
+              "5.68"
+            ],
+            "heater": {
+              "eps": 0.77,
+              "contact": 1000.0,
+              "zone_error": -0.02,
+              "controller": "pyrometer -2 K"
+            },
+            "law": "Ref14_growth",
+            "rate_error": -0.01,
+            "bfm_error": 0.0
+          },
+          {
+            "thickness_pct": 0.7232635093558029,
+            "pointing": "flange 0.8 deg dir 180",
+            "ga": [
+              120,
+              "5.68"
+            ],
+            "heater": {
+              "eps": 0.77,
+              "contact": 1000.0,
+              "zone_error": -0.02,
+              "controller": "pyrometer -2 K"
+            },
+            "law": "Ref14_growth",
+            "rate_error": -0.01,
+            "bfm_error": 0.02
+          },
+          {
+            "thickness_pct": 0.7232635093558029,
+            "pointing": "flange 0.8 deg dir 180",
+            "ga": [
+              70,
+              "8"
+            ],
+            "heater": {
+              "eps": 0.77,
+              "contact": 1000.0,
+              "zone_error": -0.02,
+              "controller": "pyrometer -2 K"
+            },
+            "law": "Heying_growth",
+            "rate_error": -0.01,
+            "bfm_error": 0.0
+          },
+          {
+            "thickness_pct": 0.7232635093558029,
+            "pointing": "flange 0.8 deg dir 180",
+            "ga": [
+              70,
+              "8"
+            ],
+            "heater": {
+              "eps": 0.77,
+              "contact": 1000.0,
+              "zone_error": -0.02,
+              "controller": "pyrometer -2 K"
+            },
+            "law": "Heying_growth",
+            "rate_error": -0.01,
+            "bfm_error": 0.02
+          },
+          {
+            "thickness_pct": 0.7232635093558029,
+            "pointing": "flange 0.8 deg dir 180",
+            "ga": [
+              40,
+              "8"
+            ],
+            "heater": {
+              "eps": 0.77,
+              "contact": 1000.0,
+              "zone_error": -0.02,
+              "controller": "pyrometer -2 K"
+            },
+            "law": "Heying_growth",
+            "rate_error": -0.01,
+            "bfm_error": 0.02
+          }
+        ],
+        "worst_by_pointing": {
+          "nominal": 0.6142110781401132,
+          "plate 0.8 deg dir 0": 0.5830462375518489,
+          "plate 0.8 deg dir 30": 0.5867803406723434,
+          "plate 0.8 deg dir 60": 0.6000008324255199,
+          "plate 0.8 deg dir 90": 0.6126736129698364,
+          "plate 0.8 deg dir 120": 0.6292488442306315,
+          "plate 0.8 deg dir 150": 0.6441339581814731,
+          "plate 0.8 deg dir 180": 0.6575033621846765,
+          "plate 0.8 deg dir 210": 0.6509867071163064,
+          "plate 0.8 deg dir 240": 0.6325735076881253,
+          "plate 0.8 deg dir 270": 0.6105110336682888,
+          "plate 0.8 deg dir 300": 0.5959448017612974,
+          "plate 0.8 deg dir 330": 0.5838416978460957,
+          "flange 0.8 deg dir 0": 0.5918968717204944,
+          "flange 0.8 deg dir 30": 0.5770486264861766,
+          "flange 0.8 deg dir 60": 0.5637144214054641,
+          "flange 0.8 deg dir 90": 0.6070760842375423,
+          "flange 0.8 deg dir 120": 0.6560099339210668,
+          "flange 0.8 deg dir 150": 0.7013635260883141,
+          "flange 0.8 deg dir 180": 0.7232635093558029,
+          "flange 0.8 deg dir 210": 0.7070679612193878,
+          "flange 0.8 deg dir 240": 0.6648193774398397,
+          "flange 0.8 deg dir 270": 0.6143472997274367,
+          "flange 0.8 deg dir 300": 0.5655190795556105,
+          "flange 0.8 deg dir 330": 0.5780131133594432
+        }
+      }
+    ],
+    "best_admissible": {
+      "B-p / rate monitor + BFM": {
+        "layout": "B-p",
+        "T_C": 720,
+        "controller": "rate monitor + BFM",
+        "joint_fraction": 0.9994919473657471,
+        "worst_pct": 0.5368930125640479,
+        "admissible": true,
+        "bound_worst_pct": 0.5365888293034332,
+        "run": "ms_h1460_d0.2",
+        "settings": {
+          "heater_design_limit_K": 1460.0,
+          "heater_control": "multispot",
+          "pointing_residual_deg": 0.2,
+          "aim_maps": [
+            "results/aim_operating/aim_maps_B-L.npz"
+          ],
+          "aim_mm": [
+            95.0
+          ],
+          "rate_monitor_errors": [
+            -0.01,
+            0.0,
+            0.01
+          ],
+          "bfm_errors": [
+            -0.02,
+            0.0,
+            0.02
+          ],
+          "T_C": [
+            720
+          ]
+        }
+      },
+      "B-p / rate monitor + BFM + fill": {
+        "layout": "B-p",
+        "T_C": 710,
+        "controller": "rate monitor + BFM + fill",
+        "joint_fraction": 0.9595417365239038,
+        "worst_pct": 0.4941445180314893,
+        "admissible": true,
+        "bound_worst_pct": 0.494124052329674,
+        "run": "ms_h1460_d0.2_cold",
+        "settings": {
+          "heater_design_limit_K": 1460.0,
+          "heater_control": "multispot",
+          "pointing_residual_deg": 0.2,
+          "aim_maps": [
+            "results/aim_operating/aim_maps_B-L.npz"
+          ],
+          "aim_mm": [
+            95.0
+          ],
+          "rate_monitor_errors": [
+            -0.01,
+            0.0,
+            0.01
+          ],
+          "bfm_errors": [
+            -0.02,
+            0.0,
+            0.02
+          ],
+          "T_C": [
+            690,
+            700,
+            710
+          ]
+        }
+      },
+      "B-L / rate monitor + BFM + fill": {
+        "layout": "B-L",
+        "T_C": 710,
+        "controller": "rate monitor + BFM + fill",
+        "joint_fraction": 0.9822770919067215,
+        "worst_pct": 0.6542950183861914,
+        "admissible": true,
+        "bound_worst_pct": 0.6431393727638125,
+        "run": "ms_h1460_d0.2_cold",
+        "settings": {
+          "heater_design_limit_K": 1460.0,
+          "heater_control": "multispot",
+          "pointing_residual_deg": 0.2,
+          "aim_maps": [
+            "results/aim_operating/aim_maps_B-L.npz"
+          ],
+          "aim_mm": [
+            95.0
+          ],
+          "rate_monitor_errors": [
+            -0.01,
+            0.0,
+            0.01
+          ],
+          "bfm_errors": [
+            -0.02,
+            0.0,
+            0.02
+          ],
+          "T_C": [
+            690,
+            700,
+            710
+          ]
+        }
+      },
+      "B-L / rate monitor + BFM": {
+        "layout": "B-L",
+        "T_C": 710,
+        "controller": "rate monitor + BFM",
+        "joint_fraction": 0.9687029416247523,
+        "worst_pct": 0.6542950183861914,
+        "admissible": true,
+        "bound_worst_pct": 0.6431393727638125,
+        "run": "ms_h1460_d0.2_cold",
+        "settings": {
+          "heater_design_limit_K": 1460.0,
+          "heater_control": "multispot",
+          "pointing_residual_deg": 0.2,
+          "aim_maps": [
+            "results/aim_operating/aim_maps_B-L.npz"
+          ],
+          "aim_mm": [
+            95.0
+          ],
+          "rate_monitor_errors": [
+            -0.01,
+            0.0,
+            0.01
+          ],
+          "bfm_errors": [
+            -0.02,
+            0.0,
+            0.02
+          ],
+          "T_C": [
+            690,
+            700,
+            710
+          ]
+        }
+      }
+    }
+  },
+  "disabled_physics": [],
+  "warnings": [
+    "Each run's own source hashes are in its manifest in results/; the realizable controller's priors (instrument errors, exact commissioned maps) apply",
+    "Aim maps reuse the current aim's attenuation tables and tilt responses"
+  ]
+}

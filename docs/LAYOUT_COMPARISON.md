@@ -1,12 +1,19 @@
 # Source layouts at physically achievable operating points
 
-Status: 2026-10-05 (sixth revision: section 11 replaces the Ga steering with a realizable controller and adds a heater power margin; fifth revision: section 10 adds the gas-scattered atoms and the nitrogen plume; sections 1-8 are the direct-beam model and stay as recorded; fourth revision after the [project audit](PROJECT_AUDIT_2026-10-01.md), its [follow-up](PROJECT_AUDIT_FOLLOWUP_2026-10-01.md) and the [2026-10-02 audit](PROJECT_AUDIT_2026-10-02.md)), `representative_chamber`. These are model comparisons on a typical 200 mm RIBER/Veeco-class geometry, not predictions for the proposed machine. No nitrogen map, heater result or growth model here is validated against a measurement.
+Status: 2026-10-05 (seventh revision: section 12 ranks the worst-case drivers and adds three levers against them; sixth revision: section 11 replaces the Ga steering with a realizable controller and adds a heater power margin; fifth revision: section 10 adds the gas-scattered atoms and the nitrogen plume; sections 1-8 are the direct-beam model and stay as recorded; fourth revision after the [project audit](PROJECT_AUDIT_2026-10-01.md), its [follow-up](PROJECT_AUDIT_FOLLOWUP_2026-10-01.md) and the [2026-10-02 audit](PROJECT_AUDIT_2026-10-02.md)), `representative_chamber`. These are model comparisons on a typical 200 mm RIBER/Veeco-class geometry, not predictions for the proposed machine. No nitrogen map, heater result or growth model here is validated against a measurement.
 
 **The question:** under what physically achievable conditions does a layout meet the project's requirements?
 
 **The short answer:** no layout can be called a pass, because neither a uniformity target nor a minimum growth rate is agreed (section 8). The model can, however, say which conditions each layout needs, and where its results are inside the model's validity. Two conditions dominate:
 - **Nitrogen supply sets the reachable growth rate.** That rate depends on a source conversion fraction nobody has published. The literature implies it lies between 6 and 57 % at high flow.
 - **The aperture plate must stay free-molecular at the flow that rate needs.** With the published-type plate, it stops being free-molecular above about 6 sccm.
+
+**Update 2026-10-05 (section 12, uniformity first).** N pointing sets most of the worst case, then the heater. Three levers together reduce the worst case at 1 um/h to **0.49 % (B-p) / 0.65 % (B-L) at 710 C**:
+1. Re-aim the N source at commissioning to 0.2 deg.
+2. Aim B-L at +95 mm.
+3. Use multi-spot pyrometry with three heater zone groups.
+
+Section 11's 1.53 / 1.67 % are the single-pyrometer, no-re-aim values.
 
 **Update 2026-10-05 (section 11).** The Ga steering of sections 8 and 10 knew every uncertain state's maps (audit 2026-10-05). With a controller that knows only a frozen calibration and real instruments:
 - Every admissible 1 um/h point needs a Ga beam-flux monitor and an in-situ growth-rate monitor. Without the beam-flux monitor, no temperature qualifies.
@@ -547,6 +554,74 @@ More headroom widens the wafer's temperature range, and a warmer wafer turns tha
 - **Why B-p wins:** B-p is the more uniform layout at this point. It needs the high conversion (eta about 1, 2 m^3/s, 10 sccm scenario); at realistic conversion, B-L is the layout that reaches 1 um/h.
 
 The flux-monitor and rate-monitor error magnitudes are priors until the instruments are selected. The commissioned maps are an optimistic limit (exact map calibration). The grid of states is not a probability distribution.
+
+## 12. What sets the worst case, and three levers against it (2026-10-05, uniformity first)
+
+The project's priority is the worst-case thickness spread (2026-10-05). scripts/worst_case_drivers.py ranks the uncertain factors at an operating point by how much each adds to that worst case. It compares the worst case with the factor held at nominal against the worst case with everything free, using the rate monitor + BFM controller. All runs are summarized in [uniformity_levers.json](../data/runs/studies/uniformity_levers.json); commands are in REPRODUCE.md.
+
+**1. Drivers at the section 11 points.**
+
+| Factor | B-p 720 C (1460 K design), worst 1.53 % | B-L 730 C (current heater), worst 1.67 % |
+|---|---|---|
+| N pointing (+/-0.8 deg) | adds 0.99 pt | adds 0.72 pt |
+| Heater error (emissivity, contact, zone) | adds 0.32 pt | adds 0.45 pt |
+| Pyrometer bias, Ga state, rate and BFM errors | at most 0.02 pt | at most 0.01 pt |
+
+- **Pointing dominates.** The worst states are tilts about the mounting flange towards or away from the wafer centre (directions 0 and 180 deg). Sideways tilts matter little.
+- **Instrument errors and the Ga state decide whether a state stays in the window, not how uneven it grows.** At these points the layer is set by N and temperature.
+
+**2. Lever 1: re-aim the N source after commissioning.**
+- **What changes.** The harmful tilts change the radial thickness profile, so an N-limited (Ga-rich) thickness map at commissioning reveals them. The mount is then trimmed.
+- **How it is modelled.** The residual tilt is +/-delta (option --pointing-residual). The maps come from linear interpolation between the nominal and 0.8 deg maps; direct maps at 0.2 and 0.4 deg agree to 0.04-0.07 % in shape.
+- **What it needs.** A residual of 0.2 deg changes the N-limited profile by up to 0.42 % (B-p) / 0.29 % (B-L). So the commissioning map must resolve about 0.3 %, and the mount must adjust and repeat to about 0.2 deg (about 1 mm at the 0.3 m flange pivot).
+
+| Residual pointing | B-p 720 C | B-L 720 C |
+|---|---|---|
+| 0.8 deg (no re-aim) | 1.53 % | not admissible (730 C: 1.67 %) |
+| 0.4 deg | 1.00 % | 1.24 % |
+| **0.2 deg** | **0.75 %** | **1.08 %** |
+| 0.1 deg | 0.64 % | 1.00 % |
+
+Heater designs 1450-1460 K; worst case over states valid and in the window (95-97 %).
+
+**3. Lever 2: aim at the operating point.**
+- **Method.** scripts/nitrogen_aim_operating.py computes nominal N maps at other aim offsets. The pointing states keep the tilt response of the current aim, and the attenuation tables are reused (stated approximations).
+- **B-p.** Its +97.5 mm aim stays best: 92.5 mm gives 1.20 % and 102.5 mm gives 1.25 % (re-aimed to 0.2 deg, 720 C).
+- **B-L.** It improves 5 mm further out, at **+95 mm** (aims 90 to 105 mm checked):
+  - after a 0.2 deg re-aim: 0.87 % (against 1.08 % at 90 mm, 0.96 % at 92.5, 0.88 % at 97.5, 1.00 % at 100);
+  - without the re-aim: 1.34 % at 720 C (95.1 %), which is admissible where 90 mm was not.
+- **Why the old aim is off.** The 90 mm aim was set for the N map at the 740 C pressure. The grown thickness at 720 C also carries the heater map and the scattered-atom tables.
+
+**4. Lever 3: multi-spot pyrometry with zone-group trimming.**
+- **The controller** (scripts/multispot_heater.py, --heater-control multispot):
+  - three pyrometer spots at 0, 50 and 85 mm, 10 mm each;
+  - the 12 heater rings driven as three groups (inner, middle and outer thirds of the heater), solved so that all three spots read their calibrated values;
+  - errors: a common bias of -2 / 0 / +2 K and an edge-spot error of -0.5 / 0 / +0.5 K, the same element limit, the same Ga controller (centre reading).
+- **Effect on the wafer.** Over the 27 heater errors x bias states at 720 C (1460 K design), the wafer range falls from up to 14.3 K (one centre reading) to at most 6.2 K. Capped states fall from 33 % to 23 %.
+
+| Rate monitor + BFM | B-p | B-L (aim 95 mm) |
+|---|---|---|
+| Multi-spot, 0.8 deg pointing, 720 C | 1.30 % (100 %) | 1.13 % (100 %) |
+| **Multi-spot, 0.2 deg re-aim, 720 C** | **0.54 %** (99.9 %) | **0.72 %** (100 %) |
+| Multi-spot, 0.2 deg re-aim, 710 C | 0.49 % (96.0 % with the fill known; 94.1 % without) | **0.65 %** (96.9 %) |
+| Multi-spot, 0.2 deg re-aim, 700 C | 71.7 % pass (not admissible) | 78.4 % pass (not admissible) |
+
+The heater design limit hardly matters with multi-spot control. At 720 C: B-p 0.54 % for 1460 / 1450 / 1425 K designs, B-L 0.72 / 0.74 / 0.79 %. After lever 3 the heater adds only 0.02 pt (B-p) / 0.15 pt (B-L). The worst case then sits close to the all-nominal floor of 0.30 % (B-p) / 0.43 % (B-L), and the remaining pointing residual is the largest term.
+
+**5. Most uniform admissible points (uniformity first).**
+- **B-p: 710 C, worst 0.49 %.** It needs:
+  - an N-source re-aim at commissioning to 0.2 deg;
+  - multi-spot pyrometry with three zone groups;
+  - a Ga beam-flux monitor and a growth-rate monitor;
+  - the Ga fill tracked from charge bookkeeping;
+  - heater zones designed for about 1460 K.
+- **B-L: 710 C, worst 0.65 %.** Aim +95 mm, with the same instruments; fill tracking is not needed.
+- **Caveats.**
+  - 710 C uses the decomposition law 10 K below its fitted range (720-805 C). Decomposition is a small term there. The nearest point inside the range is 720 C: 0.54 % (B-p) / 0.72 % (B-L).
+  - Crystal quality may set its own lower temperature (not modelled).
+  - Commissioned maps and instrument errors are priors.
+
+Compared with section 11, the worst case falls by a factor of three for B-p (1.53 -> 0.49 %) and 2.6 for B-L (1.67 -> 0.65 %).
 
 ## Appendix: superseded records
 

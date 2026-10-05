@@ -55,7 +55,13 @@ The reading's error budget is tight. In the model, the error with which the gall
 
 **Why.** The clearance checks so far use simplified solids and do not include the cryoshroud or the diagnostic lines of sight.
 
-## 7. In-situ instruments: gallium beam flux and growth rate
+## 7. In-situ instruments and adjustments for the most even layers
+
+**Nitrogen source re-aiming.** In the model, the largest remaining source of uneven thickness is the nitrogen source pointing slightly off its intended aim. A thickness map grown at commissioning shows the error. Please tell us whether the source mount can be adjusted after installation in steps of about 0.2 deg (about 1 mm at the flange) and returns to its setting within that after remounting. We also need wafer thickness mapping repeatable to about 0.3 % (ex-situ, at commissioning).
+
+**Temperature at several radii.** Reading the wafer temperature at three radii (centre, about 50 mm, about 85 mm) and trimming the heater in three zone groups to hold all three removes most of the wafer-to-wafer heating variation in the model. Please tell us whether three pyrometer (or band-edge) lines of sight are possible and whether the heater's zones can be driven as at least three independently controlled groups.
+
+### Gallium beam flux and growth rate
 
 **What we need.**
 - A **beam-flux monitor** (ion gauge) that can be placed at the wafer position: its reproducibility for a Ga beam from run to run and after remounting, and how its reading is converted to an atom flux.

@@ -182,6 +182,18 @@ def main():
     ap.add_argument("--out", default=None)
     ap.add_argument("--rate-error", type=float, default=0.01, help="rate-monitor error e: states at -e, 0, +e")
     ap.add_argument("--bfm-error", type=float, default=0.02, help="BFM error e: states at -e, 0, +e")
+    ap.add_argument("--aim-maps", nargs="*", default=None,
+                    help="npz files of scripts/nitrogen_aim_operating.py (one per layout): nominal N maps at other aims")
+    ap.add_argument("--aim-mm", type=float, nargs="*", default=None, help="aim offset (mm) per --aim-maps file; the "
+                    "pointing states keep their map differences from the current aim's ensemble")
+    ap.add_argument("--heater-control", default="single", choices=("single", "multispot"),
+                    help="single: one centre pyrometer, fixed zone ratios; multispot: three spots and three zone groups "
+                         "(scripts/multispot_heater.py)")
+    ap.add_argument("--pointing-residual", type=float, default=None,
+                    help="residual pointing (deg) after a commissioning re-aim: the 0.8 deg states are scaled to this tilt "
+                         "by linear interpolation from the nominal map (checked against direct maps to 0.07 %% in shape)")
+    ap.add_argument("--dump-t", type=int, nargs="*", default=None,
+                    help="temperatures (C) whose per-state arrays are saved to OUT/states_<layout>_<T>C.npz")
     ap.add_argument("--rate-um-h", type=float, default=RATE_UM_H, help="wafer-mean net rate")
     ap.add_argument("--heater-design-limit", type=float, default=1473.15,
                     help="element temperature the zone fractions are optimized under (K); the cap stays 1473.15 K")
@@ -190,6 +202,7 @@ def main():
     E_RATE = (-args.rate_error, 0.0, args.rate_error)
     E_BFM = (-args.bfm_error, 0.0, args.bfm_error)
     out = Path(args.out or f"results/realizable_controller{'' if args.scattered == 'none' else '_sc_' + args.scattered.replace('+', '_')}")
+    out.mkdir(parents=True, exist_ok=True)
     record = lc.comparison_record(args.scattered)
     rec = json.loads(record.read_text(encoding="utf-8"))
     env = rec["inputs"]["envelope"]
@@ -209,17 +222,32 @@ def main():
     for (name, scen), t0 in itertools.product(SCENARIOS, t_c):
         inp = oo.load_inputs(rec, env, name, rho, scatter, scen["S_eff_m3_s"])
         inp = {**inp, "n_vac": inp["n_vac"][:, [lip2]], "g_vac": inp["g_vac"][:, [lip2]]}
+        for f_aim, a_mm in zip(args.aim_maps or (), args.aim_mm or ()):
+            za = np.load(f_aim)
+            if str(za["layout"]) == name:
+                n_aim = za[f"aim_{a_mm:g}"]
+                inp["n_vac"] = n_aim[None, None, :] + (inp["n_vac"] - inp["n_vac"][:1])
+        if args.pointing_residual is not None:
+            n0 = inp["n_vac"][:1]
+            inp["n_vac"] = n0 + (args.pointing_residual / 0.8) * (inp["n_vac"] - n0)
+            shape = inp["n_vac"][:, 0] / inp["n_vac"][:, 0].mean(-1, keepdims=True)
+            profile_change = float(100 * np.max(np.abs(shape - shape[:1])))
         port = env["layouts"][name]["ga_port_deg"]
         refs = [ga_reference(port, f, d) for f, d in inp["labels"]]
         g_cal = inp["nominal_g"]
         if t0 not in heater_cache:
-            heater_cache[t0] = heater_states(t0 + lc.C, rho, args.heater_design_limit)
+            if args.heater_control == "multispot":
+                ms = _load("multispot_heater")
+                heater_cache[t0] = ms.multispot_states(hr.hz, hr, t0 + lc.C, rho, args.heater_design_limit,
+                                                       hr.LIMITS[LIMIT_NAME])[0]
+            else:
+                heater_cache[t0] = heater_states(t0 + lc.C, rho, args.heater_design_limit)
             print(f"heater states at {t0} C: {len(heater_cache[t0])}", flush=True)
         hs = heater_cache[t0]
         t_maps = np.array([s["t_map"] for s in hs])                        # (H, rho)
         reading = np.array([s["reading_K"] for s in hs])                   # (H,)
         i_nom = next(i for i, s in enumerate(hs) if s["controller"] == "pyrometer +0 K"
-                     and all(s[k] == v for k, v in hr.NOMINAL.items()))
+                     and s.get("edge_spot_error_K", 0.0) == 0.0 and all(s[k] == v for k, v in hr.NOMINAL.items()))
         shortfall = float(t0 + lc.C - hs[i_nom]["reading_K"])
         per_feed = scen["eta"] * lc.N_ATOMS_PER_SCCM / k_atoms
         to_p = lc.SCCM_PA_M3_S * (t_gas / lc.T_STD) / scen["S_eff_m3_s"]
@@ -233,6 +261,7 @@ def main():
         s_c, f_c, p_c, lim_c, att_c = lc.solve_states(n_cal[None, None], inp["att_n"], dec_cal, target, scen["eta"],
                                                      scen["S_eff_m3_s"], cap, t_gas, k_atoms, None, rho)
         row = {**scen, "layout": name, "T_C": t0, "rate_um_h": RATE_UM_H, "nominal_shortfall_K": shortfall,
+               "pointing_profile_change_pct": profile_change if args.pointing_residual is not None else None,
                "heater_capped_share": float(np.mean([s["capped"] for s in hs]))}
         if lim_c.any():
             rows.append({**row, "reachable": False})
@@ -245,7 +274,7 @@ def main():
         r_cal = reading[i_nom]
         row.update({"reachable": True, "calibration": {"feed_sccm": feed_cal, "pressure_Pa": p_cal}, "controllers": {}})
         bound, _ = oo.evaluate_point(inp, t_maps, reading, params, laws, rho, target, k_atoms, scen, cap, t_gas)
-        keys = ("valid", "margin", "m_nrich", "m_drop", "thick", "rate", "feed", "g", "h", "law")
+        keys = ("valid", "margin", "m_nrich", "m_drop", "thick", "rate", "feed", "g", "h", "law", "n", "e", "eb")
         per_ctrl = {c: {k: [] for k in keys} for c in CONTROLLERS}
         for law in laws:
             b = bound[law]
@@ -257,6 +286,9 @@ def main():
             kb["g"].append(gi_.ravel())
             kb["h"].append(hi_.ravel())
             kb["law"].append(np.full(b["valid"].size, laws.index(law)))
+            kb["n"].append(ni.ravel())
+            kb["e"].append(np.full(b["valid"].size, -1))
+            kb["eb"].append(np.full(b["valid"].size, -1))
             fc_cal = float(params.critical_excess(law, r_cal))
             mid_cal = float(window_mid(n_shape_cal, ga_shape_cal, np.array(jn_cal[0]), np.array(fc_cal)))
             ga_centre_cal = mid_cal * jn_cal[0]                                         # nm/min arrival at p_cal
@@ -306,6 +338,10 @@ def main():
                     out["g"].append(np.full(mean_h.size, gi))
                     out["h"].append(hidx.ravel())
                     out["law"].append(np.full(mean_h.size, laws.index(law)))
+                    idx = np.indices(mean_h.shape)
+                    out["n"].append(idx[0].ravel())
+                    out["e"].append(idx[2].ravel())
+                    out["eb"].append(idx[3].ravel() if mean_h.ndim > 3 else np.full(mean_h.size, -1))
                     out["thick"].append((100 * (h.max(-1) - h.min(-1)) / (2 * mean_h)).ravel())
                     out["rate"].append((mean_h / target - 1.0).ravel())
                     out["feed"].append(np.broadcast_to(feed if mode == "cell" else feed[..., None], mean_h.shape).ravel())
@@ -388,6 +424,11 @@ def main():
                               "feed_sccm": [float(feed.min()), float(feed.max())]})
             row["controllers"][c] = entry
         rows.append(row)
+        if t0 in (args.dump_t or ()):
+            meta = {"laws": laws, "ga_labels": inp["labels"], "e_rate": E_RATE, "e_bfm": E_BFM,
+                    "heater": [{k: s_[k] for k in ("eps", "contact", "zone_error", "controller")} for s_ in hs]}
+            np.savez_compressed(out / f"states_{name}_{t0}C.npz", meta=json.dumps(meta),
+                                **{f"{c}|{k}": np.concatenate(v) for c, d in per_ctrl.items() for k, v in d.items() if v})
         print(f"{name} {t0} C: " + "; ".join(f"{c}: joint {100 * e['joint_fraction']:.1f} %, worst "
                                             f"{e['worst_pct'] if e['worst_pct'] is None else round(e['worst_pct'], 2)} %"
                                             for c, e in row["controllers"].items()), flush=True)
@@ -408,7 +449,8 @@ def main():
         inputs={"record": str(record.relative_to(ROOT)), "scattered": args.scattered, "scenarios": SCENARIOS,
                 "rate_um_h": RATE_UM_H, "T_C": t_c, "element_limit": LIMIT_NAME, "pyrometer_biases_K": BIASES_K,
                 "rate_monitor_errors": E_RATE, "bfm_errors": E_BFM, "rate_band": RATE_BAND, "admit": ADMIT,
-                "controllers": CONTROLLERS, "heater_design_limit_K": args.heater_design_limit, "lip_m": 0.002, "pointing_ensemble_deg": 0.8,
+                "controllers": CONTROLLERS, "heater_design_limit_K": args.heater_design_limit,
+                "pointing_residual_deg": args.pointing_residual, "heater_control": args.heater_control, "aim_maps": args.aim_maps, "aim_mm": args.aim_mm, "lip_m": 0.002, "pointing_ensemble_deg": 0.8,
                 "ga_records_sha256": {lc.ga_record(env["layouts"][n]["ga_port_deg"], f, d):
                                       lc.file_sha256(lc.GA_RECORDS / lc.ga_record(env["layouts"][n]["ga_port_deg"], f, d))
                                       for n, _ in SCENARIOS for f, d in itertools.product((40, 70, 120), lc.GA_D)}},

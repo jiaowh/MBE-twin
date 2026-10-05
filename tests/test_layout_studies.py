@@ -353,3 +353,22 @@ def test_admission_gates_on_the_joint_fraction():
     # overlapping failures: the joint fraction equals the separate ones
     margin[4:8], margin[:4] = 1.0, -0.1
     assert oo.admission(valid, margin)["joint_fraction"] == pytest.approx(0.96)
+
+
+def test_multispot_controller_holds_three_readings():
+    # three zone groups and three pyrometer spots: a more emissive wafer with poorer ledge contact is brought back to the
+    # calibrated readings (with the spot offsets), which one centre reading at fixed ratios cannot do
+    hz = _load("heater_zones")
+    ms = _load("multispot_heater")
+    edges, geo = hz.LAYOUTS["12 zones"], {"ledge_inner": 0.099}
+    base = hz.make(edges, geo, {})
+    frac = np.full(12, 1.0 / 12)
+    nominal = hz.at_mean(base, frac, 993.15, p0=2300.0)
+    target = ms.spot_readings(nominal)
+    m = hz.make(edges, geo, {"eps_wafer": 0.77, "h_contact": 50.0})
+    offsets = np.array([0.0, 0.0, 0.5])
+    r, capped = ms.hold_spots(m, frac, float(nominal["zone_power"].sum()), target, offsets, 2500.0)   # no cap: this test is about the readings
+    assert not capped
+    assert np.allclose(ms.spot_readings(r) + offsets, target, atol=2e-3)
+    single = hz.at_mean(m, frac, 993.15, p0=2300.0)
+    assert abs(r["wafer_range"] - nominal["wafer_range"]) < abs(single["wafer_range"] - nominal["wafer_range"])

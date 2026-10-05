@@ -130,6 +130,10 @@ PYTHONPATH=src python scripts/heater_margin.py                                  
 
 Records: `data/runs/studies/realizable_controller_sc_plume*.json`, `heater_margin.json`. The joint-gate reruns of 2026-10-05 (operating_optimum*, operating_cold_limit*) used the commands above in this file unchanged; `cases/rerun_gate_2026-10-05.sh` lists them.
 
+## Uniformity levers (2026-10-05)
+
+Worst-case drivers: `realizable_controller.py ... --dump-t T` then `python scripts/worst_case_drivers.py <out>/states_<layout>_<T>C.npz`. Residual-pointing sweep: `cases/reaim_sweep_2026-10-05.sh`. Aim maps: `python scripts/nitrogen_aim_operating.py --layout B-L --aims 75 80 85 90 95 100 105` (and `--aims 92.5 97.5 --out results/aim_operating_fine`; B-p 87.5-107.5), then `cases/aim_sweep_2026-10-05.sh`. Multi-spot heater: `cases/multispot_sweep_2026-10-05.sh` (about 20 min per temperature), and the 690-710 C run `realizable_controller.py --t-min 690 --t-max 710 --heater-control multispot --heater-design-limit 1460 --pointing-residual 0.2 --aim-maps results/aim_operating/aim_maps_B-L.npz --aim-mm 95 --out results/ms_h1460_d0.2_cold`. Summary record: `python scripts/summarize_uniformity_levers.py` -> `data/runs/studies/uniformity_levers.json`.
+
 ## Run times
 
 On the development laptop (4 WSL cores, serial SPARTA, four jobs in parallel):
