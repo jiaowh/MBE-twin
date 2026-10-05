@@ -107,3 +107,9 @@ python results/audit_20261005/check_joint.py
 The test selection above refers to tracked files at review time; later commits can change it. Python was invoked through the installed runtime's full path on this machine because it was not on `PATH`.
 
 The audit reviewed implementation and internal evidence, ran tracked tests and selected numerical reproductions. It did not rerun the expensive production DSMC or scattering-table campaigns, repeat the literature review, or validate against real-machine measurements. It did not modify the in-progress integration work, commit or push changes.
+
+## Response (2026-10-05, same day)
+
+- **Finding 1.** scripts/realizable_controller.py evaluates controllers that know only a calibration frozen on the nominal state, plus named observations with errors, over the full grid. It reproduces this audit's 96.192 % / 97.311 % for the known-maps protocol. With realizable observations, 1 um/h at 720 C needs a Ga beam-flux monitor, an in-situ growth-rate monitor and about 14 % heater power headroom; with the current heater the limit is 730 C, and without the BFM there is none ([LAYOUT_COMPARISON.md](LAYOUT_COMPARISON.md) section 11). The integrated twin's controllers use the same information only (control.py; tests converge them to the steady realizable solution). The README's operating-point statement is qualified accordingly.
+- **Finding 2.** operating_optimum.admission gates on the joint fraction (test in tests/test_layout_studies.py); operating_optimum and operating_cold_limit records were regenerated. Only the case named here changes: B-L at 1.25 um/h has no admissible point up to 760 C.
+- **Finding 3.** record_provenance.py expands inputs.ga_records_sha256 (also under a twin run's chamber_provenance), with a test.

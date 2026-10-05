@@ -116,7 +116,19 @@ PYTHONPATH=src python scripts/twin_run.py --chamber cases/twin/chamber_B-L_720C.
 PYTHONPATH=src python scripts/twin_run.py --pyrometer-bias 2                # and -2
 ```
 
-Each run takes 12-20 s. The records are `data/runs/studies/twin_gan_1um_720C_B-L_720C*.json`; the figure is `make_readme_figures.py` (`twin`).
+Realizable recipe: `--recipe cases/twin/gan_1um_720C_realizable.json` on the same definitions (also `--bfm-error 0.02` and `--rate-error 0.01` on the 120 mm one); heater margin: `scripts/twin_chamber.py --heater-design-limit 1425`, then the frozen recipe at pyrometer bias -2 / 0 / +2 K. `cases/twin/twin_runs.sh` lists the full set. Each run takes 12-30 s. The records are `data/runs/studies/twin_gan_1um_720C_B-L_720C*.json`; the figure is `make_readme_figures.py` (`twin`).
+
+## Realizable controller and heater margin (2026-10-05)
+
+```bash
+PYTHONPATH=src python scripts/realizable_controller.py                              # about 15 min
+PYTHONPATH=src python scripts/realizable_controller.py --heater-design-limit 1425 \
+    --out results/realizable_controller_sc_plume_heater1425
+PYTHONPATH=src python scripts/realizable_controller.py --t-min 720 --t-max 720 --rate-error R --bfm-error B   # error budget
+PYTHONPATH=src python scripts/heater_margin.py                                      # about 5 min
+```
+
+Records: `data/runs/studies/realizable_controller_sc_plume*.json`, `heater_margin.json`. The joint-gate reruns of 2026-10-05 (operating_optimum*, operating_cold_limit*) used the commands above in this file unchanged; `cases/rerun_gate_2026-10-05.sh` lists them.
 
 ## Run times
 

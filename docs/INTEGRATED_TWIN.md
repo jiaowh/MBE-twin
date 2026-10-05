@@ -1,8 +1,8 @@
-# Integrated twin, first slice (2026-10-05)
+# Integrated twin, first slice (2026-10-05; realizable controllers and heater margin added the same day)
 
 The integrated twin runs a growth recipe through the Stage A subsystem models, coupled in time on one radial wafer grid. It covers heater and wafer temperature, the Ga cell, the N2 feed and plasma source, chamber pressure, beam arrival, the growing surface and the instruments. It delivers the PHASE1 item "integrated thickness and conserved inventories through a shutter event", a sensor-space log and a run bundle. It is a `representative_chamber` result: these are not predictions for the proposed machine, and nothing here is validated against machine data.
 
-Modules: [twin.py](../src/mbe_twin/twin.py), [chamber.py](../src/mbe_twin/chamber.py), [recipe.py](../src/mbe_twin/recipe.py), [surface.py](../src/mbe_twin/surface.py), [sensors.py](../src/mbe_twin/sensors.py), [thermal_transient.py](../src/mbe_twin/thermal_transient.py). Scripts: [twin_chamber.py](../scripts/twin_chamber.py) builds a chamber definition, and [twin_run.py](../scripts/twin_run.py) runs a recipe. Tests: [test_twin.py](../tests/test_twin.py).
+Modules: [twin.py](../src/mbe_twin/twin.py), [chamber.py](../src/mbe_twin/chamber.py), [control.py](../src/mbe_twin/control.py), [recipe.py](../src/mbe_twin/recipe.py), [surface.py](../src/mbe_twin/surface.py), [sensors.py](../src/mbe_twin/sensors.py), [thermal_transient.py](../src/mbe_twin/thermal_transient.py). Scripts: [twin_chamber.py](../scripts/twin_chamber.py) builds a chamber definition, and [twin_run.py](../scripts/twin_run.py) runs a recipe. Tests: [test_twin.py](../tests/test_twin.py).
 
 ## 1. What is coupled
 
@@ -39,6 +39,12 @@ true state -> pyrometer, ion gauge, regime indicator, thickness map (readings wi
 
   The controllers see readings only.
 - **Time stepping.** Each recipe step is split into equal sub-steps of at most `dt_max`, so shutter and setpoint events fall on step boundaries and are never stepped across. The Ga cell is evaluated at mid-step, and the surface uses the end-of-step wafer temperature. The controller acts on the reading at the start of the sub-step (zero-order hold).
+- **Realizable Ga and N control** ([control.py](../src/mbe_twin/control.py); recipe [gan_1um_720C_realizable.json](../cases/twin/gan_1um_720C_realizable.json)). The controllers know only the chamber's `controller_model`, which is the calibration state's maps, the Ga cell model and the centre-to-mean rate ratio, plus instrument readings.
+  - `"n2_sccm": "rate_monitor"`: an in-situ growth-rate monitor measures the centre net rate over each 10 min of growth (`sensors.rate_monitor`: window, error, noise) and scales the commanded feed by (target + modelled decomposition) / (measured + modelled decomposition).
+  - `"ga_cell": {"target_K": "steered"}`: the cell follows the window middle at the pyrometer reading through the calibrated model.
+  - `"bfm": true` step: a beam-flux monitor at the wafer position reads the centre arrival while the wafer is out of the beam. The reading sets the model's correction factor.
+
+  The protocol is that of the steady ensemble study (scripts/realizable_controller.py, [LAYOUT_COMPARISON.md](LAYOUT_COMPARISON.md) section 11).
 - **Checkpoints.** `Twin.checkpoint()` / `restore()` serialize the full state, including the RNG. A run resumed at a shutter event is identical to an uninterrupted one (V13).
 
 ## 2. Chamber definition and the calibration/truth split
@@ -73,7 +79,7 @@ Priors written into the definition:
 - pyrometer spot 10 mm, noise 0.2 K, valid above 873 K;
 - gauge noise 1 %.
 
-## 3. Verification ([test_twin.py](../tests/test_twin.py), 13 tests)
+## 3. Verification ([test_twin.py](../tests/test_twin.py), 15 tests)
 
 | Case | Check | Result |
 |---|---|---|
@@ -88,6 +94,7 @@ Priors written into the definition:
 | V13 | Restart at the shutter opening identical to the uninterrupted run | bitwise |
 | Time step | Integrated thickness converges | < 1e-3 relative change at 2.5 s |
 | Representative chamber | The twin's steady growth map equals the studies' steady chain at the operating point; 1 um/h; whole wafer in the adlayer regime | 1e-9; 0.2 % |
+| Realizable controllers | On the tilted-source and 120 mm truth chambers, the rate monitor and BFM converge to the steady realizable solution (feed, Ga arrival) computed independently | 0.2 % |
 
 On the representative chamber, a 0.5 s step gives the same 997.9 nm as the 1 s production step.
 
@@ -113,6 +120,21 @@ Recipe [gan_1um_720C.json](../cases/twin/gan_1um_720C.json), 146 min in total:
 | Pyrometer bias +2 K | 999.2 | 0.57 % | 1.001 | 100 % |
 | Pyrometer bias -2 K | 997.5 | 0.57 % | 1.000 | 100 % |
 
+Same truth states with the realizable recipe (2 min BFM measurement before growth, Ga steered from the reading, rate monitor re-setting the feed every 10 min of growth), and the heater designed with a power margin:
+
+| Truth state | Layer (nm) | Half-range / mean | Rate at the end of growth (um/h) | Share of area in window |
+|---|---:|---:|---:|---:|
+| Realizable: as calibrated | 997.9 | 0.57 % | 1.000 | 100 % |
+| Realizable: Ga charge 40 mm | 997.9 | 0.57 % | 1.000 | 100 % |
+| Realizable: Ga charge 120 mm | 997.9 | 0.57 % | 1.000 | **100 %** |
+| Realizable: 120 mm, BFM reading 2 % high | 997.9 | 0.57 % | 1.000 | 100 % |
+| Realizable: 120 mm, rate monitor 1 % high | 989.7 | 0.56 % | 0.990 | 100 % |
+| Realizable: tilt 0.8 deg, direction 0 | 997.8 | 0.70 % | 1.009 | 100 % |
+| Realizable: tilt 0.8 deg, direction 180 | 996.8 | 1.21 % | 0.991 | 100 % |
+| Frozen recipe, heater zones designed to 1425 K | 997.9 | 0.64 % | 1.000 | 100 % |
+| Same, pyrometer bias -2 K | 996.4 | 0.64 % | 0.999 | 100 % (no clamping) |
+| Same, pyrometer bias +2 K | 999.2 | 0.63 % | 1.001 | 100 % |
+
 Atom ledgers close to about 1e-13 and the heater energy balance to 2e-13 in every run. Wall time is 12-20 s for the 146 min recipe, against the PHASE1 gate of 60 min for a 60 min recipe.
 
 What the runs show:
@@ -126,6 +148,13 @@ What the runs show:
   - With a reading 2 K low, the controller asks for more power and is clamped: the wafer stays at 993.17 K instead of the requested 995.15 K (470 clamped samples).
   - With a reading 2 K high, the wafer runs 2 K cold, as commanded.
   - Any disturbance that needs more power (emissivity, contact, film optics) would leave the wafer cold. The heater design needs a power margin at the operating point; the steady studies counted this case as "capped".
+- **The realizable controllers recover the deep charge.**
+  - The BFM step corrects the cell for the depleted flux, so the 120 mm charge grows like the calibrated machine.
+  - A 2 % BFM error stays inside the window for this state.
+  - The rate monitor pulls the centre N back to its calibration after a pointing error within about four windows. The mean rate then settles within 1 %, because one centre monitor cannot see the tilted map's centre-to-mean change.
+  - A 1 % rate-monitor error passes straight into the rate.
+- **Zones designed to 1425 K (14 % headroom) remove the clamp.** A reading 2 K low now gets the power it asks for (wafer mean 994.4 K). The nominal spread rises from 0.57 to 0.64 %.
+- The steady ensemble over all states with these controllers is in [LAYOUT_COMPARISON.md](LAYOUT_COMPARISON.md) section 11. With rate monitor + BFM, 720 C is admissible only with the heater margin; otherwise the limit is 730 C.
 
 ## 5. Disabled couplings and limits
 
@@ -145,6 +174,7 @@ The PI gains, the droplet-consumption rate and the heat capacities are hypothese
 
 ## 6. Next steps for the twin
 
-1. **Controller observations.** Give the twin the observations a machine would have: a BFM flux measurement before growth, a growth-rate monitor and a fill-tracking cell schedule. Then rerun the truth ensemble (all pointing, fill, diameter and heater states of the comparison) with frozen settings. This is the realizable-controller study the 2026-10-05 audit asks for.
-2. **Heater power margin.** Optimize the zone fractions with power headroom at the operating point, and repeat the bias and emissivity cases.
-3. **Measured inputs.** Replace the priors (heat capacities, controller dynamics, cell transient) as vendor data and commissioning measurements arrive. Add the Al cell and AlN chemistry when the AlN model exists.
+1. **Campaign simulation.** Run consecutive growths as the charge depletes, with a BFM check every n runs, to set how often the flux must be re-measured (done in the steady study only per state; the drift between measurements is a twin question).
+2. **Commissioning dry run.** Generate synthetic commissioning data from a hidden truth chamber and check that the planned calibration sequence recovers the controller model.
+3. **Sensor placement.** Compare one centre pyrometer with multi-spot or emissivity-corrected pyrometry under growing-film optics drift.
+4. **Measured inputs.** Replace the priors (heat capacities, controller dynamics, cell transient) as vendor data and commissioning measurements arrive. Add the Al cell and AlN chemistry when the AlN model exists.

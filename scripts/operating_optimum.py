@@ -22,8 +22,9 @@ state's own N and Ga maps. Per point:
   and the operating rate actually grown);
 - nominal thickness;
 - share of valid states, share of states in the growth window.
-A point is admissible if at least ADMIT of its states are valid, at least ADMIT are in the
-window, and the nominal heater state reaches the labelled temperature under the element limit
+A point is admissible if at least ADMIT of its states are both valid and in the window (one joint
+fraction; the separate fractions are kept for diagnosis; before 2026-10-05 the two were gated
+separately, which admits a joint share down to 2 ADMIT - 1), and the nominal heater state reaches the labelled temperature under the element limit
 (1473 K) within 1 K; the front is taken over admissible points. Decomposition is fitted to 720-805 C data
 (G02): points below 720 C are extrapolations and are flagged.
 
@@ -127,6 +128,14 @@ def evaluate_point(inp, t_maps, reading, params, laws, rho, target, k_atoms, sce
                  "kn_min": float(inp["kn_per_sccm"] / feed.max())}
 
 
+def admission(valid, margin):
+    """Fractions of the states that are valid, in the window (margin >= 0) and both; the gate uses the joint one."""
+    valid = np.asarray(valid, bool)
+    inside = np.asarray(margin) >= 0.0
+    return {"valid_fraction": float(valid.mean()), "in_window_fraction": float(inside.mean()),
+            "joint_fraction": float((valid & inside).mean())}
+
+
 def pareto(points):
     """Indices of points not dominated in (thickness: min, rate: max, temperature: min)."""
     keep = []
@@ -207,16 +216,16 @@ def main():
             mg = np.stack([res[l]["margin"] for l in laws], -1)
             va = np.stack([res[l]["valid"] for l in laws], -1)
             nom = (0, inp["nominal_g"], 0, lip2, laws.index("Ref14_growth"))
-            pt = {**base, "reachable": True, **nbal, "valid_fraction": float(va.mean()), "in_window_fraction": float((mg >= 0).mean()),
+            pt = {**base, "reachable": True, **nbal, **admission(va, mg),
                   "worst_pct": float(th[va].max()) if va.any() else None, "nominal_pct": float(th[nom]),
                   "heater_capped_fraction": float(np.mean(hrep["state_capped"])),
                   "nominal_shortfall_K": float(hrep["state_mean_shortfall_K"][0])}
             # the nominal heater state must reach the labelled temperature under the element limit
-            pt["admissible"] = bool(pt["valid_fraction"] >= ADMIT and pt["in_window_fraction"] >= ADMIT
-                                    and pt["nominal_shortfall_K"] <= 1.0)
+            pt["admissible"] = bool(pt["joint_fraction"] >= ADMIT and pt["nominal_shortfall_K"] <= 1.0)
             points.append(pt)
             print(f"eta {scen['eta']:.1f} S {scen['S_eff_m3_s']:.0f} feed<={scen['feed_limit_sccm']:.0f} {name:4s} {t0} C {rate:4.2f} um/h: "
-                  f"valid {100 * pt['valid_fraction']:3.0f} %, window {100 * pt['in_window_fraction']:3.0f} %, nominal "
+                  f"valid {100 * pt['valid_fraction']:3.0f} %, window {100 * pt['in_window_fraction']:3.0f} %, "
+                  f"both {100 * pt['joint_fraction']:3.0f} %, nominal "
                   f"{pt['nominal_pct']:.2f} %, worst {pt['worst_pct'] if pt['worst_pct'] is None else round(pt['worst_pct'], 2)} %, "
                   f"capped {100 * pt['heater_capped_fraction']:.0f} %{' (admissible)' if pt['admissible'] else ''}", flush=True)
     fronts = []

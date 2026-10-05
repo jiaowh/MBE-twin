@@ -28,7 +28,7 @@ from mbe_twin.twin import DISABLED_COUPLINGS, Twin  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCES = [Path(__file__)] + [ROOT / f"src/mbe_twin/{m}.py" for m in
-                              ("twin", "chamber", "recipe", "surface", "sensors", "thermal_transient", "heater",
+                              ("twin", "chamber", "control", "recipe", "surface", "sensors", "thermal_transient", "heater",
                                "growth", "vacuum", "vapour", "radiation", "manifest")]
 
 
@@ -40,6 +40,8 @@ def main():
     ap.add_argument("--sample", type=float, default=10.0, help="time-series interval (s)")
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--pyrometer-bias", type=float, default=None, help="override the pyrometer bias (K)")
+    ap.add_argument("--rate-error", type=float, default=None, help="rate-monitor relative error (e.g. 0.01)")
+    ap.add_argument("--bfm-error", type=float, default=None, help="beam-flux-monitor relative error (e.g. 0.02)")
     ap.add_argument("--run-id", default=None)
     ap.add_argument("--no-record", action="store_true", help="write the bundle only, not the study record")
     args = ap.parse_args()
@@ -47,11 +49,19 @@ def main():
     definition = load_definition(args.chamber)
     if args.pyrometer_bias is not None:
         definition["sensors"]["pyrometer"]["bias_K"] = args.pyrometer_bias
+    if args.rate_error is not None:
+        definition["sensors"]["rate_monitor"]["error_rel"] = args.rate_error
+    if args.bfm_error is not None:
+        definition["sensors"]["bfm"]["error_rel"] = args.bfm_error
     chamber = Chamber(definition)
     recipe = json.loads(Path(args.recipe).read_text(encoding="utf-8"))
     run_id = args.run_id or f"{recipe['name']}_{Path(args.chamber).stem.removeprefix('chamber_')}"
     if args.pyrometer_bias:
         run_id += f"_bias{args.pyrometer_bias:+g}K"
+    if args.rate_error:
+        run_id += f"_rate{100 * args.rate_error:+g}pct"
+    if args.bfm_error:
+        run_id += f"_bfm{100 * args.bfm_error:+g}pct"
     out = ROOT / "results/twin" / run_id
     out.mkdir(parents=True, exist_ok=True)
 
@@ -92,11 +102,13 @@ def main():
         # one sample per minute of the main channels, so figures can be drawn from the record alone
         "trace_60s": {k: [None if (isinstance(v, float) and np.isnan(v)) else v for v in ts[k][::max(1, round(60.0 / args.sample))].tolist()]
                       for k in ("t_s", "step", "pyrometer_K", "wafer_mean_K", "element_max_K", "power_W", "ga_cell_K",
-                                "pressure_Pa", "shutter_ga", "shutter_n", "plasma", "thickness_mean_nm", "window_fraction")},
+                                "pressure_Pa", "shutter_ga", "shutter_n", "plasma", "thickness_mean_nm", "window_fraction",
+                                "n2_sccm", "growth_rate_mean_nm_min", "ga_centre_nm_min", "n_centre_nm_min")},
     }
     inputs = {"chamber": Path(args.chamber).as_posix(), "chamber_sha256": chamber.sha256(), "recipe": recipe,
               "recipe_sha256": canonical_hash(recipe), "dt_max_s": args.dt, "sample_s": args.sample, "seed": args.seed,
               "pyrometer_bias_K": definition["sensors"]["pyrometer"].get("bias_K", 0.0),
+              "rate_monitor": definition["sensors"].get("rate_monitor"), "bfm": definition["sensors"].get("bfm"),
               "chamber_priors": definition.get("priors"), "chamber_provenance": definition.get("provenance")}
     man = build_manifest(f"twin_{run_id}", label=chamber.label, inputs=inputs, outputs=outputs,
                          warnings=twin.warnings, disabled_physics=DISABLED_COUPLINGS, sources=SOURCES)

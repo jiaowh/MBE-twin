@@ -1,0 +1,22 @@
+{
+ "schema_version": "0.1",
+ "name": "gan_1um_720C_realizable",
+ "description": "As gan_1um_720C, with realizable Ga and N control: a 2-minute beam-flux-monitor measurement before growth sets the Ga cell, the cell then follows the window middle at the pyrometer reading through the frozen calibration, and an in-situ growth-rate monitor re-sets the N2 feed every 10 minutes of growth. Not a machine recipe.",
+ "initial": {"wafer_C": 25.0, "ga_cell_K": 900.0},
+ "steps": [
+  {"name": "heat-up (open loop)", "duration_s": 2100.0,
+   "heater": {"mode": "feedforward", "target_C": 650.0, "ramp_K_per_min": 30.0},
+   "ga_cell": {"target_K": "operating_point", "ramp_K_per_min": 15.0}, "rotation_rpm": 10.0},
+  {"name": "ramp to growth temperature, plasma on", "duration_s": 600.0,
+   "heater": {"mode": "pyrometer", "target_C": "operating_point", "ramp_K_per_min": 20.0},
+   "n2_sccm": "rate_monitor", "plasma": true},
+  {"name": "stabilize", "duration_s": 180.0, "ga_cell": {"target_K": "steered"}},
+  {"name": "Ga beam-flux measurement", "duration_s": 120.0, "bfm": true, "shutters": {"ga": true, "n": false}},
+  {"name": "GaN growth", "duration_s": 3600.0, "shutters": {"ga": true, "n": true}},
+  {"name": "Ga off, N on (consume excess Ga)", "duration_s": 300.0, "shutters": {"ga": false, "n": true}},
+  {"name": "plasma off", "duration_s": 60.0, "shutters": {"ga": false, "n": false}, "plasma": false, "n2_sccm": 0.0},
+  {"name": "cool-down", "duration_s": 1800.0,
+   "heater": {"mode": "feedforward", "target_C": 300.0, "ramp_K_per_min": 30.0},
+   "ga_cell": {"target_K": 900.0, "ramp_K_per_min": 15.0}}
+ ]
+}

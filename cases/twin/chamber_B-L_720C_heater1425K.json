@@ -1527,18 +1527,18 @@
    "k_platen": 100.0
   },
   "zone_fractions": [
-   0.004750902404433179,
-   0.014359352869576212,
-   0.02374013444750338,
-   0.03377036822971437,
-   0.04247958103146226,
-   0.05405111819245787,
-   0.06173223022206791,
-   0.0683320971549585,
-   0.10789622356291069,
+   0.004715833841012376,
+   0.01565952935509381,
+   0.022847407562623784,
+   0.0393104169531484,
+   0.03487719460151438,
+   0.07407252586749839,
+   0.03875804184359352,
+   0.0911139226838749,
+   0.10305722913273486,
    0.0,
-   0.15807272425597194,
-   0.43081526762894357
+   0.20279365189057233,
+   0.37279424626833324
   ],
   "areal_heat_capacity_J_m2K": {
    "heater": 3700.0,
@@ -1546,7 +1546,8 @@
   },
   "element_limit_K": 1473.15,
   "optimized_at_K": 993.15,
-  "optimized_wafer_range_K": 2.5112638379038117
+  "design_limit_K": 1425.0,
+  "optimized_wafer_range_K": 2.8201536937664287
  },
  "growth": {
   "droplet_law": "Heying_growth",
@@ -1651,22 +1652,22 @@
  },
  "operating_point": {
   "wafer_C": 720.0,
-  "ga_cell_K": 1243.8489084454154,
-  "n2_sccm": 18.59179704613063,
+  "ga_cell_K": 1243.8439615066054,
+  "n2_sccm": 18.58745235665355,
   "expected": {
-   "pressure_Pa": 0.00862078453093166,
+   "pressure_Pa": 0.008618769952580638,
    "rate_target_um_h": 1.0,
-   "spot_reading_K": 993.158398009836,
-   "wafer_mean_K": 992.6194401763272,
-   "wafer_range_K": 2.43649371654044,
-   "heater_power_W": 2382.037936789273,
+   "spot_reading_K": 993.1676301579289,
+   "wafer_mean_K": 992.2987848308128,
+   "wafer_range_K": 2.8123739528975875,
+   "heater_power_W": 2299.410738795964,
    "window_ga_over_n_centre": [
-    1.0254624220091497,
-    1.4019451977092714
+    1.0254702843507504,
+    1.402229621947912
    ],
-   "ga_over_n_centre": 1.2137038098592106,
-   "ga_cell_minus_reference_K": 16.239532270223208,
-   "plate_kn": 22.364301087726172
+   "ga_over_n_centre": 1.2138499531493312,
+   "ga_cell_minus_reference_K": 16.2345853314132,
+   "plate_kn": 22.36952858968468
   },
   "basis": "solved once on the calibration state (nominal pose, 70 mm / 8 A) and frozen: pyrometer spot held at wafer_C; N feed from the per-state balance (layout_comparison.solve_states) for the wafer-mean net rate; Ga centre flux mid-window from the reading (operating_optimum protocol). The definition's maps are the truth state's; the twin's controllers observe only the pyrometer and the gauge."
  },
@@ -3075,7 +3076,7 @@
    "centre_flux_m2_s": 1.2127055258641273e+19,
    "record": "ga_dsmchold/fill070_d8_dsmchold.json"
   },
-  "centre_over_mean_rate": 0.9980842960859783,
+  "centre_over_mean_rate": 0.9979046201706456,
   "rate_target_um_h": 1.0
  },
  "provenance": {
@@ -3115,7 +3116,7 @@
    "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
   },
   "source_sha256": {
-   "scripts/twin_chamber.py": "16276419671f91d6cba663c689510cc92de33ad460865e6a06d550d9cdb3ad9c",
+   "scripts/twin_chamber.py": "d710cd2ef77348d8897c4b4dcdec39c04d85db9d840d7f3a6430fb30c7ac6b97",
    "scripts/layout_comparison.py": "43ae5196080f5668500ad659a594fc91fe405f355b4e58aae6e469464c57333c",
    "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
    "scripts/heater_zones.py": "2cf7e07a02dc9c08a7274be389a2e4cccf6082617785d10b6ccd99e9191fb73f",
@@ -3134,7 +3135,8 @@
    "out": null,
    "truth_tilt": null,
    "truth_fill": null,
-   "truth_d": null
+   "truth_d": null,
+   "heater_design_limit": 1425.0
   }
  }
 }

@@ -1,12 +1,18 @@
 # Source layouts at physically achievable operating points
 
-Status: 2026-10-03 (fifth revision: section 10 adds the gas-scattered atoms and the nitrogen plume; sections 1-8 are the direct-beam model and stay as recorded; fourth revision after the [project audit](PROJECT_AUDIT_2026-10-01.md), its [follow-up](PROJECT_AUDIT_FOLLOWUP_2026-10-01.md) and the [2026-10-02 audit](PROJECT_AUDIT_2026-10-02.md)), `representative_chamber`. These are model comparisons on a typical 200 mm RIBER/Veeco-class geometry, not predictions for the proposed machine. No nitrogen map, heater result or growth model here is validated against a measurement.
+Status: 2026-10-05 (sixth revision: section 11 replaces the Ga steering with a realizable controller and adds a heater power margin; fifth revision: section 10 adds the gas-scattered atoms and the nitrogen plume; sections 1-8 are the direct-beam model and stay as recorded; fourth revision after the [project audit](PROJECT_AUDIT_2026-10-01.md), its [follow-up](PROJECT_AUDIT_FOLLOWUP_2026-10-01.md) and the [2026-10-02 audit](PROJECT_AUDIT_2026-10-02.md)), `representative_chamber`. These are model comparisons on a typical 200 mm RIBER/Veeco-class geometry, not predictions for the proposed machine. No nitrogen map, heater result or growth model here is validated against a measurement.
 
 **The question:** under what physically achievable conditions does a layout meet the project's requirements?
 
 **The short answer:** no layout can be called a pass, because neither a uniformity target nor a minimum growth rate is agreed (section 8). The model can, however, say which conditions each layout needs, and where its results are inside the model's validity. Two conditions dominate:
 - **Nitrogen supply sets the reachable growth rate.** That rate depends on a source conversion fraction nobody has published. The literature implies it lies between 6 and 57 % at high flow.
 - **The aperture plate must stay free-molecular at the flow that rate needs.** With the published-type plate, it stops being free-molecular above about 6 sccm.
+
+**Update 2026-10-05 (section 11).** The Ga steering of sections 8 and 10 knew every uncertain state's maps (audit 2026-10-05). With a controller that knows only a frozen calibration and real instruments:
+- 1 um/h at 720 C needs a Ga beam-flux monitor, an in-situ growth-rate monitor and a heater designed with about 14 % power headroom. Worst case 1.69 % (B-p) / 1.85 % (B-L).
+- Without the heater margin, the cold limit is 730 C.
+- Without the beam-flux monitor, no temperature qualifies.
+- The joint 95 % rule now applies everywhere. It removes one recorded point (B-L at 1.25 um/h, 740 C).
 
 **Update 2026-10-03 (section 10).** Atoms scattered by the chamber gas are now followed instead of dropped, and the nitrogen plate's own plume is added:
 - Most scattered Ga still reaches the wafer, and 13-21 % more N arrives.
@@ -325,7 +331,7 @@ For each supply scenario it reports the points that no other point beats on all 
 
   The direct-beam model gives the same thresholds (at most 94 % at +/-5 K, 89 % at +/-10 K). A plain single-wavelength pyrometer on GaN-on-Si can err by more than that as the layer grows (thin-film interference), so the reading must be emissivity-corrected and checked against temperature anchors (COMMISSIONING_PLAN.md, steps 2 and 5).
 
-**Working operating point (adopted 2026-10-02, provisional): 1 um/h at 720 C** (on the source labs' temperature scale), with Ga steered from a centre pyrometer. It stands until a crystal-quality minimum temperature or the hardware answers (requests 1-3) change it.
+**Working operating point (adopted 2026-10-02, provisional): 1 um/h at 720 C** (on the source labs' temperature scale), with Ga steered from a centre pyrometer. *Revised 2026-10-05 (section 11): with a realizable controller it holds only with a Ga beam-flux monitor, a growth-rate monitor and a heater with about 14 % power headroom; otherwise 730 C. The figures in this section assume the controller knows every state's maps.* It stands until a crystal-quality minimum temperature or the hardware answers (requests 1-3) change it.
 - **Why 720 C:** it is the coldest temperature at which 1 um/h keeps the growth window under combined heater errors, in every scenario and layout that reaches 1 um/h. It is also the coldest temperature inside the range the decomposition law was fitted to (720-805 C).
 - **Why 1 um/h:**
   - Going faster costs temperature quickly (1.25 um/h needs 740 C at realistic conversion) and gains little uniformity.
@@ -447,6 +453,82 @@ The batch means are fitted as a quadratic in r^2 (median reduced chi^2 1.2). The
 - the N wall recombination is not sourced.
 
 The record scattered_redeposition.json hashes `src/mbe_twin/scattering.py` at a version with two functions (`direct_flux`, `binned_direct_flux`) that were added while it ran and that it does not call.
+
+## 11. Realizable controller and heater power margin (2026-10-05)
+
+The [2026-10-05 audit](PROJECT_AUDIT_2026-10-05.md) (finding 1) showed that the temperature-corrected Ga protocol of sections 8 and 10 places the Ga in the middle of each uncertain state's own window, computed from that state's N map, Ga shape and pressure. A centre pyrometer does not observe those maps. scripts/realizable_controller.py replaces that protocol by controllers that know only a calibration frozen on the nominal state, plus named observations with errors. Growth is then evaluated with every state's true maps (records [realizable_controller_sc_plume.json](../data/runs/studies/realizable_controller_sc_plume.json) and [realizable_controller_sc_plume_heater1425.json](../data/runs/studies/realizable_controller_sc_plume_heater1425.json); gas + plume arrival; 1 um/h).
+
+**Setup.**
+- **Calibration (commissioning, nominal state, operating temperature).** It fixes four things: the feed for the wafer-mean rate, the Ga cell temperature for the window middle, the nominal N and Ga shapes, and the centre-to-mean ratio of the net rate. The droplet onset is measured at the centre, so each droplet law is a truth scenario with its own calibration.
+- **Truth states.** 25 N pointings within +/-0.8 deg. Six Ga records (40 / 70 / 120 mm fill x 5.68 / 8 A), each with its own absolute flux versus cell temperature. 27 combined heater errors x pyrometer bias -2 / 0 / +2 K. Three droplet laws. Observation errors at -e / 0 / +e.
+- **Validity.** A state counts if:
+  - the plate holes stay free-molecular;
+  - the feed is within its limit;
+  - the wafer-mean rate is within 3 % of the target (the controllers hold the centre rate, not the mean).
+
+  The gate is the joint 95 % fraction (finding 2, now enforced in every study).
+
+**Controllers.** All of them see the pyrometer and the ion gauge.
+- **Known maps (bound):** the earlier protocol. It reproduces the audit's 96.19 % (B-p) and 97.31 % (B-L) at 720 C exactly.
+- **Frozen:** the calibrated feed and cell temperature, never re-set.
+- **Rate monitor:** an in-situ growth-rate monitor at the centre (laser reflectometry, +/-1 %) re-sets the feed to the calibrated centre rate. The Ga target is the window middle from the calibrated shapes at the reading, applied through the calibrated cell model.
+- **+ BFM:** additionally, a beam-flux monitor at the wafer centre sets the Ga arrival (+/-2 %).
+- **+ fill:** additionally, the Ga shape of the charge's current fill (known from bookkeeping).
+- **+ commissioned maps:** additionally, each state's own N and Ga shapes, as N-limited and Ga-limited thickness maps measured at commissioning would give them. They are taken as exact, which is an optimistic limit.
+
+![Share of uncertain states in the growth window by controller and heater design](figures/controllers.png)
+
+**Share of states valid and in the window, and coldest admissible temperature for 1 um/h** (worst-case thickness half-range/mean there):
+
+| Controller | B-p, 720 C | B-L, 720 C | Coldest, current heater | Coldest, 14 % power margin |
+|---|---:|---:|---|---|
+| Known maps (bound) | 96.2 % | 97.3 % | 720 C (1.53 %) | 710 C (1.50 / 1.66 %) |
+| Frozen | 33.1 % | 37.3 % | none up to 790 C | none |
+| Rate monitor | 51.3 % | 51.7 % | none | none |
+| Rate monitor + BFM | 88.9 % | 90.8 % | **730 C (1.68 / 1.67 %)** | **720 C (1.69 / 1.85 %)** |
+| + fill | 89.9 % | 92.0 % | 730 C | 720 C |
+| + commissioned maps | 90.3 % | 92.3 % | 730 C | 720 C |
+
+In the last two columns the pairs are B-p / B-L. With the margin heater, rate monitor + BFM gives 97.0 % (B-p) and 95.7 % (B-L) at 720 C.
+
+**What the controller must observe:**
+- **A Ga beam-flux measurement is indispensable.** Without it, a deeper or shallower charge moves the Ga out of the window at the frozen cell temperature: with the rate monitor alone, only 19-43 % of the 40 and 120 mm states pass at 720 C. A rate monitor alone never reaches 95 % at any temperature.
+- **The rate monitor is needed for the N side.** It re-sets the feed for pointing and pressure changes, to within the centre-to-mean change of the tilted map (mean rate -2.6 to +2.4 % at 720 C).
+- **Knowing the fill or the commissioned maps adds only 1-2 points.** The remaining gap to the bound is the run-to-run part:
+  - the instrument errors. With zero rate and BFM error, the commissioned-maps controller reaches 97.1 % for B-L at 720 C, against the bound's 97.3 %. Given the same information, the realizable protocol reproduces the earlier study.
+  - the heater state: wafer emissivity, contact, zone error and pyrometer bias.
+- **Error budget at 720 C, current heater, B-L / B-p.** The BFM error matters most.
+
+  | Rate monitor / BFM error | Rate monitor + BFM | + commissioned maps |
+  |---|---|---|
+  | 1 % / 2 % | 90.8 / 88.9 % | 92.3 / 90.3 % |
+  | 1 % / 0 | 93.4 / 91.9 % | 95.9 / 94.5 % |
+  | 0 / 2 % | 91.2 / 89.1 % | 93.0 / 90.9 % |
+  | 0.5 % / 1 % | 93.2 / 91.6 % | 95.6 / 94.1 % |
+  | 0 / 0 | 93.6 % (B-L) | 97.1 % (B-L) |
+
+**Heater power margin** (scripts/heater_margin.py, record [heater_margin.json](../data/runs/studies/heater_margin.json)). The zone fractions of the comparison are optimized under the 1473 K element limit, so at the operating point the hottest ring is on the limit (integrated twin: 2382 of 2387 W).
+- With those fractions, 46 % of the 81 combined heater/pyrometer states are capped, and their reading falls up to 24 K short.
+- Optimizing the zones under a 1425 K design limit leaves 14.2 % power headroom, at a cost of 0.3 K more wafer range (2.51 -> 2.82 K at 720 C). No combined state is capped any more.
+- That headroom is what moves the realizable cold limit back to 720 C. It also costs uniformity at higher temperatures, because the wider wafer range raises the worst cases above about 730 C.
+
+| Design limit | Headroom | Wafer range, 720 C | Capped combined states | Largest reading shortfall |
+|---|---:|---:|---:|---:|
+| 1473 K (current) | 0 % | 2.51 K | 46 % | 24 K |
+| 1450 K | 6.6 % | 2.66 K | 32 % | 8 K |
+| **1425 K** | **14.2 %** | **2.82 K** | **0 %** | 0 |
+| 1400 K | 22.6 % | 2.98 K | 0 % | 0 |
+
+The integrated twin confirms both effects in time ([INTEGRATED_TWIN.md](INTEGRATED_TWIN.md), section 4). With the BFM step and the rate monitor, the 120 mm charge grows like the calibrated machine (100 % of the wafer in the window, against 38 % with frozen settings). With the 1425 K design, a pyrometer reading 2 K low is no longer clamped.
+
+**Revised working point (2026-10-05).** 1 um/h at 720 C stands only with all three of the following:
+1. A heater with about 14 % power headroom at the operating point (zones designed to about 1425 K, element rated 1473 K).
+2. A Ga beam-flux measurement before growth (+/-2 % or better).
+3. An in-situ growth-rate monitor that re-sets the N feed (+/-1 % or better).
+
+Its worst case is 1.69 % for B-p and 1.85 % for B-L. Without the heater margin, the same instruments need 730 C (1.67-1.68 %). Without the BFM there is no admissible 1 um/h point.
+
+The flux-monitor and rate-monitor error magnitudes are priors until the instruments are selected. The commissioned maps are an optimistic limit (exact map calibration). The grid of states is not a probability distribution.
 
 ## Appendix: superseded records
 

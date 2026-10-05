@@ -76,6 +76,8 @@ PRIORS = {
     "sensors.pyrometer.noise_K": (0.2, "reading noise; the bias budget is +/-2 K (audit 2026-10-03)"),
     "sensors.pyrometer.valid_min_K": (873.0, "Si opaque enough at the pyrometer wavelength above about 600 C"),
     "sensors.ion_gauge.noise_rel": (0.01, "1 % reading noise"),
+    "sensors.rate_monitor.window_s": (600.0, "laser reflectometry needs about one interference period (~140 nm of GaN at "
+                                             "633 nm, 8 min at 1 um/h) per rate reading"),
 }
 
 
@@ -94,6 +96,9 @@ def main():
                     help="truth N pointing: pivot name of the envelope (e.g. flange), tilt 0.8 or 1.6 deg, direction 0-330 deg")
     ap.add_argument("--truth-fill", type=int, default=None, help="truth Ga fill (mm) among the port's admissible fills")
     ap.add_argument("--truth-d", default=None, choices=list(lc.GA_D), help="truth Ga collision diameter label")
+    ap.add_argument("--heater-design-limit", type=float, default=None,
+                    help="element temperature (K) the zone fractions are optimized under; the limit stays 1473.15 K "
+                         "(scripts/heater_margin.py)")
     args = ap.parse_args()
     truth_tag = ""
     if args.truth_tilt:
@@ -102,6 +107,8 @@ def main():
         truth_tag += f"_fill{args.truth_fill}"
     if args.truth_d:
         truth_tag += f"_d{args.truth_d}"
+    if args.heater_design_limit:
+        truth_tag += f"_heater{args.heater_design_limit:g}K"
     out = Path(args.out or f"cases/twin/chamber_{args.layout}_{args.t_c:g}C{truth_tag}.json")
 
     env = json.loads(lc.ENVELOPE.read_text(encoding="utf-8"))
@@ -162,7 +169,7 @@ def main():
     model = lc.hz.make(edges, {"ledge_inner": opening}, {})
     limit = lc.LIMITS["1473 K element"]
     t0_k = args.t_c + lc.C
-    r_opt, frac = lc.hz.optimize(model, t0_k, limits={"t_heater_max": limit})
+    r_opt, frac = lc.hz.optimize(model, t0_k, limits={"t_heater_max": args.heater_design_limit or limit})
     g_kw, p_kw = heater_definition(model.geometry, model.props)
 
     gp = json.loads((ROOT / "data/parameters/gan_growth.json").read_text(encoding="utf-8"))
@@ -185,6 +192,7 @@ def main():
                    "areal_heat_capacity_J_m2K": {"heater": pr["heater.areal_heat_capacity_J_m2K.heater"],
                                                  "ledge": pr["heater.areal_heat_capacity_J_m2K.ledge"]},
                    "element_limit_K": limit, "optimized_at_K": t0_k,
+                   "design_limit_K": args.heater_design_limit or limit,
                    "optimized_wafer_range_K": float(r_opt["wafer_range"])},
         "growth": {"droplet_law": args.droplet_law, "n_rich_decomposition": "vacuum", "atoms_per_m2_s_per_nm_min": k_atoms},
         "sensors": {"pyrometer": {"spot_radius_m": pr["sensors.pyrometer.spot_radius_m"], "bias_K": 0.0,
@@ -192,6 +200,8 @@ def main():
                                   "valid_min_K": pr["sensors.pyrometer.valid_min_K"]},
                     "ion_gauge": {"sensitivity": 1.0, "noise_rel": pr["sensors.ion_gauge.noise_rel"]},
                     "regime_spot_radius_m": 0.01,
+                    "rate_monitor": {"window_s": pr["sensors.rate_monitor.window_s"], "error_rel": 0.0, "noise_rel": 0.0},
+                    "bfm": {"error_rel": 0.0, "noise_rel": 0.0},
                     "thickness_map_radii_m": [float(x) for x in np.arange(0.0, usable + 1e-9, 0.005)] + [usable]},
         "priors": {k: {"value": v, "basis": b} for k, (v, b) in PRIORS.items()},
         "truth_state": truth,
@@ -238,6 +248,15 @@ def main():
                  "wafer_C; N feed from the per-state balance (layout_comparison.solve_states) for the wafer-mean net rate; "
                  "Ga centre flux mid-window from the reading (operating_optimum protocol). The definition's maps are the "
                  "truth state's; the twin's controllers observe only the pyrometer and the gauge."}
+    # what the realizable controllers know: the calibration state's maps and the centre-to-mean rate ratio there
+    from mbe_twin.growth import steady_state
+    st_cal = steady_state(mid * jn[0] * gshape, jn, t_map, params, args.droplet_law)
+    definition["controller_model"] = {
+        "basis": "calibration state (nominal pose, 70 mm / 8 A); used by the twin's rate-monitor and BFM controllers",
+        "n_map_per_atom_s": n_cal.tolist(), "n_att": np.asarray(att_n).tolist(),
+        "ga_shape": ga_shape_cal.tolist(), "ga_att": np.asarray(att_g_cal).tolist(), "ga_reference": ga_ref_cal,
+        "centre_over_mean_rate": float(st_cal["net_growth"][0] / lc.area_mean(st_cal["net_growth"], rho)),
+        "rate_target_um_h": args.rate_um_h}
     definition["provenance"] = {
         "comparison_record": rec_path.relative_to(ROOT).as_posix(), "comparison_record_sha256": lc.file_sha256(rec_path),
         "map_caches": [c for c in rec["inputs"]["map_caches"]

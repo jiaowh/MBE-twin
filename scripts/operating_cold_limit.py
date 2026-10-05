@@ -14,7 +14,7 @@ its own feed, pressure and attenuation, over the +/-0.8 deg pointing ensemble, t
 diameters, the three droplet laws and the 2 mm lip.
 
 For each supply scenario, layout and rate, the coldest temperature (10 K steps) at which at least
-ADMIT of the states are valid and in the window is reported for each controller, with the
+ADMIT of the states are both valid and in the window (joint fraction, operating_optimum.admission) is reported for each controller, with the
 worst-case thickness there.
 
 Usage: python scripts/operating_cold_limit.py [--out results/operating_cold_limit] [--scattered none|gas|gas-gamma0.1|gas+plume]
@@ -115,16 +115,16 @@ def main():
                     th = np.stack([res[l]["thickness"] for l in laws], -1)
                     mg = np.stack([res[l]["margin"] for l in laws], -1)
                     va = np.stack([res[l]["valid"] for l in laws], -1)
-                    entry[cname] = {"valid_fraction": float(va.mean()), "in_window_fraction": float((mg >= 0).mean()),
-                                    "worst_pct": float(th[va].max()) if va.any() else None,
-                                    "admissible": bool(va.mean() >= ADMIT and (mg >= 0).mean() >= ADMIT
-                                                       and entry["nominal_shortfall_K"] <= 1.0)}
+                    adm = oo.admission(va, mg)
+                    entry[cname] = {**adm, "worst_pct": float(th[va].max()) if va.any() else None,
+                                    "admissible": bool(adm["joint_fraction"] >= ADMIT and entry["nominal_shortfall_K"] <= 1.0)}
             per_t.append(entry)
         row = {**scen, "layout": name, "rate_um_h": rate, "temperatures": per_t}
         for cname in controllers:
             ok = [e for e in per_t if e["reachable"] and e[cname]["admissible"]]
             row[f"coldest_{cname}"] = ({"T_C": ok[0]["T_C"], "worst_pct": ok[0][cname]["worst_pct"],
-                                        "in_window_fraction": ok[0][cname]["in_window_fraction"]} if ok else None)
+                                        "in_window_fraction": ok[0][cname]["in_window_fraction"],
+                                        "joint_fraction": ok[0][cname]["joint_fraction"]} if ok else None)
         rows.append(row)
         cm, cp = row["coldest_mean"], row[f"coldest_{pyro}"]
         print(f"eta {scen['eta']:.1f} S {scen['S_eff_m3_s']:.0f} feed<={scen['feed_limit_sccm']:.0f} {name:4s} {rate:4.2f} um/h: coldest "

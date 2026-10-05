@@ -13,7 +13,8 @@ as "not reviewed". `--hashes` prints the current pins to paste after a review. T
 data/runs/studies/PROVENANCE.md, so that it is found with them rather than in commit messages.
 
 Besides source_sha256, a record can depend on data tables it names only under inputs (the scattered-arrival
-factor tables: inputs.scattered_tables_sha256 and inputs.scattered_plume_tables_sha256), and records run
+factor tables: inputs.scattered_tables_sha256 and inputs.scattered_plume_tables_sha256; the Ga DSMC summaries:
+inputs.ga_records_sha256, also under inputs.chamber_provenance for twin runs), and records run
 with --scattered gas+plume before 2026-10-03 loaded the plume tables without recording them. Both are checked
 like sources (see recorded_hashes): an input hash against the current file, and an unrecorded plume dependency
 against the hashes stored by the comparison record the study read, which used the same files at the time. A
@@ -148,6 +149,8 @@ def applicable_note(path, current, record, recorded):
 INPUT_HASHES = {
     "scattered_tables_sha256": lambda v: {"data/runs/studies/scattered_tables.json": v},
     "scattered_plume_tables_sha256": lambda v: {f"data/runs/studies/scattered_plume_tables_{k}.json": h for k, h in v.items()},
+    # Ga DSMC summaries a study reloads (paths relative to data/runs/sparta_ga; audit 2026-10-05, finding 3)
+    "ga_records_sha256": lambda v: {f"data/runs/sparta_ga/{k}": h for k, h in v.items()},
 }
 PLUME_PREFIX = "data/runs/studies/scattered_plume_tables_"
 UNTRACED = "untraced"
@@ -158,10 +161,12 @@ def recorded_hashes(m):
     did not record them) the plume tables, traced through the comparison record it read; UNTRACED if none."""
     out = dict(m.get("source_sha256", {}))
     inputs = m.get("inputs", {})
-    for key, expand in INPUT_HASHES.items():
-        if isinstance(inputs.get(key), (str, dict)) and inputs[key]:
-            for path, h in expand(inputs[key]).items():
-                out.setdefault(path, h)
+    # twin runs carry their chamber definition's provenance one level down
+    for scope in (inputs, inputs.get("chamber_provenance") or {}):
+        for key, expand in INPUT_HASHES.items():
+            if isinstance(scope.get(key), (str, dict)) and scope[key]:
+                for path, h in expand(scope[key]).items():
+                    out.setdefault(path, h)
     if inputs.get("scattered") == "gas+plume" and not any(p.startswith(PLUME_PREFIX) for p in out):
         traced = False
         for path in list(out):

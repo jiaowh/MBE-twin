@@ -1,6 +1,6 @@
 # Hardware information requested for the 200 mm GaN MBE design
 
-Status: 2026-10-03 (updated for the model with scattered atoms, and for the commissioning rehearsals). For the hardware team and for nitrogen-source, heater and chamber vendors.
+Status: 2026-10-05 (heater power headroom and in-situ instruments added, section 4 and new section 7; 2026-10-03: scattered atoms, commissioning rehearsals). For the hardware team and for nitrogen-source, heater and chamber vendors.
 
 We are choosing where to mount the nitrogen plasma source and the gallium cells on a 200 mm GaN-on-Si MBE chamber, which nitrogen aperture plate to specify, and which heater to use, using a computer model of the chamber. The working layout mounts the nitrogen source on the same ring as the effusion cells, aimed about 100 mm off the wafer centre. The model shows that the choice, and whether the target growth rate is reachable at all, now depend on a few hardware facts that no published source gives. Each request below says what we need, in what form, and which decision it settles. Approximate or preliminary figures are useful; please say how each figure was obtained (measured, calculated or specified).
 
@@ -37,6 +37,8 @@ We are choosing where to mount the nitrogen plasma source and the gallium cells 
 
 The reading's error budget is tight. In the model, the error with which the gallium is placed in the growth window must stay within about 3 K equivalent at the working point (1 um/h at 720 C). With the gallium placed 3 K off, the standard plate already needs 730 C; at 4 K the working temperature rises by 10 C, and the large plate at realistic conversion has no working temperature. At 5 K or more, no growth temperature keeps 95 % of the modelled cases (combinations of heater, pointing, gallium-fill and growth-law uncertainty, not a wafer yield) in the smooth-growth range. That budget is shared: calibrating the window edge and the gallium-to-nitrogen ratio uses 2-4 K of it, so the reading itself should be **reproducible to about 1-2 K** between calibration runs and production, from wafer to wafer, and while a GaN layer grows on the silicon wafer (which changes the apparent emissivity as the layer thickens). An absolute accuracy is not needed: the growth window is calibrated against the instrument's own reading. Please tell us whether your pyrometer corrects for the growing layer (emissivity-corrected or reflectance-compensated pyrometry, or band-edge thermometry of the substrate), and its stated reproducibility and drift during growth.
 
+**Power headroom (2026-10-05).** In the model, a heater whose zones are laid out so that the element runs right at its rating at the operating point cannot respond when the wafer needs more heat. Examples are a slightly more emissive wafer, poorer contact with the holder, or a temperature reading that is low. In about half of the modelled cases the wafer then runs up to 24 K cold. Laying the zones out for an element about 50 K below its rating at 720 C leaves about 14 % power headroom and removes the problem, at a small cost in temperature evenness (0.3 K). Please tell us the power per zone available above the operating point, or the element temperature at 720 C wafer temperature for your zone layout, and whether the zone layout (element pitch) can be chosen.
+
 ## 5. Mounts, ports and holder
 
 **What we need.**
@@ -52,6 +54,14 @@ The reading's error budget is tight. In the model, the error with which the gall
 **What we need.** A dimensioned chamber drawing or CAD model: source ports, cryoshroud, RHEED and pyrometer lines of sight, main shutter, manipulator.
 
 **Why.** The clearance checks so far use simplified solids and do not include the cryoshroud or the diagnostic lines of sight.
+
+## 7. In-situ instruments: gallium beam flux and growth rate
+
+**What we need.**
+- A **beam-flux monitor** (ion gauge) that can be placed at the wafer position: its reproducibility for a Ga beam from run to run and after remounting, and how its reading is converted to an atom flux.
+- An **in-situ growth-rate monitor** (laser reflectometry or interferometry through a viewport near the wafer normal): its rate accuracy on GaN-on-Si and the time it needs per reading.
+
+**Why.** The model was rerun with a controller that only uses what a machine can measure. Without a Ga flux measurement before each growth, the gallium supply leaves the smooth-growth range as the crucible empties, at any growth temperature. With a beam-flux monitor good to about 2 % and a growth-rate monitor good to about 1 %, 1 um/h at 720 C holds in at least 95 % of the modelled cases, provided the heater has the power headroom of section 4; without the headroom it needs 730 C. Better instruments narrow the gap further. The beam-flux monitor's accuracy matters most.
 
 ## Contact and format
 

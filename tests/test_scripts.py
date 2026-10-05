@@ -203,3 +203,20 @@ def test_nitrogen_aim_tolerance_fails_on_partial_scans(tmp_path):
         mod.load_scans(tmp_path, [2.92, 11.66])
     with pytest.raises(SystemExit, match="no aim scan defined"):
         mod.load_scans(tmp_path, [2.92, 7.0])
+
+
+def test_provenance_covers_ga_record_dependencies(tmp_path):
+    # audit 2026-10-05 finding 3: the Ga DSMC summaries a study reloads are checked like sources, also for twin runs
+    import importlib.util
+    root = Path(__file__).resolve().parents[1]
+    spec = importlib.util.spec_from_file_location("record_provenance", root / "scripts/record_provenance.py")
+    rp = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(rp)
+    rec = "ga_dsmchold/fill070_d8_dsmchold.json"
+    path = f"data/runs/sparta_ga/{rec}"
+    actual = rp.sha_lf((root / path).read_bytes())
+    for m in ({"inputs": {"ga_records_sha256": {rec: "0" * 64}}},
+              {"inputs": {"chamber_provenance": {"ga_records_sha256": {rec: "0" * 64}}}}):
+        hashes = rp.recorded_hashes(m)
+        assert hashes[path] == "0" * 64 != actual          # a changed summary is a mismatch the checker reports
+    assert rp.recorded_hashes({"inputs": {"ga_records_sha256": {"missing.json": "x"}}})["data/runs/sparta_ga/missing.json"] == "x"

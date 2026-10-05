@@ -14,6 +14,12 @@ so a step lists only what it changes:
 - n2_sccm: N2 feed through the plasma source; plasma: true / false (active N leaves the plate only
   with the plasma on); shutters: {"ga": bool, "n": bool}; rotation_rpm.
 
+Realizable controllers (twin.py; they need the chamber's controller_model): "n2_sccm": "rate_monitor"
+re-sets the feed from an in-situ growth-rate monitor at the centre during growth; "ga_cell":
+{"target_K": "steered"} sets the cell from the pyrometer reading and the calibrated window, through
+the calibrated Ga model corrected by the last beam-flux-monitor reading; "bfm": true makes a step a
+BFM measurement (the Ga beam reaches the monitor at the wafer position, not the wafer; not inherited).
+
 "operating_point" in place of a number takes the chamber definition's value (wafer_C, ga_cell_K
 or n2_sccm). Initial state: {"wafer_C", "ga_cell_K"} (the wafer and holder start isothermal at
 wafer_C). Units are in the key names; anything else is rejected.
@@ -24,7 +30,7 @@ import json
 from dataclasses import dataclass
 from pathlib import Path
 
-STEP_KEYS = {"name", "duration_s", "heater", "ga_cell", "n2_sccm", "plasma", "shutters", "rotation_rpm", "note"}
+STEP_KEYS = {"name", "duration_s", "heater", "ga_cell", "n2_sccm", "plasma", "shutters", "rotation_rpm", "note", "bfm"}
 HEATER_MODES = {"power": {"power_W"}, "feedforward": {"target_C"}, "pyrometer": {"target_C"}}
 DEFAULTS = {"heater": {"mode": "power", "power_W": 0.0}, "ga_cell": {"target_K": None, "ramp_K_per_min": None},
             "n2_sccm": 0.0, "plasma": False, "shutters": {"ga": False, "n": False}, "rotation_rpm": 0.0}
@@ -41,6 +47,7 @@ class Step:
     plasma: bool
     shutters: dict
     rotation_rpm: float
+    bfm: bool = False
 
 
 def _op(value, key, op):
@@ -109,14 +116,16 @@ def load(recipe, operating_point=None):
             g = dict(s["ga_cell"])
             if set(g) - {"target_K", "ramp_K_per_min"} or "target_K" not in g:
                 raise ValueError(f"recipe step {i}: ga_cell takes target_K and optional ramp_K_per_min")
-            g["target_K"] = _number(_op(g["target_K"], "ga_cell_K", operating_point), f"step {i} ga_cell target_K", 0.0)
+            if g["target_K"] != "steered":
+                g["target_K"] = _number(_op(g["target_K"], "ga_cell_K", operating_point), f"step {i} ga_cell target_K", 0.0)
             g["ramp_K_per_min"] = (_number(g["ramp_K_per_min"], f"step {i} ga_cell ramp", 0.0)
                                    if g.get("ramp_K_per_min") is not None else None)
             if g["ramp_K_per_min"] == 0.0:
                 raise ValueError(f"recipe step {i}: a ramp rate must be positive (omit it for a step change)")
             cur["ga_cell"] = g
         if "n2_sccm" in s:
-            cur["n2_sccm"] = _number(_op(s["n2_sccm"], "n2_sccm", operating_point), f"step {i} n2_sccm", 0.0)
+            cur["n2_sccm"] = ("rate_monitor" if s["n2_sccm"] == "rate_monitor"
+                              else _number(_op(s["n2_sccm"], "n2_sccm", operating_point), f"step {i} n2_sccm", 0.0))
         if "plasma" in s:
             if not isinstance(s["plasma"], bool):
                 raise ValueError(f"recipe step {i}: plasma must be true or false")
@@ -128,6 +137,9 @@ def load(recipe, operating_point=None):
             cur["shutters"] = {**cur["shutters"], **sh}
         if "rotation_rpm" in s:
             cur["rotation_rpm"] = _number(s["rotation_rpm"], f"step {i} rotation_rpm", 0.0)
+        bfm = s.get("bfm", False)
+        if not isinstance(bfm, bool):
+            raise ValueError(f"recipe step {i}: bfm must be true or false")
         steps.append(Step(i, name, dur, copy.deepcopy(cur["heater"]), copy.deepcopy(cur["ga_cell"]), cur["n2_sccm"],
-                          cur["plasma"], dict(cur["shutters"]), cur["rotation_rpm"]))
+                          cur["plasma"], dict(cur["shutters"]), cur["rotation_rpm"], bfm))
     return initial, steps, raw

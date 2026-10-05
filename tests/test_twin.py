@@ -266,3 +266,39 @@ def test_representative_chamber_reproduces_the_steady_operating_point():
     mean_rate = float(np.sum(sensors.ring_weights(w, w[-1]) * st["net_growth"]) / np.sum(sensors.ring_weights(w, w[-1])))
     assert mean_rate * 0.06 == pytest.approx(op["expected"]["rate_target_um_h"], rel=2e-3)
     assert set(tw._last["regime"]) == {"Ga-adlayer"}
+
+
+@pytest.mark.parametrize("truth", ["tilt-flange-0.8deg-dir180", "fill120"])
+def test_realizable_controllers_converge_to_the_steady_realizable_state(truth):
+    # Rate monitor + BFM in the twin, on truth chambers that differ from the calibration. At the end of a long growth
+    # step the commanded feed and the Ga arrival equal the steady realizable solution computed here independently:
+    # the feed puts the true centre N arrival at the calibrated centre rate plus decomposition, and the Ga centre
+    # arrival is the controller's window middle (exact BFM).
+    from pathlib import Path
+    from mbe_twin.chamber import load_definition
+    from mbe_twin.control import ControllerModel
+    d = load_definition(Path(__file__).resolve().parents[1] / f"cases/twin/chamber_B-L_720C_{truth}.json")
+    d["sensors"]["pyrometer"]["noise_K"] = 0.0
+    ch = Chamber(d)
+    rec = {"schema_version": "0.1", "initial": {"wafer_C": 720.0, "ga_cell_K": "operating_point"},
+           "steps": [{"duration_s": 300.0, "heater": {"mode": "pyrometer", "target_C": "operating_point"},
+                      "ga_cell": {"target_K": "steered"}, "n2_sccm": "rate_monitor", "plasma": True, "rotation_rpm": 10.0},
+                     {"duration_s": 120.0, "bfm": True, "shutters": {"ga": True, "n": False}},
+                     {"duration_s": 4200.0, "shutters": {"ga": True, "n": True}}]}
+    tw = Twin(ch, rec, dt_max=5.0).run()
+    cm = ControllerModel(d, ch, PARAMS)
+    t_w = np.asarray(tw._last["t_wafer"])
+    reading = ch.spot_mean(t_w, d["sensors"]["pyrometer"]["spot_radius_m"])
+    need = cm.centre_rate_target() + float(PARAMS.decomposition(t_w[0]))
+
+    def centre_n(f):
+        return float(ch.n_flux(f, ch.pressure_eq(f))[0]) / ch.k_atoms
+    lo, hi = 1.0, 35.0
+    for _ in range(60):
+        mid = 0.5 * (lo + hi)
+        lo, hi = (mid, hi) if centre_n(mid) < need else (lo, mid)
+    feed = 0.5 * (lo + hi)
+    assert tw.state["feed_cmd"] == pytest.approx(feed, rel=2e-3)          # 7 rate windows: converged geometrically
+    ts = tw.timeseries()
+    assert ts["ga_centre_nm_min"][-1] == pytest.approx(cm.ga_target(reading, ch.pressure_eq(feed)), rel=2e-3)
+    assert set(tw._last["regime"]) == {"Ga-adlayer"}

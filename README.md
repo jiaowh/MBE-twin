@@ -6,7 +6,7 @@ The long-term scope includes GaN and AlN. The working growth model currently cov
 
 **Current state:** this is a research codebase with working physics models and design studies for a representative chamber. The proposed machine has not been built, and its drawings and measurements are not yet available. Several models have passed numerical checks, and the metal-source model has been compared with a published experiment. The nitrogen, heater and growth models still need experimental validation. A first integrated twin now runs complete growth recipes on the representative chamber; a twin calibrated to the proposed machine is not yet possible without its drawings and measurements.
 
-This overview reflects the recorded studies through **5 October 2026**. Detailed results and their reproduction commands are linked below.
+This overview reflects the recorded studies through **5 October 2026** (including the realizable-controller update). Detailed results and their reproduction commands are linked below.
 
 ## What the project is trying to achieve
 
@@ -100,17 +100,28 @@ The studies above look at one steady moment of growth. The integrated twin inste
 
 Run as calibrated, the twin reproduces the steady studies: 1 µm/h, about ±0.6 % thickness, the whole wafer inside the growth window. When the machine drifts from its calibration, three things show up:
 
-- **The gallium charge matters most.** As the crucible empties to a deep fill, the same cell temperature delivers about 16 % less gallium; only 38 % of the wafer then stays in the growth window and the thickness spread rises to ±2.5 %. The 720 °C operating point needs the gallium flux to be measured or re-scheduled as the charge is used. The earlier steady studies had quietly assumed that the controller knew this (pointed out by the 5 October audit).
+- **The gallium charge matters most.** As the crucible empties to a deep fill, the same cell temperature delivers about 16 % less gallium; only 38 % of the wafer then stays in the growth window and the thickness spread rises to ±2.5 %. The 720 °C operating point needs the gallium flux to be measured as the charge is used. The earlier steady studies had quietly assumed that the controller knew this (pointed out by the 5 October audit). With a beam-flux measurement before growth and a growth-rate monitor, the twin's controllers bring the deep charge back to the calibrated result.
 - **A small nitrogen pointing error shifts the growth rate** by about ±3.5 % at fixed nitrogen flow, so the rate has to be measured and the flow re-set, as commissioning would do.
 - **The heater has no spare power at 720 °C.** Its zone settings were optimized right up to the element's temperature limit. If the wafer needs more heat (a temperature reading that is low, a change in wafer emission), the controller cannot supply it. The heater needs a power margin at the operating point.
 
 The [integrated twin document](docs/INTEGRATED_TWIN.md) describes the model, its checks and what it does not yet include.
 
+### What the controller has to measure
+
+The earlier operating-point studies let the gallium controller know every uncertain detail of the machine. The study was rerun with controllers that use only a calibration fixed at commissioning and real instruments, then checked against every combination of pointing error, gallium fill, heater variation and growth law.
+
+![Share of uncertain machine states that stay in the growth window, by what the controller observes](docs/figures/controllers.png)
+
+- With settings fixed at calibration, or with only a growth-rate monitor, no temperature keeps 95 % of the cases in the growth window.
+- A **gallium beam-flux measurement** before growth is what makes the difference. Together with an in-situ growth-rate monitor it reaches 95 % at 730 °C with the current heater design.
+- **Giving the heater about 14 % spare power** (laying out its zones for an element temperature about 50 K below the rating) brings that back to **720 °C**, at a worst-case thickness spread of about ±1.7–1.9 %.
+- Knowing the crucible fill or measuring the beam maps at commissioning adds only 1–2 points; the remaining gap is the instruments' accuracy and wafer-to-wafer heater variation. The beam-flux monitor's accuracy matters most.
+
 ## Current design direction
 
 The provisional choice is **layout B-p**: the nitrogen source sits on the same port ring as the metal cells, with its beam aimed about 97.5 mm from the wafer centre toward the source side. Its aim was selected for growth pressure. **B-L** uses a larger outlet plate designed in this study and an aim offset of about 90 mm. It is a promising alternative if the supplier can build and operate that plate.
 
-The current working operating point is **1 µm/h at about 720 °C**, with gallium supply adjusted from a wafer-centre temperature reading. This is a modelling choice, conditional on nitrogen output, pumping, heater performance and acceptable crystal quality. The temperature is based on the published growth laws' scales and must be calibrated on the real machine.
+The current working operating point is **1 µm/h at about 720 °C**, with gallium supply adjusted from a wafer-centre temperature reading. Since the 5 October update it is conditional on a gallium beam-flux monitor, an in-situ growth-rate monitor and a heater with spare power (otherwise 730 °C). This is a modelling choice, conditional on nitrogen output, pumping, heater performance and acceptable crystal quality. The temperature is based on the published growth laws' scales and must be calibrated on the real machine.
 
 At that operating point, the studies including scattered atoms and the nitrogen plume give worst-case thickness **half-range/mean of about 1.5–1.8%** across the qualifying scenarios. Other scattering and wall assumptions extend that range to about 2.1%. These are model results over a selected set of conditions, not demonstrated wafer uniformity or a probability of production success.
 
@@ -143,7 +154,7 @@ For example, 4% range/mean is 2% half-range/mean. The latter is not a statistica
 
 The [commissioning plan](docs/COMMISSIONING_PLAN.md) includes the measurement sequence and the synthetic rehearsals already completed for nitrogen, temperature and gallium calibration. Those rehearsals test the proposed procedure; they are not experimental validation.
 
-The integrated twin's next step is to give its controllers the measurements a real machine would have (a gallium beam-flux reading, a growth-rate monitor) and rerun the full set of uncertain machine states with settings fixed in advance.
+The integrated twin's next steps are a campaign simulation (how often the gallium flux must be re-measured as the charge depletes), a rehearsal of the commissioning calibration on synthetic data, and a comparison of temperature sensor layouts.
 
 Further scans of steeper nitrogen ports, additional gallium collision sizes, adjustable cells and heater variants are on hold until they are likely to change a design decision.
 

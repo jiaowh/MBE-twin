@@ -27,6 +27,14 @@ dynamics. The total power is clamped to the steady power that puts the hottest e
 its limit; because the heater network is cooperative (more power never cools a ring), a clamped
 power keeps the element below its limit at all times when it starts colder.
 
+Realizable Ga and N control (recipe "ga_cell": {"target_K": "steered"}, "n2_sccm": "rate_monitor", "bfm"
+steps; control.ControllerModel): the controllers know only the calibration state frozen in the chamber's
+controller_model and instrument readings. The rate monitor measures the centre net rate over
+`sensors.rate_monitor.window_s` of growth (relative error and noise) and scales the commanded feed by
+(target + modelled decomposition) / (measured + modelled decomposition); the Ga cell follows the window
+middle at the reading through the calibrated model, corrected by the last BFM reading. The controller
+uses the true pressure as its gauge reading (an ideal gauge).
+
 Disabled couplings (estimated effects in the run manifest): Ga cell dynamics and the shutter flux
 transient; collisional change of the Ga crucible transmission with cell temperature; adlayer
 transients (10-20 s, R20); droplet evaporation; growing-film optics in the pyrometer and the
@@ -43,6 +51,7 @@ import numpy as np
 
 from . import recipe as recipe_mod
 from . import sensors, surface, thermal_transient
+from .control import ControllerModel
 from .growth import load_parameters
 
 DISABLED_COUPLINGS = [
@@ -66,7 +75,8 @@ TIMESERIES_KEYS = ("t_s", "step", "heater_setpoint_K", "pyrometer_K", "pyrometer
                    "wafer_range_K", "element_max_K", "power_W", "power_clamped", "ga_cell_K", "n2_sccm", "pressure_Pa",
                    "gauge_Pa", "shutter_ga", "shutter_n", "plasma", "ga_centre_nm_min", "n_centre_nm_min",
                    "thickness_centre_nm", "thickness_mean_nm", "thickness_edge_nm", "droplets_mean_nm",
-                   "growth_rate_mean_nm_min", "regime_centre", "window_fraction")
+                   "growth_rate_mean_nm_min", "regime_centre", "window_fraction", "feed_command_sccm",
+                   "ga_target_nm_min", "rate_monitor_nm_min", "bfm_kappa")
 
 
 def area_weights(rho):
@@ -107,6 +117,10 @@ class Twin:
         self.rng = np.random.default_rng(self.seed)
         self.weights = area_weights(chamber.rho)
         c = chamber
+        self.cm = ControllerModel(c.definition, c, self.params) if "controller_model" in c.definition else None
+        if self.cm is None and any(st.n2_sccm == "rate_monitor" or st.ga_cell["target_K"] == "steered" or st.bfm
+                                   for st in self.steps):
+            raise ValueError("recipe uses realizable controllers, but the chamber has no controller_model")
         n_nodes = c.heater.nh + c.heater.nw + c.heater.nl + c.heater.npl
         t0 = self.initial["wafer_K"]
         self.state = {
@@ -116,6 +130,7 @@ class Twin:
             "energy": {"in_J": 0.0, "loss_J": 0.0}, "heater_T0": [t0] * n_nodes,
             "surface": surface.SurfaceState.bare(len(c.rho)).to_dict(),
             "exposure_s": {"ga": 0.0, "n": 0.0, "growth": 0.0},
+            "feed_cmd": None, "kappa": 1.0, "rate_win": None, "rate_meas": None, "ga_target": None,
         }
         self.log = {k: [] for k in TIMESERIES_KEYS}
         self.events, self.warnings = [], []
@@ -185,7 +200,9 @@ class Twin:
                     self.warnings.append(f"{step.name}: {revs:.1f} revolutions with a shutter open; a partial revolution "
                                          "leaves azimuthal dose structure up to 1/revs of the layer, not resolved")
         c = self.chamber
-        if step.plasma and step.n2_sccm > 0 and c.kn_per_sccm is not None and c.kn_per_sccm / step.n2_sccm < c.kn_valid:
+        if step.bfm and not step.shutters["ga"]:
+            raise ValueError(f"{step.name}: a BFM step needs the Ga shutter open")
+        if step.plasma and isinstance(step.n2_sccm, float) and step.n2_sccm > 0 and c.kn_per_sccm is not None and c.kn_per_sccm / step.n2_sccm < c.kn_valid:
             self.warnings.append(f"{step.name}: plate hole Kn {c.kn_per_sccm / step.n2_sccm:.1f} < {c.kn_valid:g}; the "
                                  "free-molecular N map is outside its validity")
 
@@ -207,6 +224,8 @@ class Twin:
                 s["step_heater_sp0"] = start
             sp = _ramped(start, target, h.get("ramp_K_per_min"), elapsed)
         g = step.ga_cell
+        if g["target_K"] == "steered":
+            return sp, s["cell_K"]
         cell = _ramped(s["step_cell0"], g["target_K"], g.get("ramp_K_per_min"), elapsed)
         return sp, cell
 
@@ -249,8 +268,17 @@ class Twin:
         fr = thermal_transient.fields(c.heater, t_new, zp)
         s["energy"]["in_J"] += power * dt
         s["energy"]["loss_J"] += dt * (fr["front_loss"] + fr["rim_loss"])
+        # ---- realizable Ga steering on the readings at the start of the sub-step ----
+        if step.ga_cell["target_K"] == "steered" and flag == "ok":
+            s["ga_target"] = self.cm.ga_target(reading, s["pressure"])
+            cell_mid = cell_end = self.cm.cell_for(s["ga_target"], s["pressure"], s["kappa"])
         # ---- feed and pressure (exact first-order over the sub-step) ----
-        target_flow = step.n2_sccm
+        if step.n2_sccm == "rate_monitor":
+            if s["feed_cmd"] is None:
+                s["feed_cmd"] = float(c.operating_point["n2_sccm"])
+            target_flow = s["feed_cmd"]
+        else:
+            target_flow = step.n2_sccm
         a = math.exp(-dt / c.mfc_tau) if c.mfc_tau > 0 else 0.0
         flow_mean = target_flow + (s["flow"] - target_flow) * (c.mfc_tau / dt * (1.0 - a) if c.mfc_tau > 0 else 0.0)
         flow_end = target_flow + (s["flow"] - target_flow) * a
@@ -260,13 +288,38 @@ class Twin:
         p_mean = p_eq + (s["pressure"] - p_eq) * tau_p / dt * (1.0 - b)
         p_end = p_eq + (s["pressure"] - p_eq) * b
         # ---- arrival and surface ----
-        j_ga = c.ga_flux(cell_mid, p_mean) / c.k_atoms if step.shutters["ga"] else np.zeros_like(c.rho)
+        j_ga = (c.ga_flux(cell_mid, p_mean) / c.k_atoms if step.shutters["ga"] and not step.bfm
+                else np.zeros_like(c.rho))
+        if step.bfm:   # the monitor at the wafer position reads the centre arrival; the wafer is out of the beam
+            bf = c.sensors.get("bfm", {})
+            true_arr = float(c.ga_flux(cell_mid, p_mean)[0]) / c.k_atoms
+            noise = float(self.rng.normal(0.0, bf["noise_rel"])) if bf.get("noise_rel", 0.0) > 0 else 0.0
+            measured = true_arr * (1.0 + bf.get("error_rel", 0.0)) * (1.0 + noise)
+            s["kappa"] = self.cm.model_arrival(cell_mid, p_mean) / measured
         j_n = (c.n_flux(flow_mean, p_mean) / c.k_atoms if (step.shutters["n"] and step.plasma)
                else np.zeros_like(c.rho))
         t_wafer = c.wafer_on_grid(t_new)
         surf = surface.SurfaceState.from_dict(s["surface"])
         surf_new, info = surface.advance(surf, j_ga, j_n, t_wafer, dt, self.params, c.droplet_law,
                                          c.n_rich_decomposition)
+        growing = step.shutters["ga"] and not step.bfm and step.shutters["n"] and step.plasma
+        if step.n2_sccm == "rate_monitor" and growing:
+            rm = c.sensors.get("rate_monitor", {})
+            if s["rate_win"] is None:
+                s["rate_win"] = {"t0": s["t"], "h0": float(surf.thickness[0])}
+            elapsed = s["t"] + dt - s["rate_win"]["t0"]
+            if elapsed >= rm.get("window_s", 600.0) - 1e-9:
+                noise = float(self.rng.normal(0.0, rm["noise_rel"])) if rm.get("noise_rel", 0.0) > 0 else 0.0
+                meas = ((float(surf_new.thickness[0]) - s["rate_win"]["h0"]) / (elapsed / 60.0)
+                        * (1.0 + rm.get("error_rel", 0.0)) * (1.0 + noise))
+                dec = float(self.params.decomposition(reading)) if flag == "ok" else 0.0
+                r_star = self.cm.centre_rate_target()
+                cap = float(c.definition["vacuum"].get("feed_limit_sccm", np.inf))
+                s["feed_cmd"] = float(np.clip(s["feed_cmd"] * (r_star + dec) / max(meas + dec, 1e-9), 0.0, cap))
+                s["rate_meas"] = meas
+                s["rate_win"] = {"t0": s["t"] + dt, "h0": float(surf_new.thickness[0])}
+        elif not growing:
+            s["rate_win"] = None
         # ---- commit ----
         s.update({"t": s["t"] + dt, "heater_T": t_new.tolist(), "heater_sp_K": sp_end, "cell_K": cell_end,
                   "flow": flow_end, "pressure": p_end, "power_W": power, "surface": surf_new.to_dict()})
@@ -296,7 +349,11 @@ class Twin:
                    "thickness_edge_nm": float(surf_new.thickness[-1]),
                    "droplets_mean_nm": float(np.sum(w * surf_new.droplets)),
                    "growth_rate_mean_nm_min": float(np.sum(w * info["net_growth"])), "regime_centre": regime,
-                   "window_fraction": float(np.sum(w * in_window))}
+                   "window_fraction": float(np.sum(w * in_window)),
+                   "feed_command_sccm": np.nan if s["feed_cmd"] is None else s["feed_cmd"],
+                   "ga_target_nm_min": np.nan if s["ga_target"] is None else s["ga_target"],
+                   "rate_monitor_nm_min": np.nan if s["rate_meas"] is None else s["rate_meas"],
+                   "bfm_kappa": s["kappa"]}
             for k in TIMESERIES_KEYS:
                 self.log[k].append(row[k])
         self._last = {"t_wafer": t_wafer.tolist(), "regime": info["regime"].tolist(),

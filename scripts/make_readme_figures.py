@@ -374,9 +374,37 @@ def twin():
     plt.close(fig)
 
 
+def controllers():
+    """Share of uncertain states valid and in the growth window versus temperature, for what the controller observes,
+    with the current heater design and with a 14 % power margin (data/runs/studies/realizable_controller_sc_plume*.json)."""
+    fig, axes = plt.subplots(1, 2, figsize=(11, 4.2), sharey=True)
+    styles = {"known maps (bound)": (GREY, ":", "every state's maps known (earlier studies' bound)"),
+              "frozen": (RED, "-", "settings frozen at calibration"),
+              "rate monitor": (ORANGE, "-", "+ growth-rate monitor"),
+              "rate monitor + BFM": (BLUE, "-", "+ rate monitor and beam-flux monitor"),
+              "rate monitor + BFM + commissioned maps": (GREEN, "--", "+ maps measured at commissioning")}
+    for ax, (rec, title) in zip(axes, (("realizable_controller_sc_plume", "Current heater (no power margin)"),
+                                       ("realizable_controller_sc_plume_heater1425", "Heater with 14 % power margin"))):
+        rows = [r for r in load(f"studies/{rec}.json")["rows"] if r.get("reachable") and r["layout"] == "B-L"]
+        t = [r["T_C"] for r in rows]
+        for c, (col, ls, lab) in styles.items():
+            ax.plot(t, [100 * r["controllers"][c]["joint_fraction"] for r in rows], ls, c=col, lw=2, label=lab)
+        ax.axhline(95, c=GREY, lw=1)
+        ax.axvline(720, c=GREY, lw=0.8, ls="--")
+        ax.set_ylim(0, 100)
+        ax.set_xlabel("growth temperature (°C)")
+        ax.set_title(title, fontsize=9)
+    axes[0].set_ylabel("uncertain states in the growth window (%)")
+    axes[0].text(691, 96.5, "95 % requirement", fontsize=7, color=GREY)
+    axes[1].legend(frameon=False, fontsize=7, loc="lower right")
+    fig.suptitle("What the controller must observe to hold 1 µm/h (layout B-L; representative chamber)", fontsize=10)
+    fig.savefig(OUT / "controllers.png")
+    plt.close(fig)
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
-    for f in (chamber, level_melt, r07, ga_fill, ga_angle, growth_window, n_aim, layouts, twin):
+    for f in (chamber, level_melt, r07, ga_fill, ga_angle, growth_window, n_aim, layouts, twin, controllers):
         f()
         print("wrote", f.__name__)
 
