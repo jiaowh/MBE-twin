@@ -1,0 +1,1 @@
+{"script": "C:\\Users\\Jiaow\\Documents\\github\\MBE twin\\tmp\\overnight_audit_pytest\\test_batch_reports_failures_an0\\fake.py", "jobs": [{"name": "good", "args": ["ok"]}, {"name": "bad", "args": ["ok"]}]}

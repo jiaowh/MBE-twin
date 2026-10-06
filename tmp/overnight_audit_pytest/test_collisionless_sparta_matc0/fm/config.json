@@ -1,0 +1,41 @@
+{
+  "T_K": 846.15,
+  "benchmark": "r07_fm",
+  "case": "fm",
+  "cell_m": 0.001,
+  "coarse": 3,
+  "collisions": false,
+  "diameter_m": 8e-10,
+  "dimer_diameter_scale": 1.2599210498948732,
+  "dt_factor": 0.3,
+  "dt_s": 1.024620884485822e-06,
+  "dump_every": 20,
+  "fnum": 966409189.2858406,
+  "lambda_sat_m": null,
+  "overrides": [
+    "steps_eq=4000",
+    "steps_sample=6000",
+    "particles=1e5",
+    "slab_D=[1.5, 2.0]"
+  ],
+  "p_Pa": 0.08,
+  "particles": 100000.0,
+  "seed": 12345,
+  "slab_D": [
+    1.5,
+    2.0
+  ],
+  "slab_m": [
+    0.02475,
+    0.033
+  ],
+  "source_sha256_at_start": {
+    "scripts/sparta_r07.py": "fec46be8b9bcda5b70ca74d4fdf8c86cf1160bc8867a6b7e2425f2752964f2ad",
+    "src/mbe_twin/crucible.py": "981dab446a3caf8230a0ba691141ac8500a259d98518f810e4d8c7eda68256d2",
+    "src/mbe_twin/sparta.py": "a293265e2ca3e5b92e8dd28f45ddcec940758916d7dee6d365af0d3fb3861311"
+  },
+  "sparta_commit": "e071055fca6ccd250d4b894dadb7ff64d6e6fcac",
+  "steps_eq": 4000,
+  "steps_sample": 6000,
+  "x_dimer": 0.0
+}

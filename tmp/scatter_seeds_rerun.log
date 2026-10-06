@@ -1,0 +1,126 @@
+run directory results/scatter_seeds_20261006_091429
+Wrote results\scatter_seeds_20261006_091429\avg_gas_BL\manifest.json
+Wrote results\scatter_seeds_20261006_091429\avg_plume_BL\manifest.json
+Wrote results\scatter_seeds_20261006_091429\avg_plume_Bp\manifest.json
+done ctl_BL95_s1 09:16
+done ctl_BL95_s2 09:16
+done ctl_BL95_s3 09:17
+done ctl_BL95_s4 09:17
+done ctl_BL95_s5 09:18
+done ctl_BL95_s6 09:18
+done ctl_BL95_s7 09:19
+done ctl_BL95_s8 09:19
+done ctl_BL95_s9 09:20
+done ctl_BL95_s10 09:20
+done ctl_BL95_avg 09:22
+done ctl_BL95_flat 09:22
+done ctl_BLscan_90 09:23
+done ctl_BLscan_92.5 09:23
+done ctl_BLscan_97.5 09:25
+done ctl_BLscan_100 09:25
+done ctl_Bp_s1 09:26
+done ctl_Bp_s2 09:26
+done ctl_Bp_s3 09:28
+done ctl_Bp_s4 09:28
+done ctl_Bp_s5 09:29
+done ctl_Bp_s6 09:29
+done ctl_Bp_s7 09:31
+done ctl_Bp_s8 09:31
+done ctl_Bp_s9 09:33
+done ctl_Bp_s10 09:33
+done ctl_Bp_avg 09:34
+done ctl_Bp_flat 09:34
+done ctl_BL95_boot1 09:35
+done ctl_Bp_boot1 09:35
+done ctl_BL95_boot2 09:36
+done ctl_Bp_boot2 09:36
+done ctl_BL95_boot3 09:37
+done ctl_Bp_boot3 09:37
+done ctl_BL95_boot4 09:38
+done ctl_Bp_boot4 09:38
+done ctl_BL95_boot5 09:39
+done ctl_Bp_boot5 09:39
+done ctl_BL95_boot6 09:40
+done ctl_Bp_boot6 09:40
+done ctl_BL95_boot7 09:41
+done ctl_Bp_boot7 09:41
+done ctl_BL95_boot8 09:42
+done ctl_Bp_boot8 09:42
+done ctl_BL95_boot9 09:43
+done ctl_Bp_boot9 09:44
+done ctl_BL95_boot10 09:45
+done ctl_Bp_boot10 09:45
+done ctl_BL95_boot11 09:46
+done ctl_Bp_boot11 09:46
+done ctl_BL95_boot12 09:47
+done ctl_Bp_boot12 09:47
+done ctl_BL95_boot13 09:48
+done ctl_Bp_boot13 09:48
+done ctl_BL95_boot14 09:49
+done ctl_Bp_boot14 09:49
+done ctl_BL95_boot15 09:50
+done ctl_Bp_boot15 09:51
+done ctl_BL95_boot16 09:52
+done ctl_Bp_boot16 09:52
+done ctl_BL95_boot17 09:53
+done ctl_Bp_boot17 09:53
+done ctl_BL95_boot18 09:54
+done ctl_Bp_boot18 09:54
+done ctl_BL95_boot19 09:56
+done ctl_Bp_boot19 09:56
+done ctl_BL95_boot20 09:57
+done ctl_Bp_boot20 09:57
+done ctl_BL95_boot21 09:58
+done ctl_Bp_boot21 09:58
+done ctl_BL95_boot22 09:59
+done ctl_Bp_boot22 09:59
+done ctl_BL95_boot23 10:00
+done ctl_Bp_boot23 10:00
+done ctl_BL95_boot24 10:01
+done ctl_Bp_boot24 10:01
+done ctl_BL95_boot25 10:02
+done ctl_Bp_boot25 10:02
+done ctl_BL95_boot26 10:03
+done ctl_Bp_boot26 10:03
+done ctl_BL95_boot27 10:04
+done ctl_Bp_boot27 10:04
+done ctl_BL95_boot28 10:06
+done ctl_Bp_boot28 10:06
+done ctl_BL95_boot29 10:07
+done ctl_Bp_boot29 10:07
+done ctl_BL95_boot30 10:08
+done ctl_Bp_boot30 10:08
+done ctl_BL95_boot31 10:09
+done ctl_Bp_boot31 10:09
+done ctl_BL95_boot32 10:11
+done ctl_Bp_boot32 10:11
+done ctl_BL95_boot33 10:12
+done ctl_Bp_boot33 10:12
+done ctl_BL95_boot34 10:14
+done ctl_Bp_boot34 10:14
+done ctl_BL95_boot35 10:15
+done ctl_Bp_boot35 10:15
+done ctl_BL95_boot36 10:16
+done ctl_Bp_boot36 10:17
+done ctl_BL95_boot37 10:18
+done ctl_Bp_boot37 10:18
+done ctl_BL95_boot38 10:19
+done ctl_Bp_boot38 10:19
+done ctl_BL95_boot39 10:21
+done ctl_Bp_boot39 10:21
+done ctl_BL95_boot40 10:22
+done ctl_Bp_boot40 10:22
+B-L 710 C: single 10 runs mean 0.597 sd 0.120 [0.475, 0.805]; avg [0.5263723412427779]; flat [0.5415367626267856]; aim {"['results/aim_tables/n_tables_B-L_90mm.npz']": [0.7860665481937316, 0.9718650612203424], "['results/aim_tables/n_tables_B-L_92.5mm.npz']": [0.6355643622065206, 0.9697962708936646], "['results/aim_tables/n_tables_B-L_97.5mm.npz']": [0.5190561447009782, 0.9615353350607123], "['results/aim_tables/n_tables_B-L_100mm.npz']": [0.642993701944947, 0.9570797134583143]}
+    boot 40 resamples: worst sd 0.035 [0.465, 0.580], mean - avg -0.004; joint 0.9666 [0.9644, 0.9687]; pass {'known maps (bound)': 1.0, 'frozen': 0.0, 'rate monitor': 0.0, 'rate monitor + BFM': 1.0, 'rate monitor + BFM + fill': 1.0, 'rate monitor + BFM + commissioned maps': 1.0}
+B-L 720 C: single 10 runs mean 0.644 sd 0.126 [0.522, 0.848]; avg [0.583291740238979]; flat [0.5998979753663348]; aim {"['results/aim_tables/n_tables_B-L_90mm.npz']": [0.8295194814924303, 0.9999664685261394], "['results/aim_tables/n_tables_B-L_92.5mm.npz']": [0.6849986356374138, 0.9999542752629172], "['results/aim_tables/n_tables_B-L_97.5mm.npz']": [0.5638964845292594, 0.9998902606310014], "['results/aim_tables/n_tables_B-L_100mm.npz']": [0.6908328546394251, 0.9998486003149927]}
+    boot 40 resamples: worst sd 0.036 [0.517, 0.635], mean - avg -0.005; joint 0.9999 [0.9999, 0.9999]; pass {'known maps (bound)': 1.0, 'frozen': 0.0, 'rate monitor': 0.0, 'rate monitor + BFM': 1.0, 'rate monitor + BFM + fill': 1.0, 'rate monitor + BFM + commissioned maps': 1.0}
+Wrote results\scatter_seeds_20261006_091429\scatter_noise_BL95\manifest.json
+B-p 710 C: single 10 runs mean 0.729 sd 0.227 [0.557, 1.335]; avg [0.5660694044993324]; flat [0.7171445418404785]; aim {}
+    boot 40 resamples: worst sd 0.089 [0.498, 0.778], mean - avg 0.031; joint 0.9506 [0.9448, 0.9580]; pass {'known maps (bound)': 1.0, 'frozen': 0.0, 'rate monitor': 0.0, 'rate monitor + BFM': 0.45, 'rate monitor + BFM + fill': 1.0, 'rate monitor + BFM + commissioned maps': 1.0}
+B-p 720 C: single 10 runs mean 0.777 sd 0.232 [0.601, 1.391]; avg [0.6219658516639487]; flat [0.7771281775350075]; aim {}
+    boot 40 resamples: worst sd 0.093 [0.546, 0.838], mean - avg 0.029; joint 0.9996 [0.9996, 0.9997]; pass {'known maps (bound)': 1.0, 'frozen': 0.0, 'rate monitor': 0.0, 'rate monitor + BFM': 1.0, 'rate monitor + BFM + fill': 1.0, 'rate monitor + BFM + commissioned maps': 1.0}
+difference B-p - B-L at 710 C: avg 0.040; boot sd 0.099 [-0.057, 0.243], share > 0 0.75
+difference B-p - B-L at 720 C: avg 0.039; boot sd 0.103 [-0.061, 0.246], share > 0 0.75
+Wrote results\scatter_seeds_20261006_091429\scatter_noise_Bp\manifest.json
+all done 10:22
+exit 0

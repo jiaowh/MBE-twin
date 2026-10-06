@@ -1,0 +1,30 @@
+seed 12345
+dimension 3
+units si
+global gridcut 0.0
+boundary o o o
+create_box -0.06 0.06 -0.06 0.06 -0.0675 0.1005
+region fine cylinder z 0 0 0.0165 -0.0675 0.0165
+create_grid 40 40 56 levels 2 region 2 fine 3 3 3 inside any
+global fnum 1.142807e+09
+species bi.species Bi
+mixture melt Bi nrho 8.097875e+19 temp 939.15 vstream 0 0 0
+read_surf surf.crucible type
+group melt surf type 1
+group wall surf type 2
+group lip surf type 3
+surf_collide absorb vanish
+surf_collide hot diffuse 939.15 1.0
+surf_modify melt collide absorb
+surf_modify lip collide absorb
+surf_modify wall collide hot
+collide vss melt bi.vss
+fix evap emit/surf melt melt
+timestep 9.725667e-07
+stats 1000
+stats_style step cpu np nattempt ncoll nscoll
+run 8000
+region slab block INF INF INF INF 0.0825 0.09075
+dump slab particle melt 20 dump.slab.* id x y z vx vy vz
+dump_modify slab region slab
+run 48000

@@ -1,0 +1,59 @@
+! V02: steady 1D conduction with uniform heat source in a 1.0 x 0.2 m slab.
+! T(0) = 300 K, T(1) = 400 K, insulated top/bottom, k = 10 W/m/K, q = 1000 W/m^3.
+! Exact: T(x) = 300 + 100 x + q/(2k) x (1 - x); linear elements are exact at the nodes.
+Header
+  Mesh DB "." "mesh"
+End
+
+Simulation
+  Coordinate System = Cartesian 2D
+  Simulation Type = Steady State
+  Steady State Max Iterations = 1
+  Output Intervals = 1
+End
+
+Body 1
+  Equation = 1
+  Material = 1
+  Body Force = 1
+End
+
+Material 1
+  Heat Conductivity = 10.0
+  Density = 1.0
+End
+
+Body Force 1
+  Heat Source = 1000.0
+End
+
+Equation 1
+  Active Solvers(1) = 1
+End
+
+Solver 1
+  Equation = Heat Equation
+  Procedure = "HeatSolve" "HeatSolver"
+  Variable = Temperature
+  Linear System Solver = Direct
+  Linear System Direct Method = UMFPack
+  Steady State Convergence Tolerance = 1.0e-10
+End
+
+Solver 2
+  Exec Solver = After Simulation
+  Equation = SaveLine
+  Procedure = "SaveData" "SaveLine"
+  Filename = "line.dat"
+  Polyline Coordinates(2,2) = 0.0 0.1 1.0 0.1
+End
+
+Boundary Condition 1
+  Target Boundaries(1) = 4
+  Temperature = 300.0
+End
+
+Boundary Condition 2
+  Target Boundaries(1) = 2
+  Temperature = 400.0
+End

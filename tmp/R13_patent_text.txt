@@ -1,0 +1,992 @@
+                                                                           US010526723B2
+
+      United States Patent                                      (10) Patent No.: US 10,526,723 B2
+
+      Doolittle et al.                                          (45) Date of Patent:               Jan. 7 , 2020
+
+(54 ) SYSTEM AND METHOD FOR INCREASING                      (52) U.S. CI.
+
+      III-NITRIDE SEMICONDUCTOR GROWTH                             CPC C30B 23/025 (2013.01); C23C 14/0641
+      RATE AND REDUCING DAMAGING ION                                                 (2013.01); C23C 14/221 (2013.01);
+
+      FLUX                                                                           (Continued )
+
+(71) Applicant: Georgia Tech Research Corporation,          (58) Field of Classification Search
+
+               Atlanta,GA (US)                                     CPC                C30B 23/02; C30B 23/06
+
+(72) Inventors: William Alan Doolittle, Atlanta,GA                 See application file for complete search history.
+              (US); Evan A. Clinton , Atlanta, GA
+              (US); Chloe A. M.Fabien , Atlanta,GA          (56 )          References Cited
+
+             (US); Brendan Patrick Gunning,                             U.S. PATENT DOCUMENTS
+             Atlanta,GA (US); Joseph J. Merola,
+                                                                   5,248,631 A * 9/1993 Park         C30B 23/02
+              Atlanta, GA (US)                                     5,291,507 A * 3/1994 Haase             438/22
+
+(73) Assignee: Georgia Tech Research Corporation,                                  (Continued )      B82Y 20/00
+
+               Atlanta,GA (US)                                                                            257/79
+
+( * ) Notice: Subject to any disclaimer,the term of this                FOREIGN PATENT DOCUMENTS
+              patent is extended or adjusted under 35
+             U.S.C. 154(b ) by 0 days.                      WO          2006/034540   4/2006
+
+(21) Appl. No.: 15/738,458                                                 OTHER PUBLICATIONS
+
+(22) PCT Filed : Jun. 16 , 2016                             Gunning et al " Control of ion content and nitrogen species using a
+
+(86 ) PCT No.: PCT/US2016 /037930                           mexied chemistry plasma for GaN grown at extremly high growth
+     $ 371 (c)(1),
+     (2) Date: Dec. 20, 2017                                rates >9 um /h by plasma assistedmolecular beam epitaxy" Journal
+                                                            of Applied Physics 118 155302 2015.*
+(87) PCT Pub. No.: WO2016 /205562
+                                                                               (Continued)
+     PCT Pub . Date : Dec. 22 , 2016
+                                                            Primary Examiner Robert M Kunemund
+(65)              Prior Publication Data
+                                                            (74) Attorney, Agent, or Firm -- Troutman Sanders LLP;
+
+                                                            Ryan A. Schneider
+
+      US 2018/0135202 A1 May 17, 2018                       (57)           ABSTRACT
+
+      Related U.S. Application Data                         Systems and methods are disclosed for rapid growth of
+
+(60 ) Provisional application No.62/180,167, filed on Jun.  Group III metal nitrides using plasma assisted molecular
+                                                            beam epitaxy. The disclosure includes higher pressure and
+      16 , 2015 .
+                                                            flc rates of nitrogen in the plasma, and the application of
+(51) Int. Ci.                                               mixtures ofnitrogen and an inert gas.Growth rates exceed
+                      ( 2006.01 )                           ing 8 um /hour can be achieved.
+      C30B 23/02      (2006.01)
+     HOIL 21/02
+                  (Continued)
+                                                                        32 Claims, 7 Drawing Sheets
+
+                        350                                                100 % N2
+                        300                                                75 % N2
+
+                        250                                                50 % N2
+                                                                           25 % N2
+                  CPn()urorAebnet 200
+                                                                           0 % N2
+                        150
+
+                        100
+
+                                 50
+
+                                   0
+
+                                           6 8 10 12 14 16 18 20 22
+
+                                           Pressure (mTorr)
+                                      US 10,526,723 B2
+
+                                             Page 2
+
+(51) Int. Ci.                                                          OTHER PUBLICATIONS
+                                                         Search Report and Opinion from PCT Application No.PCT/US16 /
+       C30B 29/40  ( 2006.01 )                           037930 dated Sep. 7, 2016 (26 pages).
+                                                         McSkimming, et al.," PLasma Assisted Molecular Beam Epitaxy of
+       C23C 14/06  ( 2006.01 )                           GaN with Growth Rates > 2.6 umh," Journal ofCrystalGrowth, vol.
+                                                         386 , Oct. 16 , 2013.
+       C23C 14/22  (2006.01)                             Gunning, et al.,"Control of Ion Content andNitrogen Species Using
+                                                         a Mixed Chemistry Plasma for GaN Grown at Extremely High
+       C30B 31/06  (2006.01)
+                                                         Growth Rates > 9 um /hby Plasma-Assisted Molecular Beam Epitaxy,"
+(52) U.S. CI.
+       CPC         C30B 29/406 (2013.01); C30B 31/06     Journal of Applied Physics, vol. 118, Oct. 16 , 2015.
+                                                         International Search Report from European Application No. 16812470.9
+               (2013.01); HOIL 21/0242 (2013.01); HOIL   dated Jan. 2, 2019 (11 pages).
+            21/0254 (2013.01); HOIL 21/02576 (2013.01);  Kosaraju , et al.," The Role of Argon in Plasma-Assisted Deposition
+                   HOIL 21/02631 (2013.01)
+                                                         of Indium Nitride," Journal of CrystalGrowth, vol. 286, No. 2, pp.
+(56 )              References Cited
+                                                         400-406 , Jan. 15 , 2006 .
+               U.S. PATENT DOCUMENTS
+                                                         * cited by examiner
+   6,073,578 A 6/2000 Shim et al.
+2004/0072425 A1 4/2004 Cui et al.
+U.S. Patent Jan. 7, 2020 Sheet 1 of 7                                                          US 10,526,723 B2
+
+                 12
+                 10
+
+                      8
+
+       GR(uh/)raowtmreh
+                      6
+
+2                                                                             350W
+
+                                                                              500W
+
+0                                                                                              ...t
+
+                                                                              4 8 12 16 20 24 28 32 36
+
+                                                                              N ,Flow (sccm )
+
+                                                                                Figure 1A
+
+      7
+
+GR(uh/)raowtmreh
+
+                                                                           T
+
+                                                  ................
+
+300 350 400 450 500 550
+
+        RF Power (Watts)
+
+               Figure 1B
+U.S. Patent Jan. 7, 2020 Sheet 2 of 7  US 10,526,723 B2
+
+Figure 2A
+
+                     (b )
+
+Figure 2B
+U.S. Patent Jan. 7 , 2020 Sheet 3 of 7           US 10,526,723 B2
+
+16000
+
+               N , only
+
+                      2
+
+12000                 Ar only
+
+I()ant.enusit.y 8000
+
+4000
+
+0
+
+500 600 700 800 900
+
+        Wavelength (nm )
+
+     1500                  Figure 3A
+
+     1200             N , only
+
+Ia()nt.enusi.ty 900      + Ar
+
+      600             Ar oily
+
+       300                              og
+
+550                            600          650
+
+                         Wavelength (nm )
+
+                               Figure 3B
+U.S. Patent Jan. 7 , 2020 Sheet 4 of 7  US 10,526,723 B2
+
+      350                               100 % N2
+                                        75 % N2
+       300                              50 % N2
+                                        25 % N2
+      250                               0 % N2
+
+PC(N)urorAebnet 200
+
+      150
+
+100
+
+50
+
+0 mwandamanandamanandamannaharamuntananandhanmanainamwandamamahannekanandaramainonnanhamnskommandonaandamannada
+
+             8 10 12 14 16 18 20 22
+
+         Pressure (m Torr)
+
+                     Figure 4
+U.S. Patent Jan. 7, 2020 Sheet 5 of 7  US 10,526,723 B2
+
+       800
+       700
+
+6nIa)@(nt.e5numsi0.ty 600
+      500
+
+300                                                          50 % N2
+200                                                          75 % N2
+                                                            100 % NZ
+          4
+                            8 10 12 14 16 18 20 22
+1600
+                            Pressure (m Torr)
+
+                              Figure 5A
+
+      1200                                     50 % NZ
+
+)Ia(n8@nt.2enums1i.ty 1000                       75 % NZ
+
+       800                                 *** 100 % N2
+       600
+                            8 10 12 14 16 18 20 22
+       200
+                            Pressure (m Torr)
+               4
+                              Figure 5B
+U.S. Patent Jan. 7 , 2020 Sheet 6 of 7                                                                                      US 10,526,723 B2
+
+1020                                                                                                                        200
+
+EC(c)olnectmraoin ?10199
+   1018
+
+                                                                                                               4                          M( cN +- o)bilmity
+
+1017                                                                                                                   Electron Concentration
+
+1016 750                  800                                                                                     850  900              25
+
+                                                                                                                            950 1000
+
+                          Ge Cell Temperature (°C )
+
+                                                                                                                  Figure 6
+U.S. Patent Jan. 7 , 2020 Sheet 7 of 7  US 10,526,723 B2
+
+# Holes=       Old Condition 712 holes, 1.3 sccm and ~ 1.3 um /hour
+
+C_orfice               0.008 inches
+C_apperture =       0.02032 cm
+
+Pdown =                  712
+Pups
+                 0.0037618 L / Sec
+ D                    2.678L/Sec
+
+ # Holes =            1.3 Sccm          2.195947 Pascals/sec
+
+C_orficer      0.016471 Torr-L /Sec or     6.165 mTorr
+C_apperture =  1.50E -05 Torr
+
+Pdown =        6.16E-03 Torr or
+Pup =
+               FIG.7
+
+               New Condition 4000 holes, 20 sccm and ~ 8 um /hour
+
+                          0.008 inches
+
+                      0.02032 cm
+
+                           4000
+
+                   0.0037618 L / Sec
+
+                      15.047 L/Sec
+
+                      20 Sccm           16.855 mTorr
+
+                0.2534 Torr -L /Sec
+
+               1.50E-05 Torr
+
+               1.69E -02 Torr or
+
+               FIG . 8
+                           US 10,526,723 B2
+
+                        1                                              2
+
+SYSTEM AND METHOD FOR INCREASING                             InGaN is very low growth rates and highly inefficient
+
+III-NITRIDE SEMICONDUCTOR GROWTH                             precursor usage. Contrarily,these high indium composition
+                                                             alloys are dramatically more suitable for PAMBE where
+ RATE AND REDUCING DAMAGING ION
+                       FLUX                                  substrate temperatures can be reduced in order to facilitate
+                                                           5 proper indium incorporation and no ammonia cracking is
+      CROSS -REFERENCE TO RELATED
+                                                             required. If rapid growth of indium -bearing layers can be
+               APPLICATIONS                                  achieved, then the potential of III-nitrides for photovoltaics
+
+                                                             improves dramatically .
+
+ This application is a U.S.National Stage of International             BRIEF SUMMARY
+Patent Application No. PCT/US2016/037930, filed on Jun. 10
+16 , 2016, claims the benefit of U.S. Provisional Patent
+Application Ser. No. 62/180,167, filed Jun . 16 , 2015,    15    The various embodiments of the disclosure relate gener
+entitled "Method of Increasing III-Nitride Semiconductor
+Growth Rate and reduced Damaging Ion Flux content," the        ally to processes,methods, and systems for rapidly growing
+entire contents and substance of which are hereby incorpo      Group III metal nitrides in an PAMBE process .
+rated by reference as if fully set forth below .
+                                                                 An embodiment of the disclosure can be a PAMBE
+
+                                                               system having a growth chamber with a substrate therein , a
+                                                               remote plasma chamber, and a gas-conductance barrier
+                                                               separating the plasma chamber from the growth chamber.
+        STATEMENT OF FEDERALLY SPONSORED
+                         RESEARCH                              The plasma can contain nitrogen and a inert gas mixture . The
+                                                           20 growth chamber can have a pressure Pg, and the plasma
+This invention wasmade with government supportunder chamberhas a pressure Pp, and the gas conductance barrier
+Grant No. EEC1041895 awarded by the National Science allows the pressure P , to be lower that Pp.
+Foundation. The governmenthas certain rights in the inven In some embodiments , Pp can be at least 0.1 mTorr, at
+tion .                                                         least 1 mTorr, at least 10 mTorr, or at least 100 mTorr. In
+                                                           25 someembodiments, the P , can be less than about 0.1 m Torr,
+                                                               or less than about 0.05 m Torr. In one example ,Pp can be at
+        TECHNICAL FIELD
+
+                                                               least 5 m Torr, and P , can be less than about 0.1 mTorr.
+The various embodiments of the disclosure relate gener In some embodiment, the nitrogen gas flow ofthe plasma
+ally to processes,methods, and systems for plasma-assisted can be at least 3 sccm based on a 2 inch diameter substrate .
+molecular beam epitaxy (MBE). It is particularly useful for 30 The nitrogen gas flow can be scaled to larger systemsbased
+the rapid production of group III-nitride semiconductors. on the equation SCCM = (GR)* (AREA )/SCALE, where GR
+                                                               is the growth rate in um /hour,AREA is the size ofthetarget
+        BACKGROUND                                             in square inches, and SCALE is a factor with units (um
+
+                                                               inches^2 )/(SCCM -hour), wherein SCALE is between 0.1
+Group III-nitride semiconductors have seen enormous 35 and 50 , between 1 and 50, or between 1 and 20 .
+commercial growth in recent years for solid state lighting In some embodiments, the plasma can contain nitrogen
+and power electronics.While themajority of light emitting gas and an inert gas. The inert gas can be selected from
+diodes (LEDs) are grown by metalorganic chemical vapor helium , neon, argon, xenon, and krypton, preferably from
+deposition (MOCVD ),molecular beam epitaxy (MBE) has helium neon, argon and xenon. The inert gas can be selected
+seen success in the power electronicsmarket for the growth 40 from the group consisting of argon and xenon . The plasma
+ofhigh electron mobility transistors (HEMTs)) and promises can include nitrogen gas and argon . In some embodiment,
+expansion of light emitters to wavelengths currently chal the nitrogen to inert gas ratio can be 1:20 to 20:1, or 1:1 to
+
+lenging for MOCVD . Plasma-assisted MBE (PAMBE ) typi 10 : 1.
+cally uses radio frequency (RF) plasma to generate reactive In someembodiments, the gas-conductance barrier has a
+nitrogen species from inert nitrogen gas. PAMBE using RF 45 conductance value of at least about 7 L/sec, about 10 L/sec,
+plasma has been shown to result in higher growth rates and or about 15 L /sec. In some embodiments, the gas-conduc
+improved surface morphology compared to other plasma tance barrier can have a conductance value of at least about
+
+techniques owing to lower ion contentand reduced surface 5 L /sec or 10 L /sec. The conductance value can be scaled by
+damage during growth .                                         r>,where r is the platter size in a multi-wafer system or the
+
+Nonetheless, PAMBE is typically performed at growth 50 wafer size in a single wafer system .
+rates on the order of 0.1 to 1 um /hour, substantially lower In some embodiments , the substrate can include a Group
+than the growth rates typically used in MOCVD growth of III metal nitride. The Group III metal nitride can include
+GaN which commonly exceed 1-3 um /hour. These relatively GaN , InN , AIN , or combinations thereof. The substrate can
+low growth rates limit theapplicability of PAMBE formany include a Group IIImetalnitride growing at a rate of at least
+device structures which require thick buffer layers to reduce 55 3 micrometer/hour, at a rate of at least 4 micrometers/hour,
+defect densities resulting from heteroepitaxy. Although the or at least about 8 micrometers /hour. The substrate can also
+ultra clean environment ofMBE can be beneficial for the include an n-type dopant, such as germanium .
+thick, undoped drift regions of p -i-n rectifiers or LEDs, the Another embodiment of the disclosure can be a method
+slow growth rates still preclude the use of MBE for such for growing Group III metal nitrides, wherein the method
+devices. Finally, if III-Nitrides,with their tunable band gap 60 includesthe stepsof generating a plasmain a remote plasma
+and strong light absorption, are ever to become viable for chamber; flowing the plasma through a gas-conductance
+solar applications, thick indium -bearing layers must be barrier and into a growth chamber; and growing a group III
+demonstrated in order to reduce defect densities. Such layers metalnitride product on a substrate in the growth chamber.
+with high indium mole fractions are impractical in MOCVD The growth rate of the group III metal nitride product can be
+due to the low temperature requirements for growing indium 65 greater than 1 micrometer/hour, greater than 3 micrometer/
+bearing alloys, while high temperatures are required for hour, greater than 4 micrometers/hour, or greater than 8
+cracking ammonia. The result formostMOCVD growth of micrometers/hour.
+                                       US 10,526,723 B2
+
+                            3                                                                          4
+
+In someembodiment, the plasma can contain a combina FIGS. 2A and 2B illustrate gallium nitride surfaces, in
+tion of nitrogen and an inert gas. The inert gas can be accordance with an exemplary embodiment of the disclo
+selected from helium , neon, argon, xenon, and krypton ,
+preferably from neon, argon and xenon. The inert gas can be                                        5   sure .
+
+pslelaescmteadcafnrominctlhuedegrnoiutrpogceonnsigsatsianngdofaragrogno.nInansdomxeeneonmb.oTdhie      plFasImGaS.g3aAs, ainndac3cBorildlaunstcreatweiptlhaasnmaexemeimspsliaornyspeemcbtoradiomfetnhet
+
+ment, the nitrogen to inert gas ratio can be 1:20 to 20:1, or                                          of the disclosure.
+
+ 1 :1 to 10 : 1.                                                                                         FIG . 4 illustrates ion reductions based on probe current
+
+  In the method,the nitrogen gas flow of the plasma can be                                             for varying amounts of pressure and gas combinations, in
+                                                                                                       accordance with an exemplary embodiment of the disclo
+at least 3 sccm based on a 2 inch diameter substrate . The
+nitrogen gas flow can be scaled to large systemsbased on the                                       10  sure .
+equation SCCM = (GR )* (AREA )/SCALE, where GR is the
+growth rate in um /hour, AREA is the size of the target in                                              FIGS. 5A and 5B illustrate the molecular nitrogen and
+                                                                                                       atomic nitrogen plasma emission intensities with changing
+
+square inches, and SCALE is a factor with units (um pressure and gas combinations, in accordance with an exem
+inches^2)/(SCCM -hour). SCALE can be between 0.1 and plary embodimentof the disclosure.
+50 , between 1 and 50, or between about 1 and 20.                                                  15 FIG . 6 illustrates electron concentration and mobility for
+In some embodiments, Pp can be at least 0.1 mTorr, at germanium doping of a gallium nitride under various con
+least 1 mTorr, at least 10 mTorr, or at least 100 mTorr. In ditions,in accordance with an exemplary embodimentof the
+someembodiments, the P , can be less than about 0.1 m Torr, disclosure .
+or less than about 0.05 m Torr. In one example, Pp can be at FIG . 7 illustrates a table of operating conditions for the
+least 5 m Torr, and P , can be less than about 0.1 m Torr. 20 present invention in accordance with an exemplary embodi
+In some embodiments, the gas-conductance barrier can ment of the disclosure .
+have a conductance value of at least about 5 L /sec, 7 L /sec FIG . 8 illustrates a table of operating conditions for the
+or 10 L /sec. The conductance value can be scaled by r?, present invention in accordance with an exemplary embodi
+where r is the platter size in a multi-wafer system or the ment of the disclosure.
+wafer size in a single wafer system .
+                                                                                                   25
+
+In some embodiments,themethod can include growing a                                                    DETAILED DESCRIPTION
+
+group III metal nitride including GaN , InN , AIN , or com
+binations thereof. The Group III metal nitride can be grown Although preferred embodiments of the disclosure are
+at a rate of at least 3 micrometer/hour, at a rate of at least 4 explained in detail, it is to be understood that other embodi
+micrometers/hour, or at least about 8 micrometers/hour. 30 ments are contemplated . Accordingly, it is not intended that
+In some embodiments , the method can further include the disclosure is limited in its scope to the details of
+doping the Group III metal nitride with an n-type dopant, construction and arrangement of components set forth in the
+including with germanium .                                                                             following description or illustrated in the drawings. The
+
+An embodiment of the disclosure can include a method disclosure is capable of other embodiments and of being
+for increasing the growth rate of group III nitrides in 35 practiced or carried out in various ways . Also , in describing
+plasma-assisted MBE, wherein a nitrogen plasma can be the preferred embodiments, specific terminology will be
+seeded with an inert gas, and the nitrogen flow rate can be resorted to for the sake of clarity.
+at least 5 sccm . The nitrogen gas flow can be scaled to large Itmust also be noted that, as used in the specification and
+systems based on the equation SCCM =(GR)*(AREA)/ the appended claims, the singular forms" a," " an " and " the"
+SCALE, whereGR is the growth rate in um /hour,AREA is 40 include plural referents unless the context clearly dictates
+the size of the targetin square inches ,and SCALE is a factor otherwise.
+with units (um inches^2)/(SCCM -hour). SCALE can be Also, in describing the preferred embodiments, terminol
+between 0.1 and 50 , between 1 and 50, or between about 1 ogy willbe resorted to for the sake of clarity . It is intended
+and 20. The inert gas can be selected from the group that each term contemplates its broadest meaning as under
+consisting of helium neon, argon and xenon. In some 45 stood by those skilled in the art and includes all technical
+embodiments,the ratio ofnitrogen to inertgas can be atleast equivalentswhich operate in a similarmanner to accomplish
+5:1, or at least 10:1. The ratio ofnitrogen to inert gas can be a similar purpose.
+between about 5 : 1 to about 20 : 1 .                                                                  Ranges can be expressed herein as from " about" or
+An embodiment of the disclosure can include, in method "approximately" one particular value and/or to " about" or
+for growing group III metal nitrides by plasma-assisted 50 "approximately" another particular value. When such a
+MBE using nitrogen gas in the plasma, the improvement range is expressed, another embodiment includes from the
+comprising reducing the ion content of the plasma by one particular value and/or to the other particular value.
+increasing the pressure of the plasma to at least about 1 By" comprising" or "comprising" or " including" is meant
+mTorr. Themethod can further include adding an inert gas that at least the named compound, element, particle, or
+to the nitrogen plasma,the inert gas selected from the group 55 method step is present in the composition or article or
+consisting of helium , neon, argon and xenon, or can be method, but does not exclude the presence of other com
+argon. The ratio of the inert gas can be at least about 5:1, or pounds,materials,particles,method steps , even if the other
+at least about 10 :1. The ratio ofnitrogen to inert gas can be such compounds,material, particles ,method steps have the
+between about 5:1 to about 20:1. The nitrogen flow rate can same function as what is named.
+be at least 5 sccm , and can be scaled based on the equation 60 It is also to be understood that themention ofone ormore
+SCCM = (GR )*(AREA )/SCALE, as described herein .                                                      method steps does not preclude the presence of additional
+                                                                                                       method steps or intervening method steps between those
+BRIEF DESCRIPTION OF THE DRAWINGS                                                                      steps expressly identified. Similarly, it is also to be under
+
+                                                                                                       stood that the mention of one or more components in a
+FIGS. 1A and 1B illustrate growth rates of gallium nitride 65 device or system does not preclude the presence of addi
+under various conditions, in accordance with an exemplary tional components or intervening components between those
+embodiment of the disclosure .                                                                         components expressly identified .
+                                                  US 10,526,723 B2
+
+                            5                                                          6
+
+The disclosure includes a technique for extremely high One of skill in the artwillrecognize that nitrogen gas flow
+growth rates in PAMBE growth ofGroup IIImetal nitrides, rates described above,while still above the traditional range
+including for example GaN , while maintaining a smooth of less than 1 to about 3 sccm in a similar system , will
+surface microstructure. By adding pumping capacity and a depend entirely on the size of system in which the gas is
+minormodification to the plasma source, a broad range of 5 being applied to a larger system would have an inherently
+growth rates can be achieved, while a mixed chemistry larger flow rate. Moreover, several practical aspects of
+plasma shows a further enhancement of the growth rate. PAMBE add some error to the value, including particularly
+Suppression of ion content can be achieved by higher the amount of spray past the substrate , the net desorption
+plasmapressure and through argon dilution. A growth rate of (non -sticking Nitrogen )ofNitrogen offthe substrate and the
+9.8 um /hour in an exemplary system representsmore than an 10 efficiency of the plasma in generating reactive species.
+order ofmagnitude increase compared to traditional growth Nonetheless,the flow rates above can be scaled according to
+rates in MBE, and even exceeds those commonly used in the system in which they are applied. Themass transport,
+MOCVD .                                           SCCM in units of standard cubic centimeters per minute
+
+The disclosure includes a PAMBE system that has a (sccm ), of the system can be scaled according to the equa
+growth chamber, a remote plasma chamber, and a gas 15 tion SCCM =(GR)*(AREA)/SCALE, where GR is the
+conductance barrier separating the growth chamber and the growth rate in um /hour, AREA is the size of the target in
+plasma chamber. The growth chamber operates at a pressure square inches, and SCALE is a factor with units (um
+P and the plasma chamber operates at a pressure Pp. inches^2 )/(SCCM -hour) that accounts for thefactthat not all
+However, unlike previous systems, the gas conductance the gas is incorporated in the growing film , some having
+barrier,or aperture,provides a much higher conductance of 20 missed the substrate, somedesorbed from the substrate and
+gas flow between the two chambers. The gas conductance also accounting for the percent activation ofthe plasma. The
+barrier can be at least 3 times the conductance of a tradi SCALE can be between about 0.1 to 50, from about 1 to 50 ,
+tional system , at least 4 times the conductance of a tradi from about 1 to 20 , from about 1 to 10 , from about 2 to 10 ,
+tional system , or at least 5 times the conductance of a or from about 1 to about 5 .
+traditional system . By increasing the conductance of the 25 Another aspect of the disclosure is the gas conductance
+barrier, a larger flow rate of gas into the plasma can be barrier separating the plasma chamber from the growth
+achieved , which leads to the increased growth rates. A chamber. The gas conductance barrier has a conductance
+pressure differential of the two chambers should still be associated with it which can vary with the size ofthe system .
+maintained in the system .
+                                                  In an embodiment of the disclosure , the conductance of the
+One embodiment of the disclosure then includes the 30 barrier can be between about 1 L /sec and 100 L / sec. The
+pressure of the plasma chamber, designated P,. The plasma conductance can be greater than about 2 L/sec, greater than
+chamber pressure can be at least about 0.1mTorr, at least about 3 L/s, or greater than about5 L /sec. The conductance
+about 1 m Torr, at least about 10 m Torr, least about 50 can be greater than about 7 L /sec , greaterthan about 10 L/s,
+mTorr, at least about 100 m Torr, or at least about 250 m Torr. or greater than about 15 L /sec. The conductance can be less
+An upper limit of the plasma chamber pressure can depend 35 than about 90 L/sec, less than about75 L/sec, or less than
+on the nature of the plasma chamber and the RF power used. about 50 L /sec. In an embodiment, the conductance can be
+However, one of ordinary skill would understand that the from about 2 L /sec to about 90 L /sec, from about 3 L /sec to
+upper limit could be at a pressure sufficient to maintain the about 75 L /sec, from about 4 L /sec to about 60 L /sec , or
+plasma in a "bright mode" (often referred to as inductive from about 5 L /sec to about 50 L /sec. In an embodiment,the
+mode), i.e. before it switched to a " dim mode" (often 40 conductance can be from about 10 L/sec to about 90 L /sec,
+referred to as capacitive mode) or fully extinguished. The from about 10 L / sec to about75 L/sec, from about 10 L /sec
+plasma chamber pressure could thereforebe less than 3 Torr, to about 60 L /sec, or from about 10 L /sec to about 50 L /sec.
+less than 2 Torr, or less than about 1 Torr.      One of skill in the art will recognize that larger systems can
+
+One embodiment of the disclosure then includes the be scaled for larger conductance values. That conductance
+pressure of the growth chamber, designated Pg. The growth 45 value, like the gas flow , can increase at r where r is the
+chamber pressure can be less than Pp, less than about 0.1 platter size in a multi-wafer system or the wafer size in a
+mTorr, less than about 0.08 m Torr, less than about 0.07 single wafer system .
+mTorr, or less than about 0.05mTorr. The growth chamber As demonstrated in further detail below , a high growth
+pressure can be greater than about 0.005 m Torr.  rate and high quality of the group IIImetal nitride structures
+Thegas flow in this disclosure can bemaintained ata rate 50 can be achieved using a pure nitrogen plasma.However,as
+high enough to maintain the plasma and drive preferred the pressure from the decreased gas flow decreases further,
+grow rates. One of ordinary skill would appreciate that the detrimental effects to the substrates can be observed due to
+flow (Q , in torr-liters/second), conductance (C , in liters/ high energy species created when operating at lower nitro
+second) and pressures (Pp and P , in torr) are governed by gen pressures. This ion content should be controlled in order
+the relationship Q =C (Pp-P .), often approximated by 55 to achieve high quality III-Nitrides. By including an inert
+Q = CP p, when Pp>>Pg. In an exemplary system , based on a gas flow into the nitrogen stream , the ion content can be
+2 inch target, the nitrogen gas flow rate can be greater than reduced, by either changing the electron temperature of the
+3 sccm , greater than 4 sccm , or greater than 5 sccm . The plasma or in other cases, operating at a higher plasma
+nitrogen gas flow rate can be greater than 8 sccm , greater pressure where the mean free path between collisions is
+than 9 sccm or greater than 10 sccm . The nitrogen gas flow 60 minimized ,and even higher grow rates can be achieved . The
+rate can be less than 50 sccm , less than 45 sccm , or less than last feature is likely due to an effective higher electron
+40 sccm in the exemplary system for a 2 inch target. The temperature of the plasma when the inert gas is present.
+nitrogen gas flow rate can be between about 3 sccm and Thus, an embodiment of the disclosure includes a plasma
+about 40 sccm , between about 3 sccm and about 35 sccm , that includes nitrogen gas and an inert gas. The inert gas can
+between about 8 and about 35 sccm , or between about 10 65 behelium ,neon, argon xenon or krypton. The inert gas can
+and about 35 sccm , in an exemplary system for a 2 inch be neon , argon or xenon . The inert gas can be argon or
+target.                                           xenon, or argon orhelium , or can be argon or can be helium .
+                                     US 10,526,723 B2
+
+                       7                                               8
+
+The ratio of gas flows for nitrogen to inert gas can be from The disclosure also provides for a method of growing
+99:1 to 1:99. The ratio for nitrogen to inert gas can be from group III metal nitrides, wherein the method comprises
+20:1 to 1:20, from 10:1 to 1:10, or from 5:1 to 1:5. The ratio generating a plasma in a PAMBE system , flowing the
+for nitrogen to inert gas can be from 20 :1 to 1:1. The ratio plasma through a gas conductance barrier into a growth
+fornitrogen to inert gas can be from 20:1 to 3:2, or from 20 :1 5 chamber, and growing a group III metal nitride on a sub
+                                                                      strate in the growth chamber. The growth rate of the group
+to 2:1. In some embodiments, the nitrogen to inert gas ratio          IIImetal nitride can be greater than 1um /hour, greater than
+is greater than 3:2, greater than 2:1, greater than 3:1, greater      about 2 um /hour, or greater than about 3 um /hour. The
+
+than 4:1, or greater than 5:1. As used here, theratio is for the  10  growth rate can beatleast about 5 um /hour,or at leastabout
+gas flows of nitrogen and inert gas, e.g. sccm N2:sccm inert
+                                                                  15  8 um /hour.
+gas.Uses ofhighly dilute nitrogen in the inert gashave the
+opposite effect,reducing growth rates, providing anetwider              The plasmain themethod can comprise a nitrogen gas, or
+                                                                      can comprise a combination of nitrogen and an inert gas
+growth rate range.
+  The RF power can be any RF power used to generate a                 mixture. The inert gas, the ratio of nitrogen to inert gas, and
+                                                                      the flow rate of the gas can be as described above.
+plasma. In an embodiment, the RF power can be between
+about 300 W and about 650 W , between about 350 W and                   The method includes a pressure in the plasma chamber,
+about 650 W , or between about 350 W and about 600 W. It              wShimiiclharlcya,n tbhee mdeetfhinoedd iatnclPupd,esanad pirsesassurdeesicnribtehde garboowvteh.
+
+is well known in the art that what is important about these chamber, Pg,as described above. The substrate in the growth
+powers is the power density not the absolute power. Thus, chamber can be at a substrate temperature as described
+for larger systems,these powers scale with the volumeof the 20 above.
+
+plasma chamber wherein the present embodiment's current Another embodimentof the disclosure includes a method
+plasma chamber is ~ 1 inch diameterx4 inches long cylin of reducing the ion content of a nitrogen plasma in an
+drical .                                                              PAMBE system . The method includes increasing the pres
+
+For some embodiments described herein, the high growth sure of the plasma to at least 1mTorr,or at least 10 m Torr,
+rates can be achieved for substrate temperatures from about 25 or at least 100 mTorr. Themethod includes feeding an inert
+300° C.to about 1400 ° C. The substrate temperature can be gas into the nitrogen plasma at a ratio ofnitrogen to inert gas
+between about 300 and about 800 ° C., between about 300 of 99:1 to 1:99. The ratio for nitrogen to inert gas can be
+and about 650° C., between about 300 and about 1000 ° C., from 20 :1 to 1:20 , from 10 :1 to 1:10, or from 5:1 to 1:5. The
+between about 500 and about 1200 ° C.,between about 500 ratio for nitrogen to inert gas can be from 20:1 to 1:1. The
+and about 800° C.,between about 600 and about 1000 ° C. 30 ratio for nitrogen to inert gas can be from 20:1 to 3:2, or from
+The disclosure herein can be used to rapidly grow Group 20 :1 to 2:1. In some embodiments , the nitrogen to inert gas
+III metal nitride structures. The group III metal nitride can ratio is greater than 3:2, greater than 2:1, greater than 3:1,
+be AIN , GaN , or InN , and mixed metal combinations greater than 4: 1,or greater than 5: 1. The method ofreducing
+thereof, such as InGaN , AIGAN , or InGaAIN . In some ion content in the nitrogen plasma can include forming the
+embodiments, the group IIImetalnitride can include InN or 35 plasma in a plasma chamber, flowing the plasma through a
+GaN , or can be GaN .                                                 gas conductancebarrier into a growth chamber,and growing
+
+The disclosure herein includes growth rates of group III a group III metal nitride on a substrate in the growth
+metal nitrides substantially above traditional MBE rates. chamber. The growth rate of the group III metal nitride can
+The growth rate can be at least about 1 um /hour, at least be greater than 1 um /hour, greater than about 2 um /hour, or
+about 2 um /hour, or at least about 3 um /hour. The growth 40 greaterthan about 3 um /hour. The growth rate can beat least
+rate can be at least about 5 um /hour, or at least about 8 about 5 um /hour, or at least about 8 um /hour.
+um /hour.                                                             Some exemplary embodiments of the systems and the
+
+Several different aspects of the disclosure can thus be methods can then be described. The system and/ormethod
+discussed. One embodiment of the disclosure can include a can include a nitrogen:inert gasmixture of between 10:1 and
+system for performing PAMBE,wherein the system includes 45 1:1, a growth rate ofa group III metal nitride of at least 3
+a growth chamber, which has a substrate mounted therein ; a um /hour, and a metal nitride comprising GaN . The system
+plasma chamber separated from the growth chamber,and a and /or method can include a nitrogen :inert gas mixture of
+gas conductance barrier separating the plasma chamber and between 10:1 and 2:1, a growth rate of a group III metal
+the growth chamber. The pressures of the two chambers,the nitride of atleast 3 um /hour, and a metal nitride comprising
+conductance of the barrier, and the gases used to create the 50 GaN . The system ormethod can include a nitrogen gas flow
+plasma are as described above.                                        rate for a 2 inch substrate of at least about 7 sccm , at least
+Another embodiment can be a Group III metal nitride about 10 sccm , or at least about 15 sccm . The growth rate of
+rapid growth PAMBE system . The system can have growth a group IIImetalnitride can be at least 5 um /hour, at least
+chamber that grows the group IIImetal nitride on a substrate 6 um /hour, at least 7 um /hour, orat least 8 um /hour. The ion
+mounted therein . The system can have a nitrogen gas plasma 55 content based on a probe current can be reduced by at least
+chamber separated from the growth chamber, and a gas about 15 % , at least about 25 % , at least about 33 % , at least
+conductance barrier separating the plasma chamber and the about 50 % , at least about 66 % , or at least about 75 % .
+growth chamber. The pressures of the two chambers, the The system and methods described above can also be used
+conductance of the barrier, and the gases used to create the to add a n -type dopant in the PAMBE system to the rapidly
+plasmaare as described above. The rapid growth can be at 60 growing group III metal nitride. The methods can include
+a rate ofat least about 1 um /hour, at least about 2 um /hour, further doping a growing metal nitride with an n-type
+or at least about 3 um /hour. The growth rate can be at least dopant. The systemscan include themetal nitride grown on
+about 5 um /hour, at least about 7 um /hour, at least about 8 the substrate, which further includes an n -type dopant. The
+um /hour, or at least about 9 um /hour. The group III metal n -type dopant be any metal applicable to the PAMBE
+nitride can be AIN ,GaN , or InN , and mixed metal combi- 65 process. The n-type dopant can preferably be germanium .
+nations thereof, such as InGaN , ALGAN , or InGaAIN ; pref Utilizing a modified nitrogen plasma source, plasma
+erably InN or GaN , or can be GaN .                                   assisted molecularbeam epitaxy (PAMBE) has been used to
+                                            US 10,526,723 B2
+
+                          9                                                                                 10
+
+achieve higher growth rates in GaN . A modified conduc under N -rich conditions (III/ ~ 0.7) at 700° C. Then, a
+tance aperture plate , combined with higher nitrogen flow thicker AIN buffer layer was grown using MME at 850 ° C.
+and added pumping capacity, resulted in dramatically under Al-rich conditions (III/V ~ 1.5), while the substrate
+increased growth rates up to 8.4 um /hour using 34 sccm of temperatures duringGaN growth were typically 600 to 650°
+N , while still maintaining acceptably low operating pres- 5 C. This MME technique has been shown to achieve
+sure. Itwas further discovered that argon could be added to extremely high p -type doping, control phase separation in
+the plasma gas to enhance growth rates up to 9.8 um /hour InGaN , and result in excellent uniformity and material
+which was achieved using 20 sccm of N2 and 7.7 sccm Ar                                                      utilization due to the temperatures substantially lower than
+flows at 600 W RF power. A remote Langmuir style probe                                                  10
+employing the flux gaugewas used to indirectly measure the                                                  traditional PAMBE .
+relative ion content in the plasma. The use of argon dilution                                           15
+at low plasma pressures resulted in a dramatic reduction of                                                   The film growth was monitored in situ by reflection high
+the plasma ion currentbymore than half,while high plasma                                                    energy electron diffraction (RHEED ), and the plasma emis
+                                                                                                            sion spectra were monitored through the rear window of the
+cprheesmsiusrtersy.sMuopprreeosvseedr,idoinffceornetnetnttrernedgsardalreessapopafrpelnatsfmoar gtahse      plasma source looking through the pyrolytic boron nitride
+
+molecular and atomic nitrogen species generated by varying                                                  (ePteBrNin) tbhuelbwauvseilnegnagnthOcreaanngeOpotfic2s00H-R11-02000n0m+.EPSosstp-egcrtowrtohm
+pressure and nitrogen composition in the plasma. (See FIG .
+4.) Argon dilution resulted in nearly an order ofmagnitude                                                  structural analysis was performed by X-ray diffraction
+achievable growth rate range from 1 um /hour to nearly 10
+                                                                                                            (XRD ) using a Philips X'Pert Pro MRD, and the surface
+                                                                                                            morphology of the films was characterized by a Veeco
+
+um /hour. Even for filmsgrown atmore than 6 um /hour, the 20 Dimension 3100 atomic force microscope (AFM )operated
+surface morphology remained smooth showing clear atomic in tapping mode. Film thicknesses were verified by either
+steps with rootmean square roughness less than 1 nm . Due contact profilometry or spectroscopic ellipsometry. Hall
+to the low vapor pressure of Si, Ge was explored as an Effectwasemployed to determine theelectrical propertiesof
+alternative n -type dopant for high growth rate applications. select films using a 0.3 T fixed magnet or a custom Hall
+Electron concentrations from 2.2x1016 to 3.8x1019 cm -3 25 effect system with a 1.5 T electro -magnet.
+were achieved in GaN using Ge doping, and unintentionally Modifications to Plasma and Chamber
+doped GaN films exhibited low background electron con The overall pumping system for the growth chamber
+centrationsof just 1-2x1015 cm -3. The highest growth rates consisted of one CTI-8 cryo pump,two CTI-10 cryo pumps
+resulted in macroscopic surface features due to Ga cell all used during growth , and one ion pump and a titanium
+spitting which is an engineering challenge still to be 30 sublimation pump used when not growing. With the added
+addressed. Nonetheless, the dramatically enhanced growth cryo pumps, the pumping capacity during growth wasmore
+rates demonstrate greatpromise for the future of III-nitride than tripled compared to the previous single cryo pump
+devices grown by PAMBE .                                                                                    configuration. This increased capacity resulted in a substan
+                                                                                                            tial reduction in the chamber pressure during growth , never
+Examples                                                                                                35 exceeding 10-4 Torr even with more than 30 standard cubic
+
+Substrate, Apparatus, and Growth Technique                                                                  centimeters perminute (sccm ) of N , flow . The lower cham
+                                                                                                            ber pressure reduces wear on effusion cell filaments, and
+All films, unless otherwise specified , were grown in a could serve to decrease scattering of the incident flux to
+Riber32MBE system with a base pressureofapproximately improve growth rates.
+8x10-11 Torr. The substrates were single-side polished 1x1 40 In addition to the added pumping capacity, the plasma
+cm sapphire, 1x1 cm GaN templates, or 2" sapphire wafers. source itself was also slightly modified. The original plasma
+All substrateswere sputter coated with 2 um of tantalum on aperture (FIG . 7) was replaced with a custom 5.6x higher
+the back side for heat absorption and spreading. After conductance aperture (FIG . 8) in order to allow for higher
+cleaning in a 4:1 solution of H2SO4:H202, the substrates gas flow while maintaining the correct plasma mode. With
+were loaded into an introductory chamber on an indium -free 45 the original aperture , the plasma switched to a dim mode
+molybdenum block, and then outgassed at 150 ° C. for 20 resulting from excessive back pressure behind the aperture
+minutes . The samples were then transferred to the growth with a nitrogen flow of just 3.25 sccm , butremained lit in the
+chamber and were outgassed for an additional 10 minutes at bright mode with flow less than 1 sccm . Using the new
+600 ° C. for theGaN template substrates or 850 ° C. for the high -conductance aperture, the plasma required substan
+sapphire substrates . Any substrate temperatures listed herein 50 tially higher nitrogen flow of at least 3 sccm to remain
+were those measured by thermocouple. Forall film growths, ignited,but continued in the brightmode up to the maximum
+nitrogen was supplied by a Veeco UNI-Bulb RF plasma tested nitrogen flow of 34 sccm .
+source, with severalmodifications which will be described Growth Rate of GaN Using Mixed Nitrogen and Argon
+later. The gas flow and RF power were varied throughout the Gas
+study to achieve the desired surface conditions, and also to 55 In order to initially characterize the plasma source, the
+explore their effects on growth rate. Aluminum was supplied GaN growth rate was determined using post-growth thick
+by a cold -lip effusion cell, gallium was supplied by a nessmeasurements combined with in situ estimation of III/
+
+standard effusion cell and/or a Veeco dual- filament SUMO flux ratios by transient RHEED analysis. The RHEED and
+cell, and germanium was supplied by a standard effusion cell post growth methodsmatched to less than 5% accuracy in all
+for n-type doping. The total Ga fluxes used in this study 60 cases. To avoid desorption of theGa flux,the samples used
+varied from ~8x10-7 Torr beam equivalent pressure (BEP) for growth rate determination were grown at a low substrate
+up to -3.6x10- Torr BEP.                                                                                    temperature of 600° C. under metal-rich conditions. The
+The growth techniques employed herein were a combi nitrogen flow was initially varied from 3 sccm to 17 sccm
+nation of traditionalMBE and a shuttered variation ofMBE with a fixed powerof 350 W , and then the plasmapower was
+called Metal-Modulated Epitaxy (MME). For the sapphire 65 varied from 350 W to 500 W with a fixed nitrogen flow of
+substrates, a low -temperature nitridation was performed for 15 sccm . This resulted in growth rates of 1.5 um /hour to 6.1
+1 hour at 200° C., followed by a 10 nm AIN nucleation layer um /hour. Using pure nitrogen at 500 W RF power and
+                                                   US 10,526,723 B2
+
+11                                                                                                      12
+
+increasing the flow to 34 sccm using a second mass flow enhancing the formation of other active nitrogen species
+controller yielded a growth rate of 8.4 um /hour.                                                       besidesmolecular species and increasing the growth rate.
+To assist in the initial striking of the plasmaafter baking To further explore the effects of argon in the plasma, the
+the system , a light flow of argon gas was added which is manipulator was put into the flux measurement position
+easier to ignite than pure nitrogen.After the plasmaignited, 5 while measuring the collector current using a Keithley
+                                                                                                        6517B electrometer with the collector bias held at OV.
+the argon flow was cut off and the plasma transitioned to                                           10
+                                                                                                        During themeasurement,the grid voltage was set to OV and
+pure nitrogen.However, it was observed thatthis procedure                                           15  the flux gauge filament was turned off with the collector
+                                                                                                        shielded by earth ground except for a small opening facing
+resulted in an increase in the active nitrogen flux for films
+                                                                                                        cthhaergpeldassmpaeciseosurrceea.chTihnigs tehnescuorlelsectthoartwtehree otnhloyse icoonmiziendg/
+gtersotwwnasimpmeerdfioartmeeldy atfotedrettheermuisneeotfhearegfofnec.tAosfsaurcgho,nanoonthtehre
+                                                                                                        from the plasma source itself and or species created near the
+growth rate for various conditions. From this test, it was                                              collector of the ion gauge. As such, the collector functioned
+discovered that the growth rate increased by approximately
+20 to 50 percentathigh and low nitrogen flows, respectively,                                            sriemlialtaerd,taolbaeiLtainngdimrueictrlyp,rtoobtehwehieornecotnhteecnotlolfectthoer pcluarrsemnataiss
+
+with the addition of 7.7 sccm argon into theplasma. FIGS.
+1A and 1B show the overall growth rate as a function ofN2 discussed below. FIG . 4 shows the resulting probe current
+flow for various power conditions (A ) or RF power for a N2 from this experimentat 300 W RF power as a function ofthe
+flow of15 sccm (B ).Growth rates range from approximately nitrogen /argon plasma compositions as well as the approxi
+1.5 um /hour to 9.8 um /hour.                                                                           mate pressure inside the plasma bulb (i.e. behind the aper
+Themaximum growth rate was achieved using600 W RF 20 ture plate ) as calculated by the mass flow rate and the
+power with 20 sccm nitrogen and 7.7 sccm argon flows, theoretical conductance of the aperture plate.
+which is limited by our current mass flow controller hard It should be first emphasized that this experimental con
+ware configuration. This is not to be considered an ultimate figuration with zero bias will result in the collection of both
+limitation in our embodiment ashigher flow rates and thus electrons and ions, and is thus related to butnotequal to the
+higher growth rates could be achieved with highermass flow 25 ion content. With a positive bias applied to the grid , posi
+controllers. This condition resulted in an extremely high tively charged primary ions should be rejected and nega
+growth rate of 9.8 um /hour which is, to our knowledge, the tively charged primary electrons attracted , or vice versa for
+highest ever reported for GaN grown by MBE. Under this a negative bias on the grid. However, in this experiment it
+same condition using 20 sccm nitrogen without argon, the was found that the probe currentwas always negative with
+growth rate dropped to 8.2 um /hour.                                                                30 a magnitude of at least 10 nA regardless of applied grid bias
+
+While the demonstration ofhigh growth rates is beneficial up to +20V. This was not a measurementoffset error as the
+for future applications, the films should also remain suffi probe current was less than 10 PA while the plasma was
+ciently high quality in order be useful. FIGS. 2A and 2B turned off. Thus, the only reasonable explanation for this
+display a representative RHEED image during growth (A ), persistent large negative current is the presence of a high
+as well as a 2x2 um AFM image for a film grown at 6.1 35 density ofsecondary electrons created by the primary high
+um /hour at a substrate temperature of 600 ° C. (B ). During energy species (ions and/or electrons from the plasma)
+the growth ofthese filmsundermetal-rich conditions at 600 ° which overwhelm the primary ion and electron currents
+C. the RHEED patterns remained streaky and a 2x2 recon from the plasma itself. Secondary electrons can be generated
+struction was observed , indicating a smooth growth surface. from nearby surfaces via impact ionization or photoemis
+The AFM image showsexcellent dislocation -mediated step- 40 sion, the latterhaving been acknowledged as a complicating
+flow morphology with clear atomic stepsand spiralhillocks factor but discounted herein as has been done in prior more
+and a rootmean square (RMS) roughness of just 0.8 nm . detailed characterization efforts.Because the trends in opti
+Such a surface structure is typical for high quality GaN cal intensity (described later) do not follow the trends in
+grown by MBE,and is also seen atmuch lowergrowth rates. probe current,the role of photoemission is assumed negli
+This observation confirms that the 2D growth mode is 45 gible in the present case. However, both of these mecha
+preserved even at growth rates more than an order of nisms (impact ionization and photoemission ) suggest that
+magnitude higher than are commonly used in GaN MBE. the plasma produces sufficiently high energy primary spe
+                                                                                                        cies to cause ionization and,thus, potential ionizing damage
+Plasma Quality/Characterization
+Plasma emission spectra were compared using a simple to the sample during growth . Thus, we do not treat the
+fiber-coupled spectrometer on the rear plasmawindow . The 50 measured collector currents as a direct measure of ion
+spectra in FIGS. 3A and 3B represent 20 sccm pure N2 current but instead an impact ionization enhanced current
+(black ), a mixed plasmausing 20 sccm N , with 7.7 sccm Ar related to butnot equal to ion current. Therefore regardless
+(red), and finally a pure 7.7 sccm Ar (blue) using 350 W of of sign of the current, variations in the current are assumed
+RF power in all cases. The full wavelength range is dis to originate from changes in the high energy, potentially
+played (A ) along with a zoom (B ) of the region 550 nm to 55 damaging, primary plasma species.
+690 nm corresponding to excited molecular nitrogen (N2*) From FIG . 4 it is clear that, in the lower pressure regime,
+which has been shown to directly affect growth rate of the pure nitrogen plasma results in a dramatic increase of
+III-nitrides in plasmaMBE.                                                                              more than 100 % in probe current compared to the pure argon
+From FIG . 3B it is clear thatthe addition of argon had no plasma. Additionally, with proper dilution of the nitrogen
+meaningful effect on the excited molecular nitrogen bands, 60 with argon at lower pressure/flow , the probe current, and
+in contrast to other findings using a mixed N /Ar plasma. thus inferred ion/electron primary flux, can be dramatically
+However, the intensities of the argon -related emission lines reduced in order to minimize any detrimental effect ofhigh
+were dramatically reduced by a factor of 3-4x in themixed energy speciesbombarding the sample surface and causing
+plasma compared to the pure argon plasma. Thus, it is damage.Higher plasmapressure suppresses the ion content,
+possible that the reduction in argon -related emission inten- 65 making the ion content relatively unaffected by plasma
+sity in the mixed plasma could be due to the transfer of composition. This observation of probe current shows two
+kinetic energy from theargon species to the nitrogen species, mechanismsto control plasma damage due to high energy
+                                               US 10,526,723 B2
+
+         13                                                                    14
+
+species: in the lower flow regimeby argon dilution and in can be tuned for rapid growth of thick buffer layers or
+the higher flow regime via pressure.                               precisely controlled quantum wells.
+
+Shown in FIGS. 5A and 5B are the emission intensities at Doping with Ge vs Si
+
+300 W RF power for the 650 nm and 821 nm plasma In order to achieve sufficient n-type doping at these
+emission lines relating to molecular nitrogen (A ) and atomic 5 elevated growth rates,somereconsideration of the Sidoping
+nitrogen (B ) transitions. The 650 nm emission from excited method is needed. Typically, n-type doping in MOCVD
+                                                                   growth using Siis limited to the low ormid 1019 cm-- range
+molecular transitions in FIG . 5(a ) shows a monotonic         10  due to tensile stress and film cracking during cooldown, as
+increase in intensity with increasing nitrogen composition in  15  well as morphological degradation at higher Si concentra
+
+the plasma,and also with increasing pressure.Interestingly,        tions. In MBE, due primarily to the lower substrate tem
+                                                                   peratures, this is less of an issue. Using MME, we have
+a substantially different trend can be seen in the 821 nm          previously achieved extremely high Si doping with an
+
+atomic emission in FIG . 5(b) where the intensity trends do        electron concentration up to 2.5x1020 cm -3 and resistivity of
+                                                                   5x10-4 2-cm for a 900 nm thick film with RMS roughness
+not follow the 650 nm molecular increases. At lower nitro
+                                                                   of just 0.3 nm . This film was grown at ~ 1 um /hour, and the
+gen compositions of 25 % and 50 % , the atomic nitrogen
+                                                                   Sidopant cell required a temperature in excess of 1200° C.
+intensity increases with increasing pressure. However,
+
+above 50 % nitrogen there is a peak in the atomic emission
+intensity at ~ 10 mTorr which then decreases at higher
+pressure. In the case of a pure nitrogen plasma, the atomic        However, in order to achieve this high level of doping at
+                                                                   elevated growth rates, an even highercell temperaturewould
+emission intensity is nearly 55 % higher at 10 mTorr com be required , pushing the power limits of the cell and
+pared to 20 mTorr. The overall atomic nitrogen intensity is 20 reducing effusion cell and/or crucible lifetime.
+highest for a diluted plasma with just 50 % nitrogen at 20 To circumventthis doping challenge athigh growth rates,
+                                                                   the use ofGewas explored as an alternative. Compared to
+m Torr.
+These trends in the atomic nitrogen intensity can further Si, Ge has approximately two orders ofmagnitude higher
+explain the increased growth rate with argon as described vapor pressure for the same temperature. Or,to achieve the
+previously and as shown in FIG . 1(a).In the literature, there 25 same vapor pressure as Si, a Ge cell could be run at
+is no clear consensus which nitrogen species (atomic or approximately 200° C. lower temperature. Ge has been
+molecular ) is the primary contributor to growth during shown to have similar activation energy to Si in GaN , and
+PAMBE of III-nitrides. In this work, at the higher plasma induces substantially less stress on the crystal due to its
+pressures where the growth rate is highest, there is a closer atomic size match to the Ga atom it substitutes in the
+substantial shift in the trends of atomic nitrogen intensity 30 lattice.Given the lower temperature requirements with simi
+compared to molecular nitrogen. In the high pressure/flow lar activation , Ge would seem an excellent alternative for
+case, the dilution with ~ 25-50 % argon minimally reduces high growth rate Gan . The use ofGe was investigated by
+the molecular emission but substantially increases the varying the Ge cell temperature from 760 ° C. to 1000 ° C.
+atomic emission intensity of the plasma. Thus, one would with a fixed growth rate and Ga flux. FIG . 6 shows electron
+assume that the 20-25% increase in growth rate observed in 35 concentration (black - lower line) and mobility (blue_up
+FIG . 1(a) results from an enhancement in atomic nitrogen, per line) as a function of Ge cell temperature. Sapphire
+not the traditionally assumed excited molecular species. At substrates were used for this study to provide complete
+lower plasma chamberpressures, 10mTorr or less,both the electrical isolation and minimize the effect of surface con
+molecular and atomic nitrogen intensities are highest using tamination . A 500 nm thick AIN buffer layer was grown by
+a pure nitrogen plasma. But, at higher pressures like those 40 MME after low -temperature nitridation. The resulting AIN ,
+used to achieve growth rates above 6 um /hour, the atomic grown at nearly 2 um /hour, showed (002) rocking curve
+nitrogen is maximized for a mixed chemistry plasma with (omega scan ) full width at half maximum (FWHM ) of
+~ 50 % argon dilution . The maximum growth rate of 9.8 around 80 arcsec with RMS roughness of ~ 0.5 nm . For the
+um /hour reported here was achieved at a pressure of ~ 30 Ge-doped GaN grown at 650 ° C., MME was employed
+mTorr with a nitrogen composition of ~72% . A more in- 45 using a 10 s open/10 s closed shuttermodulation with a III/V
+depth study is currently underway in order to explore the ratio of approximately 1.8 , and both Ge and Ga were
+relative effects of atomic and molecular nitrogen and the shuttered simultaneously. The plasma condition for these
+various plasma conditions on growth rate and structural/ films was fixed at 350 W RF power with 4 sccm N2 flow,
+optical quality . But, from this preliminary characterization yielding a growth rate of approximately 2 um /hour.
+
+ofthe plasma, it is clear thatboth the atomic and molecular 50 The electron concentration in FIG . 6 exhibits a highly
+nitrogen species are important to consider, especially at the predictable exponential dependence on theGe cell tempera
+extremely high growth rates reported herein .                      ture. The electron concentrations achieved varied from 2.2x
+In this study, themaximum growth rate achieved was not 1016 cm -3 at aGe cell temperature of 760° C.up to 3.8x1019
+limited by the plasma source, but rather by the 20 sccm cm -3 at a Ge cell temperature of 999° C. These low dopant
+nhiitgrhoegrengrmoawstsh frlaotews csohnoturlodllebrewphoiscshiblien.dicInateasdditthiaotn,evtehne 55 dcoelplitnegmpaetrhaitguhregsrloewatvhe rsautbesstawnhtiilale hseiamdurlotoamneofuosrlhyigrhednu-ctiynpge
+growth rate can be reduced by varying the nitrogen and wear on the cell and crucible. As a baseline, several unin
+argon at low flow rates. With pure nitrogen , the plasma tentionally doped (UID ) GaN filmswere grown by MME in
+extinguished at a flow of ~ 3 sccm due to insufficient order to characterize the background electron concentration .
+back -pressure. However, it could be sustained by using a 60 Since MBE grown filmshavebackground impurity concen
+combination of 1 sccm of nitrogen with 7.7 sccm of argon, trations inversely proportional to growth rate, low back
+resulting in more traditional growth rates closer to 1 ground impurity concentrations are expected at these high
+um /hour. By lowering the argon content further, an addi growth rates. Indeed, with the same conditions as discussed
+tional reduction in growth rate might also be achievable to above,the UID GaN filmsexhibited repeatable background
+extend the range ofpossible growth rates. Thevaried growth 65 electron concentrations of 1-2x1015 cm -3with resistivity on
+rate from ~ 1 um /hourup to 9.8 um /hour represents nearly an the order of 50-100 22 -cm . The mobility, shown in blue in
+order ofmagnitude achievable range of growth rates which FIG . 6, initially rises with increasing Ge cell temperature
+                                             US 10,526,723 B2
+
+                        15                                                             16
+
+then begins to fall once the electron concentration exceeds 4. The system ofclaim 1,wherein the growth chamberhas
+~ 4x1018 cm -3. This trend, along with the relatively low a pressurePg,and the plasma chamber has a pressure Pp,and
+overallmobility, can be explained in thecontextofrelatively the gas conductance barrier allows the pressure P, to be
+high dislocation density resulting from the immature nature lower that Pp; and
+of these initial high growth rate studies.                     5 wherein Pp is at least 100 mTorr.
+In thesenon -optimized 1.8 um thick GaN filmsgrown on 5. The system of claim 2,wherein P ,g is less than about0.1
+AIN buffer layers on sapphire, the XRD GN (002) and m Torr.
+(102) omega rocking curve FWHM are typically on the 6. The system of claim 1, wherein the plasma chamber
+order of 250 arcsec and 1500 arcsec,respectively. Based on contains plasma comprising nitrogen and an inert gasmix
+simple estimations from these two rocking curves, the 10 ture; and
+threading dislocation density in these Ge-doped films is wherein the system is configured such that the nitrogen
+expected to be on the order of 5x10 to 1x1010 cm -2. With          gas flow of the plasma is at least 3 SCCM based on a
+these relatively high dislocation densities , the mobility is
+                                                                   2 inch diameter substrate.
+
+strongly affected by dislocation scattering at low carrier 15 7. The system of claim 1, wherein the plasma chamber
+concentrations. Athigher carrier concentrations, the dislo contains plasma comprising nitrogen and an inert gasmix
+cation scattering is minimized due to charge screening, ture; and
+while at very high doping concentrations themobility again wherein the nitrogen to inert gas ratio is 1:20 to 20 :1.
+decreases due to ionized impurity scattering. Thus,while the 8. The system of claim 1, wherein the plasma chamber
+mobility in these Ge-doped samples is relatively low , it is 20 contains plasma comprising nitrogen and an inert gas mix
+well-described by physical models and limited by disloca ture; and
+tion density.41 It is expected that the mobility should be wherein the nitrogen to inert gas ratio is 1:1 to 10 :1.
+substantially higher when grown on lower dislocation den 9. The system of claim 1, wherein the system is further
+sity GaN templates or freestanding GaN .                           configured such that the gas-conductance barrier has a
+
+It is to be understood that the embodiments and claims 25 conductance value of at least about 5 L /sec.
+
+disclosed herein are not limited in their application to the 10. A method for growing a group III metal nitride
+details of construction and arrangement of the components product comprising:
+set forth in the description and illustrated in the drawings . flowing a plasma comprising nitrogen and an inert gas
+Rather, the description and the drawings provide examples from a remote plasma chamber through a gas-conduc
+of the embodiments envisioned . The embodiments and 30 tance barrier and into a growth chamber ; and
+claimsdisclosed herein are further capable of other embodi growing a group IIImetal nitride product on a substrate in
+ments and of being practiced and carried out in various the growth chamber at a growth rate of at least 3
+ways. Also, it is to be understood that the phraseology and um /hour;
+terminology employed    herein  are for the  purposes of           wherein the nitrogen gas flow is scaled based on the
+                                                               35
+description and should  not be  regarded as  limiting the            equation
+claims.
+
+  Accordingly, those skilled in the art will appreciate that          SCCM = (GR )*(AREA )/SCALE
+
+the conception upon which the application and claims are           wherein :
+
+based can be readily utilized as a basis for the design of other    GR is the growth rate in um /hour;
+                                                                     AREA is the size of the target in inches^2; and
+structures,methods,and systemsfor carryingout the several 40
+purposes of the embodiments and claims presented in this            SCALE is a factor with units (um inches 2)/(SCCM
+
+application . It is important, therefore , that the claims be          hour) between 0.1 and 50 .
+regarded as including such equivalent constructions.
+                                                                   11. Themethod ofclaim 10, wherein the nitrogen gas flow
+                                                               45  of the plasma is at least 3 SCCM based on a 2 inch diameter
+We claim :                                                     50
+                                                                   substrate .
+1. A plasma assisted MBE system comprising:
+a growth chamber having a substrate ;                                12. The method of claim 10, wherein thenitrogen to inert
+a remote plasma chamber; and                                       gas ratio is 1:20 to 20 :1.
+a gas-conductance barrier separating the plasmachamber
+                                                                     13. The method of claim 10 , wherein the nitrogen to inert
+  from the growth chamber;                                         gas ratio is 1:1 to 10 :1.
+wherein the system is configured such that a nitrogen gas
+                                                                     14. Themethod ofclaim 10,wherein the growth chamber
+  flow of a plasma is scaled based on the equation                 has a pressure Pg,the plasmachamberhas a pressure Pp, and
+                                                                   the gas conductance barrier allows the pressure P , to be
+                                                                 lower that Pp; and
+   SCCM = (GR )* (AREA )/SCALE
+wherein :                                                      55 wherein P ?, is at least 0.1 m Torr.
+
+                                                                   15. The method claim 10 , wherein the growth chamber
+GR is the growth rate in um /hour;                                 has a pressure P ,theplasma chamber has a pressurePp, and
+AREA is the size of the substrate in inches^2; and the gas conductance barrier allows the pressure P , to be
+SCALE is a factorwith units (um inches^2)/(SCCM lower that Pp; and
+         hour)between 0.1 and 50.                              60 wherein P , is at least 100 m Torr.
+2. The system of claim 1, wherein the growth chamber has 16. Themethod of claim 10,wherein the growth chamber
+a pressurePg,and the plasma chamber has a pressure Pp, and has a pressure Pg, the plasma chamberhas a pressure Pp, and
+the gas conductance barrier allows the pressure P to be the gas conductance barrier allows the pressure P , to be
+lower that Pp; and                                                 lower that Pp; and
+wherein Pp is at least 0.1 m Torr.                             65 wherein P , is less than about 0.1 m Torr.
+3. The system of claim 1, wherein SCALE is between 1 17. Themethod of claim 10,wherein the gas-conductance
+and 20 .                                                           barrier has a conductance value of at least about 5 L /sec.
+                                                  US 10,526,723 B2
+
+                              17                                         18
+
+18. Themethod of claim 10, wherein the growth rate of 26. In a method for growing group III metal nitrides by
+the group IIImetal nitride product is at least 8 micrometers/ plasma-assisted MBE using nitrogen gas in the plasma, the
+                                                                  improvement comprising reducing the ion content of the
+hour.
+19. The method of claim 10 further comprising doping the plasma by increasing the pressure of the plasma to at least
+group III metal nitride product with an n-type dopant. 5 about 1 mTorr;
+20. A method for increasing the growth rate of group III wherein the nitrogen gas flow is scaled based on the
+nitrides in plasma-assisted MBE, wherein a nitrogen plasma equation
+is seeded with an inert gas;
+wherein the nitrogen flow rate is at least 5 SCCM ; and
+                                                                  SCCM = (GR )* (AREA )/SCALE
+
+wherein the nitrogen gas flow is scaled based on the 10           wherein :
+  equation
+                                                                    GR is the growth rate in um /hour;
+                                                                  AREA is the size of the substrate in inches^2 ; and
+       SCCM = (GR )* (AREA )/SCALE                                   SCALE is a factor with units (um inches 2)/(SCCM
+
+  wherein :                                                   15       hour) between 0.1 and 50 .
+
+   GR is the growth rate in um /hour;                         20    27. The method of claim 26 further including adding an
+    AREA is the size of the substrate in inches^2; and        25  inert gas to the nitrogen plasma, the inert gas selected from
+   SCALE is a factor with units (um inches^2 )/(SCCM              the group consisting ofhelium , neon, argon and xenon.
+
+      hour) between 0.1 and 50 .                                  ine2r8t.gaTshecommeptrhiosdingofacrlgaoimn t2o6thfeurntihterrogiennclpudliansgmaad.ding an
+  21. The method of claim 20, wherein SCALE is between             29. Themethod of claim 27,wherein the ratio ofnitrogen
+
+1 and 20 .                                                        to inert gas is at least 5:1.
+                                                                    30. The method of claim 26 , wherein the nitrogen flow
+  22. The method of claim 20, wherein the inert gas is
+selected from the group consisting of helium , neon, argon        rate is at least 5 SCCM .
+
+and xenon .                                                         31. The method of claim 26 , wherein SCALE is between
+
+  23. Themethod of claim 20 ,wherein the ratio ofnitrogen         1 and 20 .
+to inert gas is at least 5 : 1 .
+                                                                    32. Themethod of claim 10 , wherein SCALE is between
+  24. The method of claim 20 , wherein the ratio of nitrogen
+to inert gas is at least 10 : 1 .                                 1 and 20 .
+
+  25. Themethod of claim 20,wherein the ratio ofnitrogen
+to inert gas is between about 5:1 to about 20:1.
+

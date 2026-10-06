@@ -1,0 +1,643 @@
+ELMER SOLVER (v 9.0) STARTED AT: 2026/10/06 08:55:30
+ParCommInit: Initialize #PEs: 1
+MAIN: 
+MAIN: =============================================================
+MAIN: ElmerSolver finite element software, Welcome!
+MAIN: This program is free software licensed under (L)GPL
+MAIN: Copyright 1st April 1995 - , CSC - IT Center for Science Ltd.
+MAIN: Webpage http://www.csc.fi/elmer, Email elmeradm@csc.fi
+MAIN: Version: 9.0 (Rev: Release, Compiled: 2026-01-20)
+MAIN:  Running one task without MPI parallelization.
+MAIN:  Running with just one thread per task.
+MAIN:  Lua interpreter linked in.
+MAIN: =============================================================
+MAIN: 
+MAIN: 
+MAIN: -------------------------------------
+MAIN: Reading Model: case.sif
+LoadInputFile: Scanning input file: case.sif
+LoadInputFile: Scanning only size info
+LoadInputFile: First time visiting
+LoadInputFile: Reading base load of sif file
+LoadInputFile: Loading input file: case.sif
+LoadInputFile: Reading base load of sif file
+LoadInputFile: Number of BCs: 3
+LoadInputFile: Number of Body Forces: 0
+LoadInputFile: Number of Initial Conditions: 0
+LoadInputFile: Number of Materials: 1
+LoadInputFile: Number of Equations: 1
+LoadInputFile: Number of Solvers: 2
+LoadInputFile: Number of Bodies: 3
+Loading user function library: [HeatSolve]...[HeatSolver_Init0]
+Loading user function library: [HeatSolve]...[HeatSolver_Init0]
+Loading user function library: [SaveData]...[SaveLine_Init0]
+Loading user function library: [SaveData]...[SaveLine_Init0]
+LoadMesh: Loading serial mesh!
+ElmerAsciiMesh: Performing step: 1
+ElmerAsciiMesh: Base mesh name: ./mesh
+ReadHeaderFile: Reading header info from file: ./mesh/mesh.header
+InitializeMesh: Number of nodes in mesh: 369
+InitializeMesh: Number of bulk elements in mesh: 320
+InitializeMesh: Number of boundary elements in mesh: 168
+InitializeMesh: Initial number of max element nodes: 4
+ElmerAsciiMesh: Performing step: 2
+ReadNodesFile: Reading nodes from file: ./mesh/mesh.nodes
+SetMeshDimension: Dimension of mesh is: 2
+SetMeshDimension: Max dimension of mesh is: 2
+ElmerAsciiMesh: Performing step: 3
+ReadElementsFile: Reading bulk elements from file: ./mesh/mesh.elements
+ElmerAsciiMesh: Performing step: 4
+ReadBoundaryFile: Reading boundary elements from file: ./mesh/mesh.boundary
+PermuteNodeNumbering: Performing node mapping
+MapBodiesAndBCs: Skipping remapping of bodies
+MapBodiesAndBCs: Remapping boundaries
+MapBodiesAndBCs: Minimum initial boundary index: 1
+MapBodiesAndBCs: Maximum initial boundary index: 6
+ElmerAsciiMesh: Performing step: 5
+ElmerAsciiMesh: Performing step: 6
+LoadMesh: Loading mesh done
+LoadMesh: Preparing mesh done
+LoadMesh: Elapsed REAL time:     0.0020 (s)
+MeshStabParams: Computing stabilization parameters
+MeshStabParams: Elapsed REAL time:     0.0000 (s)
+LoadModel: Defined radition solver by Equation name "heat equation"
+MAIN: -------------------------------------
+AddMeshCoordinates: Setting mesh coordinates and time
+AddSolvers: Setting up 2 solvers
+AddSolvers: Setting up solver 1: heat equation
+AddEquationBasics: Setting up keywords internally for legacy solver: heat equation
+AddEquationBasics: Using procedure: HeatSolve HeatSolver
+AddEquationBasics: Setting up solver: heat equation
+Loading user function library: [HeatSolve]...[HeatSolver_Init]
+Loading user function library: [HeatSolve]...[HeatSolver_bulk]
+Loading user function library: [HeatSolve]...[HeatSolver_bulk]
+Loading user function library: [HeatSolve]...[HeatSolver]
+AddEquationBasics: Creating standard variable: temperature
+RadiationFactors: ----------------------------------------------------
+RadiationFactors: Computing radiation factors for heat transfer
+RadiationFactors: ----------------------------------------------------
+RadiationFactors: Using sparse matrix format for factor computations.
+RadiationFactors: Using direct solver for radiation factors
+RadiationFactors: Total number of Radiation Surfaces 80 out of 168
+RadiationFactors: Temporarily updating the mesh.nodes file!
+ViewFactors: 
+ViewFactors: ==================================================
+ViewFactors:  E L M E R  V I E W F A C T O R S,  W E L C O M E
+ViewFactors: ==================================================
+ViewFactors: 
+ViewFactors: 
+ViewFactors: Reading Model...
+ViewFactors: Computing view factors as defined in file: case.sif
+LoadInputFile: Scanning input file: case.sif
+LoadInputFile: Scanning only size info
+LoadInputFile: First time visiting
+LoadInputFile: Reading base load of sif file
+LoadInputFile: Loading input file: case.sif
+LoadInputFile: Reading base load of sif file
+LoadInputFile: Number of BCs: 3
+LoadInputFile: Number of Body Forces: 0
+LoadInputFile: Number of Initial Conditions: 0
+LoadInputFile: Number of Materials: 1
+LoadInputFile: Number of Equations: 1
+LoadInputFile: Number of Solvers: 2
+LoadInputFile: Number of Bodies: 3
+Loading user function library: [HeatSolve]...[HeatSolver_Init0]
+Loading user function library: [HeatSolve]...[HeatSolver_Init0]
+Loading user function library: [SaveData]...[SaveLine_Init0]
+Loading user function library: [SaveData]...[SaveLine_Init0]
+LoadMesh: Loading serial mesh!
+ElmerAsciiMesh: Performing step: 1
+ElmerAsciiMesh: Base mesh name: ./mesh
+ReadHeaderFile: Reading header info from file: ./mesh/mesh.header
+InitializeMesh: Number of nodes in mesh: 369
+InitializeMesh: Number of bulk elements in mesh: 320
+InitializeMesh: Number of boundary elements in mesh: 168
+InitializeMesh: Initial number of max element nodes: 4
+ElmerAsciiMesh: Performing step: 2
+ReadNodesFile: Reading nodes from file: ./mesh/mesh.nodes
+SetMeshDimension: Dimension of mesh is: 2
+SetMeshDimension: Max dimension of mesh is: 2
+ElmerAsciiMesh: Performing step: 3
+ReadElementsFile: Reading bulk elements from file: ./mesh/mesh.elements
+ElmerAsciiMesh: Performing step: 4
+ReadBoundaryFile: Reading boundary elements from file: ./mesh/mesh.boundary
+PermuteNodeNumbering: Performing node mapping
+MapBodiesAndBCs: Skipping remapping of bodies
+MapBodiesAndBCs: Remapping boundaries
+MapBodiesAndBCs: Minimum initial boundary index: 1
+MapBodiesAndBCs: Maximum initial boundary index: 6
+ElmerAsciiMesh: Performing step: 5
+ElmerAsciiMesh: Performing step: 6
+LoadMesh: Loading mesh done
+LoadMesh: Preparing mesh done
+LoadMesh: Elapsed REAL time:     0.0020 (s)
+MeshStabParams: Computing stabilization parameters
+MeshStabParams: Elapsed REAL time:     0.0000 (s)
+LoadModel: Defined radition solver by Equation name "heat equation"
+ViewFactors: Number of nodes in mesh: 369
+ViewFactors: Computing view factors for radiation body1
+ViewFactors: Number of surfaces participating in radiation: 80
+ViewFactors: Computing viewfactors...
+Combining original boundary elements for shading
+The combined set includes 2 line segments (vs. 80)
+ViewFactors: View factors computed in time (s):    0.00    0.00
+ViewFactors: 
+ViewFactors: Viewfactors before manipulation:
+ViewFactors: Minimum row sum:   4.162094E-01
+ViewFactors: Maximum row sum:   8.618968E-01
+ViewFactors: Average row sum:   7.410743E-01
+ViewFactors: VF percentile 41-42 count: 2
+ViewFactors: VF percentile 44-45 count: 2
+ViewFactors: VF percentile 47-48 count: 2
+ViewFactors: VF percentile 50-51 count: 2
+ViewFactors: VF percentile 53-54 count: 2
+ViewFactors: VF percentile 55-56 count: 2
+ViewFactors: VF percentile 58-59 count: 2
+ViewFactors: VF percentile 60-61 count: 2
+ViewFactors: VF percentile 63-64 count: 2
+ViewFactors: VF percentile 65-66 count: 2
+ViewFactors: VF percentile 67-68 count: 2
+ViewFactors: VF percentile 69-70 count: 2
+ViewFactors: VF percentile 70-71 count: 2
+ViewFactors: VF percentile 72-73 count: 2
+ViewFactors: VF percentile 73-74 count: 2
+ViewFactors: VF percentile 75-76 count: 2
+ViewFactors: VF percentile 76-77 count: 2
+ViewFactors: VF percentile 77-78 count: 2
+ViewFactors: VF percentile 78-79 count: 2
+ViewFactors: VF percentile 79-80 count: 2
+ViewFactors: VF percentile 80-81 count: 4
+ViewFactors: VF percentile 81-82 count: 2
+ViewFactors: VF percentile 82-83 count: 4
+ViewFactors: VF percentile 83-84 count: 6
+ViewFactors: VF percentile 84-85 count: 6
+ViewFactors: VF percentile 85-86 count: 10
+ViewFactors: VF percentile 86-87 count: 8
+ViewFactors: Symmetrizing Factors...
+ViewFactors: View factors manipulated in time (s):    0.00    0.00
+ViewFactors: 
+ViewFactors: Viewfactors after manipulation:
+ViewFactors: Minimum row sum:    4.162E-01
+ViewFactors: Maximum row sum:    8.618E-01
+ViewFactors: Printing some lumped information of view factors
+ViewFactors: BC 2 with 40 elems perm: 1
+ViewFactors: BC 3 with 40 elems perm: 2
+ViewFactors: Lumped areas:
+ViewFactors:    1.2500000000000000E-003   1.2500000000000000E-003
+ViewFactors: Lumped View Factor Matrix:
+ViewFactors:    0.0000000000000000       0.67156514172242554
+ViewFactors:   0.67156514172242454        0.0000000000000000
+ViewFactors: Saving view factors in ascii mode
+ViewFactors: *** ALL DONE ***
+RadiationFactors: Loading view factors!
+RadiationFactors: Loading view factors from ascii file: ./mesh/ViewFactors.dat
+RadiationFactors: Computing factors...
+CreateRadiationMatrix: Number of entries in matrix: 3280
+RadiationFactors: View factors filling (%)               5.1250E+01
+TabulateEmissivity: We used real emissivity for all elements!
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+DirectSolver: Using direct method: umfpack
+RadiationFactors: Minimum Gebhart factors sum          2.857026E-01
+RadiationFactors: Maximum Gebhart factors sum          7.964562E-01
+RadiationFactors: Maximum share of omitted factors     0.000000E+00
+RadiationFactors: Gebhart factors filling (%)          1.000000E+02
+RadiationFactors: Gebhart factors count                6400
+RadiationFactors: Gebhart factors determined (s)         8.0000E-03
+RadiationFactors:  All done time (s)  0.20199999999999999
+RadiationFactors: ----------------------------------------------------
+OptimizeBandwidth: ---------------------------------------------------------
+OptimizeBandwidth: Computing matrix structure for: heat equation
+OptimizeBandwidth: Initial bandwidth for heat equation: 122
+OptimizeBandwidth: Optimized bandwidth for heat equation: 84
+OptimizeBandwidth: ---------------------------------------------------------
+AddSolvers: Setting up solver 2: saveline
+AddEquationBasics: Using procedure: SaveData SaveLine
+AddEquationBasics: Setting up solver: saveline
+Loading user function library: [SaveData]...[SaveLine_Init]
+Loading user function library: [SaveData]...[SaveLine_bulk]
+Loading user function library: [SaveData]...[SaveLine_bulk]
+Loading user function library: [SaveData]...[SaveLine]
+AddTimeEtc: Setting time and other global variables
+MAIN: Random seed initialized to: 314159265
+SetInitialConditions: Setting up initial conditions (if any)
+MAIN: Number of timesteps to be saved: 1
+MAIN: 
+MAIN: -------------------------------------
+MAIN:  Steady state iteration:            1
+MAIN: -------------------------------------
+MAIN: 
+SingleSolver: Attempting to call solver: 1
+SingleSolver: Solver Equation string is: heat equation
+HeatSolver: -------------------------------------------
+HeatSolver: Solving the energy equation for temperature
+RadiationFactors: ----------------------------------------------------
+RadiationFactors: Computing radiation factors for heat transfer
+RadiationFactors: ----------------------------------------------------
+RadiationFactors: Using sparse matrix format for factor computations.
+RadiationFactors: Using direct solver for radiation factors
+RadiationFactors: Total number of Radiation Surfaces 80 out of 168
+RadiationFactors: Checking changes in mesh.nodes file!
+RadiationFactors: Maximum geometry alteration on radiation BCs:    0.00000E+00
+RadiationFactors: Geometry change is neglected and old view factors are used
+DefaultStart: Starting solver: heat equation
+HeatSolve: 
+HeatSolve: 
+HeatSolve: -------------------------------------
+HeatSolve:  TEMPERATURE ITERATION           1
+HeatSolve: -------------------------------------
+HeatSolve: 
+HeatSolve: Starting Assembly...
+HeatSolve: Assembly:
+HeatSolve: Assembly done
+DefUtils::DefaultDirichletBCs: Setting Dirichlet boundary conditions
+EnforceDirichletConditions: Enforcing total of 41 Dirichlet conditions.
+EnforceDirichletConditions: Applying Dirichlet conditions using scaled diagonal
+ScaleLinearSystem: Creating > DiagScaling < vector of size 246
+EnforceDirichletConditions: Dirichlet conditions enforced for dofs: 41
+DefaultSolve: Solving linear system with default routines
+SolveSystem: Solving linear system
+SolveLinearSystem: Assuming real valued linear system
+SolveLinearSystem: Assuming serial linear system
+ScaleLinearSystem: Creating > DiagScaling < vector of size 246
+SolveLinearSystem: Serial linear System Solver: direct
+DirectSolver: Using direct method: umfpack
+ComputeNorm: Computing norm of solution
+ComputeChange: NS (ITER=1) (NRM,RELC): (  872.18593      2.0000000     ) :: heat equation
+HeatSolve: iter:    1 Assembly: (s)    0.00    0.00
+HeatSolve: iter:    1 Solve:    (s)    0.00    0.00
+HeatSolve:  Result Norm   :    872.18593441515577
+HeatSolve:  Relative Change :    2.0000000000000000
+HeatSolve: 
+HeatSolve: 
+HeatSolve: -------------------------------------
+HeatSolve:  TEMPERATURE ITERATION           2
+HeatSolve: -------------------------------------
+HeatSolve: 
+HeatSolve: Starting Assembly...
+HeatSolve: Assembly:
+HeatSolve: Assembly done
+DefUtils::DefaultDirichletBCs: Setting Dirichlet boundary conditions
+EnforceDirichletConditions: Enforcing total of 41 Dirichlet conditions.
+EnforceDirichletConditions: Applying Dirichlet conditions using scaled diagonal
+ScaleLinearSystem: Creating > DiagScaling < vector of size 246
+EnforceDirichletConditions: Dirichlet conditions enforced for dofs: 41
+DefaultSolve: Solving linear system with default routines
+SolveSystem: Solving linear system
+SolveLinearSystem: Assuming real valued linear system
+SolveLinearSystem: Assuming serial linear system
+ScaleLinearSystem: Creating > DiagScaling < vector of size 246
+SolveLinearSystem: Serial linear System Solver: direct
+DirectSolver: Using direct method: umfpack
+ComputeNorm: Computing norm of solution
+ComputeChange: NS (ITER=2) (NRM,RELC): (  983.36106     0.11983003     ) :: heat equation
+HeatSolve: iter:    2 Assembly: (s)    0.00    0.00
+HeatSolve: iter:    2 Solve:    (s)    0.00    0.00
+HeatSolve:  Result Norm   :    983.36105638882952
+HeatSolve:  Relative Change :   0.11983002588956582
+HeatSolve: 
+HeatSolve: 
+HeatSolve: -------------------------------------
+HeatSolve:  TEMPERATURE ITERATION           3
+HeatSolve: -------------------------------------
+HeatSolve: 
+HeatSolve: Starting Assembly...
+HeatSolve: Assembly:
+HeatSolve: Assembly done
+DefUtils::DefaultDirichletBCs: Setting Dirichlet boundary conditions
+EnforceDirichletConditions: Enforcing total of 41 Dirichlet conditions.
+EnforceDirichletConditions: Applying Dirichlet conditions using scaled diagonal
+ScaleLinearSystem: Creating > DiagScaling < vector of size 246
+EnforceDirichletConditions: Dirichlet conditions enforced for dofs: 41
+DefaultSolve: Solving linear system with default routines
+SolveSystem: Solving linear system
+SolveLinearSystem: Assuming real valued linear system
+SolveLinearSystem: Assuming serial linear system
+ScaleLinearSystem: Creating > DiagScaling < vector of size 246
+SolveLinearSystem: Serial linear System Solver: direct
+DirectSolver: Using direct method: umfpack
+ComputeNorm: Computing norm of solution
+ComputeChange: NS (ITER=3) (NRM,RELC): (  981.34253     0.20547940E-02 ) :: heat equation
+HeatSolve: iter:    3 Assembly: (s)    0.00    0.01
+HeatSolve: iter:    3 Solve:    (s)    0.00    0.00
+HeatSolve:  Result Norm   :    981.34252586965647
+HeatSolve:  Relative Change :    2.0547939520247560E-003
+HeatSolve: 
+HeatSolve: 
+HeatSolve: -------------------------------------
+HeatSolve:  TEMPERATURE ITERATION           4
+HeatSolve: -------------------------------------
+HeatSolve: 
+HeatSolve: Starting Assembly...
+HeatSolve: Assembly:
+HeatSolve: Assembly done
+DefUtils::DefaultDirichletBCs: Setting Dirichlet boundary conditions
+EnforceDirichletConditions: Enforcing total of 41 Dirichlet conditions.
+EnforceDirichletConditions: Applying Dirichlet conditions using scaled diagonal
+ScaleLinearSystem: Creating > DiagScaling < vector of size 246
+EnforceDirichletConditions: Dirichlet conditions enforced for dofs: 41
+DefaultSolve: Solving linear system with default routines
+SolveSystem: Solving linear system
+SolveLinearSystem: Assuming real valued linear system
+SolveLinearSystem: Assuming serial linear system
+ScaleLinearSystem: Creating > DiagScaling < vector of size 246
+SolveLinearSystem: Serial linear System Solver: direct
+DirectSolver: Using direct method: umfpack
+ComputeNorm: Computing norm of solution
+ComputeChange: NS (ITER=4) (NRM,RELC): (  981.35701     0.14764285E-04 ) :: heat equation
+HeatSolve: iter:    4 Assembly: (s)    0.00    0.01
+HeatSolve: iter:    4 Solve:    (s)    0.00    0.00
+HeatSolve:  Result Norm   :    981.35701479780971
+HeatSolve:  Relative Change :    1.4764285468079440E-005
+HeatSolve: 
+HeatSolve: 
+HeatSolve: -------------------------------------
+HeatSolve:  TEMPERATURE ITERATION           5
+HeatSolve: -------------------------------------
+HeatSolve: 
+HeatSolve: Starting Assembly...
+HeatSolve: Assembly:
+HeatSolve: Assembly done
+DefUtils::DefaultDirichletBCs: Setting Dirichlet boundary conditions
+EnforceDirichletConditions: Enforcing total of 41 Dirichlet conditions.
+EnforceDirichletConditions: Applying Dirichlet conditions using scaled diagonal
+ScaleLinearSystem: Creating > DiagScaling < vector of size 246
+EnforceDirichletConditions: Dirichlet conditions enforced for dofs: 41
+DefaultSolve: Solving linear system with default routines
+SolveSystem: Solving linear system
+SolveLinearSystem: Assuming real valued linear system
+SolveLinearSystem: Assuming serial linear system
+ScaleLinearSystem: Creating > DiagScaling < vector of size 246
+SolveLinearSystem: Serial linear System Solver: direct
+DirectSolver: Using direct method: umfpack
+ComputeNorm: Computing norm of solution
+ComputeChange: NS (ITER=5) (NRM,RELC): (  1323.3750     0.29679629     ) :: heat equation
+HeatSolve: iter:    5 Assembly: (s)    0.00    0.01
+HeatSolve: iter:    5 Solve:    (s)    0.00    0.00
+HeatSolve:  Result Norm   :    1323.3749599985549
+HeatSolve:  Relative Change :   0.29679628602450775
+HeatSolve: 
+HeatSolve: 
+HeatSolve: -------------------------------------
+HeatSolve:  TEMPERATURE ITERATION           6
+HeatSolve: -------------------------------------
+HeatSolve: 
+HeatSolve: Starting Assembly...
+HeatSolve: Assembly:
+HeatSolve: Assembly done
+DefUtils::DefaultDirichletBCs: Setting Dirichlet boundary conditions
+EnforceDirichletConditions: Enforcing total of 41 Dirichlet conditions.
+EnforceDirichletConditions: Applying Dirichlet conditions using scaled diagonal
+ScaleLinearSystem: Creating > DiagScaling < vector of size 246
+EnforceDirichletConditions: Dirichlet conditions enforced for dofs: 41
+DefaultSolve: Solving linear system with default routines
+SolveSystem: Solving linear system
+SolveLinearSystem: Assuming real valued linear system
+SolveLinearSystem: Assuming serial linear system
+ScaleLinearSystem: Creating > DiagScaling < vector of size 246
+SolveLinearSystem: Serial linear System Solver: direct
+DirectSolver: Using direct method: umfpack
+ComputeNorm: Computing norm of solution
+ComputeChange: NS (ITER=6) (NRM,RELC): (  1190.8565     0.10541465     ) :: heat equation
+HeatSolve: iter:    6 Assembly: (s)    0.00    0.01
+HeatSolve: iter:    6 Solve:    (s)    0.00    0.01
+HeatSolve:  Result Norm   :    1190.8565450651631
+HeatSolve:  Relative Change :   0.10541464830624926
+HeatSolve: 
+HeatSolve: 
+HeatSolve: -------------------------------------
+HeatSolve:  TEMPERATURE ITERATION           7
+HeatSolve: -------------------------------------
+HeatSolve: 
+HeatSolve: Starting Assembly...
+HeatSolve: Assembly:
+HeatSolve: Assembly done
+DefUtils::DefaultDirichletBCs: Setting Dirichlet boundary conditions
+EnforceDirichletConditions: Enforcing total of 41 Dirichlet conditions.
+EnforceDirichletConditions: Applying Dirichlet conditions using scaled diagonal
+ScaleLinearSystem: Creating > DiagScaling < vector of size 246
+EnforceDirichletConditions: Dirichlet conditions enforced for dofs: 41
+DefaultSolve: Solving linear system with default routines
+SolveSystem: Solving linear system
+SolveLinearSystem: Assuming real valued linear system
+SolveLinearSystem: Assuming serial linear system
+ScaleLinearSystem: Creating > DiagScaling < vector of size 246
+SolveLinearSystem: Serial linear System Solver: direct
+DirectSolver: Using direct method: umfpack
+ComputeNorm: Computing norm of solution
+ComputeChange: NS (ITER=7) (NRM,RELC): (  1138.6761     0.44799081E-01 ) :: heat equation
+HeatSolve: iter:    7 Assembly: (s)    0.00    0.01
+HeatSolve: iter:    7 Solve:    (s)    0.00    0.01
+HeatSolve:  Result Norm   :    1138.6760849045877
+HeatSolve:  Relative Change :    4.4799080716249072E-002
+HeatSolve: 
+HeatSolve: 
+HeatSolve: -------------------------------------
+HeatSolve:  TEMPERATURE ITERATION           8
+HeatSolve: -------------------------------------
+HeatSolve: 
+HeatSolve: Starting Assembly...
+HeatSolve: Assembly:
+HeatSolve: Assembly done
+DefUtils::DefaultDirichletBCs: Setting Dirichlet boundary conditions
+EnforceDirichletConditions: Enforcing total of 41 Dirichlet conditions.
+EnforceDirichletConditions: Applying Dirichlet conditions using scaled diagonal
+ScaleLinearSystem: Creating > DiagScaling < vector of size 246
+EnforceDirichletConditions: Dirichlet conditions enforced for dofs: 41
+DefaultSolve: Solving linear system with default routines
+SolveSystem: Solving linear system
+SolveLinearSystem: Assuming real valued linear system
+SolveLinearSystem: Assuming serial linear system
+ScaleLinearSystem: Creating > DiagScaling < vector of size 246
+SolveLinearSystem: Serial linear System Solver: direct
+DirectSolver: Using direct method: umfpack
+ComputeNorm: Computing norm of solution
+ComputeChange: NS (ITER=8) (NRM,RELC): (  1130.0030     0.76459136E-02 ) :: heat equation
+HeatSolve: iter:    8 Assembly: (s)    0.00    0.01
+HeatSolve: iter:    8 Solve:    (s)    0.01    0.01
+HeatSolve:  Result Norm   :    1130.0030227342979
+HeatSolve:  Relative Change :    7.6459135547963918E-003
+HeatSolve: 
+HeatSolve: 
+HeatSolve: -------------------------------------
+HeatSolve:  TEMPERATURE ITERATION           9
+HeatSolve: -------------------------------------
+HeatSolve: 
+HeatSolve: Starting Assembly...
+HeatSolve: Assembly:
+HeatSolve: Assembly done
+DefUtils::DefaultDirichletBCs: Setting Dirichlet boundary conditions
+EnforceDirichletConditions: Enforcing total of 41 Dirichlet conditions.
+EnforceDirichletConditions: Applying Dirichlet conditions using scaled diagonal
+ScaleLinearSystem: Creating > DiagScaling < vector of size 246
+EnforceDirichletConditions: Dirichlet conditions enforced for dofs: 41
+DefaultSolve: Solving linear system with default routines
+SolveSystem: Solving linear system
+SolveLinearSystem: Assuming real valued linear system
+SolveLinearSystem: Assuming serial linear system
+ScaleLinearSystem: Creating > DiagScaling < vector of size 246
+SolveLinearSystem: Serial linear System Solver: direct
+DirectSolver: Using direct method: umfpack
+ComputeNorm: Computing norm of solution
+ComputeChange: NS (ITER=9) (NRM,RELC): (  1129.7710     0.20534739E-03 ) :: heat equation
+HeatSolve: iter:    9 Assembly: (s)    0.00    0.02
+HeatSolve: iter:    9 Solve:    (s)    0.00    0.01
+HeatSolve:  Result Norm   :    1129.7710033892786
+HeatSolve:  Relative Change :    2.0534738636443178E-004
+HeatSolve: 
+HeatSolve: 
+HeatSolve: -------------------------------------
+HeatSolve:  TEMPERATURE ITERATION          10
+HeatSolve: -------------------------------------
+HeatSolve: 
+HeatSolve: Starting Assembly...
+HeatSolve: Assembly:
+HeatSolve: Assembly done
+DefUtils::DefaultDirichletBCs: Setting Dirichlet boundary conditions
+EnforceDirichletConditions: Enforcing total of 41 Dirichlet conditions.
+EnforceDirichletConditions: Applying Dirichlet conditions using scaled diagonal
+ScaleLinearSystem: Creating > DiagScaling < vector of size 246
+EnforceDirichletConditions: Dirichlet conditions enforced for dofs: 41
+DefaultSolve: Solving linear system with default routines
+SolveSystem: Solving linear system
+SolveLinearSystem: Assuming real valued linear system
+SolveLinearSystem: Assuming serial linear system
+ScaleLinearSystem: Creating > DiagScaling < vector of size 246
+SolveLinearSystem: Serial linear System Solver: direct
+DirectSolver: Using direct method: umfpack
+ComputeNorm: Computing norm of solution
+ComputeChange: NS (ITER=10) (NRM,RELC): (  1129.7708     0.14519122E-06 ) :: heat equation
+HeatSolve: iter:   10 Assembly: (s)    0.00    0.02
+HeatSolve: iter:   10 Solve:    (s)    0.00    0.01
+HeatSolve:  Result Norm   :    1129.7708393564574
+HeatSolve:  Relative Change :    1.4519122248609064E-007
+HeatSolve: 
+HeatSolve: 
+HeatSolve: -------------------------------------
+HeatSolve:  TEMPERATURE ITERATION          11
+HeatSolve: -------------------------------------
+HeatSolve: 
+HeatSolve: Starting Assembly...
+HeatSolve: Assembly:
+HeatSolve: Assembly done
+DefUtils::DefaultDirichletBCs: Setting Dirichlet boundary conditions
+EnforceDirichletConditions: Enforcing total of 41 Dirichlet conditions.
+EnforceDirichletConditions: Applying Dirichlet conditions using scaled diagonal
+ScaleLinearSystem: Creating > DiagScaling < vector of size 246
+EnforceDirichletConditions: Dirichlet conditions enforced for dofs: 41
+DefaultSolve: Solving linear system with default routines
+SolveSystem: Solving linear system
+SolveLinearSystem: Assuming real valued linear system
+SolveLinearSystem: Assuming serial linear system
+ScaleLinearSystem: Creating > DiagScaling < vector of size 246
+SolveLinearSystem: Serial linear System Solver: direct
+DirectSolver: Using direct method: umfpack
+ComputeNorm: Computing norm of solution
+ComputeChange: NS (ITER=11) (NRM,RELC): (  1129.7708     0.42376559E-11 ) :: heat equation
+HeatSolve: iter:   11 Assembly: (s)    0.00    0.02
+HeatSolve: iter:   11 Solve:    (s)    0.00    0.01
+HeatSolve:  Result Norm   :    1129.7708393612450
+HeatSolve:  Relative Change :    4.2376559416683675E-012
+DefaultFinish: Finished solver: heat equation
+ComputeNorm: Computing norm of solution
+ComputeChange: SS (ITER=1) (NRM,RELC): (  1129.7708      2.0000000     ) :: heat equation
+SingleSolver: Attempting to call solver: 2
+SingleSolver: Solver Equation string is: saveline
+SaveLine: -----------------------------------------
+SaveLine: Saving data on lines to file: line.dat
+SaveLine: ------------------------------------------
+CreateListForSaving: Field Variables for Saving
+CreateListForSaving: Variable 1: temperature
+SaveLine: Saving PolyLines into ascii table
+FindMeshEdges: Determining edges in 2D mesh
+FindMeshEdges2D: Number of edges found: 688
+SaveLine: Number of nodes in specified lines: 41
+SaveLine: All done
+ReloadInputFile: Reloading input file
+LoadInputFile: Loading input file:
+MAIN: Reporting unused list entries for sif improvement!
+MAIN: If you do not want these lines undefine > DEVEL_LISTUSAGE < !
+   Unused keywords:
+       Boundary Condition 2  radiation target body
+       Boundary Condition 3  radiation target body
+MAIN: *** Elmer Solver: ALL DONE ***
+MAIN: The end
+SOLVER TOTAL TIME(CPU,REAL):         0.40        0.40
+ELMER SOLVER FINISHED AT: 2026/10/06 08:55:31
