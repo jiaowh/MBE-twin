@@ -271,3 +271,103 @@ def test_aim_scatter_factor_combines_gas_and_plume_as_the_comparison(tmp_path):
     assert np.allclose(rc.aim_scatter_factor([fg], "B-L", 95.0, "gas", 4.0, rho, envelope_aim=95.0), gas["gas"])
     with pytest.raises(SystemExit, match="aim"):
         rc.aim_scatter_factor([fg], "B-L", 95.0, "gas", 4.0, rho, envelope_aim=90.0)
+
+
+def test_n_scatter_overrides_must_be_consumed(tmp_path):
+    """Audit 2026-10-06, finding 4: --n-scatter without a matching --n-tables layout is refused, not ignored."""
+    import json
+    from types import SimpleNamespace
+
+    import numpy as np
+    rc = _load("realizable_controller")
+    tab = tmp_path / "n_tables_B-L.npz"
+    np.savez(tab, layout="B-L")
+    rec = tmp_path / "plume_B-L.json"
+    rec.write_text(json.dumps({"inputs": {"layouts": ["B-L"]}}))
+    rec_p = tmp_path / "plume_B-p.json"
+    rec_p.write_text(json.dumps({"inputs": {"layouts": ["B-p"]}}))
+
+    def args(n_tables, n_scatter):
+        return SimpleNamespace(n_tables=n_tables, n_scatter=n_scatter)
+    assert rc.check_overrides(args([tab], [rec]), ["B-p", "B-L"]) == ["B-L"]
+    assert rc.check_overrides(args([tab], None), ["B-L"]) == []
+    with pytest.raises(SystemExit, match="needs --n-tables"):
+        rc.check_overrides(args(None, [rec]), ["B-p", "B-L"])
+    with pytest.raises(SystemExit, match="none of which"):
+        rc.check_overrides(args([tab], [rec, rec_p]), ["B-p", "B-L"])
+    with pytest.raises(SystemExit, match="not evaluated"):
+        rc.check_overrides(args([tab], [rec]), ["B-p"])
+    with pytest.raises(SystemExit, match="more than one"):
+        rc.check_overrides(args([tab, tab], [rec]), ["B-L"])
+
+
+def _controller_run(path, layouts_changed, worst, joint, n_scatter="t.json"):
+    import json
+    rows = [{"layout": name, "T_C": 710, "controllers": {"rate monitor + BFM": {"worst_pct": w, "joint_fraction": joint,
+                                                                                   "admissible": joint >= 0.95}}}
+            for name, w in (("B-p", 0.9), ("B-L", worst))]
+    path.mkdir()
+    (path / "manifest.json").write_text(json.dumps({
+        "run_id": path.name, "source_sha256": {}, "inputs": {"n_scatter_sha256": {n_scatter: "0" * 64},
+                                                             "n_scatter_layouts": layouts_changed},
+        "outputs": {"rows": rows}}))
+    return path
+
+
+def test_scatter_noise_summary_skips_unchanged_layouts_and_bootstraps(tmp_path, monkeypatch):
+    """Audit 2026-10-06, finding 2: a run's unchanged layout is not a noise trial; boot runs give the spread of the
+    averaged result and, paired with another summary, of the layout difference."""
+    import json
+    sn = _load("summarize_scatter_noise")
+    runs = [f"single:{_controller_run(tmp_path / f's{k}', ['B-L'], 0.5 + 0.1 * k, 0.97)}" for k in range(3)]
+    runs.append(f"avg:{_controller_run(tmp_path / 'avg', ['B-L'], 0.55, 0.96)}")
+    runs += [f"boot:{_controller_run(tmp_path / f'b{k}', ['B-L'], 0.5 + 0.02 * k, 0.935 + 0.01 * k)}" for k in range(5)]
+    monkeypatch.setattr(sys, "argv", ["x", "--runs", *runs, "--out", str(tmp_path / "out")])
+    sn.main()
+    m = json.loads((tmp_path / "out/manifest.json").read_text())
+    assert set(m["outputs"]["summary"]) == {"B-L 710 C"}
+    s = m["outputs"]["summary"]["B-L 710 C"]
+    assert s["single_n"] == 3 and abs(s["single_sd"] - 0.1) < 1e-12
+    b = s["boot"]
+    assert b["n"] == 5 and abs(b["worst_mean"] - 0.54) < 1e-12 and abs(b["bias_vs_avg"] + 0.01) < 1e-12
+    assert b["pass_fraction"]["rate monitor + BFM"] == 0.6
+    # a run that does not record which layouts it changed is refused
+    bad = tmp_path / "old"
+    _controller_run(bad, [], 0.5, 0.97)
+    monkeypatch.setattr(sys, "argv", ["x", "--runs", f"single:{bad}", "--out", str(tmp_path / "out2")])
+    with pytest.raises(SystemExit, match="does not record"):
+        sn.main()
+    # paired difference against another layout's boot runs
+    other = {"outputs": {"per_run": {"B-p 710 C": [{"kind": "avg", "worst_pct": 0.6}]
+                                     + [{"kind": "boot", "worst_pct": 0.6} for _ in range(5)]}}}
+    d = sn.paired_difference(m["outputs"]["per_run"], other)["by_T"]["710 C"]
+    assert d["n"] == 5 and abs(d["avg_diff"] + 0.05) < 1e-12 and abs(d["mean"] + 0.06) < 1e-12 and d["share_positive"] == 0.0
+
+
+def test_average_scattered_seeds_resample_draws_with_replacement(tmp_path, monkeypatch):
+    """--resample: as many draws as parts, with replacement, reproducible from the seed and recorded."""
+    import json
+
+    import numpy as np
+    av = _load("average_scattered_seeds")
+    parts = []
+    for k in range(4):
+        d = tmp_path / f"p{k}"
+        d.mkdir()
+        (d / "manifest.json").write_text(json.dumps({
+            "run_id": f"p{k}", "created_utc": "", "git_commit": "", "inputs_sha256": "",
+            "source_sha256": {"scripts/average_scattered_seeds.py": "0" * 64},
+            "inputs": {"seed": k, "layouts": ["B-L"]}, "warnings": [], "disabled_physics": [],
+            "outputs": {"rho_m": [0.0, 0.1], "p_grid_Pa": [1.0], "diagnostics": {},
+                        "factors": {"N": {"B-L": {"gas": [[float(k), float(k)]]}}, "Ga": {}}}}))
+        parts.append(str(d))
+
+    def run(out, *extra):
+        monkeypatch.setattr(sys, "argv", ["x", "--parts", *parts, "--out", str(tmp_path / out), *extra])
+        av.main()
+        return json.loads((tmp_path / out / "manifest.json").read_text())
+    assert run("plain")["outputs"]["factors"]["N"]["B-L"]["gas"] == [[1.5, 1.5]]
+    a, b = run("r1", "--resample", "7"), run("r2", "--resample", "7")
+    draws = a["inputs"]["resample"]["draws"]["parts"]
+    assert len(draws) == 4 and draws == b["inputs"]["resample"]["draws"]["parts"]
+    assert np.isclose(a["outputs"]["factors"]["N"]["B-L"]["gas"][0][0], np.mean(draws))

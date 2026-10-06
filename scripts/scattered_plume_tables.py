@@ -13,7 +13,8 @@ the plume, on the comparison's pressure grid, for each effective pumping speed S
 - the plume: the feed leaves the layout's active disk uniformly, cos^n as the N atoms (hole
   peaking), N2 at 300 K (the larger effect of the 300 / 600 K bracket of
   scattered_redeposition.py), unmodified by its own collisions;
-- walls recombine N with gamma = 1.
+- walls recombine N with gamma = 1 by default; --gamma G --pump sets another wall loss and lets the pump remove
+  wall-returned atoms at the table's pumping speed (scattering.wall_loss), for a low-wall-loss bracket.
 The comparison (layout_comparison.py --scattered gas+plume) uses these factors for S = 2 and 4 and
 the gas-only factors for S = 0.5 (flagged).
 
@@ -40,7 +41,7 @@ import numpy as np  # noqa: E402
 
 from mbe_twin.manifest import build_manifest, write_manifest  # noqa: E402
 from mbe_twin.scattering import (K_B, Gas, Plume, Source, binned_direct_flux, fit_even, radial_arrival, track,  # noqa: E402
-                                 tube_cos_n)
+                                 tube_cos_n, wall_loss)
 from mbe_twin.vacuum import SCCM_PA_M3_S, T_STD, beam_mean_free_path  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -53,7 +54,7 @@ FEED_MAX_SCCM = 35.0
 PLUME_T = 300.0
 
 
-def factor(rng, source, plume, d_beam, p, t_gas, n_total, batches, edges, centres, rho):
+def factor(rng, source, plume, d_beam, p, t_gas, n_total, batches, edges, centres, rho, gamma=1.0, pump_speed=0.0):
     n_part = n_total // batches
     sp = st.SPECIES["N"]
     lam = beam_mean_free_path(p, d_beam, sp["mass_amu"], sp["temperature"], t_gas=t_gas)
@@ -61,7 +62,8 @@ def factor(rng, source, plume, d_beam, p, t_gas, n_total, batches, edges, centre
     gas = Gas(p / (K_B * t_gas), t_gas)
     g_b, counts = [], []
     for _ in range(batches):
-        r, ind, c = track(rng, n_part, source, diameter=d_beam, gas=gas, plume=plume, chamber=st.CHAMBER, gamma=1.0, **sp)
+        r, ind, c = track(rng, n_part, source, diameter=d_beam, gas=gas, plume=plume, chamber=st.CHAMBER, gamma=gamma,
+                          pump_speed=pump_speed, **sp)
         d, s = radial_arrival(r, ind, n_part, edges)
         g_b.append((d + s) / a)
         counts.append(c["plume"] / n_part)
@@ -88,6 +90,8 @@ def main():
     ap.add_argument("--seed", type=int, default=20261004)
     ap.add_argument("--aim-mm", type=float, default=None, help="N aim offset (mm) replacing the envelope's (one layout)")
     ap.add_argument("--extend", help="earlier record whose covered entries are kept")
+    ap.add_argument("--gamma", type=float, default=1.0, help="N wall loss probability per hit (default 1)")
+    ap.add_argument("--pump", action="store_true", help="pump wall-returned atoms at each table's pumping speed")
     ap.add_argument("--out", default="results/scattered_plume_tables")
     args = ap.parse_args()
     if args.aim_mm is not None and len(args.layouts) != 1:
@@ -144,7 +148,7 @@ def main():
                               temperature=PLUME_T, n_cos=n_cos)
                 t = time.time()
                 f, info = factor(rng, source, plume, vac["collision_diameters_m"]["N"], p, t_gas, args.n_particles,
-                                 args.batches, edges, centres, rho)
+                                 args.batches, edges, centres, rho, gamma=args.gamma, pump_speed=speed if args.pump else 0.0)
                 tab.append(f)
                 dg.append({**info, "feed_sccm": feed})
                 covered.append(True)
@@ -162,14 +166,19 @@ def main():
                 "species": st.SPECIES, "p_grid_Pa": lc.P_GRID, "rho_m": rho, "gas_temperature_K": t_gas, "seed": args.seed,
                 "coverage_rule": "through the first grid pressure whose feed reaches feed_max_sccm",
                 "extends": None if old is None else {"run_id": old["run_id"], "seed": old["inputs"]["seed"]}}
-               | ({} if args.aim_mm is None else {"aim_offset_mm": aims}),
+               | ({} if args.aim_mm is None else {"aim_offset_mm": aims})
+               | ({} if args.gamma == 1.0 and not args.pump else
+                  {"wall_gamma": args.gamma, "pump_wall_returned": args.pump,
+                   "wall_loss_per_hit": {f"{s_:g}": wall_loss(args.gamma, s_ if args.pump else 0.0, st.CHAMBER, st.SPECIES['N']['mass_amu']) for s_ in args.speeds}}),
         outputs={"rho_m": rho, "p_grid_Pa": lc.P_GRID, "factors": tables, "diagnostics": diag},
         sources=[Path(__file__), ROOT / "scripts/scattered_tables.py", ROOT / "src/mbe_twin/scattering.py",
                  ROOT / "src/mbe_twin/crucible.py", ROOT / "src/mbe_twin/vacuum.py", ENVELOPE],
         warnings=["Scattered component from cos^n surrogate sources, applied as a ratio to the comparison's direct maps",
                   "Plume free-molecular, N2 at 300 K, not modified by its own collisions",
-                  "Spherical 0.5 m chamber, flat holder disk, hard spheres, uniform 300 K chamber gas, no pump; gamma = 1"],
-        disabled_physics=["plume self-collisions", "pumping of wall-returned atoms", "plasma-heated chamber gas"])
+                  "Spherical 0.5 m chamber, flat holder disk, hard spheres, uniform 300 K chamber gas"
+                  + ("; no pump; gamma = 1" if args.gamma == 1.0 and not args.pump else
+                     f"; wall gamma {args.gamma:g}" + (", pump removes wall-returned atoms at the table's speed" if args.pump else ""))],
+        disabled_physics=["plume self-collisions", "plasma-heated chamber gas"] + ([] if args.pump else ["pumping of wall-returned atoms"]))
     print(f"Wrote {write_manifest(manifest, out / 'manifest.json')}")
 
 

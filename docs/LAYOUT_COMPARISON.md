@@ -8,7 +8,7 @@ Status: 2026-10-06 (ninth revision: section 14 regenerates the scattered-atom ta
 - **Nitrogen supply sets the reachable growth rate.** That rate depends on a source conversion fraction nobody has published. The literature implies it lies between 6 and 57 % at high flow.
 - **The aperture plate must stay free-molecular at the flow that rate needs.** With the published-type plate, it stops being free-molecular above about 6 sccm.
 
-**Update 2026-10-06 (section 14).** The scattered-atom tables were regenerated at B-L's +95 mm aim and averaged over independent seeds; B-p's were averaged too. The factor hardly depends on the aim, but one table's Monte Carlo noise moves the worst case by about +/-0.1 point. With averaged tables, **B-L at +95 mm gives 0.53 % at 710 C (0.58 % at 720 C) and B-p 0.57 % (0.62 %)**: the layouts are level within the remaining noise, with B-L no worse. The aim scan confirms +95 mm (optimum 95-97.5 mm), so the aim can be frozen.
+**Update 2026-10-06 (section 14).** The scattered-atom tables were regenerated at B-L's +95 mm aim and averaged over independent seeds; B-p's were averaged too. The factor hardly depends on the aim, but one table's Monte Carlo noise moves the worst case by about +/-0.1 point. With averaged tables, **B-L at +95 mm gives 0.53 +/- 0.04 % at 710 C (0.58 % at 720 C) and B-p 0.57 +/- 0.09 % (0.62 %)** (bootstrap of the averaged tables; table noise only). The layout difference, 0.04 point in B-L's favour, is not resolved: B-L is ahead in 75 % of resamples. The aim scan favours +95 mm (optimum 95-97.5 mm, conditional on transferring the 95 mm factors to the other aims), so the aim can be frozen. B-p's figures assume eta = 1, which no measured source reaches (ref/notes/RESEARCH_GAP_SEARCH_2026-10-06.md): **B-L is now the provisional layout**.
 
 **Update 2026-10-05 (section 13).** A commissioning rehearsal shows the 0.2 deg re-aim is reachable with a mount repeatable to about 0.05 deg and three wafers mapped to 0.1-0.3 %. B-L at +95 mm with its own pointing and attenuation tables gives 0.64 % at 710 C, confirming section 12. The 710 C decomposition extrapolation is a small effect on thickness.
 
@@ -50,7 +50,7 @@ Records (all in `data/runs/studies/`):
   - the comparison with them: layout_comparison_bc_sc.json, _sc_plume.json and _sc_gamma0.1.json;
   - the downstream studies on them: nitrogen_rate_limits_sc*.json, operating_cold_limit_*.json, operating_optimum_sc_plume.json, heater_robustness_sc_plume.json, nitrogen_aim_*_sc_plume.json;
   - [commissioning_rehearsal.json](../data/runs/studies/commissioning_rehearsal.json).
-- Seed-averaged tables at the frozen aims (section 14): scattered_tables_B-L_95mm.json, scattered_plume_tables_B-L_95mm.json, scattered_plume_tables_B-p_97.5mm.json; realizable_controller_ms_BL95scatter.json, scatter_noise_BL95.json, scatter_noise_Bp.json.
+- Seed-averaged tables at the frozen aims (section 14): scattered_tables_B-L_95mm.json, scattered_plume_tables_B-L_95mm.json, scattered_plume_tables_B-p_97.5mm.json; realizable_controller_ms_BL95scatter.json, realizable_controller_ms_Bp97scatter.json, scatter_noise_BL95.json, scatter_noise_Bp.json (with the bootstrap of the averaged tables and the paired layout difference).
 
 Inputs are in the [design envelope](../data/design/design_envelope.json); commands are in [REPRODUCE.md](REPRODUCE.md); hardware requests are in [HARDWARE_REQUESTS.md](HARDWARE_REQUESTS.md).
 
@@ -107,7 +107,7 @@ Inputs are in the [design envelope](../data/design/design_envelope.json); comman
   A Ga correction driven by one centre pyrometer (+/-2 K bias) keeps 96-97 % of B-p's states in the window at 740 C and 84-86 % at 700 C (1473 / 1373 K element limits). These states combine heater errors with B-p's whole +/-0.8 deg ensemble, and each has its own feed, pressure and attenuation (scripts/heater_robustness.py). With the Ga output fixed, 54-55 % stay in at 740 C and 27-30 % at 700 C. At B-L's operating pressure (1e-2 Pa), a fixed Ga output also leaves the window when the Ga collision diameter differs from the calibrated one, because Ga attenuation then differs. So Ga should be calibrated at growth pressure, not in vacuum.
 - **Mechanical:** with certified lower bounds on every modelled clearance over the continuous shutter motion (every angle of each swing, both shutters moving), B, B-p and B-L clear the 5 mm margin at 6.1 mm (Ga-Al, 8.9 mm at the closest evaluated pose), and C, C-p at 10.7 mm (20.6 mm). These are bounds for the modelled solids with assumed dimensions, not a sign-off.
 
-**Recommendation.** Carry **B-p as the provisional working layout**: B's port and mount, aimed +97.5 mm. B-p is the best layout with a published plate, and its aim can be trimmed after commissioning. Specify the plate as a decision in its own right: the large plate of B-L is what makes 1 um/h reachable at realistic conversion. Drop C and C-p as alternatives unless the plate changes: with this plate they have no valid 1 um/h point. A layout cannot be qualified until:
+**Recommendation (revised 2026-10-06).** Carry **B-L as the provisional working layout**: B's port and mount with the large plate, aimed +95 mm. B-L is the only layout that reaches 1 um/h inside the model's validity at a conversion inside the measured range (eta >= 0.22; R41 measured at most 0.4 at a source exit, falling with bulb pressure), and with the uniformity levers it is at least as uniform as B-p (section 14). Its plate is not a published design, so the vendor must confirm it can be built and keeps the discharge lit. Keep **B-p** (the published plate, aimed +97.5 mm) as the alternative only if the source is shown to convert at eta >= 0.8-0.9 at low flow, or if the relaxed hole criterion Kn >= 3 is accepted (section 6). Its section 12-14 figures assume eta = 1. Until 2026-10-06 B-p was the provisional layout, as the best layout with a published plate. Drop C and C-p as alternatives unless the plate changes: with this plate they have no valid 1 um/h point. A layout cannot be qualified until:
 1. the operating point of section 8 (1 um/h at 720 C, for the goals as uniform, as fast and as cold as possible) is confirmed against crystal quality;
 2. the source's output versus flow, and the plate options the vendor can supply, are known (hardware requests 1-2);
 3. the effective pumping speed is known (request 3);
@@ -303,7 +303,7 @@ Against the Kn 100 run, base set-up, without attenuation (record [sparta_hole.js
 | Pointing worse than +/-0.8 deg or a flange pivot | worst case 2.7-3.3 % (+/-1.6 deg) at 1 um/h | all | mount repeatability (request 5) |
 | Larger cell or shutter bodies than assumed | 6.1 mm certified Ga-Al gap closes | B family | cell and shutter drawings (request 5) |
 | Pyrometer error above about 3 K during growth | at 4 K the operating point moves to 730 C, and B-L at eta = 0.3 has none; from 5 K Ga steering keeps at most 94 % of states in the window at any temperature (section 8) | all | an emissivity-corrected reading checked against anchors (COMMISSIONING_PLAN.md, step 5) |
-| Chamber walls returning most N atoms (gamma about 0.1) | fitted eta 1.4-1.6 times off if assumed otherwise; map shape 0.15-0.3 points off | all | a measurement of N-atom wall loss or background (COMMISSIONING_PLAN.md) |
+| Chamber walls returning most N atoms (gamma about 0.1, or lower: literature gives 1e-3 or less on nitrided walls without ions; 2026-10-06) | fitted eta 1.4-1.6 times off if assumed otherwise; map shape 0.15-0.3 points off | all | a measurement of N-atom wall loss or background (COMMISSIONING_PLAN.md) |
 
 ## 8. Operating point for the project's goals
 
@@ -392,6 +392,17 @@ Sections 2-8 attenuate the direct Ga and N beams by the chamber's N2 and drop ev
 - **Test-particle transport.** The beam is a trace gas in fixed gas fields, so each atom is followed on its own (no DSMC). It collides as a hard sphere with Maxwellian partners, isotropically in the centre-of-mass frame. Heavy Ga (70 amu) on N2 (28 amu) is therefore deflected little; N (14 amu) scatters broadly.
 - **Gas fields.** The chamber's N2 at 300 K and the operating pressure. Optionally also the free-molecular plume of the nitrogen plate: the feed leaving the active disk with the holes' cos^n. Its density is computed exactly per azimuth, and it is not modified by its own collisions (first order).
 - **Chamber.** No drawing exists, so a 0.5 m sphere stands in for the cryoshroud, with an absorbing 0.13 m holder disk in the wafer plane. Ga sticks to the walls. N recombines with probability gamma = 1 per wall hit, or 0.1 as an upper case: without a pump, the returned N then accumulates.
+- **Literature check (2026-10-06): 0.1 is not an upper case.** N recombines on stainless steel with gamma 0.07 under ion bombardment (R36), but only about 7e-4 on nitrided iron and 2e-5 on quartz without it (R37). MBE walls see no ions and are nitride- or Ga-coated cryopanels, which no source covers; Ga-coated areas may consume N instead. `scattering.track` now has an optional pump that removes wall-returned atoms (loss per wall hit gamma + (1 - gamma) S / (A <v> / 4); 0.0086 at gamma 1e-3 and 4 m^3/s in this chamber). With that loss, returned atoms deliver about twice the direct beam at low pressure, nearly evenly. **Bracket result** (B-L at +95 mm, 4 m^3/s, two seeds of 4e6 atoms; records [scattered_plume_tables_B-L_95mm_lowloss.json](../data/runs/studies/scattered_plume_tables_B-L_95mm_lowloss.json) and [realizable_controller_ms_BL95lowloss.json](../data/runs/studies/realizable_controller_ms_BL95lowloss.json)):
+
+| Pressure | 2.5e-4 Pa | 2e-3 Pa | 1e-2 Pa | 2e-2 Pa |
+|---|---|---|---|---|
+| N arrival factor, gamma 1 (no pump; scattered_plume_tables_B-L_95mm.json) | 1.00 | 1.03 | 1.15 | 1.36 |
+| N arrival factor, gamma 1e-3 + pump | 2.88 | 3.02 | 3.83 | 5.16 |
+| Shape (half-range of the factor) | 0.3-0.6 pt | 0.2 pt | 0.1-0.3 pt | 0.3-0.4 pt |
+
+- **Uniformity does not depend on it.** With the section 13 controller settings, B-L's worst case is 0.53 % at 710 C (96.9 % of states) and 0.58 % at 720 C, against 0.53 % / 0.58 % with gamma 1. The returned atoms land almost evenly.
+- **The nitrogen needed does.** 1 um/h at eta 0.3 needs 5.5-5.8 sccm instead of 18-19 sccm: the same rate at the old feed would need eta of only about 0.09. B-p's conversion requirement would fall by a similar factor, back into the measured range. So the wall loss bears on the layout choice through nitrogen output, not through uniformity.
+- Measured N-limited maps that follow the source geometry would argue against such strong returns. The commissioning N-limited map and throttle series (COMMISSIONING_PLAN.md, C6b-C7) decide it.
 - **Sources.** The N atoms leave the plate disk (B-p 20 mm, B-L 30 mm) with the holes' on-axis peaking, cos^n with n = 2/W - 1 (3.70 for L/r 2.92, 2.91 for L/r 2). Ga leaves a point on the 46 deg cone, aimed at the centre, cos^2, with cos^1 and cos^4 as a beam-width check.
 - **Checks.**
   - In vacuum the arrival matches the analytic map within 0.52 % per bin, absolutely.
@@ -697,8 +708,9 @@ Section 13 left one approximation: B-L at +95 mm used the gas-scattered and plum
 | **10-seed average** | **0.53 %** (96.7 % of states) | **0.58 %** (100 %) |
 | No radial shape (--scatter-flat) | 0.54 % | 0.60 % |
 
-- One seed's table moves the B-L worst case by about +/-0.12 points (standard deviation). The averaged table brings that to roughly +/-0.04.
-- The averaged result and the shape-free limit agree to 0.02 points. B-L's converged worst case is therefore about **0.53 % at 710 C and 0.58 % at 720 C**.
+- One seed's table moves the B-L worst case by about +/-0.12 points (standard deviation).
+- **Uncertainty of the averaged result** (audit 2026-10-06): 40 bootstrap resamples of the seeds, each averaged and rerun through the controller, give a standard deviation of **0.035 points** (5-95 %: 0.47-0.58 % at 710 C, 0.52-0.64 % at 720 C). Their mean lies 0.004 below the averaged value, so residual table noise no longer biases the maximum detectably. The heuristic sd/sqrt(10) (0.04) happened to agree for B-L. Every resample keeps 96.4-96.9 % of states admissible.
+- B-L's worst case is therefore **0.53 +/- 0.04 % at 710 C and 0.58 +/- 0.04 % at 720 C** (table noise only, not model uncertainty). The shape-free limit (0.54 %) lies inside that range. That agreement is consistent with the nearly flat averaged shape but is not itself a convergence test.
 - The 0.1-point drop from section 13 comes from removing the noise, not from the change of aim.
 
 **B-L's aim, re-scanned with the averaged tables** (the 95 mm tables applied at each aim; record scatter_noise_BL95.json):
@@ -709,7 +721,8 @@ Section 13 left one approximation: B-L at +95 mm used the gas-scattered and plum
 | Worst case at 720 C | 0.83 % | 0.68 % | **0.58 %** | 0.56 % | 0.69 % |
 | Joint fraction at 710 C | 97.2 % | 97.0 % | 96.7 % | 96.2 % | 95.7 % |
 
-- The optimum lies between 95 and 97.5 mm. Those two aims differ by 0.01 points, inside the remaining noise, and 95 mm keeps more margin above the 95 % gate.
+- The scan applies the 95 mm factor tables at every aim. The factor's aim dependence (0.2-0.6 % in shape between 90 and 95 mm, as large as seed noise) is neglected, so the scan is conditional on that transfer.
+- The optimum lies between 95 and 97.5 mm. Those two aims differ by 0.01 points, well inside the 0.035-point table noise, and 95 mm keeps more margin above the 95 % gate.
 - **The +95 mm aim can be frozen.** An aim error of 2.5 mm costs about 0.1 point.
 
 **B-p is affected the same way** (+97.5 mm, rate monitor + BFM; record scatter_noise_Bp.json):
@@ -723,17 +736,20 @@ Section 13 left one approximation: B-L at +95 mm used the gas-scattered and plum
 | No radial shape (--scatter-flat) | 0.72 % | 0.78 % |
 
 - The archived table's 0.49 % was a favourable draw. Its shape at the operating pressure lies within the new seeds' spread, and the physics code is unchanged (same scattering.py).
-- B-p's worst case responds more strongly to table noise than B-L's. One of the ten seeds gives 1.34 %, although its table diagnostics (half-range, chi^2) are ordinary; without it the single-seed sd would be 0.08 points. It is kept: dropping a draw for its result would bias the average. The 10-seed average is therefore uncertain by roughly +/-0.07 points, and the 4-seed value of 0.52 % moved to 0.57 % with the extra seeds.
+- B-p's worst case responds more strongly to table noise than B-L's. One of the ten seeds gives 1.34 %, although its table diagnostics (half-range, chi^2) are ordinary; without it the single-seed sd would be 0.08 points. It is kept: dropping a draw for its result would bias the average (for reference, the nine-seed average without it gives 0.51 %; audit 2026-10-06). The 4-seed value of 0.52 % moved to 0.57 % with the extra seeds.
+- **Uncertainty of the averaged result** (40 bootstrap resamples): standard deviation **0.089 points**, 5-95 % range 0.50-0.78 % at 710 C (0.55-0.84 % at 720 C). The resample mean lies 0.03 above the averaged value, so residual noise may still bias B-p's maximum upward slightly. The earlier heuristic (+/-0.07) understated this.
 - For B-p, removing the factor's shape makes the worst case worse. The plume genuinely reshapes B-p's N arrival (section 10: 0.4-0.6 points), so the flat limit is not a bracket for B-p.
-- Whether B-p is admissible at 710 C also depends on the seed: per seed, 93.2-96.9 % of states pass without fill tracking. With the averaged table it sits exactly at the 95 % gate, so fill tracking remains a condition for 710 C.
+- Whether B-p is admissible at 710 C also depends on the seed: per seed, 93.2-96.9 % of states pass without fill tracking. With the averaged table 95.0005 % pass, essentially at the gate, and across the bootstrap resamples (94.5-95.8 %) only 45 % pass without fill tracking against 100 % with it. Fill tracking is therefore a firm condition for 710 C.
 
 **What changes.**
-- **B-p and B-L are level on uniformity; B-L is no worse.**
+- **The point estimates do not rank B-p and B-L on uniformity.**
   - At 710 C B-L reaches 0.53 % and B-p 0.57 % (with fill tracking); at 720 C, 0.58 and 0.62 %.
-  - The 0.16-point lead B-p had in section 12 was table noise. The remaining 0.04-point difference, now in B-L's favour, is inside the averaged tables' noise (about +/-0.04 for B-L, +/-0.07 for B-p).
-- **What still separates them is not uniformity:**
-  - B-p needs fill tracking at 710 C, and its figures assume nearly full nitrogen conversion (eta = 1) at 2 m^3/s;
-  - B-L assumes about 30 % conversion at 4 m^3/s, which the literature makes more plausible.
+  - The 0.16-point lead B-p had in section 12 was table noise.
+  - Pairing the two layouts' bootstrap resamples gives B-p - B-L = +0.04 +/- 0.10 points (5-95 %: -0.06 to +0.24) at 710 C, and the same at 720 C. B-L is ahead in 75 % of resamples: likely no worse, not established.
+- **What separates them is not uniformity:**
+  - B-p needs fill tracking at 710 C, and its figures assume full nitrogen conversion (eta = 1) at 2 m^3/s. The one direct measurement of a source's conversion found at most 0.4, falling as bulb pressure rises (R41, 2026-10-06), so eta = 1 is not supported;
+  - B-L assumes about 30 % conversion at 4 m^3/s, inside the measured range.
+  - On that basis B-L replaces B-p as the provisional layout (section 1).
 - **Every earlier scattered-variant worst case carries this noise.**
   - Sections 10-13 used single-seed tables. Their worst cases are uncertain by about +/-0.1 point and likely read high by a few hundredths to a tenth.
   - Comparisons across temperature, controllers and heater designs used the same table, so the noise largely cancels in them.

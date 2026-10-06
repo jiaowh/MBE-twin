@@ -126,3 +126,23 @@ def test_vacuum_arrival_matches_the_deterministic_direct_flux_absolutely():
     r, ind, _ = track(np.random.default_rng(8), n, src, mass_amu=14.0, temperature=600.0, diameter=3e-10)
     d, _ = radial_arrival(r, ind, n, edges)
     assert d == pytest.approx(binned_direct_flux(src, edges), rel=0.03)
+
+
+def test_wall_loss_adds_the_pump_share_of_the_wall_collision_rate():
+    # 2026-10-06: the pump removes wall-returned atoms at S / (A <v> / 4) per wall hit; no pump keeps gamma
+    from mbe_twin.scattering import wall_loss
+    ch = Chamber()
+    assert wall_loss(0.1, 0.0, ch, 14.007) == 0.1
+    assert wall_loss(1.0, 4.0, ch, 14.007) == 1.0
+    v = np.sqrt(8 * K_B * ch.wall_temperature / (np.pi * 14.007 * AMU))
+    p = 4.0 / (4 * np.pi * ch.radius ** 2 * v / 4)
+    assert wall_loss(1e-3, 4.0, ch, 14.007) == pytest.approx(1e-3 + (1 - 1e-3) * p)
+    assert 0.008 < wall_loss(1e-3, 4.0, ch, 14.007) < 0.009
+
+
+def test_pumping_removes_wall_returned_atoms():
+    # with no wall loss, only the pump ends an atom's life: more pumping, fewer returned arrivals
+    src = Source((0.2, 0.0, -0.2), (-0.2, 0.0, 0.2), 3.0, radius=0.02)
+    hits = [len(track(np.random.default_rng(3), 4000, src, mass_amu=14.0, temperature=600.0, diameter=3e-10,
+                      gamma=0.0, pump_speed=s)[0]) for s in (20.0, 200.0)]
+    assert hits[0] > 1.5 * hits[1]

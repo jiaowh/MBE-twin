@@ -104,17 +104,27 @@ IMPACT = {
                                         "Later options (2026-10-06) --n-scatter, --scatter-flat and --scatter-from-aim (default off) "
                                         "substitute an aim's own seed-averaged scattered-atom factors; the manifest gains their "
                                         "inputs. Rerunning the realizable_controller_ms_BL95tables.json command reproduced its rows and "
-                                        "summary exactly (2026-10-06).",
+                                        "summary exactly (2026-10-06). The audit change (2026-10-06) adds --layouts (default: "
+                                        "all layouts, as before) and a check that stops runs whose --n-tables / --n-scatter "
+                                        "overrides would not be consumed, and records n_scatter_layouts; the evaluation of "
+                                        "each layout is unchanged.",
     "scripts/scattered_plume_tables.py": "Later change (2026-10-03 audit) covers the grid pressures through the first one whose "
                                          "feed reaches the 35 sccm limit and adds --extend (reuses a record's covered entries); "
                                          "the covered entries of the earlier records are computed exactly as before. Later change "
                                          "(2026-10-06) adds --aim-mm (default: the envelope aim; recorded only when given); a "
-                                         "default run reproduced the previous version's factors and inputs bit for bit (small sample).",
+                                         "default run reproduced the previous version's factors and inputs bit for bit (small sample). Later change "
+                                         "(2026-10-06) adds --gamma and --pump (defaults 1 and off; recorded only when set) for the "
+                                         "low-wall-loss bracket; the default path is unchanged.",
+    "src/mbe_twin/scattering.py": "Later change (2026-10-06) adds wall_loss() and the optional pump_speed of track() (default 0): the "
+                                  "loss per wall hit is gamma + (1 - gamma) S / (A <v> / 4). With no pump the tracker draws the same random "
+                                  "numbers and returns identical arrivals (checked against the previous version at gamma 1 and 0.1).",
     "scripts/scattered_tables.py": "Later change (2026-10-06) adds --seed (default 20261003, the earlier fixed seed) and --aim-mm "
                                    "(default: the envelope aim; recorded only when given); a default run reproduced the previous "
                                    "version's factors and inputs bit for bit (small sample).",
     "src/mbe_twin/sparta.py": "Later change (2026-10-03) lets wsl_path return a POSIX path unchanged when run inside WSL; on "
                               "Windows (where every record ran) the path is the earlier one.",
+    "data/parameters/gan_growth.json": "Later change (2026-10-06) adds the text field droplet_onset.cross_check_R32 (literature cross-check, "
+                                       "not a scenario); growth.py reads only droplet_onset.scenarios, so no record's numbers change.",
     "data/runs/studies/layout_comparison_bc.json": [
         {"records": ["nitrogen_rate_limits.json"],
          "note": "Regenerated after the 2026-10-02 audit (on-target validity label). The operating points and nominal values "
@@ -122,14 +132,16 @@ IMPACT = {
                  "contents (checked array by array)."}],
 }
 PINS = {   # reviewed 2026-10-02
-    "scripts/realizable_controller.py": "818334150b74",  # reviewed 2026-10-06
+    "scripts/realizable_controller.py": "0fdf1ae5fc72",  # reviewed 2026-10-06 (audit change)
+    "data/parameters/gan_growth.json": "bde93b820b27",  # reviewed 2026-10-06 (R32 cross-check text)
     "scripts/scattered_tables.py": "e0fabec136a1",  # reviewed 2026-10-06
     "scripts/nitrogen_aim_pressure.py": "3ed2958db5f2",  # reviewed 2026-10-03
     "scripts/nitrogen_rate_limits.py": "29392adf050d",  # reviewed 2026-10-03
     "scripts/heater_robustness.py": "7f545f5d98da",  # reviewed 2026-10-03
     "scripts/operating_optimum.py": "4d5b02c42380",  # reviewed 2026-10-03
     "scripts/operating_cold_limit.py": "07b9707d9806",  # reviewed 2026-10-03
-    "src/mbe_twin/sparta.py": "a293265e2ca3", "scripts/scattered_plume_tables.py": "d72a59c68c2b",  # reviewed 2026-10-06
+    "src/mbe_twin/sparta.py": "a293265e2ca3", "scripts/scattered_plume_tables.py": "f0f0f0eba136",  # reviewed 2026-10-06 (pump option)
+    "src/mbe_twin/scattering.py": "1f116f870fa6",  # reviewed 2026-10-06 (pump term)
     "src/mbe_twin/aperture.py": "08ff8b237847", "scripts/nitrogen_aim_tolerance.py": "30922a1a37e6",
     "src/mbe_twin/heater.py": "b24c80baae47", "scripts/heater_zones.py": "2cf7e07a02dc",
     "scripts/growth_window.py": "e43c637528a9", "src/mbe_twin/beam.py": "90a90503e0a5",

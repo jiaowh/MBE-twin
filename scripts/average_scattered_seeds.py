@@ -10,6 +10,11 @@ speed is averaged over the parts that have it, and the record gives the count pe
 --n-scatter reads it unchanged, and adds per entry the seed-to-seed standard deviation of the factor
 (the largest over radii) and each part's run summary.
 
+--resample SEED draws the parts with replacement (as many draws as parts; for the plume tables per pumping
+speed, among the parts that have it) for a bootstrap of the averaged table: rerunning the controller on such
+resampled averages gives the uncertainty of a result computed from the averaged table, which the seed-to-seed
+spread of single-table results divided by sqrt(runs) does not (the controller takes a maximum over states).
+
 Usage: python scripts/average_scattered_seeds.py --parts results/scattered_tables_B-L_95mm results/scattered_tables_B-L_95mm_rep
                                                  --out results/scattered_tables_B-L_95mm_avg
 """
@@ -39,12 +44,23 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--parts", nargs="+", required=True)
     ap.add_argument("--out", required=True)
+    ap.add_argument("--resample", type=int, default=None, help="bootstrap: draw the parts with replacement (RNG seed)")
     args = ap.parse_args()
+    rng = None if args.resample is None else np.random.default_rng(args.resample)
+    draws = {}
     if len(args.parts) < 2:
         raise SystemExit("average_scattered_seeds: need at least two parts")
     parts = [json.loads((ROOT / p / "manifest.json").read_text(encoding="utf-8")) for p in args.parts]
     ref = parts[0]
     plume = "speeds_m3_s" in ref["inputs"]
+
+    def draw(items, key):
+        """The items themselves, or a bootstrap draw of them (indices recorded under `key`)."""
+        if rng is None:
+            return items
+        idx = rng.integers(0, len(items), len(items))
+        draws[key] = [int(i) for i in idx]
+        return [items[i] for i in idx]
     seeds = [m["inputs"]["seed"] for m in parts]
     if len(set(seeds)) != len(seeds):
         raise SystemExit(f"average_scattered_seeds: repeated seeds {seeds}")
@@ -66,6 +82,7 @@ def main():
                 have = [m for m in parts if s in m["outputs"]["factors"][name]]
                 if len(have) < 2:
                     raise SystemExit(f"average_scattered_seeds: speed {s} in fewer than two parts")
+                have = draw(have, f"{name} {s}")
                 v = have[0]["outputs"]["factors"][name][s]
                 if any(m["outputs"]["factors"][name][s]["covered"] != v["covered"] for m in have):
                     raise SystemExit("average_scattered_seeds: parts differ in coverage")
@@ -76,17 +93,18 @@ def main():
                 diag[name][s] = [[m["outputs"]["diagnostics"][name][s][i] for m in have] for i in range(len(v["covered"]))]
     else:
         factors = {"N": {}, "Ga": {}}
+        parts_in = draw(parts, "parts")
         for sp in ("N", "Ga"):
             for key, val in ref["outputs"]["factors"][sp].items():
                 if sp == "N":
                     factors["N"][key], spread.setdefault("N", {})[key] = {}, {}
                     for var in val:
-                        tabs = [m["outputs"]["factors"]["N"][key][var] for m in parts]
+                        tabs = [m["outputs"]["factors"]["N"][key][var] for m in parts_in]
                         ms = [_mean([t[i] for t in tabs]) for i in range(len(tabs[0]))]
                         factors["N"][key][var] = np.array([x for x, _ in ms])
                         spread["N"][key][var] = [sd for _, sd in ms]
                 else:
-                    tabs = [m["outputs"]["factors"]["Ga"][key] for m in parts]
+                    tabs = [m["outputs"]["factors"]["Ga"][key] for m in parts_in]
                     factors["Ga"][key] = np.mean(np.array(tabs, dtype=float), 0)
         diag = {"parts": [m["outputs"]["diagnostics"] for m in parts]}
     summary = [{k: m[k] for k in ("run_id", "created_utc", "git_commit", "source_sha256", "inputs_sha256")} | {"seed": m["inputs"]["seed"], "part": p}
@@ -94,6 +112,8 @@ def main():
     inputs = {k: v for k, v in ref["inputs"].items() if k not in ("seed", "extends")} | {"seeds": seeds, "parts": summary}
     if plume:
         inputs |= {"speeds_m3_s": speeds, "parts_per_speed": counts}
+    if rng is not None:
+        inputs |= {"resample": {"seed": args.resample, "draws": draws}}
     manifest = build_manifest(
         "scattered_plume_tables" if plume else "scattered_tables", label=ref.get("label", "representative_chamber"),
         validation_status="not_validated", inputs=inputs,
@@ -101,6 +121,7 @@ def main():
                  "diagnostics": diag, "seed_spread_max_sd": spread},
         sources=[Path(__file__)] + [ROOT / k for k in ref["source_sha256"]],
         warnings=ref["warnings"] + [f"Equal-weight mean of {len(parts)} independent-seed runs (inputs.parts)"
+                                    + (", drawn with replacement (bootstrap, inputs.resample)" if rng is not None else "")
                                     + ("; the Ga factors use token samples" if not plume else "")],
         disabled_physics=ref["disabled_physics"])
     print(f"Wrote {write_manifest(manifest, Path(args.out) / 'manifest.json')}")

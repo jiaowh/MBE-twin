@@ -155,6 +155,27 @@ def aim_scatter_factor(records, name, aim_mm, variant, speed, rho, envelope_aim=
     return np.array([np.asarray(f) if c else g for f, c, g in zip(v["factors"], v["covered"], f_gas)])
 
 
+def check_overrides(args, layouts):
+    """Stop unless every --n-tables file is for an evaluated layout (one file per layout) and every --n-scatter
+    record is consumed by one of those layouts; the factor overrides act only where an aim table is given, so
+    anything else would run the comparison's own tables while recording the supplied ones. Returns the layouts
+    whose scattered-atom factors are replaced (empty without --n-scatter)."""
+    tab = [str(np.load(f)["layout"]) for f in args.n_tables or ()]
+    if len(set(tab)) != len(tab):
+        raise SystemExit(f"realizable_controller: more than one --n-tables file per layout ({tab})")
+    if set(tab) - set(layouts):
+        raise SystemExit(f"realizable_controller: --n-tables for {sorted(set(tab) - set(layouts))}, which are not evaluated")
+    if not args.n_scatter:
+        return []
+    if not tab:
+        raise SystemExit("realizable_controller: --n-scatter needs --n-tables for the layouts it overrides")
+    for f in args.n_scatter:
+        have = json.loads(Path(f).read_text(encoding="utf-8"))["inputs"]["layouts"]
+        if not set(have) & set(tab):
+            raise SystemExit(f"realizable_controller: --n-scatter {f} covers {have}, none of which has --n-tables")
+    return sorted(tab)
+
+
 def ga_reference(port, fill, dlab):
     """(cell K, absolute vacuum centre flux m^-2 s^-1) of a Ga record (annulus fit at r = 0)."""
     js = json.loads((lc.GA_RECORDS / lc.ga_record(port, fill, dlab)).read_text(encoding="utf-8"))
@@ -233,6 +254,9 @@ def main():
     ap.add_argument("--scatter-flat", action="store_true",
                     help="with --n-scatter: replace each pressure's factor profile by its area-weighted mean (the "
                          "zero-noise limit if the scattered arrival has no radial shape; a bracket on table noise)")
+    ap.add_argument("--layouts", nargs="+", default=None, choices=[n for n, _ in SCENARIOS],
+                    help="evaluate only these layouts (default: all); runs that override one layout's tables need "
+                         "not re-evaluate the others")
     ap.add_argument("--heater-control", default="single", choices=("single", "multispot"),
                     help="single: one centre pyrometer, fixed zone ratios; multispot: three spots and three zone groups "
                          "(scripts/multispot_heater.py)")
@@ -247,6 +271,8 @@ def main():
     args = ap.parse_args()
     if (args.scatter_flat or args.scatter_from_aim is not None) and not args.n_scatter:
         raise SystemExit("realizable_controller: --scatter-flat and --scatter-from-aim need --n-scatter")
+    scenarios = [s for s in SCENARIOS if args.layouts is None or s[0] in args.layouts]
+    n_scatter_layouts = check_overrides(args, [n for n, _ in scenarios])
     RATE_UM_H = args.rate_um_h
     E_RATE = (-args.rate_error, 0.0, args.rate_error)
     E_BFM = (-args.bfm_error, 0.0, args.bfm_error)
@@ -268,7 +294,7 @@ def main():
     w = lc.area_weights(rho)
     rows = []
     heater_cache = {}
-    for (name, scen), t0 in itertools.product(SCENARIOS, t_c):
+    for (name, scen), t0 in itertools.product(scenarios, t_c):
         inp = oo.load_inputs(rec, env, name, rho, scatter, scen["S_eff_m3_s"])
         inp = {**inp, "n_vac": inp["n_vac"][:, [lip2]], "g_vac": inp["g_vac"][:, [lip2]]}
         for f_tab in args.n_tables or ():
@@ -505,7 +531,7 @@ def main():
                                             f"{e['worst_pct'] if e['worst_pct'] is None else round(e['worst_pct'], 2)} %"
                                             for c, e in row["controllers"].items()), flush=True)
     summary = []
-    for name, scen in SCENARIOS:
+    for name, scen in scenarios:
         rr = [r for r in rows if r["layout"] == name and r.get("reachable")]
         for c in CONTROLLERS:
             ok = [r for r in rr if r["controllers"][c]["admissible"]]
@@ -518,7 +544,7 @@ def main():
                   f"{s['joint_at_720C']}", flush=True)
     manifest = build_manifest(
         "realizable_controller", label="representative_chamber", validation_status="not_validated",
-        inputs={"record": str(record.relative_to(ROOT)), "scattered": args.scattered, "scenarios": SCENARIOS,
+        inputs={"record": str(record.relative_to(ROOT)), "scattered": args.scattered, "scenarios": scenarios,
                 "rate_um_h": RATE_UM_H, "T_C": t_c, "element_limit": LIMIT_NAME, "pyrometer_biases_K": BIASES_K,
                 "rate_monitor_errors": E_RATE, "bfm_errors": E_BFM, "rate_band": RATE_BAND, "admit": ADMIT,
                 "controllers": CONTROLLERS, "heater_design_limit_K": args.heater_design_limit,
@@ -526,10 +552,10 @@ def main():
                 "aim_maps_sha256": {f: lc.file_sha256(Path(f)) for f in tuple(args.aim_maps or ()) + tuple(args.n_tables or ())},
                 "n_tables": args.n_tables, "lip_m": 0.002,
                 "n_scatter_sha256": {f: lc.file_sha256(Path(f)) for f in args.n_scatter or ()},
-                "scatter_flat": args.scatter_flat, "scatter_from_aim_mm": args.scatter_from_aim, "pointing_ensemble_deg": 0.8,
+                "n_scatter_layouts": n_scatter_layouts, "scatter_flat": args.scatter_flat, "scatter_from_aim_mm": args.scatter_from_aim, "pointing_ensemble_deg": 0.8,
                 "ga_records_sha256": {lc.ga_record(env["layouts"][n]["ga_port_deg"], f, d):
                                       lc.file_sha256(lc.GA_RECORDS / lc.ga_record(env["layouts"][n]["ga_port_deg"], f, d))
-                                      for n, _ in SCENARIOS for f, d in itertools.product((40, 70, 120), lc.GA_D)}},
+                                      for n, _ in scenarios for f, d in itertools.product((40, 70, 120), lc.GA_D)}},
         outputs={"rows": rows, "summary": summary},
         sources=([ROOT / "scripts/multispot_heater.py"] if args.heater_control == "multispot" else [])
                 + ([ROOT / "scripts/nitrogen_aim_operating.py"] if args.aim_maps else [])

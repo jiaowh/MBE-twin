@@ -1,7 +1,7 @@
 {
   "schema_version": "0.1",
   "run_id": "realizable_controller",
-  "created_utc": "2026-10-06T01:22:20+00:00",
+  "created_utc": "2026-10-06T01:34:30+00:00",
   "label": "representative_chamber",
   "validation_status": "not_validated",
   "package_version": "0.1.0",
@@ -12,8 +12,8 @@
   "source_sha256": {
     "scripts/multispot_heater.py": "4af4f9f2d2650e6b1cf322eaebad31568bba93c9eafddaae75a3e6ba4e51fc90",
     "scripts/aim_tables.py": "e2bb22a0250e000788b1ea3bc1f1ce87231dadaf9e81e4e243d8e8b8e1f6baea",
-    "results/scatter_seeds_20261006_091429/avg_gas_BL/manifest.json": "f38b254a38006b7755b4f3d71495b21918981c23292532f338d0b6f0c666aa46",
-    "results/scatter_seeds_20261006_091429/avg_plume_BL/manifest.json": "f2852ff4bb137876e6c2e63849803dcaabcbde45bb12ce156b7fd88691b8343a",
+    "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+    "results/scatter_seeds_20261006_091429/avg_plume_Bp/manifest.json": "9d5e09153ae2b99614c2fb38ffb4072b2b26679af6ad0c00ece7b7f68ae5ec09",
     "scripts/realizable_controller.py": "0fdf1ae5fc72ed9e890583e1d9cb00fea0aa37d67c3d5cc3f12282833c5165fc",
     "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
     "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
@@ -24,23 +24,22 @@
     "src/mbe_twin/vapour.py": "783c281ff672f7e660152b815e1bafa5494f644cd23599610f6da5bacb0155e7",
     "data/parameters/gan_growth.json": "e5cc5983344973cda50092c800e255e18c051f30d7b6632dd4504599d7852194",
     "data/runs/studies/layout_comparison_bc_sc_plume.json": "ef62e53355d5c7274427d7ac4ae2ac6192f439f0e19a10b38dbbdc826db9bebc",
-    "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
     "data/runs/studies/scattered_plume_tables_B.json": "88a887117084b7095a69a0bc257526dea3496be6957dd2d65177c78d247ac0ed",
     "data/runs/studies/scattered_plume_tables_B-p.json": "5750e81d3577b0f5db887d778bd858f72a70808574ec1b0d019166f3201e2c3b",
     "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
   },
   "solver": null,
-  "inputs_sha256": "57c42dfb75037f88bd2b939f6bc5abb19ce42816262db6405e2061d523c07783",
+  "inputs_sha256": "b19d6ac17c3653f3229edd399047c74b034f118f1797cf61e0202542953bfc30",
   "inputs": {
     "record": "data\\runs\\studies\\layout_comparison_bc_sc_plume.json",
     "scattered": "gas+plume",
     "scenarios": [
       [
-        "B-L",
+        "B-p",
         {
-          "eta": 0.3,
-          "S_eff_m3_s": 4.0,
-          "feed_limit_sccm": 35.0
+          "eta": 1.0,
+          "S_eff_m3_s": 2.0,
+          "feed_limit_sccm": 10.0
         }
       ]
     ],
@@ -81,18 +80,18 @@
     "aim_maps": null,
     "aim_mm": null,
     "aim_maps_sha256": {
-      "results/aim_tables/n_tables_B-L_95mm.npz": "bca83d6dc4f6ba7442ac8fb9b2195d4bb190da692054ba1ebed7ca9200947161"
+      "results/aim_tables/n_tables_B-p_97.5mm.npz": "da3bb9163ab0d11c2cf90bc8ae8b777e36ddd08983579c9a67f246a0b7dab3fc"
     },
     "n_tables": [
-      "results/aim_tables/n_tables_B-L_95mm.npz"
+      "results/aim_tables/n_tables_B-p_97.5mm.npz"
     ],
     "lip_m": 0.002,
     "n_scatter_sha256": {
-      "results/scatter_seeds_20261006_091429/avg_gas_BL/manifest.json": "f38b254a38006b7755b4f3d71495b21918981c23292532f338d0b6f0c666aa46",
-      "results/scatter_seeds_20261006_091429/avg_plume_BL/manifest.json": "f2852ff4bb137876e6c2e63849803dcaabcbde45bb12ce156b7fd88691b8343a"
+      "data/runs/studies/scattered_tables.json": "673e56e6117bf041358b68b6b98cf0c9bcc1e407710f84649e2a09f4c6bcb7b6",
+      "results/scatter_seeds_20261006_091429/avg_plume_Bp/manifest.json": "9d5e09153ae2b99614c2fb38ffb4072b2b26679af6ad0c00ece7b7f68ae5ec09"
     },
     "n_scatter_layouts": [
-      "B-L"
+      "B-p"
     ],
     "scatter_flat": false,
     "scatter_from_aim_mm": null,
@@ -109,276 +108,276 @@
   "outputs": {
     "rows": [
       {
-        "eta": 0.3,
-        "S_eff_m3_s": 4.0,
-        "feed_limit_sccm": 35.0,
-        "layout": "B-L",
+        "eta": 1.0,
+        "S_eff_m3_s": 2.0,
+        "feed_limit_sccm": 10.0,
+        "layout": "B-p",
         "T_C": 710,
         "rate_um_h": 1.0,
         "nominal_shortfall_K": -0.5160785776517969,
-        "pointing_profile_change_pct": 0.27323478007633684,
+        "pointing_profile_change_pct": 0.4211966956447988,
         "heater_capped_share": 0.22633744855967078,
         "reachable": true,
         "calibration": {
-          "feed_sccm": 18.70705876224357,
-          "pressure_Pa": 0.008674229951877768
+          "feed_sccm": 4.638968217078884,
+          "pressure_Pa": 0.00430206346874902
         },
         "controllers": {
           "known maps (bound)": {
             "valid_fraction": 1.0,
-            "in_window_fraction": 1.0,
-            "joint_fraction": 1.0,
+            "in_window_fraction": 0.9998628257887517,
+            "joint_fraction": 0.9998628257887517,
             "states": 109350,
-            "worst_pct": 0.5171575310647185,
-            "worst_valid_pct": 0.5171575310647185,
+            "worst_pct": 0.5655556733687882,
+            "worst_valid_pct": 0.5655556733687882,
             "admissible": true,
             "joint_by_ga_state": {
               "40 mm / 5.68 A": 1.0,
               "40 mm / 8 A": 1.0,
               "70 mm / 5.68 A": 1.0,
               "70 mm / 8 A": 1.0,
-              "120 mm / 5.68 A": 1.0,
+              "120 mm / 5.68 A": 0.9991769547325103,
               "120 mm / 8 A": 1.0
             },
             "joint_by_law": {
               "Ref14_growth": 1.0,
               "Heying_growth": 1.0,
-              "G01_adsorption": 1.0
+              "G01_adsorption": 0.9995884773662551
             },
             "joint_by_pyrometer": {
               "pyrometer +0 K": 1.0,
-              "pyrometer +2 K": 1.0,
-              "pyrometer -2 K": 1.0
+              "pyrometer +2 K": 0.9997256515775035,
+              "pyrometer -2 K": 0.9998628257887517
             }
           },
           "frozen": {
             "valid_fraction": 0.7777777777777778,
-            "in_window_fraction": 0.44769090077732054,
-            "joint_fraction": 0.44769090077732054,
+            "in_window_fraction": 0.46459990855052585,
+            "joint_fraction": 0.46459990855052585,
             "states": 109350,
-            "worst_pct": 0.5114260053136626,
-            "worst_valid_pct": 2.6810359263224726,
+            "worst_pct": 0.566289507596056,
+            "worst_valid_pct": 2.9001825926554146,
             "admissible": false,
             "joint_by_ga_state": {
-              "40 mm / 5.68 A": 0.3442524005486968,
-              "40 mm / 8 A": 0.3445267489711934,
-              "70 mm / 5.68 A": 0.9973662551440329,
-              "70 mm / 8 A": 1.0,
+              "40 mm / 5.68 A": 0.425679012345679,
+              "40 mm / 8 A": 0.36373113854595335,
+              "70 mm / 5.68 A": 0.9990672153635116,
+              "70 mm / 8 A": 0.9991220850480109,
               "120 mm / 5.68 A": 0.0,
               "120 mm / 8 A": 0.0
             },
             "joint_by_law": {
-              "Ref14_growth": 0.654320987654321,
-              "Heying_growth": 0.3567352537722908,
-              "G01_adsorption": 0.3320164609053498
+              "Ref14_growth": 0.6618930041152263,
+              "Heying_growth": 0.39947873799725653,
+              "G01_adsorption": 0.33242798353909464
             },
             "joint_by_pyrometer": {
-              "pyrometer +0 K": 0.4398902606310014,
-              "pyrometer +2 K": 0.4398902606310014,
-              "pyrometer -2 K": 0.46329218106995884
+              "pyrometer +0 K": 0.4479835390946502,
+              "pyrometer +2 K": 0.4426063100137174,
+              "pyrometer -2 K": 0.5032098765432099
             },
             "out_of_window_by_side": {
               "N-rich somewhere": 0.3333333333333333,
-              "droplets somewhere": 0.21897576588934614
+              "droplets somewhere": 0.20206675811614083
             },
             "mean_rate_error_pct": [
-              -11.800539357023176,
-              1.0805424117372064
+              -11.651369391642552,
+              1.3058511863039746
             ],
             "feed_sccm": [
-              18.70705876224357,
-              18.70705876224357
+              4.638968217078884,
+              4.638968217078884
             ]
           },
           "rate monitor": {
-            "valid_fraction": 0.7758725803993294,
-            "in_window_fraction": 0.45506477671086726,
-            "joint_fraction": 0.45506477671086726,
+            "valid_fraction": 0.7762536198750191,
+            "in_window_fraction": 0.4699009297363207,
+            "joint_fraction": 0.4699009297363207,
             "states": 328050,
-            "worst_pct": 0.5263723412427779,
-            "worst_valid_pct": 3.4750189858632194,
+            "worst_pct": 0.5660694044993324,
+            "worst_valid_pct": 4.069068555729336,
             "admissible": false,
             "joint_by_ga_state": {
-              "40 mm / 5.68 A": 0.36490169181527204,
-              "40 mm / 8 A": 0.3654869684499314,
-              "70 mm / 5.68 A": 1.0,
+              "40 mm / 5.68 A": 0.4419935985368084,
+              "40 mm / 8 A": 0.37772290809327846,
+              "70 mm / 5.68 A": 0.9996890717878372,
               "70 mm / 8 A": 1.0,
               "120 mm / 5.68 A": 0.0,
               "120 mm / 8 A": 0.0
             },
             "joint_by_law": {
-              "Ref14_growth": 0.6666026520347508,
-              "Heying_growth": 0.36525834476451763,
-              "G01_adsorption": 0.3333333333333333
+              "Ref14_growth": 0.6666666666666666,
+              "Heying_growth": 0.40985825331504344,
+              "G01_adsorption": 0.33317786922725195
             },
             "joint_by_pyrometer": {
-              "pyrometer +0 K": 0.4444444444444444,
-              "pyrometer +2 K": 0.44438042981252857,
-              "pyrometer -2 K": 0.47636945587562873
+              "pyrometer +0 K": 0.45388203017832646,
+              "pyrometer +2 K": 0.4444444444444444,
+              "pyrometer -2 K": 0.5113763145861911
             },
             "out_of_window_by_side": {
-              "N-rich somewhere": 0.3333333333333333,
-              "droplets somewhere": 0.21160188995579943
+              "N-rich somewhere": 0.3333851547020271,
+              "droplets somewhere": 0.1967139155616522
             },
             "mean_rate_error_pct": [
-              -13.917272659120938,
-              1.212715634486572
+              -13.749524807306601,
+              1.2750869715474566
             ],
             "feed_sccm": [
-              18.210260295740085,
-              19.19123942643617
+              4.5104389668644895,
+              4.764467124969495
             ]
           },
           "rate monitor + BFM": {
             "valid_fraction": 1.0,
-            "in_window_fraction": 0.96663719961388,
-            "joint_fraction": 0.96663719961388,
+            "in_window_fraction": 0.9500045724737083,
+            "joint_fraction": 0.9500045724737083,
             "states": 984150,
-            "worst_pct": 0.5263723412427779,
-            "worst_valid_pct": 2.3013552061963285,
+            "worst_pct": 0.5660694044993324,
+            "worst_valid_pct": 2.8102621687966693,
             "admissible": true,
             "joint_by_ga_state": {
-              "40 mm / 5.68 A": 0.9755707971345832,
-              "40 mm / 8 A": 0.9900868770004573,
-              "70 mm / 5.68 A": 0.9949702789208962,
-              "70 mm / 8 A": 0.9979393385154702,
-              "120 mm / 5.68 A": 0.9093247980490778,
-              "120 mm / 8 A": 0.9319311080627953
+              "40 mm / 5.68 A": 0.9864410912970584,
+              "40 mm / 8 A": 0.9934887974394148,
+              "70 mm / 5.68 A": 0.9859106843468983,
+              "70 mm / 8 A": 0.9881969212010364,
+              "120 mm / 5.68 A": 0.8346654473403444,
+              "120 mm / 8 A": 0.9113244932174973
             },
             "joint_by_law": {
               "Ref14_growth": 1.0,
-              "Heying_growth": 0.999475689681451,
-              "G01_adsorption": 0.900435909160189
+              "Heying_growth": 0.9979180003048316,
+              "G01_adsorption": 0.8520957171162933
             },
             "joint_by_pyrometer": {
-              "pyrometer +0 K": 0.9727175735406188,
-              "pyrometer +2 K": 0.9586709343087944,
-              "pyrometer -2 K": 0.9685230909922268
+              "pyrometer +0 K": 0.959375095259869,
+              "pyrometer +2 K": 0.9380490778844688,
+              "pyrometer -2 K": 0.9525895442767871
             },
             "out_of_window_by_side": {
-              "N-rich somewhere": 0.02559670781893004,
-              "droplets somewhere": 0.007766092567189961
+              "N-rich somewhere": 0.04042473200223543,
+              "droplets somewhere": 0.009570695524056292
             },
             "mean_rate_error_pct": [
-              -1.3332900513842283,
-              1.212715634486572
+              -1.5827529362539505,
+              1.2750869715474566
             ],
             "feed_sccm": [
-              18.210260295740085,
-              19.19123942643617
+              4.5104389668644895,
+              4.764467124969495
             ]
           },
           "rate monitor + BFM + fill": {
             "valid_fraction": 1.0,
-            "in_window_fraction": 0.9808545445308134,
-            "joint_fraction": 0.9808545445308134,
+            "in_window_fraction": 0.9679479754102525,
+            "joint_fraction": 0.9679479754102525,
             "states": 984150,
-            "worst_pct": 0.5263723412427779,
-            "worst_valid_pct": 1.6367759655656313,
+            "worst_pct": 0.5660694044993324,
+            "worst_valid_pct": 2.1846031543061764,
             "admissible": true,
             "joint_by_ga_state": {
-              "40 mm / 5.68 A": 0.9929949702789209,
-              "40 mm / 8 A": 0.9998963572626124,
-              "70 mm / 5.68 A": 0.9949702789208962,
-              "70 mm / 8 A": 0.9979393385154702,
-              "120 mm / 5.68 A": 0.9393689986282578,
-              "120 mm / 8 A": 0.9599573235787228
+              "40 mm / 5.68 A": 0.9994573997866179,
+              "40 mm / 8 A": 0.9998719707361683,
+              "70 mm / 5.68 A": 0.9859106843468983,
+              "70 mm / 8 A": 0.9881969212010364,
+              "120 mm / 5.68 A": 0.8931626276482244,
+              "120 mm / 8 A": 0.9410882487425697
             },
             "joint_by_law": {
               "Ref14_growth": 1.0,
-              "Heying_growth": 1.0,
-              "G01_adsorption": 0.9425636335924402
+              "Heying_growth": 0.9997561347355586,
+              "G01_adsorption": 0.9040877914951989
             },
             "joint_by_pyrometer": {
-              "pyrometer +0 K": 0.9898734948940711,
-              "pyrometer +2 K": 0.9654778235025149,
-              "pyrometer -2 K": 0.9872123151958543
+              "pyrometer +0 K": 0.9766224660874867,
+              "pyrometer +2 K": 0.9534461210181375,
+              "pyrometer -2 K": 0.9737753391251334
             },
             "out_of_window_by_side": {
-              "N-rich somewhere": 0.007293603617334756,
-              "droplets somewhere": 0.011851851851851851
+              "N-rich somewhere": 0.01862317736117462,
+              "droplets somewhere": 0.01342884722857288
             },
             "mean_rate_error_pct": [
-              -1.227483870615853,
-              1.212715634486572
+              -1.3606423995082273,
+              1.2750869715474566
             ],
             "feed_sccm": [
-              18.210260295740085,
-              19.19123942643617
+              4.5104389668644895,
+              4.764467124969495
             ]
           },
           "rate monitor + BFM + commissioned maps": {
             "valid_fraction": 1.0,
-            "in_window_fraction": 0.9828349336991312,
-            "joint_fraction": 0.9828349336991312,
+            "in_window_fraction": 0.9676126606716455,
+            "joint_fraction": 0.9676126606716455,
             "states": 984150,
-            "worst_pct": 0.5263723412427779,
-            "worst_valid_pct": 1.4954552390000526,
+            "worst_pct": 0.5660694044993324,
+            "worst_valid_pct": 1.7832700552378142,
             "admissible": true,
             "joint_by_ga_state": {
-              "40 mm / 5.68 A": 0.9999634202103338,
-              "40 mm / 8 A": 1.0,
-              "70 mm / 5.68 A": 0.993537570492303,
-              "70 mm / 8 A": 0.9977991159884164,
-              "120 mm / 5.68 A": 0.9445328456028045,
-              "120 mm / 8 A": 0.9611766499009298
+              "40 mm / 5.68 A": 0.9995793324188386,
+              "40 mm / 8 A": 0.9999207437890566,
+              "70 mm / 5.68 A": 0.9808809632677945,
+              "70 mm / 8 A": 0.9891601889955799,
+              "120 mm / 5.68 A": 0.8932174973327237,
+              "120 mm / 8 A": 0.9429172382258802
             },
             "joint_by_law": {
               "Ref14_growth": 1.0,
-              "Heying_growth": 1.0,
-              "G01_adsorption": 0.9485048010973937
+              "Heying_growth": 0.9999207437890566,
+              "G01_adsorption": 0.9029172382258802
             },
             "joint_by_pyrometer": {
-              "pyrometer +0 K": 0.9903825636335924,
-              "pyrometer +2 K": 0.9695930498399634,
-              "pyrometer -2 K": 0.9885291876238378
+              "pyrometer +0 K": 0.9761133973479652,
+              "pyrometer +2 K": 0.9475293400396281,
+              "pyrometer -2 K": 0.9791952446273434
             },
             "out_of_window_by_side": {
-              "N-rich somewhere": 0.005592643397856018,
-              "droplets somewhere": 0.011572422903012752
+              "N-rich somewhere": 0.012697251435248691,
+              "droplets somewhere": 0.019690087893105727
             },
             "mean_rate_error_pct": [
-              -1.2297333056053406,
-              1.212715634486572
+              -1.3324003384140526,
+              1.2750869715474566
             ],
             "feed_sccm": [
-              18.210260295740085,
-              19.19123942643617
+              4.5104389668644895,
+              4.764467124969495
             ]
           }
         },
         "calibration_by_law": {
           "Ref14_growth": {
-            "ga_cell_K": 1243.9627671598496,
-            "ga_over_n_centre": 1.2237302957318894,
-            "centre_over_mean_rate": 0.9966107443804839
+            "ga_cell_K": 1241.4014582448785,
+            "ga_over_n_centre": 1.2273652782300033,
+            "centre_over_mean_rate": 0.9954881052157012
           },
           "Heying_growth": {
-            "ga_cell_K": 1240.1582592350987,
-            "ga_over_n_centre": 1.13323156731622,
-            "centre_over_mean_rate": 0.9966107443804839
+            "ga_cell_K": 1237.6218982037753,
+            "ga_over_n_centre": 1.1368072388738257,
+            "centre_over_mean_rate": 0.9954881052157012
           },
           "G01_adsorption": {
-            "ga_cell_K": 1237.9552925353782,
-            "ga_over_n_centre": 1.0836834375497468,
-            "centre_over_mean_rate": 0.9966107443804839
+            "ga_cell_K": 1235.4336557987212,
+            "ga_over_n_centre": 1.087226636317642,
+            "centre_over_mean_rate": 0.9954881052157012
           }
         }
       },
       {
-        "eta": 0.3,
-        "S_eff_m3_s": 4.0,
-        "feed_limit_sccm": 35.0,
-        "layout": "B-L",
+        "eta": 1.0,
+        "S_eff_m3_s": 2.0,
+        "feed_limit_sccm": 10.0,
+        "layout": "B-p",
         "T_C": 720,
         "rate_um_h": 1.0,
         "nominal_shortfall_K": -0.6073272746681369,
-        "pointing_profile_change_pct": 0.27323478007633684,
+        "pointing_profile_change_pct": 0.4211966956447988,
         "heater_capped_share": 0.22633744855967078,
         "reachable": true,
         "calibration": {
-          "feed_sccm": 18.827148498477612,
-          "pressure_Pa": 0.008729914065569486
+          "feed_sccm": 4.6664494950958435,
+          "pressure_Pa": 0.004327548920836412
         },
         "controllers": {
           "known maps (bound)": {
@@ -386,8 +385,8 @@
             "in_window_fraction": 1.0,
             "joint_fraction": 1.0,
             "states": 109350,
-            "worst_pct": 0.5732124577334936,
-            "worst_valid_pct": 0.5732124577334936,
+            "worst_pct": 0.6218252265602187,
+            "worst_valid_pct": 0.6218252265602187,
             "admissible": true,
             "joint_by_ga_state": {
               "40 mm / 5.68 A": 1.0,
@@ -410,15 +409,15 @@
           },
           "frozen": {
             "valid_fraction": 0.8888888888888888,
-            "in_window_fraction": 0.6332601737540009,
-            "joint_fraction": 0.6332601737540009,
+            "in_window_fraction": 0.664618198445359,
+            "joint_fraction": 0.664618198445359,
             "states": 109350,
-            "worst_pct": 0.5671403947027656,
-            "worst_valid_pct": 2.730901698803744,
+            "worst_pct": 0.6220294704051662,
+            "worst_valid_pct": 2.9599584983455722,
             "admissible": false,
             "joint_by_ga_state": {
-              "40 mm / 5.68 A": 0.5659259259259259,
-              "40 mm / 8 A": 0.5669684499314129,
+              "40 mm / 5.68 A": 0.7226886145404664,
+              "40 mm / 8 A": 0.5983539094650205,
               "70 mm / 5.68 A": 1.0,
               "70 mm / 8 A": 1.0,
               "120 mm / 5.68 A": 0.3333333333333333,
@@ -426,263 +425,263 @@
             },
             "joint_by_law": {
               "Ref14_growth": 1.0,
-              "Heying_growth": 0.5307544581618656,
-              "G01_adsorption": 0.3690260631001372
+              "Heying_growth": 0.5857064471879286,
+              "G01_adsorption": 0.40814814814814815
             },
             "joint_by_pyrometer": {
-              "pyrometer +0 K": 0.6480658436213992,
-              "pyrometer +2 K": 0.5679012345679012,
-              "pyrometer -2 K": 0.6838134430727023
+              "pyrometer +0 K": 0.6614266117969821,
+              "pyrometer +2 K": 0.6125377229080933,
+              "pyrometer -2 K": 0.7198902606310014
             },
             "out_of_window_by_side": {
               "N-rich somewhere": 0.2222222222222222,
-              "droplets somewhere": 0.14451760402377686
+              "droplets somewhere": 0.11315957933241884
             },
             "mean_rate_error_pct": [
-              -7.167490404744681,
-              1.1748867314832045
+              -7.019551995990659,
+              1.401423597392104
             ],
             "feed_sccm": [
-              18.827148498477612,
-              18.827148498477612
+              4.6664494950958435,
+              4.6664494950958435
             ]
           },
           "rate monitor": {
-            "valid_fraction": 0.8831672001219326,
-            "in_window_fraction": 0.6427465325407712,
-            "joint_fraction": 0.6427465325407712,
+            "valid_fraction": 0.8824112178021642,
+            "in_window_fraction": 0.6696662094192959,
+            "joint_fraction": 0.6696662094192959,
             "states": 328050,
-            "worst_pct": 0.583291740238979,
-            "worst_valid_pct": 3.6405121720907156,
+            "worst_pct": 0.6219658516639487,
+            "worst_valid_pct": 4.12251966692843,
             "admissible": false,
             "joint_by_ga_state": {
-              "40 mm / 5.68 A": 0.6066575217192501,
-              "40 mm / 8 A": 0.6077183356195702,
+              "40 mm / 5.68 A": 0.7608413351623228,
+              "40 mm / 8 A": 0.6341838134430727,
               "70 mm / 5.68 A": 1.0,
               "70 mm / 8 A": 1.0,
-              "120 mm / 5.68 A": 0.3323273891175126,
-              "120 mm / 8 A": 0.30977594878829445
+              "120 mm / 5.68 A": 0.31749428440786465,
+              "120 mm / 8 A": 0.30547782350251484
             },
             "joint_by_law": {
-              "Ref14_growth": 0.9870781893004115,
-              "Heying_growth": 0.5656881572930955,
-              "G01_adsorption": 0.3754732510288066
+              "Ref14_growth": 0.9781527206218564,
+              "Heying_growth": 0.6105715592135346,
+              "G01_adsorption": 0.42027434842249656
             },
             "joint_by_pyrometer": {
-              "pyrometer +0 K": 0.6574485596707819,
-              "pyrometer +2 K": 0.5714677640603566,
-              "pyrometer -2 K": 0.6993232738911751
+              "pyrometer +0 K": 0.6718335619570187,
+              "pyrometer +2 K": 0.6112482853223594,
+              "pyrometer -2 K": 0.7259167809785094
             },
             "out_of_window_by_side": {
-              "N-rich somewhere": 0.22631611034903215,
-              "droplets somewhere": 0.1309373571101966
+              "N-rich somewhere": 0.22950464868160342,
+              "droplets somewhere": 0.10082914189910075
             },
             "mean_rate_error_pct": [
-              -10.967230291531294,
-              1.2212354861112162
+              -10.79722933642131,
+              1.2836045611234415
             ],
             "feed_sccm": [
-              18.307073798288076,
-              19.32284144873093
+              4.532654236693203,
+              4.794529735788273
             ]
           },
           "rate monitor + BFM": {
             "valid_fraction": 1.0,
-            "in_window_fraction": 0.9999278565259361,
-            "joint_fraction": 0.9999278565259361,
+            "in_window_fraction": 0.999640298734949,
+            "joint_fraction": 0.999640298734949,
             "states": 984150,
-            "worst_pct": 0.583291740238979,
-            "worst_valid_pct": 0.6358711659885756,
+            "worst_pct": 0.6219658516639487,
+            "worst_valid_pct": 1.189598026351179,
             "admissible": true,
             "joint_by_ga_state": {
               "40 mm / 5.68 A": 1.0,
               "40 mm / 8 A": 1.0,
               "70 mm / 5.68 A": 1.0,
               "70 mm / 8 A": 1.0,
-              "120 mm / 5.68 A": 0.9996646852613931,
-              "120 mm / 8 A": 0.9999024538942234
+              "120 mm / 5.68 A": 0.9980734644109129,
+              "120 mm / 8 A": 0.9997683279987807
             },
             "joint_by_law": {
               "Ref14_growth": 1.0,
               "Heying_growth": 1.0,
-              "G01_adsorption": 0.9997835695778082
+              "G01_adsorption": 0.9989208962048468
             },
             "joint_by_pyrometer": {
-              "pyrometer +0 K": 1.0,
+              "pyrometer +0 K": 0.9998567291571406,
               "pyrometer +2 K": 1.0,
-              "pyrometer -2 K": 0.9997835695778082
+              "pyrometer -2 K": 0.9990641670477062
             },
             "out_of_window_by_side": {
-              "N-rich somewhere": 7.214347406391302e-05,
+              "N-rich somewhere": 0.0003597012650510593,
               "droplets somewhere": 0.0
             },
             "mean_rate_error_pct": [
-              -1.236553316107003,
-              1.2212354861112162
+              -1.3124578451681357,
+              1.2836045611234415
             ],
             "feed_sccm": [
-              18.307073798288076,
-              19.32284144873093
+              4.532654236693203,
+              4.794529735788273
             ]
           },
           "rate monitor + BFM + fill": {
             "valid_fraction": 1.0,
-            "in_window_fraction": 1.0,
-            "joint_fraction": 1.0,
+            "in_window_fraction": 0.9999695168419448,
+            "joint_fraction": 0.9999695168419448,
             "states": 984150,
-            "worst_pct": 0.583291740238979,
-            "worst_valid_pct": 0.583291740238979,
+            "worst_pct": 0.6219658516639487,
+            "worst_valid_pct": 0.6219658516639487,
             "admissible": true,
             "joint_by_ga_state": {
               "40 mm / 5.68 A": 1.0,
               "40 mm / 8 A": 1.0,
               "70 mm / 5.68 A": 1.0,
               "70 mm / 8 A": 1.0,
-              "120 mm / 5.68 A": 1.0,
+              "120 mm / 5.68 A": 0.999817101051669,
               "120 mm / 8 A": 1.0
             },
             "joint_by_law": {
               "Ref14_growth": 1.0,
               "Heying_growth": 1.0,
-              "G01_adsorption": 1.0
+              "G01_adsorption": 0.9999085505258345
             },
             "joint_by_pyrometer": {
               "pyrometer +0 K": 1.0,
               "pyrometer +2 K": 1.0,
-              "pyrometer -2 K": 1.0
+              "pyrometer -2 K": 0.9999085505258345
             },
             "out_of_window_by_side": {
-              "N-rich somewhere": 0.0,
+              "N-rich somewhere": 3.0483158055174515e-05,
               "droplets somewhere": 0.0
             },
             "mean_rate_error_pct": [
-              -1.236553316107003,
-              1.2212354861112162
+              -1.3124578451681357,
+              1.2836045611234415
             ],
             "feed_sccm": [
-              18.307073798288076,
-              19.32284144873093
+              4.532654236693203,
+              4.794529735788273
             ]
           },
           "rate monitor + BFM + commissioned maps": {
             "valid_fraction": 1.0,
-            "in_window_fraction": 1.0,
-            "joint_fraction": 1.0,
+            "in_window_fraction": 0.9999989838947315,
+            "joint_fraction": 0.9999989838947315,
             "states": 984150,
-            "worst_pct": 0.583291740238979,
-            "worst_valid_pct": 0.583291740238979,
+            "worst_pct": 0.6219658516639487,
+            "worst_valid_pct": 0.6219658516639487,
             "admissible": true,
             "joint_by_ga_state": {
               "40 mm / 5.68 A": 1.0,
               "40 mm / 8 A": 1.0,
               "70 mm / 5.68 A": 1.0,
               "70 mm / 8 A": 1.0,
-              "120 mm / 5.68 A": 1.0,
+              "120 mm / 5.68 A": 0.999993903368389,
               "120 mm / 8 A": 1.0
             },
             "joint_by_law": {
               "Ref14_growth": 1.0,
               "Heying_growth": 1.0,
-              "G01_adsorption": 1.0
+              "G01_adsorption": 0.9999969516841944
             },
             "joint_by_pyrometer": {
               "pyrometer +0 K": 1.0,
-              "pyrometer +2 K": 1.0,
+              "pyrometer +2 K": 0.9999969516841944,
               "pyrometer -2 K": 1.0
             },
             "out_of_window_by_side": {
               "N-rich somewhere": 0.0,
-              "droplets somewhere": 0.0
+              "droplets somewhere": 1.016105268505817e-06
             },
             "mean_rate_error_pct": [
-              -1.236553316107003,
-              1.2212354861112162
+              -1.3124578451681357,
+              1.2836045611234415
             ],
             "feed_sccm": [
-              18.307073798288076,
-              19.32284144873093
+              4.532654236693203,
+              4.794529735788273
             ]
           }
         },
         "calibration_by_law": {
           "Ref14_growth": {
-            "ga_cell_K": 1247.4809560863537,
-            "ga_over_n_centre": 1.3052793741448334,
-            "centre_over_mean_rate": 0.9963895551113382
+            "ga_cell_K": 1244.8795260390093,
+            "ga_over_n_centre": 1.3090285705135245,
+            "centre_over_mean_rate": 0.9953007787286756
           },
           "Heying_growth": {
-            "ga_cell_K": 1244.2732268599307,
-            "ga_over_n_centre": 1.2238985351899816,
-            "centre_over_mean_rate": 0.9963895551113382
+            "ga_cell_K": 1241.6927639220853,
+            "ga_over_n_centre": 1.2275974410487658,
+            "centre_over_mean_rate": 0.9953007787286756
           },
           "G01_adsorption": {
-            "ga_cell_K": 1240.7868334788295,
-            "ga_over_n_centre": 1.1407536345039728,
-            "centre_over_mean_rate": 0.9963895551113382
+            "ga_cell_K": 1238.22963292534,
+            "ga_over_n_centre": 1.1444011597244474,
+            "centre_over_mean_rate": 0.9953007787286756
           }
         }
       }
     ],
     "summary": [
       {
-        "layout": "B-L",
-        "eta": 0.3,
-        "S_eff_m3_s": 4.0,
-        "feed_limit_sccm": 35.0,
+        "layout": "B-p",
+        "eta": 1.0,
+        "S_eff_m3_s": 2.0,
+        "feed_limit_sccm": 10.0,
         "controller": "known maps (bound)",
         "coldest_T_C": 710,
-        "worst_pct_there": 0.5171575310647185,
+        "worst_pct_there": 0.5655556733687882,
         "joint_at_720C": 1.0
       },
       {
-        "layout": "B-L",
-        "eta": 0.3,
-        "S_eff_m3_s": 4.0,
-        "feed_limit_sccm": 35.0,
+        "layout": "B-p",
+        "eta": 1.0,
+        "S_eff_m3_s": 2.0,
+        "feed_limit_sccm": 10.0,
         "controller": "frozen",
         "coldest_T_C": null,
         "worst_pct_there": null,
-        "joint_at_720C": 0.6332601737540009
+        "joint_at_720C": 0.664618198445359
       },
       {
-        "layout": "B-L",
-        "eta": 0.3,
-        "S_eff_m3_s": 4.0,
-        "feed_limit_sccm": 35.0,
+        "layout": "B-p",
+        "eta": 1.0,
+        "S_eff_m3_s": 2.0,
+        "feed_limit_sccm": 10.0,
         "controller": "rate monitor",
         "coldest_T_C": null,
         "worst_pct_there": null,
-        "joint_at_720C": 0.6427465325407712
+        "joint_at_720C": 0.6696662094192959
       },
       {
-        "layout": "B-L",
-        "eta": 0.3,
-        "S_eff_m3_s": 4.0,
-        "feed_limit_sccm": 35.0,
+        "layout": "B-p",
+        "eta": 1.0,
+        "S_eff_m3_s": 2.0,
+        "feed_limit_sccm": 10.0,
         "controller": "rate monitor + BFM",
         "coldest_T_C": 710,
-        "worst_pct_there": 0.5263723412427779,
-        "joint_at_720C": 0.9999278565259361
+        "worst_pct_there": 0.5660694044993324,
+        "joint_at_720C": 0.999640298734949
       },
       {
-        "layout": "B-L",
-        "eta": 0.3,
-        "S_eff_m3_s": 4.0,
-        "feed_limit_sccm": 35.0,
+        "layout": "B-p",
+        "eta": 1.0,
+        "S_eff_m3_s": 2.0,
+        "feed_limit_sccm": 10.0,
         "controller": "rate monitor + BFM + fill",
         "coldest_T_C": 710,
-        "worst_pct_there": 0.5263723412427779,
-        "joint_at_720C": 1.0
+        "worst_pct_there": 0.5660694044993324,
+        "joint_at_720C": 0.9999695168419448
       },
       {
-        "layout": "B-L",
-        "eta": 0.3,
-        "S_eff_m3_s": 4.0,
-        "feed_limit_sccm": 35.0,
+        "layout": "B-p",
+        "eta": 1.0,
+        "S_eff_m3_s": 2.0,
+        "feed_limit_sccm": 10.0,
         "controller": "rate monitor + BFM + commissioned maps",
         "coldest_T_C": 710,
-        "worst_pct_there": 0.5263723412427779,
-        "joint_at_720C": 1.0
+        "worst_pct_there": 0.5660694044993324,
+        "joint_at_720C": 0.9999989838947315
       }
     ]
   },
