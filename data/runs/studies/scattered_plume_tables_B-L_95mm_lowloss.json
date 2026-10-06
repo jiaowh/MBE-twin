@@ -1,17 +1,17 @@
 {
   "schema_version": "0.1",
   "run_id": "scattered_plume_tables",
-  "created_utc": "2026-10-06T05:05:31+00:00",
+  "created_utc": "2026-10-06T06:13:04+00:00",
   "label": "representative_chamber",
   "validation_status": "not_validated",
   "package_version": "0.1.0",
-  "git_commit": "9bcae33f952c7d819ff81fb22d3955b486b5b0f1-dirty",
+  "git_commit": "204cb6cd89298b063733585575ad46c6841b6c3e-dirty",
   "python": "3.12.13",
   "numpy": "2.4.4",
   "platform": "Windows-11-10.0.26300-SP0",
   "source_sha256": {
-    "scripts/average_scattered_seeds.py": "725da079acb7b9ae115ec773425a8cb41d7c79511642b0c590fc6fa58a54907b",
-    "scripts/scattered_plume_tables.py": "f0f0f0eba136600dd4a8fbf3e035118b47a577633ccc0c1adceaf50ea986e5c0",
+    "scripts/average_scattered_seeds.py": "46723964e4e99c26a6da57d1284b2dc8437d9329d70ade7ec562a7b2ec5ee77e",
+    "scripts/scattered_plume_tables.py": "7ed3c7c5fad27c4103e69f34eeb3e6794fadcb53614221bef43e93af5765a044",
     "scripts/scattered_tables.py": "e0fabec136a1bb585f1e67652ea010f13dea6cd482cbe3b54e9e297d58320548",
     "src/mbe_twin/scattering.py": "1f116f870fa6fc394bd0e910c33793969b401433061dabdf72b90d451ef62d28",
     "src/mbe_twin/crucible.py": "981dab446a3caf8230a0ba691141ac8500a259d98518f810e4d8c7eda68256d2",
@@ -19,7 +19,7 @@
     "data/design/design_envelope.json": "e1d2e14d6e2277cab563a3231116889ed4f053186e600e3ae68e050ec1c79906"
   },
   "solver": null,
-  "inputs_sha256": "194022845171835372e004bbe645838a43d9471d771033a38234e308217b552b",
+  "inputs_sha256": "825ab88bcd2c652a5b041acb0c4ecbad723ce321819674e70bde84e167c8cecc",
   "inputs": {
     "layouts": [
       "B-L"
@@ -117,41 +117,41 @@
       "4": 0.008555450869279642
     },
     "seeds": [
-      20264001,
-      20264002
+      20264011,
+      20264012
     ],
     "parts": [
       {
         "run_id": "scattered_plume_tables",
-        "created_utc": "2026-10-06T05:04:05+00:00",
-        "git_commit": "9bcae33f952c7d819ff81fb22d3955b486b5b0f1-dirty",
+        "created_utc": "2026-10-06T06:12:54+00:00",
+        "git_commit": "204cb6cd89298b063733585575ad46c6841b6c3e-dirty",
         "source_sha256": {
-          "scripts/scattered_plume_tables.py": "f0f0f0eba136600dd4a8fbf3e035118b47a577633ccc0c1adceaf50ea986e5c0",
+          "scripts/scattered_plume_tables.py": "7ed3c7c5fad27c4103e69f34eeb3e6794fadcb53614221bef43e93af5765a044",
           "scripts/scattered_tables.py": "e0fabec136a1bb585f1e67652ea010f13dea6cd482cbe3b54e9e297d58320548",
           "src/mbe_twin/scattering.py": "1f116f870fa6fc394bd0e910c33793969b401433061dabdf72b90d451ef62d28",
           "src/mbe_twin/crucible.py": "981dab446a3caf8230a0ba691141ac8500a259d98518f810e4d8c7eda68256d2",
           "src/mbe_twin/vacuum.py": "21b1538e8ea911537a4d42f584dd08efca470db7db594259be2d16b4c806db7b",
           "data/design/design_envelope.json": "e1d2e14d6e2277cab563a3231116889ed4f053186e600e3ae68e050ec1c79906"
         },
-        "inputs_sha256": "6f43aa624cf6ef3a3d165ddcb21e93240d646adcc9a6dfa788725c2f5c162911",
-        "seed": 20264001,
-        "part": "results/scattered_plume_tables_B-L_95mm_lowloss_s1"
+        "inputs_sha256": "b68dedee3bbf2d44b81c476cd0471c2773a9c82d03684fe02827caf3c3eb32cb",
+        "seed": 20264011,
+        "part": "results/scattered_plume_tables_B-L_95mm_lowloss_s1z"
       },
       {
         "run_id": "scattered_plume_tables",
-        "created_utc": "2026-10-06T05:04:04+00:00",
-        "git_commit": "9bcae33f952c7d819ff81fb22d3955b486b5b0f1-dirty",
+        "created_utc": "2026-10-06T06:12:54+00:00",
+        "git_commit": "204cb6cd89298b063733585575ad46c6841b6c3e-dirty",
         "source_sha256": {
-          "scripts/scattered_plume_tables.py": "f0f0f0eba136600dd4a8fbf3e035118b47a577633ccc0c1adceaf50ea986e5c0",
+          "scripts/scattered_plume_tables.py": "7ed3c7c5fad27c4103e69f34eeb3e6794fadcb53614221bef43e93af5765a044",
           "scripts/scattered_tables.py": "e0fabec136a1bb585f1e67652ea010f13dea6cd482cbe3b54e9e297d58320548",
           "src/mbe_twin/scattering.py": "1f116f870fa6fc394bd0e910c33793969b401433061dabdf72b90d451ef62d28",
           "src/mbe_twin/crucible.py": "981dab446a3caf8230a0ba691141ac8500a259d98518f810e4d8c7eda68256d2",
           "src/mbe_twin/vacuum.py": "21b1538e8ea911537a4d42f584dd08efca470db7db594259be2d16b4c806db7b",
           "data/design/design_envelope.json": "e1d2e14d6e2277cab563a3231116889ed4f053186e600e3ae68e050ec1c79906"
         },
-        "inputs_sha256": "bf4d894f360a4b85e4415e7e9916840ed7bac7b0d30ab5506b3e18d3bca61f31",
-        "seed": 20264002,
-        "part": "results/scattered_plume_tables_B-L_95mm_lowloss_s2"
+        "inputs_sha256": "4d54334294d6780c6f773bf941b79e7b00dd496a6acad0e680ffd684fc27951e",
+        "seed": 20264012,
+        "part": "results/scattered_plume_tables_B-L_95mm_lowloss_s2z"
       }
     ],
     "parts_per_speed": {
@@ -225,45 +225,45 @@
         "4": {
           "factors": [
             [
-              1.0,
-              1.0,
-              1.0,
-              1.0,
-              1.0,
-              1.0,
-              1.0,
-              1.0,
-              1.0,
-              1.0,
-              1.0,
-              1.0,
-              1.0,
-              1.0,
-              1.0,
-              1.0,
-              1.0,
-              1.0,
-              1.0,
-              1.0,
-              1.0,
-              1.0,
-              1.0,
-              1.0,
-              1.0,
-              1.0,
-              1.0,
-              1.0,
-              1.0,
-              1.0,
-              1.0,
-              1.0,
-              1.0,
-              1.0,
-              1.0,
-              1.0,
-              1.0,
-              1.0,
-              1.0
+              2.8360686978083907,
+              2.836094455957675,
+              2.836171617340483,
+              2.836299842761683,
+              2.836478566896057,
+              2.8367069982882973,
+              2.83698411935301,
+              2.837308686374713,
+              2.837679229507836,
+              2.838094052776722,
+              2.8385512340756263,
+              2.839048625168715,
+              2.839583851690069,
+              2.84015431314368,
+              2.840757182903452,
+              2.8413894082132023,
+              2.8420477101866592,
+              2.8427285838074647,
+              2.8434282979291714,
+              2.8441428952752474,
+              2.8448681924390695,
+              2.845599779883929,
+              2.846333021943029,
+              2.8470630568194846,
+              2.8477847965863248,
+              2.848492927186488,
+              2.8491819084328283,
+              2.8498459740081095,
+              2.8504791314650095,
+              2.8510751622261177,
+              2.851627621583936,
+              2.8521298387008787,
+              2.852574916609272,
+              2.8529557322113552,
+              2.8532649362792792,
+              2.8534949534551086,
+              2.8536379822508184,
+              2.853685995048297,
+              2.853630738099346
             ],
             [
               2.866501029679549,
@@ -666,8 +666,70 @@
       "B-L": {
         "4": [
           [
-            null,
-            null
+            {
+              "bins": [
+                2.8349391406510174,
+                2.8461206099156042,
+                2.8341773004809445,
+                2.86117021220007,
+                2.8521425412863657,
+                2.854022978702513,
+                2.8376960799931217,
+                2.8564008633195934,
+                2.8545139261618266,
+                2.841251860211733
+              ],
+              "bins_err": [
+                0.006896264497830913,
+                0.010104143226098265,
+                0.005322056615514689,
+                0.010592855148495256,
+                0.007639842410583796,
+                0.009396021164330366,
+                0.013436003029381043,
+                0.008396017682894543,
+                0.009575732176276705,
+                0.007740652121058952
+              ],
+              "reduced_chi2": 1.118890363223595,
+              "half_range_points": 0.4090663510600945,
+              "half_range_points_err": 0.09255670198614764,
+              "plume_collisions_per_emitted_atom": 0.0,
+              "feed_sccm": 0.0,
+              "zero_pressure": true
+            },
+            {
+              "bins": [
+                2.848855781281504,
+                2.837093947299866,
+                2.8503440278050642,
+                2.8334652434096945,
+                2.8488058565031427,
+                2.869607783173156,
+                2.8675076165081546,
+                2.842479040823486,
+                2.847052715398283,
+                2.866028998668524
+              ],
+              "bins_err": [
+                0.0074897129320451875,
+                0.00950321091767597,
+                0.008835986642372114,
+                0.006191286381698033,
+                0.011103895785107827,
+                0.007032320248585964,
+                0.012345156567063097,
+                0.007145113952724562,
+                0.010274651926240943,
+                0.006890195462996089
+              ],
+              "reduced_chi2": 2.816137712048208,
+              "half_range_points": 0.34647958170715243,
+              "half_range_points_err": 0.15904489601023675,
+              "plume_collisions_per_emitted_atom": 0.0,
+              "feed_sccm": 0.0,
+              "zero_pressure": true
+            }
           ],
           [
             {
@@ -699,7 +761,9 @@
               "half_range_points": 0.6264644304536904,
               "half_range_points_err": 0.130987979201916,
               "plume_collisions_per_emitted_atom": 0.0063219999999999995,
-              "feed_sccm": 0.5391561806069578
+              "feed_sccm": 0.5391561806069578,
+              "from_record": "scattered_plume_tables",
+              "from_seed": 20264001
             },
             {
               "bins": [
@@ -730,7 +794,9 @@
               "half_range_points": 0.2863971664104285,
               "half_range_points_err": 0.10189504002061511,
               "plume_collisions_per_emitted_atom": 0.0063514999999999995,
-              "feed_sccm": 0.5391561806069578
+              "feed_sccm": 0.5391561806069578,
+              "from_record": "scattered_plume_tables",
+              "from_seed": 20264002
             }
           ],
           [
@@ -763,7 +829,9 @@
               "half_range_points": 0.8337720560218134,
               "half_range_points_err": 0.18706245232602547,
               "plume_collisions_per_emitted_atom": 0.012574249999999999,
-              "feed_sccm": 1.0783123612139156
+              "feed_sccm": 1.0783123612139156,
+              "from_record": "scattered_plume_tables",
+              "from_seed": 20264001
             },
             {
               "bins": [
@@ -794,7 +862,9 @@
               "half_range_points": 0.4302931378294739,
               "half_range_points_err": 0.1366412029642224,
               "plume_collisions_per_emitted_atom": 0.012653999999999999,
-              "feed_sccm": 1.0783123612139156
+              "feed_sccm": 1.0783123612139156,
+              "from_record": "scattered_plume_tables",
+              "from_seed": 20264002
             }
           ],
           [
@@ -827,7 +897,9 @@
               "half_range_points": 0.564811436590774,
               "half_range_points_err": 0.06894386516125946,
               "plume_collisions_per_emitted_atom": 0.025360499999999998,
-              "feed_sccm": 2.156624722427831
+              "feed_sccm": 2.156624722427831,
+              "from_record": "scattered_plume_tables",
+              "from_seed": 20264001
             },
             {
               "bins": [
@@ -858,7 +930,9 @@
               "half_range_points": 0.2707599492452014,
               "half_range_points_err": 0.11427225163378778,
               "plume_collisions_per_emitted_atom": 0.02546725,
-              "feed_sccm": 2.156624722427831
+              "feed_sccm": 2.156624722427831,
+              "from_record": "scattered_plume_tables",
+              "from_seed": 20264002
             }
           ],
           [
@@ -891,7 +965,9 @@
               "half_range_points": 0.23830024696969487,
               "half_range_points_err": 0.09380494448124824,
               "plume_collisions_per_emitted_atom": 0.050859,
-              "feed_sccm": 4.313249444855662
+              "feed_sccm": 4.313249444855662,
+              "from_record": "scattered_plume_tables",
+              "from_seed": 20264001
             },
             {
               "bins": [
@@ -922,7 +998,9 @@
               "half_range_points": 0.20404345211835015,
               "half_range_points_err": 0.12024204400440432,
               "plume_collisions_per_emitted_atom": 0.050882000000000004,
-              "feed_sccm": 4.313249444855662
+              "feed_sccm": 4.313249444855662,
+              "from_record": "scattered_plume_tables",
+              "from_seed": 20264002
             }
           ],
           [
@@ -955,7 +1033,9 @@
               "half_range_points": 0.20368044965802082,
               "half_range_points_err": 0.11826409623711119,
               "plume_collisions_per_emitted_atom": 0.10280700000000001,
-              "feed_sccm": 8.626498889711325
+              "feed_sccm": 8.626498889711325,
+              "from_record": "scattered_plume_tables",
+              "from_seed": 20264001
             },
             {
               "bins": [
@@ -986,7 +1066,9 @@
               "half_range_points": 0.8018033104425316,
               "half_range_points_err": 0.13709957842876366,
               "plume_collisions_per_emitted_atom": 0.10302875,
-              "feed_sccm": 8.626498889711325
+              "feed_sccm": 8.626498889711325,
+              "from_record": "scattered_plume_tables",
+              "from_seed": 20264002
             }
           ],
           [
@@ -1019,7 +1101,9 @@
               "half_range_points": 0.5218311607110286,
               "half_range_points_err": 0.16774022417524173,
               "plume_collisions_per_emitted_atom": 0.1820685,
-              "feed_sccm": 15.09637305699482
+              "feed_sccm": 15.09637305699482,
+              "from_record": "scattered_plume_tables",
+              "from_seed": 20264001
             },
             {
               "bins": [
@@ -1050,7 +1134,9 @@
               "half_range_points": 0.18489483698890116,
               "half_range_points_err": 0.11426416006374801,
               "plume_collisions_per_emitted_atom": 0.18237799999999998,
-              "feed_sccm": 15.09637305699482
+              "feed_sccm": 15.09637305699482,
+              "from_record": "scattered_plume_tables",
+              "from_seed": 20264002
             }
           ],
           [
@@ -1083,7 +1169,9 @@
               "half_range_points": 0.1039486586552363,
               "half_range_points_err": 0.10874738294543629,
               "plume_collisions_per_emitted_atom": 0.2632065,
-              "feed_sccm": 21.566247224278314
+              "feed_sccm": 21.566247224278314,
+              "from_record": "scattered_plume_tables",
+              "from_seed": 20264001
             },
             {
               "bins": [
@@ -1114,7 +1202,9 @@
               "half_range_points": 0.2599640533724489,
               "half_range_points_err": 0.1257318634862878,
               "plume_collisions_per_emitted_atom": 0.263107,
-              "feed_sccm": 21.566247224278314
+              "feed_sccm": 21.566247224278314,
+              "from_record": "scattered_plume_tables",
+              "from_seed": 20264002
             }
           ],
           [
@@ -1147,7 +1237,9 @@
               "half_range_points": 0.5425904158018006,
               "half_range_points_err": 0.10501235612727662,
               "plume_collisions_per_emitted_atom": 0.40240575,
-              "feed_sccm": 32.349370836417464
+              "feed_sccm": 32.349370836417464,
+              "from_record": "scattered_plume_tables",
+              "from_seed": 20264001
             },
             {
               "bins": [
@@ -1178,7 +1270,9 @@
               "half_range_points": 0.1700394897726699,
               "half_range_points_err": 0.08667464935748795,
               "plume_collisions_per_emitted_atom": 0.40200775,
-              "feed_sccm": 32.349370836417464
+              "feed_sccm": 32.349370836417464,
+              "from_record": "scattered_plume_tables",
+              "from_seed": 20264002
             }
           ],
           [
@@ -1211,7 +1305,9 @@
               "half_range_points": 0.44411385960342076,
               "half_range_points_err": 0.15112332755459348,
               "plume_collisions_per_emitted_atom": 0.544419,
-              "feed_sccm": 43.13249444855663
+              "feed_sccm": 43.13249444855663,
+              "from_record": "scattered_plume_tables",
+              "from_seed": 20264001
             },
             {
               "bins": [
@@ -1242,7 +1338,9 @@
               "half_range_points": 0.3295204425592958,
               "half_range_points_err": 0.1405948841526799,
               "plume_collisions_per_emitted_atom": 0.54474875,
-              "feed_sccm": 43.13249444855663
+              "feed_sccm": 43.13249444855663,
+              "from_record": "scattered_plume_tables",
+              "from_seed": 20264002
             }
           ],
           [
@@ -1275,7 +1373,7 @@
     "seed_spread_max_sd": {
       "B-L": {
         "4": [
-          0.0,
+          0.01381298014132166,
           0.015033316304351988,
           0.008711113766631086,
           0.009813819929842793,

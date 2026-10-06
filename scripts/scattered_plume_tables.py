@@ -102,9 +102,16 @@ def main():
     if args.extend:
         old = json.loads(Path(args.extend).read_text(encoding="utf-8"))
         oi = old["inputs"]
-        for key, val in (("n_particles", args.n_particles), ("batches", args.batches), ("plume_temperature_K", PLUME_T)):
-            if oi[key] != val:
-                raise SystemExit(f"scattered_plume_tables: --extend record has {key} {oi[key]}, not {val}")
+        # everything the reused entries depend on must match (audit follow-up 2026-10-06); records made before the
+        # wall options were absorbing-wall runs (gamma 1, no pump)
+        want = {"n_particles": args.n_particles, "batches": args.batches, "plume_temperature_K": PLUME_T,
+                "chamber": vars(st.CHAMBER), "species": st.SPECIES, "gas_temperature_K": env["vacuum"]["gas_temperature_K"]["value"],
+                "p_grid_Pa": list(lc.P_GRID), "feed_max_sccm": FEED_MAX_SCCM,
+                "wall_gamma": args.gamma, "pump_wall_returned": args.pump}
+        have = dict(oi) | {"wall_gamma": oi.get("wall_gamma", 1.0), "pump_wall_returned": oi.get("pump_wall_returned", False)}
+        for key, val in want.items():
+            if json.loads(json.dumps(have.get(key))) != json.loads(json.dumps(val)):
+                raise SystemExit(f"scattered_plume_tables: --extend record has {key} {have.get(key)}, not {val}")
         if not set(args.layouts) <= set(oi["layouts"]) or not set(args.speeds) <= set(oi["speeds_m3_s"]):
             raise SystemExit("scattered_plume_tables: --extend record lacks a requested layout or speed")
         old_aims = oi.get("aim_offset_mm") or {name: env["layouts"][name]["n"]["aim_offset_mm"] for name in oi["layouts"]}
@@ -129,6 +136,22 @@ def main():
         tables[name], diag[name] = {}, {}
         for speed in args.speeds:
             tab, dg, covered = [np.ones(len(rho))], [None], [True]
+            if args.gamma != 1.0 or args.pump:
+                # returning walls send atoms back to the wafer even without gas or plume: the zero-pressure factor is
+                # the collisionless wall-return factor, not 1 (audit follow-up 2026-10-06)
+                old0 = None if old is None else old["outputs"]["diagnostics"][name][f"{speed:g}"][0]
+                if old0 is not None:
+                    tab[0] = np.asarray(old["outputs"]["factors"][name][f"{speed:g}"]["factors"][0])
+                    dg[0] = {**old0, "from_record": old0.get("from_record", old["run_id"]),
+                             "from_seed": old0.get("from_seed", old["inputs"]["seed"])}
+                else:
+                    t = time.time()
+                    f0, info0 = factor(rng, source, None, vac["collision_diameters_m"]["N"], 0.0, t_gas, args.n_particles,
+                                       args.batches, edges, centres, rho, gamma=args.gamma,
+                                       pump_speed=speed if args.pump else 0.0)
+                    tab[0], dg[0] = f0, {**info0, "feed_sccm": 0.0, "zero_pressure": True}
+                    print(f"N {name} S {speed:g} p 0 (collisionless wall return): G centre/edge {f0[0]:.4f}/{f0[-1]:.4f} "
+                          f"({time.time() - t:.0f} s)", flush=True)
             prev_feed = 0.0
             for i, p in enumerate(lc.P_GRID[1:], start=1):
                 feed = p * speed / to_p
@@ -140,7 +163,10 @@ def main():
                     continue
                 if old is not None and old["outputs"]["factors"][name][f"{speed:g}"]["covered"][i]:
                     tab.append(np.asarray(old["outputs"]["factors"][name][f"{speed:g}"]["factors"][i]))
-                    dg.append({**old["outputs"]["diagnostics"][name][f"{speed:g}"][i], "from_record": old["run_id"]})
+                    od = old["outputs"]["diagnostics"][name][f"{speed:g}"][i]
+                    # the run that simulated it (its seed identifies it; run_id names only the stage)
+                    dg.append({**od, "from_record": od.get("from_record", old["run_id"]),
+                               "from_seed": od.get("from_seed", old["inputs"]["seed"])})
                     covered.append(True)
                     continue
                 molecules = p * speed / (K_B * t_gas)

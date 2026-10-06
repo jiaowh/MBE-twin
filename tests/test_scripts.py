@@ -371,3 +371,36 @@ def test_average_scattered_seeds_resample_draws_with_replacement(tmp_path, monke
     draws = a["inputs"]["resample"]["draws"]["parts"]
     assert len(draws) == 4 and draws == b["inputs"]["resample"]["draws"]["parts"]
     assert np.isclose(a["outputs"]["factors"]["N"]["B-L"]["gas"][0][0], np.mean(draws))
+
+
+def _plume_run(monkeypatch, out, *extra):
+    import json
+    pt = _load("scattered_plume_tables")
+    monkeypatch.setattr(sys, "argv", ["x", "--layouts", "B-L", "--aim-mm", "95", "--speeds", "4", "--n-particles", "1600",
+                                      "--batches", "8", "--out", str(out), *extra])
+    pt.main()
+    return json.loads((out / "manifest.json").read_text())
+
+
+def test_plume_tables_wall_settings_extend_and_ancestry(tmp_path, monkeypatch):
+    """Audit follow-up 2026-10-06: --extend refuses other wall physics; returning walls compute the zero-pressure
+    factor; averaging refuses parts whose entries come from one simulation."""
+    import numpy as np
+    low = _plume_run(monkeypatch, tmp_path / "low", "--gamma", "0.5", "--pump", "--seed", "1")
+    f0 = np.asarray(low["outputs"]["factors"]["B-L"]["4"]["factors"][0])
+    assert low["outputs"]["diagnostics"]["B-L"]["4"][0]["zero_pressure"] and f0.mean() > 1.05
+    with pytest.raises(SystemExit, match="wall_gamma"):
+        _plume_run(monkeypatch, tmp_path / "bad", "--extend", str(tmp_path / "low/manifest.json"), "--seed", "2")
+    a = _plume_run(monkeypatch, tmp_path / "a", "--gamma", "0.5", "--pump", "--seed", "3", "--extend", str(tmp_path / "low/manifest.json"))
+    b = _plume_run(monkeypatch, tmp_path / "b", "--gamma", "0.5", "--pump", "--seed", "4", "--extend", str(tmp_path / "low/manifest.json"))
+    assert a["outputs"]["diagnostics"]["B-L"]["4"][1]["from_seed"] == 1 == b["outputs"]["diagnostics"]["B-L"]["4"][0]["from_seed"]
+    av = _load("average_scattered_seeds")
+    monkeypatch.setattr(sys, "argv", ["x", "--parts", str(tmp_path / "a"), str(tmp_path / "b"), "--out", str(tmp_path / "avg")])
+    with pytest.raises(SystemExit, match="same simulation"):
+        av.main()
+    # independent runs average fine, and a default (absorbing-wall) run keeps the exact zero-pressure factor 1
+    c = _plume_run(monkeypatch, tmp_path / "c", "--gamma", "0.5", "--pump", "--seed", "5")
+    monkeypatch.setattr(sys, "argv", ["x", "--parts", str(tmp_path / "low"), str(tmp_path / "c"), "--out", str(tmp_path / "avg2")])
+    av.main()
+    d = _plume_run(monkeypatch, tmp_path / "d", "--seed", "6")
+    assert d["outputs"]["factors"]["B-L"]["4"]["factors"][0] == [1.0] * 39 and "wall_gamma" not in d["inputs"]

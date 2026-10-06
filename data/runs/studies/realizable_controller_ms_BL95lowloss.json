@@ -1,11 +1,11 @@
 {
   "schema_version": "0.1",
   "run_id": "realizable_controller",
-  "created_utc": "2026-10-06T05:08:02+00:00",
+  "created_utc": "2026-10-06T06:14:04+00:00",
   "label": "representative_chamber",
   "validation_status": "not_validated",
   "package_version": "0.1.0",
-  "git_commit": "9bcae33f952c7d819ff81fb22d3955b486b5b0f1-dirty",
+  "git_commit": "204cb6cd89298b063733585575ad46c6841b6c3e-dirty",
   "python": "3.12.13",
   "numpy": "2.4.4",
   "platform": "Windows-11-10.0.26300-SP0",
@@ -13,7 +13,7 @@
     "scripts/multispot_heater.py": "4af4f9f2d2650e6b1cf322eaebad31568bba93c9eafddaae75a3e6ba4e51fc90",
     "scripts/aim_tables.py": "e2bb22a0250e000788b1ea3bc1f1ce87231dadaf9e81e4e243d8e8b8e1f6baea",
     "data/runs/studies/scattered_tables_B-L_95mm.json": "f38b254a38006b7755b4f3d71495b21918981c23292532f338d0b6f0c666aa46",
-    "data/runs/studies/scattered_plume_tables_B-L_95mm_lowloss.json": "20e0eb51e2194d8d64d3655d6e6f9dfaa139d3d145cddf9cbb3a386e60435ab5",
+    "data/runs/studies/scattered_plume_tables_B-L_95mm_lowloss.json": "42a9e0bc7a5b1658d233b16337f27bcda9397d22dfdaabb16321d7d8f5c2712f",
     "scripts/realizable_controller.py": "0fdf1ae5fc72ed9e890583e1d9cb00fea0aa37d67c3d5cc3f12282833c5165fc",
     "scripts/operating_optimum.py": "b41601f611616683674bcbcc3e8af22cc4d6af8485fe6943df188e6a73ff8444",
     "scripts/heater_robustness.py": "7f545f5d98da67032355176b00ff8c8f62a5a36de7b01571a7e77927feca986f",
@@ -30,7 +30,7 @@
     "data/runs/studies/scattered_plume_tables_B-L.json": "497398cbb48f2d69d99d80959f5bb0d2e31f872ba67e20db47992054383b8a33"
   },
   "solver": null,
-  "inputs_sha256": "a3af49503ee1dbf69eba1c1f26a8904883f07cb8d028950e008194632ef21fb0",
+  "inputs_sha256": "1ce13baa64dfe4b2b2c1fed3eea5c1b643b9695da159e15d6e92444888f91af7",
   "inputs": {
     "record": "data\\runs\\studies\\layout_comparison_bc_sc_plume.json",
     "scattered": "gas+plume",
@@ -89,7 +89,7 @@
     "lip_m": 0.002,
     "n_scatter_sha256": {
       "data/runs/studies/scattered_tables_B-L_95mm.json": "f38b254a38006b7755b4f3d71495b21918981c23292532f338d0b6f0c666aa46",
-      "data/runs/studies/scattered_plume_tables_B-L_95mm_lowloss.json": "20e0eb51e2194d8d64d3655d6e6f9dfaa139d3d145cddf9cbb3a386e60435ab5"
+      "data/runs/studies/scattered_plume_tables_B-L_95mm_lowloss.json": "42a9e0bc7a5b1658d233b16337f27bcda9397d22dfdaabb16321d7d8f5c2712f"
     },
     "n_scatter_layouts": [
       "B-L"

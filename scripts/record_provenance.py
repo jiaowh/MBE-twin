@@ -114,7 +114,14 @@ IMPACT = {
                                          "(2026-10-06) adds --aim-mm (default: the envelope aim; recorded only when given); a "
                                          "default run reproduced the previous version's factors and inputs bit for bit (small sample). Later change "
                                          "(2026-10-06) adds --gamma and --pump (defaults 1 and off; recorded only when set) for the "
-                                         "low-wall-loss bracket; the default path is unchanged.",
+                                         "low-wall-loss bracket; the default path is unchanged. Follow-up audit change (2026-10-06): --extend refuses "
+                                         "records with other wall, chamber, species, grid or feed settings; non-default walls compute "
+                                         "the zero-pressure entry (collisionless wall return) instead of 1; inherited entries record "
+                                         "from_seed. Default (absorbing-wall) runs are unchanged, including the zero-pressure factor 1.",
+    "scripts/average_scattered_seeds.py": "Follow-up audit change (2026-10-06): --resample (bootstrap, off by default) and a check that "
+                                          "refuses parts whose entries come from the same simulation (from_seed ancestry). Re-averaging "
+                                          "the archived B-L 95 mm and B-p 97.5 mm plume parts with this version reproduced their factors "
+                                          "exactly.",
     "src/mbe_twin/scattering.py": "Later change (2026-10-06) adds wall_loss() and the optional pump_speed of track() (default 0): the "
                                   "loss per wall hit is gamma + (1 - gamma) S / (A <v> / 4). With no pump the tracker draws the same random "
                                   "numbers and returns identical arrivals (checked against the previous version at gamma 1 and 0.1).",
@@ -140,7 +147,8 @@ PINS = {   # reviewed 2026-10-02
     "scripts/heater_robustness.py": "7f545f5d98da",  # reviewed 2026-10-03
     "scripts/operating_optimum.py": "4d5b02c42380",  # reviewed 2026-10-03
     "scripts/operating_cold_limit.py": "07b9707d9806",  # reviewed 2026-10-03
-    "src/mbe_twin/sparta.py": "a293265e2ca3", "scripts/scattered_plume_tables.py": "f0f0f0eba136",  # reviewed 2026-10-06 (pump option)
+    "src/mbe_twin/sparta.py": "a293265e2ca3", "scripts/scattered_plume_tables.py": "7ed3c7c5fad2",  # reviewed 2026-10-06 (follow-up audit)
+    "scripts/average_scattered_seeds.py": "46723964e4e9",  # reviewed 2026-10-06 (follow-up audit)
     "src/mbe_twin/scattering.py": "1f116f870fa6",  # reviewed 2026-10-06 (pump term)
     "src/mbe_twin/aperture.py": "08ff8b237847", "scripts/nitrogen_aim_tolerance.py": "30922a1a37e6",
     "src/mbe_twin/heater.py": "b24c80baae47", "scripts/heater_zones.py": "2cf7e07a02dc",

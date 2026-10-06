@@ -72,6 +72,27 @@ def main():
                              f"{sorted(k for k in set(a) | set(b) if a.get(k) != b.get(k))}")
         if m["source_sha256"] != ref["source_sha256"]:
             raise SystemExit(f"average_scattered_seeds: {p} ran different code from {args.parts[0]}")
+    if plume:
+        # an extended record's seed covers only its new entries; inherited entries come from the record named in
+        # their diagnostics (from_seed, the seed of the run that simulated them; entries that name only a from_record
+        # predate that bookkeeping and are refused). Every entry averaged must come from a different simulation in each part
+        # (audit follow-up 2026-10-06), so two extensions of one parent are not counted as independent samples.
+        for name in ref["inputs"]["layouts"]:
+            for s_ in {k for m in parts for k in m["outputs"]["factors"][name]}:
+                have = [(pth, m) for pth, m in zip(args.parts, parts) if s_ in m["outputs"]["factors"][name]]
+                for i in range(len(have[0][1]["outputs"]["factors"][name][s_]["covered"])):
+                    origin = []
+                    for pth, m in have:
+                        dgi = m["outputs"]["diagnostics"][name][s_][i]
+                        if dgi is None:
+                            continue
+                        if "from_record" in dgi and "from_seed" not in dgi:
+                            raise SystemExit(f"average_scattered_seeds: {pth} inherits {name} S {s_} entry {i} from a record "
+                                             "of unknown seed; rerun it without --extend")
+                        origin.append(dgi.get("from_seed", m["inputs"]["seed"]))
+                    if len(set(origin)) != len(origin):
+                        raise SystemExit(f"average_scattered_seeds: {name} S {s_} entry {i} comes from the same simulation in "
+                                         f"more than one part ({origin}); extended records sharing a parent are not independent")
     spread, counts = {}, {}
     if plume:
         speeds = sorted({s for m in parts for s in m["inputs"]["speeds_m3_s"]})
