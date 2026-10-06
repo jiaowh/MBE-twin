@@ -1,0 +1,34 @@
+***** ElmerGrid input: V03 coaxial disks, axisymmetric (x = r, y = z) *****
+! Lower disk (material 1): z 0-2 mm, radius 50 mm. Gap 20 mm (material 3: meshed but given
+! no equation; material 0 cannot be used because ElmerGrid then also tags outer edges).
+! Upper disk (material 2): z 22-24 mm. Boundaries: 1 bottom of the lower disk, 5 its face
+! toward the gap, 6 the upper disk's face toward the gap, 3 top of the upper disk, 2 rims,
+! 4 the axis.
+Version = 210903
+Coordinate System = Cartesian 2D
+Subcell Divisions in 2D = 1 3
+Subcell Sizes 1 = 0.05
+Subcell Sizes 2 = 0.002 0.020 0.002
+Material Structure in 2D
+  2
+  3
+  1
+End
+Materials Interval = 1 3
+Boundary Definitions
+! type     out      int      double of the boundaries
+  1        -1        1        1
+  2        -2        1        1
+  2        -2        2        1
+  3        -3        2        1
+  4        -4        1        1
+  4        -4        2        1
+  5         3        1        1
+  6         3        2        1
+End
+Numbering = Horizontal
+Element Degree = 1
+Element Innernodes = False
+Triangles = False
+Element Divisions 1 = 40
+Element Divisions 2 = 2 4 2

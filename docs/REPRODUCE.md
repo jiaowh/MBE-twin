@@ -104,6 +104,48 @@ The batch runner treats a job as complete only when its directory holds `summary
 | Beam, crucible, metrics, manifest, estimator, scripts, SPARTA and Elmer checks | `python -m pytest -q` | Closed-form solutions, deterministic ring transmission, point-source slab propagation, stored dense profile, SPARTA collisionless pipeline, Elmer V02 conduction and V03 radiation |
 | Elmer diffuse-gray radiation (V03) | `python -m pytest -q tests/test_elmer.py` | Exact black-disk result and independent ring radiosity (`mbe_twin.radiation`); Elmer is 0.22-0.25 K (0.02 %) low, independent of mesh |
 
+## Integrated twin
+
+Chamber definitions (`cases/twin/`, committed) are built from the gas+plume comparison's map caches in `results/layout_comparison_bc` (rebuild them with `scripts/layout_comparison.py --scattered gas+plume` if absent):
+
+```bash
+PYTHONPATH=src python scripts/twin_chamber.py                              # nominal truth
+PYTHONPATH=src python scripts/twin_chamber.py --truth-fill 120             # also --truth-fill 40
+PYTHONPATH=src python scripts/twin_chamber.py --truth-tilt flange 0.8 0    # also direction 180
+PYTHONPATH=src python scripts/twin_run.py --chamber cases/twin/chamber_B-L_720C.json   # one per definition
+PYTHONPATH=src python scripts/twin_run.py --pyrometer-bias 2                # and -2
+```
+
+Realizable recipe: `--recipe cases/twin/gan_1um_720C_realizable.json` on the same definitions (also `--bfm-error 0.02` and `--rate-error 0.01` on the 120 mm one); heater margin: `scripts/twin_chamber.py --heater-design-limit 1425`, then the frozen recipe at pyrometer bias -2 / 0 / +2 K. `cases/twin/twin_runs.sh` lists the full set. Each run takes 12-30 s. The records are `data/runs/studies/twin_gan_1um_720C_B-L_720C*.json`; the figure is `make_readme_figures.py` (`twin`).
+
+## Realizable controller and heater margin (2026-10-05)
+
+```bash
+PYTHONPATH=src python scripts/realizable_controller.py                              # about 15 min
+PYTHONPATH=src python scripts/realizable_controller.py --heater-design-limit 1425 \
+    --out results/realizable_controller_sc_plume_heater1425
+PYTHONPATH=src python scripts/realizable_controller.py --t-min 720 --t-max 720 --rate-error R --bfm-error B   # error budget
+PYTHONPATH=src python scripts/heater_margin.py                                      # about 5 min
+```
+
+Records: `data/runs/studies/realizable_controller_sc_plume*.json`, `heater_margin.json`. The joint-gate reruns of 2026-10-05 (operating_optimum*, operating_cold_limit*) used the commands above in this file unchanged; `cases/rerun_gate_2026-10-05.sh` lists them.
+
+## Uniformity levers (2026-10-05)
+
+Worst-case drivers: `realizable_controller.py ... --dump-t T` then `python scripts/worst_case_drivers.py <out>/states_<layout>_<T>C.npz`. Residual-pointing sweep: `cases/reaim_sweep_2026-10-05.sh`. Aim maps: `python scripts/nitrogen_aim_operating.py --layout B-L --aims 75 80 85 90 95 100 105` (and `--aims 92.5 97.5 --out results/aim_operating_fine`; B-p 87.5-107.5), then `cases/aim_sweep_2026-10-05.sh`. Multi-spot heater: `cases/multispot_sweep_2026-10-05.sh` (about 20 min per temperature), and the 690-710 C run `realizable_controller.py --t-min 690 --t-max 710 --heater-control multispot --heater-design-limit 1460 --pointing-residual 0.2 --aim-maps results/aim_operating/aim_maps_B-L.npz --aim-mm 95 --out results/ms_h1460_d0.2_cold`. Summary record: `python scripts/summarize_uniformity_levers.py` -> `data/runs/studies/uniformity_levers.json`.
+
+## Checks of the uniformity levers (2026-10-05)
+
+`python scripts/commissioning_reaim.py --trials 2000` (about 30 min; record commissioning_reaim.json); `python scripts/aim_tables.py --layout B-L --aim-mm 95` (about 5 min), then `python scripts/commissioning_reaim.py --layout B-L --trials 1000 --n-tables results/aim_tables/n_tables_B-L_95mm.npz --out results/commissioning_reaim_BL95` and `python scripts/realizable_controller.py --t-min 710 --t-max 720 --heater-control multispot --heater-design-limit 1460 --pointing-residual 0.2 --n-tables results/aim_tables/n_tables_B-L_95mm.npz --out results/ms_BL95tables_d0.2` (record realizable_controller_ms_BL95tables.json).
+
+Scattered-atom tables at the frozen aims, seed-averaged (2026-10-06; LAYOUT_COMPARISON section 14). The Monte Carlo runs take 3-6 h each on one core and ran detached, several in parallel (`results/run_queue_aim95.ps1`, `run_queue_aim95_seeds.ps1`, `run_queue_aim95_seeds2.ps1`, `run_queue_Bp_seeds.ps1`):
+- B-L +95 mm gas: `python scripts/scattered_tables.py --layouts B-L --aim-mm 95 --ga-particles 16000 --seed S --out results/scattered_tables_B-L_95mm[_rep|_s3|_s4]` (S = 20261003, 20261103, 20261203, 20261303);
+- B-L +95 mm plume: `python scripts/scattered_plume_tables.py --layouts B-L --aim-mm 95 --seed S --out results/scattered_plume_tables_B-L_95mm[_rep|_s3|_s4]` (S = 20261007, 20261107, 20261207, 20261307), and with `--speeds 4` for `_s5` ... `_s10` (S = 20261507 ... 20262007);
+- B-p +97.5 mm plume: `python scripts/scattered_plume_tables.py --layouts B-p --aim-mm 97.5 --speeds 2 --seed S --out results/scattered_plume_tables_B-p_97.5mm_sK` (K = 1 ... 10, S = 20262006 + 100 K; `run_queue_Bp_seeds2.ps1` for K = 5 ... 10);
+- aim tables: `python scripts/aim_tables.py --layout B-L --aim-mm A` (A = 90, 92.5, 97.5, 100; about 8-20 min each) and `--layout B-p --aim-mm 97.5`;
+- then `bash cases/scatter_seeds_2026-10-06.sh` (about 70 min with the defaults NBOOT=40 MAXJOBS=2 MIN_FREE_GB=3; do not raise MAXJOBS on a 15 GB machine: six parallel runs crashed it): seed averages (records scattered_tables_B-L_95mm.json, scattered_plume_tables_B-L_95mm.json, scattered_plume_tables_B-p_97.5mm.json), 40 bootstrap-resampled averages per layout, the controller runs and their summaries (records realizable_controller_ms_BL95scatter.json, realizable_controller_ms_Bp97scatter.json, scatter_noise_BL95.json, scatter_noise_Bp.json). Everything goes to a fresh results/scatter_seeds_<time>/ and the records are replaced only if every step succeeds.
+- low-wall-loss bracket (2026-10-06; about 2 h, two jobs): `python scripts/scattered_plume_tables.py --layouts B-L --aim-mm 95 --speeds 4 --n-particles 4000000 --batches 8 --seed S --gamma 0.001 --pump --out results/scattered_plume_tables_B-L_95mm_lowloss_sK` (S = 20264001, 20264002; K = 1, 2). Those runs predate the zero-pressure fix, so each was extended with the same options plus `--seed S' --extend results/scattered_plume_tables_B-L_95mm_lowloss_sK/manifest.json --out results/scattered_plume_tables_B-L_95mm_lowloss_sKz` (S' = 20264011, 20264012; about 1 min each: only the collisionless p = 0 entry is simulated; a fresh run now computes it directly). Then `python scripts/average_scattered_seeds.py --parts results/scattered_plume_tables_B-L_95mm_lowloss_s1z results/scattered_plume_tables_B-L_95mm_lowloss_s2z --out results/scattered_plume_tables_B-L_95mm_lowloss_avgz`, copy its manifest to data/runs/studies/scattered_plume_tables_B-L_95mm_lowloss.json, and run `python scripts/realizable_controller.py --t-min 710 --t-max 720 --heater-control multispot --heater-design-limit 1460 --pointing-residual 0.2 --layouts B-L --n-tables results/aim_tables/n_tables_B-L_95mm.npz --n-scatter data/runs/studies/scattered_tables_B-L_95mm.json data/runs/studies/scattered_plume_tables_B-L_95mm_lowloss.json` (record realizable_controller_ms_BL95lowloss.json).
+
 ## Run times
 
 On the development laptop (4 WSL cores, serial SPARTA, four jobs in parallel):

@@ -4,9 +4,9 @@ This project models a 200 mm molecular beam epitaxy (MBE) growth chamber to help
 
 The long-term scope includes GaN and AlN. The working growth model currently covers **GaN only**.
 
-**Current state:** this is a research codebase with working physics models and design studies for a representative chamber. The proposed machine has not been built, and its drawings and measurements are not yet available. Several models have passed numerical checks, and the metal-source model has been compared with a published experiment. The nitrogen, heater and growth models still need experimental validation. A complete twin calibrated to the proposed machine is not yet implemented.
+**Current state:** this is a research codebase with working physics models and design studies for a representative chamber. The proposed machine has not been built, and its drawings and measurements are not yet available. Several models have passed numerical checks, and the metal-source model has been compared with a published experiment. The nitrogen, heater and growth models still need experimental validation. A first integrated twin now runs complete growth recipes on the representative chamber; a twin calibrated to the proposed machine is not yet possible without its drawings and measurements.
 
-This overview reflects the recorded studies through **3 October 2026**. Detailed results and their reproduction commands are linked below.
+This overview reflects the recorded studies through **6 October 2026**. The current provisional choices, the evidence for them and what would reopen them are in one place: the [decision record](docs/DECISION_RECORD.md). Detailed results and their reproduction commands are linked below.
 
 ## What the project is trying to achieve
 
@@ -43,6 +43,7 @@ The repository uses Python models, **SPARTA** for particle simulations with gas 
 | Heater and wafer | Radial radiation and conduction, heater zones, holder contact, power limits, temperature sensing and control studies | Simplified geometry; no measured heater validation |
 | GaN growth | Steady-state growth rate, decomposition and gallium balance; nitrogen-limited growth and droplet onset | No transient growth, AlN chemistry, morphology or crystal-quality prediction |
 | Layout comparison | Source and shutter clearances; coupled supply, pressure, temperature and thickness calculations across many operating cases | Assumed hardware dimensions and properties; no mechanical approval for the real machine |
+| Integrated twin | A whole recipe (heat-up, plasma, shutters, growth, cool-down) run through the heater, sources, gas, growing surface and instruments together; controllers see only instrument readings | First version: radial, rotation-averaged maps; several hardware properties assumed; source and surface transients not yet included |
 | Commissioning preparation | Measurement plan and rehearsals using synthetic data | No calibration or validation data from the proposed machine |
 
 ## What the studies have found
@@ -89,23 +90,76 @@ Gas in the chamber scatters atoms travelling toward the wafer. The latest studie
 
 Including them changes the required nitrogen flow and the predicted thickness profile. It also makes the result depend on whether chamber walls absorb reactive nitrogen or return it to the gas. That behaviour needs measurement during commissioning.
 
+### Running a whole recipe shows what fixed settings cannot absorb
+
+The studies above look at one steady moment of growth. The integrated twin instead runs a complete recipe in time: the wafer heats up, the plasma ignites, the shutters open for an hour of growth and close again, and the wafer cools. The heater controller sees only what a pyrometer would read, and the gallium cell and nitrogen flow are set once, as a calibration on the machine would set them. Every gallium and nitrogen atom is accounted for through each shutter event, and a 2.4-hour recipe takes about 15 seconds on the laptop.
+
+![One recipe through the twin, and the final layer when the machine differs from its calibration](docs/figures/twin.png)
+
+*Left: temperatures and layer thickness through the recipe. Right: the same recipe and settings when the real machine differs from the state it was calibrated in. Representative chamber, layout B-L, 720 °C, 1 µm/h.*
+
+Run as calibrated, the twin reproduces the steady studies: 1 µm/h, about ±0.6 % thickness, the whole wafer inside the growth window. When the machine drifts from its calibration, three things show up:
+
+- **The gallium charge matters most.** As the crucible empties to a deep fill, the same cell temperature delivers about 16 % less gallium; only 38 % of the wafer then stays in the growth window and the thickness spread rises to ±2.5 %. The 720 °C operating point needs the gallium flux to be measured as the charge is used. The earlier steady studies had quietly assumed that the controller knew this (pointed out by the 5 October audit). With a beam-flux measurement before growth and a growth-rate monitor, the twin's controllers bring the deep charge back to the calibrated result.
+- **A small nitrogen pointing error shifts the growth rate** by about ±3.5 % at fixed nitrogen flow, so the rate has to be measured and the flow re-set, as commissioning would do.
+- **The heater has no spare power at 720 °C.** Its zone settings were optimized right up to the element's temperature limit. If the wafer needs more heat (a temperature reading that is low, a change in wafer emission), the controller cannot supply it. The heater needs a power margin at the operating point.
+
+The [integrated twin document](docs/INTEGRATED_TWIN.md) describes the model, its checks and what it does not yet include.
+
+### What the controller has to measure
+
+The earlier operating-point studies let the gallium controller know every uncertain detail of the machine. The study was rerun with controllers that use only a calibration fixed at commissioning and real instruments, then checked against every combination of pointing error, gallium fill, heater variation and growth law.
+
+![Share of uncertain machine states that stay in the growth window, by what the controller observes](docs/figures/controllers.png)
+
+- With settings fixed at calibration, or with only a growth-rate monitor, no temperature keeps 95 % of the cases in the growth window.
+- A **gallium beam-flux measurement** before growth is what makes the difference. Together with an in-situ growth-rate monitor it reaches 95 % at 730 °C with the current heater design.
+- **Simpler configuration** (one centre pyrometer, no re-aim). A little spare heater power, with the zones laid out for an element about 13 K below its rating (about 4 % headroom), lets the standard-plate layout B-p run at 720 °C with a worst-case thickness spread of ±1.53 %. B-L needs 730 °C (±1.67 %). More spare power makes the controller more robust, but it widens the wafer's temperature range, which costs uniformity.
+- **Most of the remaining worst case comes from two things:** the nitrogen source pointing slightly off, and wafer-to-wafer heating differences. Two changes address them:
+  - re-aim the nitrogen source after commissioning, from a measured thickness map, to within about 0.2°;
+  - read the wafer temperature at three radii and trim the heater zones in three groups.
+
+  With both, the best model results at 1 µm/h are:
+  - **B-L, aimed 5 mm further out (+95 mm): ±0.58 % at 720 °C**, with 99.99 % of the modelled cases inside the growth window and ±0.64 % over all of them. This is the recommended working point.
+  - At 710 °C the cases that stay in the growth window reach ±0.53 %. But about 3 % of cases leave it, mostly with a nearly empty gallium charge, and their thickness spread reaches ±2.3 %. So 710 °C is slightly more even only for the cases that succeed. Both figures carry about ±0.04 point of Monte Carlo noise from the scattered-atom tables.
+  - **B-p: ±0.57 % at 710 °C (±0.09 point from table noise), only if the gallium charge's fill level is tracked** and the calibrated beam shape for that fill is used. Without fill tracking, the share of modelled cases that pass at 710 °C sits right at the 95 % requirement (it passes in fewer than half of the noise resamples), and B-p's best point is ±0.62 % at 720 °C. B-p's figures also assume the nitrogen source converts all of its feed into active nitrogen, which no measured source does (see the design direction).
+  - **The model cannot tell the two layouts apart on uniformity.** Earlier figures (B-p ±0.49 %, B-L ±0.65 %) used one random sample of the scattered-atom calculation each. That calculation is a Monte Carlo simulation, and one sample's statistical noise moves a worst case by about ±0.1 point for B-L and more for B-p. Averaging ten independent samples per layout removes most of it. To measure what remains, the samples were redrawn 40 times (a bootstrap) and each average rerun: the B-p − B-L difference is +0.04 ± 0.10 point, with B-L ahead in three of four redraws. That makes B-L likely no worse, but not demonstrably better.
+  - **Re-aim checked:** a rehearsal of the commissioning re-aim on synthetic data shows the 0.2° correction is reachable if the source mount can be set and holds its setting to about 0.05° (0.3 mm at the flange), with three calibration wafers thickness-mapped to 0.1–0.3 %.
+  - **B-L's nominal aim is +95 mm.** Rechecked with its own transport and pointing tables, the best aim lies between 95 and 97.5 mm; 2.5 mm off costs about 0.1 point. The scan reuses the 95 mm scattered-atom tables at the other aims, and the real aim is trimmed at commissioning.
+  - **Caveats:** 710 °C uses the decomposition law 10 °C below the range it was fitted to (720–805 °C). The published data put decomposition near zero there, so this is a small effect on thickness. At 720 °C, inside that range, the values are ±0.62 % (B-p) and ±0.58 % (B-L).
+- Measuring the beam maps at commissioning adds only 1–2 points on top of that. The rest of the gap is the instruments' accuracy and wafer-to-wafer heater variation. The beam-flux monitor's accuracy matters most for staying in the growth window.
+
 ## Current design direction
 
-The provisional choice is **layout B-p**: the nitrogen source sits on the same port ring as the metal cells, with its beam aimed about 97.5 mm from the wafer centre toward the source side. Its aim was selected for growth pressure. **B-L** uses a larger outlet plate designed in this study and an aim offset of about 90 mm. It is a promising alternative if the supplier can build and operate that plate.
+The provisional choice is **layout B-L** (changed from B-p on 2026-10-06). In both, the nitrogen source sits on the same port ring as the metal cells, with its beam aimed past the wafer centre. The two differ in the source's outlet plate, the disk of small holes the nitrogen leaves through:
 
-The current working operating point is **1 µm/h at about 720 °C**, with gallium supply adjusted from a wafer-centre temperature reading. This is a modelling choice, conditional on nitrogen output, pumping, heater performance and acceptable crystal quality. The temperature is based on the published growth laws' scales and must be calibrated on the real machine.
+- **B-L** uses a larger plate designed in this study (about 8000 holes of 0.5 mm), aimed 95 mm from the wafer centre. Its plate lets gas out easily, so the plasma bulb stays at low pressure even at high nitrogen flow. That is the condition under which a source converts a useful share of its nitrogen into the reactive atoms that grow GaN. B-L reaches 1 µm/h if about a quarter of the nitrogen is converted.
+- **B-p** uses the published plate type (about 2000 holes of 0.34 mm), aimed 97.5 mm out. Its plate passes too little gas for 1 µm/h unless the source converts 80–90 % of its nitrogen. The one direct measurement of a source found at most 40 %, falling as bulb pressure rises ([research note](ref/notes/RESEARCH_GAP_SEARCH_2026-10-06.md)), and back-calculations from published growth rates give 6–57 %. B-p remains an alternative only if a supplier demonstrates much higher conversion.
 
-At that operating point, the studies including scattered atoms and the nitrogen plume give worst-case thickness **half-range/mean of about 1.5–1.8%** across the qualifying scenarios. Other scattering and wall assumptions extend that range to about 2.1%. These are model results over a selected set of conditions, not demonstrated wafer uniformity or a probability of production success.
+The risk moves with the choice: B-L's plate is not a catalogue part, so the supplier must confirm that it can be made, fits the source and keeps the plasma lit.
+
+The working rate is **1 µm/h**. The temperature is chosen for the best worst-case uniformity, which is the project's priority. Every option needs a gallium beam-flux monitor and an in-situ growth-rate monitor. Three configurations are on the table:
+
+| Configuration | B-p (standard plate) | B-L (large plate) |
+|---|---|---|
+| One centre pyrometer, no re-aim | 720 °C, ±1.53 % (about 4 % heater headroom) | 730 °C, ±1.67 % |
+| Re-aim to 0.2° + three-point heater control | 720 °C, ±0.62 % | 720 °C, ±0.58 % (aim +95 mm) |
+| Same, at 710 °C (decomposition law extrapolated 10 °C) | ±0.57 % for the 95 % of cases that pass, **needs gallium fill tracking**; failing cases up to ±2.8 % | ±0.53 % for the 97 % that pass; failing cases up to ±2.3 % |
+
+B-p's figures assume a source that converts all of its nitrogen feed into active nitrogen, with 2 m³/s of pumping. B-L's assume about 30 % conversion with 4 m³/s of pumping, inside the measured range. So the two columns are not equally achievable. With re-aim and three-point heater control the model cannot separate them on uniformity (the averaged-table figures carry about ±0.04 point for B-L and ±0.09 for B-p from Monte Carlo noise), so what decides between them is nitrogen output, pumping and whether B-L's larger plate can be built. The figures in the first row come from single Monte Carlo samples of the scattered-atom tables and are uncertain by about ±0.1 point.
+
+All of these are modelling choices. They are conditional on nitrogen output, pumping, heater performance, the instruments' accuracy and acceptable crystal quality, which is not modelled and may set its own lower temperature limit. The temperatures are on the published growth laws' scales and must be calibrated on the real machine. The figures are worst cases over the grid conditions that stay in the growth window (at 720 °C almost all of them; at 710 °C see the table), not demonstrated wafer uniformity or a probability of production success. B-L's +95 mm aim is a nominal modelling choice, trimmed at commissioning.
 
 The main decisions remain:
 
 - **Nitrogen source and plate:** the larger B-L plate makes 1 µm/h achievable at more plausible reactive-nitrogen output, given strong pumping. Its manufacturability and stable plasma operating range need confirmation.
 - **Pumping:** effective nitrogen pumping speed determines growth pressure. The present model does not establish whether weak pumping can support the intended rate.
+- **What the chamber walls do to nitrogen atoms:** the model assumed each atom that hits a wall is lost. Published measurements suggest walls without plasma exposure return most atoms. If so, nitrogen arriving at the wafer roughly triples, so much less source output is needed (1 µm/h with B-L at 5–6 sccm instead of about 19). That could bring the standard-plate layout B-p back into range. In the one case tested (B-L, two Monte Carlo samples) uniformity was unchanged, because the returned atoms land almost evenly; this has not been checked for B-p or for how the returned share varies with source pointing. The commissioning nitrogen-limited thickness map and a pump-throttle test decide this.
 - **Temperature measurement and gallium calibration:** the studies indicate a shared error allowance equivalent to roughly 3 °C for positioning gallium supply within the growth window. Sensor repeatability of about 1–2 °C is only one part of that allowance.
 - **Mechanical fit:** simplified models give about 6 mm minimum guaranteed clearance for the B family over the full shutter motion. Actual source, shutter, holder and chamber drawings are needed to check the design.
 - **Acceptance criteria:** uniformity, minimum growth rate and material-quality requirements must be agreed before a layout can be accepted.
 
-The [layout comparison](docs/LAYOUT_COMPARISON.md) contains the assumptions, scenario tables and failure conditions. Its section 10 includes scattering and the nitrogen plume; earlier sections retain the older direct-beam results for comparison.
+The [layout comparison](docs/LAYOUT_COMPARISON.md) contains the assumptions, scenario tables and failure conditions. Sections 11 and 12 govern the operating point: section 11 covers the realistic controller and heater margin, section 12 the worst-case drivers and the re-aim, aim and three-point heater levers. Section 10 adds scattering and the nitrogen plume; sections 1–8 keep the older direct-beam results, in which the controller knew every machine state, for comparison.
 
 ### Reading the uniformity numbers
 
@@ -125,6 +179,8 @@ For example, 4% range/mean is 2% half-range/mean. The latter is not a statistica
 5. **Validate on separate runs and demonstrate improvement.** Reserve complete wafers and operating conditions that were not used for fitting. Compare a baseline and candidate design using the [measurement protocol](docs/DATA_AND_VALIDATION_PLAN.md).
 
 The [commissioning plan](docs/COMMISSIONING_PLAN.md) includes the measurement sequence and the synthetic rehearsals already completed for nitrogen, temperature and gallium calibration. Those rehearsals test the proposed procedure; they are not experimental validation.
+
+The integrated twin's next steps are a campaign simulation (how often the gallium flux must be re-measured as the charge depletes), a rehearsal of the commissioning calibration on synthetic data, and a comparison of temperature sensor layouts.
 
 Further scans of steeper nitrogen ports, additional gallium collision sizes, adjustable cells and heater variants are on hold until they are likely to change a design decision.
 

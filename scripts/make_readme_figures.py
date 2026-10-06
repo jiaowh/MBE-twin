@@ -325,9 +325,86 @@ def layouts():
     plt.close(fig)
 
 
+def twin():
+    """Integrated twin: one recipe run (temperatures, pressure, thickness) and the final layer when the machine differs
+    from its calibration, from data/runs/studies/twin_*.json."""
+    base = "studies/twin_gan_1um_720C_B-L_720C"
+    o = load(base + ".json")
+    tr = o["trace_60s"]
+    t = np.array(tr["t_s"]) / 60.0
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4.4))
+    fig.subplots_adjust(wspace=0.5)
+    ax1.plot(t, np.array(tr["wafer_mean_K"]) - 273.15, c=BLUE, lw=2, label="wafer mean (true)")
+    ax1.plot(t, np.array(tr["ga_cell_K"]) - 273.15, c=ORANGE, lw=2, label="Ga cell")
+    open_ = np.array(tr["shutter_ga"], bool)
+    ax1.fill_between(t, 0, 1, where=open_, transform=ax1.get_xaxis_transform(), color=GREEN, alpha=0.15, lw=0)
+    ax1.text(t[open_].mean(), 0.04, "Ga and N\nshutters open", transform=ax1.get_xaxis_transform(), ha="center",
+             fontsize=7, color=GREEN)
+    ax1.set_xlabel("time (min)")
+    ax1.set_ylabel("temperature (°C)")
+    axp = ax1.twinx()
+    axp.plot(t, np.array(tr["thickness_mean_nm"]) / 1000.0, c=GREY, lw=1.5, ls="--", label="layer thickness")
+    axp.set_ylabel("mean layer thickness (µm)")
+    axp.spines["right"].set_visible(True)
+    h1, l1 = ax1.get_legend_handles_labels()
+    h2, l2 = axp.get_legend_handles_labels()
+    ax1.legend(h1 + h2, l1 + l2, frameon=False, fontsize=7, loc="center")
+    ax1.set_title("One recipe through the twin (720 °C, 1 µm/h, B-L)", fontsize=9)
+    runs = [("", "as calibrated", BLUE), ("_fill40", "Ga charge shallower (40 mm)", GREEN),
+            ("_fill120", "Ga charge deeper (120 mm)", RED),
+            ("_tilt-flange-0.8deg-dir0", "N source tilted 0.8° (one way)", ORANGE),
+            ("_tilt-flange-0.8deg-dir180", "N source tilted 0.8° (other way)", GREY)]
+    for suffix, label, c in runs:
+        path = RUNS / f"{base}{suffix}.json"
+        if not path.exists():
+            continue
+        m = load(f"{base}{suffix}.json")["final_maps"]
+        s = load(f"{base}{suffix}.json")["summary"]
+        ls = ":" if suffix == "_fill40" else "-"
+        ax2.plot(np.array(m["rho_m"]) * 1e3, np.array(m["thickness_nm"]) / 1000.0, ls, c=c,
+                 lw=3.5 if suffix == "" else 1.8, zorder=1 if suffix == "" else 2,
+                 label=f"{label}: ±{s['thickness_half_range_pct']:.2f} %")
+    ax2.set_xlabel("radius on the wafer (mm)")
+    ax2.set_ylabel("final layer thickness (µm)")
+    ax2.set_title("Same recipe and settings, machine different from its calibration", fontsize=9)
+    ax2.legend(frameon=False, fontsize=7, loc="lower left")
+    fig.suptitle("Integrated twin, first slice (representative chamber; controllers see only the pyrometer and gauge)",
+                 fontsize=10)
+    fig.savefig(OUT / "twin.png")
+    plt.close(fig)
+
+
+def controllers():
+    """Share of uncertain states valid and in the growth window versus temperature, for what the controller observes,
+    with the current heater design and with a 14 % power margin (data/runs/studies/realizable_controller_sc_plume*.json)."""
+    fig, axes = plt.subplots(1, 2, figsize=(11, 4.2), sharey=True)
+    styles = {"known maps (bound)": (GREY, ":", "every state's maps known (earlier studies' bound)"),
+              "frozen": (RED, "-", "settings frozen at calibration"),
+              "rate monitor": (ORANGE, "-", "+ growth-rate monitor"),
+              "rate monitor + BFM": (BLUE, "-", "+ rate monitor and beam-flux monitor"),
+              "rate monitor + BFM + commissioned maps": (GREEN, "--", "+ maps measured at commissioning")}
+    for ax, (rec, title) in zip(axes, (("realizable_controller_sc_plume", "Current heater (no power margin)"),
+                                       ("realizable_controller_sc_plume_heater1425", "Heater with 14 % power margin"))):
+        rows = [r for r in load(f"studies/{rec}.json")["rows"] if r.get("reachable") and r["layout"] == "B-L"]
+        t = [r["T_C"] for r in rows]
+        for c, (col, ls, lab) in styles.items():
+            ax.plot(t, [100 * r["controllers"][c]["joint_fraction"] for r in rows], ls, c=col, lw=2, label=lab)
+        ax.axhline(95, c=GREY, lw=1)
+        ax.axvline(720, c=GREY, lw=0.8, ls="--")
+        ax.set_ylim(0, 100)
+        ax.set_xlabel("growth temperature (°C)")
+        ax.set_title(title, fontsize=9)
+    axes[0].set_ylabel("uncertain states in the growth window (%)")
+    axes[0].text(691, 96.5, "95 % requirement", fontsize=7, color=GREY)
+    axes[1].legend(frameon=False, fontsize=7, loc="lower right")
+    fig.suptitle("What the controller must observe to hold 1 µm/h (layout B-L; representative chamber)", fontsize=10)
+    fig.savefig(OUT / "controllers.png")
+    plt.close(fig)
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
-    for f in (chamber, level_melt, r07, ga_fill, ga_angle, growth_window, n_aim, layouts):
+    for f in (chamber, level_melt, r07, ga_fill, ga_angle, growth_window, n_aim, layouts, twin, controllers):
         f()
         print("wrote", f.__name__)
 

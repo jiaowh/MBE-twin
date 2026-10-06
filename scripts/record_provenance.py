@@ -13,7 +13,8 @@ as "not reviewed". `--hashes` prints the current pins to paste after a review. T
 data/runs/studies/PROVENANCE.md, so that it is found with them rather than in commit messages.
 
 Besides source_sha256, a record can depend on data tables it names only under inputs (the scattered-arrival
-factor tables: inputs.scattered_tables_sha256 and inputs.scattered_plume_tables_sha256), and records run
+factor tables: inputs.scattered_tables_sha256 and inputs.scattered_plume_tables_sha256; the Ga DSMC summaries:
+inputs.ga_records_sha256, also under inputs.chamber_provenance for twin runs), and records run
 with --scattered gas+plume before 2026-10-03 loaded the plume tables without recording them. Both are checked
 like sources (see recorded_hashes): an input hash against the current file, and an unrecorded plume dependency
 against the hashes stored by the comparison record the study read, which used the same files at the time. A
@@ -94,11 +95,43 @@ IMPACT = {
     "scripts/operating_cold_limit.py": "Later change (2026-10-03) adds --scattered, --pyrometer-bias (default 2 K, the earlier controllers) and --t-max (default 760 C, the earlier range); with the defaults operating_cold_limit.json reproduces bit for bit (checked 2026-10-03)." + SRC_ONLY,
     "scripts/nitrogen_aim_pressure.py": "Later change (2026-10-03) adds --scattered and --factor-layout to the --combine evaluation (evaluate takes an optional factor); without them nitrogen_aim_pressure.json and nitrogen_aim_bigplate.json reproduce bit for bit (checked 2026-10-03)." + SRC_ONLY,
     "scripts/nitrogen_rate_limits.py": "Later change (2026-10-03) applies the scattered-arrival factors when the comparison record was run with --scattered; for the default record (scattered none) the attenuation is the earlier one and nitrogen_rate_limits.json reproduces bit for bit (checked 2026-10-03)." + SRC_ONLY,
+    "scripts/realizable_controller.py": "Later changes (2026-10-05) add options whose defaults reproduce the recorded "
+                                        "runs: --rate-um-h (default 1 um/h), --pointing-residual, --aim-maps/--aim-mm, "
+                                        "--heater-control (default single), --dump-t, plus per-state factor bookkeeping; "
+                                        "--pointing-residual 0.8 reproduced the 1460 K record (95.2 %, 1.53 %). The follow-up audit "
+                                        "change (2026-10-05) only adds aim-map and optional-module hashes to the "
+                                        "manifest. A later option, --n-tables (default off), substitutes an aim's own pointing and attenuation tables. "
+                                        "Later options (2026-10-06) --n-scatter, --scatter-flat and --scatter-from-aim (default off) "
+                                        "substitute an aim's own seed-averaged scattered-atom factors; the manifest gains their "
+                                        "inputs. Rerunning the realizable_controller_ms_BL95tables.json command reproduced its rows and "
+                                        "summary exactly (2026-10-06). The audit change (2026-10-06) adds --layouts (default: "
+                                        "all layouts, as before) and a check that stops runs whose --n-tables / --n-scatter "
+                                        "overrides would not be consumed, and records n_scatter_layouts; the evaluation of "
+                                        "each layout is unchanged.",
     "scripts/scattered_plume_tables.py": "Later change (2026-10-03 audit) covers the grid pressures through the first one whose "
                                          "feed reaches the 35 sccm limit and adds --extend (reuses a record's covered entries); "
-                                         "the covered entries of the earlier records are computed exactly as before.",
+                                         "the covered entries of the earlier records are computed exactly as before. Later change "
+                                         "(2026-10-06) adds --aim-mm (default: the envelope aim; recorded only when given); a "
+                                         "default run reproduced the previous version's factors and inputs bit for bit (small sample). Later change "
+                                         "(2026-10-06) adds --gamma and --pump (defaults 1 and off; recorded only when set) for the "
+                                         "low-wall-loss bracket; the default path is unchanged. Follow-up audit change (2026-10-06): --extend refuses "
+                                         "records with other wall, chamber, species, grid or feed settings; non-default walls compute "
+                                         "the zero-pressure entry (collisionless wall return) instead of 1; inherited entries record "
+                                         "from_seed. Default (absorbing-wall) runs are unchanged, including the zero-pressure factor 1.",
+    "scripts/average_scattered_seeds.py": "Follow-up audit change (2026-10-06): --resample (bootstrap, off by default) and a check that "
+                                          "refuses parts whose entries come from the same simulation (from_seed ancestry). Re-averaging "
+                                          "the archived B-L 95 mm and B-p 97.5 mm plume parts with this version reproduced their factors "
+                                          "exactly.",
+    "src/mbe_twin/scattering.py": "Later change (2026-10-06) adds wall_loss() and the optional pump_speed of track() (default 0): the "
+                                  "loss per wall hit is gamma + (1 - gamma) S / (A <v> / 4). With no pump the tracker draws the same random "
+                                  "numbers and returns identical arrivals (checked against the previous version at gamma 1 and 0.1).",
+    "scripts/scattered_tables.py": "Later change (2026-10-06) adds --seed (default 20261003, the earlier fixed seed) and --aim-mm "
+                                   "(default: the envelope aim; recorded only when given); a default run reproduced the previous "
+                                   "version's factors and inputs bit for bit (small sample).",
     "src/mbe_twin/sparta.py": "Later change (2026-10-03) lets wsl_path return a POSIX path unchanged when run inside WSL; on "
                               "Windows (where every record ran) the path is the earlier one.",
+    "data/parameters/gan_growth.json": "Later change (2026-10-06) adds the text field droplet_onset.cross_check_R32 (literature cross-check, "
+                                       "not a scenario); growth.py reads only droplet_onset.scenarios, so no record's numbers change.",
     "data/runs/studies/layout_comparison_bc.json": [
         {"records": ["nitrogen_rate_limits.json"],
          "note": "Regenerated after the 2026-10-02 audit (on-target validity label). The operating points and nominal values "
@@ -106,12 +139,17 @@ IMPACT = {
                  "contents (checked array by array)."}],
 }
 PINS = {   # reviewed 2026-10-02
+    "scripts/realizable_controller.py": "0fdf1ae5fc72",  # reviewed 2026-10-06 (audit change)
+    "data/parameters/gan_growth.json": "bde93b820b27",  # reviewed 2026-10-06 (R32 cross-check text)
+    "scripts/scattered_tables.py": "e0fabec136a1",  # reviewed 2026-10-06
     "scripts/nitrogen_aim_pressure.py": "3ed2958db5f2",  # reviewed 2026-10-03
     "scripts/nitrogen_rate_limits.py": "29392adf050d",  # reviewed 2026-10-03
     "scripts/heater_robustness.py": "7f545f5d98da",  # reviewed 2026-10-03
     "scripts/operating_optimum.py": "4d5b02c42380",  # reviewed 2026-10-03
     "scripts/operating_cold_limit.py": "07b9707d9806",  # reviewed 2026-10-03
-    "src/mbe_twin/sparta.py": "a293265e2ca3", "scripts/scattered_plume_tables.py": "e6e482fe953c",  # reviewed 2026-10-03
+    "src/mbe_twin/sparta.py": "a293265e2ca3", "scripts/scattered_plume_tables.py": "7ed3c7c5fad2",  # reviewed 2026-10-06 (follow-up audit)
+    "scripts/average_scattered_seeds.py": "46723964e4e9",  # reviewed 2026-10-06 (follow-up audit)
+    "src/mbe_twin/scattering.py": "1f116f870fa6",  # reviewed 2026-10-06 (pump term)
     "src/mbe_twin/aperture.py": "08ff8b237847", "scripts/nitrogen_aim_tolerance.py": "30922a1a37e6",
     "src/mbe_twin/heater.py": "b24c80baae47", "scripts/heater_zones.py": "2cf7e07a02dc",
     "scripts/growth_window.py": "e43c637528a9", "src/mbe_twin/beam.py": "90a90503e0a5",
@@ -148,6 +186,12 @@ def applicable_note(path, current, record, recorded):
 INPUT_HASHES = {
     "scattered_tables_sha256": lambda v: {"data/runs/studies/scattered_tables.json": v},
     "scattered_plume_tables_sha256": lambda v: {f"data/runs/studies/scattered_plume_tables_{k}.json": h for k, h in v.items()},
+    # Ga DSMC summaries a study reloads (paths relative to data/runs/sparta_ga; audit 2026-10-05, finding 3)
+    "ga_records_sha256": lambda v: {f"data/runs/sparta_ga/{k}": h for k, h in v.items()},
+    # aim maps a realizable-controller run read (paths relative to the repository root; audit follow-up 2026-10-05)
+    "aim_maps_sha256": lambda v: dict(v),
+    # factor tables given to realizable_controller.py --n-scatter (paths relative to the repository root; 2026-10-06)
+    "n_scatter_sha256": lambda v: dict(v),
 }
 PLUME_PREFIX = "data/runs/studies/scattered_plume_tables_"
 UNTRACED = "untraced"
@@ -158,10 +202,12 @@ def recorded_hashes(m):
     did not record them) the plume tables, traced through the comparison record it read; UNTRACED if none."""
     out = dict(m.get("source_sha256", {}))
     inputs = m.get("inputs", {})
-    for key, expand in INPUT_HASHES.items():
-        if isinstance(inputs.get(key), (str, dict)) and inputs[key]:
-            for path, h in expand(inputs[key]).items():
-                out.setdefault(path, h)
+    # twin runs carry their chamber definition's provenance one level down
+    for scope in (inputs, inputs.get("chamber_provenance") or {}):
+        for key, expand in INPUT_HASHES.items():
+            if isinstance(scope.get(key), (str, dict)) and scope[key]:
+                for path, h in expand(scope[key]).items():
+                    out.setdefault(path, h)
     if inputs.get("scattered") == "gas+plume" and not any(p.startswith(PLUME_PREFIX) for p in out):
         traced = False
         for path in list(out):
@@ -222,7 +268,13 @@ def main():
     for rec in sorted(STUDIES.glob("*.json")):
         m = json.loads(rec.read_text(encoding="utf-8"))
         mismatches = []
-        for path, recorded in recorded_hashes(m).items():
+        # a summary record keeps each constituent run's dependencies separately (inputs.constituents); each is checked
+        # as its own set, labelled record [run], so differing versions across runs are not merged
+        sets = [(rec.name, recorded_hashes(m))]
+        for run, deps in (m.get("inputs", {}).get("constituents") or {}).items():
+            sets.append((f"{rec.name} [{run}]", recorded_hashes({"source_sha256": deps.get("source_sha256", {}),
+                                                                 "inputs": deps})))
+        for label, path, recorded in ((lb, p_, h) for lb, hs in sets for p_, h in hs.items()):
             f = ROOT / path
             current = sha_lf(f.read_bytes()) if f.exists() else "missing"
             if current == recorded:
@@ -238,9 +290,9 @@ def main():
             changed = "; ".join(f"`{h[:7]}` {s}" for h, s, _ in reversed(later)) or "-"
             note = applicable_note(path, current, rec.name, recorded)
             if note is None:
-                unreviewed.append(f"{rec.name}: {path}")
+                unreviewed.append(f"{label}: {path}")
                 note = "**not reviewed**"
-            mismatches.append(f"| {rec.name} | `{path}` | {version} | {changed} | {note} |")
+            mismatches.append(f"| {label} | `{path}` | {version} | {changed} | {note} |")
         if mismatches:
             lines.extend(mismatches)
         else:

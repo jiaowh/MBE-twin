@@ -1,0 +1,729 @@
+    Observation and mitigation of RF-plasma-induced damage to
+    III-nitrides grown by molecular beam epitaxy
+
+      Evan A. Clinton1, Ehsan Vadiee1, M. Brooks Tellekamp2, and W. Alan Doolittle1,a)
+      1School of Electrical and Computer Engineering, Georgia Institute of Technology,
+      Atlanta, GA 30332, USA
+      2National Renewable Energy Laboratory, Golden, CO 80401, USA
+
+      a)Alan.Doolittle@ece.gatech.edu
+
+      Abstract ­ In this work, radio-frequency (RF) plasma-induced damage to III-nitrides
+      surfaces and bulk defects are observed, and mitigated. It is shown that for InN films, the
+      surface is more sensitive to plasma-induced damage than GaN films, as observed via
+      atomic force microscopy (AFM) and reflection high energy electron diffraction (RHEED).
+      In order to isolate any possible plasma-induced damage, a growth window for InN is
+      established, and temperature ranges are determined for other damaging effects which
+      include: roughening due to low adatom mobility, InN decomposition, and indium
+      desorption. In-situ plasma monitoring and optimization are accomplished with a
+      combination of optical emission spectroscopy (OES) as well as a remote Langmuir
+      probe. It is shown that by increasing the plasma nitrogen flow, the positive ion content
+      increases; however, the ion acceleration potential reduces. Additionally, a reduced RF
+      plasma power results in a reduction of atomic nitrogen species. These plasma species
+      and energetic variations result in variations in the bulk unintentional background
+      electron concentrations observed by room temperature Hall Effect measurements of ~1
+      µm thick InN films. By increasing the nitrogen flow from 2.5 to 7.5 sccm for a constant
+      RF power of 350 W, the background electron concentration decreases by 74% from
+      1.36 x 1019 cm-3 to 3.54 x 1018 cm-3, while maintaining a smooth surface morphology.
+      Additionally, photoluminescence spectra indicate optical emission energies shift from
+      ~0.81 to 0.71 eV (closer to the fundamental bandgap of InN) by limiting the damaging
+      plasma species. Finally, conditions are presented to further minimize plasma-induced
+      damage in III-nitride devices.
+
+                                                                1
+
+Pursuant to the DOE Public Access Plan, this document represents the authors' peer-reviewed, accepted manuscript.
+                            The published version of the article is available from the relevant publisher.
+      I. INTRODUCTION
+
+               The III-nitrides demonstrate a band gap as low as ~0.7 eV for InN1, a high light
+      absorption coefficient2, and a high radiation resistance3 which are all desirable for a
+      variety of optoelectronic devices such as light emitting diodes (LEDs) and solar cells.
+
+               III-nitride devices are commercially available, such as blue LEDs due to the low
+      indium content used in the InxGa1-xN/GaN quantum well active layers (x < 0.15),
+      resulting in a low lattice-mismatch between the InxGa1-xN quantum well and GaN barrier
+      and high electron-hole wave function overlap. Increasing the indium content in both the
+      quantum wells and barriers can enable longer wavelength emission while minimizing
+      the generation of additional lattice-mismatch induced defects in the active layer. Thus,
+      high indium content InxGa1-xN with low defect densities, and single-phase crystallinity
+      are essential to realize the next generation of long wavelength III-nitride multi-quantum
+      well (MQW) LEDs.
+
+               In addition to LEDs, III-nitride solar cells have been demonstrated with active
+      layers consisting of either InxGa1-xN/GaN MQWs4­6 or single semi-bulk InxGa1-xN.7,8 In
+      order to optimally design single junction and tandem InxGa1-xN solar cells for optimal
+      utilization of the solar spectrum, InxGa1-xN absorbing layers with x > 0.5 is required.9
+      Presently, InxGa1-xN solar cells are limited in photovoltaic performance with efficiencies
+      less than 4%10 primarily due to the limited indium content, and the poor crystal quality of
+      the active layer and, thus, low carrier extraction efficiency. Therefore, improving the
+      crystal quality of high indium content III-nitrides is essential for next generation LEDs,
+      solar cells, and other optoelectronic devices.
+
+               III-nitride molecular beam epitaxy typically uses one of two nitrogen sources. In
+      one form, ammonia is supplied to the growth surface and thermally "cracked" to provide
+      active nitrogen to the crystal. Achieving high quality films via ammonia-based MBE
+      becomes significantly more challenging at low growth temperatures due to the inefficient
+      cracking of nitrogen.11 The high growth temperatures in ammonia-based MBE required
+      to growth high quality nitride-based films is not suitable for the growth of high indium
+      content InxGa1-xN films. However, plasma-assisted molecular beam epitaxy (PAMBE)
+      which utilizes a radio frequency (RF) plasma source to dissociate gaseous molecular
+      nitrogen can be extended to colder substrate temperatures as low as 275 °C for InN12
+      and is thus capable of growing single phase InxGa1-xN for all x from 0  x  1.13­15
+
+               For III-nitride films, as the indium content increases, the band gap decreases,
+      and, thus, the bond strength decreases. As the bond strength decreases, the film
+      becomes more susceptible to plasma-induced damage. Crystal damage during the
+      growth arises from impinging high kinetic energy particles which, in turn, result in
+      enhanced decomposition, desorption of adatoms, and an increase in surface dangling
+      bonds. The mentioned drawbacks can detrimentally reduce the surface diffusion length
+      and may even prevent step-flow growth. Given the PAMBE nitrogen sources are remote
+      sources with low energy ions, typically less than 6 eV of kinetic energy filtering out
+      through a series of orifices, any detected ion damage would likely be worsened in direct
+      plasma deposition techniques with high ion energies such as sputtering. Therefore, in
+
+                                                                2
+
+Pursuant to the DOE Public Access Plan, this document represents the authors' peer-reviewed, accepted manuscript.
+                            The published version of the article is available from the relevant publisher.
+      order to optimize III-nitride film quality and realize the next generation of optoelectronic
+      devices, damage from the plasma discharge must be characterized and minimized.
+
+               In a PAMBE reactor, typically the plasma chamber is a pyrolytic boron nitride
+      chamber in series with the nitrogen gas source and the growth chamber. The plasma
+      chamber is excited by an RF electromagnetic source able to energetically excite (< ~9
+      eV) and even crack (> 9.7 eV) molecules of nitrogen producing various populations of
+      excited atomic and molecular nitrogen along with both positive and negative ions and
+      free electrons. When nitrogen flows through the plasma chamber, a conductance
+      limitation enabled by an aperture plate at the plasma chamber outlet results in
+      pressures in the order of millitorr. The RF energy excited gas leaks out into the growth
+      chamber which is operated in the 10-5-10-6 Torr pressure range. Along with the excited
+      neutral charged gas emission through the aperture plate, both electrons and ions
+      escape and all species are directed in a molecular beam (essentially collisionless)
+      toward the substrate. Since the vacuum acts as a dielectric capacitance and the
+      substrate is typically grounded to the chamber potential, the relative differences in the
+      positive to negative species (positive ions, negative ions, and electrons) emission rates
+      induce a net "floating potential" in steady state between the chamber/substrate and the
+      plasma itself. Direct bombardment of ions from inside the plasma to the substrate is
+      limited by the aperture plate containing narrow holes, and so the primary source of
+      acceleration energy for any ions towards the substrate is from the floating potential. The
+      nature of the plasma discharge is determined primarily from the plasma bulb geometry,
+      the size of each hole and conductance of the collection of holes in the aperture plate,
+      the input nitrogen gas flow, and the applied plasma power.16 Specifically, the plasma
+      pressure in the bulb is determined by the flow rate and the conductance of the aperture
+      determines the mean free path for plasma collisions, and in large part, the acceleration
+      potential. The geometry of the plasma bulb as well as the number of holes in the
+      aperture plate modify the bulb volume and conductance.17 A wide range of applied
+      plasma powers and nitrogen gas flows are used to study the optical and electrical
+      characteristics of the plasma discharge and the crystal quality of the grown films.
+
+               The plasma discharge can be electrically characterized in-situ via a Langmuir
+      probe.18,19 The current-voltage characteristics of the Langmuir probe can reveal the
+      positive and negative ion contents and the ion acceleration potential, which is the
+      voltage induced between the plasma and the substrate. Reducing the ion content, and
+      minimizing the ion acceleration potential has been demonstrated to improve III-nitride
+      film quality.20
+
+               The optical behavior of the plasma can be characterized via optical emission
+      spectroscopy (OES) through the rear plasma window port. OES provides a qualitative
+      understanding of the molecular and atomic nitrogen species in the plasma. It is shown
+      that the ratio of the molecular and atomic nitrogen species in the plasma changes by
+      varying the input nitrogen flow and applied plasma power.21 The optical characteristics
+      of the plasma measured by OES are weighted by the transmission properties of the rear
+      plasma window and the PBN bulb.
+
+                                                                3
+
+Pursuant to the DOE Public Access Plan, this document represents the authors' peer-reviewed, accepted manuscript.
+                            The published version of the article is available from the relevant publisher.
+               OES measures both excited molecular and atomic nitrogen species, but cannot
+      distinguish between ionic and neutral excited species. In contrast, a Langmuir probe
+      can measure the charged particles in the form of ions and electrons, but cannot
+      distinguish between molecular and atomic ions. Plasma characterization is best
+      performed when combining these two techniques while recognizing their individual
+      limitations.
+
+               In this work, InN, possessing the weakest molecular bond strength (7.72 eV/bond
+      in the bulk) of the III-nitrides (compared to 9.12 and 11.52 eV/bond of GaN and AlN, in
+      the bulk, respectively), is utilized as a sensitive material to characterize and optimize the
+      plasma discharge.22 It is important to note that the surface bond energies may be
+      significantly less than those of the bulk due to local near-surface crystalline softening
+      and chemical catalytic energy additions. Thus, the plasma-induced damage in InN films
+      needs to be isolated from other potentially damaging effects which can also generate
+      defects in the film. These effects primarily include roughening due to low adatom
+      mobility, InN decomposition, and indium desorption.
+
+               The Langmuir probe, OES, and InN crystal quality data are combined to provide
+      insight and guidance towards optimal plasma conditions which minimize plasma
+      damage of high indium content III-nitrides films.
+
+      II. EXPERIMENTAL PROCEDURE
+
+               In this study, a Riber 32 PAMBE reactor is employed to study the nitrogen
+      plasma discharge and grow nitride-based films. GaN templates on sapphire were
+      chosen as substrates. The templates were first backside metallized with 2 µm of
+      tantalum to ensure temperature uniformity during the growth. Next, the templates were
+      cleaned with a two-stage piranha clean consisting of 3:1 of H2SO4:H2O2 followed by a DI
+      water rinse. The substrates were then loaded into an introductory chamber and
+      outgassed at 200 °C before loading into the growth reactor. Inside the growth reactor,
+      indium and gallium fluxes are supplied via a standard effusion cell and a Veeco dual-
+      filament SUMO cell, respectively. A Veeco UNI-Bulb RF nitrogen plasma source was
+      used to supply various nitrogen flows and powers ranging from 2.5 to 12.5 sccm and
+      350 to 550 W, respectively. The plasma source was equipped with an aperture plate
+      containing ~2000 holes drilled with a #80 drill bit (0.0135" diameter). This is roughly half
+      the total conductance used in our previous work that resulted in GaN growth rates of 9.8
+      um/hour17. The plasma optical emission spectrum was monitored in-situ via an Ocean
+      Optics HR-2000+ES spectrometer through both a rear window and the pyrolytic boron
+      nitride (PBN) bulb. The flux gauge collector terminal is repurposed as a Langmuir probe
+      and placed in a position that matches the film growth position, in order to accurately
+      characterize the plasma in the growth environment. A Keithley 6517A electrometer is
+      connected to the collector pin feedthrough to sweep the voltage between -100 and 100
+      V and sense current. Growths were achieved by utilizing the metal modulated epitaxy
+      (MME) growth technique, presented in our previous works.12,23 Reflection high energy
+      electron diffraction (RHEED) was used to monitor the MME growths in-situ.
+
+                                                                4
+
+Pursuant to the DOE Public Access Plan, this document represents the authors' peer-reviewed, accepted manuscript.
+                            The published version of the article is available from the relevant publisher.
+      III. RESULTS AND DISCUSSION
+               The sensitivity of nitride-based surfaces to the plasma discharge is first studied
+
+      by comparing the surface quality of GaN and InN films which were exposed to the
+      plasma discharge post-growth with a nitrogen plasma input flow of 2.5 sccm and an
+      applied RF power of 350 W. Figure 1 compares AFM and RHEED images of GaN and
+      InN surfaces before and after exposure to the plasma discharge for 5 minutes at growth
+      temperatures of 600 and 300 °C for the GaN and InN films, respectively. The GaN
+      surface shows a negligible difference in morphology when exposed to the post-growth
+      plasma discharge, whereas the InN surface exhibits significant texturing. It should be
+      noted that exposure of the plasma to the GaN surface for even a few minutes resulted
+      in a rising specular RHEED spot intensity associated with slight surface roughening, as
+      seen in Figure 1. Longer post-growth plasma exposure (e.g., one hour) of GaN resulted
+      in a significant surface roughening.
+
+        Figure 1. AFM images of as-grown and post-growth plasma exposed GaN and InN films. The InN surface is degraded
+                                                 by plasma exposure (inset: associated RHEED images.)
+
+               InN film quality can be deteriorated due to a variety of thermal related factors
+      such as high growth temperatures resulting in indium desorption and/or InN
+      decomposition and low growth temperatures resulting in low adatom mobility. In order to
+      isolate the effects of the plasma damage on the InN film quality, a temperature growth
+      window, free of the mentioned thermal related effects, was first established. Figure 2
+      illustrates the onset of each thermal related effect and their associated RHEED
+      patterns. First, at low substrate temperatures (e.g., 225 °C), the indium adatom mobility
+      is low, which results in the surface roughening and spotty RHEED patterns. Next, when
+      the substrate temperature is set to greater than 250 °C (e.g., 300 °C) the film exhibits a
+      1 x 1 RHEED streaky pattern and, thus, a smoother InN surface. Finally, at higher
+      growth temperatures (e.g., 450 °C), the RHEED patterns dim due to the accumulation of
+      excess indium metal on the surface, which scatters/blocks the electron beams as a
+      result of InN decomposition.
+
+                                                                5
+
+Pursuant to the DOE Public Access Plan, this document represents the authors' peer-reviewed, accepted manuscript.
+                            The published version of the article is available from the relevant publisher.
+        Figure 2. Substrate growth temperature window for MME InN for isolation and characterization of the plasma damage
+         effects. The RHEED images indicate a rough surface for substrate temperatures that are low and InN decomposition
+
+                                                            for substrate temperatures that are high.
+
+               The onset of InN decomposition and indium desorption were analyzed to
+      determine a more accurate temperature boundary and extract their corresponding
+      activation energies. First, InN decomposition was studied by growing InN via MME with
+      a growth temperature of 360 to 430 °C. When InN decomposes into indium and nitrogen
+      species, the indium metal remains on the surface and contributes to the total metal dose
+      as long as the growth temperature is lower than the temperatures at which indium
+      desorbs from the surface. For a constant plasma condition and, thus, nitrogen flux, the
+      excess indium introduced from the decomposition of the underlying InN film can be
+      quantified by measuring the additional time required to consume the total metal dose
+      when compared to lower growth temperatures less than 360 °C without indium
+      decomposition. RHEED transients show that the InN decomposition rate increases by
+      increasing the growth temperature, leading to a longer metal consumption times (see
+      Figure 3). As seen in Figure 3, by increasing the substrate temperature, the duration of
+      the highlighted region, associated with the decomposed In metal from the underlying
+      InN layers, increases.
+
+                                                                6
+
+Pursuant to the DOE Public Access Plan, this document represents the authors' peer-reviewed, accepted manuscript.
+                            The published version of the article is available from the relevant publisher.
+ Figure 3. MME RHEED intensity transients during the growth of InN at different substrate temperatures where InN
+decomposition occurs. At higher growth temperatures, InN decomposition contributes additional indium metal to the
+
+                                                                       surface.
+
+The increased amount of time required to consume the indium metal on the
+
+surface can be converted into an excess flux of indium in atoms/cm2. Figure 4 illustrates
+
+the exponential nature of the decomposition flux vs substrate temperature. The
+
+extracted InN decomposition activation energy is ~1.77 eV which is close to the
+
+previously reported value of 1.78 eV.24
+(a)                                      (b)
+
+         Figure 4. InN decomposition flux in the form of excess In flux (atoms/cm2) present on the surface at various substrate
+                                                  temperatures for both (a) linear and (b) Arrhenius plots.
+
+               In addition to the InN decomposition, the substrate temperatures in which indium
+      desorption occurs are identified. Unfortunately, it is difficult to directly measure the
+      indium desorption from an InN surface by RHEED transients due to the InN
+      decomposing at significantly lower substrate temperatures than those required for
+      desorption, as depicted in Figure 2. Thus, at first, an indium dose of 5.1 x 1016
+      atoms/cm2 is supplied to a GaN surface without any supplied nitrogen flux.
+      Subsequently, most of the desorbed indium is indium desorption from the metallic
+      indium surface, and not directly measuring desorption from the GaN surface. Indium
+      desorbing from indium on a GaN surface should provide a rough estimate of the
+      substrate temperature range where significant indium desorption occurs. Figure 5
+      details RHEED intensity transients where the indium dose is evaporated onto the GaN
+
+                                                                7
+
+Pursuant to the DOE Public Access Plan, this document represents the authors' peer-reviewed, accepted manuscript.
+                            The published version of the article is available from the relevant publisher.
+surface in the first 20 s and then desorbed. As seen, the RHEED intensity falls as the
+indium accumulates on the surface and rises to its initial value once it is completely
+desorbed. In addition, Figure 5 illustrates that the same amount of indium desorbs faster
+at higher substrate temperatures.
+
+Figure 5. RHEED intensity transients after evaporating 5.1 x 1016 atoms/cm2 indium onto a GaN surface for 20 s.
+   RHEED transients illustrate the increasing rates of indium desorption with increasing substrate temperature.
+
+The time to desorb the indium dose on the surface can be then plotted vs
+
+substrate temperature (see Figure 6). As seen in Fig. 6, the desorption flux
+
+exponentially increases with increasing substrate temperature. The Arrhenius plot
+
+indicates an indium desorption activation energy of ~2.32 eV, which is most likely
+
+indium desorbing from the metallic indium but does closely match with Gallinat et al.
+
+reported value of 2.49 eV.24
+
+(a)                           (b)
+
+              Figure 6. (a) In desorption time and associated desorption flux and (b) Arrhenius plot of the desorption flux vs
+                                                                        substrate temperature.
+
+               By in-situ analysis of RHEED patterns and intensity transients, the substrate
+      temperature boundaries for the onset of surface roughening due to low adatom mobility,
+      InN decomposition, and In desorption are established. These temperature boundaries
+      define a growth window for InN containing devices in the range of 250-400 °C. In this
+      work, InN films grown in this window act as a sensitive material to isolate any potential
+      influence of the plasma conditions on the crystal quality.
+
+                                                                8
+
+Pursuant to the DOE Public Access Plan, this document represents the authors' peer-reviewed, accepted manuscript.
+                            The published version of the article is available from the relevant publisher.
+               The plasma can be electrically characterized in-situ via a flux ion gauge collector
+      pin repurposed into a Langmuir probe. A Keithley 6517A electrometer was connected
+      externally to the collector pin feedthrough. By placing the manipulator into the flux
+      measurement position, the Langmuir probe is directed towards the plasma discharge.
+      When sweeping voltage and measuring current, any ions/electrons collected are
+      measured as a contribution to the total current.
+
+               The plasma is then electrically characterized in-situ via the flux ion gauge
+      collector pin repurposed into a Langmuir probe and placed in the growth position. By
+      sweeping voltage and measuring current, any ion/electrons contribute to the total
+      current. At a high reverse (forward) bias, most of the impinging negative electrons
+      (positive ions) are repelled, and mainly the positive ions (electrons) are collected,
+      resulting in a measured positive (negative) current. Since, in this setup, the Langmuir
+      probe is outside the plasma bulb, and the density of the ions and electrons are often
+      uneven, the probe may not collect an equal contribution of positive ions and negative
+      electrons at zero applied bias. Instead, the plasma bulb will retain a net charge (+Q) that
+      results from excess charge (­Q) ejected from the plasma towards the probe which
+      establishes a steady state acceleration voltage (Va) according to Q = CVa (where C is
+      the combined series capacitance of (a) the internal plasma and (b) the vacuum
+      dielectric capacitance). The internal plasma capacitance depends mainly on the plasma
+      chemistry modified by the plasma input conditions and bulb dimensions. The vacuum
+      dielectric capacitance is mainly associated with the aperture to chamber (or sample)
+      location. There corresponds to the series capacitances, a plasma potential (Vp), and a
+      floating potential (Vf). The Langmuir probe bias that cancels the net charge expelled
+      from the plasma and, thus, results in a zero measured current can be identified as Vf.
+      Generally, Vp inside the plasma bulb (internal plasma) is found by the inflection point of
+      the Langmuir probe I-V data in the positive potential region.25 The difference between
+      Vp and Vf is defined as the ion acceleration potential (Va). Thus, a Langmuir probe can
+      provide an understanding of the plasma contents, along with the induced ion
+      acceleration potential between the plasma and the sample substrate.
+
+                                                                9
+
+Pursuant to the DOE Public Access Plan, this document represents the authors' peer-reviewed, accepted manuscript.
+                            The published version of the article is available from the relevant publisher.
+(a)  (b)
+
+        Figure 7. Semi-log and linear current-voltage characteristics of the Langmuir probe for different plasma conditions: (a)
+           350 to 550 W RF applied power with a constant 2.5 sccm N2 flow and (b) 2.5 to 12.5 sccm N2 flow with a constant
+          350 W RF applied power. The ion saturation current (Iis), electron saturation current (Ies), floating potential (Vf), and
+                                                              plasma potential (Vp), are all labeled.
+
+               The Langmuir probe's current-voltage characteristics of the plasma at various
+      power and flow conditions are presented in Figure 7. The positive ion saturation current
+      (Iis) and negative electron saturation current (Ies), the zero-current floating potential (Vf),
+      and the plasma potential (Vp) are all labeled. It is evident that the plasma related
+      parameters (including Ies, Iis, and Va) do not change with increasing plasma power, as
+      the plasma density is proportional to the square root of power. Contrarily, as seen in
+      Figure 7(b), an increased nitrogen gas flow results in an increased positive ion content,
+      a reduced negative ion/electron content, and, thus, a more neutral plasma discharge
+      which lowers the floating potential.
+
+               In addition to the floating potential, the plasma potential must be found to
+      determine the overall acceleration potential (Va = Vp - Vf). The plasma potential is best
+      observed when the inflection point is easily identifiable in the current-voltage
+      characteristic. Hershowitz details the best configuration for observing this inflection point
+      when employing a sem(ai-)infinite planar probe insid(eb)the plasma.26 Unlike Hershowitz, in
+      this paper, a circular flux gauge collector pin is utilized as a Langmuir probe outside the
+      plasma, and, thus, the current-voltage inflection point and the plasma potential are
+      difficult to extract, as reported by Azooz.27 However, some of the plasma potential
+      values can be extracted by data smoothing and numerical differentiation of the I-V
+      characteristics, as seen in Figure 8.
+
+                                                               10
+
+Pursuant to the DOE Public Access Plan, this document represents the authors' peer-reviewed, accepted manuscript.
+                            The published version of the article is available from the relevant publisher.
+Figure 8. A numerical derivative of the Langmuir probe data for various (a) plasma powers and (b) nitrogen flows.
+
+         The derivative data shown in Figure 8(a), which correspond to the various RF
+powers and nitrogen flows, have identifiable peaks, associated with the plasma
+potentials. The floating potential, extractable plasma potentials, and acceleration
+potential (Vp-Vf) are plotted in Figure 9.
+
+(a)  (b)
+
+(c)  (d)
+
+(e)  (f)
+
+              Figure 9. Plasma parameters extracted from the Langmuir probe current-voltage characteristics: (a-b) floating
+               potential, (c-d) plasma potentials, and (e-f) acceleration potentials for various RF powers and nitrogen flows.
+
+               As seen in Figure 9, the magnitude of Vf is significantly reduced (by
+      approximately 8 V) when increasing the nitrogen flow from 2.5 to 12.5 sccm, however, it
+      negligibly changes by increasing the RF power from 350 to 550 W. In addition, the Vp
+      increases by increasing the power and flow, which results in increased plasma density.
+      The increase in the plasma density can be seen in Figure 10, as Vp linearly increases
+      with the square root of the RF power.
+
+                                                               11
+
+Pursuant to the DOE Public Access Plan, this document represents the authors' peer-reviewed, accepted manuscript.
+                            The published version of the article is available from the relevant publisher.
+Figure 10. Plasma potential vs the square root of the RF power and the associated linear fit.
+
+The combined effects of Vp and Vf result in a rise of Va by ~1.4 V for an increase
+
+in the power from 350 to 500 W and a fall of ~3.8 V for an increase in the nitrogen flow
+
+from 2.5 to 10.0 sccm.
+
+                        (a)  (b)
+
+     Figure 11. Optical emission spectroscopy for different conditions: (a) 350 and 550 W RF applied power with a
+    constant 2.5 sccm N2 flow, and (b) 2.5 and 12.5 sccm N2 flow with a constant 350 W RF applied power (inset: a
+
+                         narrow wavelength range (740-750 nm) to view excited atomic nitrogen peaks).
+
+         The excited molecular (N2*) and atomic nitrogen (N*) contents of the plasma are
+extracted from the OES data. The broad and low intensity peaks, displayed in Figure
+11(a) and Figure 11(b), are excited molecular nitrogen, while the sharp and narrow
+peaks are associated with excited atomic nitrogen.16,21 The spectrum lines of 582 and
+745 nm are chosen as representatives of N2* and N*, respectively. Figure 12 displays
+atomic and molecular peak intensities vs plasma power and flow. Interestingly, the
+atomic peak intensity monotonically increases with increasing power, as seen in Figure
+12(a), but saturates at high flows (see Figure 12(b)). Additionally, the molecular peak
+intensity has little correlation with increasing power (see Figure 12(c)), but
+monotonically increases with the increasing flow (see Figure 12(d)). While the excited
+atomic nitrogen peak intensity is much higher than the molecular nitrogen in Figure 11
+and Figure 12, the integral width of the spectra is dominated by the molecular species
+suggesting that the atomic nitrogen percentage of the plasma is relatively small.
+
+                                                               12
+
+Pursuant to the DOE Public Access Plan, this document represents the authors' peer-reviewed, accepted manuscript.
+                            The published version of the article is available from the relevant publisher.
+(a)  (b)
+
+(c)  (d)
+
+               Figure 12. Peak OES intensity data for various plasma conditions at (a-b) atomic 745 nm emission and (c-d)
+                                                                    molecular 582 nm emission.
+
+               By comparing the OES and Langmuir probe data, one can conclude that by
+      raising the plasma RF power, the significant rise in N* only results in a slight increase of
+      positive ion content and Va. The negligible difference in Langmuir probe data would
+      imply that the percentage of the total plasma density and the ion content of the plasma
+      are minimally affected by the atomic nitrogen content and this is consistent with the
+      growth rate data which will be presented later. As will be also shown later, even though
+      the atomic nitrogen content does not dominate the plasma characteristics, it correlates
+      to the defect concentration of the films and, likely, is the source of surface roughening,
+      observed in Figure 1, and the unintentional background electron concentrations of InN
+      films.
+
+               Next, the effects of increasing the plasma nitrogen flow on the OES and
+      Langmuir probe data are compared. The large increase in excited molecular nitrogen
+      content from an increase in flow results in a larger positive ion content and reduced ion
+      acceleration potential. At first, the increase in positive ion content with the increased
+      flow may appear disconcerting. However, it is accompanied by a significant decrease in
+      the acceleration potential responsible for the kinetic energy of ionized species that
+      potentially causes degradation of the film quality. This is not surprising as the increased
+      flow results in increased plasma bulb pressure and, thus, a decrease in the mean free
+      path, described by Eq. (1), where the mean free path ( ) is calculated from the
+      Boltzmann constant ( ), the temperature ( ), the pressure ( ), and the molecular
+      diameter ( ). This equation dictates that the smaller atomic nitrogen will have a longer
+      mean free path than molecular nitrogen, thus, traveling longer before being scattered,
+      leading to higher kinetic velocities.
+
+                                                               13
+
+Pursuant to the DOE Public Access Plan, this document represents the authors' peer-reviewed, accepted manuscript.
+                            The published version of the article is available from the relevant publisher.
+  ,  (1)
+
+         The drop in the mean free path with higher flow results in increased scattering
+within the plasma bulb, limiting the kinetic energy of species and consequently lowering
+the floating potential of the remote plasma (over 8 V for an increase in flow from 2.5 to
+10.0 sccm). The conductance of the aperture of the plasma bulb sets operational limits
+over which the plasma can be sustained. For the aperture used in this study, the
+pressure in the plasma bulb ranges from 1.5 to 7.4 mT and, consequently, a molecular
+nitrogen mean free path of 31 to 6 mm for a flow rate of 2.5 to 12.5 sccm. The atomic
+nitrogen mean free path for the same flow range, assuming independent gas species
+(for comparison purposes only), varies from 1,400 to 270 mm. Below the lower pressure
+limit, the plasma density is insufficiently high to support a plasma. At these lower flows,
+the acceleration potential is substantial due to the longer mean free path and, thus,
+higher obtainable scattering limited kinetic energies. At higher plasma pressures, the
+plasma mean free path is insufficiently long to allow energy transfer, thus, extinguishing
+the plasma. However, at the upper end of the allowable flow, the floating and
+acceleration potentials are substantially lower resulting in (as will be shown below)
+minor film damage. In a similar way, as the electrical conductance of the path from the
+aperture of the plasma to the sample (chamber ground) is increased by increased flow,
+the floating potential drops significantly due to the inability to support large voltages
+across a highly conductive remote plasma glow.
+
+         After optical and electrical characterization of the plasma, InN films are grown at
+various plasma conditions. Seven ~1 µm-thick InN films were grown via MME on GaN
+templates to determine the effect of plasma power and nitrogen flow on the material
+quality. First, three films were grown with a nitrogen flow of 2.5 sccm and varied plasma
+powers of 350, 450, and 550 W. Next, four additional films were grown with a standard
+plasma power of 350 W and nitrogen flows of 3.75, 5.0, 6.25, and 7.5 sccm. The InN
+films' surface morphology, X-ray diffraction, background electron concentrations, and
+photoluminescence are compared to elucidate the origin of the plasma damage, and
+predict optimal growth conditions. X-ray diffraction (not shown here) resulted in the
+ 0002 omega rocking curve full width at half maximum (FWHM) values between 137
+and 167" for all films. In addition, the 1015 omega rocking curve FWHM values are
+between 316 and 337" for all films. A 5 x 5 µm2 AFM image of the sample with the
+highest growth rate (grown with 350 W RF plasma power, 7.5 sccm N2 flow and a
+corresponding growth rate of ~4.6 µm/hr) is shown in Figure 13. The film shows a RMS
+roughness of ~0.9 nm and a smooth spiral-hillock surface morphology, which is
+observed for all the grown InN films. Notably, the MME growth method with high growth
+rates yields high-quality InN films.
+
+                                                               14
+
+Pursuant to the DOE Public Access Plan, this document represents the authors' peer-reviewed, accepted manuscript.
+                            The published version of the article is available from the relevant publisher.
+        Figure 13. A 5 x 5 µm2 AFM image of an InN film grown at 4.6 µm/hr exhibiting a 0.9 nm RMS roughness.
+
+         Since both ion damage and background contamination can affect the
+unintentional electron concentration, the films' growth rate and background electron
+concentration are compared, as shown in Figure 14, for both power and flow rate
+variations. The plasma condition of 350 W and 2.5 sccm nitrogen flow resulted in a
+growth rate of 2.01 µm/hr and a background electron concentration of 1.36 x 1019 cm-3.
+Growing an InN film with a plasma power of 550 W with 2.5 sccm nitrogen flow
+increased the growth rate up to 2.54 µm/hr, and the background electron concentration
+escalated to 1.49 x 1019 cm-3. Interestingly, when growing a film with a nitrogen flow as
+high as 7.5 sccm, the resulting growth rate was 4.58 µm/hr, and the background
+electron concentration reduced significantly to 3.54 x 1018 cm-3, unlike the trend for
+increasing plasma power. As a) both the residual background electron concentration
+and b) the change in electron concentration as a function of flow and, thus, growth rate
+are higher than expected for contamination, it is likely that the residual electron
+concentration is controlled predominantly by the ion damage. For example, when the
+growth rate increases from 2.01 to 4.58 µm/hr (by a factor of 2.28), the residual electron
+concentration drops from 1.36 x 1019 cm-3 to 3.54 x 1018 cm-3 (by a factor of 3.84). The
+reduction in the unintentional electron concentration suggests that the defect density in
+InN is controlled largely by the ion damage.
+
+(a)  (b)
+
+         Figure 14. Comparison of (a) growth rates and (b) background electron concentrations for InN films grown at various
+                                                             nitrogen flow rates and plasma powers.
+
+               The increase in background electron concentration with increasing power may be
+      attributed to the increase in atomic nitrogen species, as evident in Figure 12(a), with a
+
+                                                               15
+
+Pursuant to the DOE Public Access Plan, this document represents the authors' peer-reviewed, accepted manuscript.
+                            The published version of the article is available from the relevant publisher.
+      negligible increase in the molecular content, as shown in Figure 12(c). The ion
+      acceleration potential in Figure 9(e) is also slightly increased with increased power.
+      Thus, it is speculated that a larger ratio of atomic nitrogen to molecular nitrogen as well
+      as an increased acceleration potential can cause damage to the crystal which results in
+      a higher background electron concentration, similar to previous work for GaN16.
+
+               Photoluminescence (PL) spectra at low temperature (4 K) were taken for all
+      seven InN films, as seen in Figure 15. The low temperature spectrums seem to be
+      made up of two components: one invariant to changes in electron concentration and
+      one dependent on electron concentration. The films' spectra show an emission at 0.77
+      eV which is invariant to electron concentration, well above the fundamental bandgap
+      energy of ~0.65-0.7 eV for InN.28­30 The 0.77 eV peak is also present in room
+      temperature PL (not shown). While a future, more in-depth PL study is planned, it is
+      presently speculated that the 0.77 eV emission is associated with the surface electron
+      accumulation layer due to the commonly reported fermi-level pinning observed in InN.31
+      At low temperatures, a second peak is also observed that varies with electron
+      concentration. This peak is likely the band-to-band, or possibly the previously reported
+      band-to-acceptor transition32,33 and can be seen varying from ~0.81 to 0.71 eV for
+      electron concentrations varied from 1.49 x 1019 to 3.54 x 1018 cm-3. The ~100 meV shift
+      from the highest to lowest electron concentration is likely due to the Moss-Burstein
+      effect.34 The smallest electron concentration samples' PL peak location approaches the
+      fundamental bandgap. Thus, plasma optimization is essential for InN films, as observed
+      both electrically and optically.
+
+             Figure 15. Photoluminescence spectra for ~1 µm thick InN films grown under various plasma conditions at 4 K.
+
+               In order to minimize the plasma damage in high In content films, one must
+      minimize the atomic nitrogen species per unit thickness (or growth rate) and minimize
+      the ion acceleration potential. Ptak et al. demonstrated that the molecular nitrogen
+      species are the species that control the growth rate and the atomic nitrogen species
+      were speculated to generate point defects in the crystal.16 Thus, one should maximize
+      the molecular to atomic nitrogen ratio and also minimize the ion acceleration potential in
+      the plasma to minimize the plasma damage per unit thickness. Ptak et al. showed that
+
+                                                               16
+
+Pursuant to the DOE Public Access Plan, this document represents the authors' peer-reviewed, accepted manuscript.
+                            The published version of the article is available from the relevant publisher.
+      the size of the holes in the aperture plate could be used to adjust the atomic to
+      molecular species but did not show the effect on the acceleration potential.
+
+               By plotting the OES molecular to atomic peak intensity ratio, one can determine
+      the plasma condition necessary to maximize the molecular to atomic content and, thus,
+      minimize the plasma damage. Figure 16 illustrates that at high flow and low power, the
+      maximum ratio of molecular to atomic nitrogen is achieved, in agreement with the
+      experimental results. This condition also results in the lowest floating potential and
+      consequently the lowest acceleration potential as evident in Figure 9(b). Thus,
+      minimizing the plasma damage for III-nitride films is achievable at low RF power and
+      high nitrogen flow, while still maintaining smooth morphology.
+
+         Figure 16. OES molecular to atomic peak intensity ratio for various plasma nitrogen flow rates and applied RF power.
+
+      IV. CONCLUSIONS
+               Plasma-induced damage has been observed in III-nitride films and has been
+
+      isolated from other effects such as roughening from low adatom mobility, InN
+      decomposition, and indium desorption. By utilizing a flux gauge as a Langmuir probe in
+      combination with OES, the RF plasma in the PAMBE reactor can be characterized. It is
+      determined that atomic nitrogen and a plasma induced acceleration potential result in
+      damage to InN films as observed via an elevated background electron concentrations. A
+      low RF applied power and a high nitrogen flow enable a high molecular to atomic
+      nitrogen ratio as well as a high growth rate and minimal acceleration potential which is
+      the optimal plasma condition for continuous growth of high indium content III-nitrides,
+      necessary for future III-nitride optoelectronics.
+      ACKNOWLEDGEMENTS
+
+               This work was supported in part by the National Science Foundation (NSF) and
+      the Department of Energy under NSF CA EEC-1041895 and NSF SG DMR-1710032,
+      and in part by the Advanced Research Projects Agency-Energy, U.S. Department of
+      Energy, under Award DEAR0000470. Any opinions, findings, and conclusions or
+      recommendations expressed in this material are those of the author(s) and do not
+      necessarily reflect those of the National Science Foundation or the Department of
+      Energy.
+
+                                                               17
+
+Pursuant to the DOE Public Access Plan, this document represents the authors' peer-reviewed, accepted manuscript.
+                            The published version of the article is available from the relevant publisher.
+      References:
+
+      1 J. Wu, W. Walukiewicz, K.M. Yu, J.W. Ager, E.E. Haller, H. Lu, W.J. Schaff, Y. Saito,
+      and Y. Nanishi, Appl. Phys. Lett. 80, 3967 (2002).
+
+      2 J.F. Muth, J.H. Lee, I.K. Shmagin, R.M. Kolbas, H.C. Casey, B.P. Keller, U.K. Mishra,
+      and S.P. DenBaars, Appl. Phys. Lett. 71, 2572 (1997).
+
+      3 J. Wu, W. Walukiewicz, K.M. Yu, W. Shan, J.W. Ager, E.E. Haller, H. Lu, W.J. Schaff,
+      W.K. Metzger, and S. Kurtz, J. Appl. Phys. 94, 6477 (2003).
+
+      4 J.J. Williams, H. McFavilen, A.M. Fischer, D. Ding, S. Young, E. Vadiee, F.A. Ponce,
+      C. Arena, C.B. Honsberg, and S.M. Goodnick, IEEE J. Photovoltaics 7, 1646 (2017).
+
+      5 J.J. Williams, H. McFavilen, A.M. Fischer, D. Ding, S.R. Young, E. Vadiee, F.A. Ponce,
+      C. Arena, C.B. Honsberg, and S.M. Goodnick, 2017 IEEE 44th Photovolt. Spec. Conf.
+      PVSC 2017 193 (2018).
+
+      6 E. Vadiee, E.A. Clinton, H. Mcfavilen, A.S. Weidenbach, Z. Engel, C. Matthews, C.
+      Zhang, C. Arena, R.R. King, C.B. Honsberg, and W.A. Doolittle, Appl. Phys. Express
+      11, 082304 (2018).
+
+      7 C.A.M. Fabien, M. Moseley, B. Gunning, W.A. Doolittle, A.M. Fischer, Y.O. Wei, and
+      F.A. Ponce, IEEE J. Photovoltaics 4, 601 (2014).
+
+      8 C.A.M. Fabien, A. Maros, C.B. Honsberg, and W.A. Doolittle, IEEE J. Photovoltaics 6,
+      460 (2016).
+
+      9 C.A.M. Fabien and W.A. Doolittle, Sol. Energy Mater. Sol. Cells 130, 354 (2014).
+
+      10 N.G. Young, E.E. Perl, R.M. Farrell, M. Iza, S. Keller, J.E. Bowers, S. Nakamura, S.P.
+      Denbaars, and J.S. Speck, Appl. Phys. Lett. 104, 163902 (2014).
+
+      11 M. Kamp, M. Mayer, A. Pelzmann, and K.J. Ebeling, MRS Internet J. Nitride
+      Semicond. Res. 2, (1997).
+
+      12 M. Moseley, B. Gunning, J. Lowder, W. Alan Doolittle, and G. Namkoong, J. Vac. Sci.
+      Technol. B 31, 03C104 (2013).
+
+      13 C.A.M. Fabien, B.P. Gunning, W. Alan Doolittle, A.M. Fischer, Y.O. Wei, H. Xie, and
+      F.A. Ponce, J. Cryst. Growth 425, 115 (2015).
+
+      14 M. Moseley, J. Lowder, D. Billingsley, and W.A. Doolittle, Appl. Phys. Lett. 97, 191902
+      (2010).
+
+      15 E.A. Clinton, E. Vadiee, C.A.M. Fabien, M.W. Moseley, B.P. Gunning, W.A. Doolittle,
+      A.M. Fischer, Y.O. Wei, H. Xie, and F.A. Ponce, Solid. State. Electron. 136, 3 (2017).
+
+      16 A.J. Ptak, M.R. Millecchia, T.H. Myers, K.S. Ziemer, and C.D. Stinespring, Appl.
+      Phys. Lett. 74, 3836 (1999).
+
+      17 B.P. Gunning, E.A. Clinton, J.J. Merola, W.A. Doolittle, and R.C. Bresnahan, J. Appl.
+      Phys. 118, 155302 (2015).
+
+                                                               18
+
+Pursuant to the DOE Public Access Plan, this document represents the authors' peer-reviewed, accepted manuscript.
+                            The published version of the article is available from the relevant publisher.
+      18 H.M. Mott-Smith and I. Langmuir, Phys. Rev. 28, 727 (1926).
+      19 M.B. Hopkins and W.G. Graham, Rev. Sci. Instrum. 57, 2210 (1986).
+      20 A. V. Blant, O.H. Hughes, T.S. Cheng, S. V. Novikov, and C.T. Foxon, Plasma
+      Sources Sci. Technol. 9, 12 (2000).
+      21 E. Iliopoulos, A. Adikimenakis, E. Dimakis, K. Tsagaraki, G. Konstantinidis, and A.
+      Georgakilas, J. Cryst. Growth 278, 426 (2005).
+      22 S. Porowski and I. Grzegory, J. Cryst. Growth 178, 174 (1997).
+      23 M. Moseley, D. Billingsley, W. Henderson, E. Trybus, and W.A. Doolittle, J. Appl.
+      Phys. 106, (2009).
+      24 C.S. Gallinat, G. Koblmüller, J.S. Brown, and J.S. Speck, J. Appl. Phys. 102, 064907
+      (2007).
+      25 R.L. Merlino, Am. J. Phys. 75, 1078 (2007).
+      26 N. Hershkowitz, How Langmuir Probes Work (Academic Press, Inc., 1989).
+      27 A.A. Azooz, Rev. Sci. Instrum. 79, 103501 (2008).
+      28 A.A. Klochikhin, V.Y. Davydov, V. V. Emtsev, A. V. Sakharov, V.A. Kapitonov, B.A.
+      Andreev, H. Lu, and W.J. Schaff, 71, 195207 (2005).
+      29 T. Matsuoka, H. Okamoto, M. Nakao, H. Harima, and E. Kurimoto, 81, 1246 (2003).
+      30 V.Y. Davydov, A.A. Klochikhin, V. V Emtsev, D.A. Kurdyukov, S. V Ivanov, V.A.
+      Vekshin, F. Bechstedt, J. Furthmuller, J. Aderhold, J. Graul, A. V Mudryi, H. Harima, A.
+      Hashimoto, A. Yamamoto, and E.E. Haller, 234, 787 (2002).
+      31 I. Mahboob, T.D. Veal, C.F. Mcconville, H. Lu, and W.J. Schaff, Phys. Rev. Lett. 92,
+      036804 (2004).
+      32 B. Arnaudov, T. Paskova, P.P. Paskov, B. Magnusson, E. Valcheva, B. Monemar, H.
+      Lu, W.J. Schaff, H. Amano, and I. Akasaki, Phys. Rev. B 69, 115216 (2004).
+      33 M. Feneberg, J. Däubler, K. Thonke, R. Sauer, P. Schley, and R. Goldhahn, Phys.
+      Rev. B 77, 245207 (2008).
+      34 T.S. Moss, Proc. Phys. Soc. Sect. B 67, 775 (1954).
+
+                                                               19
+
+Pursuant to the DOE Public Access Plan, this document represents the authors' peer-reviewed, accepted manuscript.
+                            The published version of the article is available from the relevant publisher.
+

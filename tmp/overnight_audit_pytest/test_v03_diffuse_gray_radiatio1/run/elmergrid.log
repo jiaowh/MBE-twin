@@ -1,0 +1,74 @@
+==================================================================
+ElmerGrid mesh conversion and manipulation utility, Welcome!
+Version: 9.0 (Rev: Release, Compiled: 2026-01-20)
+This program is free software licensed under GPL
+==================================================================
+Elmergrid reading in-line arguments
+Lower dimensional boundaries will be removed
+Materials and boundaries will be renumbered
+Nodes that do not appear in any element will be removed
+Output will be saved to file mesh.
+
+Elmergrid loading data:
+-----------------------
+Loading the geometry from file 'mesh.grd'.
+Loading ElmerGrid file version: 210903
+Defining the coordinate system (2-DIM).
+Loading 1 subcell sizes in X-direction
+Loading 3 subcell sizes in Y-direction
+Loading material structure
+LoadElmergrid: materials interval is [1,3]
+Loading boundary conditions
+Found 8 boundaries
+Reached the end of command file
+Found 1 divisions for grid
+
+Loading ElmerGrid commands from file 'mesh.grd'.
+Reached the end of command file
+Read commands from a file
+
+Elmergrid creating and manipulating meshes:
+-------------------------------------------
+3 cells were created.
+Numbered 369 knots in 320 4-node elements.
+Numbering order was <x><y> and max levelwidth 43.
+40 element sides between materials -1 and 1 were located to type 1.
+2 element sides between materials -2 and 1 were located to type 2.
+2 element sides between materials -2 and 2 were located to type 2.
+40 element sides between materials -3 and 2 were located to type 3.
+2 element sides between materials -4 and 1 were located to type 4.
+2 element sides between materials -4 and 2 were located to type 4.
+40 element sides between materials 3 and 1 were located to type 5.
+40 element sides between materials 3 and 2 were located to type 6.
+Coordinates defined in 2 dimensions
+Removing lower dimensional boundaries
+Maximum elementtype is 404 and dimension 2
+Minimum elementtype is 404 and dimension 2
+Removed 0 (out of 168) less than 1D boundary elements
+All 369 nodes were used by the mesh elements
+Initial boundary interval [1,6]
+BC index unaltered 1 in 40 1D elements
+BC index unaltered 2 in 4 1D elements
+BC index unaltered 3 in 40 1D elements
+BC index unaltered 4 in 4 1D elements
+BC index unaltered 5 in 40 1D elements
+BC index unaltered 6 in 40 1D elements
+Numbering of boundary types is already ok
+Initial body interval [1,3]
+Numbering of bodies is already ok
+Renumbering of material types completed!
+Bounding box of all nodes in mesh:
+X:[0,0.05] Y:[0,0.024] Z:[0,0]
+Calculate Mesh Pieces in mesh:
+There is a single piece in the mesh, so the mesh is conforming.
+
+Elmergrid saving data with method 2:
+-------------------------------------
+Saving mesh in ElmerSolver format to directory mesh.
+Saving 369 coordinates to mesh.nodes.
+Saving 320 element topologies to mesh.elements.
+Saving boundary elements to mesh.boundary.
+Saving header info to mesh.header.
+
+Thank you for using Elmergrid!
+Send bug reports and feature wishes to elmeradm@csc.fi

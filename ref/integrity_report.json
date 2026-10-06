@@ -1,7 +1,7 @@
 {
-  "checked_date": "2026-10-01",
-  "source_count": 65,
-  "usable_pdf_count": 42,
+  "checked_date": "2026-10-06",
+  "source_count": 75,
+  "usable_pdf_count": 52,
   "usable_html_count": 8,
   "artifacts": [
     {
@@ -607,6 +607,126 @@
       "usable_source": true,
       "pdf_pages": 3,
       "first_page_text_characters": 2049,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "R32",
+      "path": "ref/reference/R32_Zhang_2026_Ga_adsorption_four_insitu.pdf",
+      "bytes": 3415011,
+      "sha256": "265e2fa0bde37b1b5c4b57f268902b5b11256a3665f4087859f49d27afa0838d",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 9,
+      "first_page_text_characters": 5663,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "R33",
+      "path": "ref/reference/R33_Reet_2020_large_area_GaN_AlN_2DHG_MBE.pdf",
+      "bytes": 516703,
+      "sha256": "cbbde58b21aacbc0d948af76f138078df35c8f92f2f3a0a011ec8b3f6361dd3b",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 5,
+      "first_page_text_characters": 4825,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "R34",
+      "path": "ref/reference/R34_MBE_Komponenten_BFM_datasheet.pdf",
+      "bytes": 1096301,
+      "sha256": "6680a33dd136309c5e922eb35c2558bf3ab43c1d65629cf533d05731a29dd0bd",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 2,
+      "first_page_text_characters": 1806,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "R35",
+      "path": "ref/reference/R35_Kurpas_ESA_GaN_epiwafer_benchmarking.pdf",
+      "bytes": 207622,
+      "sha256": "3db75ddd182f003ea13cd1bcae6bf8aac7df1c173ee451f71f44295af92cfeef",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 5,
+      "first_page_text_characters": 4184,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "R36",
+      "path": "ref/reference/R36_Singh_2000_N_recombination_stainless.pdf",
+      "bytes": 360256,
+      "sha256": "27d9803accaac5820f5cda50e77df5da48868efe54a2b787345761c8bcf7667d",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 9,
+      "first_page_text_characters": 806,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "R37",
+      "path": "ref/reference/R37_Belmonte_1999_N_loss_vs_temperature.pdf",
+      "bytes": 170437,
+      "sha256": "28f05dd31cc199557df9e3cd2b0d933a380fd1767e6d0e00a757ce137dbe150e",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 4,
+      "first_page_text_characters": 4567,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "R38",
+      "path": "ref/reference/R38_Cordier_2007_insitu_curvature_MBE_nitrides_Si.pdf",
+      "bytes": 245259,
+      "sha256": "19fcc78df8303d9f94a0307326284fb6fdeff2be7be80093bb44f868488f617d",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 4,
+      "first_page_text_characters": 3822,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "R39",
+      "path": "ref/reference/R39_Cordier_2009_growth_temperature_strain_GaN_Si.pdf",
+      "bytes": 430241,
+      "sha256": "99fe694e5f262fa5e334a645fc57197d62a7b7e6317077840cff570965b5bd46",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 4,
+      "first_page_text_characters": 4449,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "R40",
+      "path": "ref/reference/R40_Menuel_2012_dislocations_PAMBE_HEMT_Si.pdf",
+      "bytes": 937549,
+      "sha256": "790dd3e0a521316eeb3c45fd091ce4325a9b07be52eb74571b42be8834eacb7f",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 7,
+      "first_page_text_characters": 4874,
+      "parser_warning_count": 0,
+      "parser_warning_examples": []
+    },
+    {
+      "id": "R41",
+      "path": "ref/reference/R41_Voulot_1998_RF_source_atomic_N_flux.pdf",
+      "bytes": 366014,
+      "sha256": "3a0220969f5af084111e1a4c42f57b9ea998f955f436aa0d4e38e80c78a3ba2f",
+      "source_status": "downloaded",
+      "usable_source": true,
+      "pdf_pages": 5,
+      "first_page_text_characters": 1650,
       "parser_warning_count": 0,
       "parser_warning_examples": []
     }

@@ -1,0 +1,277 @@
+{
+  "schema_version": "0.1",
+  "run_id": "sparta_r07_fm",
+  "created_utc": "2026-10-06T00:56:18+00:00",
+  "label": "representative_chamber",
+  "validation_status": "not_validated",
+  "package_version": "0.1.0",
+  "git_commit": "9bcae33f952c7d819ff81fb22d3955b486b5b0f1-dirty",
+  "python": "3.12.13",
+  "numpy": "2.4.4",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "source_sha256": {
+    "scripts/sparta_r07.py": "fec46be8b9bcda5b70ca74d4fdf8c86cf1160bc8867a6b7e2425f2752964f2ad",
+    "src/mbe_twin/sparta.py": "a293265e2ca3e5b92e8dd28f45ddcec940758916d7dee6d365af0d3fb3861311",
+    "src/mbe_twin/crucible.py": "981dab446a3caf8230a0ba691141ac8500a259d98518f810e4d8c7eda68256d2"
+  },
+  "solver": {
+    "name": "SPARTA",
+    "build": "serial (WSL)",
+    "commit": "e071055fca6ccd250d4b894dadb7ff64d6e6fcac"
+  },
+  "inputs_sha256": "a084debe8dfcd1f733c6d03c1cc90ad3dbaf29501fff028873e325e7caf5cc09",
+  "inputs": {
+    "benchmark": "r07_fm",
+    "diameter_m": 8e-10,
+    "cell_m": 0.001,
+    "coarse": 3,
+    "particles": 100000.0,
+    "dt_factor": 0.3,
+    "steps_eq": 4000,
+    "steps_sample": 6000,
+    "dump_every": 20,
+    "slab_D": [
+      1.5,
+      2.0
+    ],
+    "seed": 12345,
+    "x_dimer": 0.0,
+    "dimer_diameter_scale": 1.2599210498948732,
+    "case": "fm",
+    "overrides": [
+      "steps_eq=4000",
+      "steps_sample=6000",
+      "particles=1e5",
+      "slab_D=[1.5, 2.0]"
+    ],
+    "T_K": 846.15,
+    "p_Pa": 0.08,
+    "collisions": false,
+    "fnum": 966409189.2858406,
+    "dt_s": 1.024620884485822e-06,
+    "slab_m": [
+      0.02475,
+      0.033
+    ],
+    "lambda_sat_m": null,
+    "sparta_commit": "e071055fca6ccd250d4b894dadb7ff64d6e6fcac",
+    "source_sha256_at_start": {
+      "scripts/sparta_r07.py": "fec46be8b9bcda5b70ca74d4fdf8c86cf1160bc8867a6b7e2425f2752964f2ad",
+      "src/mbe_twin/sparta.py": "a293265e2ca3e5b92e8dd28f45ddcec940758916d7dee6d365af0d3fb3861311",
+      "src/mbe_twin/crucible.py": "981dab446a3caf8230a0ba691141ac8500a259d98518f810e4d8c7eda68256d2"
+    }
+  },
+  "outputs": {
+    "config": {
+      "benchmark": "r07_fm",
+      "diameter_m": 8e-10,
+      "cell_m": 0.001,
+      "coarse": 3,
+      "particles": 100000.0,
+      "dt_factor": 0.3,
+      "steps_eq": 4000,
+      "steps_sample": 6000,
+      "dump_every": 20,
+      "slab_D": [
+        1.5,
+        2.0
+      ],
+      "seed": 12345,
+      "x_dimer": 0.0,
+      "dimer_diameter_scale": 1.2599210498948732,
+      "case": "fm",
+      "overrides": [
+        "steps_eq=4000",
+        "steps_sample=6000",
+        "particles=1e5",
+        "slab_D=[1.5, 2.0]"
+      ],
+      "T_K": 846.15,
+      "p_Pa": 0.08,
+      "collisions": false,
+      "fnum": 966409189.2858406,
+      "dt_s": 1.024620884485822e-06,
+      "slab_m": [
+        0.02475,
+        0.033
+      ],
+      "lambda_sat_m": null,
+      "sparta_commit": "e071055fca6ccd250d4b894dadb7ff64d6e6fcac",
+      "source_sha256_at_start": {
+        "scripts/sparta_r07.py": "fec46be8b9bcda5b70ca74d4fdf8c86cf1160bc8867a6b7e2425f2752964f2ad",
+        "src/mbe_twin/sparta.py": "a293265e2ca3e5b92e8dd28f45ddcec940758916d7dee6d365af0d3fb3861311",
+        "src/mbe_twin/crucible.py": "981dab446a3caf8230a0ba691141ac8500a259d98518f810e4d8c7eda68256d2"
+      }
+    },
+    "x_mm": [
+      1.0,
+      3.0,
+      5.0,
+      7.0,
+      9.0,
+      11.0,
+      13.0,
+      15.0,
+      17.0,
+      19.0,
+      21.0,
+      23.0,
+      25.0,
+      27.0,
+      29.0,
+      31.0,
+      33.0,
+      35.0,
+      37.0,
+      39.0,
+      41.0,
+      43.0,
+      45.0,
+      47.0
+    ],
+    "sparta_flux": [
+      9.069037552610488e+17,
+      8.95867118369543e+17,
+      1.0145218624142939e+18,
+      1.03034484501266e+18,
+      9.529857724597065e+17,
+      8.978417571324668e+17,
+      9.444330887661443e+17,
+      8.873441513479735e+17,
+      9.228730634253924e+17,
+      8.449645679183692e+17,
+      7.692946776572157e+17,
+      7.022064372773777e+17,
+      6.853761956173784e+17,
+      6.306011825265942e+17,
+      5.720803371938034e+17,
+      5.011045714151075e+17,
+      4.8645552059488045e+17,
+      4.6464205893261056e+17,
+      4.247803256632495e+17,
+      3.9539868077629606e+17,
+      3.640768757676836e+17,
+      3.4867731028667386e+17,
+      3.2587351010026176e+17,
+      3.1035722609476685e+17
+    ],
+    "free_molecular_flux": [
+      9.637703268281467e+17,
+      9.62990887176079e+17,
+      9.614220073448886e+17,
+      9.590699985824978e+17,
+      9.55944261740671e+17,
+      9.520571987704275e+17,
+      9.474240970801528e+17,
+      9.256289801781459e+17,
+      8.828770019663297e+17,
+      8.319213599138025e+17,
+      7.779563178708644e+17,
+      7.225446145237875e+17,
+      6.68419065565893e+17,
+      6.153123777543258e+17,
+      5.653753617879504e+17,
+      5.1930071319697466e+17,
+      4.8041057008956634e+17,
+      4.4726704945490656e+17,
+      4.180105037685853e+17,
+      3.91990875706392e+17,
+      3.683462158725007e+17,
+      3.466632945005743e+17,
+      3.269312505753652e+17,
+      3.0887816391647725e+17
+    ],
+    "profile": [
+      0.9417360149550817,
+      0.9302754841276168,
+      1.0534875065324139,
+      1.0699182165062628,
+      0.9895879452023699,
+      0.9323259645989833,
+      0.9807067709740989,
+      0.9214251679260084,
+      0.9583186705511539,
+      0.8774178741167948,
+      0.7988416630323951,
+      0.7291767048941731,
+      0.7117000491634264,
+      0.6548212433938115,
+      0.5940527358693923,
+      0.5203509406843293,
+      0.5051392507312492,
+      0.4824879800324214,
+      0.4410952416955016,
+      0.4105851098230184,
+      0.37806030037229527,
+      0.3620692700738801,
+      0.3383896240377887,
+      0.32227739230263625
+    ],
+    "profile_stderr": [
+      0.07009890134174335,
+      0.054297275406950805,
+      0.034899116039193843,
+      0.0658827737670877,
+      0.0875195163227906,
+      0.04864447769187315,
+      0.058676064694239735,
+      0.03213498401676302,
+      0.05644012831339105,
+      0.04283041656187549,
+      0.016681471285960314,
+      0.04141439872121676,
+      0.044816657487886435,
+      0.02739346890139977,
+      0.01706768148938677,
+      0.01834043572343586,
+      0.01953849387188181,
+      0.02080564112329571,
+      0.03349038073401173,
+      0.01925340698310872,
+      0.01948281846283214,
+      0.01750725346566794,
+      0.013052851562226022,
+      0.013648825815416599
+    ],
+    "centre_rate_A_s": {
+      "sparta": 0.3417022351397324,
+      "free_molecular": 0.3414159535023475,
+      "r07": 0.35
+    },
+    "rms_vs_free_molecular": 0.03334146078400743,
+    "uncertainty": {
+      "n_blocks": 8,
+      "snapshots": 301,
+      "samples": 110305,
+      "block": {
+        "rate": {
+          "block_mean": 0.3416871114777446,
+          "stderr": 0.01344328787217692
+        }
+      },
+      "halves": {
+        "rate": [
+          0.3423149998121915,
+          0.3410935285114618
+        ],
+        "profile_max_abs_diff": 0.08434331581245624
+      },
+      "np_sampling": {
+        "first": 23091.0,
+        "last": 23038.0,
+        "rel_range": 0.012791080813918942
+      },
+      "dimer_atom_share_centre": null
+    }
+  },
+  "disabled_physics": [
+    "Bi2 dimers",
+    "surface diffusion/condensation on the lip"
+  ],
+  "warnings": [
+    "Bi treated as monatomic hard spheres (Bi2 in the vapour neglected)",
+    "Collisions above the sampling slab neglected (ballistic propagation)",
+    "Sensor size neglected; profiles averaged over +/- x and azimuth",
+    "Uncertainties are statistical (batch means) only; discretization is assessed by separate runs"
+  ]
+}

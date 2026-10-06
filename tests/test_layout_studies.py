@@ -336,3 +336,39 @@ def test_rehearsal_fit_recovers_a_quadratic_conversion_exactly():
     r = (coef[0] + coef[1] * x + coef[2] * x * x) * g
     c, chi2, dof = cr.fit(r, q, g, np.column_stack([x ** k for k in range(3)]))
     assert np.allclose(c, coef) and chi2 < 1e-12 and dof == 2
+
+
+def test_admission_gates_on_the_joint_fraction():
+    # audit 2026-10-05 finding 2: 4 of 100 states invalid and 4 other states out of the window pass two separate
+    # 95 % checks (96 % each) but only 92 % satisfy both
+    oo = _load("operating_optimum")
+    valid = np.ones(100, bool)
+    valid[:4] = False
+    margin = np.ones(100)
+    margin[4:8] = -0.1
+    a = oo.admission(valid, margin)
+    assert a["valid_fraction"] == pytest.approx(0.96) and a["in_window_fraction"] == pytest.approx(0.96)
+    assert a["joint_fraction"] == pytest.approx(0.92)
+    assert a["joint_fraction"] < oo.ADMIT
+    # overlapping failures: the joint fraction equals the separate ones
+    margin[4:8], margin[:4] = 1.0, -0.1
+    assert oo.admission(valid, margin)["joint_fraction"] == pytest.approx(0.96)
+
+
+def test_multispot_controller_holds_three_readings():
+    # three zone groups and three pyrometer spots: a more emissive wafer with poorer ledge contact is brought back to the
+    # calibrated readings (with the spot offsets), which one centre reading at fixed ratios cannot do
+    hz = _load("heater_zones")
+    ms = _load("multispot_heater")
+    edges, geo = hz.LAYOUTS["12 zones"], {"ledge_inner": 0.099}
+    base = hz.make(edges, geo, {})
+    frac = np.full(12, 1.0 / 12)
+    nominal = hz.at_mean(base, frac, 993.15, p0=2300.0)
+    target = ms.spot_readings(nominal)
+    m = hz.make(edges, geo, {"eps_wafer": 0.77, "h_contact": 50.0})
+    offsets = np.array([0.0, 0.0, 0.5])
+    r, capped = ms.hold_spots(m, frac, float(nominal["zone_power"].sum()), target, offsets, 2500.0)   # no cap: this test is about the readings
+    assert not capped
+    assert np.allclose(ms.spot_readings(r) + offsets, target, atol=2e-3)
+    single = hz.at_mean(m, frac, 993.15, p0=2300.0)
+    assert abs(r["wafer_range"] - nominal["wafer_range"]) < abs(single["wafer_range"] - nominal["wafer_range"])

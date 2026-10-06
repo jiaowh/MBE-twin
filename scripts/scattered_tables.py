@@ -26,7 +26,9 @@ Monte Carlo direct arrival over the deterministic one (the effect of the speed d
 against the comparison's mean-speed mean free path). At p = 0 the factor is 1.
 
 Usage: python scripts/scattered_tables.py [--layouts B B-p B-L] [--n-particles 8000000] [--ga-particles 16000000]
-                                          [--batches 8] [--out results/scattered_tables]
+                                          [--batches 8] [--seed 20261003] [--aim-mm A] [--out results/scattered_tables]
+--aim-mm A replaces the envelope's N aim offset (mm) of the one layout given, for tables at another aim
+(read by realizable_controller.py --n-scatter); the Ga factors do not depend on it.
 """
 
 import argparse
@@ -96,8 +98,12 @@ def main():
     ap.add_argument("--n-particles", type=int, default=8_000_000)
     ap.add_argument("--ga-particles", type=int, default=16_000_000)
     ap.add_argument("--batches", type=int, default=8)
+    ap.add_argument("--seed", type=int, default=20261003)
+    ap.add_argument("--aim-mm", type=float, default=None, help="N aim offset (mm) replacing the envelope's (one layout)")
     ap.add_argument("--out", default="results/scattered_tables")
     args = ap.parse_args()
+    if args.aim_mm is not None and len(args.layouts) != 1:
+        raise SystemExit("scattered_tables: --aim-mm needs exactly one layout")
     env = json.loads(ENVELOPE.read_text(encoding="utf-8"))
     usable = env["wafer_and_mask"]["usable_radius_m"]["value"]
     rho = np.linspace(0.0, usable, 39)                       # as layout_comparison.main
@@ -106,13 +112,14 @@ def main():
     throw = env["chamber"]["source_throw_m"]["value"]
     vac = env["vacuum"]
     t_gas = vac["gas_temperature_K"]["value"]
-    rng = np.random.default_rng(20261003)
+    rng = np.random.default_rng(args.seed)
+    aims = {name: env["layouts"][name]["n"]["aim_offset_mm"] if args.aim_mm is None else args.aim_mm for name in args.layouts}
     tables, diag = {"N": {}, "Ga": {}}, {"N": {}, "Ga": {}}
 
     for name in args.layouts:
         n = env["layouts"][name]["n"]
         n_cos = tube_cos_n(n["L_over_r"])
-        src, axis = geometry(n["polar_deg"], n["aim_offset_mm"] / 1e3, throw)
+        src, axis = geometry(n["polar_deg"], aims[name] / 1e3, throw)
         source = Source(tuple(src), tuple(axis), n_cos, radius=n.get("plate_radius_m", 0.020))
         tables["N"][name], diag["N"][name] = {}, {"n_cos": n_cos}
         for var, gamma in VARIANTS.items():
@@ -153,7 +160,8 @@ def main():
         inputs={"layouts": args.layouts, "n_particles": args.n_particles, "ga_particles": args.ga_particles,
                 "batches": args.batches, "chamber": vars(CHAMBER), "species": SPECIES, "ga_cos_n": GA_COS_N,
                 "variants_gamma": VARIANTS, "p_grid_Pa": lc.P_GRID, "rho_m": rho, "ga_d": lc.GA_D,
-                "collision_diameters_m": vac["collision_diameters_m"], "gas_temperature_K": t_gas, "seed": 20261003},
+                "collision_diameters_m": vac["collision_diameters_m"], "gas_temperature_K": t_gas, "seed": args.seed}
+               | ({} if args.aim_mm is None else {"aim_offset_mm": aims}),
         outputs={"rho_m": rho, "p_grid_Pa": lc.P_GRID, "factors": tables, "diagnostics": diag},
         sources=[Path(__file__), ROOT / "src/mbe_twin/scattering.py", ROOT / "src/mbe_twin/crucible.py",
                  ROOT / "src/mbe_twin/vacuum.py", ENVELOPE],

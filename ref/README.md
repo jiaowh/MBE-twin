@@ -4,6 +4,8 @@ New search, 2026-09-30: [references for predictive validation](notes/VALIDATION_
 
 Second search, 2026-09-30: [physics data for the open Stage A questions](notes/PHYSICS_DATA_SEARCH_2026-09-30.md), sources R21-R31 and the R05 full text: Bi2 and the R07 rate deficit, a Ga collision-diameter bracket, Ga2, nitrogen plate holes, depletion-resistant crucibles, emissivities and heater-uniformity mechanisms.
 
+Third search, 2026-10-06: [research gaps of the integrated twin](notes/RESEARCH_GAP_SEARCH_2026-10-06.md), sources R32-R41: Ga adlayer desorption at 676-708 C and instrument error terms (R32), rotation rate (R33), BFM geometry (R34), achievable uniformity (R35), and full texts still needed on N wall recombination, active-N output, wafer bow and crystal quality near 710 C (R36-R41).
+
 Compiled 2026-09-13. This is an acquired evidence collection for the GaN/AlN chamber plan. Literature and comparator specifications do not validate this custom chamber.
 
 Read the annotated reviews: [growth/materials](notes/GROWTH_EVIDENCE.md), [hardware](notes/HARDWARE_EVIDENCE.md), and [solver/fidelity](notes/SOLVER_AND_FIDELITY.md) and [representative chamber](notes/REFERENCE_CHAMBER.md). The [combined manifest](sources.json) preserves the detailed source records; [integrity report](integrity_report.json) records file checks. Original-source copyright and license terms remain applicable.
@@ -100,6 +102,16 @@ Details: [methods/sources.json](methods/sources.json).
 | R13 | [System and method for increasing III-nitride semiconductor growth rate and reducing damaging ion flux (US 10,526,723)](https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/10526723) (2020) | [PDF](reference/R13_US10526723_plasma_aperture.pdf) |
 | R14 | [Simulation of the uniformity influence of effusion cell structure and layout in molecular beam epitaxy](https://doi.org/10.13922/j.cnki.cjvst.202502013) (2025) | [PDF](reference/R14_Tao_2025_effusion_cell_layout_8inch.pdf) |
 | R15 | [Vapour pressure equations for the metallic elements: 298-2500 K (CRC Handbook reprint, 'Vapor pressure of the metallic elements')](https://www.tandfonline.com/doi/abs/10.1179/cmq.1984.23.3.309) (1984) | [PDF](reference/R15_Alcock_1984_vapour_pressure_CRC.pdf) |
+| R32 | [Simultaneously monitoring Ga adsorption and desorption kinetics on GaN(0001) using four in situ techniques](https://arxiv.org/abs/2605.22279) (2026) | [PDF](reference/R32_Zhang_2026_Ga_adsorption_four_insitu.pdf) |
+| R33 | [Molecular Beam Epitaxy Growth of Large-Area GaN/AlN 2D Hole Gas Heterostructures](https://djena.engineering.cornell.edu/papers/2020/pss20_reet_2dhg_mbe_pdfa.pdf) (2020) | [PDF](reference/R33_Reet_2020_large_area_GaN_AlN_2DHG_MBE.pdf) |
+| R34 | [Beam Flux Monitor BFM (data sheet)](https://www.mbe-komponenten.de/pdf/data-sheet-bfm.pdf) (None) | [PDF](reference/R34_MBE_Komponenten_BFM_datasheet.pdf) |
+| R35 | [Performance Benchmarking of European GaN Epitaxial Wafer Suppliers in Comparison with Vendors from USA and Japan (abstract of ESA/ESTEC contract 20328/06/NL/IA)](https://escies.org/download/webDocumentFile?id=62230) (None) | [PDF](reference/R35_Kurpas_ESA_GaN_epiwafer_benchmarking.pdf) |
+| R36 | [Recombination coefficients of O and N radicals on stainless steel](https://doi.org/10.1063/1.1289046) (2000) | [PDF](reference/R36_Singh_2000_N_recombination_stainless.pdf) |
+| R37 | [Measurements of the loss probability of nitrogen atoms versus temperature on various surfaces](https://doi.org/10.1016/S0040-6090(98)01543-0) (1999) | [PDF](reference/R37_Belmonte_1999_N_loss_vs_temperature.pdf) |
+| R38 | [In situ measurements of wafer bending curvature during growth of group-III-nitride layers on silicon by molecular beam epitaxy](https://doi.org/10.1016/j.jcrysgro.2006.11.126) (2007) | [PDF](reference/R38_Cordier_2007_insitu_curvature_MBE_nitrides_Si.pdf) |
+| R39 | [Strain engineering in GaN layers grown on silicon by molecular beam epitaxy: The critical role of growth temperature](https://doi.org/10.1016/j.jcrysgro.2008.11.066) (2009) | [PDF](reference/R39_Cordier_2009_growth_temperature_strain_GaN_Si.pdf) |
+| R40 | [Threading dislocation propagation in AlGaN/GaN based HEMT structures grown on Si (111) by plasma assisted molecular beam epitaxy](https://doi.org/10.1016/j.jcrysgro.2012.07.037) (2012) | [PDF](reference/R40_Menuel_2012_dislocations_PAMBE_HEMT_Si.pdf) |
+| R41 | [Determination of the atomic nitrogen flux from a radio frequency plasma nitride source for molecular beam epitaxy systems](https://doi.org/10.1116/1.581498) (1998) | [PDF](reference/R41_Voulot_1998_RF_source_atomic_N_flux.pdf) |
 
 Details: [reference/sources.json](reference/sources.json).
 

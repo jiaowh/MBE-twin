@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "compiled_date": "2026-10-01",
+  "compiled_date": "2026-10-06",
   "sources": [
     {
       "id": "G01",
@@ -2450,6 +2450,413 @@
           "sha256": "20e3838423214d3f07c9d301f85fe1713991c848f70770b41bdeb9357c0e3416",
           "bytes": 8600,
           "provided_by": "fetched by Claude, 2026-09-29"
+        }
+      ]
+    },
+    {
+      "id": "R32",
+      "title": "Simultaneously monitoring Ga adsorption and desorption kinetics on GaN(0001) using four in situ techniques",
+      "authors": "H. Zhang, P. John, J. Kang, L. Geelhaar, Y. Cho, O. Brandt (Paul-Drude-Institut)",
+      "year": 2026,
+      "publication": "arXiv:2605.22279 (preprint, 2026-05-21)",
+      "url": "https://arxiv.org/abs/2605.22279",
+      "accessed": "2026-10-06",
+      "review_level": "full_text_reviewed",
+      "source_locator": "Sec. II (setup, flux calibration), Eqs. 1-8, Fig. 2-3, Table S1",
+      "supports": "Ga adlayer desorption on GaN(0001) without N: rate constant gamma 0.118 / 0.068 / 0.04 s^-1 at 708 / 693 / 676 C (maximum adlayer coverage 2.4 ML), activation energy 2.87 +/- 0.04 eV from four techniques (RHEED, laser reflectometry, line-of-sight QMS, pyrometry). Maximum adlayer desorption flux 0.28 ML/s at 708 C. Ga flux: absolute to 5 % (SEM thickness of N-rich layers), relative to better than 2 % (retractable ion gauge BEP vs cell temperature). Pyrometer artefacts on GaN: reflected Ga-cell radiation shifts the reading by about 0.5 C at shutter operation; cell radiation heats the wafer; the Ga adlayer changes emissivity (Eq. 5-8). Laser reflectometry (650 nm) responds to adlayer and droplets.",
+      "does_not_support": "Droplet onset during growth under N flux (no N during the transients); absolute substrate temperature (pyrometer on a Ti-coated back side, assumed emissivity 0.55); 200 mm wafers; reproducibility over campaigns.",
+      "use": "Fourth droplet-onset scenario candidate (prefactor 1.6e14 ML/s, 2.87 eV; matches the Ref14 slope, lies between Heying and Ref14 at 708 C); evidence for the 2 % BFM relative-flux prior; pyrometer error terms for the reading budget.",
+      "status": "downloaded",
+      "follow_up": "See ref/notes/RESEARCH_GAP_SEARCH_2026-10-06.md for how each source bears on the twin.",
+      "artifacts": [
+        {
+          "path": "ref/reference/R32_Zhang_2026_Ga_adsorption_four_insitu.pdf",
+          "url": "https://arxiv.org/pdf/2605.22279",
+          "status": "downloaded",
+          "sha256": "265e2fa0bde37b1b5c4b57f268902b5b11256a3665f4087859f49d27afa0838d",
+          "bytes": 3415011,
+          "pages": 9,
+          "provided_by": "fetched by Claude, 2026-10-06"
+        }
+      ],
+      "collection": "reference",
+      "detail_manifest": "ref/reference/sources.json",
+      "indexed_artifacts": [
+        {
+          "path": "ref/reference/R32_Zhang_2026_Ga_adsorption_four_insitu.pdf",
+          "url": "https://arxiv.org/pdf/2605.22279",
+          "status": "downloaded",
+          "sha256": "265e2fa0bde37b1b5c4b57f268902b5b11256a3665f4087859f49d27afa0838d",
+          "bytes": 3415011,
+          "pages": 9,
+          "provided_by": "fetched by Claude, 2026-10-06"
+        }
+      ]
+    },
+    {
+      "id": "R33",
+      "title": "Molecular Beam Epitaxy Growth of Large-Area GaN/AlN 2D Hole Gas Heterostructures",
+      "authors": "R. Chaudhuri, S. J. Bader, Z. Chen, D. Muller, H. G. Xing, D. Jena",
+      "year": 2020,
+      "publication": "Physica Status Solidi B 257, 1900567",
+      "doi": "10.1002/pssb.201900567",
+      "url": "https://djena.engineering.cornell.edu/papers/2020/pss20_reet_2dhg_mbe_pdfa.pdf",
+      "accessed": "2026-10-06",
+      "review_level": "full_text_reviewed",
+      "source_locator": "Sec. 3.2, Table 1, Fig. 2",
+      "supports": "Veeco Gen10 PAMBE, RF source at 2 sccm / 400 W for 520 nm/h. Rotating at 20 rpm (about 2 ML per rotation) left 70 % of a quarter 2-inch wafer without a 2DHG; 30 rpm (about 1 ML per rotation) gave 87.5 % and then 100 % yield on a full 2-inch wafer.",
+      "does_not_support": "Thickness uniformity (the metric is sheet resistance); 200 mm; the mechanism behind the rotation effect.",
+      "use": "Rotation-rate condition: at 1 um/h (about 1.07 ML/s) one ML per rotation needs about 64 rpm. The twin assumes rotation-averaged maps.",
+      "status": "downloaded",
+      "follow_up": "See ref/notes/RESEARCH_GAP_SEARCH_2026-10-06.md for how each source bears on the twin.",
+      "artifacts": [
+        {
+          "path": "ref/reference/R33_Reet_2020_large_area_GaN_AlN_2DHG_MBE.pdf",
+          "url": "https://djena.engineering.cornell.edu/papers/2020/pss20_reet_2dhg_mbe_pdfa.pdf",
+          "status": "downloaded",
+          "sha256": "cbbde58b21aacbc0d948af76f138078df35c8f92f2f3a0a011ec8b3f6361dd3b",
+          "bytes": 516703,
+          "pages": 5,
+          "provided_by": "fetched by Claude, 2026-10-06"
+        }
+      ],
+      "collection": "reference",
+      "detail_manifest": "ref/reference/sources.json",
+      "indexed_artifacts": [
+        {
+          "path": "ref/reference/R33_Reet_2020_large_area_GaN_AlN_2DHG_MBE.pdf",
+          "url": "https://djena.engineering.cornell.edu/papers/2020/pss20_reet_2dhg_mbe_pdfa.pdf",
+          "status": "downloaded",
+          "sha256": "cbbde58b21aacbc0d948af76f138078df35c8f92f2f3a0a011ec8b3f6361dd3b",
+          "bytes": 516703,
+          "pages": 5,
+          "provided_by": "fetched by Claude, 2026-10-06"
+        }
+      ]
+    },
+    {
+      "id": "R34",
+      "title": "Beam Flux Monitor BFM (data sheet)",
+      "authors": "Dr. Eberl MBE-Komponenten GmbH",
+      "year": null,
+      "publication": "Product data sheet",
+      "url": "https://www.mbe-komponenten.de/pdf/data-sheet-bfm.pdf",
+      "accessed": "2026-10-06",
+      "review_level": "full_text_reviewed",
+      "source_locator": "p. 2, technical data and drawing",
+      "supports": "Bayard-Alpert gauge on a 150 or 250 mm z-shift, DN40CF port about 20 mm below the sample position, range 1e-3 to 4e-11 mbar BEP.",
+      "does_not_support": "Accuracy, reproducibility or drift (not stated).",
+      "use": "BFM geometry (it samples the beam about 20 mm in front of the wafer plane, at one point). No support for the 2 % accuracy prior; see R32.",
+      "status": "downloaded",
+      "follow_up": "See ref/notes/RESEARCH_GAP_SEARCH_2026-10-06.md for how each source bears on the twin.",
+      "artifacts": [
+        {
+          "path": "ref/reference/R34_MBE_Komponenten_BFM_datasheet.pdf",
+          "url": "https://www.mbe-komponenten.de/pdf/data-sheet-bfm.pdf",
+          "status": "downloaded",
+          "sha256": "6680a33dd136309c5e922eb35c2558bf3ab43c1d65629cf533d05731a29dd0bd",
+          "bytes": 1096301,
+          "pages": 2,
+          "provided_by": "fetched by Claude, 2026-10-06"
+        }
+      ],
+      "collection": "reference",
+      "detail_manifest": "ref/reference/sources.json",
+      "indexed_artifacts": [
+        {
+          "path": "ref/reference/R34_MBE_Komponenten_BFM_datasheet.pdf",
+          "url": "https://www.mbe-komponenten.de/pdf/data-sheet-bfm.pdf",
+          "status": "downloaded",
+          "sha256": "6680a33dd136309c5e922eb35c2558bf3ab43c1d65629cf533d05731a29dd0bd",
+          "bytes": 1096301,
+          "pages": 2,
+          "provided_by": "fetched by Claude, 2026-10-06"
+        }
+      ]
+    },
+    {
+      "id": "R35",
+      "title": "Performance Benchmarking of European GaN Epitaxial Wafer Suppliers in Comparison with Vendors from USA and Japan (abstract of ESA/ESTEC contract 20328/06/NL/IA)",
+      "authors": "P. Kurpas, I. Selvanathan, M. Schulz, J. Wuerfl (Ferdinand-Braun-Institut)",
+      "year": null,
+      "publication": "ESA ESCIES document 62230",
+      "url": "https://escies.org/download/webDocumentFile?id=62230",
+      "accessed": "2026-10-06",
+      "review_level": "full_text_reviewed",
+      "source_locator": "Sec. III, Fig. 3-4, Fig. 7",
+      "supports": "Nine vendors' AlGaN/GaN HEMT wafers on 75 mm SiC: GaN buffer thickness standard deviation 0.5 % and total thickness variation 1.3 % for one of the best, 3.2 % and 9 % for a moderate one (white-light interferometry maps); one vendor's growth-rate instability gave a non-rotational thickness profile correlated with breakdown-voltage maps.",
+      "does_not_support": "200 mm; MBE specifically (growth method per vendor not stated); thickness metrology repeatability.",
+      "use": "Industry context for the uniformity target: the twin's +/-0.53 % worst-case half-range at 200 mm compares with about +/-0.65 % (TTV/2) for the best 75 mm wafers.",
+      "status": "downloaded",
+      "follow_up": "See ref/notes/RESEARCH_GAP_SEARCH_2026-10-06.md for how each source bears on the twin.",
+      "artifacts": [
+        {
+          "path": "ref/reference/R35_Kurpas_ESA_GaN_epiwafer_benchmarking.pdf",
+          "url": "https://escies.org/download/webDocumentFile?id=62230",
+          "status": "downloaded",
+          "sha256": "3db75ddd182f003ea13cd1bcae6bf8aac7df1c173ee451f71f44295af92cfeef",
+          "bytes": 207622,
+          "pages": 5,
+          "provided_by": "fetched by Claude, 2026-10-06"
+        }
+      ],
+      "collection": "reference",
+      "detail_manifest": "ref/reference/sources.json",
+      "indexed_artifacts": [
+        {
+          "path": "ref/reference/R35_Kurpas_ESA_GaN_epiwafer_benchmarking.pdf",
+          "url": "https://escies.org/download/webDocumentFile?id=62230",
+          "status": "downloaded",
+          "sha256": "3db75ddd182f003ea13cd1bcae6bf8aac7df1c173ee451f71f44295af92cfeef",
+          "bytes": 207622,
+          "pages": 5,
+          "provided_by": "fetched by Claude, 2026-10-06"
+        }
+      ]
+    },
+    {
+      "id": "R36",
+      "title": "Recombination coefficients of O and N radicals on stainless steel",
+      "authors": "H. Singh, J. W. Coburn, D. B. Graves",
+      "year": 2000,
+      "publication": "Journal of Applied Physics 88, 3748-3755",
+      "doi": "10.1063/1.1289046",
+      "url": "https://doi.org/10.1063/1.1289046",
+      "accessed": "2026-10-06",
+      "review_level": "full_text_reviewed",
+      "source_locator": "Abstract; Sec. IV (Fig. 6); Sec. V",
+      "supports": "gamma_N = 0.07 +/- 0.02 on the stainless-steel walls of an N2 ICP at about 330 K, 10-30 mTorr, with ion bombardment (gamma_O 0.17). Estimates within 30 % of the mean over a factor 2-4 range of conditions. The authors expect neutral-temperature gradients to overestimate gamma by about 30 %, and state that gamma could differ without ion bombardment and depends on the wall's exposure history.",
+      "does_not_support": "Walls without ion bombardment, cryogenic (77 K) or nitride/Ga-coated walls as in an MBE chamber.",
+      "use": "Upper reference for N wall loss on metal under plasma exposure; the twin's baseline gamma = 1 is far above it.",
+      "status": "downloaded",
+      "follow_up": "See ref/notes/RESEARCH_GAP_SEARCH_2026-10-06.md for how each source bears on the twin.",
+      "artifacts": [
+        {
+          "path": "ref/reference/R36_Singh_2000_N_recombination_stainless.pdf",
+          "url": "https://doi.org/10.1063/1.1289046",
+          "status": "downloaded",
+          "sha256": "27d9803accaac5820f5cda50e77df5da48868efe54a2b787345761c8bcf7667d",
+          "bytes": 360256,
+          "pages": 9,
+          "provided_by": "saved by the user from a browser, 2026-10-06"
+        }
+      ],
+      "collection": "reference",
+      "detail_manifest": "ref/reference/sources.json",
+      "indexed_artifacts": [
+        {
+          "path": "ref/reference/R36_Singh_2000_N_recombination_stainless.pdf",
+          "url": "https://doi.org/10.1063/1.1289046",
+          "status": "downloaded",
+          "sha256": "27d9803accaac5820f5cda50e77df5da48868efe54a2b787345761c8bcf7667d",
+          "bytes": 360256,
+          "pages": 9,
+          "provided_by": "saved by the user from a browser, 2026-10-06"
+        }
+      ]
+    },
+    {
+      "id": "R37",
+      "title": "Measurements of the loss probability of nitrogen atoms versus temperature on various surfaces",
+      "authors": "T. Belmonte, L. Lefevre, T. Czerwiec, H. Michel, A. Ricard",
+      "year": 1999,
+      "publication": "Thin Solid Films 341, 27-30",
+      "doi": "10.1016/S0040-6090(98)01543-0",
+      "url": "https://doi.org/10.1016/S0040-6090(98)01543-0",
+      "accessed": "2026-10-06",
+      "review_level": "full_text_reviewed",
+      "source_locator": "Abstract; Sec. 4; Fig. 3; Eq. 6",
+      "supports": "Late Ar-N2 afterglow, 1500 Pa, NO titration and a 2D model: gamma_N on quartz = 9.3e-5 exp(-3700 J/mol / RT) over 300-823 K (Eley-Rideal), about 2e-5. Iron foil at 300 K: 6.7e-4, low against the usual 1e-2 because the surface nitrided and nothing sputtered it. Literature gamma_N on Pyrex scatters 3e-6 to 2e-4 with surface state.",
+      "does_not_support": "Other metals or temperatures (only quartz was measured versus temperature, iron only at 300 K); UHV pressures. The 'various surfaces versus temperature' of the title is not in this paper.",
+      "use": "Lower reference: on a nitrided metal without ion bombardment gamma_N is about 1e-3, far below the twin's 'walls return N' case (0.1).",
+      "status": "downloaded",
+      "follow_up": "See ref/notes/RESEARCH_GAP_SEARCH_2026-10-06.md for how each source bears on the twin.",
+      "artifacts": [
+        {
+          "path": "ref/reference/R37_Belmonte_1999_N_loss_vs_temperature.pdf",
+          "url": "https://doi.org/10.1016/S0040-6090(98)01543-0",
+          "status": "downloaded",
+          "sha256": "28f05dd31cc199557df9e3cd2b0d933a380fd1767e6d0e00a757ce137dbe150e",
+          "bytes": 170437,
+          "pages": 4,
+          "provided_by": "saved by the user from a browser, 2026-10-06"
+        }
+      ],
+      "collection": "reference",
+      "detail_manifest": "ref/reference/sources.json",
+      "indexed_artifacts": [
+        {
+          "path": "ref/reference/R37_Belmonte_1999_N_loss_vs_temperature.pdf",
+          "url": "https://doi.org/10.1016/S0040-6090(98)01543-0",
+          "status": "downloaded",
+          "sha256": "28f05dd31cc199557df9e3cd2b0d933a380fd1767e6d0e00a757ce137dbe150e",
+          "bytes": 170437,
+          "pages": 4,
+          "provided_by": "saved by the user from a browser, 2026-10-06"
+        }
+      ]
+    },
+    {
+      "id": "R38",
+      "title": "In situ measurements of wafer bending curvature during growth of group-III-nitride layers on silicon by molecular beam epitaxy",
+      "authors": "Y. Cordier, N. Baron, F. Semond, J. Massies, M. Binetti et al. (CRHEA)",
+      "year": 2007,
+      "publication": "Journal of Crystal Growth 301-302, 71-74",
+      "doi": "10.1016/j.jcrysgro.2006.11.126",
+      "url": "https://doi.org/10.1016/j.jcrysgro.2006.11.126",
+      "accessed": "2026-10-06",
+      "review_level": "full_text_reviewed",
+      "source_locator": "Sec. 2-3; Fig. 1; Table 1",
+      "supports": "CRHEA, Riber Compact 21 (NH3 MBE), 50 mm Si(111), LayTec EpiCurve + EpiTT: radiatively heated wafers do not change temperature with bending, even at curvatures near 0.3 m^-1 (unlike MOCVD). In-growth curvature reaches -0.24 to -0.31 m^-1 (convex, compressive) and changes by about 0.2 m^-1 on cooling. A plain IR pyrometer (0.91-0.97 um) shows +/-20 C oscillations from GaN thin-film interference and about 20 C absolute difference from the emissivity-corrected EpiTT reading; the corrected optical head reduces parasitic radiation from the hot sources to about 2 K.",
+      "does_not_support": "200 mm wafers or plasma-source growth (this paper is ammonia MBE); the size of view-factor changes at larger bow.",
+      "use": "Supports neglecting bow in the radiative heater model; at 0.3 m^-1 a 200 mm wafer sags about 1.5 mm. Requires an emissivity-corrected pyrometer: an uncorrected one is far outside the twin's 1-2 K reading budget, and source radiation alone is about 2 K.",
+      "status": "downloaded",
+      "follow_up": "See ref/notes/RESEARCH_GAP_SEARCH_2026-10-06.md for how each source bears on the twin.",
+      "artifacts": [
+        {
+          "path": "ref/reference/R38_Cordier_2007_insitu_curvature_MBE_nitrides_Si.pdf",
+          "url": "https://doi.org/10.1016/j.jcrysgro.2006.11.126",
+          "status": "downloaded",
+          "sha256": "19fcc78df8303d9f94a0307326284fb6fdeff2be7be80093bb44f868488f617d",
+          "bytes": 245259,
+          "pages": 4,
+          "provided_by": "saved by the user from a browser, 2026-10-06"
+        }
+      ],
+      "collection": "reference",
+      "detail_manifest": "ref/reference/sources.json",
+      "indexed_artifacts": [
+        {
+          "path": "ref/reference/R38_Cordier_2007_insitu_curvature_MBE_nitrides_Si.pdf",
+          "url": "https://doi.org/10.1016/j.jcrysgro.2006.11.126",
+          "status": "downloaded",
+          "sha256": "19fcc78df8303d9f94a0307326284fb6fdeff2be7be80093bb44f868488f617d",
+          "bytes": 245259,
+          "pages": 4,
+          "provided_by": "saved by the user from a browser, 2026-10-06"
+        }
+      ]
+    },
+    {
+      "id": "R39",
+      "title": "Strain engineering in GaN layers grown on silicon by molecular beam epitaxy: The critical role of growth temperature",
+      "authors": "Y. Cordier, N. Baron, S. Chenot, P. Vennegues, O. Tottereau et al. (CRHEA)",
+      "year": 2009,
+      "publication": "Journal of Crystal Growth 311, 2002-2005",
+      "doi": "10.1016/j.jcrysgro.2008.11.066",
+      "url": "https://doi.org/10.1016/j.jcrysgro.2008.11.066",
+      "accessed": "2026-10-06",
+      "review_level": "full_text_reviewed",
+      "source_locator": "Sec. 2; Sec. 4; Fig. 2, 5; Sec. 5",
+      "supports": "CRHEA, Riber Compact 21 with NH3 and an Addon RF N50/63 plasma source. Plasma GaN at 700-720 C, 1.8 sccm, 400 W, Ga-rich, about 0.5 um/h: good layers with a flat growth front, but threading dislocations turn vertical and are filtered less, so the density exceeds 1e10 cm^-2; the lower temperature keeps more compressive stress (convex bow). NH3 GaN at 800 C reached mobility near 2000 cm^2/Vs below 5e9 cm^-2; 820 C relaxed too fast and cracked.",
+      "does_not_support": "200 mm; a temperature series for plasma growth alone (one plasma condition); other buffer schemes.",
+      "use": "Crystal-quality cost of the twin's 710-720 C working point: plasma growth there is smooth but filters dislocations poorly with this buffer. The cold limit is set by quality, which the twin does not model.",
+      "status": "downloaded",
+      "follow_up": "See ref/notes/RESEARCH_GAP_SEARCH_2026-10-06.md for how each source bears on the twin.",
+      "artifacts": [
+        {
+          "path": "ref/reference/R39_Cordier_2009_growth_temperature_strain_GaN_Si.pdf",
+          "url": "https://doi.org/10.1016/j.jcrysgro.2008.11.066",
+          "status": "downloaded",
+          "sha256": "99fe694e5f262fa5e334a645fc57197d62a7b7e6317077840cff570965b5bd46",
+          "bytes": 430241,
+          "pages": 4,
+          "provided_by": "saved by the user from a browser, 2026-10-06"
+        }
+      ],
+      "collection": "reference",
+      "detail_manifest": "ref/reference/sources.json",
+      "indexed_artifacts": [
+        {
+          "path": "ref/reference/R39_Cordier_2009_growth_temperature_strain_GaN_Si.pdf",
+          "url": "https://doi.org/10.1016/j.jcrysgro.2008.11.066",
+          "status": "downloaded",
+          "sha256": "99fe694e5f262fa5e334a645fc57197d62a7b7e6317077840cff570965b5bd46",
+          "bytes": 430241,
+          "pages": 4,
+          "provided_by": "saved by the user from a browser, 2026-10-06"
+        }
+      ]
+    },
+    {
+      "id": "R40",
+      "title": "Threading dislocation propagation in AlGaN/GaN based HEMT structures grown on Si (111) by plasma assisted molecular beam epitaxy",
+      "authors": "L. Menuel, F. M. Morales, R. Garcia, R. Aidam, L. Kirste et al.",
+      "year": 2012,
+      "publication": "Journal of Crystal Growth 357, 35-41",
+      "doi": "10.1016/j.jcrysgro.2012.07.037",
+      "url": "https://doi.org/10.1016/j.jcrysgro.2012.07.037",
+      "accessed": "2026-10-06",
+      "review_level": "full_text_reviewed",
+      "source_locator": "Sec. 3 (experimental methods); Tables 2-5; Sec. 6",
+      "supports": "Fraunhofer IAF Veeco Gen20A (up to 4-inch), two Veeco UNI-Bulb sources at 400 W and 4 sccm each: N-limited GaN at 0.86 um/h on 4-inch Si(111). LayTec EpiCurve with reflectivity-corrected pyrometer. A GaN buffer that fully compensates thermal and lattice strain gave the flattest wafer and among the lowest threading dislocation densities at the barrier (TEM, HRXRD).",
+      "does_not_support": "The growth temperature (given in their ref. 28, not here); source-to-wafer geometry; uniformity.",
+      "use": "Production-type rate per flow: 0.86 um/h from 8 sccm total (0.11 um/h per sccm) on a multi-inch platform, the lowest of the published values (0.26-1.0 elsewhere), as expected for a longer throw.",
+      "status": "downloaded",
+      "follow_up": "See ref/notes/RESEARCH_GAP_SEARCH_2026-10-06.md for how each source bears on the twin.",
+      "artifacts": [
+        {
+          "path": "ref/reference/R40_Menuel_2012_dislocations_PAMBE_HEMT_Si.pdf",
+          "url": "https://doi.org/10.1016/j.jcrysgro.2012.07.037",
+          "status": "downloaded",
+          "sha256": "790dd3e0a521316eeb3c45fd091ce4325a9b07be52eb74571b42be8834eacb7f",
+          "bytes": 937549,
+          "pages": 7,
+          "provided_by": "saved by the user from a browser, 2026-10-06"
+        }
+      ],
+      "collection": "reference",
+      "detail_manifest": "ref/reference/sources.json",
+      "indexed_artifacts": [
+        {
+          "path": "ref/reference/R40_Menuel_2012_dislocations_PAMBE_HEMT_Si.pdf",
+          "url": "https://doi.org/10.1016/j.jcrysgro.2012.07.037",
+          "status": "downloaded",
+          "sha256": "790dd3e0a521316eeb3c45fd091ce4325a9b07be52eb74571b42be8834eacb7f",
+          "bytes": 937549,
+          "pages": 7,
+          "provided_by": "saved by the user from a browser, 2026-10-06"
+        }
+      ]
+    },
+    {
+      "id": "R41",
+      "title": "Determination of the atomic nitrogen flux from a radio frequency plasma nitride source for molecular beam epitaxy systems",
+      "authors": "F. Voulot, C. McCullough, P. Thompson, A. Burns, J. Geddes et al.",
+      "year": 1998,
+      "publication": "Journal of Vacuum Science & Technology A 16, 3434-3437",
+      "doi": "10.1116/1.581498",
+      "url": "https://doi.org/10.1116/1.581498",
+      "accessed": "2026-10-06",
+      "review_level": "full_text_reviewed",
+      "source_locator": "Sec. II-IV; Eq. 1-3; Fig. 2-3",
+      "supports": "SVTA RF 4.5 (PBN tube 16.8 mm, single 2.8 mm aperture), modulated-beam QMS and gas throughput: dissociation fraction (= atom fraction of the fed N, i.e. eta at the source exit) 0.40 at 0.07 Torr source pressure falling to about 0.10 at 0.50 Torr (500 W); atom flux 0.45-0.85e18 s^-1, maximum at 0.32 Torr. At 0.1 and 0.2 Torr D rises with power to 0.30 and 0.26 at 500 W. From F = 3.22e19 x 2 D Q, D 0.40 at the low end corresponds to roughly 1-2 sccm; the high-pressure end is several sccm.",
+      "does_not_support": "Multi-hole aperture plates or UNI-Bulb sources; the delivered atom flux at the wafer (wall losses downstream).",
+      "use": "Evidence that eta at the source exit is at most about 0.4 and falls with source (bulb) pressure: eta = 1 (the B-p scenario) is not supported; a high-conductance plate that keeps the bulb pressure low (the B-L design idea) is the way to keep eta up at high flow.",
+      "status": "downloaded",
+      "follow_up": "See ref/notes/RESEARCH_GAP_SEARCH_2026-10-06.md for how each source bears on the twin.",
+      "artifacts": [
+        {
+          "path": "ref/reference/R41_Voulot_1998_RF_source_atomic_N_flux.pdf",
+          "url": "https://doi.org/10.1116/1.581498",
+          "status": "downloaded",
+          "sha256": "3a0220969f5af084111e1a4c42f57b9ea998f955f436aa0d4e38e80c78a3ba2f",
+          "bytes": 366014,
+          "pages": 5,
+          "provided_by": "saved by the user from a browser, 2026-10-06"
+        }
+      ],
+      "collection": "reference",
+      "detail_manifest": "ref/reference/sources.json",
+      "indexed_artifacts": [
+        {
+          "path": "ref/reference/R41_Voulot_1998_RF_source_atomic_N_flux.pdf",
+          "url": "https://doi.org/10.1116/1.581498",
+          "status": "downloaded",
+          "sha256": "3a0220969f5af084111e1a4c42f57b9ea998f955f436aa0d4e38e80c78a3ba2f",
+          "bytes": 366014,
+          "pages": 5,
+          "provided_by": "saved by the user from a browser, 2026-10-06"
         }
       ]
     }

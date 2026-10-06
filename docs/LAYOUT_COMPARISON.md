@@ -1,12 +1,31 @@
 # Source layouts at physically achievable operating points
 
-Status: 2026-10-03 (fifth revision: section 10 adds the gas-scattered atoms and the nitrogen plume; sections 1-8 are the direct-beam model and stay as recorded; fourth revision after the [project audit](PROJECT_AUDIT_2026-10-01.md), its [follow-up](PROJECT_AUDIT_FOLLOWUP_2026-10-01.md) and the [2026-10-02 audit](PROJECT_AUDIT_2026-10-02.md)), `representative_chamber`. These are model comparisons on a typical 200 mm RIBER/Veeco-class geometry, not predictions for the proposed machine. No nitrogen map, heater result or growth model here is validated against a measurement.
+Status: 2026-10-06 (ninth revision: section 14 regenerates the scattered-atom tables at the frozen aims and averages seeds; eighth revision: section 13 checks the section 12 assumptions; seventh revision: section 12 ranks the worst-case drivers and adds three levers against them; sixth revision: section 11 replaces the Ga steering with a realizable controller and adds a heater power margin; fifth revision: section 10 adds the gas-scattered atoms and the nitrogen plume; sections 1-8 are the direct-beam model and stay as recorded; fourth revision after the [project audit](PROJECT_AUDIT_2026-10-01.md), its [follow-up](PROJECT_AUDIT_FOLLOWUP_2026-10-01.md) and the [2026-10-02 audit](PROJECT_AUDIT_2026-10-02.md)), `representative_chamber`. These are model comparisons on a typical 200 mm RIBER/Veeco-class geometry, not predictions for the proposed machine. No nitrogen map, heater result or growth model here is validated against a measurement.
 
 **The question:** under what physically achievable conditions does a layout meet the project's requirements?
 
 **The short answer:** no layout can be called a pass, because neither a uniformity target nor a minimum growth rate is agreed (section 8). The model can, however, say which conditions each layout needs, and where its results are inside the model's validity. Two conditions dominate:
 - **Nitrogen supply sets the reachable growth rate.** That rate depends on a source conversion fraction nobody has published. The literature implies it lies between 6 and 57 % at high flow.
 - **The aperture plate must stay free-molecular at the flow that rate needs.** With the published-type plate, it stops being free-molecular above about 6 sccm.
+
+**Update 2026-10-06 (section 14).** The scattered-atom tables were regenerated at B-L's +95 mm aim and averaged over independent seeds; B-p's were averaged too. The factor hardly depends on the aim, but one table's Monte Carlo noise moves the worst case by about +/-0.1 point. With averaged tables, **B-L at +95 mm gives 0.53 +/- 0.04 % at 710 C (0.58 % at 720 C) and B-p 0.57 +/- 0.09 % (0.62 %)** (bootstrap of the averaged tables; table noise only). The layout difference, 0.04 point in B-L's favour, is not resolved: B-L is ahead in 75 % of resamples. The aim scan favours +95 mm (optimum 95-97.5 mm, conditional on transferring the 95 mm factors to the other aims), so +95 mm is the nominal aim (trimmed at commissioning). At 710 C these are worst cases over the states that pass the growth-window gate (B-L 96.7 %); the failing states reach 2.30 % (B-p 2.81 %). At 720 C nearly all pass (0.64 % over all), so 720 C is the nominal working temperature ([decision record](DECISION_RECORD.md)). B-p's figures assume eta = 1, which no measured source reaches (ref/notes/RESEARCH_GAP_SEARCH_2026-10-06.md): **B-L is now the provisional layout**.
+
+**Update 2026-10-05 (section 13).** A commissioning rehearsal shows the 0.2 deg re-aim is reachable with a mount repeatable to about 0.05 deg and three wafers mapped to 0.1-0.3 %. B-L at +95 mm with its own pointing and attenuation tables gives 0.64 % at 710 C, confirming section 12. The 710 C decomposition extrapolation is a small effect on thickness.
+
+**Update 2026-10-05 (section 12, uniformity first).** N pointing sets most of the worst case, then the heater. Three levers together reduce the worst case at 1 um/h to **0.49 % (B-p) / 0.65 % (B-L) at 710 C**:
+1. Re-aim the N source at commissioning to 0.2 deg.
+2. Aim B-L at +95 mm.
+3. Use multi-spot pyrometry with three heater zone groups.
+
+Section 11's 1.53 / 1.67 % are the single-pyrometer, no-re-aim values.
+
+**Update 2026-10-05 (section 11).** The Ga steering of sections 8 and 10 knew every uncertain state's maps (audit 2026-10-05). With a controller that knows only a frozen calibration and real instruments:
+- Every admissible 1 um/h point needs a Ga beam-flux monitor and an in-situ growth-rate monitor. Without the beam-flux monitor, no temperature qualifies.
+- Chosen for the best worst-case uniformity (the project's priority, 2026-10-05):
+  - **B-p:** 720 C, with the heater zones designed for an element 13 K below its rating (3.7 % power headroom); worst case 1.53 %.
+  - **B-L:** 730 C with the current heater; worst case 1.67 %.
+- More heater headroom lowers B-L's cold limit to 720 C but widens the spread.
+- The joint 95 % rule now applies everywhere. It removes one recorded point (B-L at 1.25 um/h, 740 C).
 
 **Update 2026-10-03 (section 10).** Atoms scattered by the chamber gas are now followed instead of dropped, and the nitrogen plate's own plume is added:
 - Most scattered Ga still reaches the wafer, and 13-21 % more N arrives.
@@ -31,6 +50,7 @@ Records (all in `data/runs/studies/`):
   - the comparison with them: layout_comparison_bc_sc.json, _sc_plume.json and _sc_gamma0.1.json;
   - the downstream studies on them: nitrogen_rate_limits_sc*.json, operating_cold_limit_*.json, operating_optimum_sc_plume.json, heater_robustness_sc_plume.json, nitrogen_aim_*_sc_plume.json;
   - [commissioning_rehearsal.json](../data/runs/studies/commissioning_rehearsal.json).
+- Seed-averaged tables at the frozen aims (section 14): scattered_tables_B-L_95mm.json, scattered_plume_tables_B-L_95mm.json, scattered_plume_tables_B-p_97.5mm.json; realizable_controller_ms_BL95scatter.json, realizable_controller_ms_Bp97scatter.json, scatter_noise_BL95.json, scatter_noise_Bp.json (with the bootstrap of the averaged tables and the paired layout difference).
 
 Inputs are in the [design envelope](../data/design/design_envelope.json); commands are in [REPRODUCE.md](REPRODUCE.md); hardware requests are in [HARDWARE_REQUESTS.md](HARDWARE_REQUESTS.md).
 
@@ -87,7 +107,7 @@ Inputs are in the [design envelope](../data/design/design_envelope.json); comman
   A Ga correction driven by one centre pyrometer (+/-2 K bias) keeps 96-97 % of B-p's states in the window at 740 C and 84-86 % at 700 C (1473 / 1373 K element limits). These states combine heater errors with B-p's whole +/-0.8 deg ensemble, and each has its own feed, pressure and attenuation (scripts/heater_robustness.py). With the Ga output fixed, 54-55 % stay in at 740 C and 27-30 % at 700 C. At B-L's operating pressure (1e-2 Pa), a fixed Ga output also leaves the window when the Ga collision diameter differs from the calibrated one, because Ga attenuation then differs. So Ga should be calibrated at growth pressure, not in vacuum.
 - **Mechanical:** with certified lower bounds on every modelled clearance over the continuous shutter motion (every angle of each swing, both shutters moving), B, B-p and B-L clear the 5 mm margin at 6.1 mm (Ga-Al, 8.9 mm at the closest evaluated pose), and C, C-p at 10.7 mm (20.6 mm). These are bounds for the modelled solids with assumed dimensions, not a sign-off.
 
-**Recommendation.** Carry **B-p as the provisional working layout**: B's port and mount, aimed +97.5 mm. B-p is the best layout with a published plate, and its aim can be trimmed after commissioning. Specify the plate as a decision in its own right: the large plate of B-L is what makes 1 um/h reachable at realistic conversion. Drop C and C-p as alternatives unless the plate changes: with this plate they have no valid 1 um/h point. A layout cannot be qualified until:
+**Recommendation (revised 2026-10-06).** Carry **B-L as the provisional working layout**: B's port and mount with the large plate, aimed +95 mm. B-L is the only layout that reaches 1 um/h inside the model's validity at a conversion inside the measured range (eta >= 0.22; R41 measured at most 0.4 at a source exit, falling with bulb pressure), and with the uniformity levers it is at least as uniform as B-p (section 14). Its plate is not a published design, so the vendor must confirm it can be built and keeps the discharge lit. Keep **B-p** (the published plate, aimed +97.5 mm) as the alternative only if the source is shown to convert at eta >= 0.8-0.9 at low flow, or if the relaxed hole criterion Kn >= 3 is accepted (section 6). Its section 12-14 figures assume eta = 1. Until 2026-10-06 B-p was the provisional layout, as the best layout with a published plate. Drop C and C-p as alternatives unless the plate changes: with this plate they have no valid 1 um/h point. A layout cannot be qualified until:
 1. the operating point of section 8 (1 um/h at 720 C, for the goals as uniform, as fast and as cold as possible) is confirmed against crystal quality;
 2. the source's output versus flow, and the plate options the vendor can supply, are known (hardware requests 1-2);
 3. the effective pumping speed is known (request 3);
@@ -283,7 +303,7 @@ Against the Kn 100 run, base set-up, without attenuation (record [sparta_hole.js
 | Pointing worse than +/-0.8 deg or a flange pivot | worst case 2.7-3.3 % (+/-1.6 deg) at 1 um/h | all | mount repeatability (request 5) |
 | Larger cell or shutter bodies than assumed | 6.1 mm certified Ga-Al gap closes | B family | cell and shutter drawings (request 5) |
 | Pyrometer error above about 3 K during growth | at 4 K the operating point moves to 730 C, and B-L at eta = 0.3 has none; from 5 K Ga steering keeps at most 94 % of states in the window at any temperature (section 8) | all | an emissivity-corrected reading checked against anchors (COMMISSIONING_PLAN.md, step 5) |
-| Chamber walls returning most N atoms (gamma about 0.1) | fitted eta 1.4-1.6 times off if assumed otherwise; map shape 0.15-0.3 points off | all | a measurement of N-atom wall loss or background (COMMISSIONING_PLAN.md) |
+| Chamber walls returning most N atoms (gamma about 0.1, or lower: literature gives 1e-3 or less on nitrided walls without ions; 2026-10-06) | fitted eta 1.4-1.6 times off if assumed otherwise; map shape 0.15-0.3 points off | all | a measurement of N-atom wall loss or background (COMMISSIONING_PLAN.md) |
 
 ## 8. Operating point for the project's goals
 
@@ -325,7 +345,7 @@ For each supply scenario it reports the points that no other point beats on all 
 
   The direct-beam model gives the same thresholds (at most 94 % at +/-5 K, 89 % at +/-10 K). A plain single-wavelength pyrometer on GaN-on-Si can err by more than that as the layer grows (thin-film interference), so the reading must be emissivity-corrected and checked against temperature anchors (COMMISSIONING_PLAN.md, steps 2 and 5).
 
-**Working operating point (adopted 2026-10-02, provisional): 1 um/h at 720 C** (on the source labs' temperature scale), with Ga steered from a centre pyrometer. It stands until a crystal-quality minimum temperature or the hardware answers (requests 1-3) change it.
+**Working operating point (adopted 2026-10-02, provisional): 1 um/h at 720 C** (on the source labs' temperature scale), with Ga steered from a centre pyrometer. *Revised 2026-10-05 (section 11): with a realizable controller it holds only with a Ga beam-flux monitor, a growth-rate monitor and a heater with about 14 % power headroom; otherwise 730 C. The figures in this section assume the controller knows every state's maps.* It stands until a crystal-quality minimum temperature or the hardware answers (requests 1-3) change it.
 - **Why 720 C:** it is the coldest temperature at which 1 um/h keeps the growth window under combined heater errors, in every scenario and layout that reaches 1 um/h. It is also the coldest temperature inside the range the decomposition law was fitted to (720-805 C).
 - **Why 1 um/h:**
   - Going faster costs temperature quickly (1.25 um/h needs 740 C at realistic conversion) and gains little uniformity.
@@ -372,6 +392,18 @@ Sections 2-8 attenuate the direct Ga and N beams by the chamber's N2 and drop ev
 - **Test-particle transport.** The beam is a trace gas in fixed gas fields, so each atom is followed on its own (no DSMC). It collides as a hard sphere with Maxwellian partners, isotropically in the centre-of-mass frame. Heavy Ga (70 amu) on N2 (28 amu) is therefore deflected little; N (14 amu) scatters broadly.
 - **Gas fields.** The chamber's N2 at 300 K and the operating pressure. Optionally also the free-molecular plume of the nitrogen plate: the feed leaving the active disk with the holes' cos^n. Its density is computed exactly per azimuth, and it is not modified by its own collisions (first order).
 - **Chamber.** No drawing exists, so a 0.5 m sphere stands in for the cryoshroud, with an absorbing 0.13 m holder disk in the wafer plane. Ga sticks to the walls. N recombines with probability gamma = 1 per wall hit, or 0.1 as an upper case: without a pump, the returned N then accumulates.
+- **Literature check (2026-10-06): 0.1 is not an upper case.** N recombines on stainless steel with gamma 0.07 under ion bombardment (R36), but only about 7e-4 on nitrided iron and 2e-5 on quartz without it (R37). MBE walls see no ions and are nitride- or Ga-coated cryopanels, which no source covers; Ga-coated areas may consume N instead. `scattering.track` now has an optional pump that removes wall-returned atoms (loss per wall hit gamma + (1 - gamma) S / (A <v> / 4); 0.0086 at gamma 1e-3 and 4 m^3/s in this chamber). With that loss, returned atoms deliver about twice the direct beam at low pressure, nearly evenly. **Bracket result** (B-L at +95 mm, 4 m^3/s, two seeds of 4e6 atoms; records [scattered_plume_tables_B-L_95mm_lowloss.json](../data/runs/studies/scattered_plume_tables_B-L_95mm_lowloss.json) and [realizable_controller_ms_BL95lowloss.json](../data/runs/studies/realizable_controller_ms_BL95lowloss.json)):
+
+| Pressure | 2.5e-4 Pa | 2e-3 Pa | 1e-2 Pa | 2e-2 Pa |
+|---|---|---|---|---|
+| N arrival factor, gamma 1 (no pump; scattered_plume_tables_B-L_95mm.json) | 1.00 | 1.03 | 1.15 | 1.36 |
+| N arrival factor, gamma 1e-3 + pump | 2.88 | 3.02 | 3.83 | 5.16 |
+| Shape (half-range of the factor) | 0.3-0.6 pt | 0.2 pt | 0.1-0.3 pt | 0.3-0.4 pt |
+
+- **In this case uniformity did not change.** With the section 13 controller settings, B-L's worst case is 0.53 % at 710 C (96.9 % of states; 2.29 % over all valid states) and 0.58 % at 720 C (0.62 %), against 0.53 % / 0.58 % with gamma 1. The returned atoms land almost evenly. This is one layout and two seeds, and the controller applies one nominal scattering factor to every pointing state. When returned flux dominates, its dependence on pointing and on the real chamber and pump geometry, and the B-p case, remain to be checked before generalizing.
+- The zero-pressure entry of the low-loss table is the collisionless wall-return factor (2.84), computed since the follow-up audit; the earlier record set it to 1. That affects feeds below about 0.5 sccm only, and the results above are unchanged.
+- **The nitrogen needed does.** 1 um/h at eta 0.3 needs 5.5-5.8 sccm instead of 18-19 sccm: the same rate at the old feed would need eta of only about 0.09. B-p's conversion requirement would fall by a similar factor, back into the measured range. So the wall loss bears on the layout choice through nitrogen output, not through uniformity.
+- Measured N-limited maps that follow the source geometry would argue against such strong returns. The commissioning N-limited map and throttle series (COMMISSIONING_PLAN.md, C6b-C7) decide it.
 - **Sources.** The N atoms leave the plate disk (B-p 20 mm, B-L 30 mm) with the holes' on-axis peaking, cos^n with n = 2/W - 1 (3.70 for L/r 2.92, 2.91 for L/r 2). Ga leaves a point on the 46 deg cone, aimed at the centre, cos^2, with cos^1 and cos^4 as a beam-width check.
 - **Checks.**
   - In vacuum the arrival matches the analytic map within 0.52 % per bin, absolutely.
@@ -447,6 +479,283 @@ The batch means are fitted as a quadratic in r^2 (median reduced chi^2 1.2). The
 - the N wall recombination is not sourced.
 
 The record scattered_redeposition.json hashes `src/mbe_twin/scattering.py` at a version with two functions (`direct_flux`, `binned_direct_flux`) that were added while it ran and that it does not call.
+
+## 11. Realizable controller and heater power margin (2026-10-05)
+
+The [2026-10-05 audit](PROJECT_AUDIT_2026-10-05.md) (finding 1) showed that the temperature-corrected Ga protocol of sections 8 and 10 places the Ga in the middle of each uncertain state's own window, computed from that state's N map, Ga shape and pressure. A centre pyrometer does not observe those maps. scripts/realizable_controller.py replaces that protocol by controllers that know only a calibration frozen on the nominal state, plus named observations with errors. Growth is then evaluated with every state's true maps (records [realizable_controller_sc_plume.json](../data/runs/studies/realizable_controller_sc_plume.json) and [realizable_controller_sc_plume_heater1425.json](../data/runs/studies/realizable_controller_sc_plume_heater1425.json); gas + plume arrival; 1 um/h).
+
+**Setup.**
+- **Calibration (commissioning, nominal state, operating temperature).** It fixes four things: the feed for the wafer-mean rate, the Ga cell temperature for the window middle, the nominal N and Ga shapes, and the centre-to-mean ratio of the net rate. The droplet onset is measured at the centre, so each droplet law is a truth scenario with its own calibration.
+- **Truth states.** 25 N pointings within +/-0.8 deg. Six Ga records (40 / 70 / 120 mm fill x 5.68 / 8 A), each with its own absolute flux versus cell temperature. 27 combined heater errors x pyrometer bias -2 / 0 / +2 K. Three droplet laws. Observation errors at -e / 0 / +e.
+- **Validity.** A state counts if:
+  - the plate holes stay free-molecular;
+  - the feed is within its limit;
+  - the wafer-mean rate is within 3 % of the target (the controllers hold the centre rate, not the mean).
+
+  The gate is the joint 95 % fraction (finding 2, now enforced in every study).
+
+**Controllers.** All of them see the pyrometer and the ion gauge.
+- **Known maps (bound):** the earlier protocol. It reproduces the audit's 96.19 % (B-p) and 97.31 % (B-L) at 720 C exactly.
+- **Frozen:** the calibrated feed and cell temperature, never re-set.
+- **Rate monitor:** an in-situ growth-rate monitor at the centre (laser reflectometry, +/-1 %) re-sets the feed to the calibrated centre rate. The Ga target is the window middle from the calibrated shapes at the reading, applied through the calibrated cell model.
+- **+ BFM:** additionally, a beam-flux monitor at the wafer centre sets the Ga arrival (+/-2 %).
+- **+ fill:** additionally, the Ga shape of the charge's current fill (known from bookkeeping).
+- **+ commissioned maps:** additionally, each state's own N and Ga shapes, as N-limited and Ga-limited thickness maps measured at commissioning would give them. They are taken as exact, which is an optimistic limit.
+
+![Share of uncertain states in the growth window by controller and heater design](figures/controllers.png)
+
+**Share of states valid and in the window, and coldest admissible temperature for 1 um/h** (worst-case thickness half-range/mean there):
+
+| Controller | B-p, 720 C | B-L, 720 C | Coldest, current heater | Coldest, 14 % power margin |
+|---|---:|---:|---|---|
+| Known maps (bound) | 96.2 % | 97.3 % | 720 C (1.53 %) | 710 C (1.50 / 1.66 %) |
+| Frozen | 33.1 % | 37.3 % | none up to 790 C | none |
+| Rate monitor | 51.3 % | 51.7 % | none | none |
+| Rate monitor + BFM | 88.9 % | 90.8 % | **730 C (1.68 / 1.67 %)** | **720 C (1.69 / 1.85 %)** |
+| + fill | 89.9 % | 92.0 % | 730 C | 720 C |
+| + commissioned maps | 90.3 % | 92.3 % | 730 C | 720 C |
+
+In the last two columns the pairs are B-p / B-L. With the margin heater, rate monitor + BFM gives 97.0 % (B-p) and 95.7 % (B-L) at 720 C.
+
+**What the controller must observe:**
+- **A Ga beam-flux measurement is indispensable.** Without it, a deeper or shallower charge moves the Ga out of the window at the frozen cell temperature: with the rate monitor alone, only 19-43 % of the 40 and 120 mm states pass at 720 C. A rate monitor alone never reaches 95 % at any temperature.
+- **The rate monitor is needed for the N side.** It re-sets the feed for pointing and pressure changes, to within the centre-to-mean change of the tilted map (mean rate -2.6 to +2.4 % at 720 C).
+- **Knowing the fill or the commissioned maps adds only 1-2 points.** The remaining gap to the bound is the run-to-run part:
+  - the instrument errors. With zero rate and BFM error, the commissioned-maps controller reaches 97.1 % for B-L at 720 C, against the bound's 97.3 %. Given the same information, the realizable protocol reproduces the earlier study.
+  - the heater state: wafer emissivity, contact, zone error and pyrometer bias.
+- **Error budget at 720 C, current heater, B-L / B-p.** The BFM error matters most.
+
+  | Rate monitor / BFM error | Rate monitor + BFM | + commissioned maps |
+  |---|---|---|
+  | 1 % / 2 % | 90.8 / 88.9 % | 92.3 / 90.3 % |
+  | 1 % / 0 | 93.4 / 91.9 % | 95.9 / 94.5 % |
+  | 0 / 2 % | 91.2 / 89.1 % | 93.0 / 90.9 % |
+  | 0.5 % / 1 % | 93.2 / 91.6 % | 95.6 / 94.1 % |
+  | 0 / 0 | 93.6 % (B-L) | 97.1 % (B-L) |
+
+**Heater power margin** (scripts/heater_margin.py, record [heater_margin.json](../data/runs/studies/heater_margin.json)). The zone fractions of the comparison are optimized under the 1473 K element limit, so at the operating point the hottest ring is on the limit (integrated twin: 2382 of 2387 W).
+- With those fractions, 46 % of the 81 combined heater/pyrometer states are capped, and their reading falls up to 24 K short.
+- Optimizing the zones under a 1425 K design limit leaves 14.2 % power headroom, at a cost of 0.3 K more wafer range (2.51 -> 2.82 K at 720 C). No combined state is capped any more.
+- That headroom is what moves the realizable cold limit back to 720 C. It also costs uniformity at higher temperatures, because the wider wafer range raises the worst cases above about 730 C.
+
+| Design limit | Headroom | Wafer range, 720 C | Capped combined states | Largest reading shortfall |
+|---|---:|---:|---:|---:|
+| 1473 K (current) | 0 % | 2.51 K | 46 % | 24 K |
+| 1450 K | 6.6 % | 2.66 K | 32 % | 8 K |
+| 1460 K | 3.7 % | 2.60 K | 33 % | 15 K |
+| **1425 K** | **14.2 %** | **2.82 K** | **0 %** | 0 |
+| 1400 K | 22.6 % | 2.98 K | 0 % | 0 |
+
+The integrated twin confirms both effects in time ([INTEGRATED_TWIN.md](INTEGRATED_TWIN.md), section 4). With the BFM step and the rate monitor, the 120 mm charge grows like the calibrated machine (100 % of the wafer in the window, against 38 % with frozen settings). With the 1425 K design, a pyrometer reading 2 K low is no longer clamped.
+
+**Uniformity-first choice of temperature and heater margin** (the project set uniformity as its priority on 2026-10-05). Rate monitor + BFM, 1 um/h. Each entry is the share of states that pass and the worst case (record realizable_controller_sc_plume_heater1460.json and the design-limit probes of 2026-10-05):
+
+| Zone design limit (headroom) | B-p 720 C | B-p 730 C | B-L 720 C | B-L 730 C |
+|---|---|---|---|---|
+| 1473 K (0 %) | 88.9 % | **96.0 %, 1.68 %** | 90.8 % | **95.8 %, 1.67 %** |
+| 1465 K (2.2 %) | 93.2 % | 97.2 %, 1.67 % | 94.0 % | 96.4 %, 1.76 % |
+| **1460 K (3.7 %)** | **95.2 %, 1.53 %** | 97.5 %, 1.67 % | 94.99 % | 96.5 %, 1.82 % |
+| 1450 K (6.6 %) | 96.8 %, 1.60 % | 97.5 %, 1.81 % | 95.7 %, 1.76 % | 96.4 %, 1.97 % |
+| 1425 K (14.2 %) | 97.0 %, 1.69 % | 97.4 %, 1.95 % | 95.7 %, 1.85 % | 96.3 %, 2.11 % |
+
+More headroom widens the wafer's temperature range, and a warmer wafer turns that range into thickness through decomposition. The most uniform admissible point is therefore the coldest temperature with the least headroom that still passes. 1.25 um/h is no better: B-L reaches 1.74 % at 740 C, and B-p is outside plate validity.
+
+**Revised working point (2026-10-05, uniformity first).**
+- **B-p:** 1 um/h at **720 C**, with the heater zones designed for an element about 13 K below its 1473 K rating (3.7 % power headroom). Worst case **1.53 %**, the same as the known-maps bound. It passes the 95 % rule narrowly (95.2 %): a 1450 K design gives more margin (96.8 %) at 1.60 %.
+- **B-L:** 1 um/h at **730 C** with the current heater (worst 1.67 %). Its 720 C option needs 6.6 % headroom and gives 1.76 %.
+- **Both need:**
+  - a Ga beam-flux measurement before growth (+/-2 % or better);
+  - an in-situ growth-rate monitor that re-sets the N feed (+/-1 % or better).
+
+  Without the BFM there is no admissible 1 um/h point.
+- **Why B-p wins:** B-p is the more uniform layout at this point. It needs the high conversion (eta about 1, 2 m^3/s, 10 sccm scenario); at realistic conversion, B-L is the layout that reaches 1 um/h.
+
+The flux-monitor and rate-monitor error magnitudes are priors until the instruments are selected. The commissioned maps are an optimistic limit (exact map calibration). The grid of states is not a probability distribution.
+
+## 12. What sets the worst case, and three levers against it (2026-10-05, uniformity first)
+
+The project's priority is the worst-case thickness spread (2026-10-05). scripts/worst_case_drivers.py ranks the uncertain factors at an operating point by how much each adds to that worst case. It compares the worst case with the factor held at nominal against the worst case with everything free, using the rate monitor + BFM controller. All runs are summarized in [uniformity_levers.json](../data/runs/studies/uniformity_levers.json); commands are in REPRODUCE.md.
+
+**1. Drivers at the section 11 points.**
+
+| Factor | B-p 720 C (1460 K design), worst 1.53 % | B-L 730 C (current heater), worst 1.67 % |
+|---|---|---|
+| N pointing (+/-0.8 deg) | adds 0.99 pt | adds 0.72 pt |
+| Heater error (emissivity, contact, zone) | adds 0.32 pt | adds 0.45 pt |
+| Pyrometer bias, Ga state, rate and BFM errors | at most 0.02 pt | at most 0.01 pt |
+
+- **Pointing dominates.** The worst states are tilts about the mounting flange towards or away from the wafer centre (directions 0 and 180 deg). Sideways tilts matter little.
+- **Instrument errors and the Ga state decide whether a state stays in the window, not how uneven it grows.** At these points the layer is set by N and temperature.
+
+**2. Lever 1: re-aim the N source after commissioning.**
+- **What changes.** The harmful tilts change the radial thickness profile, so an N-limited (Ga-rich) thickness map at commissioning reveals them. The mount is then trimmed.
+- **How it is modelled.** The residual tilt is +/-delta (option --pointing-residual). The maps come from linear interpolation between the nominal and 0.8 deg maps; direct maps at 0.2 and 0.4 deg agree to 0.04-0.07 % in shape.
+- **What it needs.** A residual of 0.2 deg changes the N-limited profile by up to 0.42 % (B-p) / 0.29 % (B-L). So the commissioning map must resolve about 0.3 %, and the mount must adjust and repeat to about 0.2 deg (about 1 mm at the 0.3 m flange pivot).
+
+| Residual pointing | B-p 720 C | B-L 720 C |
+|---|---|---|
+| 0.8 deg (no re-aim) | 1.53 % | not admissible (730 C: 1.67 %) |
+| 0.4 deg | 1.00 % | 1.24 % |
+| **0.2 deg** | **0.75 %** | **1.08 %** |
+| 0.1 deg | 0.64 % | 1.00 % |
+
+Heater designs 1450-1460 K; worst case over states valid and in the window (95-97 %).
+
+**3. Lever 2: aim at the operating point.**
+- **Method.** scripts/nitrogen_aim_operating.py computes nominal N maps at other aim offsets. The pointing states keep the tilt response of the current aim, and the attenuation tables are reused (stated approximations).
+- **B-p.** Its +97.5 mm aim stays best: 92.5 mm gives 1.20 % and 102.5 mm gives 1.25 % (re-aimed to 0.2 deg, 720 C).
+- **B-L.** It improves 5 mm further out, at **+95 mm** (aims 90 to 105 mm checked):
+  - after a 0.2 deg re-aim: 0.87 % (against 1.08 % at 90 mm, 0.96 % at 92.5, 0.88 % at 97.5, 1.00 % at 100);
+  - without the re-aim: 1.34 % at 720 C (95.1 %), which is admissible where 90 mm was not.
+- **Why the old aim is off.** The 90 mm aim was set for the N map at the 740 C pressure. The grown thickness at 720 C also carries the heater map and the scattered-atom tables.
+
+**4. Lever 3: multi-spot pyrometry with zone-group trimming.**
+- **The controller** (scripts/multispot_heater.py, --heater-control multispot):
+  - three pyrometer spots at 0, 50 and 85 mm, 10 mm each;
+  - the 12 heater rings driven as three groups (inner, middle and outer thirds of the heater), solved so that all three spots read their calibrated values;
+  - errors: a common bias of -2 / 0 / +2 K and an edge-spot error of -0.5 / 0 / +0.5 K, the same element limit, the same Ga controller (centre reading).
+- **Effect on the wafer.** Over the 27 heater errors x bias states at 720 C (1460 K design), the wafer range falls from up to 14.3 K (one centre reading) to at most 6.2 K. Capped states fall from 33 % to 23 %.
+
+| Rate monitor + BFM | B-p | B-L (aim 95 mm) |
+|---|---|---|
+| Multi-spot, 0.8 deg pointing, 720 C | 1.30 % (100 %) | 1.13 % (100 %) |
+| **Multi-spot, 0.2 deg re-aim, 720 C** | **0.54 %** (99.9 %) | **0.72 %** (100 %) |
+| Multi-spot, 0.2 deg re-aim, 710 C | 0.49 % (96.0 % with the fill known; 94.1 % without) | **0.65 %** (96.9 %) |
+| Multi-spot, 0.2 deg re-aim, 700 C | 71.7 % pass (not admissible) | 78.4 % pass (not admissible) |
+
+The heater design limit hardly matters with multi-spot control. At 720 C: B-p 0.54 % for 1460 / 1450 / 1425 K designs, B-L 0.72 / 0.74 / 0.79 %. After lever 3 the heater adds only 0.02 pt (B-p) / 0.15 pt (B-L). The worst case then sits close to the all-nominal floor of 0.30 % (B-p) / 0.43 % (B-L), and the remaining pointing residual is the largest term.
+
+**5. Most uniform admissible points (uniformity first).**
+- **B-p: 710 C, worst 0.49 %.** It needs:
+  - an N-source re-aim at commissioning to 0.2 deg;
+  - multi-spot pyrometry with three zone groups;
+  - a Ga beam-flux monitor and a growth-rate monitor;
+  - the Ga fill tracked from charge bookkeeping;
+  - heater zones designed for about 1460 K.
+- **B-L: 710 C, worst 0.65 %.** Aim +95 mm, with the same instruments; fill tracking is not needed.
+- **Caveats.**
+  - 710 C uses the decomposition law 10 K below its fitted range (720-805 C). Decomposition is a small term there. The nearest point inside the range is 720 C: 0.54 % (B-p) / 0.72 % (B-L).
+  - Crystal quality may set its own lower temperature (not modelled).
+  - Commissioned maps and instrument errors are priors.
+
+Compared with section 11, the worst case falls by a factor of three for B-p (1.53 -> 0.49 %) and 2.6 for B-L (1.67 -> 0.65 %).
+
+## 13. Checks of the section 12 assumptions (2026-10-05)
+
+**Commissioning re-aim rehearsal** (scripts/commissioning_reaim.py, record [commissioning_reaim.json](../data/runs/studies/commissioning_reaim.json), `synthetic`).
+
+Setup:
+- **Hidden tilt:** drawn uniformly within +/-0.8 deg, about the flange pivot or about the plate centre. Its map is superposed from the comparison's 0 and 90 deg responses; the check against the 30 and 60 deg maps agrees to 0.04-0.07 % in shape.
+- **Calibration wafers:** each is an N-limited growth. Its radial thickness profile is sampled at 5 mm pitch with relative map noise. Each wafer gets a random combined heater state, which the fit does not know.
+- **Estimate:** the misalignment in the mount's two flange axes is estimated by Bayesian weighted least squares, with a +/-0.8 deg tolerance prior. A sideways tilt hardly changes a radial profile, so an unweighted fit amplifies noise along that axis. The prior leaves that invisible, and nearly harmless, component alone.
+- **Correction:** the mount is moved by the opposite of the estimate, with its own repeatability error.
+- **Metric:** the half-range of the corrected N profile in excess of the nominal one, at the 95th percentile of 2000 trials. It is compared with the excess a 0.2 deg residual causes in its worst direction.
+
+| Three calibration wafers, one round | B-p (97.5 mm) | B-L (90 mm) | B-L (95 mm, own tables) |
+|---|---|---|---|
+| No correction | 0.50-0.53 pt | 0.46-0.49 pt | 0.36 pt |
+| Map 0.1 %, mount 0.05 deg | **0.110 pt** | **0.139 pt** | **0.096 pt** |
+| Map 0.3 %, mount 0.05 deg | 0.126 pt | 0.157 pt | 0.113 pt |
+| Map 0.3 %, mount 0.10 deg | 0.158 pt | 0.188 pt | 0.142 pt |
+| Reference: 0.2 deg residual, worst direction | 0.126 pt | 0.137 pt | 0.083 pt |
+
+- **The 0.2 deg residual of section 12 is achievable** with a mount repeatable to about 0.05 deg (0.3 mm at the 0.3 m flange pivot) and three mapped wafers. B-p reaches it at 0.1-0.3 % map noise; B-L at 90 mm needs about 0.1 %.
+- **A second measure-and-correct round does not help.** The floor is set by the mount's repeatability and the unknown wafer-to-wafer heating, not by map noise.
+- **A mount good only to 0.1 deg leaves 25-40 % more.** It corresponds to about a 0.25 deg residual.
+- **Plate-centred tilts can only partly be removed through the flange axes,** but they are about 2.5 times less harmful to start with.
+- **At B-L's 95 mm aim the map is less sensitive to pointing.** A 0.2 deg residual costs 0.083 pt against 0.137 pt at 90 mm, and the corrected residual is the smallest of the three cases.
+
+**B-L at +95 mm with its own tables** (scripts/aim_tables.py, record aim_tables_B-L_95mm.json).
+- **What is recomputed:** the pointing ensemble (49 maps) and the attenuation and lip tables at 95 mm. These replace the 90 mm tilt responses and attenuation that `--aim-maps` reused.
+- **What is not:** the gas-scattered and plume factors are still those of the 90 mm aim. That is the remaining approximation.
+- **Results:** with multi-spot heater control, a 0.2 deg re-aim, rate monitor + BFM and the 1460 K design (record realizable_controller_ms_BL95tables.json): **0.64 % at 710 C** (96.8 % of states) and **0.70 % at 720 C** (100 %). The approximate --aim-maps run gave 0.65 / 0.72 %, so the B-L result stands. The scattered-atom factors at 95 mm were regenerated and seed-averaged in section 14 (0.53 % at 710 C).
+
+**Decomposition below 720 C.**
+- **Grounds for a small effect:** Grandjean et al. (APL 74, 1854, 1999) report GaN decomposition in vacuum as nearly zero below 750 C, with an activation energy of 3.6 eV from laser reflectivity. The law used here (G02) has 3.1 eV, from QMS.
+- **Size at 710 C:** the law gives about 0.20 nm/min against 16.7 nm/min of growth. Using 3.6 eV instead of 3.1 eV, anchored at 720 C, changes that by about 6 %.
+- **Effect on uniformity:** the decomposition term's radial variation over a 6 K wafer range is about 0.27 % of the rate. A 6 % change in it moves the worst case by well under 0.1 pt (an estimate, not a rerun).
+- **Conclusion:** the 710 C extrapolation is a small effect on thickness. What 710 C does to crystal quality is not modelled.
+
+## 14. Scattered-atom tables at the frozen aims, and their Monte Carlo noise (2026-10-06)
+
+Section 13 left one approximation: B-L at +95 mm used the gas-scattered and plume factors of the 90 mm aim. Those tables were regenerated at 95 mm. Doing so showed that the tables' Monte Carlo noise is a larger effect than their aim dependence, so the tables were rerun with several seeds and averaged.
+
+**Method.**
+- `scattered_tables.py` and `scattered_plume_tables.py` take `--aim-mm` and `--seed`. Their default runs reproduce the earlier versions bit for bit (checked on a small sample).
+- Each run has 8e6 atoms in 8 batches, the settings of the section 10 tables. Independent seeds are averaged with equal weights by `scripts/average_scattered_seeds.py`:
+  - B-L at +95 mm, gas (gamma 1 and 0.1): 4 seeds, record [scattered_tables_B-L_95mm.json](../data/runs/studies/scattered_tables_B-L_95mm.json);
+  - B-L at +95 mm, with the plume: 4 seeds at S = 2 and 4 m^3/s and 6 more at S = 4 only (the B-L scenario), so 10 at S = 4; record [scattered_plume_tables_B-L_95mm.json](../data/runs/studies/scattered_plume_tables_B-L_95mm.json);
+  - B-p at its envelope aim of +97.5 mm, with the plume: 10 seeds at S = 2 (the B-p scenario); record [scattered_plume_tables_B-p_97.5mm.json](../data/runs/studies/scattered_plume_tables_B-p_97.5mm.json).
+- `realizable_controller.py --n-scatter` replaces the comparison aim's factors with these tables, for a layout run with `--n-tables`:
+  - passing the old 90 mm (B-L) or 97.5 mm (B-p) tables explicitly reproduces the implicit path exactly;
+  - `--scatter-flat` replaces each pressure's factor profile by its area-weighted mean, the limit with no radial shape at all;
+  - `--scatter-from-aim` applies one set of tables at another aim (used for the aim scan below).
+- Controller settings throughout are those of section 13: multi-spot heater, 0.2 deg re-aim, 1460 K heater design, rate monitor + BFM.
+- Records:
+  - [realizable_controller_ms_BL95scatter.json](../data/runs/studies/realizable_controller_ms_BL95scatter.json): the B-L result;
+  - [scatter_noise_BL95.json](../data/runs/studies/scatter_noise_BL95.json) and [scatter_noise_Bp.json](../data/runs/studies/scatter_noise_Bp.json): single-seed, averaged and flat runs, and the B-L aim scan, with each constituent run's dependency hashes.
+
+**The factor hardly depends on the aim.**
+- At B-L's operating pressure (19 sccm, 8.8e-3 Pa, S = 4), scattered atoms and the plume add 13.1 % to the N arrival at both aims. The means differ by 0.03 %.
+- Between the aims, the factor's radial shape differs by up to 0.2-0.6 %. Two seeds at the same aim differ by just as much (0.3-0.7 %).
+- One 8e6-atom table carries 0.1-0.4 points of random half-range per pressure. The 4-seed average leaves 0.07-0.10 points, and the averaged shape is nearly flat for B-L.
+
+**But the worst case is sensitive to table noise.** The worst case is a maximum over states, so random shape in the factor both scatters it and, on average, raises it. B-L at +95 mm, rate monitor + BFM:
+
+| B-L +95 mm | 710 C | 720 C |
+|---|---|---|
+| Section 13 (90 mm factors, one seed) | 0.64 % | 0.70 % |
+| 10 single-seed tables: mean +/- sd [range] | 0.60 +/- 0.12 % [0.48, 0.81] | 0.64 +/- 0.13 % [0.52, 0.85] |
+| **10-seed average** | **0.53 %** (96.7 % of states) | **0.58 %** (100 %) |
+| No radial shape (--scatter-flat) | 0.54 % | 0.60 % |
+
+- One seed's table moves the B-L worst case by about +/-0.12 points (standard deviation).
+- **Uncertainty of the averaged result** (audit 2026-10-06): 40 bootstrap resamples of the seeds, each averaged and rerun through the controller, give a standard deviation of **0.035 points** (5-95 %: 0.47-0.58 % at 710 C, 0.52-0.64 % at 720 C). Their mean lies 0.004 below the averaged value, so residual table noise no longer biases the maximum detectably. The heuristic sd/sqrt(10) (0.04) happened to agree for B-L. Every resample keeps 96.4-96.9 % of states admissible.
+- B-L's worst case is therefore **0.53 +/- 0.04 % at 710 C and 0.58 +/- 0.04 % at 720 C** (table noise only, not model uncertainty). These are over the states that pass the gate. Over all valid states they are 2.30 % at 710 C (3.3 % of states fail, mostly N-rich with the deepest Ga melt level) and 0.64 % at 720 C (`worst_valid_pct` in the record). The shape-free limit (0.54 %) lies inside that range. That agreement is consistent with the nearly flat averaged shape but is not itself a convergence test.
+- The 0.1-point drop from section 13 comes from removing the noise, not from the change of aim.
+
+**B-L's aim, re-scanned with the averaged tables** (the 95 mm tables applied at each aim; record scatter_noise_BL95.json):
+
+| Aim | 90 mm | 92.5 mm | **95 mm** | 97.5 mm | 100 mm |
+|---|---|---|---|---|---|
+| Worst case at 710 C | 0.79 % | 0.64 % | **0.53 %** | 0.52 % | 0.64 % |
+| Worst case at 720 C | 0.83 % | 0.68 % | **0.58 %** | 0.56 % | 0.69 % |
+| Joint fraction at 710 C | 97.2 % | 97.0 % | 96.7 % | 96.2 % | 95.7 % |
+
+- The scan applies the 95 mm factor tables at every aim. The factor's aim dependence (0.2-0.6 % in shape between 90 and 95 mm, as large as seed noise) is neglected, so the scan is conditional on that transfer.
+- The optimum lies between 95 and 97.5 mm. Those two aims differ by 0.01 points, well inside the 0.035-point table noise, and 95 mm keeps more margin above the 95 % gate.
+- **+95 mm is the nominal aim**, conditional on the factor-table transfer above; the real aim is trimmed at commissioning. An aim error of 2.5 mm costs about 0.1 point.
+
+**B-p is affected the same way** (+97.5 mm, rate monitor + BFM; record scatter_noise_Bp.json):
+
+| B-p +97.5 mm | 710 C | 720 C |
+|---|---|---|
+| Section 12 (archived table, one seed) | 0.49 % (needs fill tracking) | 0.54 % |
+| 10 new single-seed tables: mean +/- sd [range] | 0.73 +/- 0.23 % [0.56, 1.34] | 0.78 +/- 0.23 % [0.60, 1.39] |
+| (the first 4 of them, averaged) | (0.52 %) | (0.57 %) |
+| **10-seed average** | **0.57 %**: 95.0 % of states without fill tracking, 96.8 % with | **0.62 %** (100 %) |
+| No radial shape (--scatter-flat) | 0.72 % | 0.78 % |
+
+- The archived table's 0.49 % was a favourable draw. Its shape at the operating pressure lies within the new seeds' spread, and the physics code is unchanged (same scattering.py).
+- B-p's worst case responds more strongly to table noise than B-L's. One of the ten seeds gives 1.34 %, although its table diagnostics (half-range, chi^2) are ordinary; without it the single-seed sd would be 0.08 points. It is kept: dropping a draw for its result would bias the average (for reference, the nine-seed average without it gives 0.51 %; audit 2026-10-06). The 4-seed value of 0.52 % moved to 0.57 % with the extra seeds.
+- **Uncertainty of the averaged result** (40 bootstrap resamples): standard deviation **0.089 points**, 5-95 % range 0.50-0.78 % at 710 C (0.55-0.84 % at 720 C). The resample mean lies 0.03 above the averaged value, so residual noise may still bias B-p's maximum upward slightly. The earlier heuristic (+/-0.07) understated this.
+- For B-p, removing the factor's shape makes the worst case worse. The plume genuinely reshapes B-p's N arrival (section 10: 0.4-0.6 points), so the flat limit is not a bracket for B-p.
+- Whether B-p is admissible at 710 C also depends on the seed: per seed, 93.2-96.9 % of states pass without fill tracking. With the averaged table 95.0005 % pass, essentially at the gate, and across the bootstrap resamples (94.5-95.8 %) only 45 % pass without fill tracking against 100 % with it. Fill tracking is therefore a firm condition for 710 C.
+
+**What changes.**
+- **The point estimates do not rank B-p and B-L on uniformity.**
+  - At 710 C B-L reaches 0.53 % and B-p 0.57 % (with fill tracking); at 720 C, 0.58 and 0.62 %.
+  - The 0.16-point lead B-p had in section 12 was table noise.
+  - Pairing the two layouts' bootstrap resamples gives B-p - B-L = +0.04 +/- 0.10 points (5-95 %: -0.06 to +0.24) at 710 C, and the same at 720 C. B-L is ahead in 75 % of resamples: likely no worse, not established.
+- **What separates them is not uniformity:**
+  - B-p needs fill tracking at 710 C, and its figures assume full nitrogen conversion (eta = 1) at 2 m^3/s. The one direct measurement of a source's conversion found at most 0.4, falling as bulb pressure rises (R41, 2026-10-06), so eta = 1 is not supported;
+  - B-L assumes about 30 % conversion at 4 m^3/s, inside the measured range.
+  - On that basis B-L replaces B-p as the provisional layout (section 1).
+- **Every earlier scattered-variant worst case carries this noise.**
+  - Sections 10-13 used single-seed tables. Their worst cases are uncertain by about +/-0.1 point and likely read high by a few hundredths to a tenth.
+  - Comparisons across temperature, controllers and heater designs used the same table, so the noise largely cancels in them.
+  - Absolute values, and comparisons between layouts or aims, do not get that cancellation.
+- **Practice from here:** quote worst cases from seed-averaged tables. These exist for B-L at 95 mm (10 seeds at S = 4) and B-p at 97.5 mm (10 seeds at S = 2). The section 10 tables for the other layouts and aims remain single-seed.
 
 ## Appendix: superseded records
 

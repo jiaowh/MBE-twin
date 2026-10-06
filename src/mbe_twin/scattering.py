@@ -19,7 +19,11 @@ Geometry (as scripts/background_scattering.py): wafer centre at the origin, grow
 (normal -z), sources below (z < 0). The holder is an absorbing disk of radius holder_radius in
 the plane z = 0 (wafer r <= wafer_radius); the chamber wall is a sphere of radius
 chamber_radius about the wafer centre. On the wall, atoms are lost with probability gamma
-(sticking, recombination), otherwise re-emitted diffusely at the wall temperature.
+(sticking, recombination), otherwise re-emitted diffusely at the wall temperature. With a pumping
+speed S for the atoms, a wall-returned atom is also removed with the probability S / (A <v> / 4)
+that the pump's aperture takes of the wall's collision rate (A the sphere's area, <v> the mean speed
+at the wall temperature), so the loss per wall hit is gamma + (1 - gamma) S / (A <v> / 4). Without a
+pump (the default) wall-returned atoms are removed only by gamma.
 """
 
 from dataclasses import dataclass
@@ -188,11 +192,22 @@ class Source:
         return x, cos_n_directions(rng, np.repeat(ax[None], n, 0), self.n_cos)
 
 
+def wall_loss(gamma, pump_speed, chamber, mass_amu):
+    """Loss probability per wall hit: gamma, plus the pump's share of the wall collision rate for the rest."""
+    if pump_speed <= 0:
+        return gamma
+    v_mean = np.sqrt(8 * K_B * chamber.wall_temperature / (np.pi * mass_amu * AMU))
+    p_pump = min(1.0, pump_speed / (4 * np.pi * chamber.radius ** 2 * v_mean / 4))
+    return gamma + (1 - gamma) * p_pump
+
+
 def track(rng, n, source, *, mass_amu, temperature, diameter, gas=None, plume=None, chamber=Chamber(), gamma=1.0,
-          gas_diameter=D_N2, chunk=4000, max_iter=100_000):
+          pump_speed=0.0, gas_diameter=D_N2, chunk=4000, max_iter=100_000):
     """Follow n atoms from source; return wafer-hit radii, an 'indirect' flag per hit (collided or wall-returned),
-    and counts of gas and plume collisions."""
+    and counts of gas and plume collisions. pump_speed (m^3/s, for these atoms) adds the pump's removal of
+    wall-returned atoms (wall_loss); 0 reproduces the earlier tracker exactly."""
     m = mass_amu
+    p_loss = wall_loss(gamma, pump_speed, chamber, m)
     sigma = np.pi * ((diameter + gas_diameter) / 2) ** 2
     x, d = source.emit(rng, n)
     v = d * flux_speeds(rng, n, temperature, m)[:, None]
@@ -251,7 +266,7 @@ def track(rng, n, source, *, mass_amu, temperature, diameter, gas=None, plume=No
         # wall
         j = idx[ev_sp]
         if j.size:
-            lost = rng.random(j.size) < gamma
+            lost = rng.random(j.size) < p_loss
             alive[j[lost]] = False
             jr = j[~lost]
             if jr.size:

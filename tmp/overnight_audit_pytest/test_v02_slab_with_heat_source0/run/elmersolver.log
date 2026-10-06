@@ -1,0 +1,152 @@
+ELMER SOLVER (v 9.0) STARTED AT: 2026/10/06 08:55:27
+ParCommInit: Initialize #PEs: 1
+MAIN: 
+MAIN: =============================================================
+MAIN: ElmerSolver finite element software, Welcome!
+MAIN: This program is free software licensed under (L)GPL
+MAIN: Copyright 1st April 1995 - , CSC - IT Center for Science Ltd.
+MAIN: Webpage http://www.csc.fi/elmer, Email elmeradm@csc.fi
+MAIN: Version: 9.0 (Rev: Release, Compiled: 2026-01-20)
+MAIN:  Running one task without MPI parallelization.
+MAIN:  Running with just one thread per task.
+MAIN:  Lua interpreter linked in.
+MAIN: =============================================================
+MAIN: 
+MAIN: 
+MAIN: -------------------------------------
+MAIN: Reading Model: case.sif
+LoadInputFile: Scanning input file: case.sif
+LoadInputFile: Scanning only size info
+LoadInputFile: First time visiting
+LoadInputFile: Reading base load of sif file
+LoadInputFile: Loading input file: case.sif
+LoadInputFile: Reading base load of sif file
+LoadInputFile: Number of BCs: 2
+LoadInputFile: Number of Body Forces: 1
+LoadInputFile: Number of Initial Conditions: 0
+LoadInputFile: Number of Materials: 1
+LoadInputFile: Number of Equations: 1
+LoadInputFile: Number of Solvers: 2
+LoadInputFile: Number of Bodies: 1
+Loading user function library: [HeatSolve]...[HeatSolver_Init0]
+Loading user function library: [HeatSolve]...[HeatSolver_Init0]
+Loading user function library: [SaveData]...[SaveLine_Init0]
+Loading user function library: [SaveData]...[SaveLine_Init0]
+LoadMesh: Loading serial mesh!
+ElmerAsciiMesh: Performing step: 1
+ElmerAsciiMesh: Base mesh name: ./mesh
+ReadHeaderFile: Reading header info from file: ./mesh/mesh.header
+InitializeMesh: Number of nodes in mesh: 105
+InitializeMesh: Number of bulk elements in mesh: 80
+InitializeMesh: Number of boundary elements in mesh: 48
+InitializeMesh: Initial number of max element nodes: 4
+ElmerAsciiMesh: Performing step: 2
+ReadNodesFile: Reading nodes from file: ./mesh/mesh.nodes
+SetMeshDimension: Dimension of mesh is: 2
+SetMeshDimension: Max dimension of mesh is: 2
+ElmerAsciiMesh: Performing step: 3
+ReadElementsFile: Reading bulk elements from file: ./mesh/mesh.elements
+ElmerAsciiMesh: Performing step: 4
+ReadBoundaryFile: Reading boundary elements from file: ./mesh/mesh.boundary
+PermuteNodeNumbering: Performing node mapping
+MapBodiesAndBCs: Skipping remapping of bodies
+MapBodiesAndBCs: Remapping boundaries
+MapBodiesAndBCs: Minimum initial boundary index: 1
+MapBodiesAndBCs: Maximum initial boundary index: 4
+ElmerAsciiMesh: Performing step: 5
+ElmerAsciiMesh: Performing step: 6
+LoadMesh: Loading mesh done
+LoadMesh: Preparing mesh done
+LoadMesh: Elapsed REAL time:     0.0020 (s)
+MeshStabParams: Computing stabilization parameters
+MeshStabParams: Elapsed REAL time:     0.0000 (s)
+LoadModel: Defined radition solver by Equation name "heat equation"
+MAIN: -------------------------------------
+AddMeshCoordinates: Setting mesh coordinates and time
+AddSolvers: Setting up 2 solvers
+AddSolvers: Setting up solver 1: heat equation
+AddEquationBasics: Setting up keywords internally for legacy solver: heat equation
+AddEquationBasics: Using procedure: HeatSolve HeatSolver
+AddEquationBasics: Setting up solver: heat equation
+Loading user function library: [HeatSolve]...[HeatSolver_Init]
+Loading user function library: [HeatSolve]...[HeatSolver_bulk]
+Loading user function library: [HeatSolve]...[HeatSolver_bulk]
+Loading user function library: [HeatSolve]...[HeatSolver]
+AddEquationBasics: Creating standard variable: temperature
+OptimizeBandwidth: ---------------------------------------------------------
+OptimizeBandwidth: Computing matrix structure for: heat equation
+OptimizeBandwidth: Initial bandwidth for heat equation: 23
+OptimizeBandwidth: Optimized bandwidth for heat equation: 11
+OptimizeBandwidth: ---------------------------------------------------------
+AddSolvers: Setting up solver 2: saveline
+AddEquationBasics: Using procedure: SaveData SaveLine
+AddEquationBasics: Setting up solver: saveline
+Loading user function library: [SaveData]...[SaveLine_Init]
+Loading user function library: [SaveData]...[SaveLine_bulk]
+Loading user function library: [SaveData]...[SaveLine_bulk]
+Loading user function library: [SaveData]...[SaveLine]
+AddTimeEtc: Setting time and other global variables
+MAIN: Random seed initialized to: 314159265
+SetInitialConditions: Setting up initial conditions (if any)
+MAIN: Number of timesteps to be saved: 1
+MAIN: 
+MAIN: -------------------------------------
+MAIN:  Steady state iteration:            1
+MAIN: -------------------------------------
+MAIN: 
+SingleSolver: Attempting to call solver: 1
+SingleSolver: Solver Equation string is: heat equation
+HeatSolver: -------------------------------------------
+HeatSolver: Solving the energy equation for temperature
+DefaultStart: Starting solver: heat equation
+HeatSolve: 
+HeatSolve: 
+HeatSolve: -------------------------------------
+HeatSolve:  TEMPERATURE ITERATION           1
+HeatSolve: -------------------------------------
+HeatSolve: 
+HeatSolve: Starting Assembly...
+HeatSolve: Assembly:
+HeatSolve: Assembly done
+DefUtils::DefaultDirichletBCs: Setting Dirichlet boundary conditions
+EnforceDirichletConditions: Enforcing total of 10 Dirichlet conditions.
+EnforceDirichletConditions: Applying Dirichlet conditions using scaled diagonal
+ScaleLinearSystem: Creating > DiagScaling < vector of size 105
+EnforceDirichletConditions: Dirichlet conditions enforced for dofs: 10
+DefaultSolve: Solving linear system with default routines
+SolveSystem: Solving linear system
+SolveLinearSystem: Assuming real valued linear system
+SolveLinearSystem: Assuming serial linear system
+ScaleLinearSystem: Creating > DiagScaling < vector of size 105
+SolveLinearSystem: Serial linear System Solver: direct
+DirectSolver: Using direct method: umfpack
+ComputeNorm: Computing norm of solution
+ComputeChange: NS (ITER=1) (NRM,RELC): (  359.21818      2.0000000     ) :: heat equation
+HeatSolve: iter:    1 Assembly: (s)    0.00    0.00
+HeatSolve: iter:    1 Solve:    (s)    0.00    0.00
+HeatSolve:  Result Norm   :    359.21817592748152
+HeatSolve:  Relative Change :    2.0000000000000000
+DefaultFinish: Finished solver: heat equation
+ComputeNorm: Computing norm of solution
+ComputeChange: SS (ITER=1) (NRM,RELC): (  359.21818      2.0000000     ) :: heat equation
+SingleSolver: Attempting to call solver: 2
+SingleSolver: Solver Equation string is: saveline
+SaveLine: -----------------------------------------
+SaveLine: Saving data on lines to file: line.dat
+SaveLine: ------------------------------------------
+CreateListForSaving: Field Variables for Saving
+CreateListForSaving: Variable 1: temperature
+SaveLine: Saving PolyLines into ascii table
+FindMeshEdges: Determining edges in 2D mesh
+FindMeshEdges2D: Number of edges found: 184
+SaveLine: Number of nodes in specified lines: 21
+SaveLine: All done
+ReloadInputFile: Reloading input file
+LoadInputFile: Loading input file:
+MAIN: Reporting unused list entries for sif improvement!
+MAIN: If you do not want these lines undefine > DEVEL_LISTUSAGE < !
+   Unused keywords:
+MAIN: *** Elmer Solver: ALL DONE ***
+MAIN: The end
+SOLVER TOTAL TIME(CPU,REAL):         1.82        1.82
+ELMER SOLVER FINISHED AT: 2026/10/06 08:55:29
